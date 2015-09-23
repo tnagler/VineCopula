@@ -3,9 +3,9 @@ VineCopula 2.0.0 (ongoing)
 
 DEPENDS
 
-  * `igraph` has been removed from `Imports`.
+  * igraph has been removed from `Imports`.
   
-  * `network` has been added to `Imports`.
+  * network has been added to `Imports`.
   
 
 NEW FEATURES
@@ -71,7 +71,7 @@ BUG FIXES
   * Definition of "C" in BiCopCDF for tawn copulas used constants `u1` und `u2` 
     instead of arguments `u` and `v`.
 
-  * `RVineStructureSelect`: Adjust to new version of `igraph`. Tree structure was 
+  * `RVineStructureSelect`: Adjust to new version of igraph. Tree structure was 
     not selected correctly. igraph function names changed to the names used in
     the new version. Some small modifications to avoid some for loops and make 
     the code easier to read.
@@ -250,7 +250,7 @@ BUG FIXES
     the calculation was based on `RVM$par` and `RVM$par2`. This is corrected now.
     (reported by Marcel Duellmann; thanks)
     
-  * `RVineStructureSelect`: The new `igraph` version returned a different 
+  * `RVineStructureSelect`: The new igraph version returned a different 
     variable type causing an error in the second and higher order tree selection.
 
 
@@ -303,7 +303,7 @@ BUG FIXES
   * `BiCopPar2Tau`: corrected calculation of Kendall's tau of rotated BB7.
 (Reported by Giampiero Marra. Thanks!)
 
-  * `RVineStructureSelect`: Corrected code for the `igraph` package.
+  * `RVineStructureSelect`: Corrected code for the igraph package.
 
   * `RVineTreePlot`: Now a 3-dimensional R-vine can be plotted too.
 
@@ -327,7 +327,7 @@ NEW AUTHOR
 
 NEW FEATURES
 
-  * Changed dependency from `igraph0` to `igraph` since the support for `igraph0`
+  * Changed dependency from igraph0 to igraph since the support for igraph0
     will be quit soon.
 
   * Additional validity check of the R-vine matrix in `RVineMatrix` (Code
