@@ -1,0 +1,31 @@
+language: c
+sudo: required
+
+before_install:
+  - sudo apt-get install gsl-bin
+  - sudo apt-get install libgsl0-dbg
+  - sudo apt-get install libgsl0-dev
+  - sudo apt-get install libgsl0ldbl
+  - curl -OL https://raw.githubusercontent.com/metacran/r-builder/master/pkg-build.sh
+  - chmod 755 pkg-build.sh
+  - ./pkg-build.sh bootstrap
+
+install:
+  - ./pkg-build.sh install_deps
+
+script:
+  - ./pkg-build.sh run_tests
+
+after_failure:
+  - ./pkg-build.sh dump_logs
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+
+env:
+  matrix:
+    - RVERSION=oldrel
+    - RVERSION=release
+    - RVERSION=devel
