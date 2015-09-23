@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 
 
 Tools for bivariate exploratory data analysis, bivariate copula selection and
-(vine) tree construction are provided.Vine copula models can be estimated either
+(vine) tree construction are provided. Vine copula models can be estimated either
 sequentially or by joint maximum likelihood estimation. Sampling algorithms and 
 plotting methods are included. Data is assumed to lie in the unit hypercube 
 (so-called copula data).

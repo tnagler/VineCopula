@@ -64,7 +64,7 @@ VineCopula 1.6 (July 16, 2015)
 
 NEW FEATURES
 
-  * RVineTreePlot: option for a legend (and numbered nodes and edges).
+  * `RVineTreePlot`: option for a legend (and numbered nodes and edges).
 
 BUG FIXES
 
