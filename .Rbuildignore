@@ -1,0 +1,9 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^.*\.Rprofile$
+^README\.Rmd$
+^NEWS\.md$
+^\.travis\.yml$
+^appveyor\.yml$
+^cran-comments\.md$
+tests/other

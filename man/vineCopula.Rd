@@ -1,0 +1,31 @@
+\name{vineCopula}
+\alias{vineCopula}
+
+\title{Constructor of the Class \code{\linkS4class{vineCopula}}.}
+\description{Constructs an instance of the \code{\linkS4class{vineCopula}} class.}
+\usage{
+vineCopula(RVM, type = "CVine")
+}
+
+\arguments{
+  \item{RVM}{An object of class \code{RVineMatrix} generated from \code{\link{RVineMatrix}} in the package \code{\link{VineCopula-package}} or an integer (e.g. \code{4L}) defining the dimension (an independent C-vine of this dimension will be constructed).}
+  \item{type}{A predefined type if only the dimension is provided and ignored otherwise, the default is a canonical vine}
+}
+
+\value{An instance of the \code{\linkS4class{vineCopula}} class.}
+
+\references{Aas, K., C. Czado, A. Frigessi, and H. Bakken (2009). Pair-copula constructions of multiple dependence Insurance: Mathematics and Economics 44 (2), 182-198.}
+
+\author{Benedikt Graeler}
+
+\examples{
+# a C-vine of independent copulas
+vine <- vineCopula(4L, "CVine")
+
+library(copula)
+library(lattice)
+
+cloud(V1 ~ V2 + V3, as.data.frame(rCopula(500, vine)))
+}
+\keyword{ mulitvariate }
+\keyword{ distribution }

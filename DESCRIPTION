@@ -1,0 +1,46 @@
+Package: VineCopula
+Type: Package
+Title: Statistical Inference of Vine Copulas
+Version: 1.7
+Description: Tools for bivariate exploratory data analysis, bivariate copula
+    selection and (vine) tree construction are provided. Vine copula models can
+    be estimated either sequentially or by joint maximum likelihood estimation.
+    Sampling algorithms and plotting methods are included. Data is assumed to
+    lie in the unit hypercube (so-called copula data). For C- and D-vines links
+    to the package 'CDVine' are provided.
+Authors@R: c(
+    person("Ulf", "Schepsmeier", , "ulf.schepsmeier@tum.de", c("aut")),
+    person("Jakob", "Stoeber", , role = "aut"),
+    person("Eike", "Brechmann", "Christian", role = "aut"),
+    person("Benedikt", "Graeler", , role="aut"),
+    person("Thomas", "Nagler", , "thomas.nagler@tum.de", c("aut")),
+    person("Tobias", "Erhardt", , "tobias.erhardt@tum.de", c("aut", "cre")),
+    person("Carlos", "Almeida", , role="ctb"),
+    person("Aleksey", "Min", , role=c("ctb", "ths")),
+    person("Claudia", "Czado", , role=c("ctb", "ths")),
+    person("Mathias", "Hofmann", , role="ctb"),
+    person("Matthias", "Killiches", , role="ctb"),
+    person("Harry", "Joe", , role="ctb")
+    )
+Depends:
+    R (>= 2.11.0)
+Imports:
+    graphics,
+    grDevices,
+    stats,
+    utils,
+    MASS,
+    mvtnorm,
+    network,
+    methods,
+    copula,
+    ADGofTest,
+    lattice
+Suggests:
+    CDVine,
+    TS
+License: GPL (>= 2)
+LazyLoad: yes
+BugReports: https://github.com/tnagler/VineCopula/issues
+URL: https://github.com/tnagler/VineCopula
+

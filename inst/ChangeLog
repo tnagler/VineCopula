@@ -1,0 +1,188 @@
+Changes for R-package VineCopula
+
+Current authors: Ulf Schepsmeier, Thomas Nagler, Tobias Erhardt and Benedikt Graeler
+Former authors: Eike Brechmann and Jakob Stoeber
+Maintainer: Tobias Erhardt <tobias.erhardt@tum.de> and Thomas Nagler <thomas.nagler@tum.de>
+
+Version 1.7 (August 10, 2015)
+- Bug fix:
+  * The S4-class objets of the Tawn copulas pointed to Archimedean CDFs, now corrected to true CDFs based on c-code
+  * TauMatrix: restriction for input data to be in [0,1] removed
+  * RVineCopSelect: no printing of family-Matrix
+  * Added methods for Pickand's dependence function "A" for tawnT1Copula, surTawnT1Copula, tawnT2Copula and surTawnT2Copula
+  * use c-code instead of R-code for Tawn copulas, remove redundant c-code of Tawn copulas
+
+Version 1.6 (July 16, 2015)
+
+- Imports
+  * extend Imports to avoid undefined globals (CRAN E-mail 02.07.2015)
+  * new version reqiures igraph (>= 1.0.0)
+
+- Bug fix:
+  * Definition of "C" in BiCopCDF for tawn copulas used constants u1 und u2 instead of arguments u and v
+  * RVineStructureSelect: Adjust to new version of igraph. Tree structure was not selected correctly. igraph function names changed to the names used in the new version. Some small modifications to avoid some for loops and make the code easier to read.
+
+- New functionality:
+  * RVineTreePlot: option for a legend (and numbered nodes and edges)
+
+
+Version 1.5 (June 2, 2015)
+
+- New functionality:
+  * as.copuladata: coerce to class copuladata
+  * pairs.copuladata: pairs plots for objects of class copuladata
+  * RVinePDF: PDF of an R-Vine Copula Model
+  * BiCopSelect, RVineCopSelect, RVineStructureSelect: add option "rotations = TRUE" which augments the familyset with all rotations to a given family
+  * RVineMatrix, RVineStructureSelect: allow upper triangular matrices as input (output remains lower triangular)
+  * 'BiCop' objects for bivariate copulas:
+    . add constructor 'BiCop' and plotting generic 'plot.BiCop'
+    . define results of 'BiCopEst'/'BiCopSelect' as 'BiCop' objects
+    . add compatibility with other BiCopXyz functions (BiCopPDF, BiCopPar2Tau, etc.)
+
+- Bug fix:
+  * BiCopEst: extend search interval for Tawn MLE to avoid optim-errors
+  * BiCopEst: fix for optim error ('non-finite value supplied')
+  * RVineSim: reorder U so that it corresponds to the order of RVM
+  * RVineCor2pcor: include normalization step for a more intuitive behavior, bug fix for d = 2, 3 and d >= 10
+  * RVinePcor2cor: bug fixes for d=2 and d>9
+  * RVineCopSelect: RVM object now uses variable names as provided by data
+
+
+Version 1.4 (January 26, 2015)
+
+- New functionality:
+  * BiCopTau2Par and BiCopPar2Tau: fully vectorized (parameter/tau input), and sanity checks extendend. Before vector input was not prohibited. However, both functions were not intended to be used for vectorized input.
+
+
+Version 1.3-2 (January 19, 2015)
+
+- New author: Thomas Nagler
+
+- New functionality:
+  * Import/Export of function 'pobs' from 'copula' package
+
+- Bug fix:
+  * RVineStructureSelect: Bug concerning the dimensions of input data/security queries fixed (Reported by Sarka Cerna, Radek Solnicky and Ludovic Theate. Thanks a lot!)
+  * RVineStructureSelect: Correct handling of rotated BBs and Tawns (fit.ACopula, as.RVM)
+  * BiCopSelect, BiCopEst: Improved starting values for Tawn MLE
+  * hfunc.c: Correct Hfunc1 for Tawns;
+  * hfunc.c: Bound all results to lie in [0,1] (Hfunc1 and Hfunc2)
+  * hfunc.c: Extension of Hinv1 and Hinv2 in analogy to Hfunc1 and Hfunc2
+  * incompleteBeta.c: Misuse of the C function abs (as reported by CRAN) corrected to fabs
+  * gof_PIT.r: Use of 'require()' replaced by 'requireNamespace' according to 'Writing R Extensions'
+  * Package 'ADGofTest' removed from Suggests (see 'Writing R Extensions' for usage of Suggests)
+  * Import of function 'ad.test' from 'ADGofTest' for 'gof_PIT.r'
+
+
+Version 1.3-1 (September 10, 2014)
+
+- Bug fix:
+  * Bootstrap procedure for the White test (RVineGofTest, gof_White) was incorrect. (Reported by Piotr Zuraniewski and Daniel Worm. Thanks!)
+  * Bootstrap procedure for the PIT based and the ECP based test were incorrect. 
+    First, C starts to count at 0 not 1. This could result in zero entries in the bootstrapped data matrix.
+	Second, forget to permute vdirect and vindirect according to the permutation of data.
+  * BiCopSelect: For the rotated BB7 and BB8 (family=37, 38) the limiting cases were incorrect for very small parameters (copy&paste error) (Reported by Radek Solnicky. Thanks!)
+
+
+Version 1.3 (March 26, 2014)
+
+- Maintainer changed from Ulf Schepsmeier to Tobias Erhardt (tobias.erhardt@tum.de)
+
+
+Version 1.2-1 (March 21, 2014)
+
+- Moved copula from depends to the more appropriate import field
+- Added tests generated from example code
+
+
+Version 1.2-1 (March 4, 2014)
+
+- New functionality:
+  * RVineSim allows to commit a (N,d)-matrix of U[0,1] random variates to be transformed to the copula sample. 
+    For example if you want to use quasi random variables instead of the pseudo random variables implemented in R (Thanks to Marius Hofert)
+  * The package now contains class wrappers that are compatible with the copula class from the copula R-package. These include all bivariate families currently implemented: The class representation for different rotated families of e.g the BB6 family are represented as BB6Copula, r90B6Copula, surBB6Copula and r270BB6Copula. These bivariate classes are fully compatible with the standard copula methods such as dCopula, pCopula, rCopula or fitCopula including persp and contour. A vine copula can as well be coerced into a class representation of vineCopula. However, the support of the standard methods is limited. See the corresponding help pages for details. Earlier introduced R-wrapper of C-functions have been removed, as they are no longer needed by the spcopula R-package
+  * added parameter "verbose" to RVineLogLik to allow to suppres some debug output
+	
+- Bug fix:
+  * RVineMLE: the optim argument "parscale" was not correctly defined for all cases.
+  * RVineAIC/BIC: Instead of the function arguments "par" and "par2" the calculation was based on RVM$par and RVM$par2. 
+    This is corrected now. (reported by Marcel Duellmann; thanks)
+  * RVineStructureSelect: The new igraph version returned a different variable type causing an error in the second and higher order tree selection.
+  
+
+Version 1.2 (October 09, 2013)
+
+- New functionality:
+  * RVinePIT 		Calculation of the probability integral transform (PIT) for R-vines
+  * RVineGofTest 	15 different goodness-of-fit tests for R-vine copulas (Schepsmeier 2013).
+  * print.RVM		A more detailed summary is printed if print(RVM, detail=TRUE) is set.
+  * BetaMatrix  	Matrix of empirical Blomqvist's beta values
+  * BiCopPar2Beta   Blomqvist's beta value of a bivariate copula
+  * RVinePar2Beta   Blomqvist's beta values of an R-vine copula model
+  * RVineCor2pcor	correlations to partial correlations for R-vines
+  * RVinePcor2cor	partial correlations to correlations for R-vines
+  * New copula families for most of the BiCop as well as for the RVine-functions: As an asymmetric extension of the Gumbel copula, the Tawn copula with three parameters is now also included in the package.
+Both the Gumbel and the Tawn copula are extreme-value copulas, which can be defined in terms of their corresponding Pickands dependence functions.
+For simplicity, we implemented two versions of the Tawn copula with two parameters each.
+Each type has one of the asymmetry parameters fixed to 1, so that the corresponding Pickands dependence is either left- or right-skewed. In the manual we will call these two new copulas "Tawn type 1" and "Tawn type 2". 
+The families 104,114,124,134 denote the Tawn copula and their rotated versions in the case of left skewness (Tawn type 1).
+The families 204,214,224,234 denote the Tawn copula and their rotated versions in the case of right skewness (Tawn type 2).
+  
+- Bug fix:
+  * BiCopPar2Tau: corrected calculation of Kendall's tau of rotated BB7 (Reported by Giampiero Marra. Thanks!)
+  * RVineStructureSelect: Corrected code for the igraph package
+  * RVineTreePlot: Now a 3-dimensional R-vine can be plotted too.
+  * Corrected upper tail dependence coefficient for the survival BB1 copula (BiCopPar2TailDep)
+  * Minor improvement in BiCopSelect regarding the starting values for parameter estimation
+
+- Documentation update
+
+
+Version 1.1-2 (July 09, 2013)
+
+- Changed dependency from "igraph0" to "igraph" since the support for "igraph0" will be quit soon.
+
+- Additional validity check of the R-vine matrix in RVineMatrix (Code provided by Harry Joe)
+  Also available as separate function "RVineMatrixCheck"
+
+- New bivariate copula: Reflection asymmetric Archimedean copula
+  In our functions it is "family=41", and 51, 61, and 71 for the rotated versions.
+  So far only implemented in some bivariate functions (not documented so far; experimental)
+
+- New author: Benedikt Graeler  
+  
+- Bug fix:
+  * New (correct) examples for the Clarke and Vuong test
+  * Fixed memory problem in the C-function ktau (TauMatrix)
+  
+
+Version 1.1-1 (February 7, 2013)
+
+- Bug fix:
+  * Fixed issue with the inverse h-function of the Gumbel copula
+  
+
+Version 1.1 (February 4, 2013)
+
+- New functions:
+  * BiCopGofTest Goodness-of-fit test for bivariate copulas based on White's information matrix equality as introduced by Wanling and Prokhorov (2011).
+    The formally included function BiCopGofKendall is now part BiCopGofTest (method="kendall").
+
+- Additional edge label "pair" in RVineTreePlot to display the indices of the (conditioned) pairs of variables identified by the edges.
+
+- In RVineStructureSelect and RVineCopSelect a truncation level can be set.
+
+- Improved inverse h-functions for the Gumbel and Joe copulas (thanks to Harry Joe).
+
+- C to R wrapping functions for the h-functions (Hfunc1, Hfunc2), the bivariate log-likelihood function (LL_mod_seperate), the bivariate Archimedean copula CDF (archCDF)
+  and the simulation function for C- and D-vines (pcc) (request of Benedikt Graeler for the R-package "spcopula").
+  
+- The functions R2CVine and R2Dine were removed, since they were only correct in special cases.
+
+- Bug fixes:
+  * Work around for a problem with optim and the analytical gradient in BiCopEst
+  * Improvement of the bivariate maximum likelihood estimation (BiCopEst)
+  * In the functions BiCopCDF and BiCopGoFTest(..., method="Kendall") the t-copula is not implemented any more. 
+    The calculation of the CDF was incorrect for non-integer values of the degrees-of-freedom parameter.
+    The implemented algorithm in the mvtnorm package only works for integer values of the degrees-of-freedom parameter.
+  * Improvement in the calculation of the cdf of the Frank copula (BiCopCDF)
