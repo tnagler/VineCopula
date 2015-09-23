@@ -35,29 +35,29 @@ As an asymmetric extension of the Gumbel copula, the Tawn copula with three para
 
 The following table shows the parameter ranges of bivariate copula families with parameters `par` and `par2` and internal coding `family`:
 
-| Copula family                               | `family`     | `par`                         | `par2`           |
-|:--------------------------------------------|:-------------|:------------------------------|:-----------------|
-| Gaussian                                    | `1`          | \((-1,1)\)                    | -                |
-| Student t                                   | `2`          | \((-1,1)\)                    | \((2,\infty)\)   |
-| (Survival) Clayton                          | `3`, `13`    | \((0,\infty)\)                | -                |
-| Rotated Clayton (90 and 270 degrees)        | `23`, `33`   | \((-\infty,0)\)               | -                |
-| (Survival) Gumbel                           | `4`, `14`    | \([1,\infty)\)                | -                |
-| Rotated Gumbel (90 and 270 degrees)         | `24`, `34`   | \((-\infty,-1]\)              | -                |
-| Frank                                       | `5`          | \(\mathbb{R}\setminus \{0\}\) | -                |
-| (Survival) Joe                              | `6`, `16`    | \((1,\infty)\)                | -                |
-| Rotated Joe (90 and 270 degrees)            | `26`, `36`   | \((-\infty,-1)\)              | -                |
-| (Survival) Clayton-Gumbel (BB1)             | `7`, `17`    | \((0,\infty)\)                | \([1,\infty)\)   |
-| Rotated Clayton-Gumbel (90 and 270 degrees) | `27`, `37`   | \((-\infty,0)\)               | \((-\infty,-1]\) |
-| (Survival) Joe-Gumbel (BB6)                 | `8`, `18`    | \([1,\infty)\)                | \([1,\infty)\)   |
-| Rotated Joe-Gumbel (90 and 270 degrees)     | `28`, `38`   | \((-\infty,-1]\)              | \((-\infty,-1]\) |
-| (Survival) Joe-Clayton (BB7)                | `9`, `19`    | \([1,\infty)\)                | \((0,\infty)\)   |
-| Rotated Joe-Clayton (90 and 270 degrees)    | `29`, `39`   | \((-\infty,-1]\)              | \((-\infty,0)\)  |
-| (Survival) Joe-Frank (BB8)                  | `10`, `20`   | \([1,\infty)\)                | \((0,1]\)        |
-| Rotated Joe-Frank (90 and 270 degrees)      | `30`, `40`   | \((-\infty,-1]\)              | \([-1,0)\)       |
-| (Survival) Tawn type 1                      | `104`, `114` | \([1,\infty)\)                | \([0,1]\)        |
-| Rotated Tawn type 1(90 and 270 degrees)     | `124`, `134` | \((-\infty,-1]\)              | \([0,1]\)        |
-| (Survival) Tawn type 2                      | `204`, `214` | \([1,\infty)\)                | \([0,1]\)        |
-| Rotated Tawn type 2 (90 and 270 degrees)    | `224`, `234` | \((-\infty,-1]\)              | \([0,1]\)        |
+| Copula family                               | `family`     | `par`        | `par2`       |
+|:--------------------------------------------|:-------------|:-------------|:-------------|
+| Gaussian                                    | `1`          | `(-1, 1)`    | -            |
+| Student t                                   | `2`          | `(-1, 1)`    | `(2,Inf)`    |
+| (Survival) Clayton                          | `3`, `13`    | `(0, Inf)`   | -            |
+| Rotated Clayton (90 and 270 degrees)        | `23`, `33`   | `(-Inf, 0)`  | -            |
+| (Survival) Gumbel                           | `4`, `14`    | `[1, Inf)`   | -            |
+| Rotated Gumbel (90 and 270 degrees)         | `24`, `34`   | `(-Inf, -1]` | -            |
+| Frank                                       | `5`          | `R \ {0}`    | -            |
+| (Survival) Joe                              | `6`, `16`    | `(1, Inf)`   | -            |
+| Rotated Joe (90 and 270 degrees)            | `26`, `36`   | `(-Inf, -1)` | -            |
+| (Survival) Clayton-Gumbel (BB1)             | `7`, `17`    | `(0, Inf)`   | `[1, Inf)`   |
+| Rotated Clayton-Gumbel (90 and 270 degrees) | `27`, `37`   | `(-Inf, 0)`  | `(-Inf, -1]` |
+| (Survival) Joe-Gumbel (BB6)                 | `8`, `18`    | `[1 ,Inf)`   | `[1, Inf)`   |
+| Rotated Joe-Gumbel (90 and 270 degrees)     | `28`, `38`   | `(-Inf, -1]` | `(-Inf, -1]` |
+| (Survival) Joe-Clayton (BB7)                | `9`, `19`    | `[1, Inf)`   | `(0, Inf)`   |
+| Rotated Joe-Clayton (90 and 270 degrees)    | `29`, `39`   | `(-Inf, -1]` | `(-Inf, 0)`  |
+| (Survival) Joe-Frank (BB8)                  | `10`, `20`   | `[1, Inf)`   | `(0, 1]`     |
+| Rotated Joe-Frank (90 and 270 degrees)      | `30`, `40`   | `(-Inf, -1]` | `[-1, 0)`    |
+| (Survival) Tawn type 1                      | `104`, `114` | `[1, Inf)`   | `[0, 1]`     |
+| Rotated Tawn type 1(90 and 270 degrees)     | `124`, `134` | `(-Inf, -1]` | `[0, 1]`     |
+| (Survival) Tawn type 2                      | `204`, `214` | `[1, Inf)`   | `[0, 1]`     |
+| Rotated Tawn type 2 (90 and 270 degrees)    | `224`, `234` | `(-Inf, -1]` | `[0, 1]`     |
 
 ### R-vine copula models
 
