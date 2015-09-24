@@ -45,3 +45,4 @@ Temporary Items
 *.o
 .Rproj.user
 README.html
+*.dll
