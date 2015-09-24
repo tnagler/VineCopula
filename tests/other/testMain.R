@@ -1,16 +1,16 @@
 ##' Testsuite
-##' 
+##'
 ##' Tests for the VineCopula package
-##' 
+##'
 ##' @author Dr. Ulf Schepsmeier
-##' 
+##'
 
 ## Main function
 
 library(VineCopula)
 
-source("../tests/testRun.r")
-source("../tests/testCheck.r")
+source("tests/other/testRun.r")
+source("tests/other/testCheck.r")
 
 # BiCopPar2Tau
 results_BiCopPar2Tau <- testRunBiCopPar("BiCopPar2Tau")
@@ -59,11 +59,11 @@ system.time({
   results_BiCopCDF <- testRunBiCop("BiCopCDF")
 })
 ## Gauss alone
-#User      System verstrichen 
+#User      System verstrichen
 #93.73        0.00       94.22
 
 ## All families exept rotated ones, i.e. 11 families
-#User      System verstrichen 
+#User      System verstrichen
 #116.06        1.27      147.56
 
 ## But memory is at 2.5 GB for these 11 families!
