@@ -77,15 +77,31 @@ if(!all(check_BiCopCDF)){
 }
 
 
+
 # BiCopPDF
 system.time({
-  results_BiCopPDF <- testRunBiCop("BiCopPDF")
+    results_BiCopPDF <- testRunBiCop("BiCopPDF")
 })
 
 check_BiCopPDF <- testCheck3(results_BiCopPDF)
 if(!all(check_BiCopPDF)){
-  print(check_BiCopPDF)
+    print(check_BiCopPDF)
 } else {
-  rm(results_BiCopPDF)
-  gc()
+    rm(results_BiCopPDF)
+    gc()
+}
+
+
+
+# BiCopHfunc
+system.time({
+    results_BiCopHfunc <- testRunBiCop("BiCopHfunc")
+})
+
+check_BiCopHfunc <- testCheck3(results_BiCopHfunc)
+if(!all(check_BiCopHfunc)){
+    print(check_BiCopHfunc)
+} else {
+    rm(results_BiCopHfunc)
+    gc()
 }

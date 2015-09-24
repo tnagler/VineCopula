@@ -1,7 +1,7 @@
 ##' Testsuite - Run
-##' 
+##'
 ##' Run several tests for the BiCop-functions of the VineCopula-package
-##' 
+##'
 ##' @author Dr. Ulf Schepsmeier
 ##' @param FUN function name
 ##' @return results list of results for each family
@@ -15,19 +15,19 @@ testRunBiCopPar <- function(FUN){
   familyset <- c(1:10,13:20,23:30,33:40,104,114,124,134,204,214,224,234)
   #familyset <- c(1:10,13:20,23:30)
   familyset <- familyset[-which(familyset %in% c(15,25,35))]
-  
+
   if(FUN == "BiCopPar2Beta") familyset <- familyset[-which(familyset == 2)]
-  
+
   ## parameter sets
   parset3 <- seq(0, 0.999, 0.001)
   parset3a <- seq(1, 1.999, 0.001)
   parset1 <- c(parset3, seq(1, 10, 0.01))
   parset2 <- c(parset3a, seq(2, 10, 0.01))
   parset4 <- seq(0, 50, 1)
-  
+
   ## return the results in a list
   results <- list()
-  
+
   k <- 1
   for(fam in familyset){  # run over all families
     ## set the correct parameter set
@@ -67,11 +67,11 @@ testRunBiCopPar <- function(FUN){
       par <- parset2
       par2 <- parset3
     }
-    
+
     ## length of results (depending on the parameter set)
     n1 <- ifelse(is.null(dim(res)), length(res), nrow(res))
     n2 <- ifelse(is.null(dim(res)), 0, ncol(res))
-    
+
     ## for BiCopPar2TailDep double res
     if(FUN == "BiCopPar2TailDep"){
       if(n2 == 0){
@@ -80,7 +80,7 @@ testRunBiCopPar <- function(FUN){
         res <- rbind(res, res)
       }
     }
-    
+
     ## for rotated copulas switch sign
     if(fam > 20 && fam < 100){
       par <- -par
@@ -88,7 +88,7 @@ testRunBiCopPar <- function(FUN){
     } else if(fam %in% c(124,134,224,234)){
       par <- -par
     }
-    
+
     for(i in 1:n1){
       if(n2 == 0){
         if(FUN == "BiCopPar2TailDep"){
@@ -110,15 +110,15 @@ testRunBiCopPar <- function(FUN){
         }
       }
     }
-    
+
     ## save the results and give it the name of teh family
     results[[k]] <- res
     names(results)[[k]] <- as.character(fam)
-    
+
     k <- k+1
-    
+
   } # end familyset
-  
+
   return(results)
 }
 
@@ -128,14 +128,14 @@ testRunBiCopPar <- function(FUN){
 testRunBiCopTau <- function(FUN){
   ## familyset
   familyset <- c(1:6, 13,14,16,23,24,26,33,34,36)
-  
+
   ## tau
   tauset <- seq(0.001, 0.999, 0.001)
   ntauset <- -tauset
-  
+
   ## return the results in a list
   results <- list()
-  
+
   k <- 1
   for(fam in familyset){  # run over all families
     if(fam %in% c(1,2,5)){
@@ -145,17 +145,17 @@ testRunBiCopTau <- function(FUN){
     } else {
       tau <- ntauset[length(ntauset):1]
     }
-    
+
     res <- do.call(what=FUN, args=list(family=fam, tau=tau))  # vectorized function
-    
+
     ## save the results and give it the name of teh family
     results[[k]] <- res
     names(results)[[k]] <- as.character(fam)
-    
+
     k <- k+1
-    
+
   } # end familyset
-  
+
   return(results)
 }
 
@@ -166,23 +166,23 @@ testRunBiCop <- function(FUN){
   #familyset <- c(1:10,13:20,23:30,33:40,104,114,124,134,204,214,224,234)
   familyset <- c(1:10, 104, 204)
   #familyset <- familyset[-which(familyset %in% c(15,25,35))]
-  
+
   if(FUN == "BiCopCDF") familyset <- familyset[-which(familyset == 2)]
-  
+
   ## parameter sets
   parset3 <- seq(0, 0.99, 0.01)
   parset3a <- seq(1, 1.99, 0.01)
   parset1 <- c(parset3, seq(1, 10, 0.25))
   parset2 <- c(parset3a, seq(2, 10, 0.25))
   parset4 <- seq(2, 30, 2)
-  
+
   ## copula data
   u1 <- c(seq(0.001,0.01,0.002), seq(0.01,0.99,0.02), seq(0.99,0.999,0.002))
   u2 <- u1
-  
+
   ## return the results in a list
   results <- list()
-  
+
   k <- 1
   for(fam in familyset){  # run over all families
     ## set the correct parameter set
@@ -222,11 +222,11 @@ testRunBiCop <- function(FUN){
       par <- parset2
       par2 <- parset3
     }
-    
+
     ## length of results (depending on the parameter set)
     n1 <- dim(res)[1]
     n2 <- ifelse(length(dim(res))==4, dim(res)[2], 0)
-    
+
     ## for rotated copulas switch sign
     if(fam > 20 && fam < 100){
       par <- -par
@@ -234,7 +234,7 @@ testRunBiCop <- function(FUN){
     } else if(fam %in% c(124,134,224,234)){
       par <- -par
     }
-    
+
     ## for loops are not the best
     iu <- 1
     for(u in u1){
@@ -242,11 +242,25 @@ testRunBiCop <- function(FUN){
       #for(v in u2){
       uu <- rep(u,length(u2))
         for(i in 1:n1){
-          if(n2 == 0){
-            res[i,iu,] <- do.call(what=FUN, args=list(u1=uu, u2=u2, family=fam, par=par[i], par2=0, check.pars=FALSE))
-          } else {
+            if(n2 == 0){
+              if(FUN == "BiCopHfunc"){
+                  ## At the moment just test hfunc1
+                  res[i,iu,] <- do.call(what=FUN,
+                                        args=list(u1=uu, u2=u2, family=fam, par=par[i],
+                                                  par2=0, check.pars=FALSE))$hfunc1
+              } else {
+                res[i,iu,] <- do.call(what=FUN, args=list(u1=uu, u2=u2, family=fam, par=par[i], par2=0, check.pars=FALSE))
+              }
+            } else {
             for(j in n2){
-              res[i,j,iu,] <- do.call(what=FUN, args=list(u1=uu, u2=u2, family=fam, par=par[i], par2=par2[j], check.pars=FALSE))
+                if(FUN == "BiCopHfunc"){
+                    ## At the moment just test hfunc1
+                    res[i,j,iu,] <- do.call(what=FUN,
+                                          args=list(u1=uu, u2=u2, family=fam, par=par[i],
+                                                    par2=0, check.pars=FALSE))$hfunc1
+                } else {
+                    res[i,j,iu,] <- do.call(what=FUN, args=list(u1=uu, u2=u2, family=fam, par=par[i], par2=par2[j], check.pars=FALSE))
+                }
             }
           }
         }
@@ -254,17 +268,17 @@ testRunBiCop <- function(FUN){
       #}
       iu <- iu + 1
     }
-    
-    
-    
+
+
+
     ## save the results and give it the name of teh family
     results[[k]] <- res
     names(results)[[k]] <- as.character(fam)
-    
+
     k <- k+1
-    
+
   } # end familyset
-  
+
   return(results)
-  
+
 }
