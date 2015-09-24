@@ -9,18 +9,18 @@ Description: Tools for bivariate exploratory data analysis, bivariate copula
     lie in the unit hypercube (so-called copula data). For C- and D-vines links
     to the package 'CDVine' are provided.
 Authors@R: c(
-    person("Ulf", "Schepsmeier", , "ulf.schepsmeier@tum.de", c("aut")),
-    person("Jakob", "Stoeber", , role = "aut"),
-    person("Eike", "Brechmann", "Christian", role = "aut"),
-    person("Benedikt", "Graeler", , role="aut"),
-    person("Thomas", "Nagler", , "thomas.nagler@tum.de", c("aut", "cre")),
-    person("Tobias", "Erhardt", , "tobias.erhardt@tum.de", c("aut")),
-    person("Carlos", "Almeida", , role="ctb"),
-    person("Aleksey", "Min", , role=c("ctb", "ths")),
-    person("Claudia", "Czado", , role=c("ctb", "ths")),
-    person("Mathias", "Hofmann", , role="ctb"),
-    person("Matthias", "Killiches", , role="ctb"),
-    person("Harry", "Joe", , role="ctb")
+    person("Ulf", "Schepsmeier",, "ulf.schepsmeier@tum.de", role = "aut"),
+    person("Jakob", "Stoeber",, role = "aut"),
+    person("Eike Christian", "Brechmann",, role = "aut"),
+    person("Benedikt", "Graeler",, role = "aut"),
+    person("Thomas", "Nagler",, "thomas.nagler@tum.de", role = c("aut", "cre")),
+    person("Tobias", "Erhardt",, "tobias.erhardt@tum.de", role = "aut"),
+    person("Carlos", "Almeida",, role = "ctb"),
+    person("Aleksey", "Min",, role = c("ctb", "ths")),
+    person("Claudia", "Czado",, role = c("ctb", "ths")),
+    person("Mathias", "Hofmann",, role = "ctb"),
+    person("Matthias", "Killiches",, role = "ctb"),
+    person("Harry", "Joe",, role = "ctb")
     )
 Depends:
     R (>= 2.11.0)
