@@ -1,6 +1,10 @@
 VineCopula 2.0.0 (ongoing)
 ----------------------------------------------------------------
 
+MAINTAINER
+
+ * changed from Tobias Erhardt to Thomas Nagler (thomas.nagler@tum.de).
+
 DEPENDS
 
   * igraph has been removed from `Imports`.
