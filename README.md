@@ -74,6 +74,7 @@ The specification of an R-vine is done in matrix notation, introduced by Dissman
 
 -------------------------------
 Associated shiny apps
+----------------
 
 ### Copulatheque
 This small shiny app illustrates a couple of bivariate copula families implemented in the [copula](http://cran.r-project.org/web/packages/copula/index.html), [VineCopula](http://cran.r-project.org/web/packages/VineCopula/index.html) and [spcopula](http://r-forge.r-project.org/projects/spcopula/) R packages. Density and pairs plots are drawn as well as Kendall's tau and tail dependence coefficients.
@@ -88,8 +89,6 @@ The page is still under construction.
 Author: Ulf Schepsmeier
 
 https://rvinegraph.shinyapps.io/rvinegraph
-
--------------------
 
 ------------------------------------------------------------------------
 
