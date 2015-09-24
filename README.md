@@ -4,6 +4,8 @@ VineCopula
 
 > Statistical inference of vine copulas
 
+[![Build status Linux](https://travis-ci.org/tnagler/VineCopula.svg?branch=master)](https://travis-ci.org/tnagler/VineCopula)
+[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/tnagler/VineCopula?svg=true)](https://ci.appveyor.com/project/tnagler/VineCopula)
 [![CRAN version](http://www.r-pkg.org/badges/version/VineCopula)](https://cran.r-project.org/web/packages/VineCopula/index.html) [![CRAN downloads](http://cranlogs.r-pkg.org/badges/VineCopula)](https://cran.r-project.org/web/packages/VineCopula/index.html)
 
 This package is made primarily for the statistical analysis with **vine copula** models.
