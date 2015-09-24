@@ -1,3 +1,102 @@
+#' Parameter of a Bivariate Copula for a given Kendall's Tau Value
+#' 
+#' This function computes the parameter of a (one parameter) bivariate copula
+#' for a given value of Kendall's tau.
+#' 
+#' 
+#' @param family integer; single number or vector of size \code{m}; defines the
+#' bivariate copula family: \cr \code{0} = independence copula \cr \code{1} =
+#' Gaussian copula \cr \code{2} = Student t copula (Here only the first
+#' parameter can be computed) \cr \code{3} = Clayton copula \cr \code{4} =
+#' Gumbel copula \cr \code{5} = Frank copula \cr \code{6} = Joe copula \cr
+#' \code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
+#' \code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+#' \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr \code{23}
+#' = rotated Clayton copula (90 degrees) \cr \code{24} = rotated Gumbel copula
+#' (90 degrees) \cr \code{26} = rotated Joe copula (90 degrees) \cr \code{33} =
+#' rotated Clayton copula (270 degrees) \cr \code{34} = rotated Gumbel copula
+#' (270 degrees) \cr \code{36} = rotated Joe copula (270 degrees)\cr Note that
+#' (with exception of the t-copula) two parameter bivariate copula families
+#' cannot be used.
+#' @param tau numeric; single number or vector of size \code{m}; Kendall's tau
+#' value (vector with elements in [-1,1]).
+#' @param check.taus logical; default is \code{TRUE}; if \code{FALSE}, checks
+#' for family/tau-consistency are ommited (should only be used with care).
+#' @return Parameter (vector) corresponding to the bivariate copula family and
+#' the value(s) of Kendall's tau (\eqn{\tau}). \tabular{ll}{ No.
+#' (\code{family}) \tab Parameter (\code{par}) \cr \code{1, 2} \tab
+#' \eqn{\sin(\tau \frac{\pi}{2})}{sin(\tau \pi/2)} \cr \code{3, 13} \tab
+#' \eqn{2\frac{\tau}{1-\tau}}{2\tau/(1-\tau)} \cr \code{4, 14} \tab
+#' \eqn{\frac{1}{1-\tau}}{1/(1-\tau)} \cr \code{5} \tab no closed form
+#' expression (numerical inversion) \cr \code{6, 16} \tab no closed form
+#' expression (numerical inversion) \cr \code{23, 33} \tab
+#' \eqn{2\frac{\tau}{1+\tau}}{2\tau/(1+\tau)} \cr \code{24, 34} \tab
+#' \eqn{-\frac{1}{1+\tau}}{-1/(1+\tau)} \cr \code{26, 36} \tab no closed form
+#' expression (numerical inversion) }
+#' @author Jakob Stoeber, Eike Brechmann, Tobias Erhardt
+#' @seealso \code{\link{BiCopPar2Tau}}
+#' @references Joe, H. (1997). Multivariate Models and Dependence Concepts.
+#' Chapman and Hall, London.
+#' 
+#' Czado, C., U. Schepsmeier, and A. Min (2012). Maximum likelihood estimation
+#' of mixed C-vines with application to exchange rates. Statistical Modelling,
+#' 12(3), 229-255.
+#' @examples
+#' 
+#' ## Example 1: Gaussian copula
+#' tau0 <- 0.5
+#' rho <- BiCopTau2Par(family = 1, tau = tau0)
+#' 
+#' # transform back
+#' tau <- BiCopPar2Tau(family = 1, par = rho)
+#' tau - 2/pi*asin(rho)
+#' 
+#' 
+#' ## Example 2: Clayton copula
+#' theta <- BiCopTau2Par(family = 3, tau = c(0.4, 0.5, 0.6))
+#' BiCopPar2Tau(family = 3, par = theta)
+#' 
+#' 
+#' ## Example 3:
+#' vtau <- seq(from = 0.1, to = 0.8, length.out = 100)
+#' thetaC <- BiCopTau2Par(family = 3, tau = vtau)
+#' thetaG <- BiCopTau2Par(family = 4, tau = vtau)
+#' thetaF <- BiCopTau2Par(family = 5, tau = vtau)
+#' thetaJ <- BiCopTau2Par(family = 6, tau = vtau)
+#' plot(thetaC ~ vtau, type = "l", ylim = range(thetaF))
+#' lines(thetaG ~ vtau, col = 2)
+#' lines(thetaF ~ vtau, col = 3)
+#' lines(thetaJ ~ vtau, col = 4)
+#' 
+#' \dontshow{
+#' # Test BiCopTau2Par
+#' BiCopTau2Par(family = 0, tau = c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 1, tau = c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 2, tau = c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 3, tau = c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 4, tau = c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 5, tau = c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 6, tau = c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 13, tau = c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 14, tau = c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 16, tau = c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 23, tau = -c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 24, tau = -c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 26, tau = -c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 33, tau = -c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 34, tau = -c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 36, tau = -c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 41, tau = c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 51, tau = c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 61, tau = c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 71, tau = c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 41, tau = -c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 51, tau = -c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 61, tau = -c(0.4,0.5,0.6))
+#' BiCopTau2Par(family = 71, tau = -c(0.4,0.5,0.6))
+#' }
+#' 
+#' @export BiCopTau2Par
 BiCopTau2Par <- function(family, tau, check.taus = TRUE) {
     ## sanity check
     if (any(abs(tau) > 0.99999))

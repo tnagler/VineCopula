@@ -1,3 +1,41 @@
+#' Plotting tools for BiCop objects
+#' 
+#' There are several options for plotting BiCop objects. The density of a
+#' bivariate copula density can be visualized as surface/perspective or contour
+#' plot. Optionally, the density can be coupled with standard normal margins
+#' (default for contour plots). Furthermore, a lambda-plot is available (c.f.
+#' \code{\link{BiCopLambda}}).
+#' 
+#' 
+#' @aliases plot.BiCop contour.BiCop
+#' @param x \code{BiCop object.}
+#' @param type plot type; either \code{"surface"}, \code{"contour"}, or
+#' \code{"lambda"} (partial matching is activated); the latter is only
+#' implemented for a few families (c.f., \code{\link{BiCopLambda}}).
+#' @param margins only relevant for types \code{"contour"} and
+#' \code{"surface"}; either \code{"unif"} for the original copula density or
+#' \code{"norm"} for the transformed density with standard normal margins
+#' (partial matching is activated). Default is \code{"norm"} for \code{type =
+#' "contour"}, and \code{"unif"} for \code{type = "surface"}.
+#' @param size integer; only relevant for types \code{"contour"} and
+#' \code{"surface"}; the plot is based on values on a \eqn{size x size} grid;
+#' default is 100 for \code{type = "contour"}, and 25 for \code{type =
+#' "surface"}.
+#' @param \dots optional arguments passed to \code{\link{contour}} or
+#' \code{\link{wireframe}}.
+#' @author Thomas Nagler
+#' @seealso \code{\link{BiCop}}, \code{\link{contour}}, \code{\link{wireframe}}
+#' @keywords plot
+#' @examples
+#' 
+#' ## construct BiCop object for a Tawn copula
+#' obj <- BiCop(family = 104, par = 2.5, par2 = 0.4)
+#' 
+#' ## plots
+#' plot(obj)  # surface plot of copula density 
+#' contour(obj)  # contour plot with standard normal margins
+#' contour(obj, margins = "unif")  # contour plot of copula density
+#' 
 plot.BiCop <- function(x, type = "surface", margins, size, ...) {    
     ## partial matching and sanity check for type
     stopifnot(class(type) == "character")

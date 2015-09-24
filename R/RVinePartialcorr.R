@@ -31,6 +31,55 @@ partcor <- function(S, given, j, k) {
 # param: cor, correlation matrix
 # param: RVM, RVineMatrix defining the strucutre of the RVine
 
+
+
+#' (Partial) Correlations for R-Vine Copula Models
+#' 
+#' Correlations to partial correlations and vice versa for R-vines with
+#' independence, Gaussian and t-copulas.
+#' 
+#' 
+#' @aliases RVinePcor2cor RVineCor2pcor
+#' @param RVM \code{\link{RVineMatrix}} defining only the R-vine structure for
+#' \code{Cor2pcor} and providing as well the partial correlations for
+#' \code{Pcor2cor}.
+#' @param corMat correlation matrix
+#' @return \item{RVM}{RVineMatrix with transformed partial correlations (for
+#' \code{Cor2pcor})} \item{cor}{correlation matrix (for \code{Pcor2cor})}
+#' @note The behavior of \code{RVinePcor2ccor} differs from older versions (<=
+#' 1.4). The RVM object is now normalized such that the order of the returned
+#' correlation matrix conforms with the correlation matrix of the data. If
+#' \code{RVM$names} are non-default, the initial ordering of the variables
+#' cannot be traced back and the matrix has to be interpreted as inidicated by
+#' the row- and column names.
+#' @keywords vine partial correlation
+#' @examples
+#' 
+#' ## create RVineMatrix-object for Gaussian vine
+#' Matrix <- matrix(c(1, 3, 4, 2, 
+#'                    0, 3, 4, 2,
+#'                    0, 0, 4, 2, 
+#'                    0, 0, 0, 2), 4, 4)
+#' family <- matrix(c(0, 1, 1, 1, 
+#'                    0, 0, 1, 1,
+#'                    0, 0, 0, 1, 
+#'                    0, 0, 0, 0), 4, 4)
+#' par <- matrix(c(0, 0.2,   0, 0.6, 
+#'                 0,   0, 0.2, 0.6,
+#'                 0,   0,   0, 0.6, 
+#'                 0,   0,   0,   0), 4, 4)
+#' RVM <- RVineMatrix(Matrix, family, par)
+#' 
+#' ## calculate correlation matrix corresponding to the R-Vine model
+#' newcor <- RVinePcor2cor(RVM)
+#' 
+#' ## transform back to partial correlations
+#' RVineCor2pcor(RVM, newcor)$par
+#' 
+#' ## check if they are equal
+#' all.equal(RVM$par, RVineCor2pcor(RVM, newcor)$par)
+#' 
+#' @export RVineCor2pcor
 RVineCor2pcor <- function(RVM, corMat) {
     d <- nrow(corMat)
     stopifnot(d == nrow(RVM$Matrix))
