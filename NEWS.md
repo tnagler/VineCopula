@@ -159,11 +159,11 @@ BUG FIXES
 
   * `hfunc.c`: 
 
-  * Correct `Hfunc1` for Tawns.
+    * Correct `Hfunc1` for Tawns.
 
-  * Bound all results to lie in [0,1] (`Hfunc1` and `Hfunc2`)
+    * Bound all results to lie in [0,1] (`Hfunc1` and `Hfunc2`)
 
-  * Extension of `Hinv1` and `Hinv2` in analogy to `Hfunc1` and `Hfunc2`.
+    * Extension of `Hinv1` and `Hinv2` in analogy to `Hfunc1` and `Hfunc2`.
 
   * `incompleteBeta.c`: Misuse of the C function abs (as reported by CRAN)
     corrected to `fabs`.
@@ -171,7 +171,7 @@ BUG FIXES
   * `gof_PIT.R`: Use of `require()` replaced by `requireNamespace` according to +
     'Writing R Extensions'.
 
-    * Package `ADGofTest` removed from `Suggests` (see 'Writing R Extensions' 
+  * Package `ADGofTest` removed from `Suggests` (see 'Writing R Extensions' 
     for usage of Suggests).
 
   * Import of function `ad.test` from `ADGofTest` for `gof_PIT.R`.
