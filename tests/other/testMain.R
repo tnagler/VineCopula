@@ -105,3 +105,17 @@ if(!all(check_BiCopHfunc)){
     rm(results_BiCopHfunc)
     gc()
 }
+
+
+# BiCopHinv
+system.time({
+    results_BiCopHinv <- testRunBiCop("BiCopHinv")
+})
+
+check_BiCopHinv <- testCheck3(results_BiCopHinv)
+if(!all(check_BiCopHinv)){
+    print(check_BiCopHinv)
+} else {
+    rm(results_BiCopHinv)
+    gc()
+}

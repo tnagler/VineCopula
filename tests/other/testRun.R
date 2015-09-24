@@ -243,21 +243,21 @@ testRunBiCop <- function(FUN){
       uu <- rep(u,length(u2))
         for(i in 1:n1){
             if(n2 == 0){
-              if(FUN == "BiCopHfunc"){
+              if(FUN %in% c("BiCopHfunc", "BiCopHinv")){
                   ## At the moment just test hfunc1
                   res[i,iu,] <- do.call(what=FUN,
                                         args=list(u1=uu, u2=u2, family=fam, par=par[i],
-                                                  par2=0, check.pars=FALSE))$hfunc1
+                                                  par2=0, check.pars=FALSE))[[1]]
               } else {
                 res[i,iu,] <- do.call(what=FUN, args=list(u1=uu, u2=u2, family=fam, par=par[i], par2=0, check.pars=FALSE))
               }
             } else {
             for(j in n2){
-                if(FUN == "BiCopHfunc"){
+                if(FUN %in% c("BiCopHfunc", "BiCopHinv")){
                     ## At the moment just test hfunc1
                     res[i,j,iu,] <- do.call(what=FUN,
                                           args=list(u1=uu, u2=u2, family=fam, par=par[i],
-                                                    par2=0, check.pars=FALSE))$hfunc1
+                                                    par2=0, check.pars=FALSE))[[1]]
                 } else {
                     res[i,j,iu,] <- do.call(what=FUN, args=list(u1=uu, u2=u2, family=fam, par=par[i], par2=par2[j], check.pars=FALSE))
                 }
