@@ -6,13 +6,13 @@ VineCopula
 
 [![CRAN version](http://www.r-pkg.org/badges/version/VineCopula)](https://cran.r-project.org/web/packages/VineCopula/index.html) [![CRAN downloads](http://cranlogs.r-pkg.org/badges/VineCopula)](https://cran.r-project.org/web/packages/VineCopula/index.html)
 
-This package is made primarily for the statistical analysis with *vine copula* models.
+This package is made primarily for the statistical analysis with **vine copula** models.
 Vine copulas are a flexible class of dependence models consisting of bivariate building blocks.
 
 The package includes model selection, model verification via goodness-of-fit tests, parameter estimation, simulation and visualization tools.
 Vine copula models can be estimated either sequentially or by joint maximum likelihood estimation. Sampling algorithms and plotting methods are included.
 
-Tools for bivariate exploratory data analysis, *bivariate copula* selection and estimation are also provided. 
+Tools for bivariate exploratory data analysis, **bivariate copula** selection and estimation are also provided. 
 
 For all functions data is assumed to lie in the unit hypercube (so-called copula data).
 
@@ -69,7 +69,7 @@ The following table shows the parameter ranges of bivariate copula families with
 
 ### R-vine copula models
 
-The specification of an R-vine is done in matrix notation, introduced by Dissmann et al. (2013). One matrix contains the R-vine tree structure, one the copula families utilized and two matrices corresponding parameter values. These four matrices are stored in an `RVineMatrix` object created by the function `RVineMatrix`. Each matrix is a d x d lower triangular matrix. Since C- and D-vines are special cases, boundary cases, of R-vines one can write each C- or D-vine in R-vine notation. The transformation of notation to an R-vine can be done via `C2RVine` and `D2RVine`, which provide an interface to the package *CDVine* (https://cran.r-project.org/package=CDVine). For more details see the documentation of the functions.
+The specification of an R-vine is done in matrix notation, introduced by Dissmann et al. (2013). One matrix contains the R-vine tree structure, one the copula families utilized and two matrices corresponding parameter values. These four matrices are stored in an `RVineMatrix` object created by the function `RVineMatrix`. Each matrix is a d x d lower triangular matrix. Since C- and D-vines are special cases, boundary cases, of R-vines one can write each C- or D-vine in R-vine notation. The transformation of notation to an R-vine can be done via `C2RVine` and `D2RVine`, which provide an interface to the package **CDVine** (https://cran.r-project.org/package=CDVine). For more details see the documentation of the functions.
 
 ------------------------------------------------------------------------
 
