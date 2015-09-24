@@ -201,7 +201,7 @@ VineCopula 1.3 (March 26, 2014)
 
 MAINTAINER
 
-  changed from Ulf Schepsmeier to Tobias Erhardt (tobias.erhardt@tum.de).
+ * changed from Ulf Schepsmeier to Tobias Erhardt (tobias.erhardt@tum.de).
 
 
 VineCopula 1.2-1 (March 21, 2014)
