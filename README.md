@@ -71,6 +71,26 @@ The following table shows the parameter ranges of bivariate copula families with
 
 The specification of an R-vine is done in matrix notation, introduced by Dissmann et al. (2013). One matrix contains the R-vine tree structure, one the copula families utilized and two matrices corresponding parameter values. These four matrices are stored in an `RVineMatrix` object created by the function `RVineMatrix`. Each matrix is a d x d lower triangular matrix. Since C- and D-vines are special cases, boundary cases, of R-vines one can write each C- or D-vine in R-vine notation. The transformation of notation to an R-vine can be done via `C2RVine` and `D2RVine`, which provide an interface to the package **CDVine** (https://cran.r-project.org/package=CDVine). For more details see the documentation of the functions.
 
+
+-------------------------------
+Associated shiny apps
+
+### Copulatheque
+This small shiny app illustrates a couple of bivariate copula families implemented in the [copula](http://cran.r-project.org/web/packages/copula/index.html), [VineCopula](http://cran.r-project.org/web/packages/VineCopula/index.html) and [spcopula](http://r-forge.r-project.org/projects/spcopula/) R packages. Density and pairs plots are drawn as well as Kendall's tau and tail dependence coefficients.
+This side and script is provided by Benedikt Gräler (Universtity of Münster) 
+
+http://ifgi.uni-muenster.de/~b_grae02/indexCopulatheque.html
+
+
+### rvinegraph
+This small shiny app enables the user to draw nice tree plots of his R-Vine copula model using the package [d3Network](https://cran.r-project.org/package=d3Network).
+The page is still under construction.
+Author: Ulf Schepsmeier
+
+https://rvinegraph.shinyapps.io/rvinegraph
+
+-------------------
+
 ------------------------------------------------------------------------
 
 References
