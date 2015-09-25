@@ -51,6 +51,8 @@
 #' \code{family = 2}.
 #' @param tau numeric; value of Kendall's tau; has to lie in the interval
 #' (-1, 1). If \code{tau} is provided, \code{par} will be ignored.
+#' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
+#' for family/parameter-consistency are ommited (should only be used with
 #'
 #' @return An object of class \code{\link{BiCop}}. Objects of this class are
 #' also returned by the \code{\link{BiCopEst}} and \code{\link{BiCopSelect}}
@@ -76,18 +78,23 @@
 #' BiCopPDF(0.5, 0.5, obj) # evaluate density in (0.5,0.5)
 #' plot(obj)  # normal contour plot
 #'
-BiCop <- function(family, par, par2 = 0, tau = NULL) {
+BiCop <- function(family, par, par2 = 0, tau = NULL, check.pars = TRUE) {
     ## use tau to construct object (if provided)
     if (!is.null(tau))
         par <- BiCopTau2Par(family, tau)
+    stopifnot(is.logical(check.pars))
 
     ## family/parameter consistency checks
-    BiCopCheck(family, par, par2)
-    if ((family %% 10 %in% c(0, 1, 3, 4, 5, 6)) && (par2 != 0)) {
-        txt <- paste0("The ",
-                      BiCopName(family, short = FALSE),
-                      " copula has only one parameter; 'par2' is useless.")
-        warning(txt)
+    if (check.pars) {
+        # check for consistency
+        BiCopCheck(family, par, par2)
+        # warn if par2 is unused
+        if ((family %% 10 %in% c(0, 1, 3, 4, 5, 6)) && (par2 != 0)) {
+            txt <- paste0("The ",
+                          BiCopName(family, short = FALSE),
+                          " copula has only one parameter; 'par2' is useless.")
+            warning(txt)
+        }
     }
 
     # calculate dependence measures
@@ -150,7 +157,7 @@ summary.BiCop <- function(object, ...) {
 
 
     ## show dependence measures
-#     object$rho <- BiCopPar2Rho(object)
+    #     object$rho <- BiCopPar2Rho(object)
     ms <- data.frame(tau = object$tau,
                      utd = object$taildep$upper,
                      ltd = object$taildep$lower,
