@@ -37,8 +37,7 @@
 #' \code{39} = rotated BB7 copula (270 degrees) \cr
 #' \code{40} = rotated BB8 copula (270 degrees) \cr
 #' \code{104} = Tawn type 1 copula \cr
-#' \code{114} = rotated Tawn type 1 copula
-#' (180 degrees) \cr
+#' \code{114} = rotated Tawn type 1 copula (180 degrees) \cr
 #' \code{124} = rotated Tawn type 1 copula (90 degrees) \cr
 #' \code{134} = rotated Tawn type 1 copula (270 degrees) \cr
 #' \code{204} = Tawn type 2 copula \cr
