@@ -120,12 +120,9 @@ print.BiCop <- function(x, ...) {
 
 summary.BiCop <- function(object, ...) {
     ## print family name
-    cat("Copula family:       ",
-        object$familyname,
-        " (family = ",
-        object$family,
-        ")",
-        sep = "")
+    cat("Family name:        ", object$familyname)
+    cat("\n")
+    cat("Family number:      ", object$family)
     cat("\n")
     cat("\n")
 
