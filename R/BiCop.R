@@ -98,9 +98,9 @@ BiCop <- function(family, par, par2 = 0, tau = NULL) {
                 par        = par,
                 par2       = par2,
                 familyname = familyname,
-                measures   = list(tau     = tau,
-                                  beta    = beta,
-                                  taildep = taildep))
+                tau     = tau,
+                beta    = beta,
+                taildep = taildep)
     class(out) <- "BiCop"
     out
 }
@@ -122,10 +122,10 @@ summary.BiCop <- function(object, ...) {
     cat("\n")
 
     ## show dependence measures as table
-    ms <- c(tau = object$measures$tau,
-            bet = object$measures$beta,
-            utd = object$measures$taildep$upper,
-            ltd = object$measures$taildep$lower)
+    ms <- c(tau = object$tau,
+            bet = object$beta,
+            utd = object$taildep$upper,
+            ltd = object$taildep$lower)
     names(ms) <- c("Kendall's tau",
                    "Blomqvist's beta",
                    "Upper TD",
