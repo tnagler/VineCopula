@@ -1,11 +1,11 @@
 #' R-Vine Copula Model in Matrix Notation
-#' 
+#'
 #' This function creates an \code{\link{RVineMatrix}} object which encodes an
 #' R-vine copula model. It contains the matrix identifying the R-vine tree
 #' structure, the matrix identifying the copula families utilized and two
 #' matrices for corresponding parameter values.
-#' 
-#' 
+#'
+#'
 #' @param Matrix Lower (or upper) triangular d x d matrix that defines the
 #' R-vine tree structure.
 #' @param family Lower (or upper) triangular d x d matrix with zero diagonal
@@ -71,7 +71,7 @@
 #' (2013). Selecting and estimating regular vine copulae and application to
 #' financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 #' @examples
-#' 
+#'
 #' # define 5-dimensional R-vine tree structure matrix
 #' Matrix <- c(5, 2, 3, 1, 4,
 #'             0, 2, 3, 4, 1,
@@ -79,7 +79,7 @@
 #'             0, 0, 0, 4, 1,
 #'             0, 0, 0, 0, 1)
 #' Matrix <- matrix(Matrix, 5, 5)
-#' 
+#'
 #' # define R-vine pair-copula family matrix
 #' family <- c(0, 1, 3, 4, 4,
 #'             0, 0, 3, 4, 1,
@@ -87,7 +87,7 @@
 #'             0, 0, 0, 0, 3,
 #'             0, 0, 0, 0, 0)
 #' family <- matrix(family, 5, 5)
-#' 
+#'
 #' # define R-vine pair-copula parameter matrix
 #' par <- c(0, 0.2, 0.9, 1.5, 3.9,
 #'          0, 0, 1.1, 1.6, 0.9,
@@ -95,106 +95,99 @@
 #'          0, 0, 0, 0, 4.8,
 #'          0, 0, 0, 0, 0)
 #' par <- matrix(par, 5, 5)
-#' 
+#'
 #' # define second R-vine pair-copula parameter matrix
 #' par2 <- matrix(0, 5, 5)
-#' 
+#'
 #' # define RVineMatrix object
 #' RVM <- RVineMatrix(Matrix = Matrix, family = family,
 #'                    par = par, par2 = par2,
 #'                    names = c("V1", "V2", "V3", "V4", "V5"))
-#' 
+#'
 #' # Print detailed information
 #' print(RVM, detail = TRUE)
-#' 
+#'
 #' @export RVineMatrix
 RVineMatrix <- function(Matrix, family = array(0, dim = dim(Matrix)), par = array(NA, dim = dim(Matrix)), par2 = array(NA, dim = dim(Matrix)), names = NULL, check.pars = TRUE) {
-    
+
     ## set NAs to zero
     Matrix[is.na(Matrix)] <- 0
     family[is.na(family)] <- 0
     par[is.na(par)] <- 0
     par2[is.na(par2)] <- 0
-    
+
     ## convert to lower triangular matrix if necessary
     Matrix <- ToLowerTri(Matrix)
     family <- ToLowerTri(family)
     par    <- ToLowerTri(par)
     par2   <- ToLowerTri(par2)
-    
+
     ## set upper triangle to zero
     family[upper.tri(family, diag = T)] <- 0
     par[upper.tri(par, diag = T)] <- 0
     par2[upper.tri(par2, diag = T)] <- 0
-    
+
     ## check matrices
-    if (dim(Matrix)[1] != dim(Matrix)[2]) 
+    if (dim(Matrix)[1] != dim(Matrix)[2])
         stop("Structure matrix has to be quadratic.")
-    if (any(par != NA) & dim(par)[1] != dim(par)[2]) 
+    if (any(par != NA) & dim(par)[1] != dim(par)[2])
         stop("Parameter matrix has to be quadratic.")
-    if (any(par2 != NA) & dim(par2)[1] != dim(par2)[2]) 
+    if (any(par2 != NA) & dim(par2)[1] != dim(par2)[2])
         stop("Second parameter matrix has to be quadratic.")
-    if (any(family != 0) & dim(family)[1] != dim(family)[2]) 
+    if (any(family != 0) & dim(family)[1] != dim(family)[2])
         stop("Copula family matrix has to be quadratic.")
-    if (max(Matrix) > dim(Matrix)[1]) 
+    if (max(Matrix) > dim(Matrix)[1])
         stop("Error in the structure matrix.")
-    if (any(!(family %in% c(0, 1:10, 13, 14, 16:20, 23, 24, 26:30, 33, 34, 36:40, 43, 44, 104, 114, 124, 134, 204, 214, 224, 234)))) 
-        stop("Copula family not implemented.")
-    if (length(names) > 0 & length(names) != dim(Matrix)[1]) 
+    if (length(names) > 0 & length(names) != dim(Matrix)[1])
         stop("Length of the vector 'names' is not correct.")
-    if (RVineMatrixCheck(Matrix) != 1) 
+    if (RVineMatrixCheck(Matrix) != 1)
         stop("'Matrix' is not a valid R-vine matrix")
-    
+
     ## check for family/parameter consistency
-    if (check.pars) {
-        if (!all(par %in% c(0, NA))) {
-            for (i in 2:dim(Matrix)[1]) {
-                for (j in 1:(i - 1)) {
-                    BiCopCheck(family[i, j], par[i, j], par2[i, j])
-                }
-            }
-        }
+    if (check.pars & (any(family != 0) | any(!is.na(par)))) {
+        sel <- lower.tri(family)  # selector for lower triangular matrix
+        BiCopCheck(family[sel], par[sel], par2[sel])
     }
-    
+
     ## create help matrices
     MaxMat <- createMaxMat(Matrix)
     CondDistr <- neededCondDistr(Matrix)
-    
+
     ## create RVineMatrix object
     RVM <- list(Matrix = Matrix,
-                family = family, 
+                family = family,
                 par = par,
                 par2 = par2,
                 names = names,
-                MaxMat = MaxMat, 
+                MaxMat = MaxMat,
                 CondDistr = CondDistr)
     class(RVM) <- "RVineMatrix"
-    
+
     ## return results
     RVM
 }
 
 normalizeRVineMatrix <- function(RVM) {
-    
+
     oldOrder <- diag(RVM$Matrix)
     Matrix <- reorderRVineMatrix(RVM$Matrix)
-    
+
     return(RVineMatrix(Matrix,
-                       RVM$family, 
+                       RVM$family,
                        RVM$par,
-                       RVM$par2, 
+                       RVM$par2,
                        names = rev(RVM$names[oldOrder])))
 }
 
 reorderRVineMatrix <- function(Matrix) {
     oldOrder <- diag(Matrix)
-    
+
     O <- apply(t(1:nrow(Matrix)), 2, "==", Matrix)
-    
+
     for (i in 1:nrow(Matrix)) {
         Matrix[O[, oldOrder[i]]] <- nrow(Matrix) - i + 1
     }
-    
+
     return(Matrix)
 }
 
@@ -202,44 +195,44 @@ reorderRVineMatrix <- function(Matrix) {
 
 
 #' Normalization of R-Vine Matrix
-#' 
+#'
 #' An \code{\link{RVineMatrix}} is permuted to achieve a natural ordering (i.e.
 #' \code{diag(RVM$Matrix) == d:1})
-#' 
-#' 
+#'
+#'
 #' @param RVM \code{\link{RVineMatrix}} defining the R-vine structure
 #' @return \item{RVM}{An \code{\link{RVineMatrix}} in natural ordering with
 #' entries in \code{RVM$names} keeping track of the reordering.}
 #' @keywords vine
 #' @examples
-#' 
+#'
 #' Matrix <- matrix(c(5, 2, 3, 1, 4,
 #'                    0, 2, 3, 4, 1,
 #'                    0, 0, 3, 4, 1,
 #'                    0, 0, 0, 4, 1,
 #'                    0, 0, 0, 0, 1), 5, 5)
 #' family <- matrix(1,5,5)
-#' 
+#'
 #' par <- matrix(c(0, 0.2, 0.9, 0.5, 0.8,
 #'                 0,   0, 0.1, 0.6, 0.9,
 #'                 0,   0,   0, 0.7, 0.5,
 #'                 0,   0,   0,   0, 0.8,
 #'                 0,   0,   0,   0,   0), 5, 5)
-#' 
+#'
 #' # define RVineMatrix object
 #' RVM <- RVineMatrix(Matrix, family, par)
-#' 
+#'
 #' # normalise the RVine
 #' RVineMatrixNormalize(RVM)
-#' 
+#'
 #' @export RVineMatrixNormalize
 RVineMatrixNormalize <- function(RVM) {
     stopifnot(is(RVM, "RVineMatrix"))
-    
-    if (is.null(RVM$names)) 
+
+    if (is.null(RVM$names))
         RVM$names <- paste("V", 1:nrow(RVM$Matrix), sep = "")
     oldOrder <- diag(RVM$Matrix)
-    
+
     return(normalizeRVineMatrix(RVM))
 }
 
@@ -253,7 +246,7 @@ print.RVineMatrix <- function(x, detail = FALSE, ...) {
     RVine <- x
     message("R-vine matrix:")
     print(RVine$Matrix, ...)
-    
+
     # Falls namen diese auch ausgeben
     if (!is.null(RVine$names)) {
         message("")
@@ -263,13 +256,13 @@ print.RVineMatrix <- function(x, detail = FALSE, ...) {
         }
     }
     # NextMethod('print')
-    
+
     d <- dim(RVine)
     if (detail == TRUE || detail == T) {
         message("")
         message("Tree 1:")
         for (i in 1:(d - 1)) {
-            a <- paste(RVine$names[[RVine$Matrix[i, i]]], 
+            a <- paste(RVine$names[[RVine$Matrix[i, i]]],
                        ",",
                        RVine$names[[RVine$Matrix[d, i]]],
                        sep = "")
@@ -281,18 +274,18 @@ print.RVineMatrix <- function(x, detail = FALSE, ...) {
                 a <- paste(a, " with par=", round(RVine$par[d, i], 2), sep = "")
                 if (RVine$family[d, i] %in% c(2, 7, 8, 9, 10,
                                               17, 18, 19, 20,
-                                              27, 28, 29, 30, 
+                                              27, 28, 29, 30,
                                               37, 38, 39, 40,
-                                              104, 114, 124, 134, 
+                                              104, 114, 124, 134,
                                               204, 214, 224, 234)) {
                     a <- paste(a, " and par2=", round(RVine$par2[d, i], 2), sep = "")
                 }
                 a <- paste(a,
-                           " (tau=", 
+                           " (tau=",
                            round(BiCopPar2Tau(RVine$family[d, i],
-                                              RVine$par[d, i], 
+                                              RVine$par[d, i],
                                               RVine$par2[d, i]), 2),
-                           ")", 
+                           ")",
                            sep = "")
             }
             message(a)
@@ -302,8 +295,8 @@ print.RVineMatrix <- function(x, detail = FALSE, ...) {
             a <- paste("Tree ", j, ":", sep = "")
             message(a)
             for (i in 1:(d - j)) {
-                a <- paste(RVine$names[[RVine$Matrix[i, i]]], 
-                           ",", 
+                a <- paste(RVine$names[[RVine$Matrix[i, i]]],
+                           ",",
                            RVine$names[[RVine$Matrix[d - j + 1, i]]],
                            sep = "")
                 a <- paste(a, "|", sep = "")
@@ -313,33 +306,33 @@ print.RVineMatrix <- function(x, detail = FALSE, ...) {
                         a <- paste(a, ",", sep = "")
                     }
                     a <- paste(a,
-                               RVine$names[[RVine$Matrix[conditioningSet[k], i]]], 
+                               RVine$names[[RVine$Matrix[conditioningSet[k], i]]],
                                sep = "")
                 }
                 a <- paste(a,
-                           ": ", 
-                           BiCopName(RVine$family[d - j + 1, i], short = FALSE), 
+                           ": ",
+                           BiCopName(RVine$family[d - j + 1, i], short = FALSE),
                            sep = "")
                 if (RVine$family[d - j + 1, i] != 0) {
-                    a <- paste(a, 
+                    a <- paste(a,
                                " with par=",
                                round(RVine$par[d - j + 1, i], 2),
                                sep = "")
                     if (RVine$family[d - j + 1, i] %in% c(2, 7, 8, 9, 10,
                                                           17, 18, 19, 20,
-                                                          27, 28, 29, 30, 
+                                                          27, 28, 29, 30,
                                                           37, 38, 39, 40,
-                                                          104, 114, 124, 134, 
+                                                          104, 114, 124, 134,
                                                           204, 214, 224, 234)) {
-                        a <- paste(a, 
+                        a <- paste(a,
                                    " and par2=",
-                                   round(RVine$par2[d - j + 1, i], 2), 
+                                   round(RVine$par2[d - j + 1, i], 2),
                                    sep = "")
                     }
                     a <- paste(a,
                                " (tau=",
-                               round(BiCopPar2Tau(RVine$family[d - j + 1, i], 
-                                                  RVine$par[d - j + 1, i], 
+                               round(BiCopPar2Tau(RVine$family[d - j + 1, i],
+                                                  RVine$par[d - j + 1, i],
                                                   RVine$par2[d - j + 1, i]), 2),
                                ")",
                                sep = "")
@@ -347,71 +340,71 @@ print.RVineMatrix <- function(x, detail = FALSE, ...) {
                 message(a)
             }
         }
-        
+
     }
 }
 
 
 
 createMaxMat <- function(Matrix) {
-    
-    if (dim(Matrix)[1] != dim(Matrix)[2]) 
+
+    if (dim(Matrix)[1] != dim(Matrix)[2])
         stop("Structure matrix has to be quadratic.")
-    
+
     MaxMat <- reorderRVineMatrix(Matrix)
-    
+
     n <- nrow(MaxMat)
-    
+
     for (j in 1:(n - 1)) {
         for (i in (n - 1):j) {
             MaxMat[i, j] <- max(MaxMat[i:(i + 1), j])
         }
     }
-    
+
     tMaxMat <- MaxMat
     tMaxMat[is.na(tMaxMat)] <- 0
-    
+
     oldSort <- diag(Matrix)
     oldSort <- oldSort[n:1]
-    
+
     for (i in 1:n) {
         MaxMat[tMaxMat == i] <- oldSort[i]
     }
-    
+
     return(MaxMat)
 }
 
 neededCondDistr <- function(Vine) {
-    
-    if (dim(Vine)[1] != dim(Vine)[2]) 
+
+    if (dim(Vine)[1] != dim(Vine)[2])
         stop("Structure matrix has to be quadratic.")
-    
+
     Vine <- reorderRVineMatrix(Vine)
-    
+
     MaxMat <- createMaxMat(Vine)
-    
+
     d <- nrow(Vine)
-    
+
     M <- list()
     M$direct <- matrix(FALSE, d, d)
     M$indirect <- matrix(FALSE, d, d)
-    
+
     M$direct[2:d, 1] <- TRUE
-    
+
     for (i in 2:(d - 1)) {
         v <- d - i + 1
-        
+
         bw <- as.matrix(MaxMat[i:d, 1:(i - 1)]) == v
-        
+
         direct <- Vine[i:d, 1:(i - 1)] == v
-        
+
         M$indirect[i:d, i] <- apply(as.matrix(bw & (!direct)), 1, any)
-        
+
         M$direct[i:d, i] <- TRUE
-        
+
         M$direct[i, i] <- any(as.matrix(bw)[1, ] & as.matrix(direct)[1, ])
     }
-    
+
     return(M)
 }
 
@@ -422,7 +415,7 @@ as.RVineMatrix <- function(RVine) as.RVM2(RVine)
 # Code from Harry Joe (Thanks for that)
 
 
-# varray2NO:  vine array to natural order 
+# varray2NO:  vine array to natural order
 # irev=F means A1[d,d]=A[d,d]
 # irev=T means A1[d,d]=A[d-1,d] (this option used to check if A is in
 #                   equivalence class of size 1 or 2).
@@ -447,7 +440,7 @@ varray2NO <- function(A, irev = FALSE, iprint = FALSE) {
         A1[k - 1, k - 1] <- A1[k - 1, k]
     }
     # A1 satisfies A[i,i]=A[i,i+1]
-    if (iprint) 
+    if (iprint)
         print(A1)
     # now apply permutation
     iorder <- order(diag(A1))
@@ -455,7 +448,7 @@ varray2NO <- function(A, irev = FALSE, iprint = FALSE) {
     for (i in 1:d) {
         for (j in i:d) A2[i, j] <- iorder[A1[i, j]]
     }
-    if (iprint) 
+    if (iprint)
         print(A2)
     list(NOa = A1, NO = A2, perm = iorder, diag = diag(A1))
 }
@@ -481,7 +474,7 @@ vpartner <- function(A) {
 # Natural order also means A[j-1,j]=j-1 and A[j,j]=j
 # Function with A vine array (assumed dxd) and calls to vinvstepb
 # if(b==0) on input,
-#    columns 4 to d, binary elements of b are randomly generated 
+#    columns 4 to d, binary elements of b are randomly generated
 # output is b matrix with NA in lower triangle if A is OK
 #   otherwise returns -1
 #varraycheck=function(A)
@@ -495,7 +488,7 @@ varray2bin <- function(A) {
     for (i in 4:d) {
         b0 <- vinvstepb(A, i)
         # print(b0)
-        if (min(b0) == -1) 
+        if (min(b0) == -1)
             return(-1)
         b[1:i, i] <- b0
     }
@@ -503,9 +496,9 @@ varray2bin <- function(A) {
 }
 
 
-# inverse for column i: 
+# inverse for column i:
 # input A has dimension at least ixi
-# output b has length i 
+# output b has length i
 # This function is not in NAMESPACE (not for direct use);
 # it is used by varraycheck
 
@@ -513,16 +506,16 @@ vinvstepb <- function(A, i, ichk0 = 0) {
     # do these basic checks first
     if (ichk0 > 0) {
         diagA <- diag(A[1:i, 1:i])
-        if (max(diagA - (1:i)) != 0) 
+        if (max(diagA - (1:i)) != 0)
             return(-1)
         for (k in 2:i) {
-            if (A[k - 1, k] != k - 1) 
+            if (A[k - 1, k] != k - 1)
                 return(-1)
         }
-        if (A[1][3] != 1) 
+        if (A[1][3] != 1)
             return(-1)
     }
-    
+
     b <- rep(1, i)
     itaken <- rep(0, i)
     itaken[i] <- 1
@@ -555,10 +548,10 @@ vinvstepb <- function(A, i, ichk0 = 0) {
 
 
 #' R-Vine Matrix Check
-#' 
+#'
 #' The given matrix is tested to be a valid R-vine matrix.
-#' 
-#' 
+#'
+#'
 #' @param M A dxd vine matrix: only lower triangle is used; For the check, M is
 #' assumed to be in natural order, i.e. d:1 on diagonal. Further M[j+1,j]=d-j
 #' and M[j,j]=d-j
@@ -577,8 +570,8 @@ vinvstepb <- function(A, i, ichk0 = 0) {
 #' generation algorithm and number of equivalence classes. In Dependence
 #' Modeling: Vine Copula Handbook, pp 219--231. World Scientific, Singapore.
 #' @examples
-#' 
-#' A1 <- matrix(c(6, 0, 0, 0, 0, 0, 
+#'
+#' A1 <- matrix(c(6, 0, 0, 0, 0, 0,
 #' 			         5, 5, 0, 0, 0, 0,
 #' 			         3, 4, 4, 0, 0, 0,
 #' 			         4, 3, 3, 3, 0, 0,
@@ -587,7 +580,7 @@ vinvstepb <- function(A, i, ichk0 = 0) {
 #' b1 <- RVineMatrixCheck(A1)
 #' print(b1)
 #' # improper vine matrix, code=-1
-#' A2 <- matrix(c(6, 0, 0, 0, 0, 0, 
+#' A2 <- matrix(c(6, 0, 0, 0, 0, 0,
 #' 			         5, 5, 0, 0, 0, 0,
 #' 			         4, 4, 4, 0, 0, 0,
 #' 			         1, 3, 3, 3, 0, 0,
@@ -596,7 +589,7 @@ vinvstepb <- function(A, i, ichk0 = 0) {
 #' b2 <- RVineMatrixCheck(A2)
 #' print(b2)
 #' # improper vine matrix, code=-2
-#' A3 <- matrix(c(6, 0, 0, 0, 0, 0, 
+#' A3 <- matrix(c(6, 0, 0, 0, 0, 0,
 #' 			         3, 5, 0, 0, 0, 0,
 #' 			         3, 4, 4, 0, 0, 0,
 #' 			         4, 3, 3, 3, 0, 0,
@@ -604,17 +597,17 @@ vinvstepb <- function(A, i, ichk0 = 0) {
 #' 			         2, 2, 1, 1, 1, 1), 6, 6, byrow = TRUE)
 #' b3 <- RVineMatrixCheck(A3)
 #' print(b3)
-#' 
+#'
 #' @export RVineMatrixCheck
 RVineMatrixCheck <- function(M) {
     A <- M
     d <- nrow(A)
-    if (d != ncol(A)) 
+    if (d != ncol(A))
         return(-1)
-    
+
     A <- A[d:1, d:1]  # unsere Notation <-> Harrys Notation
-    
-    if (sum(abs(sort(diag(A)) - (1:d))) != 0) 
+
+    if (sum(abs(sort(diag(A)) - (1:d))) != 0)
         return(-3)
     # convert to 1:d on diagonal
     iorder <- order(diag(A))
@@ -624,16 +617,16 @@ RVineMatrixCheck <- function(M) {
     }
     # print(A2)
     for (j in 2:d) {
-        if (sum(abs(sort(A2[1:(j - 1), j]) - (1:(j - 1)))) != 0) 
+        if (sum(abs(sort(A2[1:(j - 1), j]) - (1:(j - 1)))) != 0)
             return(-2)
     }
     # next convert to natural order for more checks
-    if (d <= 3) 
+    if (d <= 3)
         return(1)
     ANOobj <- varray2NO(A2)
     # print(ANOobj)
     b <- varray2bin(ANOobj$NO)  # if OK, a binary matrix is returned here
-    if (is.matrix(b)) 
+    if (is.matrix(b))
         return(1) else return(-1)
 }
 
