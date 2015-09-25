@@ -84,6 +84,12 @@ BiCop <- function(family, par, par2 = 0, tau = NULL) {
 
     ## family/parameter consistency checks
     BiCopCheck(family, par, par2)
+    if ((family %% 10 %in% c(0, 1, 3, 4, 5, 6)) && (par2 != 0)) {
+        txt <- paste0("The ",
+                      BiCopName(family, short = FALSE),
+                      " copula has only one parameter; 'par2' is useless.")
+        warning(txt)
+    }
 
     # calculate dependence measures
     tau <- BiCopPar2Tau(family, par, par2, check.pars = FALSE)
@@ -110,7 +116,7 @@ BiCop <- function(family, par, par2 = 0, tau = NULL) {
 print.BiCop <- function(x, ...) {
     cat("Bivariate copula: ")
     cat(x$familyname, " (par = ", round(x$par, 2), sep = "")
-    if (x$par2 != 0)
+    if (!(x$family %% 10 %in% c(0, 1, 3, 4, 5, 6)))
         cat(", par2 = ", round(x$par2, 2), sep = "")
     cat(") \n")
 
@@ -128,14 +134,14 @@ summary.BiCop <- function(object, ...) {
 
     ## create data.frame of parameters
     df <- data.frame(par = object$par)
-    if (!((object$family %% 10) %in% c(0, 1, 3, 4, 5, 6)))
+    if (!(object$family %% 10 %in% c(0, 1, 3, 4, 5, 6)))
         df$par2 <- object$par2
     rownames(df) <- "Parameter(s):       "
 
     ## add standard errors (if available)
     if (!is.null(object$se)) {
         se <- c(par = object$se)
-        if (!((object$family %% 10) %in% c(0, 1, 3, 4, 5, 6)))
+        if (!(object$family %% 10 %in% c(0, 1, 3, 4, 5, 6)))
             se <- c(se, par2 = object$se2)
         df <- rbind(df, se)
         rownames(df)[2] <- "Standard Error(s):"
