@@ -1,14 +1,15 @@
 #' Plotting \code{RVineMatrix} objects.
-#' 
+#'
 #' There are two plotting generics for \code{RVineMatrix} objects.
 #' \code{plot.RVineMatrix} plots one or all trees of a given R-vine copula
 #' model. Edges can be labeld with information about the corresponding
 #' pair-copula. \code{contour.RVineMatrix} produces a matrix of contour plots
 #' (using \code{\link[VineCopula:plot.BiCop]{plot.BiCop}}).
-#' 
+#'
 #' If you want the contour boxes to be perfect sqaures, the plot height should
 #' be \code{1.25/length(tree)*(d - min(tree))} times the plot width.
-#' 
+#'
+#' @method plot RVineMatrix
 #' @aliases plot.RVineMatrix contour.RVineMatrix
 #' @param x \code{RVineMatrix} object.
 #' @param tree \code{"ALL"} or integer vector; specifies which trees are
@@ -41,58 +42,58 @@
 #' \code{\link[graphics:legend]{legend}}
 #' @keywords plot
 #' @examples
-#' 
+#'
 #' ## build vine model
 #' strucmat <- matrix(c(3,   1, 2, 0, 2, 1, 0, 0, 1), 3, 3)
 #' fammat   <- matrix(c(0,   1, 6, 0, 0, 3, 0, 0, 0), 3, 3)
 #' parmat   <- matrix(c(0, 0.3, 3, 0, 0, 1, 0, 0, 0), 3, 3)
 #' par2mat  <- matrix(c(0,   0, 0, 0, 0, 0, 0, 0, 0), 3, 3)
 #' RVM  <- RVineMatrix(strucmat, fammat, parmat, par2mat)
-#' 
+#'
 #' # plot trees
 #' plot(RVM)
-#' 
+#'
 #' ## build new model
 #' # simulate from previous model
 #' u <- RVineSim(500, RVM)
 #' colnames(u) <- c("X", "Y", "Z")
-#' 
+#'
 #' # estimate new model
 #' RVM2 <- RVineStructureSelect(u)
-#' 
-#' \dontrun{
-#' # plot new model with legend
-#' plot(RVM2, type = 1)
-#' 
+#'
+#' # plot second tree of new model with legend
+#' plot(RVM2, tree = 2, type = 1)
+#'
 #' # show contour plots
 #' contour(RVM2)
-#' }
-#' 
-plot.RVineMatrix <- function(x, tree = "ALL", type = 0, edge.labels = NULL, legend.pos = "bottomleft", interactive = FALSE, ...) {
-    
+#'
+#'
+plot.RVineMatrix <- function(x, tree = "ALL", type = 0, edge.labels = NULL,
+                             legend.pos = "bottomleft", interactive = FALSE, ...) {
+
     M <- x$Matrix
     d <- nrow(M)
-    
+
     ## sanity checks
-    if (!inherits(x, "RVineMatrix")) 
+    if (!inherits(x, "RVineMatrix"))
         stop("'x' has to be an RVineMatrix object.")
-    if (tree != "ALL" && tree > d - 1) 
+    if (tree != "ALL" && tree > d - 1)
         stop("Selected tree does not exist.")
     if (any(tree == "ALL") )
         tree <- 1:(d - 1)
     if (!all(type %in% c(0, 1, 2)))
         stop("type not implemented")
     stopifnot(is.logical(interactive))
-    
+
     ## set names if empty
-    if (is.null(x$names)) 
+    if (is.null(x$names))
         x$names <- paste("V", 1:d, sep = "")
-    
+
     #### set up plotting options ----------------------------
-    # reduce default margins of plot range 
-    usr <- par(mar = c(1.1,0.1,3.1,0.1)) 
+    # reduce default margins of plot range
+    usr <- par(mar = c(1.1,0.1,3.1,0.1))
     on.exit(par(usr))
-    
+
     # set plot.network options
     TUMblue <- rgb(0, 103/255, 198/255)
     TUMlightblue <- tint(TUMblue, 0.5)
@@ -109,48 +110,48 @@ plot.RVineMatrix <- function(x, tree = "ALL", type = 0, edge.labels = NULL, lege
                  label.cex = 1.3,
                  vertex.cex = 0,
                  object.scale = 0.05)
-    # Same color for edges, edge labels and label borders 
+    # Same color for edges, edge labels and label borders
     dflt <- append(dflt, list(label.border   = dflt$edge.col,
                               edge.label.col = dflt$edge.col,
-                              edge.label.cex = dflt$label.cex - 0.2)) 
-    
+                              edge.label.cex = dflt$label.cex - 0.2))
+
     ## overwrite defaults with ... argument
     lst <- list(...)
-    temp.args <- modifyList(dflt, lst) 
-    
+    temp.args <- modifyList(dflt, lst)
+
     #### loop through the trees -----------------------------
     for (i in tree) {
-        
-        main <- list(main = paste("Tree ", i, sep = ""), 
+
+        main <- list(main = paste("Tree ", i, sep = ""),
                      col.main = ifelse("col.main" %in% names(temp.args),
-                                       temp.args$col.main, 
-                                       temp.args$edge.col)) 
+                                       temp.args$col.main,
+                                       temp.args$edge.col))
         final.args <- append(temp.args, main)
-        
+
         ## create network object
         g <- makeNetwork(x, i, !(type %in% c(0, 2)))
         final.args$x = g$nw
-        
+
         ## set edge labels
-        if (!is.null(edge.labels)) 
+        if (!is.null(edge.labels))
             final.args$edge.label <- set_edge_labels(tree = i,
                                                      RVM = x,
-                                                     edge.labels = edge.labels, 
+                                                     edge.labels = edge.labels,
                                                      type = type)
-        
+
         do.call(plot, final.args)
-        
+
         ## add legend
         if (type == 2) {
-            legend(legend.pos, 
+            legend(legend.pos,
                    legend = paste(1:d, x$name, sep = " \U002194 "),
-                   bty = "n", 
-                   xjust = 0, 
+                   bty = "n",
+                   xjust = 0,
                    text.col = final.args$edge.col,
                    cex = final.args$label.cex)
         }
-        
-        ## wait for key stroke 
+
+        ## wait for key stroke
         if (i != max(tree)) {
             par(ask = TRUE)
         } else {
@@ -164,9 +165,9 @@ plot.RVineMatrix <- function(x, tree = "ALL", type = 0, edge.labels = NULL, lege
 makeNetwork <- function(RVM, tree, use.names = FALSE) {
     M <- RVM$Matrix
     d <- ncol(M)
-    
+
     I <- matrix(0, d - tree + 1, d - tree + 1)
-    
+
     ## extract node and edge labels as numbers
     if (tree > 1) {
         node.lab <- sapply(1:(d - tree + 1),
@@ -178,20 +179,20 @@ makeNetwork <- function(RVM, tree, use.names = FALSE) {
     }
     edge.lab <- sapply(seq.int(d - tree),
                        get_num,
-                       tree = tree, 
+                       tree = tree,
                        RVM = RVM)
-    
+
     ## convert to numeric matrices V and E
     V <- t(sapply(strsplit(node.lab,  " *[,;] *"), as.numeric))
     V <- matrix(V, ncol = tree)
     E <- t(sapply(strsplit(edge.lab,  " *[,;] *"), as.numeric))
-    
+
     ## build incident matrix by matching V and E
     for (i in 1:nrow(E)) {
         ind.i <- which(apply(V, 1, function(x) all(x %in% E[i, ])))
         I[ind.i[1], ind.i[2]] <- I[ind.i[1], ind.i[2]] <- 1
     }
-    
+
     ## convert to variable names (if asked for)
     if (use.names) {
         if (tree > 1) {
@@ -203,11 +204,11 @@ makeNetwork <- function(RVM, tree, use.names = FALSE) {
             node.lab <- RVM$names
         }
     }
-    
+
     ## create network
     colnames(I) <- rownames(I) <- node.lab
     nw <- network(I, directed = FALSE)
-    
+
     ## return network and labels
     list(nw = nw, vlabs = node.lab)
 }
@@ -217,9 +218,9 @@ makeNetwork <- function(RVM, tree, use.names = FALSE) {
 set_edge_labels <- function(tree, RVM, edge.labels, type) {
     d <- nrow(RVM$Matrix)
     if (edge.labels[1] == "family") {
-        elabel <- sapply(1:(d - tree + 1), 
-                         get_family, 
-                         tree = tree, 
+        elabel <- sapply(1:(d - tree + 1),
+                         get_family,
+                         tree = tree,
                          RVM = RVM)
         elabel <- BiCopName(as.numeric(elabel))
     } else if (edge.labels[1] == "par") {
@@ -234,29 +235,29 @@ set_edge_labels <- function(tree, RVM, edge.labels, type) {
                          RVM = RVM)
     } else if (edge.labels[1] == "family-par") {
         elabel1 <- sapply(1:(d - tree + 1),
-                          get_family, 
-                          tree = tree, 
+                          get_family,
+                          tree = tree,
                           RVM = RVM)
         elabel1 <- BiCopName(as.numeric(elabel1))
         elabel2 <- sapply(1:(d - tree + 1),
                           get_par,
-                          tree = tree, 
+                          tree = tree,
                           RVM = RVM)
         elabel <- paste0(elabel1, "(", elabel2, ")")
-        elabel <- sapply(elabel, 
+        elabel <- sapply(elabel,
                          function(x){
                              tmp <- gsub("((", "(", x, fixed = TRUE)
                              gsub("))", ")", tmp, fixed = TRUE)
                          })
     } else if (edge.labels[1] == "family-tau") {
         elabel1 <- sapply(1:(d - tree + 1),
-                          get_family, 
-                          tree = tree, 
+                          get_family,
+                          tree = tree,
                           RVM = RVM)
         elabel1 <- BiCopName(as.numeric(elabel1))
         elabel2 <- sapply(1:(d - tree + 1),
                           get_tau,
-                          tree = tree, 
+                          tree = tree,
                           RVM = RVM)
         elabel <- paste0(elabel1, "(", elabel2, ")")
     } else if (length(edge.labels) > 1) {
@@ -268,20 +269,20 @@ set_edge_labels <- function(tree, RVM, edge.labels, type) {
         }
     } else if (edge.labels[1] == "pair"){
         if (type %in% c(0, 2)) {
-            elabel <- sapply(1:(d - tree + 1), 
-                             get_num, 
-                             tree = tree, 
+            elabel <- sapply(1:(d - tree + 1),
+                             get_num,
+                             tree = tree,
                              RVM = RVM)
         } else {
-            elabel <- sapply(1:(d - tree + 1), 
-                             get_name, 
-                             tree = tree, 
+            elabel <- sapply(1:(d - tree + 1),
+                             get_name,
+                             tree = tree,
                              RVM = RVM)
         }
     } else {
         stop("edge.labels not implemented")
     }
-    
+
     elabel
 }
 
@@ -301,7 +302,7 @@ get_num <-  function(j, tree, RVM) {
     aft <- if (length(nums) > 2) {
         gsub(" ",
              ",",
-             do.call(paste, as.list(as.character(nums[3:length(nums)])))) 
+             do.call(paste, as.list(as.character(nums[3:length(nums)]))))
     }  else ""
     # paste together
     sep <- if (length(nums) > 2) " ; " else ""
@@ -320,7 +321,7 @@ get_name <-  function(j, tree, RVM) {
                  collapse = "")
     # conditioning set
     aft <- if (length(nams) > 2) {
-        gsub(" ",  ",", do.call(paste, as.list(nams[3:length(nams)]))) 
+        gsub(" ",  ",", do.call(paste, as.list(nams[3:length(nams)])))
     }  else ""
     # paste together
     sep <- if (length(nams) > 2) " ; " else ""
@@ -344,7 +345,7 @@ get_par <- function(j, tree, RVM) {
 }
 
 join_par <- function(x) {
-    if (x[2] != 0) 
+    if (x[2] != 0)
         return(paste0("(", x[1], ",", x[2], ")"))
     x[1]
 }

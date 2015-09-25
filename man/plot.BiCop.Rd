@@ -5,7 +5,9 @@
 \alias{plot.BiCop}
 \title{Plotting tools for BiCop objects}
 \usage{
-plot.BiCop(x, type = "surface", margins, size, ...)
+\method{plot}{BiCop}(x, type = "surface", margins, size, ...)
+
+\method{contour}{BiCop}(x, margins = "norm", size = 100L, ...)
 }
 \arguments{
 \item{x}{\code{BiCop object.}}

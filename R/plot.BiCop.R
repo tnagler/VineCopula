@@ -1,12 +1,13 @@
 #' Plotting tools for BiCop objects
-#' 
+#'
 #' There are several options for plotting BiCop objects. The density of a
 #' bivariate copula density can be visualized as surface/perspective or contour
 #' plot. Optionally, the density can be coupled with standard normal margins
 #' (default for contour plots). Furthermore, a lambda-plot is available (c.f.
 #' \code{\link{BiCopLambda}}).
-#' 
-#' 
+#'
+#' @method plot BiCop
+#'
 #' @aliases plot.BiCop contour.BiCop
 #' @param x \code{BiCop object.}
 #' @param type plot type; either \code{"surface"}, \code{"contour"}, or
@@ -27,27 +28,27 @@
 #' @seealso \code{\link{BiCop}}, \code{\link{contour}}, \code{\link{wireframe}}
 #' @keywords plot
 #' @examples
-#' 
+#'
 #' ## construct BiCop object for a Tawn copula
 #' obj <- BiCop(family = 104, par = 2.5, par2 = 0.4)
-#' 
+#'
 #' ## plots
-#' plot(obj)  # surface plot of copula density 
+#' plot(obj)  # surface plot of copula density
 #' contour(obj)  # contour plot with standard normal margins
 #' contour(obj, margins = "unif")  # contour plot of copula density
-#' 
-plot.BiCop <- function(x, type = "surface", margins, size, ...) {    
+#'
+plot.BiCop <- function(x, type = "surface", margins, size, ...) {
     ## partial matching and sanity check for type
     stopifnot(class(type) == "character")
     tpnms <- c("contour", "surface", "lambda")
     type <- tpnms[pmatch(type, tpnms)]
     if (is.na(type))
         stop("type not implemented")
-    
+
     ## lambda plot can be called directly
     if (type == "lambda")
         return(BiCopLambda(x))
-    
+
     ## choose margins if missing, else partial matching and sanity check
     if (missing(margins)) {
         margins <- switch(type,
@@ -57,8 +58,8 @@ plot.BiCop <- function(x, type = "surface", margins, size, ...) {
         stopifnot(class(margins) == "character")
         mgnms <- c("norm", "unif")
         margins <- mgnms[pmatch(margins, mgnms)]
-    } 
-    
+    }
+
     ## choose size if missing and sanity check
     if (missing(size))
         size <- switch(type,
@@ -66,7 +67,7 @@ plot.BiCop <- function(x, type = "surface", margins, size, ...) {
                        "surface" = 25L)
     stopifnot(is.numeric(size))
     size <- round(size)
-    
+
     ## construct grid for evaluation of the copula density
     if (size < 3) {
         warning("size too small, set to 5")
@@ -81,7 +82,7 @@ plot.BiCop <- function(x, type = "surface", margins, size, ...) {
     } else {
         xylim <- range(c(list(...)$xlim, list(...)$ylim))
     }
-    
+
     ## prepare for plotting with selected margins
     if (margins == "unif") {
         points <- switch(type,
@@ -105,18 +106,18 @@ plot.BiCop <- function(x, type = "surface", margins, size, ...) {
         gv <- qnorm(g[, 2L])
         xlim <- ylim <- c(-3, 3)
         at <- c(seq(0, 0.3, length.out = 50), seq(0.3, 100, length.out = 50))
-    } 
-    
+    }
+
     ## evaluate on grid
     vals <- BiCopPDF(g[, 1L], g[, 2L], x)
     cop <- matrix(vals, size, size)
-    
+
     ## actual plotting
-    if (type == "contour") {        
+    if (type == "contour") {
         # set default parameters
-        pars <- list(x = points, 
+        pars <- list(x = points,
                      y = points,
-                     z = cop * adj, 
+                     z = cop * adj,
                      levels = levels,
                      xlim = xlim,
                      ylim = ylim,
@@ -126,21 +127,21 @@ plot.BiCop <- function(x, type = "surface", margins, size, ...) {
                      ylab = switch(margins,
                                    "unif" = expression(u[2]),
                                    "norm" = expression(z[2])))
-        
+
         # call contour with final parameters
         do.call(contour, modifyList(pars, list(...)))
-        
+
     } else if (type == "heat") {
         stop("Not implemented yet")
     } else if (type == "surface") {
         # list with coordinates
         lst <- list(u = gu, v = gv, c = as.vector(cop) * as.vector(adj))
-        
+
         # define colors
         TUMblue   <- rgb(0, 103/255, 198/255)
         TUMgreen  <- rgb(162/255, 173/255, 0)
-        TUMorange <- rgb(227/255, 114/255, 37/255) 
-        
+        TUMorange <- rgb(227/255, 114/255, 37/255)
+
         # set default parameters
         pars <- list(x = c ~ u * v,
                      data = lst,
@@ -166,12 +167,14 @@ plot.BiCop <- function(x, type = "surface", margins, size, ...) {
                      zlim = switch(margins,
                                    "unif" = c(0, max(3, 1.1*max(lst$c))),
                                    "norm" = c(0, max(0.4, 1.1*max(lst$c)))))
-        
+
         # call wireframe with final parameters
         do.call(wireframe, modifyList(pars, list(...)))
     }
 }
 
+#' @method contour BiCop
+#' @rdname plot.BiCop
 contour.BiCop <- function(x, margins = "norm", size = 100L, ...) {
     plot(x, type = "contour", margins = margins, size = size, ...)
 }
