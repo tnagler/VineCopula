@@ -132,7 +132,11 @@
 #' # Print detailed information
 #' print(RVM, detail = TRUE)
 #'
-RVineMatrix <- function(Matrix, family = array(0, dim = dim(Matrix)), par = array(NA, dim = dim(Matrix)), par2 = array(NA, dim = dim(Matrix)), names = NULL, check.pars = TRUE) {
+RVineMatrix <- function(Matrix,
+                        family = array(0, dim = dim(Matrix)),
+                        par = array(NA, dim = dim(Matrix)),
+                        par2 = array(NA, dim = dim(Matrix)),
+                        names = NULL, check.pars = TRUE) {
 
     ## set NAs to zero
     Matrix[is.na(Matrix)] <- 0
@@ -168,8 +172,8 @@ RVineMatrix <- function(Matrix, family = array(0, dim = dim(Matrix)), par = arra
         stop("'Matrix' is not a valid R-vine matrix")
 
     ## check for family/parameter consistency
+    sel <- lower.tri(family)  # selector for lower triangular matrix
     if (check.pars & (any(family != 0) | any(!is.na(par)))) {
-        sel <- lower.tri(family)  # selector for lower triangular matrix
         BiCopCheck(family[sel], par[sel], par2[sel])
     }
 
@@ -186,6 +190,22 @@ RVineMatrix <- function(Matrix, family = array(0, dim = dim(Matrix)), par = arra
                 MaxMat = MaxMat,
                 CondDistr = CondDistr)
     class(RVM) <- "RVineMatrix"
+
+    ## add dependence measures
+    # create list of BiCop ojbects
+    objlst <- apply(cbind(family[sel], par[sel], par2[sel]),
+                    1,
+                    function(x) BiCop(x[1], x[2], x[3], check.pars = FALSE))
+    # construct dependence measure matrices
+    taus <- utds <- ltds <- bets <- matrix(0, nrow(Matrix), ncol(Matrix))
+    taus[sel] <- sapply(objlst, function(x) x$tau)
+    utds[sel] <- sapply(objlst, function(x) x$taildep$upper)
+    ltds[sel] <- sapply(objlst, function(x) x$taildep$lower)
+    bets[sel] <- sapply(objlst, function(x) x$beta)
+    RVM$tau <- taus
+    RVM$taildep$upper <- utds
+    RVM$taildep$lower <- ltds
+    RVM$beta <- bets
 
     ## return results
     RVM
