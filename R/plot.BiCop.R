@@ -95,7 +95,7 @@ plot.BiCop <- function(x, type = "surface", margins, size, ...) {
         gv <- g[, 2L]
         levels <- c(0.2, 0.6, 1, 1.5, 2, 3, 5, 10, 20)
         xlim <- ylim <- c(0, 1)
-        at <- c(seq(0, 6, length.out = 50), seq(7, 100, length.out = 50))
+        at <- c(seq(0, 3, length.out = 50), seq(5, 100, length.out = 50))
     } else if (margins == "norm") {
         points <- pnorm(seq(xylim[1L], xylim[2L], length.out = size))
         g <- as.matrix(expand.grid(points, points))
@@ -163,7 +163,7 @@ plot.BiCop <- function(x, type = "surface", margins, size, ...) {
                      ylab = switch(margins,
                                    "unif" = expression(u[2]),
                                    "norm" = expression(z[2])),
-                     zlab = "density",
+                     zlab = "",
                      zlim = switch(margins,
                                    "unif" = c(0, max(3, 1.1*max(lst$c))),
                                    "norm" = c(0, max(0.4, 1.1*max(lst$c)))))
