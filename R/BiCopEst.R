@@ -276,6 +276,7 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
                 D <- 1/tauder(-theta)
             }
 
+
             se1 <- as.numeric(sqrt(16/n * var(v %*% D)))
         }  # end if (se == TRUE)
     }  # end if (method == "itau")
@@ -447,29 +448,20 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
     }
 
     ## store estimated parameters
-    out2 <- list(family = family)
-    if (length(theta) == 2) {
-        out2$par <- theta[1]
-        out2$par2 <- theta[2]
-    } else {
-        out2$par <- theta
-        out2$par2 <- 0
-    }
+    if (length(theta) == 1)
+        theta <- c(theta, 0)
+    obj <- BiCop(family, theta[1], theta[2])
 
     ## store standard errors (if asked for)
     if (se == TRUE) {
-        if (length(se1) == 2) {
-            out2$se <- se1[1]
-            out2$se2 <- se1[2]
-        } else {
-            out2$se <- se1
-            out2$se2 <- 0
-        }
+        if (length(se1) == 1)
+            se1 <- c(se1, 0)
+        obj$se <- se1[1]
+        obj$se2 <- se1[2]
     }
 
     ## return results
-    class(out2) <- "BiCop"
-    out2
+    obj
 }
 
 

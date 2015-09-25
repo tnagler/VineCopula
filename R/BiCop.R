@@ -106,7 +106,7 @@ BiCop <- function(family, par, par2 = 0, tau = NULL) {
 }
 
 print.BiCop <- function(x, ...) {
-    cat("Bivariate copula: \n")
+    cat("Bivariate copula: ")
     cat(x$familyname, " (par = ", round(x$par, 2), sep = "")
     if (x$par2 != 0)
         cat(", par2 = ", round(x$par2, 2), sep = "")
@@ -117,22 +117,46 @@ print.BiCop <- function(x, ...) {
 }
 
 summary.BiCop <- function(object, ...) {
-    ## print object
-    print.BiCop(object)
+    ## print family name
+    cat("Copula family:       ",
+        object$familyname,
+        " (family = ",
+        object$family,
+        ")",
+        sep = "")
+    cat("\n")
     cat("\n")
 
-    ## show dependence measures as table
-    ms <- c(tau = object$tau,
-            bet = object$beta,
-            utd = object$taildep$upper,
-            ltd = object$taildep$lower)
-    names(ms) <- c("Kendall's tau",
-                   "Blomqvist's beta",
-                   "Upper TD",
-                   "Lower TD")
-    cat("Dependence measures: \n")
-    print(ms, digits = 2)
+    ## create data.frame of parameters
+    df <- data.frame(par = object$par)
+    if (!((object$family %% 10) %in% c(0, 1, 3, 4, 5, 6)))
+        df$par2 <- object$par2
+    rownames(df) <- "Parameter(s):       "
+
+    ## add standard errors (if available)
+    if (!is.null(object$se)) {
+        se <- c(par = object$se)
+        if (!((object$family %% 10) %in% c(0, 1, 3, 4, 5, 6)))
+            se <- c(se, par2 = object$se2)
+        df <- rbind(df, se)
+        rownames(df)[2] <- "Standard Error(s):"
+    }
+    print(df, digits = 2)
     cat("\n")
+
+
+    ## show dependence measures
+#     object$rho <- BiCopPar2Rho(object)
+    ms <- data.frame(tau = object$tau,
+                     utd = object$taildep$upper,
+                     ltd = object$taildep$lower,
+                     bet = object$beta)
+    colnames(ms) <- c("Kendall's tau",
+                      "Upper TD",
+                      "Lower TD",
+                      "Blomqvist's beta")
+    rownames(ms) <-  "Dependence measures:"
+    print(ms, digits = 2)
 
     ## return BiCop object invsibly
     invisible(object)
