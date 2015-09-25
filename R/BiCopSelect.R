@@ -642,10 +642,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         }
     }
 
-    ## store and return results
-    out$par <- out$par[1]
-    out$par2 <- out$par[2]
-    class(out) <- "BiCop"
+    ## store results in BiCop object (dependence measures are calculated)
+    out <- BiCop(out$family, out$par, out$par2, check.pars = FALSE)
     out
 }
 

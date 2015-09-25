@@ -65,8 +65,7 @@
 #' \code{39} = rotated BB7 copula (270 degrees) \cr
 #' \code{40} = rotated BB8 copula (270 degrees) \cr
 #' \code{104} = Tawn type 1 copula \cr
-#' \code{114} = rotated Tawn type 1 copula
-#' (180 degrees) \cr
+#' \code{114} = rotated Tawn type 1 copula (180 degrees) \cr
 #' \code{124} = rotated Tawn type 1 copula (90 degrees) \cr
 #' \code{134} = rotated Tawn type 1 copula (270 degrees) \cr
 #' \code{204} = Tawn type 2 copula \cr
@@ -86,6 +85,7 @@
 #' (in absolute values) of the BB1, BB6, BB7 and BB8 copulas \cr (default:
 #' \code{max.BB = list(BB1=c(5,6),BB6=c(6,6),BB7=c(5,6),BB8=c(6,1))}).
 #' @param weights Numerical; weights for each observation (opitional).
+#'
 #' @return An object of class \code{\link{BiCop}}, i.e., a list containing
 #' \item{family}{Copula family} \item{par, par2}{Estimated copula
 #' parameter(s).} \item{se, se2}{Standard error(s) of the parameter estimate(s)
