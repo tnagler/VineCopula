@@ -50,7 +50,8 @@
 #' \code{par2} should be an positive integer for the Students's t copula
 #' \code{family = 2}.
 #' @param tau numeric; value of Kendall's tau; has to lie in the interval
-#' (-1, 1). If \code{tau} is provided, \code{par} will be ignored.
+#' (-1, 1). Can only be used with one-parameter families and the t copula.
+#' If \code{tau} is provided, \code{par} will be ignored.
 #' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
 #' for family/parameter-consistency are ommited (should only be used with
 #'
