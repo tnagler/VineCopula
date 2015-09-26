@@ -657,8 +657,11 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         out$AIC    <- 0
         out$BIC    <- 0
     } else {
-        if (se)
-            out$se <- optiout[[out$family]]$se
+        if (se) {
+            out$se <- optiout[[out$family]]$se[1]
+            if (out$family %in% allfams[twopar])
+                out$se2 <- optiout[[out$family]]$se[2]
+        }
         out$nobs   <- length(u1)
         out$logLik <- lls[out$family]
         out$AIC    <- AICs[out$family]
