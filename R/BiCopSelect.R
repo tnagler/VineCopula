@@ -568,41 +568,42 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
             ## calculate AIC and BIC
             AICs <- rep(Inf, max(todo))
             BICs <- rep(Inf, max(todo))
+            lls  <- rep(Inf, max(todo))
             for (i in todo) {
                 if (i %in% familyset[twopar]) {
                     if (any(is.na(weights))) {
-                        ll <- sum(log(BiCopPDF(data1,
+                        lls[i] <- sum(log(BiCopPDF(data1,
                                                data2,
                                                i,
                                                optiout[[i]]$par[1],
                                                optiout[[i]]$par[2],
                                                check.pars = FALSE)))
                     } else {
-                        ll <- sum(log(BiCopPDF(data1,
+                        lls[i] <- sum(log(BiCopPDF(data1,
                                                data2,
                                                i,
                                                optiout[[i]]$par[1],
                                                optiout[[i]]$par[2],
                                                check.pars = FALSE)) %*% weights)
                     }
-                    AICs[i] <- -2 * ll + 4
-                    BICs[i] <- -2 * ll + 2 * log(length(data1))
+                    AICs[i] <- -2 * lls[i] + 4
+                    BICs[i] <- -2 * lls[i] + 2 * log(length(data1))
                 } else {
                     if (any(is.na(weights))) {
-                        ll <- sum(log(BiCopPDF(data1,
+                        lls[i] <- sum(log(BiCopPDF(data1,
                                                data2,
                                                i,
                                                optiout[[i]]$par,
                                                check.pars = FALSE)))
                     } else {
-                        ll <- sum(log(BiCopPDF(data1,
+                        lls[i] <- sum(log(BiCopPDF(data1,
                                                data2,
                                                i,
                                                optiout[[i]]$par,
                                                check.pars = FALSE)) %*% weights)
                     }
-                    AICs[i] <- -2 * ll + 2
-                    BICs[i] <- -2 * ll + 2 * log(length(data1))
+                    AICs[i] <- -2 * lls[i] + 2
+                    BICs[i] <- -2 * lls[i] + 2 * log(length(data1))
                 }
             }
 
@@ -625,6 +626,14 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
 
     ## store results in BiCop object (dependence measures are calculated)
     out <- BiCop(out$family, out$par, out$par2, check.pars = FALSE)
+
+    ## add more information about the fit
+    out$nobs   <- length(u1)
+    out$logLik <- lls[out$family]
+    out$AIC    <- AICs[out$family]
+    out$BIC    <- BICs[out$family]
+
+    ## return final BiCop objectz
     out
 }
 
