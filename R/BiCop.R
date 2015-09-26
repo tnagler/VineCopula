@@ -113,9 +113,10 @@ BiCop <- function(family, par, par2 = 0, tau = NULL, check.pars = TRUE) {
                 par        = par,
                 par2       = par2,
                 familyname = familyname,
-                tau     = tau,
-                beta    = beta,
-                taildep = taildep)
+                tau        = tau,
+                beta       = beta,
+                taildep    = taildep,
+                call       = match.call())
     class(out) <- "BiCop"
     out
 }

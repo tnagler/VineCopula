@@ -442,6 +442,9 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
         obj$se2 <- se1[2]
     }
 
+    ## store the call that created the BiCop object
+    obj$call <- match.call()
+
     ## return results
     obj
 }

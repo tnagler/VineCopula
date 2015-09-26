@@ -665,6 +665,9 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         out$BIC    <- BICs[out$family]
     }
 
+    ## store the call that created the BiCop object
+    out$call <- match.call()
+
     ## return final BiCop objectz
     out
 }
