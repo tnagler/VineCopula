@@ -87,6 +87,8 @@
 #' @param weights Numerical; weights for each observation (optional).
 #' @param rotations If \code{TRUE}, all rotations of the families in
 #' \code{familyset} are included.
+#' @param se Logical; whether standard error(s) of parameter estimates is/are
+#' estimated (default: \code{se = FALSE}).
 #'
 #' @return An object of class \code{\link{BiCop}}, i.e., a list containing
 #' \item{family}{The selected bivariate copula family.}
@@ -164,7 +166,7 @@
 #' @export BiCopSelect
 BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                         indeptest = FALSE, level = 0.05, weights = NA,
-                        rotations = TRUE) {
+                        rotations = TRUE, se = TRUE) {
     allfams <- c(1:10,
                  13, 14, 16:20,
                  23, 24, 26:30, 33, 34, 36:40,
@@ -290,7 +292,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                                                           data2,
                                                           family = 2,
                                                           max.df = 30,
-                                                          weights = weights))
+                                                          weights = weights,
+                                                          se = se))
                 optiout[[2]]$par <- c(optiout[[2]]$par, optiout[[2]]$par2)
                 if (optiout[[2]]$par[2] >= 30) {
                     todo[todo == 2] <- 1
@@ -303,7 +306,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                 optiout[[7]] <- MLE_intern(cbind(data1, data2),
                                            start[[7]],
                                            7,
-                                           weights = weights)
+                                           weights = weights,
+                                           se = se)
                 if (optiout[[7]]$par[1] <= 0.1 | optiout[[7]]$par[2] <= 1.1) {
                     if (optiout[[7]]$par[1] <= 0.1) {
                         todo[todo == 7] <- 4
@@ -320,7 +324,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                 optiout[[8]] <- MLE_intern(cbind(data1, data2),
                                            start[[8]],
                                            8,
-                                           weights = weights)
+                                           weights = weights,
+                                           se = se)
                 if (optiout[[8]]$par[1] <= 1.1 | optiout[[8]]$par[2] <= 1.1) {
                     if (optiout[[8]]$par[1] <= 1.1) {
                         todo[todo == 8] <- 4
@@ -337,7 +342,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                 optiout[[9]] <- MLE_intern(cbind(data1, data2),
                                            start[[9]],
                                            9,
-                                           weights = weights)
+                                           weights = weights,
+                                           se = se)
                 if (optiout[[9]]$par[1] <= 1.1 | optiout[[9]]$par[2] <= 0.1) {
                     if (optiout[[9]]$par[1] <= 1.1) {
                         todo[todo == 9] <- 3
@@ -354,7 +360,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                 optiout[[10]] <- MLE_intern(cbind(data1, data2),
                                             start[[10]],
                                             10,
-                                            weights = weights)
+                                            weights = weights,
+                                            se = se)
                 if (optiout[[10]]$par[2] >= 0.99) {
                     todo[todo == 10] <- 6
                     todo <- unique(todo)
@@ -366,7 +373,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                 optiout[[17]] <- MLE_intern(cbind(data1, data2),
                                             start[[17]],
                                             17,
-                                            weights = weights)
+                                            weights = weights,
+                                            se = se)
                 if (optiout[[17]]$par[1] <= 0.1 | optiout[[17]]$par[2] <= 1.1) {
                     if (optiout[[17]]$par[1] <= 0.1) {
                         todo[todo == 17] <- 14
@@ -383,7 +391,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                 optiout[[18]] <- MLE_intern(cbind(data1, data2),
                                             start[[18]],
                                             18,
-                                            weights = weights)
+                                            weights = weights,
+                                            se = se)
                 if (optiout[[18]]$par[1] <= 1.1 | optiout[[18]]$par[2] <= 1.1) {
                     if (optiout[[18]]$par[1] <= 1.1) {
                         todo[todo == 18] <- 14
@@ -400,7 +409,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                 optiout[[19]] <- MLE_intern(cbind(data1, data2),
                                             start[[19]],
                                             19,
-                                            weights = weights)
+                                            weights = weights,
+                                            se = se)
                 if (optiout[[19]]$par[1] <= 1.1 | optiout[[19]]$par[2] <= 0.1) {
                     if (optiout[[19]]$par[1] <= 1.1) {
                         todo[todo == 19] <- 13
@@ -417,7 +427,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                 optiout[[20]] <- MLE_intern(cbind(data1, data2),
                                             start[[20]],
                                             20,
-                                            weights = weights)
+                                            weights = weights,
+                                            se = se)
                 if (optiout[[20]]$par[2] >= 0.99) {
                     todo[todo == 20] <- 16
                     todo <- unique(todo)
@@ -429,7 +440,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                 optiout[[27]] <- MLE_intern(cbind(data1, data2),
                                             start[[27]],
                                             27,
-                                            weights = weights)
+                                            weights = weights,
+                                            se = se)
                 if (optiout[[27]]$par[1] >= -0.1 | optiout[[27]]$par[2] >= -1.1) {
                     if (optiout[[27]]$par[1] >= -0.1) {
                         todo[todo == 27] <- 24
@@ -446,7 +458,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                 optiout[[28]] <- MLE_intern(cbind(data1, data2),
                                             start[[28]],
                                             28,
-                                            weights = weights)
+                                            weights = weights,
+                                            se = se)
                 if (optiout[[28]]$par[1] >= -1.1 | optiout[[28]]$par[2] >= -1.1) {
                     if (optiout[[28]]$par[1] >= -1.1) {
                         todo[todo == 28] <- 24
@@ -463,7 +476,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                 optiout[[29]] <- MLE_intern(cbind(data1, data2),
                                             start[[29]],
                                             29,
-                                            weights = weights)
+                                            weights = weights,
+                                            se = se)
                 if (optiout[[29]]$par[1] >= -1.1 | optiout[[29]]$par[2] >= -0.1) {
                     if (optiout[[29]]$par[1] >= -1.1) {
                         todo[todo == 29] <- 23
@@ -481,7 +495,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                 optiout[[30]] <- MLE_intern(cbind(data1, data2),
                                             start[[30]],
                                             30,
-                                            weights = weights)
+                                            weights = weights,
+                                            se = se)
                 if (optiout[[30]]$par[2] <= -0.99) {
                     todo[todo == 30] <- 26
                     todo <- unique(todo)
@@ -493,7 +508,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                 optiout[[37]] <- MLE_intern(cbind(data1, data2),
                                             start[[37]],
                                             37,
-                                            weights = weights)
+                                            weights = weights,
+                                            se = se)
                 if (optiout[[37]]$par[1] >= -0.1 | optiout[[37]]$par[2] >= -1.1) {
                     if (optiout[[37]]$par[1] >= -0.1) {
                         todo[todo == 37] <- 34
@@ -510,7 +526,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                 optiout[[38]] <- MLE_intern(cbind(data1, data2),
                                             start[[38]],
                                             38,
-                                            weights = weights)
+                                            weights = weights,
+                                            se = se)
                 if (optiout[[38]]$par[1] >= -1.1 | optiout[[38]]$par[2] >= -1.1) {
                     if (optiout[[38]]$par[1] >= -1.1) {
                         todo[todo == 38] <- 34
@@ -527,7 +544,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                 optiout[[39]] <- MLE_intern(cbind(data1, data2),
                                             start[[39]],
                                             39,
-                                            weights = weights)
+                                            weights = weights,
+                                            se = se)
                 if (optiout[[39]]$par[1] >= -1.1 | optiout[[39]]$par[2] >= -0.1) {
                     if (optiout[[39]]$par[1] >= -1.1) {
                         todo[todo == 39] <- 33
@@ -544,7 +562,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                 optiout[[40]] <- MLE_intern(cbind(data1, data2),
                                             start[[40]],
                                             40,
-                                            weights = weights)
+                                            weights = weights,
+                                            se = se)
                 if (optiout[[40]]$par[2] <= -0.99) {
                     todo[todo == 40] <- 36
                     todo <- unique(todo)
@@ -555,14 +574,16 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
             for (i in todo[(todo %in% allfams[tawns])]) {
                 optiout[[i]] <- MLE_intern_Tawn(cbind(data1, data2),
                                                 start[[i]],
-                                                i)
+                                                i,
+                                                se = se)
             }
             # one parameter families
             for (i in todo[todo %in% allfams[onepar]]) {
                 optiout[[i]] <- MLE_intern(cbind(data1, data2),
                                            start[[i]],
                                            i,
-                                           weights = weights)
+                                           weights = weights,
+                                           se = se)
             }
 
             ## calculate AIC and BIC
@@ -570,37 +591,37 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
             BICs <- rep(Inf, max(todo))
             lls  <- rep(Inf, max(todo))
             for (i in todo) {
-                if (i %in% familyset[twopar]) {
+                if (i %in% allfams[twopar]) {
                     if (any(is.na(weights))) {
                         lls[i] <- sum(log(BiCopPDF(data1,
-                                               data2,
-                                               i,
-                                               optiout[[i]]$par[1],
-                                               optiout[[i]]$par[2],
-                                               check.pars = FALSE)))
+                                                   data2,
+                                                   i,
+                                                   optiout[[i]]$par[1],
+                                                   optiout[[i]]$par[2],
+                                                   check.pars = FALSE)))
                     } else {
                         lls[i] <- sum(log(BiCopPDF(data1,
-                                               data2,
-                                               i,
-                                               optiout[[i]]$par[1],
-                                               optiout[[i]]$par[2],
-                                               check.pars = FALSE)) %*% weights)
+                                                   data2,
+                                                   i,
+                                                   optiout[[i]]$par[1],
+                                                   optiout[[i]]$par[2],
+                                                   check.pars = FALSE)) %*% weights)
                     }
                     AICs[i] <- -2 * lls[i] + 4
                     BICs[i] <- -2 * lls[i] + 2 * log(length(data1))
                 } else {
                     if (any(is.na(weights))) {
                         lls[i] <- sum(log(BiCopPDF(data1,
-                                               data2,
-                                               i,
-                                               optiout[[i]]$par,
-                                               check.pars = FALSE)))
+                                                   data2,
+                                                   i,
+                                                   optiout[[i]]$par,
+                                                   check.pars = FALSE)))
                     } else {
                         lls[i] <- sum(log(BiCopPDF(data1,
-                                               data2,
-                                               i,
-                                               optiout[[i]]$par,
-                                               check.pars = FALSE)) %*% weights)
+                                                   data2,
+                                                   i,
+                                                   optiout[[i]]$par,
+                                                   check.pars = FALSE)) %*% weights)
                     }
                     AICs[i] <- -2 * lls[i] + 2
                     BICs[i] <- -2 * lls[i] + 2 * log(length(data1))
@@ -628,6 +649,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
     out <- BiCop(out$family, out$par, out$par2, check.pars = FALSE)
 
     ## add more information about the fit
+    if (se)
+        out$se <- optiout[[out$family]]$se
     out$nobs   <- length(u1)
     out$logLik <- lls[out$family]
     out$AIC    <- AICs[out$family]
