@@ -99,6 +99,9 @@
 #' @export BiCopTau2Par
 BiCopTau2Par <- function(family, tau, check.taus = TRUE) {
     ## sanity check
+    if (any(family %in% setdiff(allfams[twopar], 2)))
+        stop("For two parameter copulas (except t) Kendall's tau cannot be inverted.")
+
     if (any(abs(tau) > 0.99999))
         stop("some tau is too close to -1 or 1")
 
