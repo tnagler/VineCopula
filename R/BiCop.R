@@ -120,10 +120,19 @@ BiCop <- function(family, par, par2 = 0, tau = NULL, check.pars = TRUE) {
     out
 }
 
+## sets of families
+allfams <- c(1:10,
+             13, 14, 16:20,
+             23, 24, 26:30, 33, 34, 36:40,
+             104, 114, 124, 134, 204, 214, 224, 234)
+tawns <- which(floor(allfams / 100) > 0)
+onepar <- setdiff(which(allfams %% 10 %in% c(1, 3, 4, 5, 6)), tawns)
+twopar <- setdiff(seq_along(allfams), onepar)
+
 print.BiCop <- function(x, ...) {
     cat("Bivariate copula: ")
     cat(x$familyname, " (par = ", round(x$par, 2), sep = "")
-    if (!(x$family %% 10 %in% c(0, 1, 3, 4, 5, 6)))
+    if (x$family %in% allfams[twopar])
         cat(", par2 = ", round(x$par2, 2), sep = "")
     cat(") \n")
 
@@ -141,14 +150,14 @@ summary.BiCop <- function(object, ...) {
 
     ## create data.frame of parameters
     df <- data.frame(par = object$par)
-    if (!(object$family %% 10 %in% c(0, 1, 3, 4, 5, 6)))
+    if (object$family %in% allfams[twopar])
         df$par2 <- object$par2
     rownames(df) <- "Parameter(s):       "
 
     ## add standard errors (if available)
     if (!is.null(object$se)) {
         se <- c(par = object$se)
-        if (!(object$family %% 10 %in% c(0, 1, 3, 4, 5, 6)))
+        if (object$family %in% allfams[twopar])
             se <- c(se, par2 = object$se2)
         df <- rbind(df, se)
         rownames(df)[2] <- "Standard Error(s):"
