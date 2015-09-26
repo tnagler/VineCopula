@@ -4,7 +4,7 @@
 \alias{BiCop}
 \title{Constructing BiCop-objects}
 \usage{
-BiCop(family, par, par2 = 0, tau = NULL)
+BiCop(family, par, par2 = 0, tau = NULL, check.pars = TRUE)
 }
 \arguments{
 \item{family}{An integer defining the bivariate copula family: \cr
@@ -41,8 +41,7 @@ BiCop(family, par, par2 = 0, tau = NULL)
 \code{39} = rotated BB7 copula (270 degrees) \cr
 \code{40} = rotated BB8 copula (270 degrees) \cr
 \code{104} = Tawn type 1 copula \cr
-\code{114} = rotated Tawn type 1 copula
-(180 degrees) \cr
+\code{114} = rotated Tawn type 1 copula (180 degrees) \cr
 \code{124} = rotated Tawn type 1 copula (90 degrees) \cr
 \code{134} = rotated Tawn type 1 copula (270 degrees) \cr
 \code{204} = Tawn type 2 copula \cr
@@ -58,7 +57,11 @@ BB1, BB6, BB7, BB8, Tawn type 1 and type 2; default is \code{par2 = 0}).
 \code{family = 2}.}
 
 \item{tau}{numeric; value of Kendall's tau; has to lie in the interval
-(-1, 1). If \code{tau} is provided, \code{par} will be ignored.}
+(-1, 1). Can only be used with one-parameter families and the t copula.
+If \code{tau} is provided, \code{par} will be ignored.}
+
+\item{check.pars}{logical; default is \code{TRUE}; if \code{FALSE}, checks
+for family/parameter-consistency are ommited (should only be used with}
 }
 \value{
 An object of class \code{\link{BiCop}}. Objects of this class are
