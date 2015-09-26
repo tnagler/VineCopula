@@ -185,7 +185,7 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
 
     if (method != "mle" && method != "itau")
         stop("Estimation method has to be either 'mle' or 'itau'.")
-    if (method == "itau" && family %in% c(2, 7, 8, 9, 10, 17, 18, 19, 20, 27, 28, 29, 30, 37, 38, 39, 40, 104, 114, 124, 134, 204, 214, 224, 234)) {
+    if ((method == "itau") && (!(family %in% c(allfams[onepar], 2)))) {
         message("For two parameter copulas the estimation method 'itau' cannot be used. The method is automatically set to 'mle'.")
         method <- "mle"
     }
@@ -193,14 +193,10 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
         stop("'se' has to be a logical variable (TRUE or FALSE).")
 
 
-    ## calculate empirical kendall's tau
-    if (family != 0) {
-        # tau <- cor(u1,u2,method='kendall')
-        tau <- fasttau(u1, u2)
-    }
-
-    ## invert tau for initial parameter estimate
-    theta <- BiCopTau2Par(family, tau)
+    ## calculate empirical Kendall's tau and invert for initial estimate
+    tau <- fasttau(u1, u2)
+    if (family %in% c(allfams[onepar], 2))
+        theta <- BiCopTau2Par(family, tau)
 
     ## inversion of kendall's tau -----------------------------
     if (method == "itau") {
