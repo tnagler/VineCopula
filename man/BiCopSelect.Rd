@@ -5,7 +5,8 @@
 \title{Selection and Maximum Likelihood Estimation of Bivariate Copula Families}
 \usage{
 BiCopSelect(u1, u2, familyset = NA, selectioncrit = "AIC",
-  indeptest = FALSE, level = 0.05, weights = NA, rotations = TRUE)
+  indeptest = FALSE, level = 0.05, weights = NA, rotations = TRUE,
+  se = TRUE)
 }
 \arguments{
 \item{u1,u2}{Data vectors of equal length with values in [0,1].}
@@ -16,33 +17,47 @@ be selected).  The vector has to include at least one bivariate copula
 family that allows for positive and one that allows for negative dependence.
 Not listed copula families might be included to better handle limit cases.
 If \code{familyset = NA} (default), selection among all possible families is
-performed.  Coding of bivariate copula families: \cr \code{1} = Gaussian
-copula \cr \code{2} = Student t copula (t-copula) \cr \code{3} = Clayton
-copula \cr \code{4} = Gumbel copula \cr \code{5} = Frank copula \cr \code{6}
-= Joe copula \cr \code{7} = BB1 copula \cr \code{8} = BB6 copula \cr
-\code{9} = BB7 copula \cr \code{10} = BB8 copula \cr \code{13} = rotated
-Clayton copula (180 degrees; ``survival Clayton'') \cr \code{14} = rotated
-Gumbel copula (180 degrees; ``survival Gumbel'') \cr \code{16} = rotated Joe
-copula (180 degrees; ``survival Joe'') \cr \code{17} = rotated BB1 copula
-(180 degrees; ``survival BB1'')\cr \code{18} = rotated BB6 copula (180
-degrees; ``survival BB6'')\cr \code{19} = rotated BB7 copula (180 degrees;
-``survival BB7'')\cr \code{20} = rotated BB8 copula (180 degrees; ``survival
-BB8'')\cr \code{23} = rotated Clayton copula (90 degrees) \cr \code{24} =
-rotated Gumbel copula (90 degrees) \cr \code{26} = rotated Joe copula (90
-degrees) \cr \code{27} = rotated BB1 copula (90 degrees) \cr \code{28} =
-rotated BB6 copula (90 degrees) \cr \code{29} = rotated BB7 copula (90
-degrees) \cr \code{30} = rotated BB8 copula (90 degrees) \cr \code{33} =
-rotated Clayton copula (270 degrees) \cr \code{34} = rotated Gumbel copula
-(270 degrees) \cr \code{36} = rotated Joe copula (270 degrees) \cr \code{37}
-= rotated BB1 copula (270 degrees) \cr \code{38} = rotated BB6 copula (270
-degrees) \cr \code{39} = rotated BB7 copula (270 degrees) \cr \code{40} =
-rotated BB8 copula (270 degrees) \cr \code{104} = Tawn type 1 copula \cr
-\code{114} = rotated Tawn type 1 copula (180 degrees) \cr \code{124} =
-rotated Tawn type 1 copula (90 degrees) \cr \code{134} = rotated Tawn type 1
-copula (270 degrees) \cr \code{204} = Tawn type 2 copula \cr \code{214} =
-rotated Tawn type 2 copula (180 degrees) \cr \code{224} = rotated Tawn type
-2 copula (90 degrees) \cr \code{234} = rotated Tawn type 2 copula (270
-degrees) \cr}
+performed.  Coding of bivariate copula families: \cr
+\code{0} = independence copula \cr
+\code{1} = Gaussian copula \cr
+\code{2} = Student t copula (t-copula) \cr
+\code{3} = Clayton copula \cr
+\code{4} = Gumbel copula \cr
+\code{5} = Frank copula \cr
+\code{6} = Joe copula \cr
+\code{7} = BB1 copula \cr
+\code{8} = BB6 copula \cr
+\code{9} = BB7 copula \cr
+\code{10} = BB8 copula \cr
+\code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
+\code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+\code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
+\code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
+\code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
+\code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
+\code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
+\code{23} = rotated Clayton copula (90 degrees) \cr
+\code{24} = rotated Gumbel copula (90 degrees) \cr
+\code{26} = rotated Joe copula (90 degrees) \cr
+\code{27} = rotated BB1 copula (90 degrees) \cr
+\code{28} = rotated BB6 copula (90 degrees) \cr
+\code{29} = rotated BB7 copula (90 degrees) \cr
+\code{30} = rotated BB8 copula (90 degrees) \cr
+\code{33} = rotated Clayton copula (270 degrees) \cr
+\code{34} = rotated Gumbel copula (270 degrees) \cr
+\code{36} = rotated Joe copula (270 degrees) \cr
+\code{37} = rotated BB1 copula (270 degrees) \cr
+\code{38} = rotated BB6 copula (270 degrees) \cr
+\code{39} = rotated BB7 copula (270 degrees) \cr
+\code{40} = rotated BB8 copula (270 degrees) \cr
+\code{104} = Tawn type 1 copula \cr
+\code{114} = rotated Tawn type 1 copula (180 degrees) \cr
+\code{124} = rotated Tawn type 1 copula (90 degrees) \cr
+\code{134} = rotated Tawn type 1 copula (270 degrees) \cr
+\code{204} = Tawn type 2 copula \cr
+\code{214} = rotated Tawn type 2 copula (180 degrees) \cr
+\code{224} = rotated Tawn type 2 copula (90 degrees) \cr
+\code{234} = rotated Tawn type 2 copula (270 degrees) \cr}
 
 \item{selectioncrit}{Character indicating the criterion for bivariate copula
 selection. Possible choices: \code{selectioncrit = "AIC"} (default) or
@@ -61,12 +76,15 @@ be rejected.}
 
 \item{rotations}{If \code{TRUE}, all rotations of the families in
 \code{familyset} are included.}
+
+\item{se}{Logical; whether standard error(s) of parameter estimates is/are
+estimated (default: \code{se = FALSE}).}
 }
 \value{
 An object of class \code{\link{BiCop}}, i.e., a list containing
-\item{family}{The selected bivariate copula family.} \item{par, par2}{The
-estimated bivariate copula parameter(s).} \item{p.value.indeptest}{P-value
-of the independence test if performed.}
+\item{family}{The selected bivariate copula family.}
+\item{par, par2}{The estimated bivariate copula parameter(s).}
+\item{p.value.indeptest}{P-value of the independence test if performed.}
 }
 \description{
 This function selects an appropriate bivariate copula family for given
@@ -161,7 +179,9 @@ Schwarz, G. E. (1978). Estimating the dimension of a model. Annals of
 Statistics 6 (2), 461-464.
 }
 \seealso{
-\code{\link{RVineStructureSelect}}, \code{\link{RVineCopSelect}},
-\code{\link{BiCopIndTest}}, \code{\link{BiCop}}
+\code{\link{RVineStructureSelect}},
+\code{\link{RVineCopSelect}},
+\code{\link{BiCopIndTest}},
+\code{\link{BiCop}}
 }
 

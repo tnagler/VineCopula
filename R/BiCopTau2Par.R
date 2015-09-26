@@ -1,9 +1,9 @@
 #' Parameter of a Bivariate Copula for a given Kendall's Tau Value
-#' 
+#'
 #' This function computes the parameter of a (one parameter) bivariate copula
 #' for a given value of Kendall's tau.
-#' 
-#' 
+#'
+#'
 #' @param family integer; single number or vector of size \code{m}; defines the
 #' bivariate copula family: \cr \code{0} = independence copula \cr \code{1} =
 #' Gaussian copula \cr \code{2} = Student t copula (Here only the first
@@ -37,26 +37,26 @@
 #' @seealso \code{\link{BiCopPar2Tau}}
 #' @references Joe, H. (1997). Multivariate Models and Dependence Concepts.
 #' Chapman and Hall, London.
-#' 
+#'
 #' Czado, C., U. Schepsmeier, and A. Min (2012). Maximum likelihood estimation
 #' of mixed C-vines with application to exchange rates. Statistical Modelling,
 #' 12(3), 229-255.
 #' @examples
-#' 
+#'
 #' ## Example 1: Gaussian copula
 #' tau0 <- 0.5
 #' rho <- BiCopTau2Par(family = 1, tau = tau0)
-#' 
+#'
 #' # transform back
 #' tau <- BiCopPar2Tau(family = 1, par = rho)
 #' tau - 2/pi*asin(rho)
-#' 
-#' 
+#'
+#'
 #' ## Example 2: Clayton copula
 #' theta <- BiCopTau2Par(family = 3, tau = c(0.4, 0.5, 0.6))
 #' BiCopPar2Tau(family = 3, par = theta)
-#' 
-#' 
+#'
+#'
 #' ## Example 3:
 #' vtau <- seq(from = 0.1, to = 0.8, length.out = 100)
 #' thetaC <- BiCopTau2Par(family = 3, tau = vtau)
@@ -67,7 +67,7 @@
 #' lines(thetaG ~ vtau, col = 2)
 #' lines(thetaF ~ vtau, col = 3)
 #' lines(thetaJ ~ vtau, col = 4)
-#' 
+#'
 #' \dontshow{
 #' # Test BiCopTau2Par
 #' BiCopTau2Par(family = 0, tau = c(0.4,0.5,0.6))
@@ -95,27 +95,30 @@
 #' BiCopTau2Par(family = 61, tau = -c(0.4,0.5,0.6))
 #' BiCopTau2Par(family = 71, tau = -c(0.4,0.5,0.6))
 #' }
-#' 
+#'
 #' @export BiCopTau2Par
 BiCopTau2Par <- function(family, tau, check.taus = TRUE) {
     ## sanity check
+    if (any(family %in% setdiff(allfams[twopar], 2)))
+        stop("For two parameter copulas (except t) Kendall's tau cannot be inverted.")
+
     if (any(abs(tau) > 0.99999))
         stop("some tau is too close to -1 or 1")
-    
+
     ## adjust length for input vectors; stop if not matching
     n <- max(length(family), length(tau))
-    if (length(family) == 1) 
+    if (length(family) == 1)
         family <- rep(family, n)
-    if (length(tau) == 1) 
+    if (length(tau) == 1)
         par <- rep(tau, n)
     if (!all(c(length(family), length(tau)) %in% c(1, n)))
         stop("Input lenghts don't match")
-    
+
     ## check for family/tau consistency
     if (check.taus)
         BiCopCheckTaus(family, tau)
-    
-    
+
+
     ## calculate the parameter
     if (length(tau) == 1) {
         # call for single parameters
@@ -126,7 +129,7 @@ BiCopTau2Par <- function(family, tau, check.taus = TRUE) {
                       function(i) calcPar(family[i], tau[i]),
                       numeric(1))
     }
-    
+
     ## return result
     out
 }
@@ -156,8 +159,66 @@ calcPar <- function(family, tau) {
     } else if (family %in% c(61, 71)) {
         par <- -ipsA.tau2cpar(-tau)
     }
-    
+
     ## return result
     par
+}
+
+Frank.itau.JJ <- function(tau) {
+    a <- 1
+    if (tau < 0) {
+        a <- -1
+        tau <- -tau
+    }
+    v <- uniroot(function(x) tau - (1 - 4/x + 4/x * debye1(x)),
+                 lower = 0 + .Machine$double.eps^0.5, upper = 5e5,
+                 tol = .Machine$double.eps^0.5)$root
+    return(a*v)
+}
+
+
+Joe.itau.JJ <- function(tau) {
+    if (tau < 0) {
+        return(1.000001)
+    } else {
+        tauF <- function(par) {
+            param1 <- 2/par + 1
+            tem <- digamma(2) - digamma(param1)
+            tau <- 1 + tem * 2/(2 - par)
+            tau[par == 2] <- 1 - trigamma(2)
+            tau
+        }
+
+        v <- uniroot(function(x) tau - tauF(x),
+                     lower = 1,
+                     upper = 5e5,
+                     tol = .Machine$double.eps^0.5)$root
+        return(v)
+    }
+}
+
+ipsA.tau2cpar <- function(tau, mxiter = 20, eps = 1e-06, dstart = 0, iprint = FALSE) {
+    con <- log((1 - tau) * sqrt(pi)/2)
+    de <- dstart
+    if (dstart <= 0)
+        de <- tau + 1
+    iter <- 0
+    diff <- 1
+    while (iter < mxiter & max(abs(diff)) > eps) {
+        g <- con + lgamma(1 + de) - lgamma(de + 0.5)
+        gp <- digamma(1 + de) - digamma(de + 0.5)
+        iter <- iter + 1
+        diff <- g/gp
+        de <- de - diff
+        while (min(de) <= 0) {
+            diff <- diff/2
+            de <- de + diff
+        }
+        if (iprint)
+            cat(iter, " ", de, " ", diff, "\n")
+    }
+    if (iter >= mxiter)
+        cat("did not converge\n")
+    de
 }
 
