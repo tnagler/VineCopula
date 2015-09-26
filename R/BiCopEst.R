@@ -442,6 +442,12 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
         obj$se2 <- se1[2]
     }
 
+    ## add more information about the fit
+    obj$nobs   <- length(u1)
+    obj$logLik <- out$value
+    obj$AIC    <- - 2 * obj$logLik + 2 * obj$npars
+    obj$BIC    <- - 2 * obj$logLik + log(obj$nobs) * obj$npars
+
     ## store the call that created the BiCop object
     obj$call <- match.call()
 
