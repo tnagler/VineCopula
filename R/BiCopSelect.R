@@ -170,7 +170,7 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                  23, 24, 26:30, 33, 34, 36:40,
                  104, 114, 124, 134, 204, 214, 224, 234)
     if (is.na(familyset[1]))
-        family <- allfams
+        familyset <- allfams
 
     ## sanity checks
     if ((is.null(u1) == TRUE) || (is.null(u2) == TRUE))
@@ -183,7 +183,7 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         stop("Data has to be in the interval [0,1].")
     if (any(u2 > 1) || any(u2 < 0))
         stop("Data has to be in the interval [0,1].")
-    if (!all(family %in% allfams))
+    if (!all(familyset %in% allfams))
         stop("Copula family not implemented.")
     if ((selectioncrit != "AIC") && (selectioncrit != "BIC"))
         stop("Selection criterion not implemented.")
@@ -200,7 +200,7 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         familyset <- with_rotations(familyset)
 
     if (!is.na(familyset[1]) & any(familyset == 0)) {
-        # select independence if allowed
+        ## select independence if allowed
         out$p.value.indeptest <- NA
         out$family <- 0
         out$par <- c(0, 0)
@@ -209,14 +209,9 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         negfams <- c(1, 2, 5, 23, 24, 26:30, 33, 34, 36:40, 124, 134, 224, 234)
         posfams <- c(1:10, 13, 14, 16:20, 104, 114, 204, 214)
 
-        ## indicators for tawns, one- and two-parameter families
-        tawns <- which(floor(familyset / 100) > 0)
-        onepar <- setdiff(which(familyset %% 10 %in% c(1, 3, 4, 5, 6)), tawns)
-        twopar <- seq_along(familyset)[-onepar]
-
         ## stop if familyset not sufficient
         if (!is.na(familyset[1]) &&
-            (!any(negfams %in% familyset) || posfams %in% familyset)) {
+            !(any(familyset %in% negfams) && any(familyset %in% posfams))) {
             txt <- paste0("'familyset' has to include at least one bivariate ",
                           "copula family for positive and one for negative ",
                           "dependence.")
@@ -234,10 +229,9 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         }
 
         if ((!is.na(out$p.value.indeptest)) & (out$p.value.indeptest >= level)) {
-            # select independence copula, if not rejected
+            ## select independence copula, if not rejected
             out$family <- 0
             out$par <- c(0, 0)
-
         } else {
             ## initial values for parameter optimization
             start <- list()
@@ -280,9 +274,9 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
             ## find families for which estimation is required (only families that allow for
             ## the empirical kendall's tau)
             if (emp_tau < 0) {
-                todo <- negf
+                todo <- negfams
             } else {
-                todo <- posf
+                todo <- posfams
             }
             todo <- todo[which(todo %in% familyset)]
 
@@ -290,8 +284,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
             ## estimate parameters for each of the families (in 'todo')
             optiout <- list()
 
+            # t
             if (any(todo == 2)) {
-                # t
                 optiout[[2]] <- suppressWarnings(BiCopEst(data1,
                                                           data2,
                                                           family = 2,
@@ -304,9 +298,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                     optiout[[2]] <- list()
                 }
             }
-
+            # BB1
             if (any(todo == 7)) {
-                # BB1
                 optiout[[7]] <- MLE_intern(cbind(data1, data2),
                                            start[[7]],
                                            7,
@@ -322,9 +315,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                     optiout[[7]] <- list()
                 }
             }
-
+            # BB6
             if (any(todo == 8)) {
-                # BB6
                 optiout[[8]] <- MLE_intern(cbind(data1, data2),
                                            start[[8]],
                                            8,
@@ -340,9 +332,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                     optiout[[8]] <- list()
                 }
             }
-
+            # BB7
             if (any(todo == 9)) {
-                # BB7
                 optiout[[9]] <- MLE_intern(cbind(data1, data2),
                                            start[[9]],
                                            9,
@@ -358,9 +349,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                     optiout[[9]] <- list()
                 }
             }
-
+            # BB8
             if (any(todo == 10)) {
-                # BB8
                 optiout[[10]] <- MLE_intern(cbind(data1, data2),
                                             start[[10]],
                                             10,
@@ -371,9 +361,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                     optiout[[10]] <- list()
                 }
             }
-
+            # SBB1
             if (any(todo == 17)) {
-                # SBB1
                 optiout[[17]] <- MLE_intern(cbind(data1, data2),
                                             start[[17]],
                                             17,
@@ -389,9 +378,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                     optiout[[17]] <- list()
                 }
             }
-
+            # SBB6
             if (any(todo == 18)) {
-                # SBB6
                 optiout[[18]] <- MLE_intern(cbind(data1, data2),
                                             start[[18]],
                                             18,
@@ -407,9 +395,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                     optiout[[18]] <- list()
                 }
             }
-
+            # SBB7
             if (any(todo == 19)) {
-                # SBB7
                 optiout[[19]] <- MLE_intern(cbind(data1, data2),
                                             start[[19]],
                                             19,
@@ -425,9 +412,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                     optiout[[19]] <- list()
                 }
             }
-
+            # SBB8
             if (any(todo == 20)) {
-                # SBB8
                 optiout[[20]] <- MLE_intern(cbind(data1, data2),
                                             start[[20]],
                                             20,
@@ -438,9 +424,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                     optiout[[20]] <- list()
                 }
             }
-
+            # BB1_90
             if (any(todo == 27)) {
-                # BB1_90
                 optiout[[27]] <- MLE_intern(cbind(data1, data2),
                                             start[[27]],
                                             27,
@@ -456,9 +441,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                     optiout[[27]] <- list()
                 }
             }
-
+            # BB6_90
             if (any(todo == 28)) {
-                # BB6_90
                 optiout[[28]] <- MLE_intern(cbind(data1, data2),
                                             start[[28]],
                                             28,
@@ -474,9 +458,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                     optiout[[28]] <- list()
                 }
             }
-
+            # BB7_90
             if (any(todo == 29)) {
-                # BB7_90
                 optiout[[29]] <- MLE_intern(cbind(data1, data2),
                                             start[[29]],
                                             29,
@@ -505,9 +488,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                     optiout[[30]] <- list()
                 }
             }
-
+            # BB1_270
             if (any(todo == 37)) {
-                # BB1_270
                 optiout[[37]] <- MLE_intern(cbind(data1, data2),
                                             start[[37]],
                                             37,
@@ -523,9 +505,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                     optiout[[37]] <- list()
                 }
             }
-
+            # BB6_270
             if (any(todo == 38)) {
-                # BB6_270
                 optiout[[38]] <- MLE_intern(cbind(data1, data2),
                                             start[[38]],
                                             38,
@@ -541,9 +522,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                     optiout[[38]] <- list()
                 }
             }
-
+            # BB7_270
             if (any(todo == 39)) {
-                # BB7_270
                 optiout[[39]] <- MLE_intern(cbind(data1, data2),
                                             start[[39]],
                                             39,
@@ -559,9 +539,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                     optiout[[39]] <- list()
                 }
             }
-
+            # BB8_270
             if (any(todo == 40)) {
-                # BB8_270
                 optiout[[40]] <- MLE_intern(cbind(data1, data2),
                                             start[[40]],
                                             40,
@@ -572,26 +551,25 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                     optiout[[40]] <- list()
                 }
             }
-
-            for (i in todo[!(todo %in% familyset[-tawns])]) {
+            # Tawns
+            for (i in todo[(todo %in% allfams[tawns])]) {
+                optiout[[i]] <- MLE_intern_Tawn(cbind(data1, data2),
+                                                start[[i]],
+                                                i)
+            }
+            # one parameter families
+            for (i in todo[todo %in% allfams[onepar]]) {
                 optiout[[i]] <- MLE_intern(cbind(data1, data2),
                                            start[[i]],
                                            i,
                                            weights = weights)
             }
 
-            for (i in todo[(todo %in% familyset[tawns])]) {
-                optiout[[i]] <- MLE_intern_Tawn(cbind(data1, data2),
-                                                start[[i]],
-                                                i)
-            }
-
             ## calculate AIC and BIC
             AICs <- rep(Inf, max(todo))
             BICs <- rep(Inf, max(todo))
             for (i in todo) {
-                if (i %in% c(2, 7:10, 17:20, 27:30, 37:40, 104,
-                             114, 124, 134, 204, 214, 224, 234)) {
+                if (i %in% familyset[twopar]) {
                     if (any(is.na(weights))) {
                         ll <- sum(log(BiCopPDF(data1,
                                                data2,
@@ -630,15 +608,18 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
 
             ## select the best fitting model
             if (selectioncrit == "AIC") {
-                out$family <- todo[which.min(AICs[todo])]
+                out$family <- todo[which.min(AICs[todo])][1]
             } else {
-                out$family <- todo[which.min(BICs[todo])]
+                out$family <- todo[which.min(BICs[todo])][1]
             }
 
             ## for one-parameter families, set par2 = 0 (default)
-            out$par <- optiout[[out$family]]$par
-            if (out$family %in% familyset[onepar])
-                out$par[2] <- 0
+            out$par <- optiout[[out$family]]$par[1]
+            if (out$family %in% allfams[onepar]) {
+                out$par2 <- 0
+            } else {
+                out$par2 <- optiout[[out$family]]$par[2]
+            }
         }
     }
 
