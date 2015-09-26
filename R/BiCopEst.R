@@ -716,6 +716,7 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
                                      maximum = TRUE,
                                      interval = c(2.0001, max.df))
                 optimout$par <- optimout$maximum
+                optimout$value <- optimout$objective
             }
             optimout$par <- c(0, optimout$par)
 
@@ -874,6 +875,7 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
         } else {
             optimout <- optimize(f = t_LL, interval = c(low, up), maximum = TRUE)
             optimout$par <- optimout$maximum
+            optimout$value <- optimout$objective
         }
         optimout$par <- c(optimout$par, 0)
 
