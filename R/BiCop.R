@@ -90,7 +90,7 @@ BiCop <- function(family, par, par2 = 0, tau = NULL, check.pars = TRUE) {
         # check for consistency
         BiCopCheck(family, par, par2)
         # warn if par2 is unused
-        if ((family %% 10 %in% c(0, 1, 3, 4, 5, 6)) && (par2 != 0)) {
+        if ((family %in% allfams[onepar]) && (par2 != 0)) {
             txt <- paste0("The ",
                           BiCopName(family, short = FALSE),
                           " copula has only one parameter; 'par2' is useless.")
