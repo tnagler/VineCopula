@@ -444,7 +444,14 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
 
     ## add more information about the fit
     obj$nobs   <- length(u1)
-    obj$logLik <- out$value
+    # for method "itau" the log-likelihood hasn't been calculated yet
+    obj$logLik <- switch(method,
+                         "itau" = sum(log(BiCopPDF(u1, u2,
+                                                   obj$family,
+                                                   obj$par,
+                                                   obj$par2,
+                                                   check.pars = FALSE))),
+                         "mle"  = out$value)
     obj$AIC    <- - 2 * obj$logLik + 2 * obj$npars
     obj$BIC    <- - 2 * obj$logLik + log(obj$nobs) * obj$npars
 
