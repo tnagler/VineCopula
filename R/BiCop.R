@@ -112,6 +112,7 @@ BiCop <- function(family, par, par2 = 0, tau = NULL, check.pars = TRUE) {
     out <- list(family     = family,
                 par        = par,
                 par2       = par2,
+                npars      = ifelse(family %in% allfams[onepar], 1, 2),
                 familyname = familyname,
                 tau        = tau,
                 beta       = beta,
