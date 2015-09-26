@@ -199,9 +199,10 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
         tau <- fasttau(u1, u2)
     }
 
+    theta <- BiCopTau2Par(family, tau)
+
     ## inversion of kendall's tau -----------------------------
     if (method == "itau") {
-        theta <- BiCopTau2Par(family, tau)
 
         ## standard errors for method itau
         se1 <- 0
