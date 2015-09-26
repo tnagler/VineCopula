@@ -205,7 +205,7 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         ## select independence if allowed
         out$p.value.indeptest <- NA
         out$family <- 0
-        out$par <- c(0, 0)
+        out$par <- out$par2 <- 0
     } else {
         ## sets of families for negative and positive dependence
         negfams <- c(1, 2, 5, 23, 24, 26:30, 33, 34, 36:40, 124, 134, 224, 234)
@@ -233,7 +233,7 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         if ((!is.na(out$p.value.indeptest)) & (out$p.value.indeptest >= level)) {
             ## select independence copula, if not rejected
             out$family <- 0
-            out$par <- c(0, 0)
+            out$par <- out$par2 <- 0
         } else {
             ## initial values for parameter optimization
             start <- list()
@@ -649,12 +649,21 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
     out <- BiCop(out$family, out$par, out$par2, check.pars = FALSE)
 
     ## add more information about the fit
-    if (se)
-        out$se <- optiout[[out$family]]$se
-    out$nobs   <- length(u1)
-    out$logLik <- lls[out$family]
-    out$AIC    <- AICs[out$family]
-    out$BIC    <- BICs[out$family]
+    if (out$family == 0) {
+        if (se)
+            out$se <- NA
+        out$nobs   <- length(u1)
+        out$logLik <- 0
+        out$AIC    <- 0
+        out$BIC    <- 0
+    } else {
+        if (se)
+            out$se <- optiout[[out$family]]$se
+        out$nobs   <- length(u1)
+        out$logLik <- lls[out$family]
+        out$AIC    <- AICs[out$family]
+        out$BIC    <- BICs[out$family]
+    }
 
     ## return final BiCop objectz
     out
