@@ -131,6 +131,7 @@ tawns <- which(floor(allfams / 100) > 0)
 onepar <- setdiff(which(allfams %% 10 %in% c(1, 3, 4, 5, 6)), tawns)
 twopar <- setdiff(seq_along(allfams), onepar)
 
+
 print.BiCop <- function(x, ...) {
     cat("Bivariate copula: ")
     cat(x$familyname, " (par = ", round(x$par, 2), sep = "")
@@ -142,44 +143,52 @@ print.BiCop <- function(x, ...) {
     invisible(x)
 }
 
+
 summary.BiCop <- function(object, ...) {
     ## print family name
-    cat("Family name:        ", object$familyname)
+    cat("Family\n")
+    cat("------ \n")
+    cat("Name:  ", object$familyname)
     cat("\n")
-    cat("Family number:      ", object$family)
+    cat("Number:", object$family)
     cat("\n")
     cat("\n")
 
-    ## create data.frame of parameters
-    df <- data.frame(par = object$par)
-    if (object$family %in% allfams[twopar])
-        df$par2 <- object$par2
-    rownames(df) <- "Parameter(s):       "
-
-    ## add standard errors (if available)
-    if (!is.null(object$se)) {
-        se <- c(par = object$se)
-        if (object$family %in% allfams[twopar])
-            se <- c(se, par2 = object$se2)
-        df <- rbind(df, se)
-        rownames(df)[2] <- "Standard Error(s):"
+    ## print parameters and standard errors
+    cat("Parameter(s)\n")
+    cat("------------\n")
+    cat("par: ", as.character(round(object$par, 2)))
+    if (!is.null(object$se))
+        cat("  (SE = ", as.character(round(object$se[1], 2)), ")", sep = "")
+    cat("\n")
+    if (object$family %in% allfams[twopar]) {
+        cat("par2:", as.character(round(object$par2, 2)))
+        if (!is.null(object$se))
+            cat("  (SE = ", as.character(round(object$se2, 2)), ")", sep = "")
     }
-    print(df, digits = 2)
     cat("\n")
-
+    cat("\n")
 
     ## show dependence measures
     #     object$rho <- BiCopPar2Rho(object)
-    ms <- data.frame(tau = object$tau,
-                     utd = object$taildep$upper,
-                     ltd = object$taildep$lower,
-                     bet = object$beta)
-    colnames(ms) <- c("Kendall's tau",
-                      "Upper TD",
-                      "Lower TD",
-                      "Blomqvist's beta")
-    rownames(ms) <-  "Dependence measures:"
-    print(ms, digits = 2)
+    cat("Dependence measures\n")
+    cat("-------------------\n")
+    cat("Kendall's tau:   ", as.character(round(object$tau, 2)), "\n")
+    cat("Upper TD:        ", as.character(round(object$taildep$upper, 2)), "\n")
+    cat("Lower TD:        ", as.character(round(object$taildep$lower, 2)), "\n")
+    cat("Blomqvist's beta:", as.character(round(object$beta, 2)), "\n")
+    cat("\n")
+
+    ## print fit statistics if available
+    if (!is.null(object$nobs)) {
+        cat("Fit statistics\n")
+        cat("--------------\n")
+        cat("logLik: ", as.character(round(object$logLik, 2)), "\n")
+        cat("AIC:   ", as.character(round(object$AIC, 2)), "\n")
+        cat("BIC:   ", as.character(round(object$BIC, 2)), "\n")
+        cat("\n")
+
+    }
 
     ## return BiCop object invsibly
     invisible(object)
