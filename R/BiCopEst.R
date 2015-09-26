@@ -199,6 +199,7 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
         tau <- fasttau(u1, u2)
     }
 
+    ## invert tau for initial parameter estimate
     theta <- BiCopTau2Par(family, tau)
 
     ## inversion of kendall's tau -----------------------------
@@ -373,7 +374,7 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
                 delta <- max(-0.5, -max((max.BB$BB8[2] + 0.001)/2, 0.001))
                 theta1 <- max(-1.5, -max((max.BB$BB8[1] + 1.001)/2, 1.001))
             }
-        } else if (family %in% c(104, 114, 124, 134, 204, 214, 224, 234)) {
+        } else if (family %in% allfams[tawns]) {
             ## Tawn
             # the folllowing gives a theoretical kendall's tau close to the empirical one
             delta <- min(abs(tau) + 0.1, 0.999)
@@ -409,18 +410,18 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
         }
 
         ## likelihood optimization
-        if (family != 0 && family < 100) {
+        if ((family != 0) && (family < 100)) {
             out <- MLE_intern(cbind(u1, u2),
                               c(theta1, delta),
                               family = family,
                               se,
                               max.df,
-                              max.BB
-                              , weights)
+                              max.BB,
+                              weights)
             theta <- out$par
             if (se == TRUE)
                 se1 <- out$se
-        } else if (family != 0 && family > 100) {
+        } else if ((family != 0) && (family > 100)) {
             # New
             out <- MLE_intern_Tawn(cbind(u1, u2),
                                    c(theta1, delta),
@@ -892,7 +893,8 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
             } else {
                 var <- (-solve(optimout$hessian))
             }
-
+            if (any(diag(var) < 0))
+                var <- matrix(NA, nrow(var), ncol(var))
             out$se <- sqrt(diag(var))
 
             if (family == 2 && out$par[2] >= (max.df - 1e-04))
