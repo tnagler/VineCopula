@@ -146,22 +146,7 @@
 BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
                      max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6), BB8 = c(6, 1)),
                      weights = NA) {
-    # Function that estimates the parameter(s) of the bivatiate copula
-    #---------------------------------------------------------
-    # INPUT:
-    #   u1,u2      Data for which to estimate parameter
-    #   family            The array definig the copulas in the pcc copula construction
-    # OUTPUT:
-    #   theta      Estimated Parameters
-    #----------------------------------------------------------
-    # Author: Carlos Almeida  <calmeida at ma.tum.de>
-    # Update: Ulf Schepsmeier <schepsmeier at ma.tum.de>
-    # Date: 2008-12-08
-    # Update date: 2011-05-27
-    # Version: 1.1
-    #---------------------------------------------------------------
-
-    # sanity checks
+    ## sanity checks
     if (is.null(u1) == TRUE || is.null(u2) == TRUE)
         stop("u1 and/or u2 are not set or have length zero.")
     if (length(u1) != length(u2))
@@ -389,7 +374,6 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
             }
         } else if (family %in% c(104, 114, 124, 134, 204, 214, 224, 234)) {
             ## Tawn
-
             # the folllowing gives a theoretical kendall's tau close to the empirical one
             delta <- min(abs(tau) + 0.1, 0.999)
             theta1 <- 1 + 6 * abs(tau)
