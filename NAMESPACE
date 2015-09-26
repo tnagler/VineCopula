@@ -112,6 +112,8 @@ S3method(as.copuladata, list)
 S3method(pairs, copuladata)
 S3method(plot, BiCop)
 S3method(contour, BiCop)
+S3method(print, BiCop)
+S3method(summary, BiCop)
 S3method(plot, RVineMatrix)
 S3method(contour, RVineMatrix)
 
