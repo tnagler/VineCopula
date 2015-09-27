@@ -13,17 +13,22 @@ RVineHessian(data, RVM)
 pair-copula families, and the parameters. \cr
 Only the following copula
 families are allowed in \code{RVM$family} \cr
-\code{0} = independence copula
-\cr \code{1} = Gaussian copula \cr \code{2} = Student t copula (t-copula)
-(WARNING: see details)\cr \code{3} = Clayton copula \cr \code{4} = Gumbel
-copula \cr \code{5} = Frank copula \cr \code{6} = Joe copula \cr \code{13} =
-rotated Clayton copula (180 degrees; ``survival Clayton'') \cr \code{14} =
-rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr \code{16} =
-rotated Joe copula (180 degrees; ``survival Joe'') \cr \code{23} = rotated
-Clayton copula (90 degrees) \cr \code{24} = rotated Gumbel copula (90
-degrees) \cr \code{26} = rotated Joe copula (90 degrees) \cr \code{33} =
-rotated Clayton copula (270 degrees) \cr \code{34} = rotated Gumbel copula
-(270 degrees) \cr \code{36} = rotated Joe copula (270 degrees) \cr}
+\code{0} = independence copula \cr
+\code{1} = Gaussian copula \cr
+\code{2} = Student t copula (t-copula)\cr
+\code{3} = Clayton copula \cr
+\code{4} = Gumbel copula \cr
+\code{5} = Frank copula \cr
+\code{6} = Joe copula \cr
+\code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
+\code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+\code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
+\code{23} = rotated Clayton copula (90 degrees) \cr
+\code{24} = rotated Gumbel copula (90 degrees) \cr
+\code{26} = rotated Joe copula (90 degrees) \cr
+\code{33} = rotated Clayton copula (270 degrees) \cr
+\code{34} = rotated Gumbel copula (270 degrees) \cr
+\code{36} = rotated Joe copula (270 degrees) \cr}
 }
 \value{
 \item{hessian}{The calculated Hessian matrix of the log-likelihood
@@ -103,8 +108,12 @@ vine copula models. Computational Statistics, 28 (6), 2679-2707
 \url{http://link.springer.com/article/10.1007/s00180-013-0423-8#}.
 }
 \seealso{
-\code{\link{BiCopDeriv}}, \code{\link{BiCopDeriv2}},
-\code{\link{BiCopHfuncDeriv}}, \code{\link{BiCopHfuncDeriv2}}, \cr
-\code{\link{RVineMatrix}}, \code{\link{RVineMLE}}, \code{\link{RVineGrad}}
+\code{\link{BiCopDeriv}},
+\code{\link{BiCopDeriv2}},
+\code{\link{BiCopHfuncDeriv}},
+\code{\link{BiCopHfuncDeriv2}}, \cr
+\code{\link{RVineMatrix}},
+\code{\link{RVineMLE}},
+\code{\link{RVineGrad}}
 }
 

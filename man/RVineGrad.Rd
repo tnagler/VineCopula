@@ -46,8 +46,8 @@ in the gradient (default: \code{posParams = (RVM$family > 0)}).}
 }
 \value{
 gradient The calculated gradient of the log-likelihood value
-of the R-vine copula model. (three matrices: \code{direct}, \code{indirect} and
-\code{value}).
+of the R-vine copula model. (three matrices: \code{direct}, \code{indirect}
+and \code{value}).
 }
 \description{
 This function calculates the gradient of the log-likelihood of a
@@ -131,9 +131,12 @@ vine copula models. Computational Statistics, 28 (6), 2679-2707
 \url{http://link.springer.com/article/10.1007/s00180-013-0423-8#}.
 }
 \seealso{
-\code{\link{BiCopDeriv}}, \code{\link{BiCopDeriv2}},
-\code{\link{BiCopHfuncDeriv}}, \code{\link{BiCopHfuncDeriv2}}, \cr
-\code{\link{RVineMatrix}}, \code{\link{RVineMLE}},
+\code{\link{BiCopDeriv}},
+\code{\link{BiCopDeriv2}},
+\code{\link{BiCopHfuncDeriv}},
+\code{\link{BiCopHfuncDeriv2}}, \cr
+\code{\link{RVineMatrix}},
+\code{\link{RVineMLE}},
 \code{\link{RVineHessian}}
 }
 

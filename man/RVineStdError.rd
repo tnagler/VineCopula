@@ -94,9 +94,12 @@ vine copula models. Computational Statistics, 28 (6), 2679-2707
 \url{http://link.springer.com/article/10.1007/s00180-013-0423-8#}.
 }
 \seealso{
-\code{\link{BiCopDeriv}}, \code{\link{BiCopDeriv2}},
-\code{\link{BiCopHfuncDeriv}}, \code{\link{BiCopHfuncDeriv2}}, \cr
-\code{\link{RVineMatrix}}, \code{\link{RVineHessian}},
+\code{\link{BiCopDeriv}},
+\code{\link{BiCopDeriv2}},
+\code{\link{BiCopHfuncDeriv}},
+\code{\link{BiCopHfuncDeriv2}}, \cr
+\code{\link{RVineMatrix}},
+\code{\link{RVineHessian}},
 \code{\link{RVineGrad}}
 }
 
