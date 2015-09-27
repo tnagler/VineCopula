@@ -33,7 +33,7 @@ C(u_d|u_1,\ldots,u_{d-1}), } where \eqn{C(u_k|u_1,\ldots,u_{k-1})} is the
 conditional copula of \eqn{U_k} given \eqn{U_1 = u_1,\ldots, U_{k-1} =
 u_{k-1}, k = 2,\ldots,d}. The data vector \eqn{y = (y_1,\ldots,y_d)} is now
 i.i.d. with \eqn{y_i \sim U[0, 1]}. The algorithm for the R-vine PIT is
-given in the appendix of Schepsmeier (2013).
+given in the appendix of Schepsmeier (2015).
 }
 \examples{
 # load data set

@@ -10,8 +10,10 @@ RVineHessian(data, RVM)
 \item{data}{An N x d data matrix (with uniform margins).}
 
 \item{RVM}{An \code{\link{RVineMatrix}} object including the structure, the
-pair-copula families, and the parameters. \cr Only the following copula
-families are allowed in \code{RVM$family} \cr \code{0} = independence copula
+pair-copula families, and the parameters. \cr
+Only the following copula
+families are allowed in \code{RVM$family} \cr
+\code{0} = independence copula
 \cr \code{1} = Gaussian copula \cr \code{2} = Student t copula (t-copula)
 (WARNING: see details)\cr \code{3} = Clayton copula \cr \code{4} = Gumbel
 copula \cr \code{5} = Frank copula \cr \code{6} = Joe copula \cr \code{13} =
@@ -25,7 +27,8 @@ rotated Clayton copula (270 degrees) \cr \code{34} = rotated Gumbel copula
 }
 \value{
 \item{hessian}{The calculated Hessian matrix of the log-likelihood
-value of the R-vine copula model.} \item{der}{The product of the gradient
+value of the R-vine copula model.}
+\item{der}{The product of the gradient
 vector with its transposed version.}
 }
 \description{
@@ -87,12 +90,16 @@ Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 (2013). Selecting and estimating regular vine copulae and application to
 financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 
-Schepsmeier, U. and J. Stoeber (2012). Derivatives and Fisher information of
-bivariate copulas. Statistical Papers.
-\url{http://link.springer.com/article/10.1007/s00362-013-0498-x}.
+Schepsmeier, U. and J. Stöber (2014)
+Derivatives and Fisher information of bivariate copulas.
+Statistical Papers, 55(2), 525-542.
+online first: \url{http://link.springer.com/article/10.1007/s00362-013-0498-x}.
+
+Web supplement: Derivatives and Fisher Information of bivariate copulas.
+\url{http://mediatum.ub.tum.de/node?id=1119201}
 
 Stoeber, J. and U. Schepsmeier (2013). Estimating standard errors in regular
-vine copula models. Computational Statistics, 1-29
+vine copula models. Computational Statistics, 28 (6), 2679-2707
 \url{http://link.springer.com/article/10.1007/s00180-013-0423-8#}.
 }
 \seealso{
