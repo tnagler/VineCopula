@@ -10,7 +10,8 @@ VineCopula
 
 This package is made primarily for the statistical analysis with **vine copula** 
 models. Vine copulas are a flexible class of dependence models consisting of
-bivariate building blocks (see e.g., Aas et al., 2009).
+bivariate building blocks (see e.g., Aas et al., 2009). For a comprehensive 
+list of publications (and more), please visit [vine-copula.org](http://www.statistics.ma.tum.de/en/research/vine-copula-models/).
 
 The package includes model selection, model verification via goodness-of-fit
 tests, parameter estimation, simulation and visualization tools. Vine copula 
