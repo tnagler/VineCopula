@@ -4,25 +4,21 @@ VineCopula
 > Statistical inference of vine copulas
 
 [![Build status Linux](https://travis-ci.org/tnagler/VineCopula.svg?branch=master)](https://travis-ci.org/tnagler/VineCopula)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/tnagler/VineCopula?svg=true)](https://ci.appveyor.com/project/tnagler/VineCopula)
+[![Windows Build status](http://ci.appveyor.com/api/projects/status/github/tnagler/VineCopula?svg=true)](https://ci.appveyor.com/project/tnagler/VineCopula)
 [![CRAN version](http://www.r-pkg.org/badges/version/VineCopula)](https://cran.r-project.org/web/packages/VineCopula/index.html) 
 [![CRAN downloads](http://cranlogs.r-pkg.org/badges/VineCopula)](https://cran.r-project.org/web/packages/VineCopula/index.html)
 
-This package is made primarily for the statistical analysis with **vine copula** 
+This package is made primarily for the statistical analysis with vine copula 
 models. Vine copulas are a flexible class of dependence models consisting of
 bivariate building blocks (see e.g., Aas et al., 2009). For a comprehensive 
 list of publications (and more), please visit [vine-copula.org](http://www.statistics.ma.tum.de/en/research/vine-copula-models/).
 
 The package includes model selection, model verification via goodness-of-fit
-tests, parameter estimation, simulation and visualization tools. Vine copula 
-models can be estimated either sequentially or by joint maximum likelihood
-estimation. Sampling algorithms and plotting methods are included.
-
-Tools for bivariate exploratory data analysis, **bivariate copula** selection 
+tests, parameter estimation, simulation and visualization tools. **Vine copula 
+models** can be estimated either sequentially or by joint maximum likelihood
+estimation. Sampling algorithms and plotting methods are included. Tools for 
+bivariate exploratory data analysis, **bivariate copula** selection 
 and estimation are also provided. 
-
-For all functions data is assumed to lie in the unit hypercube (so-called copula
-data).
 
 You can install:
 
@@ -43,12 +39,11 @@ You can install:
 Package overview
 ----------------
 
-### Functionality
-
 The package provides functions for dependence modeling with bivariate and R-vine
-copulas. Below, we list most functions you should know.
+copulas. For all functions data is assumed to lie in the unit hypercube (so-called copula
+data). Below, we list most functions you should know.
 
-#### Bivariate copula modeling: the BiCop-family
+### Bivariate copula modeling: the BiCop-family
 
   * `BiCop`: Creates a bivariate copula by specifying the family and parameters
     (or Kendall's tau). Returns an object of class `BiCop`. The class has the
@@ -100,7 +95,7 @@ For most functions, you can provide an object of class `BiCop` instead of
 specifying `family`, `par` and `par2` manually.
 
 
-#### R-vine copula modeling: the RVine-family
+### R-vine copula modeling: the RVine-family
 
   * `RVineMatrix`: Creates an R-vine copula by specifying structure, family and
     parameter matrices. Such matrices have been introduced by Dissman et al. 
@@ -136,11 +131,11 @@ specifying `family`, `par` and `par2` manually.
   * `RVinePar2Tau`, `RVinePar2Beta`: Calculates dependence measures 
     corresponding to a vine copula model.
     
-  * `RVinePDF`, `RVineAIC`, `RVineBIC`: Calculates the PDF, AIC, and BIC of a 
-    vine copula model, respectively.
+  * `RVinePDF`, `RVineAIC`, `RVineBIC`: Calculates the density, AIC, and BIC of
+    a vine copula model, respectively.
 
 
-#### Additional features
+### Additional features
   
 The functions `C2RVine` and `D2RVine` create `RVineMatrix` objects for C- and 
 D-vine copula models. This is particularly useful for former users of the CDVine
@@ -149,10 +144,8 @@ package.
 Furthermore, all bivariate and vine copula models from this packages can be used
 within the [copula package](https://r-forge.r-project.org/R/?group_id=600) 
 (Hofert et al., 2015). For more details, we refer to the package manual.
-    
-    
 
-  
+
 ### Bivariate copula families
 
 In this package several bivariate copula families are included for bivariate 
@@ -202,18 +195,6 @@ parameters `par` and `par2` and internal coding `family`:
 | (Survival) Tawn type 2                      | `204`, `214` | `[1, Inf)`   | `[0, 1]`     |
 | Rotated Tawn type 2 (90 and 270 degrees)    | `224`, `234` | `(-Inf, -1]` | `[0, 1]`     |
 
-### R-vine copula models
-
-The specification of an R-vine is done in matrix notation, introduced by 
-Dissmann et al. (2013). One matrix contains the R-vine tree structure, one the
-copula families utilized and two matrices corresponding parameter values. These 
-four matrices are stored in an `RVineMatrix` object created by the function 
-`RVineMatrix`. Each matrix is a d x d lower triangular matrix. Since C- and 
-D-vines are special cases, boundary cases, of R-vines one can write each C- or 
-D-vine in R-vine notation. The transformation of notation to an R-vine can be 
-done via `C2RVine` and `D2RVine`, which provide an interface to the package 
-**CDVine** (https://cran.r-project.org/package=CDVine). For more details see
-the documentation of the functions.
 
 ------------------------------------------------------------------------
 
@@ -279,7 +260,7 @@ Kurowicka, D. and H. Joe (Eds.) (2011). Dependence Modeling: Vine Copula Handboo
 Nelsen, R. (2006). An introduction to copulas. Springer
 
 Nagler, T. (2015). kdecopula: Kernel Smoothing for Bivariate Copula Densities. R package
-version 0.2.0. https://github.com/tnagler/kdecopula
+version 0.2.0. <http://cran.r-project.org/web/packages/kdecopula>
 
 Schepsmeier, U. and J. Stoeber (2012). Derivatives and Fisher information of bivariate copulas. Statistical Papers, 55 (2), 525-542. <http://link.springer.com/article/10.1007/s00362-013-0498-x>.
 
