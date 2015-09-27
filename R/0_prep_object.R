@@ -290,7 +290,7 @@ linkVineCop.CDFtawn <- function(u, copula) {
 #' copula.
 #'
 #' @name ddCopula
-#' @aliases dduCopula ddvCopula
+#' @aliases ddCopula dduCopula ddvCopula
 #' @param u Pairs of values for which the partial derivative should be
 #' evaluated.
 #' @param copula The copula object representing the family member of interest.

@@ -16,6 +16,8 @@
 #' given by \deqn{ BIC := -2
 #' l_{RVine}\left(\boldsymbol{\theta}|\boldsymbol{u}\right) + \log(N) k. }
 #'
+#' @aliases RVineAIC RVineBIC
+#'
 #' @param data An N x d data matrix (with uniform margins).
 #' @param RVM An \code{\link{RVineMatrix}} object including the structure and
 #' the pair-copula families and parameters.
