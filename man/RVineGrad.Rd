@@ -118,7 +118,7 @@ Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 (2013). Selecting and estimating regular vine copulae and application to
 financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 
-Schepsmeier, U. and J. Stöber (2014)
+Schepsmeier, U. and J. Stoeber (2014)
 Derivatives and Fisher information of bivariate copulas.
 Statistical Papers, 55(2), 525-542.
 online first: \url{http://link.springer.com/article/10.1007/s00362-013-0498-x}.

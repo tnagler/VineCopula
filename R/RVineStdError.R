@@ -7,26 +7,35 @@
 #' @param hessian The Hessian matrix of the given R-vine.
 #' @param RVM An \code{\link{RVineMatrix}} object including the structure, the
 #' pair-copula families, and the parameters.
+#'
 #' @return \item{se}{The calculated standard errors for the first parameter
 #' matrix. The entries are ordered with respect to the ordering of the
 #' \code{RVM$par} matrix.} \item{se2}{The calculated standard errors for the
 #' second parameter matrix.}
+#'
 #' @note The negative Hessian matrix should be positive semidefinite. Otherwise
 #' NAs will be returned in some entries and the non-NA entries may be wrong. If
 #' the negaive Hessian matrix is negative definite, then one could try a near
 #' positive matrix. The package \code{Matrix} provides a function called
 #' \code{nearPD} to estimate a matrix which is positive definite and close to
 #' the given matrix.
+#'
 #' @author Ulf Schepsmeier, Jakob Stoeber
-#' @seealso \code{\link{BiCopDeriv}}, \code{\link{BiCopDeriv2}},
-#' \code{\link{BiCopHfuncDeriv}}, \code{\link{BiCopHfuncDeriv2}}, \cr
-#' \code{\link{RVineMatrix}}, \code{\link{RVineHessian}},
+#'
+#' @seealso
+#' \code{\link{BiCopDeriv}},
+#' \code{\link{BiCopDeriv2}},
+#' \code{\link{BiCopHfuncDeriv}},
+#' \code{\link{BiCopHfuncDeriv2}}, \cr
+#' \code{\link{RVineMatrix}},
+#' \code{\link{RVineHessian}},
 #' \code{\link{RVineGrad}}
+#'
 #' @references Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 #' (2013). Selecting and estimating regular vine copulae and application to
 #' financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 #'
-#' Schepsmeier, U. and J. Stöber (2014)
+#' Schepsmeier, U. and J. Stoeber (2014)
 #' Derivatives and Fisher information of bivariate copulas.
 #' Statistical Papers, 55(2), 525-542.
 #' online first: \url{http://link.springer.com/article/10.1007/s00362-013-0498-x}.
@@ -37,6 +46,7 @@
 #' Stoeber, J. and U. Schepsmeier (2013). Estimating standard errors in regular
 #' vine copula models. Computational Statistics, 28 (6), 2679-2707
 #' \url{http://link.springer.com/article/10.1007/s00180-013-0423-8#}.
+#'
 #' @examples
 #'
 #' # define 5-dimensional R-vine tree structure matrix
@@ -81,7 +91,6 @@
 #' # get the standard errors
 #' RVineStdError(out2$hessian, RVM)
 #'
-#' @export RVineStdError
 RVineStdError <- function(hessian, RVM) {
     # Test auf pos. semidef.
     se3 <- numeric()

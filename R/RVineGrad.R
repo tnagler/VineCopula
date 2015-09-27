@@ -1,4 +1,3 @@
-
 #' Gradient of the Log-Likelihood of an R-Vine Copula Model
 #'
 #' This function calculates the gradient of the log-likelihood of a
@@ -44,22 +43,30 @@
 #' NA}).
 #' @param posParams A d x d matrix indicating which copula has to be considered
 #' in the gradient (default: \code{posParams = (RVM$family > 0)}).
+#'
 #' @return gradient The calculated gradient of the log-likelihood value
-#' of the R-vine copula model. (three matrices: \code{direct}, \code{indirect} and
-#' \code{value}).
+#' of the R-vine copula model. (three matrices: \code{direct}, \code{indirect}
+#' and \code{value}).
+#'
 #' @note The gradient for R-vine copula models with two parameter Archimedean
 #' copulas, i.e. BB1, BB6, BB7, BB8 and their rotated versions can not yet be calculated.
 #' The derivatives of these bivariate copulas are more complicated.
+#'
 #' @author Ulf Schepsmeier, Jakob Stoeber
-#' @seealso \code{\link{BiCopDeriv}}, \code{\link{BiCopDeriv2}},
-#' \code{\link{BiCopHfuncDeriv}}, \code{\link{BiCopHfuncDeriv2}}, \cr
-#' \code{\link{RVineMatrix}}, \code{\link{RVineMLE}},
+#'
+#' @seealso \code{\link{BiCopDeriv}},
+#' \code{\link{BiCopDeriv2}},
+#' \code{\link{BiCopHfuncDeriv}},
+#' \code{\link{BiCopHfuncDeriv2}}, \cr
+#' \code{\link{RVineMatrix}},
+#' \code{\link{RVineMLE}},
 #' \code{\link{RVineHessian}}
+#'
 #' @references Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 #' (2013). Selecting and estimating regular vine copulae and application to
 #' financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 #'
-#' Schepsmeier, U. and J. Stöber (2014)
+#' Schepsmeier, U. and J. Stoeber (2014)
 #' Derivatives and Fisher information of bivariate copulas.
 #' Statistical Papers, 55(2), 525-542.
 #' online first: \url{http://link.springer.com/article/10.1007/s00362-013-0498-x}.
@@ -70,6 +77,7 @@
 #' Stoeber, J. and U. Schepsmeier (2013). Estimating standard errors in regular
 #' vine copula models. Computational Statistics, 28 (6), 2679-2707
 #' \url{http://link.springer.com/article/10.1007/s00180-013-0423-8#}.
+#'
 #' @examples
 #'
 #' # define 5-dimensional R-vine tree structure matrix
@@ -112,8 +120,6 @@
 #' out2 <- RVineGrad(simdata[1,], RVM)
 #' out2$gradient
 #'
-#'
-#' @export RVineGrad
 RVineGrad <- function(data, RVM, par = RVM$par, par2 = RVM$par2, start.V = NA, posParams = (RVM$family > 0)) {
 
     if (any(!(RVM$family %in% c(0, 1:6, 13, 14, 16, 23, 24, 26, 33, 34, 36))))
