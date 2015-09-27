@@ -14,6 +14,17 @@ DEPENDS
 
 NEW FEATURES
 
+  * Extend `BiCop` objects (now includes: associated dependence measures; fit statistics, if available).
+
+  * New methods `print` and `summary` for objects of class `BiCop`.
+
+  * New generic `plot.RVineMatrix` for plotting vine trees.
+  
+  * New generic `contour.RVineMatrix` for a matrix of contour plots.
+  
+  * New generic `contour.BiCop` has short hand for 
+    `plot.BiCop(..., type = "contour")`.
+
   * New function `BiCopHinv` for computation of inverse h-functions.
   
   * Vectorize `BiCopXyz`-functions w.r.t. `family`, `par`, `par2`:
@@ -29,13 +40,6 @@ NEW FEATURES
   * Add `check.pars`/`check.taus` argument to the above functions for the option
     to omit family/parameter consistency checks (for internal usage). When
     `FALSE`, the Clayton and Frank copulas can be used with `par = 0`.
-    
-  * New generic `plot.RVineMatrix` for plotting vine trees.
-  
-  * New generic `contour.RVineMatrix` for a matrix of contour plots.
-  
-  * New generic `contour.BiCop` has short hand for 
-    `plot.BiCop(..., type = "contour")`.
     
   * Faster implementations of `BiCopPar2Tau`/`BiCopTau2Par` for Frank copula and
     `BiCopTau2Par` conversion for Joe copula. 
