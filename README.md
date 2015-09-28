@@ -92,7 +92,7 @@ For most functions, you can provide an object of class `BiCop` instead of
 specifying `family`, `par` and `par2` manually.
 
 
-### R-vine copula modeling: the RVine-family
+### Vine copula modeling: the RVine-family
 
   * `RVineMatrix`: Creates a vine copula model by specifying structure, family
     and parameter matrices. Such matrices have been introduced by Dissman et al. 
