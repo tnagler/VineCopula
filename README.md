@@ -139,8 +139,10 @@ D-vine copulas. This is particularly useful for former users of the CDVine
 package. 
 
 Furthermore, bivariate and vine copula models from this packages can be used
-with the [copula package](https://r-forge.r-project.org/R/?group_id=600) 
-(Hofert et al., 2015). For more details, we refer to the package manual.
+with the [copula](https://r-forge.r-project.org/R/?group_id=600) package 
+(Hofert et al., 2015). For example, `vineCopula` transforms an `RVineMatrix` 
+object into a object of class `vineCopula` which provides methods for
+`dCopula`, `rCopula`, etc. For more details, we refer to the package manual.
 
 
 ### Bivariate copula families
