@@ -199,8 +199,8 @@ Associated shiny apps
 This small shiny app illustrates a couple of bivariate copula families 
 implemented in the [copula](http://cran.r-project.org/web/packages/copula/index.html), [VineCopula](http://cran.r-project.org/web/packages/VineCopula/index.html) and [spcopula](http://r-forge.r-project.org/projects/spcopula/) R packages. Density
 and pairs plots are drawn as well as Kendall's tau and tail dependence 
-coefficients. This side and script is provided by Benedikt Gräler (Universtity 
-of Münster) 
+coefficients.  
+Author: Benedikt Gräler (Universtity of Münster) 
 
 http://ifgi.uni-muenster.de/~b_grae02/indexCopulatheque.html
 
@@ -209,7 +209,8 @@ http://ifgi.uni-muenster.de/~b_grae02/indexCopulatheque.html
 This small shiny app enables the user to draw nice tree plots of an R-Vine
 copula model using the package 
 [d3Network](https://cran.r-project.org/package=d3Network). Models have to be
-set up in an `RVineMatrix` object. The page is still under construction.
+set up locally in an `RVineMatrix` object and uploaded as .RData file. The page
+is still under construction.  
 Author: Ulf Schepsmeier
 
 https://rvinegraph.shinyapps.io/rvinegraph
