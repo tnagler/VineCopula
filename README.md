@@ -8,17 +8,14 @@ VineCopula
 [![CRAN version](http://www.r-pkg.org/badges/version/VineCopula)](https://cran.r-project.org/web/packages/VineCopula/index.html) 
 [![CRAN downloads](http://cranlogs.r-pkg.org/badges/VineCopula)](https://cran.r-project.org/web/packages/VineCopula/index.html)
 
-This package is made primarily for the statistical analysis with vine copula 
-models. Vine copulas are a flexible class of dependence models consisting of
+Vine copulas are a flexible class of dependence models consisting of
 bivariate building blocks (see e.g., Aas et al., 2009). For a comprehensive 
 list of publications (and more), please visit [vine-copula.org](http://www.statistics.ma.tum.de/en/research/vine-copula-models/).
 
-The package includes model selection, model verification via goodness-of-fit
-tests, parameter estimation, simulation and visualization tools. **Vine copula 
-models** can be estimated either sequentially or by joint maximum likelihood
-estimation. Sampling algorithms and plotting methods are included. Tools for 
-bivariate exploratory data analysis, **bivariate copula** selection 
-and estimation are also provided. 
+This package is primarily made for the statistical analysis of **vine copula
+models**. The package includes tools for parameter estimation, model selection, simulation,
+goodness-of-fit tests, and visualization. Tools for bivariate exploratory data
+analysis, **bivariate copula** selection and estimation are also provided. 
 
 You can install:
 
@@ -40,8 +37,8 @@ Package overview
 ----------------
 
 The package provides functions for dependence modeling with bivariate and R-vine
-copulas. For all functions data is assumed to lie in the unit hypercube (so-called copula
-data). Below, we list most functions you should know.
+copulas. For all functions, data are assumed to lie in the unit hypercube 
+(so-called copula data). Below, we list most functions you should know about.
 
 ### Bivariate copula modeling: the BiCop-family
 
@@ -56,12 +53,12 @@ data). Below, we list most functions you should know.
         density. Possibly coupled with standard normal margins (default for
         `contour`.) 
      
-  * `BiCopEst`: Estimates a bivariate copula to given data and a prespecified
-    family. Estimation can be done by maximum likelihood (`method = "mle"`) or
+  * `BiCopEst`: Estimates a bivariate copula fwith a prespecified family.
+    Estimation can be done by maximum likelihood (`method = "mle"`) or
     inversion of the empirical Kendall's tau (`method = "itau"`, only available
     for one-parameter families). Returns an object of class `BiCop`.
      
-  * `BiCopSelect`: Estimates a bivariate copula for a selection of families and
+  * `BiCopSelect`: Estimates a bivariate copula for a set of families and
     selects the best fitting model (using either AIC or BIC). 
     Returns an object of class `BiCop`.
     
@@ -73,19 +70,19 @@ data). Below, we list most functions you should know.
   * `BiCopSim`: Simulates from a bivariate copula.
    
   * `BiCopPar2Tau`, `BiCopTau2Par`, `BiCopPar2Beta`, `BiCopPar2TailDep`: 
-    Conversion between dependence measures and parameters (for a given fmaily).
+    Conversion between dependence measures and parameters (for a given family).
     Functions are vectorized in all arguments.
      
   * Evaluate functions related to a bivariate copula: `BiCopPDF`, `BiCopCDF`, 
     `BiCopDeriv`, `BiCopDeriv2`, `BiCopHfunc`, `BiCopHfuncDeriv`, 
     `BiCopHfuncDeriv2`, `BiCopHinv`. Functions are vectorized in the `family`,
-    `par`, `par2` arguments. 
+    `par`, and `par2` arguments. 
     
   * `BiCopMetaContour`: Contour plots for a bivariate copula. If data is
     provided, you can create a plot of a kernel estimate of the copula density.
     In the latter case, we recommed to use the 
     [kdecopula](https://github.com/tnagler/kdecopula) package (Nagler, 2015)
-    which implements state-of-the art kernel smoothing techniques for copula
+    which implements state-of-the art kernel smoothers for bviariate copula
     densities.
     
   * `BiCopLambda`, `BiCopKPlot`, `BiCopChiPlot`: Further plot types for the 
@@ -97,8 +94,8 @@ specifying `family`, `par` and `par2` manually.
 
 ### R-vine copula modeling: the RVine-family
 
-  * `RVineMatrix`: Creates an R-vine copula by specifying structure, family and
-    parameter matrices. Such matrices have been introduced by Dissman et al. 
+  * `RVineMatrix`: Creates a vine copula model by specifying structure, family
+    and parameter matrices. Such matrices have been introduced by Dissman et al. 
     (2013). Returns an object of class `RVineMatrix`. The class has
     the following methods:
     
@@ -106,66 +103,60 @@ specifying `family`, `par` and `par2` manually.
       you can annotate the edges with pair-copula families and parameters.
       
     * `contour`: Creates a matrix of contour plots associated with the
-      pair-copulas in the model.
+      pair-copulas.
       
   * `RVineSeqEst`: Estimates the parameters of a vine copula model with 
-    prespecified structure and family matrices.
+    prespecified structure and families.
     
-  * `RVineCopSelect`: Estimates the parameters and selects the best fitting
-    families in a vine copula model with prespecified strucutre matrix.
+  * `RVineCopSelect`: Estimates the parameters and selects the best family for a
+    vine copula model with prespecified structure matrix.
     
-  * `RVineStructureSelect`: Fits an vine model assuming no prior knowledge.
+  * `RVineStructureSelect`: Fits a vine copulamodel assuming no prior knowledge.
     It selects the R-vine structure using Dissmann et al. (2013)'s 
-    method, estimates parameters for selected families, and selects the best 
-    family for each pair-copula.
+    method, estimates parameters for various families, and selects the best 
+    family for each pair.
 
   * `RVineGoFTest`: Goodness-of-Fit tests for a vine copula moel (c.f., 
     Schepsmeier, 2013, 2015). Related functions are `RVineGrad`, 
     `RVineHessian`, `RVineStdError`, and `RVinePIT`.
     
-  * `RVineVoungTest`, `RVineClarkeTest`: Vuong and Clarke tests for comparison
-    between two vine copula models.
+  * `RVineVoungTest`, `RVineClarkeTest`: Vuong and Clarke tests for comparing
+    two vine copula models.
 
   * `RVineSim`: Simulates from a vine copula model.
   
-  * `RVinePar2Tau`, `RVinePar2Beta`: Calculates dependence measures 
+  * `RVinePar2Tau`, `RVinePar2Beta`: Calculate dependence measures 
     corresponding to a vine copula model.
     
-  * `RVinePDF`, `RVineAIC`, `RVineBIC`: Calculates the density, AIC, and BIC of
+  * `RVinePDF`, `RVineAIC`, `RVineBIC`: Calculate the density, AIC, and BIC of
     a vine copula model, respectively.
 
 
 ### Additional features
   
 The functions `C2RVine` and `D2RVine` create `RVineMatrix` objects for C- and 
-D-vine copula models. This is particularly useful for former users of the CDVine
+D-vine copulas. This is particularly useful for former users of the CDVine
 package. 
 
-Furthermore, all bivariate and vine copula models from this packages can be used
-within the [copula package](https://r-forge.r-project.org/R/?group_id=600) 
+Furthermore, bivariate and vine copula models from this packages can be used
+with the [copula package](https://r-forge.r-project.org/R/?group_id=600) 
 (Hofert et al., 2015). For more details, we refer to the package manual.
 
 
 ### Bivariate copula families
 
 In this package several bivariate copula families are included for bivariate 
-analysis as well as for multivariate analysis using vine copulas. It provides 
+and multivariate analysis using vine copulas. It provides 
 functionality of elliptical (Gaussian and Student-t) as well as Archimedean 
 (Clayton, Gumbel, Frank, Joe, BB1, BB6, BB7 and BB8) copulas to cover a large
-bandwidth of possible dependence structures. For the Archimedean copula families
-rotated versions are included to cover negative dependence too. The two 
-parameter BB1, BB6, BB7 and BB8 copulas are however numerically instable for 
-large parameters, in particular, if BB6, BB7 and BB8 copulas are close to the
-Joe copula which is a boundary case of these three copula families. In general,
-the user should be careful with extreme parameter choices.
+range of dependence patterns. For Archimedean copula families,
+rotated versions are included to cover negative dependence as well.
 
-As an asymmetric extension of the Gumbel copula, the Tawn copula with three 
-parameters is also included in the package. Both the Gumbel and the Tawn copula 
-are extreme-value copulas, which can be defined in terms of their corresponding
-Pickands dependence functions. For simplicity, we implemented two versions of 
-the Tawn copula with two parameters each. Each type has one of the asymmetry 
-parameters fixed to 1, so that the corresponding Pickands dependence is either
-left- or right-skewed. In the manual we will call these two new copulas 
+The Tawn copula is an asymmetric extension of the Gumbel copula with three 
+parameters. For simplicity, we implemented two versions of the Tawn copula with
+two parameters each. Each type has one of the asymmetry parameters fixed to 1, 
+so that the corresponding copula density is either left- or right-skewed (in
+relation to the main diagonal). In the manual we will call these two new copulas 
 "Tawn type 1" and "Tawn type 2".
 
 The following table shows the parameter ranges of bivariate copula families with 
