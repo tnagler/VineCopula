@@ -8,14 +8,15 @@ VineCopula
 [![CRAN version](http://www.r-pkg.org/badges/version/VineCopula)](https://cran.r-project.org/web/packages/VineCopula/index.html) 
 [![CRAN downloads](http://cranlogs.r-pkg.org/badges/VineCopula)](https://cran.r-project.org/web/packages/VineCopula/index.html)
 
-Vine copulas are a flexible class of dependence models consisting of
-bivariate building blocks (see e.g., Aas et al., 2009). For a comprehensive 
-list of publications (and more), please visit [vine-copula.org](http://www.statistics.ma.tum.de/en/research/vine-copula-models/).
+Vine copulas are a flexible class of dependence models consisting of bivariate 
+building blocks (see e.g., Aas et al., 2009). You can find a comprehensive 
+list of publications and other materials on [vine-copula.org](http://www.statistics.ma.tum.de/en/research/vine-copula-models/).
 
 This package is primarily made for the statistical analysis of **vine copula
-models**. The package includes tools for parameter estimation, model selection, simulation,
-goodness-of-fit tests, and visualization. Tools for bivariate exploratory data
-analysis, **bivariate copula** selection and estimation are also provided. 
+models**. The package includes tools for parameter estimation, model selection,
+simulation, goodness-of-fit tests, and visualization. Tools for estimation,
+selection and exploratory data analysis of **bivariate copula** models are also
+provided. 
 
 You can install:
 
@@ -36,9 +37,8 @@ You can install:
 Package overview
 ----------------
 
-The package provides functions for dependence modeling with bivariate and R-vine
-copulas. For all functions, data are assumed to lie in the unit hypercube 
-(so-called copula data). Below, we list most functions you should know about.
+Below, we list most functions you should know about. For all functions, data
+are assumed to lie in the unit hypercube. 
 
 ### Bivariate copula modeling: the BiCop-family
 
@@ -51,24 +51,24 @@ copulas. For all functions, data are assumed to lie in the unit hypercube
             
      * `plot`, `contour`: surface/perspective and contour plots of the copula
         density. Possibly coupled with standard normal margins (default for
-        `contour`.) 
-     
-  * `BiCopEst`: Estimates a bivariate copula fwith a prespecified family.
-    Estimation can be done by maximum likelihood (`method = "mle"`) or
+        `contour`). 
+        
+  * `BiCopSim`: Simulates from a bivariate copula.
+
+  * `BiCopEst`: Estimates parameters of a bivariate copula with a prespecified
+    family. Estimation can be done by maximum likelihood (`method = "mle"`) or
     inversion of the empirical Kendall's tau (`method = "itau"`, only available
     for one-parameter families). Returns an object of class `BiCop`.
      
-  * `BiCopSelect`: Estimates a bivariate copula for a set of families and
-    selects the best fitting model (using either AIC or BIC). 
+  * `BiCopSelect`: Estimates the parameters of a bivariate copula for a set 
+    of families and selects the best fitting model (using either AIC or BIC). 
     Returns an object of class `BiCop`.
     
-  * `BiCopGofTest`: Goodness-of-Fit test for bivariate copulas.
+  * `BiCopGofTest`: Goodness-of-Fit tests for bivariate copulas.
     
   * `BiCopVuongClarke`: Vuong and Clarke tests for model comparison within a 
     prespecified set of copula families.
      
-  * `BiCopSim`: Simulates from a bivariate copula.
-   
   * `BiCopPar2Tau`, `BiCopTau2Par`, `BiCopPar2Beta`, `BiCopPar2TailDep`: 
     Conversion between dependence measures and parameters (for a given family).
     Functions are vectorized in all arguments.
@@ -104,6 +104,8 @@ specifying `family`, `par` and `par2` manually.
       
     * `contour`: Creates a matrix of contour plots associated with the
       pair-copulas.
+
+  * `RVineSim`: Simulates from a vine copula model.
       
   * `RVineSeqEst`: Estimates the parameters of a vine copula model with 
     prespecified structure and families.
@@ -111,25 +113,23 @@ specifying `family`, `par` and `par2` manually.
   * `RVineCopSelect`: Estimates the parameters and selects the best family for a
     vine copula model with prespecified structure matrix.
     
-  * `RVineStructureSelect`: Fits a vine copulamodel assuming no prior knowledge.
+  * `RVineStructureSelect`: Fits a vine copula model assuming no prior knowledge.
     It selects the R-vine structure using Dissmann et al. (2013)'s 
     method, estimates parameters for various families, and selects the best 
     family for each pair.
 
-  * `RVineGoFTest`: Goodness-of-Fit tests for a vine copula moel (c.f., 
+  * `RVineGoFTest`: Goodness-of-Fit tests for a vine copula model (c.f., 
     Schepsmeier, 2013, 2015). Related functions are `RVineGrad`, 
     `RVineHessian`, `RVineStdError`, and `RVinePIT`.
     
   * `RVineVoungTest`, `RVineClarkeTest`: Vuong and Clarke tests for comparing
     two vine copula models.
 
-  * `RVineSim`: Simulates from a vine copula model.
-  
   * `RVinePar2Tau`, `RVinePar2Beta`: Calculate dependence measures 
     corresponding to a vine copula model.
     
-  * `RVinePDF`, `RVineAIC`, `RVineBIC`: Calculate the density, AIC, and BIC of
-    a vine copula model, respectively.
+  * `RVinePDF`, `RVineLogLik`, `RVineAIC`, `RVineBIC`: Calculate the density, 
+    log-likelihood, AIC, and BIC of a vine copula.
 
 
 ### Additional features
@@ -141,8 +141,9 @@ package.
 Furthermore, bivariate and vine copula models from this packages can be used
 with the [copula](https://r-forge.r-project.org/R/?group_id=600) package 
 (Hofert et al., 2015). For example, `vineCopula` transforms an `RVineMatrix` 
-object into a object of class `vineCopula` which provides methods for
-`dCopula`, `rCopula`, etc. For more details, we refer to the package manual.
+object into an object of class `vineCopula` which provides methods for
+`dCopula`, `pCopula`, and `rCopula`. For more details, we refer to the package 
+manual.
 
 
 ### Bivariate copula families
