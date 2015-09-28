@@ -37,8 +37,8 @@ You can install:
 Package overview
 ----------------
 
-Below, we list most functions you should know about. For all functions, data
-are assumed to lie in the unit hypercube. 
+Below, we list most functions and features you should know about. As usual in 
+copula models, data are assumed to lie in the unit hypercube. 
 
 ### Bivariate copula modeling: the BiCop-family
 
