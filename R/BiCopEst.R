@@ -903,7 +903,9 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
             if (det(optimout$hessian) == 0) {
                 var <- diag(1, dim(optimout$hessian)[1])
             } else {
-                var <- (-solve(optimout$hessian))
+                var <- try((-solve(optimout$hessian)), silent = TRUE)
+                if (inherits(var, 'try-error'))
+                    var <- c(NA, NA)
             }
             if (any(diag(var) < 0))
                 var <- matrix(NA, nrow(var), ncol(var))
@@ -989,7 +991,9 @@ MLE_intern_Tawn <- function(data, start.parm, family, se = FALSE) {
         if (det(optimout$hessian) == 0) {
             var <- diag(1, dim(optimout$hessian)[1])
         } else {
-            var <- (-solve(optimout$hessian))
+            var <- try((-solve(optimout$hessian)), silent = TRUE)
+            if (inherits(var, 'try-error'))
+                var <- c(NA, NA)
         }
 
         out$se <- sqrt(diag(var))
