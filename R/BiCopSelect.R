@@ -185,7 +185,7 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         stop("Data has to be in the interval [0,1].")
     if (any(u2 > 1) || any(u2 < 0))
         stop("Data has to be in the interval [0,1].")
-    if (!all(familyset %in% allfams))
+    if (!all(familyset %in% c(0, allfams)))
         stop("Copula family not implemented.")
     if ((selectioncrit != "AIC") && (selectioncrit != "BIC"))
         stop("Selection criterion not implemented.")
