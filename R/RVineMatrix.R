@@ -220,7 +220,8 @@ normalizeRVineMatrix <- function(RVM) {
                        RVM$family,
                        RVM$par,
                        RVM$par2,
-                       names = rev(RVM$names[oldOrder])))
+                       names = rev(RVM$names[oldOrder]),
+                       check.pars = FALSE))
 }
 
 reorderRVineMatrix <- function(Matrix) {
