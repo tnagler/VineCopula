@@ -4,10 +4,13 @@
 \alias{RVinePar2Tau}
 \title{Kendall's Tau Values of an R-Vine Copula Model}
 \usage{
-RVinePar2Tau(RVM)
+RVinePar2Tau(RVM, check.pars = TRUE)
 }
 \arguments{
 \item{RVM}{An \code{\link{RVineMatrix}} object.}
+
+\item{check.pars}{logical; default is \code{TRUE}; if \code{FALSE}, checks
+for family/parameter-consistency are ommited (should only be used with}
 }
 \value{
 Matrix with the same structure as the family and parameter matrices
