@@ -5,6 +5,10 @@ import(methods)
 import(lattice)
 import(network)
 
+importFrom("doParallel", "registerDoParallel")
+importFrom("foreach", "%dopar%",  "foreach")
+importFrom("parallel", "makeCluster", "stopCluster", "detectCores")
+
 importFrom("grDevices", "colorRampPalette", "rgb", "terrain.colors", "col2rgb", "gray")
 importFrom("graphics", "abline", "box", "hist", "legend", "lines",
            "pairs", "par", "points", "strwidth", "text",
