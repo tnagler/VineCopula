@@ -909,7 +909,7 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
             }
             if (any(diag(var) < 0))
                 var <- matrix(NA, nrow(var), ncol(var))
-            out$se <- sqrt(diag(var))
+            out$se <- suppressWarnings(sqrt(diag(var)))
 
             if (family == 2 && out$par[2] >= (max.df - 1e-04))
                 out$se[2] <- NA
@@ -996,7 +996,7 @@ MLE_intern_Tawn <- function(data, start.parm, family, se = FALSE) {
                 var <- c(NA, NA)
         }
 
-        out$se <- sqrt(diag(var))
+        out$se <- suppressWarnings(sqrt(diag(var)))
     } else {
         optimout <- optim(par = start.parm,
                           fn = loglikfunc,
