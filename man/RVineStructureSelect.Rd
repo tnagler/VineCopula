@@ -6,7 +6,8 @@
 \usage{
 RVineStructureSelect(data, familyset = NA, type = 0,
   selectioncrit = "AIC", indeptest = FALSE, level = 0.05,
-  trunclevel = NA, progress = FALSE, weights = NA, rotations = TRUE)
+  trunclevel = NA, progress = FALSE, weights = NA, rotations = TRUE,
+  cores = 1)
 }
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}
@@ -17,38 +18,53 @@ wants to fit an independence vine!).  The vector has to include at least one
 pair-copula family that allows for positive and one that allows for negative
 dependence. Not listed copula families might be included to better handle
 limit cases.  If \code{familyset = NA} (default), selection among all
-possible families is performed.  Coding of pair-copula families: \cr
-\code{1} = Gaussian copula \cr \code{2} = Student t copula (t-copula) \cr
-\code{3} = Clayton copula \cr \code{4} = Gumbel copula \cr \code{5} = Frank
-copula \cr \code{6} = Joe copula \cr \code{7} = BB1 copula \cr \code{8} =
-BB6 copula \cr \code{9} = BB7 copula \cr \code{10} = BB8 copula \cr
+possible families is performed.  Coding of pair-copula families:
+\code{0} = independence copula \cr
+\code{1} = Gaussian copula \cr
+\code{2} = Student t copula (t-copula) \cr
+\code{3} = Clayton copula \cr
+\code{4} = Gumbel copula \cr
+\code{5} = Frank copula \cr
+\code{6} = Joe copula \cr
+\code{7} = BB1 copula \cr
+\code{8} = BB6 copula \cr
+\code{9} = BB7 copula \cr
+\code{10} = BB8 copula \cr
 \code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
 \code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-\code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr \code{17}
-= rotated BB1 copula (180 degrees; ``survival BB1'')\cr \code{18} = rotated
-BB6 copula (180 degrees; ``survival BB6'')\cr \code{19} = rotated BB7 copula
-(180 degrees; ``survival BB7'')\cr \code{20} = rotated BB8 copula (180
-degrees; ``survival BB8'')\cr \code{23} = rotated Clayton copula (90
-degrees) \cr \code{24} = rotated Gumbel copula (90 degrees) \cr \code{26} =
-rotated Joe copula (90 degrees) \cr \code{27} = rotated BB1 copula (90
-degrees) \cr \code{28} = rotated BB6 copula (90 degrees) \cr \code{29} =
-rotated BB7 copula (90 degrees) \cr \code{30} = rotated BB8 copula (90
-degrees) \cr \code{33} = rotated Clayton copula (270 degrees) \cr \code{34}
-= rotated Gumbel copula (270 degrees) \cr \code{36} = rotated Joe copula
-(270 degrees) \cr \code{37} = rotated BB1 copula (270 degrees) \cr \code{38}
-= rotated BB6 copula (270 degrees) \cr \code{39} = rotated BB7 copula (270
-degrees) \cr \code{40} = rotated BB8 copula (270 degrees) \cr \code{104} =
-Tawn type 1 copula \cr \code{114} = rotated Tawn type 1 copula (180 degrees)
-\cr \code{124} = rotated Tawn type 1 copula (90 degrees) \cr \code{134} =
-rotated Tawn type 1 copula (270 degrees) \cr \code{204} = Tawn type 2 copula
-\cr \code{214} = rotated Tawn type 2 copula (180 degrees) \cr \code{224} =
-rotated Tawn type 2 copula (90 degrees) \cr \code{234} = rotated Tawn type 2
-copula (270 degrees) \cr}
+\code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
+\code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
+\code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
+\code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
+\code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
+\code{23} = rotated Clayton copula (90 degrees) \cr
+\code{24} = rotated Gumbel copula (90 degrees) \cr
+\code{26} = rotated Joe copula (90 degrees) \cr
+\code{27} = rotated BB1 copula (90 degrees) \cr
+\code{28} = rotated BB6 copula (90 degrees) \cr
+\code{29} = rotated BB7 copula (90 degrees) \cr
+\code{30} = rotated BB8 copula (90 degrees) \cr
+\code{33} = rotated Clayton copula (270 degrees) \cr
+\code{34} = rotated Gumbel copula (270 degrees) \cr
+\code{36} = rotated Joe copula (270 degrees) \cr
+\code{37} = rotated BB1 copula (270 degrees) \cr
+\code{38} = rotated BB6 copula (270 degrees) \cr
+\code{39} = rotated BB7 copula (270 degrees) \cr
+\code{40} = rotated BB8 copula (270 degrees) \cr
+\code{104} = Tawn type 1 copula \cr
+\code{114} = rotated Tawn type 1 copula (180 degrees) \cr
+\code{124} = rotated Tawn type 1 copula (90 degrees) \cr
+\code{134} = rotated Tawn type 1 copula (270 degrees) \cr
+\code{204} = Tawn type 2 copula \cr
+\code{214} = rotated Tawn type 2 copula (180 degrees) \cr
+\code{224} = rotated Tawn type 2 copula (90 degrees) \cr
+\code{234} = rotated Tawn type 2 copula (270 degrees) \cr}
 
-\item{type}{Type of the vine model to be specified:\cr \code{0} or
-\code{"RVine"} = R-vine (default)\cr \code{1} or \code{"CVine"} = C-vine\cr
+\item{type}{Type of the vine model to be specified:\cr
+\code{0} or \code{"RVine"} = R-vine (default) \cr
+\code{1} or \code{"CVine"} = C-vine \cr
 C- and D-vine copula models with pre-specified order can be specified using
-\code{CDVineCopSelect} of the package CDVine.  Similarly, R-vine copula
+\code{CDVineCopSelect} of the package CDVine. Similarly, R-vine copula
 models with pre-specified tree structure can be specified using
 \code{\link{RVineCopSelect}}.}
 
@@ -56,24 +72,27 @@ models with pre-specified tree structure can be specified using
 selection. Possible choices: \code{selectioncrit = "AIC"} (default) or
 \code{"BIC"} (see \code{\link{BiCopSelect}}).}
 
-\item{indeptest}{Logical; whether a hypothesis test for the independence of
+\item{indeptest}{logical; whether a hypothesis test for the independence of
 \code{u1} and \code{u2} is performed before bivariate copula selection
 (default: \code{indeptest = FALSE}; see \code{\link{BiCopIndTest}}).  The
 independence copula is chosen for a (conditional) pair if the null
 hypothesis of independence cannot be rejected.}
 
-\item{level}{Numerical; significance level of the independence test
+\item{level}{numeri; significance level of the independence test
 (default: \code{level = 0.05}).}
 
-\item{trunclevel}{Integer; level of truncation.}
+\item{trunclevel}{integer; level of truncation.}
 
-\item{progress}{Logical; whether the tree-wise specification progress is
+\item{progress}{logical; whether the tree-wise specification progress is
 printed (default: \code{progress = FALSE}).}
 
-\item{weights}{Numerical; weights for each observation (opitional).}
+\item{weights}{numeric; weights for each observation (opitional).}
 
 \item{rotations}{If \code{TRUE}, all rotations of the families in
 \code{familyset} are included.}
+
+\item{cores}{integer; if \code{cores > 1}, estimation will be parallized
+within each tree (using \code{\link[foreach]{foreach}}).}
 }
 \value{
 An \code{\link{RVineMatrix}} object with the selected structure
@@ -146,6 +165,7 @@ Selecting and estimating regular vine copulae and application to financial
 returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 }
 \seealso{
-\code{\link{RVineTreePlot}}, \code{\link{RVineCopSelect}}
+\code{\link{RVineTreePlot}},
+\code{\link{RVineCopSelect}}
 }
 
