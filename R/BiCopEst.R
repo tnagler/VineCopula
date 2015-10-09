@@ -900,15 +900,15 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
         if (family %in% c(2, 7, 8, 9, 10, 17, 18, 19, 20, 27, 28, 29, 30, 37, 38, 39, 40)) {
             out$par <- optimout$par
 
-            if (det(optimout$hessian) == 0) {
+            if (!is.finite(det(optimout$hessian))) {
+                var <- matrix(NA)
+            } else if (det(optimout$hessian) == 0) {
                 var <- diag(1, dim(optimout$hessian)[1])
             } else {
                 var <- try((-solve(optimout$hessian)), silent = TRUE)
                 if (inherits(var, 'try-error'))
                     var <- c(NA, NA)
             }
-            if (any(diag(var) < 0))
-                var <- matrix(NA, nrow(var), ncol(var))
             out$se <- suppressWarnings(sqrt(diag(var)))
 
             if (family == 2 && out$par[2] >= (max.df - 1e-04))
@@ -917,7 +917,9 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
         } else {
             out$par <- optimout$par[1]
 
-            if (optimout$hessian == 0) {
+            if (!is.finite(optimout$hessian)) {
+                var <- NA
+            } else if (optimout$hessian == 0) {
                 var <- 1
             } else {
                 if (optimout$hessian < 0)
@@ -927,7 +929,6 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
 
             out$se <- as.numeric(sqrt(var))
         }
-
     } else {
         if (family %in% c(2, 7, 8, 9, 10, 17, 18, 19, 20, 27, 28, 29, 30, 37, 38, 39, 40)) {
 
