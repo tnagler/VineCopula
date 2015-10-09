@@ -136,12 +136,12 @@ data(daxreturns)
 RVM <- RVineStructureSelect(daxreturns[1:750,1:4], c(1:6), progress = TRUE)
 
 \dontrun{
-# specify a C-vine copula model with only Clayton, Gumbel and Frank copulas (time-consuming)
-CVM <- RVineStructureSelect2(daxreturns, c(3,4,5), "CVine")
+# specify a C-vine copula model with only Clayton, Gumbel and Frank copulas
+CVM <- RVineStructureSelect(daxreturns, c(3,4,5), "CVine")
 }
 
 \dontrun{
-# determine the order of the nodes in a D-vine using the package TSP (time-consuming)
+# determine the order of the nodes in a D-vine using the package TSP
 library(TSP)
 d <- dim(daxreturns)[2]
 M <- 1 - abs(TauMatrix(daxreturns))
@@ -167,5 +167,6 @@ returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 \seealso{
 \code{\link{RVineTreePlot}},
 \code{\link{RVineCopSelect}}
+\code{\link[foreach]{foreach}}
 }
 
