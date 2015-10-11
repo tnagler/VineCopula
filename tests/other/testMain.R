@@ -55,19 +55,7 @@ if(!all(check_BiCopTau2Par)){
 
 
 # BiCopCDF
-system.time({
-  results_BiCopCDF <- testRunBiCop("BiCopCDF")
-})
-## Gauss alone
-#User      System verstrichen
-#93.73        0.00       94.22
-
-## All families exept rotated ones, i.e. 11 families
-#User      System verstrichen
-#116.06        1.27      147.56
-
-## But memory is at 2.5 GB for these 11 families!
-
+results_BiCopCDF <- testRunBiCop("BiCopCDF")
 check_BiCopCDF <- testCheck3(results_BiCopCDF)
 if(!all(check_BiCopCDF)){
   print(check_BiCopCDF)
@@ -79,10 +67,7 @@ if(!all(check_BiCopCDF)){
 
 
 # BiCopPDF
-system.time({
-    results_BiCopPDF <- testRunBiCop("BiCopPDF")
-})
-
+results_BiCopPDF <- testRunBiCop("BiCopPDF")
 check_BiCopPDF <- testCheck3(results_BiCopPDF)
 if(!all(check_BiCopPDF)){
     print(check_BiCopPDF)
@@ -94,10 +79,7 @@ if(!all(check_BiCopPDF)){
 
 
 # BiCopHfunc
-system.time({
-    results_BiCopHfunc <- testRunBiCop("BiCopHfunc")
-})
-
+results_BiCopHfunc <- testRunBiCop("BiCopHfunc")
 check_BiCopHfunc <- testCheck3(results_BiCopHfunc)
 if(!all(check_BiCopHfunc)){
     print(check_BiCopHfunc)
@@ -108,10 +90,7 @@ if(!all(check_BiCopHfunc)){
 
 
 # BiCopHinv
-system.time({
-    results_BiCopHinv <- testRunBiCop("BiCopHinv")
-})
-
+results_BiCopHinv <- testRunBiCop("BiCopHinv")
 check_BiCopHinv <- testCheck3(results_BiCopHinv)
 if(!all(check_BiCopHinv)){
     print(check_BiCopHinv)
