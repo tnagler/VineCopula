@@ -50,23 +50,13 @@
 #' par2mat  <- matrix(c(0,   0, 0, 0, 0, 0, 0, 0, 0), 3, 3)
 #' RVM  <- RVineMatrix(strucmat, fammat, parmat, par2mat)
 #'
+#'\dontrun{
 #' # plot trees
 #' plot(RVM)
-#'
-#' ## build new model
-#' # simulate from previous model
-#' u <- RVineSim(500, RVM)
-#' colnames(u) <- c("X", "Y", "Z")
-#'
-#' # estimate new model
-#' RVM2 <- RVineStructureSelect(u)
-#'
-#' # plot second tree of new model with legend
-#' plot(RVM2, tree = 2, type = 1)
+#' }
 #'
 #' # show contour plots
-#' contour(RVM2)
-#'
+#' contour(RVM)
 #'
 plot.RVineMatrix <- function(x, tree = "ALL", type = 0, edge.labels = NULL,
                              legend.pos = "bottomleft", interactive = FALSE, ...) {
