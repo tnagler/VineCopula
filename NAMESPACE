@@ -1,13 +1,8 @@
-import(MASS)
 import(mvtnorm)
 import(copula)
 import(methods)
 import(lattice)
 import(network)
-
-importFrom("doParallel", "registerDoParallel")
-importFrom("foreach", "%dopar%",  "foreach")
-importFrom("parallel", "makeCluster", "stopCluster", "detectCores")
 
 importFrom("grDevices", "colorRampPalette", "rgb", "terrain.colors", "col2rgb", "gray")
 importFrom("graphics", "abline", "box", "hist", "legend", "lines",
@@ -18,7 +13,13 @@ importFrom("stats", "cor", "dexp", "dgamma", "dnorm", "dt",
            "pchisq", "pexp", "pgamma", "pnorm", "pt", "qexp", "qgamma",
            "qnorm", "qt", "runif", "uniroot", "var")
 importFrom("utils", "combn", "getFromNamespace", "modifyList")
+
 importFrom("ADGofTest", "ad.test")
+importFrom("MASS", "bandwidth.nrd", "ginv", "kde2d")
+
+importFrom("doParallel", "registerDoParallel")
+importFrom("foreach", "%dopar%",  "foreach")
+importFrom("parallel", "makeCluster", "stopCluster", "detectCores")
 
 export(pobs)
 
