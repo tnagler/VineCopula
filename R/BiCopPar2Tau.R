@@ -1,12 +1,12 @@
 #' Kendall's Tau Value of a Bivariate Copula
-#' 
+#'
 #' This function computes the theoretical Kendall's tau value of a bivariate
 #' copula for given parameter values.
-#' 
+#'
 #' If the family and parameter specification is stored in a \code{\link{BiCop}}
 #' object \code{obj}, the alternative version \cr
 #' \preformatted{BiCopPar2Tau(obj)} can be used.
-#' 
+#'
 #' @param family integer; single number or vector of size \code{m}; defines the
 #' bivariate copula family: \cr \code{0} = independence copula \cr \code{1} =
 #' Gaussian copula \cr \code{2} = Student t copula (t-copula) \cr \code{3} =
@@ -94,33 +94,33 @@
 #' \code{224,234} \tab \eqn{-\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt}
 #' \cr \tab with \eqn{A(t) = (1-\delta)(1-t)+[(1-t)^{-\theta}+(\delta
 #' t)^{-\theta}]^{-1/\theta}} \cr
-#' 
+#'
 #' }
 #' @note The number \code{m} can be chosen arbitrarily.
 #' @author Ulf Schepsmeier, Tobias Erhardt
 #' @seealso \code{\link{BiCopTau2Par}}, \code{\link{BiCop}}
 #' @references Joe, H. (1997). Multivariate Models and Dependence Concepts.
 #' Chapman and Hall, London.
-#' 
+#'
 #' Czado, C., U. Schepsmeier, and A. Min (2012). Maximum likelihood estimation
 #' of mixed C-vines with application to exchange rates. Statistical Modelling,
 #' 12(3), 229-255.
 #' @examples
-#' 
+#'
 #' ## Example 1: Gaussian copula
 #' tau0 <- 0.5
 #' rho <- BiCopTau2Par(family = 1, tau = tau0)
-#' 
+#'
 #' # transform back
 #' tau <- BiCopPar2Tau(family = 1, par = rho)
 #' tau - 2/pi*asin(rho)
-#' 
-#' 
+#'
+#'
 #' ## Example 2: Clayton copula
 #' theta <- BiCopTau2Par(family = 3, tau = c(0.4, 0.5, 0.6))
 #' BiCopPar2Tau(family = 3, par = theta)
-#' 
-#' 
+#'
+#'
 #' ## Example 3:
 #' vpar <- seq(from = 1.1, to = 10, length.out = 100)
 #' tauC <- BiCopPar2Tau(family = 3, par = vpar)
@@ -131,7 +131,7 @@
 #' lines(tauG ~ vpar, col = 2)
 #' lines(tauF ~ vpar, col = 3)
 #' lines(tauJ ~ vpar, col = 4)
-#' 
+#'
 #' \dontshow{
 #' # Test BiCopPar2Tau (one parametric families)
 #' theta <- BiCopTau2Par(family = 0, tau = c(0.4,0.5,0.6))
@@ -180,7 +180,7 @@
 #' BiCopPar2Tau(family = 61, par = theta)
 #' theta <- BiCopTau2Par(family = 71, tau = -c(0.4,0.5,0.6))
 #' BiCopPar2Tau(family = 71, par = theta)
-#' 
+#'
 #' # Test BiCopPar2Tau (two parametric families)
 #' theta <- BiCopTau2Par(family = 2, tau = c(0.4,0.5,0.6))
 #' BiCopPar2Tau(family = 2, par = theta)
@@ -216,7 +216,7 @@
 #' delta <- -c(0.1, 0.5, 0.9)
 #' BiCopPar2Tau(family = 30, par = theta, par2 = delta)
 #' BiCopPar2Tau(family = 40, par = theta, par2 = delta)
-#' 
+#'
 #' theta <- 2:4
 #' delta <- c(0.1, 0.5, 0.9)
 #' BiCopPar2Tau(family = 104, par = theta, par2 = delta)
@@ -225,7 +225,7 @@
 #' delta <- c(0.1, 0.5, 0.9)
 #' BiCopPar2Tau(family = 124, par = theta, par2 = delta)
 #' BiCopPar2Tau(family = 134, par = theta, par2 = delta)
-#' 
+#'
 #' theta <- 2:4
 #' delta <- c(0.1, 0.5, 0.9)
 #' BiCopPar2Tau(family = 204, par = theta, par2 = delta)
@@ -235,7 +235,7 @@
 #' BiCopPar2Tau(family = 224, par = theta, par2 = delta)
 #' BiCopPar2Tau(family = 234, par = theta, par2 = delta)
 #' }
-#' 
+#'
 #' @export BiCopPar2Tau
 BiCopPar2Tau <- function(family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
     ## extract family and parameters if BiCop object is provided
@@ -252,25 +252,25 @@ BiCopPar2Tau <- function(family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
         par <- obj$par
         par2 <- obj$par2
     }
-    
+
     ## adjust length for parameter vectors; stop if not matching
     n <- max(length(family), length(par), length(par2))
-    if (length(family) == 1) 
+    if (length(family) == 1)
         family <- rep(family, n)
-    if (length(par) == 1) 
+    if (length(par) == 1)
         par <- rep(par, n)
     if (length(par2) == 1)
         par2 <- rep(par2, n)
     if (!all(c(length(family), length(par), length(par2)) %in% c(1, n)))
         stop("Input lenghts don't match")
-    
+
     # set arbitrary par2 for t-copula
     par2[family == 2] <- par2[family == 2] + 4
-    
+
     ## check for family/parameter consistency
     if (check.pars)
         BiCopCheck(family, par, par2)
-    
+
     ## calculate Kendall's tau
     if (length(par) == 1) {
         # call for single parameters
@@ -281,7 +281,7 @@ BiCopPar2Tau <- function(family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
                       function(i) calcTau(family[i], par[i], par2[i]),
                       numeric(1))
     }
-    
+
     ## return result
     out
 }
@@ -315,39 +315,43 @@ calcTau <- function(family, par, par2) {
         kt <- function(t, th, de) {
             -log(-(1 - t)^th + 1) * (1 - t - (1 - t)^(-th) + (1 - t)^(-th) * t)/(de * th)
         }
-        tau <- 1 + 4 * mapply(function(theta, delta) {
+        tau <- try(1 + 4 * mapply(function(theta, delta) {
             integrate(function(t) {
                 kt(t, th = theta, de = delta)
             }, 0, 1)$value
-        }, theta, delta)
+        }, theta, delta))
+        if (inherits(tau, "try-error"))
+            tau <- NA
     } else if (family == 9 || family == 19) {
         theta <- par
         delta <- par2
-        
+
         kt <- function(t, th, de) {
             ((1 - (1 - t)^th)^-de - 1)/(-th * de * (1 - t)^(th - 1) * (1 - (1 - t)^th)^(-de - 1))
         }
-        tau <- 1 + 4 * mapply(function(theta, delta) {
+        tau <- try(1 + 4 * mapply(function(theta, delta) {
             integrate(function(t)  kt(t, th = theta, de = delta), 0, 1)$value
-        }, theta, delta)
-        
+        }, theta, delta))
+        if (inherits(tau, "try-error"))
+            tau <- NA
     } else if (family == 10 || family == 20) {
         theta <- par
         delta <- par2
         kt <- function(t, th, de) {
             -log(((1 - t * de)^th - 1)/((1 - de)^th - 1)) * (1 - t * de - (1 - t * de)^(-th) + (1 - t * de)^(-th) * t * de)/(th * de)
         }
-        tau <- 1 + 4 * mapply(function(theta, delta) {
+        tau <- try(1 + 4 * mapply(function(theta, delta) {
             integrate(function(t) {
                 kt(t, th = theta, de = delta)
             }, 0, 1)$value
-        }, theta, delta)
+        }, theta, delta))
+        if (inherits(tau, "try-error"))
+            tau <- NA
     } else if (family == 23 || family == 33) {
         tau <- par/(-par + 2)
     } else if (family == 24 || family == 34) {
         tau <- -1 - 1/par
     } else if (family == 26 || family == 36) {
-        
         theta <- -par
         param1 <- 2/theta + 1
         tem <- digamma(2) - digamma(param1)
@@ -365,24 +369,28 @@ calcTau <- function(family, par, par2) {
         kt <- function(t, th, de) {
             -log(-(1 - t)^th + 1) * (1 - t - (1 - t)^(-th) + (1 - t)^(-th) * t)/(de * th)
         }
-        tau <- 1 + 4 * mapply(function(theta, delta) {
+        tau <- try(1 + 4 * mapply(function(theta, delta) {
             integrate(function(t) {
                 kt(t, th = theta, de = delta)
             }, 0, 1)$value
-        }, theta, delta)
+        }, theta, delta))
+        if (inherits(tau, "try-error"))
+            tau <- NA
         tau <- -tau
     } else if (family == 29 || family == 39) {
         theta <- -par
         delta <- -par2
-        
+
         kt <- function(t, th, de) {
             ((1 - (1 - t)^th)^(-de) - 1)/(-th * de * (1 - t)^(th - 1) * (1 - (1 - t)^th)^(-de - 1))
         }
-        tau <- 1 + 4 * mapply(function(theta, delta) {
+        tau <- try(1 + 4 * mapply(function(theta, delta) {
             integrate(function(t) {
                 kt(t, th = theta, de = delta)
             }, 0, 1)$value
-        }, theta, delta)
+        }, theta, delta))
+        if (inherits(tau, "try-error"))
+            tau <- NA
         tau <- -tau
     } else if (family == 30 || family == 40) {
         theta <- -par
@@ -390,11 +398,13 @@ calcTau <- function(family, par, par2) {
         kt <- function(t, th, de) {
             -log(((1 - t * de)^th - 1)/((1 - de)^th - 1)) * (1 - t * de - (1 - t * de)^(-th) + (1 - t * de)^(-th) * t * de)/(th * de)
         }
-        tau <- 1 + 4 * mapply(function(theta, delta) {
+        tau <- try(1 + 4 * mapply(function(theta, delta) {
             integrate(function(t) {
                 kt(t, th = theta, de = delta)
             }, 0, 1)$value
-        }, theta, delta)
+        }, theta, delta))
+        if (inherits(tau, "try-error"))
+            tau <- NA
         tau <- -tau
     } else if (family == 41 || family == 51) {
         de <- par
@@ -413,57 +423,61 @@ calcTau <- function(family, par, par2) {
         par3 <- 1
         tau_int <- function(t, th, de) {
             Afunc <- .C("Tawn2",
-                        as.double(t), 
-                        as.integer(length(t)), 
-                        as.double(th), 
-                        as.double(de), 
-                        as.double(1), 
-                        as.double(rep(0, length(t))), 
-                        PACKAGE = "VineCopula")[[6]]
-            Afunc2Deriv <- .C("d2Tawn", 
-                              as.double(t), 
-                              as.integer(length(t)), 
-                              as.double(th), 
-                              as.double(de), 
-                              as.double(1),
-                              as.double(rep(0, length(t))),
-                              PACKAGE = "VineCopula")[[6]]
-            (t * (1 - t)) * Afunc2Deriv/Afunc
-        }
-        tau <- mapply(function(par, par2) {
-            integrate(function(t) {
-                tau_int(t, th = par, de = par2)
-            }, 0, 1)$value
-        }, par, par2)
-    } else if (family == 124 || family == 134 || family == 224 || family == 234) {
-        par3 <- 1
-        tau_int <- function(t, th, de) {
-            Afunc <- .C("Tawn2", 
                         as.double(t),
                         as.integer(length(t)),
-                        as.double(-th), 
+                        as.double(th),
                         as.double(de),
                         as.double(1),
                         as.double(rep(0, length(t))),
                         PACKAGE = "VineCopula")[[6]]
             Afunc2Deriv <- .C("d2Tawn",
                               as.double(t),
-                              as.integer(length(t)), 
-                              as.double(-th), 
-                              as.double(de), 
+                              as.integer(length(t)),
+                              as.double(th),
+                              as.double(de),
                               as.double(1),
-                              as.double(rep(0, length(t))), 
+                              as.double(rep(0, length(t))),
                               PACKAGE = "VineCopula")[[6]]
             (t * (1 - t)) * Afunc2Deriv/Afunc
         }
-        tau <- mapply(function(par, par2) {
+        tau <- try(mapply(function(par, par2) {
             integrate(function(t) {
                 tau_int(t, th = par, de = par2)
             }, 0, 1)$value
-        }, par, par2)
+        }, par, par2))
+        if (inherits(tau, "try-error"))
+            tau <- NA
+    } else if (family == 124 || family == 134 || family == 224 || family == 234) {
+        par3 <- 1
+        tau_int <- function(t, th, de) {
+            Afunc <- .C("Tawn2",
+                        as.double(t),
+                        as.integer(length(t)),
+                        as.double(-th),
+                        as.double(de),
+                        as.double(1),
+                        as.double(rep(0, length(t))),
+                        PACKAGE = "VineCopula")[[6]]
+            Afunc2Deriv <- .C("d2Tawn",
+                              as.double(t),
+                              as.integer(length(t)),
+                              as.double(-th),
+                              as.double(de),
+                              as.double(1),
+                              as.double(rep(0, length(t))),
+                              PACKAGE = "VineCopula")[[6]]
+            (t * (1 - t)) * Afunc2Deriv/Afunc
+        }
+        tau <- try(mapply(function(par, par2) {
+            integrate(function(t) {
+                tau_int(t, th = par, de = par2)
+            }, 0, 1)$value
+        }, par, par2))
+        if (inherits(tau, "try-error"))
+            tau <- NA
         tau <- -tau
     }
-    
+
     ## return result
     tau
 }
