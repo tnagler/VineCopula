@@ -106,8 +106,7 @@ plot.RVineMatrix <- function(x, tree = "ALL", type = 0, edge.labels = NULL,
                               edge.label.cex = dflt$label.cex - 0.2))
 
     ## overwrite defaults with ... argument
-    lst <- list(...)
-    temp.args <- modifyList(dflt, lst)
+    temp.args <- modifyList(dflt, list(...))
 
     #### loop through the trees -----------------------------
     for (i in tree) {
@@ -191,7 +190,7 @@ makeNetwork <- function(RVM, tree, use.names = FALSE) {
                                tree = tree - 1,
                                RVM = RVM)
         } else {
-            node.lab <- RVM$names
+            node.lab <- RVM$names[diag(M)]
         }
     }
 
