@@ -1,10 +1,10 @@
 #' Goodness-of-Fit Test for Bivariate Copulas
-#' 
+#'
 #' This function performs a goodness-of-fit test for bivariate copulas, either
 #' based on White's information matrix equality (White 1982) as introduced by
 #' Huang and Prokhorov (2011) or based on Kendall's process. It computes the
 #' test statistics and p-values.
-#' 
+#'
 #' \code{method = "white"}:\cr This goodness-of fit test uses the information
 #' matrix equality of White (1982) and was investigated by Huang and Prokhorov
 #' (2011). The main contribution is that under correct model specification the
@@ -28,7 +28,7 @@
 #' investigated by Genest and Rivest (1993) and Wang and Wells (2000). For
 #' rotated copulas the input arguments are transformed and the goodness-of-fit
 #' procedure for the corresponding non-rotated copula is used.
-#' 
+#'
 #' @param u1,u2 Numeric vectors of equal length with values in [0,1].
 #' @param family An integer defining the bivariate copula family: \cr \code{0}
 #' = independence copula \cr \code{1} = Gaussian copula \cr \code{2} = Student
@@ -89,62 +89,62 @@
 #' @references Genest, C. and L.-P. Rivest (1993). Statistical inference
 #' procedures for bivariate Archimedean copulas. Journal of the American
 #' Statistical Association, 88 (423), 1034-1043.
-#' 
+#'
 #' Huang, w. and A. Prokhorov (2011). A goodness-of-fit test for copulas. to
 #' appear in Econometric Reviews
-#' 
+#'
 #' Luo J. (2011). Stepwise estimation of D-vines with arbitrary specified
 #' copula pairs and EDA tools. Diploma thesis, Technische Universitaet
 #' Muenchen.\cr \url{http://mediatum.ub.tum.de/?id=1079291}.
-#' 
+#'
 #' Wang, W. and M. T. Wells (2000). Model selection and semiparametric
 #' inference for bivariate failure-time data. Journal of the American
 #' Statistical Association, 95 (449), 62-72.
-#' 
+#'
 #' White, H. (1982) Maximum likelihood estimation of misspecified models,
 #' Econometrica, 50, 1-26.
 #' @examples
-#' 
+#'
 #' # simulate from a bivariate Clayton copula
 #' set.seed(123)
 #' simdata <- BiCopSim(300, 3, 2)
 #' u1 <- simdata[,1]
 #' u2 <- simdata[,2]
-#' 
+#'
 #' # perform White's goodness-of-fit test for the true copula
 #' BiCopGofTest(u1, u2, family = 3)
-#' 
+#'
 #' # perform White's goodness-of-fit test for the Frank copula
 #' BiCopGofTest(u1, u2, family = 5)
-#' 
+#'
 #' # perform Kendall's goodness-of-fit test for the true copula
 #' gof <- BiCopGofTest(u1, u2, family = 3, method = "kendall", B=50)
 #' gof$p.value.CvM
 #' gof$p.value.KS
-#' 
+#'
 #' # perform Kendall's goodness-of-fit test for the Frank copula
 #' gof <- BiCopGofTest(u1, u2, family = 5, method = "kendall", B=50)
 #' gof$p.value.CvM
 #' gof$p.value.KS
-#' 
+#'
 #' @export BiCopGofTest
-BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", max.df = 30, 
+BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", max.df = 30,
                          B = 100, obj = NULL) {
-    if (method == "White") 
+    if (method == "White")
         method <- "white"
-    if (method == "Kendall") 
+    if (method == "Kendall")
         method <- "kendall"
-    
+
     ## sanity checks for u1, u2
-    if (is.null(u1) == TRUE || is.null(u2) == TRUE) 
+    if (is.null(u1) == TRUE || is.null(u2) == TRUE)
         stop("u1 and/or u2 are not set or have length zero.")
-    if (length(u1) != length(u2)) 
+    if (length(u1) != length(u2))
         stop("Lengths of 'u1' and 'u2' do not match.")
-    if (any(u1 > 1) || any(u1 < 0)) 
+    if (any(u1 > 1) || any(u1 < 0))
         stop("Data has be in the interval [0,1].")
-    if (any(u2 > 1) || any(u2 < 0)) 
+    if (any(u2 > 1) || any(u2 < 0))
         stop("Data has be in the interval [0,1].")
-    
+
     ## extract family and parameters if BiCop object is provided
     if (missing(family))
         family <- NA
@@ -157,29 +157,29 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
         par <- obj$par
         par2 <- obj$par2
     }
-    
+
     ## sanity checks for family and parameters
-    if (is.na(family)) 
+    if (is.na(family))
         stop("Provide either 'family' and 'par' or 'obj'")
-    if (!(family %in% c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 16, 17, 18, 19, 
-                        20, 23, 24, 26, 27, 28, 29, 30, 33, 34, 36, 37, 38, 39, 40, 43, 44))) 
+    if (!(family %in% c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 16, 17, 18, 19,
+                        20, 23, 24, 26, 27, 28, 29, 30, 33, 34, 36, 37, 38, 39, 40, 43, 44)))
         stop("Copula family not implemented.")
-    if (c(2, 7, 8, 9, 10, 17, 18, 19, 20, 27, 28, 29, 30, 37, 38, 39, 40) %in% family && par2 == 0) 
-        stop("For t-, BB1, BB6, BB7 and BB8 copulas, 'par2' must be set.")
-    if (c(1, 3, 4, 5, 6, 13, 14, 16, 23, 24, 26, 33, 34, 36) %in% family && length(par) < 1) 
+    #if (c(2, 7, 8, 9, 10, 17, 18, 19, 20, 27, 28, 29, 30, 37, 38, 39, 40) %in% family && par2 == 0)
+    #    stop("For t-, BB1, BB6, BB7 and BB8 copulas, 'par2' must be set.")
+    if (c(1, 3, 4, 5, 6, 13, 14, 16, 23, 24, 26, 33, 34, 36) %in% family && length(par) < 1)
         stop("'par' not set.")
-    if (par != 0) 
+    if (par != 0)
         VineCopula:::BiCopCheck(family, par, par2)
-    if (family == 2 && method == "kendall") 
+    if (family == 2 && method == "kendall")
         stop("The goodness-of-fit test based on Kendall's process is not implemented for the t-copula.")
-    if (family %in% c(7, 8, 9, 10, 17, 18, 19, 20, 27, 28, 29, 30, 37, 38, 39, 40) && 
-            method == "white") 
+    if (family %in% c(7, 8, 9, 10, 17, 18, 19, 20, 27, 28, 29, 30, 37, 38, 39, 40) &&
+            method == "white")
         stop("The goodness-of-fit test based on White's information matrix equality is not implemented for the BB copulas.")
     # if((level < 0 || level > 1) && method=='kendall') stop('Significance level has
     # to be between 0 and 1.')
-    
+
     T <- length(u1)
-    
+
     if (method == "white") {
         # Step 1: maximum likelihood estimation
         if (family == 2) {
@@ -197,47 +197,32 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
             nu <- 0
             theta <- BiCopEst(u1, u2, family = family, method = "mle")$par
         }
-        
+
         # Step 2: Calculation of Hesse and gradient and D
-        
+
         if (family == 2) {
             Dprime <- matrix(0, 3, T)
             Vt <- array(0, dim = c(3, 3, T))
             Bt <- array(0, dim = c(2, 2, T))
             grad <- c(0, 0)
+            gradD <- gradDtcopula(u1, u2, theta, nu)
             for (t in 1:T) {
-                rho_teil <- f_rho(u1[t], u2[t], theta, nu)
-                nu_teil <- f_nu(u1[t], u2[t], theta, nu)
-                rho_nu_teil <- f_rho_nu(u1[t], u2[t], theta, nu)
-                H <- matrix(c(rho_teil, rho_nu_teil, rho_nu_teil, nu_teil), 2, 2)  # Hesse matrix
+                # Hesse matrix
+                H <- hesseTcopula(u1[t], u2[t], theta, nu)
                 Hprime <- as.vector(H[lower.tri(H, diag = TRUE)])
-                grad[1] <- BiCopDeriv(u1[t],
-                                      u2[t], 
-                                      family = family,
-                                      par = theta, 
-                                      par2 = nu,
-                                      deriv = "par",
-                                      log = TRUE)
-                grad[2] <- BiCopDeriv(u1[t], 
-                                      u2[t],
-                                      family = family,
-                                      par = theta, 
-                                      par2 = nu,
-                                      deriv = "par2",
-                                      log = TRUE)
-                C <- grad %*% t(grad)
+
+                ## outer product of gradient
+                C <- OPGtcopula(u1[t], u2[t], theta, nu)
                 Cprime <- as.vector(C[lower.tri(C, diag = TRUE)])
+
+                ## D_t
                 Dprime[, t] <- Hprime + Cprime
                 Bt[,,t] <- H  # brauche ich noch fuer Vt
-                
+
                 # TODO: correct Vt
-                # derivative of D (i.e. gradD)
-                eps <- 0.001
-                
-                
-                #tmp <- Dprime[,t]-gradD%*%solve(Bt[,,t])%*%grad
-                #Vt[, , t] <- (tmp) %*% t(tmp)
-                vt[,,t] <- Dprime[,t] %*% t(Dprime[,t])
+                tmp <- Dprime[,t]-gradD%*%solve(Bt[,,t])%*%grad
+                Vt[, , t] <- (tmp) %*% t(tmp)
+                #vt[,,t] <- Dprime[,t] %*% t(Dprime[,t])
             }
             D <- apply(Dprime, 1, mean)
             V0 <- apply(Vt, c(1, 2), mean)
@@ -245,7 +230,7 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
             b <- BiCopPDF(u1, u2, family, theta, nu)
             d <- BiCopDeriv2(u1,u2,family,theta,nu,deriv="par")/b
             D <- mean(d)
-            
+
             eps <- 0.0001
             b_eps1 <- BiCopPDF(u1, u2, family, theta-eps, nu)
             d_eps1 <- BiCopDeriv(u1,u2,family,theta-eps,nu,deriv="par")/b_eps1
@@ -254,22 +239,22 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
             d_eps2 <- BiCopDeriv(u1,u2,family,theta+eps,nu,deriv="par")/b_eps2
             gradD_2 <- mean(d_eps2)
             gradD <- (gradD_2-gradD_1)/(2*eps)
-            
+
             tmp1 <- BiCopDeriv(u1,u2,family,theta,nu,deriv="par")
             tmp2 <- tmp1/b^2
             tmp3 <- -tmp2 + d
             H <- mean(tmp3)
             Vt <- (d-gradD/H*tmp1/b)^2
-            
+
             #Vt <- (d)^2
             V0 <- mean(Vt)
         }
-        
-        
+
+
         # Teststatistik und p-Wert
         if (family == 2) {
             handle <- try(solve(V0), TRUE)
-            if (is.null(dim(handle))) 
+            if (is.null(dim(handle)))
                 handle <- ginv(V0)
             test <- T * (t(D) %*% handle %*% D)
             pvalue <- 1 - pchisq(test, df = length(D))
@@ -282,8 +267,8 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
         # Information ratio GOF Step 1: maximum likelihood estimation
         if (family == 2) {
             if (par == 0) {
-                pars <- BiCopEst(u1, 
-                                 u2, 
+                pars <- BiCopEst(u1,
+                                 u2,
                                  family = family,
                                  method = "mle",
                                  max.df = max.df)
@@ -297,12 +282,12 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
             }
         } else {
             nu <- 0
-            theta <- BiCopEst(u1, 
-                              u2, 
+            theta <- BiCopEst(u1,
+                              u2,
                               family = family,
                               method = "mle")$par
         }
-        
+
         # Step 2: Calculation of Hesse and gradient
         if (family == 2) {
             grad <- c(0, 0)
@@ -311,47 +296,47 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
             rho_nu_teil <- f_rho_nu(u1, u2, theta, nu)
             H <- matrix(c(rho_teil, rho_nu_teil, rho_nu_teil, nu_teil), 2, 2)  # Hesse matrix
             grad[1] <- BiCopDeriv(u1,
-                                  u2, 
-                                  family = family, 
-                                  par = theta, 
-                                  par2 = nu, 
-                                  deriv = "par", 
-                                  log = TRUE)
-            grad[2] <- BiCopDeriv(u1, 
-                                  u2, 
+                                  u2,
                                   family = family,
-                                  par = theta, 
-                                  par2 = nu, 
+                                  par = theta,
+                                  par2 = nu,
+                                  deriv = "par",
+                                  log = TRUE)
+            grad[2] <- BiCopDeriv(u1,
+                                  u2,
+                                  family = family,
+                                  par = theta,
+                                  par2 = nu,
                                   deriv = "par2",
                                   log = TRUE)
             C <- grad %*% t(grad)
         } else {
             d <- rep(0, T)
             for (t in 1:T) {
-                b <- BiCopPDF(u1[t], 
+                b <- BiCopPDF(u1[t],
                               u2[t],
                               family,
                               theta,
                               nu)
                 d[t] <- BiCopDeriv2(u1[t],
                                     u2[t],
-                                    family = family, 
+                                    family = family,
                                     par = theta,
-                                    par2 = nu, 
+                                    par2 = nu,
                                     deriv = "par")/b
             }
             H <- mean(d)
-            C <- BiCopDeriv(u1, 
-                            u2, 
+            C <- BiCopDeriv(u1,
+                            u2,
                             family = family,
                             par = theta,
                             par2 = nu,
-                            deriv = "par", 
+                            deriv = "par",
                             log = TRUE)
         }
         Phi <- -solve(H) %*% C
         IR <- trace(Phi)/dim(H)[1]  #Zwischenergebnis
-        
+
         # Bootstrap procedure
         if (B == 0) {
             out <- list(IR = IR, p.value = NULL)
@@ -361,10 +346,10 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
             IR_new <- ((IR - 1)/sqrt(sigma2))^2
             IR_boot <- ((IR_boot - 1)/sqrt(sigma2))^2
             p.value <- mean(IR_boot >= IR_new)
-            
+
             out <- list(IR = IR, p.value = p.value)
         }
-        
+
     } else if (method == "kendall") {
         if (family %in% c(13, 14, 16, 17, 18, 19, 20)) {
             u1 <- 1 - u1
@@ -377,51 +362,51 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
             u2 <- 1 - u2
             family <- family - 30
         }
-        
+
         ostat <- obs.stat(u1, u2, family)
-        
+
         if (B == 0) {
             # no bootstrap
-            
+
             sn.obs <- ostat$Sn
             tn.obs <- ostat$Tn
             out <- list(Sn = sn.obs, Tn = tn.obs)
-            
+
         } else {
             bstat <- list()
             for (i in 1:B) bstat[[i]] <- boot.stat(u1, u2, family)
-            
+
             sn.boot <- rep(0, B)
             tn.boot <- rep(0, B)
             for (i in 1:B) {
                 sn.boot[i] <- bstat[[i]]$sn
                 tn.boot[i] <- bstat[[i]]$tn
             }
-            
+
             sn.obs <- ostat$Sn
             tn.obs <- ostat$Tn
-            
+
             # k<-as.integer((1-level)*B) sn.critical <- sn.boot[k] # critical value of test
             # at level 0.05 tn.critical <- tn.boot[k] # critical value of test at level 0.05
-            
-            
+
+
             pv.sn <- sapply(sn.obs,
                             function(x) (1/B) * length(which(sn.boot[1:B] >= x)))  # P-value of Sn
             pv.tn <- sapply(tn.obs,
                             function(x) (1/B) * length(which(tn.boot[1:B] >= x)))  # P-value of Tn
-            
-            out <- list(p.value.CvM = pv.sn, 
+
+            out <- list(p.value.CvM = pv.sn,
                         p.value.KS = pv.tn,
-                        statistic.CvM = sn.obs, 
+                        statistic.CvM = sn.obs,
                         statistic.KS = tn.obs)
-            
+
         }
     } else {
         stop("Method not implemented")
     }
-    
-    
-    
+
+
+
     return(out)
 }
 
@@ -430,12 +415,12 @@ f_rho <- function(u1, u2, par, par2) {
     a <- .C("diff2lPDF_rho_tCopula",
             as.double(u1),
             as.double(u2),
-            as.integer(length(u1)), 
+            as.integer(length(u1)),
             as.double(c(par, par2)),
             as.integer(2),
             as.double(rep(0, length(u1))),
             PACKAGE = "VineCopula")[[6]]
-    
+
     return(sum(a))
 }
 
@@ -443,12 +428,12 @@ f_nu <- function(u1, u2, par, par2) {
     a <- .C("diff2lPDF_nu_tCopula_new",
             as.double(u1),
             as.double(u2),
-            as.integer(length(u1)), 
+            as.integer(length(u1)),
             as.double(c(par, par2)),
             as.integer(2),
             as.double(rep(0, length(u1))),
             PACKAGE = "VineCopula")[[6]]
-    
+
     return(sum(a))
 }
 
@@ -456,21 +441,21 @@ f_rho_nu <- function(u1, u2, par, par2) {
     a <- .C("diff2lPDF_rho_nu_tCopula_new",
             as.double(u1),
             as.double(u2),
-            as.integer(length(u1)), 
-            as.double(c(par, par2)), 
-            as.integer(2), 
+            as.integer(length(u1)),
+            as.double(c(par, par2)),
+            as.integer(2),
             as.double(rep(0, length(u1))),
             PACKAGE = "VineCopula")[[6]]
-    
+
     return(sum(a))
 }
 
 boot.stat <- function(u, v, fam) {
-    
+
     n <- length(u)
     t <- seq(1, n)/(n + 1e-04)
     kt <- rep(0, n)
-    
+
     # estimate paramemter for different copula family from (u,v)
     param <- suppressWarnings({
         BiCopEst(u, v, family = fam)
@@ -496,13 +481,13 @@ boot.stat <- function(u, v, fam) {
             BiCopEst(sam[, 1], sam[, 2], family = fam)
         })  # parameter estimation of sample data
         sim <- BiCopSim(10000, fam, sam.par$par, sam.par$par2)  # generate data for the simulation of theo. K(t)
-        
+
         # par2 muss auf einen Integer gesetzt werden f?r mvtnorm
         param$par2 <- round(param$par2)
-        
+
         cormat <- matrix(c(1, param$par, param$par, 1), 2, 2)
         dcop <- rep(0, 10000)
-        for (i in 1:10000) dcop[i] <- pmvt(upper = c(qt(sim[i, 1], df = param$par2), 
+        for (i in 1:10000) dcop[i] <- pmvt(upper = c(qt(sim[i, 1], df = param$par2),
                                                      qt(sim[i, 2], df = param$par2)),
                                            corr = cormat,
                                            df = param$par2)
@@ -524,7 +509,7 @@ boot.stat <- function(u, v, fam) {
         kt <- t + log((1 - exp(-sam.par))/(1 - exp(-sam.par * t))) * (1 - exp(-sam.par * t))/(sam.par * exp(-sam.par * t))
     } else if (fam == 6) {
         sam <- BiCopSim(n, 6, param$par)  # generate sample data
-        sam.par <- BiCopEst(sam[, 1], sam[, 2], family = fam)$par  # estimate parameter of sample data        
+        sam.par <- BiCopEst(sam[, 1], sam[, 2], family = fam)$par  # estimate parameter of sample data
         kt <- t - (log(1 - (1 - t)^sam.par) * (1 - (1 - t))^sam.par)/(sam.par * (1 - t)^(sam.par - 1))
     } else if (fam == 7) {
         # BB1
@@ -555,7 +540,7 @@ boot.stat <- function(u, v, fam) {
         delta <- sam.par$par2
         kt <- t + log(((1 - t * delta)^theta - 1)/((1 - delta)^theta - 1)) * (1 - t * delta - (1 - t * delta)^(-theta) + (1 - t * delta)^(-theta) * t * delta)/(theta * delta)
     }
-    
+
     # calculate emp. Kn
     w <- rep(0, n)
     w[1:n] <- mapply(function(x, y) (1/n) * length(which(x > sam[, 1] & y > sam[, 2])),
@@ -564,7 +549,7 @@ boot.stat <- function(u, v, fam) {
     w <- sort(w)
     kn <- rep(0, n)
     kn <- sapply(t, function(x) (1/n) * length(which(w[1:n] <= x)))
-    
+
     # calculate test statistic Sn
     Sn1 <- 0
     Sn2 <- 0
@@ -584,7 +569,7 @@ boot.stat <- function(u, v, fam) {
         tm[j, 2] <- abs(kn[j] - kt[j + 1])
     }
     tn <- max(tm) * sqrt(n)
-    
+
     sn <- sort(sn)  # vector of ordered statistic Sn
     tn <- sort(tn)  # vector of ordered statistic Tn
     out <- list(sn = sn, tn = tn)
@@ -593,36 +578,36 @@ boot.stat <- function(u, v, fam) {
 
 
 obs.stat <- function(u, v, fam) {
-    
+
     n <- length(u)
     t <- seq(1, n)/(n + 1e-04)
     kt <- rep(0, n)
-    
+
     # estimate paramemter for different copula family from (u,v)
     param <- suppressWarnings({
         BiCopEst(u, v, family = fam)
     })
-    
+
     # calculate observed K(t) of (u,v)
     kt.obs <- rep(0, n)
     if (fam == 1) {
         sim <- BiCopSim(10000, 1, param$par)  # generate data for the simulation of K(t)
         cormat <- matrix(c(1, param$par, param$par, 1), 2, 2)
         dcop <- rep(0, 10000)
-        for (i in 1:10000) dcop[i] <- pmvnorm(upper = c(qnorm(sim[i, 1]), 
+        for (i in 1:10000) dcop[i] <- pmvnorm(upper = c(qnorm(sim[i, 1]),
                                                         qnorm(sim[i, 2])),
                                               corr = cormat)
-        kt.obs <- sapply(t, 
+        kt.obs <- sapply(t,
                          function(x) (1/10000) * length(which(dcop[1:10000] <= x)))  # simulate K(t) of sample data
     } else if (fam == 2) {
         sim <- BiCopSim(10000, 2, param$par, param$par2)  # generate data for the simulation of K(t)
         cormat <- matrix(c(1, param$par, param$par, 1), 2, 2)
         dcop <- rep(0, 10000)
-        for (i in 1:10000) dcop[i] <- pmvt(upper = c(qt(sim[i, 1], df = param$par2), 
-                                                     qt(sim[i, 2], df = param$par2)), 
+        for (i in 1:10000) dcop[i] <- pmvt(upper = c(qt(sim[i, 1], df = param$par2),
+                                                     qt(sim[i, 2], df = param$par2)),
                                            corr = cormat,
                                            df = param$par2)
-        kt.obs <- sapply(t, 
+        kt.obs <- sapply(t,
                          function(x) (1/10000) * length(which(dcop[1:10000] <= x)))  # simulate K(t) of sample data
     } else if (fam == 3) {
         kt.obs <- t + t * (1 - t^param$par)/param$par
@@ -652,11 +637,11 @@ obs.stat <- function(u, v, fam) {
     # calculation of observed Kn
     w <- rep(0, n)
     w[1:n] <- mapply(function(x, y) (1/n) * length(which(x > u & y > v)), u, v)
-    
+
     w <- sort(w)
     kn.obs <- rep(0, n)
     kn.obs <- sapply(t, function(x) (1/n) * length(which(w[1:n] <= x)))
-    
+
     # calculation of observed value Sn
     Sn1 <- 0
     Sn2 <- 0
@@ -665,7 +650,7 @@ obs.stat <- function(u, v, fam) {
         Sn2 <- Sn2 + (kn.obs[j]) * ((kt.obs[j + 1])^2 - (kt.obs[j])^2)
     }
     Sn <- n/3 + n * Sn1 - n * Sn2  # observed Sn
-    
+
     # calculation of observed Tn
     tn.obs <- matrix(0, n - 1, 2)
     # mit i=0
@@ -682,7 +667,7 @@ obs.stat <- function(u, v, fam) {
 }
 
 
-############################ 
+############################
 
 # bootstrap for IR
 
@@ -700,19 +685,19 @@ boot.IR <- function(family, theta, nu, B, n) {
             nu_teil <- f_nu(sam[, 1], sam[, 2], theta2, nu2)
             rho_nu_teil <- f_rho_nu(sam[, 1], sam[, 2], theta2, nu2)
             H <- matrix(c(rho_teil, rho_nu_teil, rho_nu_teil, nu_teil), 2, 2)  # Hesse matrix
-            grad[1] <- BiCopDeriv(sam[, 1], 
+            grad[1] <- BiCopDeriv(sam[, 1],
                                   sam[, 2],
                                   family = family,
-                                  par = theta2, 
-                                  par2 = nu2, 
+                                  par = theta2,
+                                  par2 = nu2,
                                   deriv = "par",
                                   log = TRUE)
             grad[2] <- BiCopDeriv(sam[, 1],
                                   sam[, 2],
                                   family = family,
-                                  par = theta2, 
+                                  par = theta2,
                                   par2 = nu2,
-                                  deriv = "par2", 
+                                  deriv = "par2",
                                   log = TRUE)
             C <- grad %*% t(grad)
         } else {
@@ -723,23 +708,88 @@ boot.IR <- function(family, theta, nu, B, n) {
                 b <- BiCopPDF(sam[t, 1], sam[t, 2], family, theta, nu)
                 d[t] <- BiCopDeriv2(sam[t, 1],
                                     sam[t, 2],
-                                    family = family, 
-                                    par = theta, 
+                                    family = family,
+                                    par = theta,
                                     par2 = nu,
                                     deriv = "par")/b
             }
             H <- mean(d)
             C <- BiCopDeriv(sam[, 1],
-                            sam[, 2], 
+                            sam[, 2],
                             family = family,
-                            par = theta2, 
-                            par2 = nu2, 
-                            deriv = "par", 
+                            par = theta2,
+                            par2 = nu2,
+                            deriv = "par",
                             log = TRUE)
         }
         Phi <- -solve(H) %*% C
         IR[i] <- trace(Phi)/dim(H)[1]
     }
-    
+
     return(IR)
+}
+
+
+
+## sub-function
+
+hesseTcopula <- function(u1, u2, theta, nu){
+    rho_teil <- f_rho(u1, u2, theta, nu)
+    nu_teil <- f_nu(u1, u2, theta, nu)
+    rho_nu_teil <- f_rho_nu(u1, u2, theta, nu)
+    H <- matrix(c(rho_teil, rho_nu_teil, rho_nu_teil, nu_teil), 2, 2)
+}
+
+OPGtcopula <- function(u1, u2, theta, nu){
+    # gradient
+    grad[1] <- mean(BiCopDeriv(u1,
+                          u2,
+                          family = family,
+                          par = theta,
+                          par2 = nu,
+                          deriv = "par",
+                          log = TRUE))
+    grad[2] <- mean(BiCopDeriv(u1,
+                          u2,
+                          family = family,
+                          par = theta,
+                          par2 = nu,
+                          deriv = "par2",
+                          log = TRUE))
+
+    ## outer product of gradient
+    C <- grad %*% t(grad)
+}
+
+
+# derivative of D (i.e. gradD) for the t-copula
+gradDtcopula <- function(u1, u2, theta, nu){
+    eps <- 0.001
+    H_theta_eps_plus <- hesseTcopula(u1, u2, theta+eps, nu)
+    H_theta_eps_minus <- hesseTcopula(u1, u2, theta-eps, nu)
+    H_nu_eps_plus <- hesseTcopula(u1, u2, theta, nu+eps)
+    H_nu_eps_minus <- hesseTcopula(u1, u2, theta, nu-eps)
+    C_theta_eps_plus <- OPGtcopula(u1, u2, theta+eps, nu)
+    C_theta_eps_minus <- OPGtcopula(u1, u2, theta-eps, nu)
+    C_nu_eps_plus <- OPGtcopula(u1, u2, theta, nu+eps)
+    C_nu_eps_minus <- OPGtcopula(u1, u2, theta, nu-eps)
+
+    Hprime_theta_eps_plus <- as.vector(H_theta_eps_plus[lower.tri(H_theta_eps_plus, diag = TRUE)])
+    Hprime_theta_eps_minus <- as.vector(H_theta_eps_minus[lower.tri(H_theta_eps_minus, diag = TRUE)])
+    Hprime_nu_eps_plus <- as.vector(H_nu_eps_plus[lower.tri(H_nu_eps_plus, diag = TRUE)])
+    Hprime_nu_eps_minus <- as.vector(H_nu_eps_minus[lower.tri(H_nu_eps_minus, diag = TRUE)])
+    Cprime_theta_eps_plus <- as.vector(C_theta_eps_plus[lower.tri(C_theta_eps_plus, diag = TRUE)])
+    Cprime_theta_eps_minus <- as.vector(C_theta_eps_minus[lower.tri(C_theta_eps_minus, diag = TRUE)])
+    Cprime_nu_eps_plus <- as.vector(C_nu_eps_plus[lower.tri(C_nu_eps_plus, diag = TRUE)])
+    Cprime_nu_eps_minus <- as.vector(C_nu_eps_minus[lower.tri(C_nu_eps_minus, diag = TRUE)])
+
+    Dprime_theta_eps_plus <- Hprime_theta_eps_plus + Cprime_theta_eps_plus
+    Dprime_theta_eps_minus <- Hprime_theta_eps_minus + Cprime_theta_eps_minus
+    Dprime_nu_eps_plus <- Hprime_nu_eps_plus + Cprime_nu_eps_plus
+    Dprime_nu_eps_minus <- Hprime_nu_eps_minus + Cprime_nu_eps_minus
+
+    gradD_theta <- (Dprime_theta_eps_minus - Dprime_theta_eps_plus)/(2*eps)
+    gradD_nu <- (Dprime_nu_eps_minus - Dprime_nu_eps_plus)/(2*eps)
+
+    gradD <- cbind(gradD_theta, gradD_nu)
 }
