@@ -169,7 +169,7 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
     if (c(1, 3, 4, 5, 6, 13, 14, 16, 23, 24, 26, 33, 34, 36) %in% family && length(par) < 1) 
         stop("'par' not set.")
     if (par != 0) 
-        BiCopCheck(family, par, par2)
+        VineCopula:::BiCopCheck(family, par, par2)
     if (family == 2 && method == "kendall") 
         stop("The goodness-of-fit test based on Kendall's process is not implemented for the t-copula.")
     if (family %in% c(7, 8, 9, 10, 17, 18, 19, 20, 27, 28, 29, 30, 37, 38, 39, 40) && 
@@ -203,6 +203,7 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
         if (family == 2) {
             Dprime <- matrix(0, 3, T)
             Vt <- array(0, dim = c(3, 3, T))
+            Bt <- array(0, dim = c(2, 2, T))
             grad <- c(0, 0)
             for (t in 1:T) {
                 rho_teil <- f_rho(u1[t], u2[t], theta, nu)
@@ -227,28 +228,40 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
                 C <- grad %*% t(grad)
                 Cprime <- as.vector(C[lower.tri(C, diag = TRUE)])
                 Dprime[, t] <- Hprime + Cprime
+                Bt[,,t] <- H  # brauche ich noch fuer Vt
                 
-                Vt[, , t] <- Dprime %*% t(Dprime)
+                # TODO: correct Vt
+                # derivative of D (i.e. gradD)
+                eps <- 0.001
+                
+                
+                #tmp <- Dprime[,t]-gradD%*%solve(Bt[,,t])%*%grad
+                #Vt[, , t] <- (tmp) %*% t(tmp)
+                vt[,,t] <- Dprime[,t] %*% t(Dprime[,t])
             }
             D <- apply(Dprime, 1, mean)
             V0 <- apply(Vt, c(1, 2), mean)
         } else {
-            d <- rep(0, T)
-            for (t in 1:T) {
-                b <- BiCopPDF(u1[t],
-                              u2[t], 
-                              family, 
-                              theta,
-                              nu)
-                d[t] <- BiCopDeriv2(u1[t],
-                                    u2[t],
-                                    family = family,
-                                    par = theta, 
-                                    par2 = nu, 
-                                    deriv = "par")/b
-            }
+            b <- BiCopPDF(u1, u2, family, theta, nu)
+            d <- BiCopDeriv2(u1,u2,family,theta,nu,deriv="par")/b
             D <- mean(d)
-            Vt <- d^2
+            
+            eps <- 0.0001
+            b_eps1 <- BiCopPDF(u1, u2, family, theta-eps, nu)
+            d_eps1 <- BiCopDeriv(u1,u2,family,theta-eps,nu,deriv="par")/b_eps1
+            gradD_1 <- mean(d_eps1)
+            b_eps2 <- BiCopPDF(u1, u2, family, theta+eps, nu)
+            d_eps2 <- BiCopDeriv(u1,u2,family,theta+eps,nu,deriv="par")/b_eps2
+            gradD_2 <- mean(d_eps2)
+            gradD <- (gradD_2-gradD_1)/(2*eps)
+            
+            tmp1 <- BiCopDeriv(u1,u2,family,theta,nu,deriv="par")
+            tmp2 <- tmp1/b^2
+            tmp3 <- -tmp2 + d
+            H <- mean(tmp3)
+            Vt <- (d-gradD/H*tmp1/b)^2
+            
+            #Vt <- (d)^2
             V0 <- mean(Vt)
         }
         
