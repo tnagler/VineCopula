@@ -192,10 +192,13 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
     if (is.logical(se) == FALSE)
         stop("'se' has to be a logical variable (TRUE or FALSE).")
 
+    ## return independence immediately
+    if (family == 0)
+        return(BiCop(0, 0))
 
     ## calculate empirical Kendall's tau and invert for initial estimate
     tau <- fasttau(u1, u2)
-    if (family %in% c(allfams[onepar], 2))
+    if (family %in% c(2, allfams[onepar]))
         theta <- BiCopTau2Par(family, tau)
 
     ## inversion of kendall's tau -----------------------------
@@ -406,7 +409,7 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
         }
 
         ## likelihood optimization
-        if ((family != 0) && (family < 100)) {
+        if (family < 100) {
             out <- MLE_intern(cbind(u1, u2),
                               c(theta1, delta),
                               family = family,
@@ -417,7 +420,7 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
             theta <- out$par
             if (se == TRUE)
                 se1 <- out$se
-        } else if ((family != 0) && (family > 100)) {
+        } else if (family > 100) {
             # New
             out <- MLE_intern_Tawn(cbind(u1, u2),
                                    c(theta1, delta),
