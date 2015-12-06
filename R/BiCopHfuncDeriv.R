@@ -6,7 +6,8 @@
 #'
 #' If the family and parameter specification is stored in a \code{\link{BiCop}}
 #' object \code{obj}, the alternative version \cr
-#' \preformatted{BiCopHfuncDeriv(u1, u2, obj, deriv = "par")} can be used.
+#' \preformatted{BiCopHfuncDeriv(u1, u2, obj, deriv = "par")}
+#' can be used.
 #'
 #' @param u1,u2 numeric vectors of equal length with values in [0,1].
 #' @param family integer; single number or vector of size \code{length(u1)};

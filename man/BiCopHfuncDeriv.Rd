@@ -59,7 +59,8 @@ arguments.
 \details{
 If the family and parameter specification is stored in a \code{\link{BiCop}}
 object \code{obj}, the alternative version \cr
-\preformatted{BiCopHfuncDeriv(u1, u2, obj, deriv = "par")} can be used.
+\preformatted{BiCopHfuncDeriv(u1, u2, obj, deriv = "par")}
+can be used.
 }
 \examples{
 ## simulate from a bivariate t-copula
