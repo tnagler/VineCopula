@@ -1,12 +1,12 @@
 /*
- ** likelihood.c - C code of the package CDRVine  
- ** 
- ** with contributions from Carlos Almeida, Aleksey Min, 
+ ** likelihood.c - C code of the package CDRVine
+ **
+ ** with contributions from Carlos Almeida, Aleksey Min,
  ** Ulf Schepsmeier, Jakob Stoeber and Eike Brechmann
- ** 
+ **
  ** A first version was based on code
  ** from Daniel Berg <daniel at danielberg.no>
- ** provided by personal communication. 
+ ** provided by personal communication.
  **
  */
 
@@ -35,10 +35,10 @@ double log1mexp(double a)
     if (a<log(2)) {
         result=log(-expm1(-a));
     }else{
-        result=log1p(-exp(-a));	
+        result=log1p(-exp(-a));
     }
-    return result;	
-}	
+    return result;
+}
 
 
 
@@ -46,7 +46,7 @@ void archCDF(double* u, double* v, int* n, double* param, int* copula, double* o
 {
     int j;
     double t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14;
-    
+
     for(j=0;j<*n;j++)
     {
         if(u[j]>UMAX && v[j]>UMAX){ out[j]=1;}
@@ -79,8 +79,8 @@ void archCDF(double* u, double* v, int* n, double* param, int* copula, double* o
                     t2=-log1p(exp(-param[0]) * expm1(param[0]-v[j]*param[0])/expm1(-param[0]));
                     out[j] = -log1mexp(t1+t2-log1mexp(param[0]))/param[0];
                 } else {
-                    out[j] =-1/param[0] * log(1 + exp(-(-log((exp(-param[0] * u[j]) - 1)/(exp(-param[0]) - 1)) + -log((exp(-param[0] * v[j]) - 1)/(exp(-param[0]) - 1)))) * (exp(-param[0]) - 1));	
-                }	
+                    out[j] =-1/param[0] * log(1 + exp(-(-log((exp(-param[0] * u[j]) - 1)/(exp(-param[0]) - 1)) + -log((exp(-param[0] * v[j]) - 1)/(exp(-param[0]) - 1)))) * (exp(-param[0]) - 1));
+                }
             }
             else if(*copula==6)	//Joe
             {
@@ -165,7 +165,7 @@ void archCDF(double* u, double* v, int* n, double* param, int* copula, double* o
             }
         }
     }
-    
+
 }
 
 
@@ -177,10 +177,10 @@ void dbb1(double* u, double* v, int* n, double* param, double* out)
     int i;
     double th, de;
     double t1, t2, t3, t16, t17, t38, t39, t4, t5, t6, t7, t9, t10, t12, t13, t20, t24, t25, t27, t29, t32, t33, t34, t36, t43, t59;
-    
+
     th = param[0];
     de = param[1];
-    
+
     for(i=0;i<*n;i++)
     {
         t1 = pow(u[i],(-th));
@@ -209,11 +209,11 @@ void dbb1(double* u, double* v, int* n, double* param, double* out)
         t36 = t33/t34;
         t43 = t4*th;
         t59 = t43*t27*t29;
-        
+
         out[i] = t25*t6*t27*t4*t29*t36*t3*t39-t13*t6*t43*t27*t29*t33*t3*t38*t17*t20+
             t13*t3*t38*t17*t33*t20*t6*de*t59+t25*t3*t39*t36*t6*t59;
     }
-    
+
 }
 
 
@@ -222,10 +222,10 @@ void dbb6(double* u, double* v, int* n, double* param, double* out)
     int i;
     double th, de;
     double t1, t2, t3, t4, t5, t12, t16, t32, t38, t39, t40, t47, t50, t61, t90, t6, t7, t8, t9, t10, t11, t13, t14, t35, t36, t37, t42, t48, t53, t56, t57, t59, t78, t80, t87, t93;
-    
+
     th = param[0];
     de = param[1];
-    
+
     for(i=0;i<*n;i++)
     {
         t1 = 1.0-u[i];
@@ -264,12 +264,12 @@ void dbb6(double* u, double* v, int* n, double* param, double* out)
         t80 = pow(t78*t14,t16);
         t87 = t78*t78;
         t93 = pow(-t9,t38);
-        
+
         out[i] = (2.0*t36*t37*t40*t42+t36*t37*t48*t50+t53*th*t57-t59*t57+
             t36*t37*t61*t56-2.0*t35*t40*t42-t35*t61*t56-t53*th*t50*t56+t59*t50*t56-
             t35*t48*t50) *t80*t7*t2/t3/t8/t87/(t90+2.0*t5*t10+t93)/t1/t6;
     }
-    
+
 }
 
 
@@ -278,10 +278,10 @@ void dbb7(double* u, double* v, int* n, double* param, double* out)
     int i;
     double th, de;
     double t1, t2, t3, t4, t5, t6, t7, t8, t9, t11, t12, t14, t15, t16, t18, t20, t23, t24, t25, t27, t30, t31, t32, t35, t37, t42, t54;
-    
+
     th = param[0];
     de = param[1];
-    
+
     for(i=0;i<*n;i++)
     {
         t1 = 1.0-u[i];
@@ -311,11 +311,11 @@ void dbb7(double* u, double* v, int* n, double* param, double* out)
         t37 = t6*th;
         t42 = 1./t12;
         t54 = t37*t18*t20;
-        
+
         out[i] = -t16*t8*t6*t18*t20*t27*t4*t32 + t35*t8*t37*t18*t20*t24*t4*t30*t31*t42+
             t35*t4*t30*t31*t24*t42*t8*de*t54+t16*t4*t32*t27*t8*t54;
     }
-    
+
 }
 
 
@@ -324,10 +324,10 @@ void dbb8(double* u, double* v, int* n, double* param, double* out)
     int i;
     double th, de;
     double t2, t3, t12, t16, t6, t7, t10, t11, t33, t38, t39, t49, t59, t69, t25, t26, t29, t44, t45, t50, t54, t62, t67;
-    
+
     th = param[0];
     de = param[1];
-    
+
     for(i=0;i<*n;i++)
     {
         t2 = 1.0-de*u[i];
@@ -357,7 +357,7 @@ void dbb8(double* u, double* v, int* n, double* param, double* out)
         t67 = t26*t26;
         out[i] = -de*t29*t62/t6/t2/t67/t69;
     }
-    
+
 }
 
 
@@ -372,7 +372,7 @@ void LL_mod2(int* family, int* n, double* u, double* v, double* theta, double* n
     int nfamily;
     ntheta = -*theta;
     nnu = -*nu;
-    
+
     for(int i=0;i<*n;i++)
     {
         if(u[i]<UMIN) u[i]=UMIN;
@@ -403,7 +403,7 @@ void LL_mod2(int* family, int* n, double* u, double* v, double* theta, double* n
             LL(&nfamily, n, negu,  v, &ntheta, &nnu, loglik);
         }
     }else{
-        
+
         if((*family==23) | (*family==24) | (*family==26) | (*family==27) | (*family==28) | (*family==29) | (*family==30) | (*family==61))	// 90? rotated copulas
         {
             nfamily = (*family)-20;
@@ -420,13 +420,13 @@ void LL_mod2(int* family, int* n, double* u, double* v, double* theta, double* n
         {
             nfamily = (*family)-20;
             for (int i = 0; i < *n; ++i) {negu[i] = 1 - u[i];}
-            LL(&nfamily, n, negu,  v, &ntheta, nu, loglik);
+            LL(&nfamily, n, v, negu, &ntheta, nu, loglik);
         }
         else if((*family==134) | (*family==234))
         {
             nfamily = (*family)-30;
             for (int i = 0; i < *n; ++i) {negv[i] = 1 - v[i];}
-            LL(&nfamily, n, u,  negv, &ntheta, nu, loglik);
+            LL(&nfamily, n, negv, u, &ntheta, nu, loglik);
         }
         else {
             LL(family, n, u,  v, theta, nu, loglik);
@@ -454,7 +454,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
     double *dat, rho, ll=0.0, t1=0.0, t2=0.0, f;
     //Allocate memory:
     dat = Calloc(2,double);
-    
+
     for(int i=0;i<*n;i++)
     {
         if(u[i]<UMIN) u[i]=UMIN;
@@ -462,7 +462,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
         if(v[i]<UMIN) v[i]=UMIN;
         else if(v[i]>UMAX) v[i]=UMAX;
     }
-    
+
     //Compute log-likelihood:
     if(*family==0) //independent
         ll = 0;
@@ -494,7 +494,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
     }
     else if(*family==3) //Clayton
     {
-        if(*theta == 0) ll = 0; 
+        if(*theta == 0) ll = 0;
         else if(*theta < 1e-10) ll = 0;
         else
         {
@@ -515,7 +515,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
             dat[0] = u[j]; dat[1] = v[j];
             t1 = pow(-log(dat[0]),*theta)+pow(-log(dat[1]),*theta);
             f= -pow(t1,1.0/(*theta))+(2.0/(*theta)-2.0)*log(t1)+(*theta-1.0)*log(log(dat[0])*log(dat[1]))-log(dat[0]*dat[1])+log1p((*theta-1.0)*pow(t1,-1.0/(*theta)));
-            
+
             if(f>XINFMAX) ll += log(XINFMAX);
             else if(f<log(DBL_MIN))ll += log(DBL_MIN);
             else ll += f;
@@ -557,9 +557,9 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
                 if(f>XINFMAX) ll += log(XINFMAX);
                 else if(f<log(DBL_MIN))ll += log(DBL_MIN);
                 else ll += f;
-            }		
+            }
         }else{
-            
+
             double *param, *fuc;
             param=Calloc(2,double);
             param[0]=*theta;
@@ -572,7 +572,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
                 {
                     fuc[j]=1;
                 }
-                
+
                 if(log(fuc[j])>XINFMAX) ll += log(XINFMAX);
                 else if(fuc[j]<DBL_MIN) ll += log(DBL_MIN);
                 else ll += log(fuc[j]);
@@ -594,7 +594,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
             {
                 fuc[j]=1;
             }
-            
+
             if(log(fuc[j])>XINFMAX) ll += log(XINFMAX);
             else if(fuc[j]<DBL_MIN) ll += log(DBL_MIN);
             else ll += log(fuc[j]);
@@ -611,7 +611,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
                 if(log(f)>XINFMAX) ll += log(XINFMAX);
                 else if(f < DBL_MIN) ll += log(DBL_MIN);
                 else ll += log(f);
-            }		
+            }
         }
         else
         {
@@ -622,12 +622,12 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
             fuc = Calloc(*n,double);
             dbb7(u, v, n, param, fuc);
             for(j=0;j<*n;j++)
-            {	
+            {
                 if(!isfinite(fuc[j]) || isnan(fuc[j]))
                 {
                     fuc[j]=1;
                 }
-                
+
                 if(log(fuc[j])>XINFMAX) ll += log(XINFMAX);
                 else if(fuc[j]<DBL_MIN) ll += log(DBL_MIN);
                 else ll += log(fuc[j]);
@@ -649,17 +649,17 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
             {
                 fuc[j]=1;
             }
-            
+
             if(log(fuc[j])>XINFMAX) ll += log(XINFMAX);
             else if(fuc[j]<DBL_MIN) ll += log(DBL_MIN);
             else ll += log(fuc[j]);
         }
         Free(fuc); Free(param);
-        
+
     }
     else if(*family==13) //rotated Clayton (180?)
     {
-        if(*theta == 0) ll = 0; 
+        if(*theta == 0) ll = 0;
         else if(*theta < XEPS) ll = 0;
         else
         {
@@ -710,9 +710,9 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
                 if(f>XINFMAX) ll += log(XINFMAX);
                 else if(f<log(DBL_MIN))ll += log(DBL_MIN);
                 else ll += f;
-            }		
-        }else{	  
-            
+            }
+        }else{
+
             double *param, *fuc;
             param=Calloc(2,double);
             param[0]=*theta;
@@ -722,14 +722,14 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
             for(j=0;j<*n;j++)
             {
                 dat[0] = 1-u[j]; dat[1] = 1-v[j];
-                
+
                 dbb1(&dat[0], &dat[1], &k, param, &fuc[j]);
-                
+
                 if(!isfinite(fuc[j]) || isnan(fuc[j]))
                 {
                     fuc[j]=1;
                 }
-                
+
                 if(log(fuc[j])>XINFMAX) ll += log(XINFMAX);
                 else if(fuc[j]<DBL_MIN) ll += log(DBL_MIN);
                 else ll += log(fuc[j]);
@@ -748,14 +748,14 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
         for(j=0;j<*n;j++)
         {
             dat[0] = 1-u[j]; dat[1] = 1-v[j];
-            
+
             dbb6(&dat[0], &dat[1], &k, param, &fuc[j]);
-            
+
             if(!isfinite(fuc[j]) || isnan(fuc[j]))
             {
                 fuc[j]=1;
             }
-            
+
             if(log(fuc[j])>XINFMAX) ll += log(XINFMAX);
             else if(fuc[j]<DBL_MIN) ll += log(DBL_MIN);
             else ll += log(fuc[j]);
@@ -771,7 +771,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
                 if(log(f)>XINFMAX) ll += log(XINFMAX);
                 else if(f < DBL_MIN) ll += log(DBL_MIN);
                 else ll += log(f);
-            }		
+            }
         }else{
             double *param, *fuc;
             param=Calloc(2,double);
@@ -779,17 +779,17 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
             param[1]=*nu;
             fuc = Calloc(*n,double);
             int k=1;
-            
+
             for(j=0;j<*n;j++)
             {
                 dat[0] = 1-u[j]; dat[1] = 1-v[j];
                 dbb7(&dat[0], &dat[1], &k, param, &fuc[j]);
-                
+
                 if(!isfinite(fuc[j]) || isnan(fuc[j]))
                 {
                     fuc[j]=1;
                 }
-                
+
                 if(log(fuc[j])>XINFMAX) ll += log(XINFMAX);
                 else if(fuc[j]<DBL_MIN) ll += log(DBL_MIN);
                 else ll += log(fuc[j]);
@@ -805,17 +805,17 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
         param[1]=*nu;
         fuc = Calloc(*n,double);
         int k=1;
-        
+
         for(j=0;j<*n;j++)
         {
             dat[0] = 1-u[j]; dat[1] = 1-v[j];
             dbb8(&dat[0], &dat[1], &k, param, &fuc[j]);
-            
+
             if(!isfinite(fuc[j]) || isnan(fuc[j]))
             {
                 fuc[j]=1;
             }
-            
+
             if(log(fuc[j])>XINFMAX) ll += log(XINFMAX);
             else if(fuc[j]<DBL_MIN) ll += log(DBL_MIN);
             else ll += log(fuc[j]);
@@ -825,7 +825,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
     else if(*family==41)		// New: 1-parametric asymmetric copula (from Harry Joe)
     {
         double tem1, tem2, con, sm, tem;
-        
+
         for(j=0;j<*n;j++)
         {
             dat[0] = 1-u[j]; dat[1] = 1-v[j];
@@ -835,7 +835,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
             sm=pow(tem1,*theta)+pow(tem2,*theta);
             tem=pow(sm,(1.0/(*theta)));
             f=con*tem*exp(-tem+tem1+tem2)/sm;
-            
+
             if(log(f)>XINFMAX) ll += log(XINFMAX);
             else if(f < DBL_MIN) ll += log(DBL_MIN);
             else ll += log(f);
@@ -844,7 +844,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
     else if(*family==51)		// New: rotated 1-parametric asymmetric copula (from Harry Joe)
     {
         double tem1, tem2, con, sm, tem;
-        
+
         for(j=0;j<*n;j++)
         {
             tem1=qgamma(1.0-u[j],*theta,1,1,0);
@@ -853,7 +853,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
             sm=pow(tem1,*theta)+pow(tem2,*theta);
             tem=pow(sm,(1.0/(*theta)));
             f=con*tem*exp(-tem+tem1+tem2)/sm;
-            
+
             if(log(f)>XINFMAX) ll += log(XINFMAX);
             else if(f < DBL_MIN) ll += log(DBL_MIN);
             else ll += log(f);
@@ -909,10 +909,10 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
             else ll += log(f);
         }
     }
-    else 
+    else
     {
         Rprintf("%d\n",*family);
-        printError("Error in LL\t:","Unknown copula family"); 
+        printError("Error in LL\t:","Unknown copula family");
     }
     //Free memory:
     Free(dat);
@@ -941,7 +941,7 @@ void copLik_mod(int* family, int* n, double* u, double* v, double* theta, double
     int nfamily, i;
     ntheta = -*theta;
     nnu = -*nu;
-    
+
     for(int i=0;i<*n;i++)
     {
         if(u[i]<UMIN) u[i]=UMIN;
@@ -949,7 +949,7 @@ void copLik_mod(int* family, int* n, double* u, double* v, double* theta, double
         if(v[i]<UMIN) v[i]=UMIN;
         else if(v[i]>UMAX) v[i]=UMAX;
     }
-    
+
     if((*family)==43)
     {
         nfamily=3;
@@ -973,7 +973,7 @@ void copLik_mod(int* family, int* n, double* u, double* v, double* theta, double
             copLik(&nfamily, n, u,  negv, &ntheta, &nnu, coplik);
         }
     }else{
-        
+
         if(((*family==23) | (*family==24) | (*family==26) | (*family==27) | (*family==28) | (*family==29) | (*family==30)) )	// 90? rotated copulas
         {
             nfamily = (*family)-20;
@@ -1001,7 +1001,7 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
     double *dat, rho, lik=1.0, t1=0.0, t2=0.0, f;
     //Allocate memory:
     dat = Calloc(2,double);
-    
+
     for(int i=0;i<*n;i++)
     {
         if(u[i]<UMIN) u[i]=UMIN;
@@ -1009,7 +1009,7 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
         if(v[i]<UMIN) v[i]=UMIN;
         else if(v[i]>UMAX) v[i]=UMAX;
     }
-    
+
     //Compute likelihood:
     if(*family==0) //independent
         lik = 1.0;
@@ -1037,7 +1037,7 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
     }
     else if(*family==3) //Clayton
     {
-        if(*theta == 0) lik = 1.0; 
+        if(*theta == 0) lik = 1.0;
         if(*theta < XEPS) lik = 1.0;
         else
         {
@@ -1081,18 +1081,18 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
     else if(*family==7)	//BB1
     {
         if(*theta == 0){
-            
+
             for(j=0;j<*n;j++)
             {
                 dat[0] = u[j]; dat[1] = v[j];
                 t1 = pow(-log(dat[0]),*nu)+pow(-log(dat[1]),*nu);
                 t2 = exp(-pow(t1,1.0/(*nu)));
                 f = t2/(dat[0]*dat[1])*pow(t1,-2.0+2.0/(*nu))*pow(log(dat[0])*log(dat[1]),*nu-1.0)*(1.0+(*nu-1.0)*pow(t1,-1.0/(*nu)));
-                lik *= f;	
+                lik *= f;
             }
-            
+
         }else{
-            
+
             double *param, *fuc;
             param=Calloc(2,double);
             param[0]=*theta;
@@ -1105,7 +1105,7 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
                 {
                     fuc[j]=1;
                 }
-                
+
                 lik *= fuc[j];
             }
             Free(fuc); Free(param);
@@ -1125,7 +1125,7 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
             {
                 fuc[j]=1;
             }
-            
+
             lik *= fuc[j];
         }
         Free(fuc); Free(param);
@@ -1137,9 +1137,9 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
             {
                 f = pow(pow(1-u[j],*theta)+pow(1-v[j],*theta)-pow(1-u[j],*theta)*pow(1-v[j],*theta),1/(*theta)-2)*pow(1-u[j],*theta-1)*pow(1-v[j],*theta-1)*(*theta-1+pow(1-u[j],*theta)+pow(1-v[j],*theta)-pow(1-u[j],*theta)*pow(1-v[j],*theta));
                 lik *= f;
-            }		
+            }
         }else{
-            
+
             double *param, *fuc;
             param=Calloc(2,double);
             param[0]=*theta;
@@ -1152,7 +1152,7 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
                 {
                     fuc[j]=1;
                 }
-                
+
                 lik *= fuc[j];
             }
             Free(fuc); Free(param);
@@ -1172,14 +1172,14 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
             {
                 fuc[j]=1;
             }
-            
+
             lik *= fuc[j];
         }
         Free(fuc); Free(param);
     }
     else if(*family==13) //rotated Clayton (180?)
     {
-        if(*theta == 0) lik = 1.0; 
+        if(*theta == 0) lik = 1.0;
         else
         {
             for(j=0;j<*n;j++)
@@ -1208,24 +1208,24 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
             dat[0]=1-u[j]; dat[1]=1-v[j];
             f = pow(pow(1-dat[0],*theta)+pow(1-dat[1],*theta)-pow(1-dat[0],*theta)*pow(1-dat[1],*theta),1/(*theta)-2)*pow(1-dat[0],*theta-1)*pow(1-dat[1],*theta-1)*(*theta-1+pow(1-dat[0],*theta)+pow(1-dat[1],*theta)-pow(1-dat[0],*theta)*pow(1-dat[1],*theta));
             lik *= f;
-            
+
         }
     }
     else if(*family==17)	//rotated BB1
     {
         if(*theta == 0){
-            
+
             for(j=0;j<*n;j++)
-            {		
+            {
                 dat[0] = 1-u[j]; dat[1] = 1-v[j];
                 t1 = pow(-log(dat[0]),*nu)+pow(-log(dat[1]),*nu);
                 t2 = exp(-pow(t1,1.0/(*nu)));
                 f = t2/(dat[0]*dat[1])*pow(t1,-2.0+2.0/(*nu))*pow(log(dat[0])*log(dat[1]),*nu-1.0)*(1.0+(*nu-1.0)*pow(t1,-1.0/(*nu)));
-                lik *= f;		
+                lik *= f;
             }
-            
+
         }else{
-            
+
             double *param, *fuc;
             param=Calloc(2,double);
             param[0]=*theta;
@@ -1235,14 +1235,14 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
             for(j=0;j<*n;j++)
             {
                 dat[0] = 1-u[j]; dat[1] = 1-v[j];
-                
+
                 dbb1(&dat[0], &dat[1], &k, param, &fuc[j]);
-                
+
                 if(!isfinite(fuc[j]) || isnan(fuc[j]))
                 {
                     fuc[j]=1;
                 }
-                
+
                 lik *= fuc[j];
             }
             Free(fuc); Free(param);
@@ -1259,14 +1259,14 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
         for(j=0;j<*n;j++)
         {
             dat[0] = 1-u[j]; dat[1] = 1-v[j];
-            
+
             dbb6(&dat[0], &dat[1], &k, param, &fuc[j]);
-            
+
             if(!isfinite(fuc[j]) || isnan(fuc[j]))
             {
                 fuc[j]=1;
             }
-            
+
             lik *= fuc[j];
         }
         Free(fuc); Free(param);
@@ -1278,27 +1278,27 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
             {
                 f = pow(pow(u[j],*theta)+pow(v[j],*theta)-pow(u[j],*theta)*pow(v[j],*theta),1/(*theta)-2)*pow(u[j],*theta-1)*pow(v[j],*theta-1)*(*theta-1+pow(u[j],*theta)+pow(v[j],*theta)-pow(u[j],*theta)*pow(v[j],*theta));
                 lik *= f;
-            }		
-        }else{		
-            
+            }
+        }else{
+
             double *param, *fuc;
             param=Calloc(2,double);
             param[0]=*theta;
             param[1]=*nu;
             fuc = Calloc(*n,double);
             int k=1;
-            
+
             for(j=0;j<*n;j++)
             {
                 dat[0] = 1-u[j]; dat[1] = 1-v[j];
-                
+
                 dbb7(&dat[0], &dat[1], &k, param, &fuc[j]);
-                
+
                 if(!isfinite(fuc[j]) || isnan(fuc[j]))
                 {
                     fuc[j]=1;
                 }
-                
+
                 lik *= fuc[j];
             }
             Free(fuc); Free(param);
@@ -1312,23 +1312,23 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
         param[1]=*nu;
         fuc = Calloc(*n,double);
         int k=1;
-        
+
         for(j=0;j<*n;j++)
         {
             dat[0] = 1-u[j]; dat[1] = 1-v[j];
-            
+
             dbb8(&dat[0], &dat[1], &k, param, &fuc[j]);
-            
+
             if(!isfinite(fuc[j]) || isnan(fuc[j]))
             {
                 fuc[j]=1;
             }
-            
+
             lik *= fuc[j];
         }
         Free(fuc); Free(param);
     }
-    
+
     else printError("Error in copLik\t:","Unknown copula family");
     //Free memory:
     Free(dat);

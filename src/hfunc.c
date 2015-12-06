@@ -1,12 +1,12 @@
 /*
- ** hfunc.c - C code of the package CDRVine  
- ** 
- ** with contributions from Carlos Almeida, Aleksey Min, 
+ ** hfunc.c - C code of the package CDRVine
+ **
+ ** with contributions from Carlos Almeida, Aleksey Min,
  ** Ulf Schepsmeier, Jakob Stoeber and Eike Brechmann
- ** 
+ **
  ** A first version was based on code
  ** from Daniel Berg <daniel at danielberg.no>
- ** provided by personal communication. 
+ ** provided by personal communication.
  **
  */
 
@@ -28,7 +28,7 @@ void pcondbb1(double* u, double* v, int* n, double* param, double* out)
     int i;
     double th, de;
     double t1, t2, t3, t16, t17, t4, t5, t6, t7, t9, t10, t12, t13, t20;
-    
+
     th = param[0];
     de = param[1];
     for(i=0;i<*n;i++)
@@ -49,7 +49,7 @@ void pcondbb1(double* u, double* v, int* n, double* param, double* out)
         t20 = 1./t10;
         out[i] = t13*t3*t1*t16*t17/t7*t20;
     }
-    
+
 }
 
 
@@ -59,10 +59,10 @@ void pcondbb6(double* u, double* v, int* n, double* param, double* out)
     int i;
     double th, de;
     double t1, t2, t3, t4, t5, t12, t16, t6, t7, t8, t9, t10, t11, t13, t14, t15, t17;
-    
+
     th = param[0];
     de = param[1];
-    
+
     for(i=0;i<*n;i++)
     {
         t1 = 1.0-u[i];
@@ -82,10 +82,10 @@ void pcondbb6(double* u, double* v, int* n, double* param, double* out)
         t14 = exp(-t13);
         t15 = 1.0-t14;
         t17 = pow(t15,t16);
-        
+
         out[i] = -t17*t13*t5*t2/t1/t3/t4/t11*t14/t15;
     }
-    
+
 }
 
 
@@ -94,10 +94,10 @@ void pcondbb7(double* u, double* v, int* n, double* param, double* out)
     int i;
     double th, de;
     double t1, t2, t3, t4, t6, t8, t9, t11, t12, t14;
-    
+
     th = param[0];
     de = param[1];
-    
+
     for(i=0;i<*n;i++)
     {
         t1 = 1.0-u[i];
@@ -110,10 +110,10 @@ void pcondbb7(double* u, double* v, int* n, double* param, double* out)
         t11 = pow(t9,-1.0/de);
         t12 = 1.0-t11;
         t14 = pow(t12,1.0/th);
-        
+
         out[i] = t14*t11*t4*t2/t1/t3/t9/t12;
     }
-    
+
 }
 
 
@@ -122,10 +122,10 @@ void pcondbb8(double* u, double* v, int* n, double* param, double* out)
     int i;
     double th, de;
     double t2, t3, t12, t16, t6, t7, t8, t10, t11, t13, t15, t17;
-    
+
     th = param[0];
     de = param[1];
-    
+
     for(i=0;i<*n;i++)
     {
         t2 = 1.0-de*u[i];
@@ -140,10 +140,10 @@ void pcondbb8(double* u, double* v, int* n, double* param, double* out)
         t8 = 1.0-t7;
         t15 = 1.0-(1.0-t3)*t8*t13;
         t17 = pow(t15,t16);
-        
+
         out[i] = t17*t3/t2*t8*t13/t15;
     }
-    
+
 }
 
 
@@ -158,7 +158,7 @@ void  Hfunc1(int* family,int* n,double* u,double* v,double* theta,double* nu,dou
     int nfamily, j, T=1;
     ntheta = -*theta;
     nnu = -*nu;
-    
+
     for(int i=0;i<*n;i++)
     {
         if(u[i]<UMIN) u[i]=UMIN;
@@ -166,13 +166,13 @@ void  Hfunc1(int* family,int* n,double* u,double* v,double* theta,double* nu,dou
         if(v[i]<UMIN) v[i]=UMIN;
         else if(v[i]>UMAX) v[i]=UMAX;
     }
-    
+
     if((*family)==43)
     {
         nfamily=3;
         if(*theta > 0){
             ntheta=2*(*theta)/(1-*theta);
-            Hfunc(&nfamily, n, u, v, &ntheta, &nnu, out);  
+            Hfunc(&nfamily, n, u, v, &ntheta, &nnu, out);
         }else{
             ntheta=-2*(*theta)/(1+*theta);
             for (int i = 0; i < *n; ++i) {negv[i]=1 - v[i];}
@@ -183,14 +183,14 @@ void  Hfunc1(int* family,int* n,double* u,double* v,double* theta,double* nu,dou
         nfamily=4;
         if(*theta > 0){
             ntheta=1/(1-*theta);
-            Hfunc (&nfamily, n, u, v, &ntheta, &nnu, out);  
+            Hfunc (&nfamily, n, u, v, &ntheta, &nnu, out);
         }else{
             ntheta=1/(1+*theta);
             for (int i = 0; i < *n; ++i) {negv[i]=1 - v[i];}
             Hfunc (&nfamily, n, u, negv, &ntheta, &nnu, out);
         }
     }else{
-        
+
         if(((*family==23) | (*family==24) | (*family==26) | (*family==27) | (*family==28) | (*family==29) | (*family==30) | (*family==61) ))
         {
             nfamily=(*family)-20;
@@ -204,11 +204,11 @@ void  Hfunc1(int* family,int* n,double* u,double* v,double* theta,double* nu,dou
             Hfunc(&nfamily, n, negu, v, &ntheta, &nnu, out);
             for (int i = 0; i < *n; i++) {out[i]=1-out[i];};
         }
-        // u and v enter in wrong order from BiCopHfunc and have to be treated accordingly 
+        // u and v enter in wrong order from BiCopHfunc and have to be treated accordingly
         else if(*family==104)
         {
             double par3=1;
-            dC_du(v,u,n,theta,nu,&par3,out);		
+            dC_du(v,u,n,theta,nu,&par3,out);
         }
         else if(*family==114)
         {
@@ -223,22 +223,24 @@ void  Hfunc1(int* family,int* n,double* u,double* v,double* theta,double* nu,dou
         }
         else if(*family==124)
         {
-            double par3=1;
+            double par3=*nu;
+            double par2=1;
             for(j=0;j<*n;j++)
             {
                 negv[j]= 1-v[j];
-                dC_du(&negv[j],&u[j],&T,&ntheta,nu,&par3,&out[j]);
+                dC_du(&negv[j],&u[j],&T,&ntheta,&par2,&par3,&out[j]);
             }
+
         }
         else if(*family==134)
         {
-            double par3=1;
+            double par3=*nu;
+            double par2=1;
             for(j=0;j<*n;j++)
             {
                 negu[j]= 1-u[j];
-                dC_du(&v[j],&negu[j],&T,&ntheta,nu,&par3,&out[j]);
+                dC_du(&v[j],&negu[j],&T,&ntheta,&par2,&par3,&out[j]);
                 out[j]=1-out[j];
-                
             }
         }
         else if(*family==204)
@@ -261,27 +263,26 @@ void  Hfunc1(int* family,int* n,double* u,double* v,double* theta,double* nu,dou
         }
         else if(*family==224)
         {
-            double par3=*nu;
-            double par2=1;
+            double par3=1;
             for(j=0;j<*n;j++)
             {
                 negv[j]= 1-v[j];
-                dC_du(&negv[j],&u[j],&T,&ntheta,&par2,&par3,&out[j]);
+                dC_du(&negv[j],&u[j],&T,&ntheta,nu,&par3,&out[j]);
             }
         }
         else if(*family==234)
         {
-            double par3=*nu;
-            double par2=1;
+            double par3=1;
             for(j=0;j<*n;j++)
             {
                 negu[j]= 1-u[j];
-                dC_du(&v[j],&negu[j],&T,&ntheta,&par2,&par3,&out[j]);
+                dC_du(&v[j],&negu[j],&T,&ntheta,nu,&par3,&out[j]);
                 out[j]=1-out[j];
+
             }
         }
         else {
-            Hfunc (family, n, u, v, theta, nu, out); 
+            Hfunc (family, n, u, v, theta, nu, out);
         }
     }
     // ensure that results are in [0,1]
@@ -299,7 +300,7 @@ void  Hfunc2(int* family,int* n,double* v,double* u,double* theta,double* nu,dou
     int nfamily;
     ntheta = -*theta;
     nnu = -*nu;
-    
+
     for(int i=0;i<*n;i++)
     {
         if(u[i]<UMIN) u[i]=UMIN;
@@ -307,32 +308,33 @@ void  Hfunc2(int* family,int* n,double* v,double* u,double* theta,double* nu,dou
         if(v[i]<UMIN) v[i]=UMIN;
         else if(v[i]>UMAX) v[i]=UMAX;
     }
-    
+
     if((*family)==43)
     {
         nfamily=3;
         if(*theta > 0){
             ntheta=2*(*theta)/(1-*theta);
-            Hfunc (&nfamily, n, v, u, &ntheta, &nnu, out);  
+            Hfunc (&nfamily, n, v, u, &ntheta, &nnu, out);
         }else{
             ntheta=-2*(*theta)/(1+*theta);
             for (int i = 0; i < *n; ++i) {negv[i]=1 - v[i];}
             Hfunc(&nfamily, n, negv, u, &ntheta, &nnu, out);
             for (int i = 0; i < *n; i++) {out[i]=1-out[i];};
         }
-    }else if((*family)==44)
+    }
+    else if((*family)==44)
     {
         nfamily=4;
         if(*theta > 0){
             ntheta=1/(1-*theta);
-            Hfunc (&nfamily, n, v, u, &ntheta, &nnu, out);  
+            Hfunc (&nfamily, n, v, u, &ntheta, &nnu, out);
         }else{
             ntheta=1/(1+*theta);
             for (int i = 0; i < *n; ++i) {negv[i]=1 - v[i];}
             Hfunc(&nfamily, n, negv, u, &ntheta, &nnu, out);
             for (int i = 0; i < *n; i++) {out[i]=1-out[i];};		}
     }else{
-        
+
         if(((*family==23) | (*family==24) | (*family==26) | (*family==27) | (*family==28) | (*family==29) | (*family==30) | (*family==61) ))
         {
             nfamily=(*family)-20;
@@ -346,31 +348,32 @@ void  Hfunc2(int* family,int* n,double* v,double* u,double* theta,double* nu,dou
             for (int i = 0; i < *n; ++i) {negu[i]=1 - u[i];}
             Hfunc(&nfamily, n, v, negu, &ntheta, &nnu, out);
         }
-        // else if(*family==104 | *family==204 | *family==114 | *family==214)
-        // {
-        // u und v vertauschen (Unsauber, aber so sollte es funktionieren in unserer bisherigen Notation)
-        // Hfunc(family,n,u,v,theta,nu,out);
-        // }
-        else if((*family==124) | (*family==224))
+        else if((*family==104) | (*family==204) | (*family==114) | (*family==214))
         {
-            nfamily=(*family)-20;
-            for (int i = 0; i < *n; ++i) {negv[i]=1 - v[i];}
-            Hfunc(&nfamily, n, negv, u, &ntheta, nu, out);
-            for (int i = 0; i < *n; i++) {out[i]=1-out[i];};
+            // switch u and v and change type
+            if((*family)/100 == 1) nfamily = (*family) + 100;
+            if((*family)/100 == 2) nfamily = (*family) - 100;
+            for (int i = 0; i < *n; ++i) {negu[i] = 1 - u[i];}
+            Hfunc1(&nfamily, n, v, negu, theta, nu, out);
+
         }
-        else if((*family==134) | (*family==234))
+        else if((*family==124) | (*family==224) | (*family==134) | (*family==234))
         {
-            nfamily=(*family)-30;
-            for (int i = 0; i < *n; ++i) {negu[i]=1 - u[i];}
-            Hfunc(&nfamily, n, v, negu, &ntheta, nu, out);
+            // switch u and v and change type
+            if((*family)/100 == 1) nfamily = (*family) + 100;
+            if((*family)/100 == 2) nfamily = (*family) - 100;
+            for (int i = 0; i < *n; ++i) {negv[i] = 1 - v[i];}
+            Hfunc1(&nfamily, n, negv, u, theta, nu, out);
+            for (int i = 0; i < *n; i++) {out[i] = 1 - out[i];};
         }
         else
-        { 
+        {
+            // switch u and v
             Hfunc(family, n, v, u, theta, nu, out);
         }
     }
     // ensure that results are in [0,1]
-    for(int i=0; i < *n; ++i) {out[i] = MIN(MAX(out[i], 0), 1);}
+    for(int i=0; i < *n; ++i) {out[i] = MIN(MAX(out[i], UMIN), UMAX);}
     free(negv);
     free(negu);
 }
@@ -410,7 +413,7 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
     double *h;
     h = Calloc(*n,double);
     double x;
-    
+
 
     for(j=0;j<*n;j++)
     {
@@ -420,7 +423,7 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
         {
             if(*family==0) //independent
             {
-                h[j] = u[j]; 
+                h[j] = u[j];
             }
             else if(*family==1) //gaussian
             {
@@ -429,7 +432,7 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                     h[j] = pnorm(x,0.0,1.0,1,0);
                 else if ((qnorm(u[j],0.0,1.0,1,0) - *theta*qnorm(v[j],0.0,1.0,1,0)) < 0)
                     h[j] = 0;
-                else 
+                else
                     h[j] = 1;
             }
             else if(*family==2) //student
@@ -439,22 +442,22 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                 h[j] = pt((t1-mu)/sqrt(sigma2),*nu+1.0,1,0);
             }
             else if(*family==3) //clayton
-            { 
+            {
                 if(*theta == 0) h[j] = u[j] ;
                 if(*theta < XEPS) h[j] = u[j] ;
                 else
-                { 
+                {
                     x = pow(u[j],-*theta)+pow(v[j],-*theta)-1.0 ;
                     h[j] =   pow(v[j],-*theta-1.0)*pow(x,-1.0-1.0/(*theta));
                     if(*theta < 0)
                     {
-                        if(x < 0) h[j] = 0; 
+                        if(x < 0) h[j] = 0;
                     }
                 }
             }
             else if(*family==4) //gumbel
             {
-                if(*theta == 1) h[j] = u[j] ; 
+                if(*theta == 1) h[j] = u[j] ;
                 else
                 {
                     h[j] = -(exp(-pow(pow(-log(v[j]),*theta)+pow(-log(u[j]),*theta),1.0/(*theta)))*pow(pow(-log(v[j]),*theta)+pow(-log(u[j]),*theta),1.0/(*theta)-1.0)*pow(-log(v[j]),*theta))/(v[j]*log(v[j]));
@@ -483,12 +486,12 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                 param[0]=*theta;
                 param[1]=*nu;
                 int T=1;
-                if(*nu==1) 
+                if(*nu==1)
                 {
                     if(*theta==0) h[j]=u[j];
                     else h[j]=pow(pow(u[j],-*theta)+pow(v[j],-*theta)-1,-1/(*theta)-1)*pow(v[j],-*theta-1);
                 }
-                else if(*theta==0) 
+                else if(*theta==0)
                 {
                     h[j]=-(exp(-pow(pow(-log(v[j]),*nu)+pow(-log(u[j]),*nu),1.0/(*nu)))*pow(pow(-log(v[j]),*nu)+pow(-log(u[j]),*nu),1.0/(*nu)-1.0)*pow(-log(v[j]),*nu))/(v[j]*log(v[j]));
                 }
@@ -505,12 +508,12 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                 param[0]=*theta;
                 param[1]=*nu;
                 int T=1;
-                if(*theta==1) 
+                if(*theta==1)
                 {
                     if(*nu==1) h[j]=u[j];
                     else h[j]=-(exp(-pow(pow(-log(v[j]),*nu)+pow(-log(u[j]),*nu),1.0/(*nu)))*pow(pow(-log(v[j]),*nu)+pow(-log(u[j]),*nu),1.0/(*nu)-1.0)*pow(-log(v[j]),*nu))/(v[j]*log(v[j]));
-                }     
-                else if(*nu==1) 
+                }
+                else if(*nu==1)
                 {
                     h[j]=pow(pow(1.0-u[j],*theta) + pow(1.0-v[j],*theta) - pow(1.0-u[j],*theta)*pow(1.0-v[j],*theta),1.0/(*theta)-1) * pow(1.0-v[j],*theta-1.0)*(1-pow(1-u[j],*theta));
                 }
@@ -518,7 +521,7 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                 {
                     pcondbb6(&v[j],&u[j],&T,param,&h[j]);
                 }
-                Free(param);			
+                Free(param);
             }
             else if(*family==9)	//BB7
             {
@@ -552,7 +555,7 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                 if(*nu==0)
                 {
                     h[j]=u[j];
-                }			
+                }
                 else if(*nu==1)
                 {
                     if(*theta==1) h[j]=u[j];
@@ -562,7 +565,7 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                 {
                     pcondbb8(&v[j],&u[j],&T,param,&h[j]);
                 }
-                Free(param);		  
+                Free(param);
             }
             else if(*family==13) //rotated clayton (180?)
             {
@@ -570,7 +573,7 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                 if(*theta < XEPS) h[j] = u[j] ;
                 else
                 {
-                    u[j]=1-u[j]; 
+                    u[j]=1-u[j];
                     v[j]=1-v[j];
                     x = pow(u[j],-*theta)+pow(v[j],-*theta)-1.0 ;
                     h[j] =   pow(v[j],-*theta-1.0)*pow(x,-1.0-1.0/(*theta)); // pow(v[j],-*theta-1.0)*pow(pow(u[j],-*theta)+pow(v[j],-*theta)-1.0,-1.0-1.0/(*theta));
@@ -604,16 +607,16 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                 param[0]=*theta;
                 param[1]=*nu;
                 int T=1;
-                if(*nu==1) 
+                if(*nu==1)
                 {
                     if(*theta==0) h[j]=u[j];
                     else
-                    { 
+                    {
                         h[j]=pow(pow(1-u[j],-*theta)+pow(1-v[j],-*theta)-1,-1/(*theta)-1)*pow(1-v[j],-*theta-1);
                         h[j]= 1-h[j];
                     }
                 }
-                else if(*theta==0) 
+                else if(*theta==0)
                 {
                     h[j]=-(exp(-pow(pow(-log(1-v[j]),*nu)+pow(-log(1-u[j]),*nu),1.0/(*nu)))*pow(pow(-log(1-v[j]),*nu)+pow(-log(1-u[j]),*nu),1.0/(*nu)-1.0)*pow(-log(1-v[j]),*nu))/((1-v[j])*log(1-v[j]));
                     h[j]= 1-h[j];
@@ -636,7 +639,7 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                 param[0]=*theta;
                 param[1]=*nu;
                 int T=1;
-                if(*theta==1) 
+                if(*theta==1)
                 {
                     if(*nu==1) h[j]=u[j];
                     else
@@ -644,8 +647,8 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                         h[j]=-(exp(-pow(pow(-log(1-v[j]),*nu)+pow(-log(1-u[j]),*nu),1.0/(*nu)))*pow(pow(-log(1-v[j]),*nu)+pow(-log(1-u[j]),*nu),1.0/(*nu)-1.0)*pow(-log(1-v[j]),*nu))/((1-v[j])*log(1-v[j]));
                         h[j]= 1-h[j];
                     }
-                }     
-                else if(*nu==1) 
+                }
+                else if(*nu==1)
                 {
                     h[j]=pow(pow(u[j],*theta) + pow(v[j],*theta) - pow(u[j],*theta)*pow(v[j],*theta),1.0/(*theta)-1) * pow(v[j],*theta-1.0)*(1-pow(u[j],*theta));
                     h[j]= 1-h[j];
@@ -657,9 +660,9 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                     pcondbb6(&v[j],&u[j],&T,param,&h[j]);
                     u[j]=1-u[j];
                     v[j]=1-v[j];
-                    h[j]= 1-h[j];	
+                    h[j]= 1-h[j];
                 }
-                Free(param);	  		  
+                Free(param);
             }
             else if(*family==19) //rotated BB7
             {
@@ -680,7 +683,7 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                 {
                     h[j] = pow(pow(u[j],*theta) + pow(v[j],*theta) - pow(u[j],*theta)*pow(v[j],*theta),1.0/(*theta)-1) * pow(v[j],*theta-1.0)*(1-pow(u[j],*theta));
                     h[j]= 1-h[j];
-                }				
+                }
                 else
                 {
                     v[j]= 1-v[j];
@@ -702,7 +705,7 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                 if(*nu==0)
                 {
                     h[j]=u[j];
-                }			
+                }
                 else if(*nu==1)
                 {
                     if(*theta==1) h[j]=u[j];
@@ -720,7 +723,7 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                     v[j]=1-v[j];
                     h[j]= 1-h[j];
                 }
-                Free(param);		  
+                Free(param);
             }
             else if(*family==41)
             {
@@ -730,43 +733,9 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                 t3=pow(pow(t1,*theta)+pow(t2,*theta),(1.0/(*theta)));
                 h[j]=exp(-t3+t1);
             }
-            else if(*family==104)
-            {
-                int T=1;
-                double par3=1;
-                dC_dv(&u[j],&v[j],&T,theta,nu,&par3,&h[j]);
-            }
-            else if(*family==114)
-            {
-                int T=1;
-                double par3=1;
-                v[j]= 1-v[j];
-                u[j]= 1-u[j];
-                dC_dv(&u[j],&v[j],&T,theta,nu,&par3,&h[j]);
-                u[j]=1-u[j];
-                v[j]=1-v[j];
-                h[j]= 1-h[j];
-            }
-            else if(*family==204)
-            {
-                int T=1;
-                double par3=*nu, par2=1;
-                dC_dv(&u[j],&v[j],&T,theta,&par2,&par3,&h[j]);	
-            }
-            else if(*family==214)
-            {
-                int T=1;
-                double par3=*nu, par2=1;
-                v[j]= 1-v[j];
-                u[j]= 1-u[j];
-                dC_dv(&u[j],&v[j],&T,theta,&par2,&par3,&h[j]);
-                u[j]=1-u[j];
-                v[j]=1-v[j];
-                h[j]= 1-h[j];
-            }
-        }	
+        }
         out[j] = MAX(MIN(h[j],UMAX),UMIN);
-    }	
+    }
     Free(h);
 }
 
@@ -776,7 +745,7 @@ void qcondgum(double* q, double* u, double* de, double* out)
     double a,p,g,gp,z1,z2,con,de1,dif;
     double mxdif;
     int iter;
-    
+
     p = 1-*q;
     z1 = -log(*u);
     con=log(1.-p)-z1+(1.-*de)*log(z1); de1=*de-1.;
@@ -801,7 +770,7 @@ void qcondjoe(double* q, double* u, double* de, double* out)
     double c21,pdf;
     int iter;
     double diff,v,de1,dtem,de1inv,tem;
-    
+
     t1 = 1.0-*u;
     t2 = pow(t1,1.0*(*de));
     t7 = 1./(*de);
@@ -810,9 +779,9 @@ void qcondjoe(double* q, double* u, double* de, double* out)
     t19 = (*de)*(*de);
     de1=*de-1;  // may need better modification for large delta
     dtem=-de1/(1.+de1); de1inv=-1./de1;
-    
+
     // v = 0.5 * (q+u); // starting guess
-    
+
     // Use a better starting point based on reflected B4 copula
     // A good starting point is crucial when delta is large because
     //    C_{2|1} will be steep
@@ -859,29 +828,55 @@ void qcondjoe(double* q, double* u, double* de, double* out)
 //////////////////////////////////////////////////////////////
 void HNumInv(int* family, double* u, double* v, double* theta, double* nu, double* out)
 {
-    
+
     int br=0, in=1;
     double ans=0.0, tol=UMIN, x0=UMIN, x1=UMAX, fl, fh, val;
-    //Rprintf("family in HNumInv: %d\n", *family);
-    Hfunc1(family,&in,&x0,v,theta,nu,&fl); fl -= *u; 
+    Hfunc1(family,&in,&x0,v,theta,nu,&fl); fl -= *u;
     Hfunc1(family,&in,&x1,v,theta,nu,&fh); fh -= *u;
     if(fabs(fl)<=tol) { ans=x0; br=1; }
     if(fabs(fh)<=tol) { ans=x1; br=1; }
-    
+
     while(!br){
-        
+
         ans = (x0+x1)/2.0;
         Hfunc1(family,&in,&ans,v,theta,nu,&val);
         val -= *u;
+        //stop if values become too close (avoid infinite loop)
         if(fabs(val)<=tol) br=1;
-        if(fabs(x0-x1)<=1e-10) br=1; //stop if values become too close (avoid infinite loop)
-        
+        if(fabs(x0-x1)<=1e-10) br=1;
+
         if(val > 0.0) {x1 = ans; fh = val;}
         else {x0 = ans; fl = val;}
-        
+
     }
     *out = ans;
-}  
+}
+
+void HNumInv2(int* family, double* v, double* u, double* theta, double* nu, double* out)
+{
+
+    int br=0, in=1;
+    double ans=0.0, tol=UMIN, x0=UMIN, x1=UMAX, fl, fh, val;
+    Hfunc2(family, &in, &x0, u, theta, nu, &fl); fl -= *v;
+    Hfunc2(family, &in, &x1, u, theta, nu, &fh); fh -= *v;
+    if(fabs(fl)<=tol) { ans=x0; br=1; }
+    if(fabs(fh)<=tol) { ans=x1; br=1; }
+
+    while(!br){
+
+        ans = (x0+x1)/2.0;
+        Hfunc2(family, &in, &ans, u, theta, nu, &val);
+        val -= *v;
+        //stop if values become too close (avoid infinite loop)
+        if(fabs(val)<=tol) br=1;
+        if(fabs(x0-x1)<=1e-10) br=1;
+
+        if(val > 0.0) {x1 = ans; fh = val;}
+        else {x0 = ans; fl = val;}
+
+    }
+    *out = ans;
+}
 
 /////////////////////////////////////////////
 // Function to invert h-function for vine simulation and estimation
@@ -895,7 +890,7 @@ void Hinv1(int* family, int* n, double* u, double* v, double* theta, double* nu,
     int nfamily;
     ntheta = -*theta;
     nnu = -*nu;
-    
+
     for(int i=0;i<*n;i++)
     {
         if(u[i]<UMIN) u[i]=UMIN;
@@ -903,7 +898,7 @@ void Hinv1(int* family, int* n, double* u, double* v, double* theta, double* nu,
         if(v[i]<UMIN) v[i]=UMIN;
         else if(v[i]>UMAX) v[i]=UMAX;
     }
-    
+
     if((*family)==43)
     {
         nfamily=3;
@@ -943,21 +938,8 @@ void Hinv1(int* family, int* n, double* u, double* v, double* theta, double* nu,
         Hinv(&nfamily,  n,  negu,  v,  &ntheta,  &nnu,  out);
         for (int i = 0; i < *n; i++) {out[i]=1-out[i];};
     }
-    else if((*family==124) | (*family==224))
-    {
-        nfamily=(*family)-20;
-        for (int i = 0; i < *n; ++i) {negv[i]=1 - v[i];}
-        Hinv(&nfamily,  n,  u,  negv,  &ntheta,  nu,  out);
-    }
-    else if((*family==134) | (*family==234))
-    {
-        nfamily=(*family)-30;
-        for (int i = 0; i < *n; i++) {negu[i]=1 - u[i];};
-        Hinv(&nfamily,  n,  negu,  v,  &ntheta,  nu,  out);
-        for (int i = 0; i < *n; i++) {out[i]=1-out[i];};
-    }
     else {
-        Hinv( family,  n,  u,  v,  theta,  nu,  out);
+        Hinv(family,  n,  u,  v,  theta,  nu,  out);
     }
     Free(negv);
     Free(negu);
@@ -972,7 +954,7 @@ void Hinv2(int* family, int* n, double* v, double* u, double* theta, double* nu,
     int nfamily;
     ntheta = -*theta;
     nnu = -*nu;
-    
+
     for(int i=0;i<*n;i++)
     {
         if(u[i]<UMIN) u[i]=UMIN;
@@ -980,7 +962,7 @@ void Hinv2(int* family, int* n, double* v, double* u, double* theta, double* nu,
         if(v[i]<UMIN) v[i]=UMIN;
         else if(v[i]>UMAX) v[i]=UMAX;
     }
-    
+
     if((*family)==43)
     {
         nfamily=3;
@@ -1010,46 +992,49 @@ void Hinv2(int* family, int* n, double* v, double* u, double* theta, double* nu,
     else if(((*family ==23) | (*family ==24) | (*family==26) | (*family ==27) | (*family ==28) | (*family==29) | (*family==30) | (*family==61) ))
     {
         nfamily = (*family)-20;
-        for (int i = 0; i < *n; ++i) {negv[i]=1 - v[i];}
+        for (int i = 0; i < *n; ++i) {negv[i] = 1 - v[i];}
         Hinv(&nfamily,  n,  negv, u,  &ntheta,  &nnu,  out);
-        for (int i = 0; i < *n; i++) {out[i]=1-out[i];};
+        for (int i = 0; i < *n; i++) {out[i] = 1 - out[i];};
     }
     else if(((*family==33) | (*family==34) | (*family==36) | (*family ==37) | (*family ==38) | (*family==39) | (*family==40) | (*family==71) ))
     {
         nfamily=(*family)-30;
-        for (int i = 0; i < *n; ++i) {negu[i]=1 - u[i];}
+        for (int i = 0; i < *n; ++i) {negu[i] = 1 - u[i];}
         Hinv(&nfamily,  n,  v,  negu,  &ntheta,  &nnu,  out);
+    }
+    else if((*family==104) | (*family==204) | (*family==114) | (*family==214))
+    {
+        // change type
+        if((*family)/100 == 1) nfamily = (*family) + 100;
+        if((*family)/100 == 2) nfamily = (*family) - 100;
+        for (int i = 0; i < *n; ++i) {
+            negu[i] = 1 - u[i];
+            HNumInv2(&nfamily, &v[i], &negu[i], theta, nu, &out[i]);
+        }
     }
     else if((*family==124) | (*family==224))
     {
-        nfamily = (*family)-20;
-        if ((*family)/100 == 1) {
-            nfamily = (nfamily) + 100;
-        } else if ((*family)/100 == 2) {
-            nfamily = nfamily - 100;
+        // change type
+        if((*family)/100 == 1) nfamily = (*family) + 100;
+        if((*family)/100 == 2) nfamily = (*family) - 100;
+        nfamily = nfamily + 10;
+        for (int i = 0; i < *n; ++i) {
+            negu[i] = 1 - u[i];
+            HNumInv2(&nfamily, &v[i], &negu[i], theta, nu, &out[i]);
         }
-        for (int i = 0; i < *n; ++i) {negv[i]=1 - v[i];}
-        Hinv(&nfamily,  n,  negv, u,  &ntheta,  nu,  out);
-        for (int i = 0; i < *n; i++) {out[i]=1-out[i];};
     }
     else if((*family==134) | (*family==234))
     {
-        nfamily = (*family)-30;
-        if ((*family)/100 == 1) {
-            nfamily = (nfamily) + 100;
-        } else if ((*family)/100 == 2) {
-            nfamily = nfamily - 100;
+        // change type
+        if((*family)/100 == 1) nfamily = (*family) + 100;
+        if((*family)/100 == 2) nfamily = (*family) - 100;
+        nfamily = nfamily - 10;
+        for (int i = 0; i < *n; ++i) {
+            negu[i] = 1 - u[i];
+            HNumInv2(&nfamily, &v[i], &negu[i], theta, nu, &out[i]);
         }
-        for (int i = 0; i < *n; ++i) {negu[i]=1 - u[i];}
-        Hinv(&nfamily,  n,  v,  negu,  &ntheta,  nu,  out);
     }
     else {
-        nfamily = (*family);
-        if ((*family)/100 == 1) {
-            nfamily = nfamily + 100;
-        } else if ((*family)/100 == 2) {
-            nfamily = nfamily - 100;
-        }  
         Hinv(&nfamily,  n,  v,  u,  theta,  nu,  out);
     }
     free(negv);
@@ -1091,7 +1076,7 @@ void Hinv(int* family, int* n, double* u, double* v, double* theta, double* nu, 
     int j;
     double *hinv;
     hinv = Calloc(*n,double);
-    
+
     for(int i=0;i<*n;i++)
     {
         if(u[i]<UMIN) u[i]=UMIN;
@@ -1099,7 +1084,7 @@ void Hinv(int* family, int* n, double* u, double* v, double* theta, double* nu, 
         if(v[i]<UMIN) v[i]=UMIN;
         else if(v[i]>UMAX) v[i]=UMAX;
     }
-    
+
     for(j=0;j<*n;j++)
     {
         if(*family==0)
@@ -1179,7 +1164,7 @@ void Hinv(int* family, int* n, double* u, double* v, double* theta, double* nu, 
         else if(*family==16) //rotated joe (180?) - must turn to numerical inversion
         {
             u[j]=1-u[j];
-            v[j]=1-v[j];			
+            v[j]=1-v[j];
             if(*theta<40)
             {
                 qcondjoe(&u[j],&v[j],theta,&hinv[j]);
@@ -1257,22 +1242,12 @@ void Hinv(int* family, int* n, double* u, double* v, double* theta, double* nu, 
             u[j]=1-u[j];
             v[j]=1-v[j];
         }
-        else if(*family==104 || *family==204) //Tawn
+        else if(((*family)/100 == 1) | ((*family)/100 == 2)) //Tawn
         {
             HNumInv(family,&u[j],&v[j],theta,nu,&hinv[j]);
         }
-        else if(*family==114 || *family==214) //Tawn
-        {
-            int jj=*family-10;
-            u[j]=1-u[j];
-            v[j]=1-v[j];
-            HNumInv(&jj,&u[j],&v[j],theta,nu,&hinv[j]);
-            hinv[j]=1-hinv[j];
-            u[j]=1-u[j];
-            v[j]=1-v[j];
-        }
-        
-        out[j] = MAX(MIN(hinv[j],UMAX),UMIN); 
+
+        out[j] = MAX(MIN(hinv[j],UMAX),UMIN);
     }
     Free(hinv);
 }
