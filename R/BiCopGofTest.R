@@ -169,7 +169,7 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
     if (c(1, 3, 4, 5, 6, 13, 14, 16, 23, 24, 26, 33, 34, 36) %in% family && length(par) < 1)
         stop("'par' not set.")
     if (par != 0)
-        VineCopula:::BiCopCheck(family, par, par2)
+        BiCopCheck(family, par, par2)
     if (family == 2 && method == "kendall")
         stop("The goodness-of-fit test based on Kendall's process is not implemented for the t-copula.")
     if (family %in% c(7, 8, 9, 10, 17, 18, 19, 20, 27, 28, 29, 30, 37, 38, 39, 40) &&
@@ -212,7 +212,7 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
                 Hprime <- as.vector(H[lower.tri(H, diag = TRUE)])
 
                 ## outer product of gradient
-                C <- OPGtcopula(u1[t], u2[t], theta, nu)
+                C <- OPGtcopula(u1[t], u2[t], family, theta, nu)
                 Cprime <- as.vector(C[lower.tri(C, diag = TRUE)])
 
                 ## D_t
@@ -740,7 +740,7 @@ hesseTcopula <- function(u1, u2, theta, nu){
     H <- matrix(c(rho_teil, rho_nu_teil, rho_nu_teil, nu_teil), 2, 2)
 }
 
-OPGtcopula <- function(u1, u2, theta, nu){
+OPGtcopula <- function(u1, u2, family, theta, nu){
     # gradient
     grad[1] <- mean(BiCopDeriv(u1,
                           u2,
