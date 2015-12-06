@@ -24,8 +24,10 @@
 #' pseudo-observations when applying the empirical marginal survival functions.
 #' @return matrix of the same dimensions as \code{x} containing the
 #' pseudo-observations.
+#'
 #' @note This function is borrowed from the
-#' \code{\link[copula]{copula-package}}, see \code{\link[copula]{pobs}}.
+#' \code{\link[copula:pobs]{copula}} package.
+#'
 #' @author Marius Hofert
 #' @examples
 #'

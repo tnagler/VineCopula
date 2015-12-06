@@ -36,7 +36,7 @@ avoid problems with density evaluation at the boundaries. Note that
 }
 \note{
 This function is borrowed from the
-\code{\link[copula]{copula-package}}, see \code{\link[copula]{pobs}}.
+\code{\link[copula:pobs]{copula}} package.
 }
 \examples{
 ## Simple definition of the function:
