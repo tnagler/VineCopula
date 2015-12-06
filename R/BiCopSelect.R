@@ -624,7 +624,7 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                                                    check.pars = FALSE)) %*% weights)
                     }
                     AICs[i] <- -2 * lls[i] + 2
-                    BICs[i] <- -2 * lls[i] + 2 * log(length(data1))
+                    BICs[i] <- -2 * lls[i] + 1 * log(length(data1))
                 }
             }
 
