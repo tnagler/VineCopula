@@ -354,7 +354,7 @@ void  Hfunc2(int* family,int* n,double* v,double* u,double* theta,double* nu,dou
             if((*family)/100 == 1) nfamily = (*family) + 100;
             if((*family)/100 == 2) nfamily = (*family) - 100;
             for (int i = 0; i < *n; ++i) {negu[i] = 1 - u[i];}
-            Hfunc1(&nfamily, n, v, negu, theta, nu, out);
+            Hfunc1(&nfamily, n, v, u, theta, nu, out);
 
         }
         else if((*family==124) | (*family==224) | (*family==134) | (*family==234))
@@ -363,7 +363,8 @@ void  Hfunc2(int* family,int* n,double* v,double* u,double* theta,double* nu,dou
             if((*family)/100 == 1) nfamily = (*family) + 100;
             if((*family)/100 == 2) nfamily = (*family) - 100;
             for (int i = 0; i < *n; ++i) {negv[i] = 1 - v[i];}
-            Hfunc1(&nfamily, n, negv, u, theta, nu, out);
+            for (int i = 0; i < *n; ++i) {negu[i] = 1 - u[i];}
+            Hfunc1(&nfamily, n, negv, negu, theta, nu, out);
             for (int i = 0; i < *n; i++) {out[i] = 1 - out[i];};
         }
         else
@@ -830,7 +831,7 @@ void HNumInv(int* family, double* u, double* v, double* theta, double* nu, doubl
 {
 
     int br=0, in=1;
-    double ans=0.0, tol=UMIN, x0=UMIN, x1=UMAX, fl, fh, val;
+    double ans=0.0, tol=1e-12, x0=UMIN, x1=UMAX, fl, fh, val;
     Hfunc1(family,&in,&x0,v,theta,nu,&fl); fl -= *u;
     Hfunc1(family,&in,&x1,v,theta,nu,&fh); fh -= *u;
     if(fabs(fl)<=tol) { ans=x0; br=1; }
@@ -843,7 +844,7 @@ void HNumInv(int* family, double* u, double* v, double* theta, double* nu, doubl
         val -= *u;
         //stop if values become too close (avoid infinite loop)
         if(fabs(val)<=tol) br=1;
-        if(fabs(x0-x1)<=1e-10) br=1;
+        if(fabs(x0-x1)<=tol) br=1;
 
         if(val > 0.0) {x1 = ans; fh = val;}
         else {x0 = ans; fl = val;}
@@ -856,7 +857,7 @@ void HNumInv2(int* family, double* v, double* u, double* theta, double* nu, doub
 {
 
     int br=0, in=1;
-    double ans=0.0, tol=UMIN, x0=UMIN, x1=UMAX, fl, fh, val;
+    double ans=0.0, tol=1e-12, x0=UMIN, x1=UMAX, fl, fh, val;
     Hfunc2(family, &in, &x0, u, theta, nu, &fl); fl -= *v;
     Hfunc2(family, &in, &x1, u, theta, nu, &fh); fh -= *v;
     if(fabs(fl)<=tol) { ans=x0; br=1; }
@@ -869,7 +870,7 @@ void HNumInv2(int* family, double* v, double* u, double* theta, double* nu, doub
         val -= *v;
         //stop if values become too close (avoid infinite loop)
         if(fabs(val)<=tol) br=1;
-        if(fabs(x0-x1)<=1e-10) br=1;
+        if(fabs(x0-x1)<=tol) br=1;
 
         if(val > 0.0) {x1 = ans; fh = val;}
         else {x0 = ans; fl = val;}
@@ -1005,37 +1006,34 @@ void Hinv2(int* family, int* n, double* v, double* u, double* theta, double* nu,
     else if((*family==104) | (*family==204) | (*family==114) | (*family==214))
     {
         // change type
-        if((*family)/100 == 1) nfamily = (*family) + 100;
-        if((*family)/100 == 2) nfamily = (*family) - 100;
+        //if((*family)/100 == 1) nfamily = (*family) + 100;
+        //if((*family)/100 == 2) nfamily = (*family) - 100;
         for (int i = 0; i < *n; ++i) {
-            negu[i] = 1 - u[i];
-            HNumInv2(&nfamily, &v[i], &negu[i], theta, nu, &out[i]);
+            HNumInv2(family, &v[i], &u[i], theta, nu, &out[i]);
         }
     }
     else if((*family==124) | (*family==224))
     {
         // change type
-        if((*family)/100 == 1) nfamily = (*family) + 100;
-        if((*family)/100 == 2) nfamily = (*family) - 100;
-        nfamily = nfamily + 10;
+        //if((*family)/100 == 1) nfamily = (*family) + 100;
+        //if((*family)/100 == 2) nfamily = (*family) - 100;
+        //nfamily = nfamily + 10;
         for (int i = 0; i < *n; ++i) {
-            negu[i] = 1 - u[i];
-            HNumInv2(&nfamily, &v[i], &negu[i], theta, nu, &out[i]);
+            HNumInv2(family, &v[i], &u[i], theta, nu, &out[i]);
         }
     }
     else if((*family==134) | (*family==234))
     {
         // change type
-        if((*family)/100 == 1) nfamily = (*family) + 100;
-        if((*family)/100 == 2) nfamily = (*family) - 100;
-        nfamily = nfamily - 10;
+        //if((*family)/100 == 1) nfamily = (*family) + 100;
+        //if((*family)/100 == 2) nfamily = (*family) - 100;
+        //nfamily = nfamily - 10;
         for (int i = 0; i < *n; ++i) {
-            negu[i] = 1 - u[i];
-            HNumInv2(&nfamily, &v[i], &negu[i], theta, nu, &out[i]);
+            HNumInv2(family, &v[i], &u[i], theta, nu, &out[i]);
         }
     }
     else {
-        Hinv(&nfamily,  n,  v,  u,  theta,  nu,  out);
+        Hinv(family,  n,  v,  u,  theta,  nu,  out);
     }
     free(negv);
     free(negu);
