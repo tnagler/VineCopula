@@ -66,6 +66,9 @@ BUG FIXES
   
   * Increased upper limit for uniroot in `Joe.itau.JJ`.
   
+  * Fixed rotations of Tawns (they were actually reflection w.r.t. the axes 
+   u = 0.5 and u2 = 0.5)
+  
 
 VineCopula 1.6 (July 16, 2015)
 ----------------------------------------------------------------
