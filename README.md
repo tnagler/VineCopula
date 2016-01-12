@@ -83,7 +83,7 @@ hypercube.
     provided, you can create a plot of a kernel estimate of the copula density.
     In the latter case, we recommed to use the 
     [kdecopula](https://github.com/tnagler/kdecopula) package (Nagler, 2015)
-    which implements state-of-the art kernel smoothers for bviariate copula
+    which implements state-of-the art kernel smoothers for bivariate copula
     densities.
     
   * `BiCopLambda`, `BiCopKPlot`, `BiCopChiPlot`: Further plot types for the 

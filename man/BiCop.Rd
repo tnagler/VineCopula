@@ -61,7 +61,8 @@ BB1, BB6, BB7, BB8, Tawn type 1 and type 2; default is \code{par2 = 0}).
 If \code{tau} is provided, \code{par} will be ignored.}
 
 \item{check.pars}{logical; default is \code{TRUE}; if \code{FALSE}, checks
-for family/parameter-consistency are ommited (should only be used with}
+for family/parameter-consistency are ommited (should only be used with
+care).}
 }
 \value{
 An object of class \code{\link{BiCop}}. Objects of this class are

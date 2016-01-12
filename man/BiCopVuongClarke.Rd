@@ -13,33 +13,47 @@ BiCopVuongClarke(u1, u2, familyset = NA, correction = FALSE, level = 0.05)
 \item{familyset}{An integer vector of bivariate copula families under
 consideration, i.e., which are compared in the goodness-of-fit test.  If
 \code{familyset = NA} (default), all possible families are compared.
-Possible families are: \cr \code{0} = independence copula \cr \code{1} =
-Gaussian copula \cr \code{2} = Student t copula (t-copula) \cr \code{3} =
-Clayton copula \cr \code{4} = Gumbel copula \cr \code{5} = Frank copula \cr
-\code{6} = Joe copula \cr \code{7} = BB1 copula \cr \code{8} = BB6 copula
-\cr \code{9} = BB7 copula \cr \code{10} = BB8 copula \cr \code{13} = rotated
-Clayton copula (180 degrees; ``survival Clayton'') \cr \code{14} = rotated
-Gumbel copula (180 degrees; ``survival Gumbel'') \cr \code{16} = rotated Joe
-copula (180 degrees; ``survival Joe'') \cr \code{17} = rotated BB1 copula
-(180 degrees; ``survival BB1'')\cr \code{18} = rotated BB6 copula (180
-degrees; ``survival BB6'')\cr \code{19} = rotated BB7 copula (180 degrees;
-``survival BB7'')\cr \code{20} = rotated BB8 copula (180 degrees; ``survival
-BB8'')\cr \code{23} = rotated Clayton copula (90 degrees) \cr \code{24} =
-rotated Gumbel copula (90 degrees) \cr \code{26} = rotated Joe copula (90
-degrees) \cr \code{27} = rotated BB1 copula (90 degrees) \cr \code{28} =
-rotated BB6 copula (90 degrees) \cr \code{29} = rotated BB7 copula (90
-degrees) \cr \code{30} = rotated BB8 copula (90 degrees) \cr \code{33} =
-rotated Clayton copula (270 degrees) \cr \code{34} = rotated Gumbel copula
-(270 degrees) \cr \code{36} = rotated Joe copula (270 degrees) \cr \code{37}
-= rotated BB1 copula (270 degrees) \cr \code{38} = rotated BB6 copula (270
-degrees) \cr \code{39} = rotated BB7 copula (270 degrees) \cr \code{40} =
-rotated BB8 copula (270 degrees) \cr \code{104} = Tawn type 1 copula \cr
-\code{114} = rotated Tawn type 1 copula (180 degrees) \cr \code{124} =
-rotated Tawn type 1 copula (90 degrees) \cr \code{134} = rotated Tawn type 1
-copula (270 degrees) \cr \code{204} = Tawn type 2 copula \cr \code{214} =
-rotated Tawn type 2 copula (180 degrees) \cr \code{224} = rotated Tawn type
-2 copula (90 degrees) \cr \code{234} = rotated Tawn type 2 copula (270
-degrees) \cr}
+Possible families are: \cr
+\code{0} = independence copula \cr
+\code{1} = Gaussian copula \cr
+\code{2} = Student t copula (t-copula) \cr
+\code{3} = Clayton copula \cr
+\code{4} = Gumbel copula \cr
+\code{5} = Frank copula \cr
+\code{6} = Joe copula \cr
+\code{7} = BB1 copula \cr
+\code{8} = BB6 copula \cr
+\code{9} = BB7 copula \cr
+\code{10} = BB8 copula \cr
+\code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
+\code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+\code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
+\code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
+\code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
+\code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
+\code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
+\code{23} = rotated Clayton copula (90 degrees) \cr
+\code{24} = rotated Gumbel copula (90 degrees) \cr
+\code{26} = rotated Joe copula (90 degrees) \cr
+\code{27} = rotated BB1 copula (90 degrees) \cr
+\code{28} = rotated BB6 copula (90 degrees) \cr
+\code{29} = rotated BB7 copula (90 degrees) \cr
+\code{30} = rotated BB8 copula (90 degrees) \cr
+\code{33} = rotated Clayton copula (270 degrees) \cr
+\code{34} = rotated Gumbel copula (270 degrees) \cr
+\code{36} = rotated Joe copula (270 degrees) \cr
+\code{37} = rotated BB1 copula (270 degrees) \cr
+\code{38} = rotated BB6 copula (270 degrees) \cr
+\code{39} = rotated BB7 copula (270 degrees) \cr
+\code{40} = rotated BB8 copula (270 degrees) \cr
+\code{104} = Tawn type 1 copula \cr
+\code{114} = rotated Tawn type 1 copula (180 degrees) \cr
+\code{124} = rotated Tawn type 1 copula (90 degrees) \cr
+\code{134} = rotated Tawn type 1 copula (270 degrees) \cr
+\code{204} = Tawn type 2 copula \cr
+\code{214} = rotated Tawn type 2 copula (180 degrees) \cr
+\code{224} = rotated Tawn type 2 copula (90 degrees) \cr
+\code{234} = rotated Tawn type 2 copula (270 degrees) \cr}
 
 \item{correction}{Correction for the number of parameters.  Possible
 choices: \code{correction = FALSE} (no correction; default), \code{"Akaike"}
@@ -100,7 +114,7 @@ Belgorodski (2010).
 set.seed(123)
 dat <- BiCopSim(500, 2, 0.7, 5)
 
-# apply the test for families 1-10
+# apply the test for families 1-6
 vcgof <- BiCopVuongClarke(dat[,1], dat[,2], familyset = 1:6)
 
 # display the Vuong test scores

@@ -88,7 +88,7 @@
 #' @param rotations If \code{TRUE}, all rotations of the families in
 #' \code{familyset} are included.
 #' @param se Logical; whether standard error(s) of parameter estimates is/are
-#' estimated (default: \code{se = FALSE}).
+#' estimated (default: \code{se = TRUE}).
 #'
 #' @return An object of class \code{\link{BiCop}}, i.e., a list containing
 #' \item{family}{The selected bivariate copula family.}
@@ -129,12 +129,12 @@
 #' @examples
 #'
 #' ## Example 1: Gaussian copula with large dependence parameter
-#' par1 <- 0.7
-#' fam1 <- 1
-#' dat1 <- BiCopSim(500, fam1, par1)
+#' par <- 0.7
+#' fam <- 1
+#' dat1 <- BiCopSim(500, fam, par)
 #'
 #' # select the bivariate copula family and estimate the parameter(s)
-#' cop1 <- BiCopSelect(dat1[,1], dat1[,2], familyset = c(1:10),
+#' cop1 <- BiCopSelect(dat1[,1], dat1[,2], familyset = 1:10,
 #'                     indeptest = FALSE, level = 0.05)
 #' cop1$family
 #' cop1$par
@@ -142,12 +142,12 @@
 #'
 #'
 #' ## Example 2: Gaussian copula with small dependence parameter
-#' par2 <- 0.01
-#' fam2 <- 1
-#' dat2 <- BiCopSim(500, fam2, par2)
+#' par <- 0.01
+#' fam <- 1
+#' dat2 <- BiCopSim(500, fam, par)
 #'
 #' # select the bivariate copula family and estimate the parameter(s)
-#' cop2 <- BiCopSelect(dat2[,1], dat2[,2], familyset = c(1:10),
+#' cop2 <- BiCopSelect(dat2[,1], dat2[,2], familyset = 1:10,
 #'                     indeptest = TRUE, level = 0.05)
 #' cop2$family
 #' cop2$par
@@ -156,9 +156,7 @@
 #'
 #' ## Example 3: empirical data
 #' data(daxreturns)
-#' cop3 <- BiCopSelect(daxreturns[,1], daxreturns[,4],
-#'                     familyset = c(1:10, 13, 14, 16,
-#'                                   23, 24, 26, 33, 34, 36))
+#' cop3 <- BiCopSelect(daxreturns[,1], daxreturns[,4], familyset = 1:10)
 #' cop3$family
 #' cop3$par
 #' cop3$par2
@@ -646,6 +644,7 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
     }
 
     ## store results in BiCop object (dependence measures are calculated)
+    p.value.indeptest <- out$p.value.indeptest
     out <- BiCop(out$family, out$par, out$par2, check.pars = FALSE)
 
     ## add more information about the fit
@@ -667,6 +666,7 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         out$AIC    <- AICs[out$family]
         out$BIC    <- BICs[out$family]
     }
+    out$p.value.indeptest <- out$p.value.indeptest
 
     ## store the call that created the BiCop object
     out$call <- match.call()

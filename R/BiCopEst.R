@@ -1,9 +1,8 @@
 #' Parameter Estimation for Bivariate Copula Data
 #'
-#' This function estimates the parameter(s) for a bivariate copula using either
-#' inversion of empirical Kendall's tau for single parameter copula families or
-#' maximum likelihood estimation for one and two parameter copula families
-#' supported in this package.
+#' This function estimates the parameter(s) of a bivariate copula using either
+#' inversion of empirical Kendall's tau (for one parameter copula families only) or
+#' maximum likelihood estimation for implemented copula families.
 #'
 #' If \code{method = "itau"}, the function computes the empirical Kendall's tau
 #' of the given copula data and exploits the one-to-one relationship of copula
@@ -78,7 +77,7 @@
 #' one parameter bivariate copula families can be used (\code{family =
 #' 1,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}).
 #' @param se Logical; whether standard error(s) of parameter estimates is/are
-#' estimated (default: \code{se = FALSE}).
+#' estimated (default: \code{se = TRUE}).
 #' @param max.df Numeric; upper bound for the estimation of the degrees of
 #' freedom parameter of the t-copula (default: \code{max.df = 30}).
 #' @param max.BB List; upper bounds for the estimation of the two parameters
@@ -132,15 +131,15 @@
 #'
 #' # inversion of empirical Kendall's tau for the Clayton copula
 #' BiCopTau2Par(3, tau2)
-#' BiCopEst(u2, v2, family = 3, method = "itau", se = TRUE)
+#' BiCopEst(u2, v2, family = 3, method = "itau")
 #'
 #' # inversion of empirical Kendall's tau for the survival Gumbel copula
 #' BiCopTau2Par(14, tau2)
-#' BiCopEst(u2, v2, family = 14, method = "itau", se = TRUE)
+#' BiCopEst(u2, v2, family = 14, method = "itau")
 #'
 #' # maximum likelihood estimates for comparison
-#' BiCopEst(u2, v2, family = 3, method = "mle", se = TRUE)
-#' BiCopEst(u2, v2, family = 14, method = "mle", se = TRUE)
+#' BiCopEst(u2, v2, family = 3, method = "mle")
+#' BiCopEst(u2, v2, family = 14, method = "mle")
 #'
 #'
 BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,

@@ -82,11 +82,17 @@ can be used.
 }
 \examples{
 ## simulate from a bivariate t-copula
-simdata <- BiCopSim(300, 2, -0.7, par2 = 4)
+set.seed(123)
+simdata <- BiCopSim(100, 2, -0.7, par2 = 4)
 
 ## or alternatively
 obj <- BiCop(family = 2, par = -0.7, par2 = 4)
-simdata <- BiCopSim(300, obj)
+set.seed(123)
+simdata2 <- BiCopSim(100, obj)
+
+\dontshow{
+if(!all(simdata == simdata2)) stop("simulation results differ")
+}
 }
 \author{
 Ulf Schepsmeier

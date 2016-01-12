@@ -54,6 +54,7 @@
 #' If \code{tau} is provided, \code{par} will be ignored.
 #' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
 #' for family/parameter-consistency are ommited (should only be used with
+#' care).
 #'
 #' @return An object of class \code{\link{BiCop}}. Objects of this class are
 #' also returned by the \code{\link{BiCopEst}} and \code{\link{BiCopSelect}}

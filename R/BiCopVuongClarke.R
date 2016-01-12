@@ -310,41 +310,55 @@ score <- function(dat) {
 #' and one based on the Clarke test, are returned for each bivariate copula
 #' family. If used as a goodness-of-fit procedure, the family with the highest
 #' score should be selected.
-#' 
+#'
 #' For more and detailed information about the goodness-of-fit test see
 #' Belgorodski (2010).
-#' 
+#'
 #' @param u1,u2 Data vectors of equal length with values in [0,1].
 #' @param familyset An integer vector of bivariate copula families under
 #' consideration, i.e., which are compared in the goodness-of-fit test.  If
 #' \code{familyset = NA} (default), all possible families are compared.
-#' Possible families are: \cr \code{0} = independence copula \cr \code{1} =
-#' Gaussian copula \cr \code{2} = Student t copula (t-copula) \cr \code{3} =
-#' Clayton copula \cr \code{4} = Gumbel copula \cr \code{5} = Frank copula \cr
-#' \code{6} = Joe copula \cr \code{7} = BB1 copula \cr \code{8} = BB6 copula
-#' \cr \code{9} = BB7 copula \cr \code{10} = BB8 copula \cr \code{13} = rotated
-#' Clayton copula (180 degrees; ``survival Clayton'') \cr \code{14} = rotated
-#' Gumbel copula (180 degrees; ``survival Gumbel'') \cr \code{16} = rotated Joe
-#' copula (180 degrees; ``survival Joe'') \cr \code{17} = rotated BB1 copula
-#' (180 degrees; ``survival BB1'')\cr \code{18} = rotated BB6 copula (180
-#' degrees; ``survival BB6'')\cr \code{19} = rotated BB7 copula (180 degrees;
-#' ``survival BB7'')\cr \code{20} = rotated BB8 copula (180 degrees; ``survival
-#' BB8'')\cr \code{23} = rotated Clayton copula (90 degrees) \cr \code{24} =
-#' rotated Gumbel copula (90 degrees) \cr \code{26} = rotated Joe copula (90
-#' degrees) \cr \code{27} = rotated BB1 copula (90 degrees) \cr \code{28} =
-#' rotated BB6 copula (90 degrees) \cr \code{29} = rotated BB7 copula (90
-#' degrees) \cr \code{30} = rotated BB8 copula (90 degrees) \cr \code{33} =
-#' rotated Clayton copula (270 degrees) \cr \code{34} = rotated Gumbel copula
-#' (270 degrees) \cr \code{36} = rotated Joe copula (270 degrees) \cr \code{37}
-#' = rotated BB1 copula (270 degrees) \cr \code{38} = rotated BB6 copula (270
-#' degrees) \cr \code{39} = rotated BB7 copula (270 degrees) \cr \code{40} =
-#' rotated BB8 copula (270 degrees) \cr \code{104} = Tawn type 1 copula \cr
-#' \code{114} = rotated Tawn type 1 copula (180 degrees) \cr \code{124} =
-#' rotated Tawn type 1 copula (90 degrees) \cr \code{134} = rotated Tawn type 1
-#' copula (270 degrees) \cr \code{204} = Tawn type 2 copula \cr \code{214} =
-#' rotated Tawn type 2 copula (180 degrees) \cr \code{224} = rotated Tawn type
-#' 2 copula (90 degrees) \cr \code{234} = rotated Tawn type 2 copula (270
-#' degrees) \cr
+#' Possible families are: \cr
+#' \code{0} = independence copula \cr
+#' \code{1} = Gaussian copula \cr
+#' \code{2} = Student t copula (t-copula) \cr
+#' \code{3} = Clayton copula \cr
+#' \code{4} = Gumbel copula \cr
+#' \code{5} = Frank copula \cr
+#' \code{6} = Joe copula \cr
+#' \code{7} = BB1 copula \cr
+#' \code{8} = BB6 copula \cr
+#' \code{9} = BB7 copula \cr
+#' \code{10} = BB8 copula \cr
+#' \code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
+#' \code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+#' \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
+#' \code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
+#' \code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
+#' \code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
+#' \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
+#' \code{23} = rotated Clayton copula (90 degrees) \cr
+#' \code{24} = rotated Gumbel copula (90 degrees) \cr
+#' \code{26} = rotated Joe copula (90 degrees) \cr
+#' \code{27} = rotated BB1 copula (90 degrees) \cr
+#' \code{28} = rotated BB6 copula (90 degrees) \cr
+#' \code{29} = rotated BB7 copula (90 degrees) \cr
+#' \code{30} = rotated BB8 copula (90 degrees) \cr
+#' \code{33} = rotated Clayton copula (270 degrees) \cr
+#' \code{34} = rotated Gumbel copula (270 degrees) \cr
+#' \code{36} = rotated Joe copula (270 degrees) \cr
+#' \code{37} = rotated BB1 copula (270 degrees) \cr
+#' \code{38} = rotated BB6 copula (270 degrees) \cr
+#' \code{39} = rotated BB7 copula (270 degrees) \cr
+#' \code{40} = rotated BB8 copula (270 degrees) \cr
+#' \code{104} = Tawn type 1 copula \cr
+#' \code{114} = rotated Tawn type 1 copula (180 degrees) \cr
+#' \code{124} = rotated Tawn type 1 copula (90 degrees) \cr
+#' \code{134} = rotated Tawn type 1 copula (270 degrees) \cr
+#' \code{204} = Tawn type 2 copula \cr
+#' \code{214} = rotated Tawn type 2 copula (180 degrees) \cr
+#' \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
+#' \code{234} = rotated Tawn type 2 copula (270 degrees) \cr
 #' @param correction Correction for the number of parameters.  Possible
 #' choices: \code{correction = FALSE} (no correction; default), \code{"Akaike"}
 #' and \code{"Schwarz"}.
@@ -360,56 +374,56 @@ score <- function(dat) {
 #' regular vines with application to the multivariate analysis of European
 #' stock market indices Diploma thesis, Technische Universitaet Muenchen.
 #' \url{http://mediatum.ub.tum.de/?id=1079284}.
-#' 
+#'
 #' Clarke, K. A. (2007). A Simple Distribution-Free Test for Nonnested Model
 #' Selection. Political Analysis, 15, 347-363.
-#' 
+#'
 #' Vuong, Q. H. (1989). Ratio tests for model selection and non-nested
 #' hypotheses. Econometrica 57 (2), 307-333.
 #' @examples
-#' 
+#'
 #' # simulate from a t-copula
 #' set.seed(123)
 #' dat <- BiCopSim(500, 2, 0.7, 5)
-#' 
-#' # apply the test for families 1-10
+#'
+#' # apply the test for families 1-6
 #' vcgof <- BiCopVuongClarke(dat[,1], dat[,2], familyset = 1:6)
-#' 
+#'
 #' # display the Vuong test scores
 #' vcgof[1,]
-#' 
+#'
 #' # display the Clarke test scores
 #' vcgof[2,]
-#' 
+#'
 #' @export BiCopVuongClarke
 BiCopVuongClarke <- function(u1, u2, familyset = NA, correction = FALSE, level = 0.05) {
-    
-    if (is.na(familyset[1])) 
+
+    if (is.na(familyset[1]))
         familyset <- c(1:10, 13, 14, 16:20, 23, 24, 26:30,
                        33, 34, 36:40, 41, 51,  61, 71,
                        104, 114, 124, 134, 204, 214, 224, 234)
     # Sicherheitsabfragen
-    if (is.null(u1) == TRUE || is.null(u2) == TRUE) 
+    if (is.null(u1) == TRUE || is.null(u2) == TRUE)
         stop("u1 and/or u2 are not set or have length zero.")
-    if (length(u1) != length(u2)) 
+    if (length(u1) != length(u2))
         stop("Lengths of 'u1' and 'u2' do not match.")
-    if (length(u1) < 2) 
+    if (length(u1) < 2)
         stop("Number of observations has to be at least 2.")
-    if (any(u1 > 1) || any(u1 < 0)) 
+    if (any(u1 > 1) || any(u1 < 0))
         stop("Data has be in the interval [0,1].")
-    if (any(u2 > 1) || any(u2 < 0)) 
+    if (any(u2 > 1) || any(u2 < 0))
         stop("Data has be in the interval [0,1].")
     for (i in 1:length(familyset)) {
         if (!(familyset[i] %in% c(1:10, 13, 14, 16:20, 23, 24, 26:30,
                                   33, 34, 36:40, 41, 51, 61, 71,
-                                  104, 114, 124, 134, 204, 214, 224, 234))) 
+                                  104, 114, 124, 134, 204, 214, 224, 234)))
             stop("Copula family not implemented.")
     }
-    
+
     xy <- cbind(u1, u2)
     score.gof <- matrix(rep(NA, 2 * length(familyset)), nrow = 2)
     dimnames(score.gof) <- list(c("Vuong", "Clarke"), familyset)
-    
+
     for (i in 1:length(familyset)) {
         temp <- vuong.clarke.sim(xy, familyset[i], familyset, correction, level)
         temp.vuong <- c()
