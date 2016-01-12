@@ -38,7 +38,8 @@ Package overview
 ----------------
 
 Below, we list most functions and features you should know about. As usual in 
-copula models, data are assumed to lie in the unit hypercube. 
+copula models, data are assumed to be serially independent and lie in the unit
+hypercube. 
 
 ### Bivariate copula modeling: the BiCop-family
 
