@@ -68,8 +68,12 @@
 #' \code{\link{RVineSim}}
 #' @examples
 #'
-#' # simulate from a bivariate t-copula
+#' ## simulate from a bivariate t-copula
 #' simdata <- BiCopSim(300, 2, -0.7, par2 = 4)
+#'
+#' ## or alternatively
+#' obj <- BiCop(family = 2, par = -0.7, par2 = 4)
+#' simdata <- BiCopSim(300, obj)
 #'
 #' @export BiCopSim
 BiCopSim <- function(N, family, par, par2 = 0, obj = NULL, check.pars = TRUE) {

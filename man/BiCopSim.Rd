@@ -81,8 +81,12 @@ object \code{obj}, the alternative version
 can be used.
 }
 \examples{
-# simulate from a bivariate t-copula
+## simulate from a bivariate t-copula
 simdata <- BiCopSim(300, 2, -0.7, par2 = 4)
+
+## or alternatively
+obj <- BiCop(family = 2, par = -0.7, par2 = 4)
+simdata <- BiCopSim(300, obj)
 }
 \author{
 Ulf Schepsmeier

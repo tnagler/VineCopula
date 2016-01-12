@@ -76,10 +76,13 @@ family/parameter consistency.
 ## create BiCop object for bivariate t-copula
 obj <- BiCop(family = 2, par = 0.4, par2 = 6)
 
-## a selection of function that can be used with BiCop objects
+## a selection of functions that can be used with BiCop objects
 simdata <- BiCopSim(300, obj)  # simulate data
 BiCopPDF(0.5, 0.5, obj) # evaluate density in (0.5,0.5)
-plot(obj)  # normal contour plot
+plot(obj)  # surface plot of copula density
+contour(obj)  # contour plot with standard normal margins
+print(obj)  # brief overview of BiCop object
+summary(obj)  # comprehensive overview of BiCop object
 }
 \author{
 Thomas Nagler
