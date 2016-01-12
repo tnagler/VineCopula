@@ -22,7 +22,7 @@ NEW FEATURES
   
   * New generic `contour.RVineMatrix` for a matrix of contour plots.
   
-  * New generic `contour.BiCop` has short hand for 
+  * New generic `contour.BiCop` as short hand for 
     `plot.BiCop(..., type = "contour")`.
 
   * New function `BiCopHinv` for computation of inverse h-functions.
@@ -79,7 +79,7 @@ NEW FEATURES
 
 BUG FIXES
 
-  * Definition of "C" in BiCopCDF for tawn copulas used constants `u1` und `u2` 
+  * Definition of "C" in BiCopCDF for tawn copulas used constants `u1` and `u2` 
     instead of arguments `u` and `v`.
 
   * `RVineStructureSelect`: Adjust to new version of igraph. Tree structure was 
@@ -91,7 +91,7 @@ IMPORTS
 
   * Extend Imports to avoid undefined globals (CRAN E-mail 02.07.2015).
 
-  * New version reqiures `igraph (>= 1.0.0)`.
+  * New version requires `igraph (>= 1.0.0)`.
 
 
 VineCopula 1.5 (June 2, 2015)
@@ -143,7 +143,7 @@ VineCopula 1.4 (January 26, 2015)
 NEW FEATURES
 
   * `BiCopTau2Par` and `BiCopPar2Tau`: fully vectorized (parameter/tau input), 
-    and sanity checks extendend. Before vector input was not prohibited. 
+    and sanity checks extended. Before vector input was not prohibited. 
     However, both functions were not intended to be used for vectorized input.
 
 
@@ -179,7 +179,7 @@ BUG FIXES
   * `incompleteBeta.c`: Misuse of the C function abs (as reported by CRAN)
     corrected to `fabs`.
 
-  * `gof_PIT.R`: Use of `require()` replaced by `requireNamespace` according to +
+  * `gof_PIT.R`: Use of `require()` replaced by `requireNamespace` according to
     'Writing R Extensions'.
 
   * Package `ADGofTest` removed from `Suggests` (see 'Writing R Extensions' 
