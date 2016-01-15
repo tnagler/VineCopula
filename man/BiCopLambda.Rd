@@ -12,13 +12,21 @@ BiCopLambda(u1 = NULL, u2 = NULL, family = "emp", par = 0, par2 = 0,
 \code{u1} and \code{u2 = NULL}).}
 
 \item{family}{An integer defining the bivariate copula family or indicating
-the empirical lambda-function: \cr \code{"emp"} = empirical lambda-function
-(default) \cr \code{1} = Gaussian copula; the theoretical lambda-function is
-simulated (no closed formula available) \cr \code{2} = Student t copula
-(t-copula); the theoretical lambda-function is simulated (no closed formula
-available) \cr \code{3} = Clayton copula \cr \code{4} = Gumbel copula \cr
-\code{5} = Frank copula \cr \code{6} = Joe copula \cr \code{7} = BB1 copula
-\cr \code{8} = BB6 copula \cr \code{9} = BB7 copula \cr \code{10} = BB8
+the empirical lambda-function: \cr
+\code{"emp"} = empirical lambda-function
+(default) \cr
+\code{1} = Gaussian copula; the theoretical lambda-function is simulated
+(no closed formula available) \cr
+\code{2} = Student-t copula; the theoretical lambda-function is simulated
+(no closed formula available) \cr
+\code{3} = Clayton copula \cr
+\code{4} = Gumbel copula \cr
+\code{5} = Frank copula \cr
+\code{6} = Joe copula \cr
+\code{7} = BB1 copula \cr
+\code{8} = BB6 copula \cr
+\code{9} = BB7 copula \cr
+\code{10} = BB8
 copula}
 
 \item{par}{Copula parameter; if the empirical lambda-function is chosen,
@@ -38,9 +46,9 @@ specification.}
 }
 \value{
 \item{empLambda}{If the empirical lambda-function is chosen and
-\code{PLOT=FALSE}, a vector of the empirical lambda's is returned.}
+\code{PLOT = FALSE}, a vector of the empirical lambda's is returned.}
 \item{theoLambda}{If the theoretical lambda-function is chosen and
-\code{PLOT=FALSE}, a vector of the theoretical lambda's is returned.}
+\code{PLOT = FALSE}, a vector of the theoretical lambda's is returned.}
 }
 \description{
 This function plots/returns the lambda-function of given bivariate copula
@@ -48,25 +56,28 @@ data.
 }
 \details{
 If the family and parameter specification is stored in a \code{\link{BiCop}}
-object \code{obj}, the alternative version \cr
-\preformatted{BiCopLambda(obj, PLOT = TRUE, ...)} can be used.
+object \code{obj}, the alternative versions \cr
+\preformatted{BiCopLambda(obj, PLOT = TRUE, ...)}
+and
+\preformatted{BiCopLambda((u1, u2, obj, PLOT = TRUE, ...)}
+can be used.
 }
 \note{
 The \eqn{\lambda}-function is characteristic for each bivariate copula
-family and defined by Kendall's distribution function \eqn{K}: \deqn{
-\lambda(v,\theta) := v - K(v,\theta) } with \deqn{ }{ K(v,\theta) :=
-P(C_{\theta}(U_1,U_2) <= v), v \in [0,1]. }\deqn{K(v,\theta) :=
-P(C_{\theta}(U_1,U_2) \leq v),\ \ v\in [0,1]. }{ K(v,\theta) :=
-P(C_{\theta}(U_1,U_2) <= v), v \in [0,1]. } For Archimedean copulas one has
-the following closed form expression in terms of the generator function
-\eqn{\varphi}{\phi} of the copula \eqn{C_{\theta}}: \deqn{ }{
-\lambda(v,\theta) = \phi(v) / \phi'(v), }\deqn{\lambda(v,\theta) =
-\frac{\varphi(v)}{\varphi '(v)}, }{ \lambda(v,\theta) = \phi(v) / \phi'(v),
-} where \eqn{\varphi '}{\phi'} is the derivative of \eqn{\varphi}{\phi}. For
+family and defined by Kendall's distribution function \eqn{K}:
+\deqn{ \lambda(v,\theta) := v - K(v,\theta) } with
+\deqn{K(v,\theta) := P(C_{\theta}(U_1,U_2) \leq v),\ \ v\in [0,1]. }{
+K(v,\theta) := P(C_{\theta}(U_1,U_2) <= v), v \in [0,1]. }
+For Archimedean copulas one has the following closed form expression
+in terms of the generator function \eqn{\varphi}{\phi} of the copula
+\eqn{C_{\theta}}:
+\deqn{\lambda(v,\theta) = \frac{\varphi(v)}{\varphi '(v)}, }{
+\lambda(v,\theta) = \phi(v) / \phi'(v), }
+where \eqn{\varphi '}{\phi'} is the derivative of \eqn{\varphi}{\phi}. For
 more details see Genest and Rivest (1993) or Schepsmeier (2010).
 
-For the bivariate Gaussian and t-copula no closed form expression for the
-theoretical \eqn{\lambda}-function exists.  Therefore it is simulated based
+For the bivariate Gaussian and Student-t copula no closed form expression for
+the theoretical \eqn{\lambda}-function exists. Therefore it is simulated based
 on samples of size 1000. For all other implemented copula families there are
 closed form expressions available.
 
@@ -82,40 +93,46 @@ and \code{1-u2}, respectively. Then \eqn{\lambda}-functions for the
 corresponding non-rotated copula families can be considered.
 }
 \examples{
-# Clayton and rotated Clayton copulas
+## Example 1: Clayton copula
 n <- 1000
 tau <- 0.5
 
 # simulate from Clayton copula
 fam <- 3
 theta <- BiCopTau2Par(fam, tau)
+cop <- BiCop(fam, theta)
 set.seed(123)
-dat <- BiCopSim(n, fam, theta)
+dat <- BiCopSim(n, cop)
 
 # create lambda-function plots
-par(mfrow = c(1, 3))
+op <- par(mfrow = c(1, 3))
 BiCopLambda(dat[, 1], dat[, 2])  # empirical lambda-function
-BiCopLambda(family = fam, par = theta)	# theoretical lambda-function
-BiCopLambda(dat[, 1], dat[, 2], family = fam, par = theta)	# both
+BiCopLambda(cop)	# theoretical lambda-function
+BiCopLambda(dat[, 1], dat[, 2], cop)	# both
+par(op)
 
-# lambda-function of estimated copula
-fit <- BiCopSelect(dat[, 1], dat[, 2])
-par(mfrow = c(1, 1))
-BiCopLambda(fit)
 
-# simulate from rotated Clayton copula (90 degrees)
+## Example 2: lambda-function of estimated copula
+cop <- BiCopSelect(dat[, 1], dat[, 2])
+BiCopLambda(cop)
+
+
+## Example 3: rotated Clayton copula (90 degrees)
 fam <- 23
 theta <- BiCopTau2Par(fam, -tau)
+cop <- BiCop(fam, theta)
 set.seed(123)
-dat <- BiCopSim(n, fam, theta)
+dat <- BiCopSim(n, cop)
 
 # rotate the data to standard Clayton copula data
 rot_dat <- 1 - dat[, 1]
 
-par(mfrow = c(1, 3))
+# create lambda-function plots
+op <- par(mfrow = c(1, 3))
 BiCopLambda(rot_dat, dat[, 2])  # empirical lambda-function
 BiCopLambda(family = 3, par = -theta)	# theoretical lambda-function
 BiCopLambda(rot_dat, dat[, 2], family = 3, par = -theta)	# both
+par(op)
 }
 \author{
 Ulf Schepsmeier

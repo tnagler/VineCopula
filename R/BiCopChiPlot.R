@@ -14,34 +14,30 @@
 
 
 #' Chi-plot for Bivariate Copula Data
-#' 
+#'
 #' This function creates a chi-plot of given bivariate copula data.
-#' 
+#'
 #' For observations \eqn{u_{i,j},\ i=1,...,N,\ j=1,2,}{u_{i,j}, i=1,...,N,
 #' j=1,2,} the chi-plot is based on the following two quantities: the
-#' chi-statistics \deqn{ }{
-#' \chi_i=F_{U_1,U_2}(u_{i,1},u_{i,2})-F_{U_1}(u_{i,1})F_{U_2}(u_{i,2}) /
-#' (F_{U_1}(u_{i,1})
-#' (1-F_{U_1}(u_{i,1}))F_{U_2}(u_{i,2})(1-F_{U_2}(u_{i,2}))^0.5,
-#' }\deqn{\chi_i=\frac{\hat{F}_{U_1U_2}(u_{i,1},u_{i,2})-\hat{F}_{U_1}(u_{i,1})\hat{F}_{U_2}(u_{i,2})}{\sqrt{\hat{F}_{U_1}(u_{i,1})
-#' (1-\hat{F}_{U_1}(u_{i,1}))\hat{F}_{U_2}(u_{i,2})(1-\hat{F}_{U_2}(u_{i,2}))}},
-#' }{ \chi_i=F_{U_1,U_2}(u_{i,1},u_{i,2})-F_{U_1}(u_{i,1})F_{U_2}(u_{i,2}) /
-#' (F_{U_1}(u_{i,1})
-#' (1-F_{U_1}(u_{i,1}))F_{U_2}(u_{i,2})(1-F_{U_2}(u_{i,2}))^0.5, } and the
-#' lambda-statistics \deqn{ }{ \lambda_i=4 sgn(
-#' tildeF_{U_1}(u_{i,1}),tildeF_{U_2}(u_{i,2}) ) * max(
-#' tildeF_{U_1}(u_{i,1})^2,tildeF_{U_2}(u_{i,2})^2 ), }\deqn{\lambda_i=4
-#' sgn\left( \tilde{F}_{U_1}(u_{i,1}),\tilde{F}_{U_2}(u_{i,2}) \right) \cdot
-#' \max\left( \tilde{F}_{U_1}(u_{i,1})^2,\tilde{F}_{U_2}(u_{i,2})^2 \right), }{
-#' \lambda_i=4 sgn( tildeF_{U_1}(u_{i,1}),tildeF_{U_2}(u_{i,2}) ) * max(
-#' tildeF_{U_1}(u_{i,1})^2,tildeF_{U_2}(u_{i,2})^2 ), } where
-#' \eqn{\hat{F}_{U_1}}{F_{U_1}}, \eqn{\hat{F}_{U_2}}{F_{U_2}} and
+#' chi-statistics
+#' \deqn{\chi_i = \frac{\hat{F}_{U_1U_2}(u_{i,1},u_{i,2})
+#' - \hat{F}_{U_1}(u_{i,1})\hat{F}_{U_2}(u_{i,2})}{
+#' \sqrt{\hat{F}_{U_1}(u_{i,1})(1-\hat{F}_{U_1}(u_{i,1}))
+#' \hat{F}_{U_2}(u_{i,2})(1-\hat{F}_{U_2}(u_{i,2}))}}, }{
+#' \chi_i = F_{U_1,U_2}(u_{i,1},u_{i,2}) - F_{U_1}(u_{i,1})F_{U_2}(u_{i,2})
+#' / (F_{U_1}(u_{i,1}) (1-F_{U_1}(u_{i,1}))F_{U_2}(u_{i,2})
+#' (1-F_{U_2}(u_{i,2}))^0.5, } and the lambda-statistics
+#' \deqn{\lambda_i = 4 sgn\left( \tilde{F}_{U_1}(u_{i,1}),\tilde{F}_{U_2}(u_{i,2}) \right)
+#' \cdot \max\left( \tilde{F}_{U_1}(u_{i,1})^2,\tilde{F}_{U_2}(u_{i,2})^2 \right), }{
+#' \lambda_i = 4 sgn( tildeF_{U_1}(u_{i,1}),tildeF_{U_2}(u_{i,2}) )
+#' * max( tildeF_{U_1}(u_{i,1})^2,tildeF_{U_2}(u_{i,2})^2 ), }
+#' where \eqn{\hat{F}_{U_1}}{F_{U_1}}, \eqn{\hat{F}_{U_2}}{F_{U_2}} and
 #' \eqn{\hat{F}_{U_1U_2}}{F_{U_1U_2}} are the empirical distribution functions
 #' of the uniform random variables \eqn{U_1} and \eqn{U_2} and of
 #' \eqn{(U_1,U_2)}, respectively. Further,
 #' \eqn{\tilde{F}_{U_1}=\hat{F}_{U_1}-0.5}{tildeF_{U_1}=F_{U_1}-0.5} and
 #' \eqn{\tilde{F}_{U_2}=\hat{F}_{U_2}-0.5}{tildeF_{U_2}=F_{U_2}-0.5}.
-#' 
+#'
 #' These quantities only depend on the ranks of the data and are scaled to the
 #' interval \eqn{[0,1]}. \eqn{\lambda_i} measures a distance of a data point
 #' \eqn{\left(u_{i,1},u_{i,2}\right)}{(u_{i,1},u_{i,2})} to the center of the
@@ -52,19 +48,19 @@
 #' \mathcal{U}[-1,1]}{\lambda_i~U[0,1]} asymptotically, i.e., values of
 #' \eqn{\chi_i} close to zero indicate independence---corresponding to
 #' \eqn{F_{U_1U_2}=F_{U_1}F_{U_2}}.
-#' 
+#'
 #' When plotting these quantities, the pairs of \eqn{\left(\lambda_i, \chi_i
 #' \right)}{(\lambda_i,\chi_i)} will tend to be located above zero for
 #' positively dependent margins and vice versa for negatively dependent
 #' margins. Control bounds around zero indicate whether there is significant
 #' dependence present.
-#' 
+#'
 #' If \code{mode = "lower"} or \code{"upper"}, the above quantities are
 #' calculated only for those \eqn{u_{i,1}}'s and \eqn{u_{i,2}}'s which are
 #' smaller/larger than the respective means of
 #' \code{u1}\eqn{=(u_{1,1},...,u_{N,1})} and
 #' \code{u2}\eqn{=(u_{1,2},...,u_{N,2})}.
-#' 
+#'
 #' @param u1,u2 Data vectors of equal length with values in [0,1].
 #' @param PLOT Logical; whether the results are plotted. If \code{PLOT =
 #' FALSE}, the values \code{lambda}, \code{chi} and \code{control.bounds} are
@@ -85,31 +81,32 @@
 #' @references Abberger, K. (2004). A simple graphical method to explore
 #' tail-dependence in stock-return pairs. Discussion Paper, University of
 #' Konstanz, Germany.
-#' 
+#'
 #' Genest, C. and A. C. Favre (2007). Everything you always wanted to know
 #' about copula modeling but were afraid to ask. Journal of Hydrologic
 #' Engineering, 12 (4), 347-368.
 #' @examples
-#' 
-#' # chi-plots for bivariate Gaussian copula data
-#' n <- 500
-#' tau <- 0.5
-#' 
+#'
+#' ## chi-plots for bivariate Gaussian copula data
+#'
 #' # simulate copula data
-#' fam <- 1  
-#' theta <- BiCopTau2Par(fam, tau)
+#' fam <- 1
+#' tau <- 0.5
+#' par <- BiCopTau2Par(fam, tau)
+#' cop <- BiCop(fam, par)
 #' set.seed(123)
-#' dat <- BiCopSim(n, fam, theta)  
-#' 
+#' dat <- BiCopSim(500, cop)
+#'
 #' # create chi-plots
-#' par(mfrow = c(1,3))
+#' op <- par(mfrow = c(1, 3))
 #' BiCopChiPlot(dat[,1], dat[,2], xlim = c(-1,1), ylim = c(-1,1),
 #'              main="General chi-plot")
 #' BiCopChiPlot(dat[,1], dat[,2], mode = "lower", xlim = c(-1,1),
 #'              ylim = c(-1,1), main = "Lower chi-plot")
 #' BiCopChiPlot(dat[,1], dat[,2], mode = "upper", xlim = c(-1,1),
 #'              ylim = c(-1,1), main = "Upper chi-plot")
-#' 
+#' par(op)
+#'
 #' @export BiCopChiPlot
 BiCopChiPlot <- function(u1, u2, PLOT = TRUE, mode = "NULL", ...) {
     # -----------------------------------------------------------------------------
@@ -119,32 +116,32 @@ BiCopChiPlot <- function(u1, u2, PLOT = TRUE, mode = "NULL", ...) {
     # will be returned mode -> character or NULL, generall chi plot or
     # lower/upper chi plot. Possible values are NULL, 'upper','lower'
     # -----------------------------------------------------------------------------
-    
+
     # validation of input parameter
-    if (any(u1 > 1) || any(u1 < 0)) 
+    if (any(u1 > 1) || any(u1 < 0))
         stop("Data has be in the interval [0,1].")
-    if (any(u2 > 1) || any(u2 < 0)) 
+    if (any(u2 > 1) || any(u2 < 0))
         stop("Data has be in the interval [0,1].")
-    if (is.null(u1) == TRUE || is.null(u2) == TRUE) 
+    if (is.null(u1) == TRUE || is.null(u2) == TRUE)
         stop("u1 and/or u2 are not set or have length zero.")
-    if (length(u1) != length(u2)) 
+    if (length(u1) != length(u2))
         stop("Lengths of 'u1' and 'u2' do not match.")
-    if (length(u1) < 2) 
+    if (length(u1) < 2)
         stop("Number of observations has to be at least 2.")
-    
-    if (PLOT != TRUE && PLOT != FALSE) 
+
+    if (PLOT != TRUE && PLOT != FALSE)
         stop("The parameter 'PLOT' has to be set to 'TRUE' or 'FALSE'.")
-    
+
     # Computing of results
     n <- length(u1)
     Hi <- H(u1, u2)
     Fi <- F(u1)
     Gi <- F(u2)
-    
-    lambda <- 4 * sign((Fi - 0.5) * (Gi - 0.5)) * apply(data.frame((Fi - 0.5)^2, 
+
+    lambda <- 4 * sign((Fi - 0.5) * (Gi - 0.5)) * apply(data.frame((Fi - 0.5)^2,
                                                                    (Gi - 0.5)^2), 1, max)
     control.bounds <- c(1.54/sqrt(n), -1.54/sqrt(n))
-    
+
     if (mode == "upper") {
         to.keep <- intersect(which(u1 > mean(u1)), which(u2 > mean(u2)))
         # to.keep<-intersect(which(u1>0),which(u2>0))
@@ -164,7 +161,7 @@ BiCopChiPlot <- function(u1, u2, PLOT = TRUE, mode = "NULL", ...) {
         lambda <- lambda[to.keep]
     }
     # remote entries with null values
-    to.remove <- c(which(Fi == 0), which(Gi == 0), which(Fi == 1), which(Gi == 
+    to.remove <- c(which(Fi == 0), which(Gi == 0), which(Fi == 1), which(Gi ==
                                                                              1))
     if (length(to.remove) != 0) {
         Hi <- Hi[-to.remove]
@@ -172,13 +169,13 @@ BiCopChiPlot <- function(u1, u2, PLOT = TRUE, mode = "NULL", ...) {
         Gi <- Gi[-to.remove]
         lambda <- lambda[-to.remove]
     }
-    
+
     chi <- (Hi - Fi * Gi)/sqrt(Fi * (1 - Fi) * Gi * (1 - Gi))
     control.bounds <- c(1.54/sqrt(n), -1.54/sqrt(n))
-    
+
     if (PLOT) {
         # plotting of results
-        plot(lambda, chi, xlab = expression(lambda), ylab = expression(chi), 
+        plot(lambda, chi, xlab = expression(lambda), ylab = expression(chi),
              ...)
         abline(h = control.bounds[1], col = "gray", lty = "dashed")
         abline(h = control.bounds[2], col = "gray", lty = "dashed")
@@ -205,10 +202,10 @@ BiCopChiPlot <- function(u1, u2, PLOT = TRUE, mode = "NULL", ...) {
 
 
 #' Kendall's Plot for Bivariate Copula Data
-#' 
+#'
 #' This function creates a Kendall's plot (K-plot) of given bivariate copula
 #' data.
-#' 
+#'
 #' For observations \eqn{u_{i,j},\ i=1,...,N,\ j=1,2,}{u_{i,j}, i=1,...,N,
 #' j=1,2,} the K-plot considers two quantities: First, the ordered values of
 #' the empirical bivariate distribution function
@@ -218,11 +215,11 @@ BiCopChiPlot <- function(u1, u2, PLOT = TRUE, mode = "NULL", ...) {
 #' hypothesis of independence between \eqn{U_1} and \eqn{U_2}. \eqn{W_{i:N}}
 #' can be calculated as follows \deqn{ W_{i:n}= N {N-1 \choose i-1}
 #' \int\limits_{0}^1 \omega k_0(\omega) ( K_0(\omega) )^{i-1} ( 1-K_0(\omega)
-#' )^{N-i} d\omega, } where \deqn{ }{ K_=(\omega)=\omega - \omega log(\omega)
-#' }\deqn{K_0(\omega)=\omega - \omega \log(\omega), }{ K_=(\omega)=\omega -
-#' \omega log(\omega) }\deqn{\nonumber }{ K_=(\omega)=\omega - \omega
-#' log(\omega) } and \eqn{k_0(\cdot)}{k_0()} is the corresponding density.
-#' 
+#' )^{N-i} d\omega, } where
+#' \deqn{K_0(\omega) = \omega - \omega \log(\omega), }{
+#' K_=(\omega) = \omega - \omega log(\omega) }
+#' and \eqn{k_0(\cdot)}{k_0()} is the corresponding density.
+#'
 #' K-plots can be seen as the bivariate copula equivalent to QQ-plots. If the
 #' points of a K-plot lie approximately on the diagonal \eqn{y=x}, then
 #' \eqn{U_1} and \eqn{U_2} are approximately independent. Any deviation from
@@ -235,7 +232,7 @@ BiCopChiPlot <- function(u1, u2, PLOT = TRUE, mode = "NULL", ...) {
 #' \eqn{\left(W_{i:N},H_i\right)}{(W_{i:N},H_i)} however lie on the x-axis,
 #' this indicates a perfect negative dependence between \eqn{U_1} and
 #' \eqn{U_2}.
-#' 
+#'
 #' @param u1,u2 Data vectors of equal length with values in [0,1].
 #' @param PLOT Logical; whether the results are plotted. If \code{PLOT =
 #' FALSE}, the values \code{W.in} and \code{Hi.sort} are returned (see below;
@@ -250,28 +247,31 @@ BiCopChiPlot <- function(u1, u2, PLOT = TRUE, mode = "NULL", ...) {
 #' to know about copula modeling but were afraid to ask. Journal of Hydrologic
 #' Engineering, 12 (4), 347-368.
 #' @examples
-#' 
-#' # Gaussian and Clayton copulas
+#'
+#' ## Gaussian and Clayton copulas
 #' n <- 500
 #' tau <- 0.5
-#' 
+#'
 #' # simulate from Gaussian copula
-#' fam1 <- 1  
-#' theta1 <- BiCopTau2Par(fam1, tau)
+#' fam <- 1
+#' par <- BiCopTau2Par(fam, tau)
+#' cop1 <- BiCop(fam, par)
 #' set.seed(123)
-#' dat1 <- BiCopSim(n, fam1, theta1)  
-#' 
+#' dat1 <- BiCopSim(n, cop1)
+#'
 #' # simulate from Clayton copula
-#' fam2 <- 3
-#' theta2 <- BiCopTau2Par(fam2, tau)
+#' fam <- 3
+#' par <- BiCopTau2Par(fam, tau)
+#' cop2 <- BiCop(fam, par)
 #' set.seed(123)
-#' dat2 <- BiCopSim(n, fam2, theta2)
-#' 
+#' dat2 <- BiCopSim(n, cop2)
+#'
 #' # create K-plots
-#' par(mfrow=c(1,2))
+#' op <- par(mfrow = c(1, 2))
 #' BiCopKPlot(dat1[,1], dat1[,2], main = "Gaussian copula")
 #' BiCopKPlot(dat2[,1], dat2[,2], main = "Clayton copula")
-#' 
+#' par(op)
+#'
 #' @export BiCopKPlot
 BiCopKPlot <- function(u1, u2, PLOT = TRUE, ...) {
     # -----------------------------------------------------------------------------
@@ -280,29 +280,29 @@ BiCopKPlot <- function(u1, u2, PLOT = TRUE, ...) {
     # should the results be plotted? If FALSE, the values W.in and Hi will be
     # return.
     # -----------------------------------------------------------------------------
-    
+
     # validation of input data
-    if (is.null(u1) == TRUE || is.null(u2) == TRUE) 
+    if (is.null(u1) == TRUE || is.null(u2) == TRUE)
         stop("u1 and/or u2 are not set or have length zero.")
-    if (length(u1) != length(u2)) 
+    if (length(u1) != length(u2))
         stop("Lengths of 'u1' and 'u2' do not match.")
-    if (length(u1) < 2) 
+    if (length(u1) < 2)
         stop("Number of observations has to be at least 2.")
-    
-    if (PLOT != TRUE && PLOT != FALSE) 
+
+    if (PLOT != TRUE && PLOT != FALSE)
         stop("The parameter 'PLOT' has to be set to 'TRUE' or 'FALSE'.")
-    
+
     # Computing of results
     Wi <- W(u1, u2)
     Hi <- H(u1, u2)
     Hi.sort <- sort(Hi)
-    
+
     n <- length(u1)
-    
+
     W.in <- rep(NA, n)
     for (i in 1:n) {
         f <- function(w) {
-            w * (-log(w)) * (w - w * log(w))^(i - 1) * (1 - w + w * log(w))^(n - 
+            w * (-log(w)) * (w - w * log(w))^(i - 1) * (1 - w + w * log(w))^(n -
                                                                                  i)
         }  # function to be integrated
         W.in[i] <- n * choose(n - 1, i - 1) * (integrate(f, lower = 0, upper = 1)$value)  # W_{i:n} for i=1:n
@@ -310,10 +310,10 @@ BiCopKPlot <- function(u1, u2, PLOT = TRUE, ...) {
     g <- function(w) {
         w - w * log(w)
     }  # K_{0}(w)=P(UV<=w)
-    
+
     if (PLOT) {
         # should the results be plotted?
-        plot(g, xlim = c(0, 1), ylim = c(0, 1), pch = "x", xlab = expression(W[1:n]), 
+        plot(g, xlim = c(0, 1), ylim = c(0, 1), pch = "x", xlab = expression(W[1:n]),
              ylab = "H", ...)  #Kurve K_{0}(w)
         points(W.in, Hi.sort, pch = "x", cex = 0.4, ...)
         abline(a = 0, b = 1)  # angle bisector
@@ -342,13 +342,13 @@ H <- function(t, s) {
     # help function for chi-plot
     n <- length(t)
     H.result <- c()
-    
+
     for (i in 1:n) {
         rank.smaller.t <- setdiff(which(rank(t) <= rank(t)[i]), i)
         rank.smaller.s <- setdiff(which(rank(s) <= rank(s)[i]), i)
         H.result[i] <- length(intersect(rank.smaller.t, rank.smaller.s))
     }
-    
+
     H.result <- H.result/(n - 1)
     return(H.result)
 }

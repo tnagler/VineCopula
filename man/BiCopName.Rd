@@ -65,18 +65,22 @@ This function transforms the bivariate copula family number into its
 character expression and vice versa.
 }
 \examples{
-# family as number
-family = 1
+## family number to character expression
+family <- 1
 BiCopName(family, short = TRUE)	 # short version
-BiCopName(family, short = FALSE)	# long version
+BiCopName(family, short = FALSE)	 # long version
 
-# family as character expression (short version)
-family = "C"
+## family character expression (short version) to number
+family <- "C"
 BiCopName(family)	# as number
 
-# long version
-family = "Clayton"
+## family character expression (long version) to number
+family <- "Clayton"
 BiCopName(family)	# as number
+
+## vectors of families
+BiCopName(1:10)    # as character expression
+BiCopName(c("Clayton","t","J"))    # as number
 }
 \author{
 Ulf Schepsmeier

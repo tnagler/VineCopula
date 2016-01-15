@@ -33,23 +33,19 @@ This function creates a chi-plot of given bivariate copula data.
 \details{
 For observations \eqn{u_{i,j},\ i=1,...,N,\ j=1,2,}{u_{i,j}, i=1,...,N,
 j=1,2,} the chi-plot is based on the following two quantities: the
-chi-statistics \deqn{ }{
-\chi_i=F_{U_1,U_2}(u_{i,1},u_{i,2})-F_{U_1}(u_{i,1})F_{U_2}(u_{i,2}) /
-(F_{U_1}(u_{i,1})
-(1-F_{U_1}(u_{i,1}))F_{U_2}(u_{i,2})(1-F_{U_2}(u_{i,2}))^0.5,
-}\deqn{\chi_i=\frac{\hat{F}_{U_1U_2}(u_{i,1},u_{i,2})-\hat{F}_{U_1}(u_{i,1})\hat{F}_{U_2}(u_{i,2})}{\sqrt{\hat{F}_{U_1}(u_{i,1})
-(1-\hat{F}_{U_1}(u_{i,1}))\hat{F}_{U_2}(u_{i,2})(1-\hat{F}_{U_2}(u_{i,2}))}},
-}{ \chi_i=F_{U_1,U_2}(u_{i,1},u_{i,2})-F_{U_1}(u_{i,1})F_{U_2}(u_{i,2}) /
-(F_{U_1}(u_{i,1})
-(1-F_{U_1}(u_{i,1}))F_{U_2}(u_{i,2})(1-F_{U_2}(u_{i,2}))^0.5, } and the
-lambda-statistics \deqn{ }{ \lambda_i=4 sgn(
-tildeF_{U_1}(u_{i,1}),tildeF_{U_2}(u_{i,2}) ) * max(
-tildeF_{U_1}(u_{i,1})^2,tildeF_{U_2}(u_{i,2})^2 ), }\deqn{\lambda_i=4
-sgn\left( \tilde{F}_{U_1}(u_{i,1}),\tilde{F}_{U_2}(u_{i,2}) \right) \cdot
-\max\left( \tilde{F}_{U_1}(u_{i,1})^2,\tilde{F}_{U_2}(u_{i,2})^2 \right), }{
-\lambda_i=4 sgn( tildeF_{U_1}(u_{i,1}),tildeF_{U_2}(u_{i,2}) ) * max(
-tildeF_{U_1}(u_{i,1})^2,tildeF_{U_2}(u_{i,2})^2 ), } where
-\eqn{\hat{F}_{U_1}}{F_{U_1}}, \eqn{\hat{F}_{U_2}}{F_{U_2}} and
+chi-statistics
+\deqn{\chi_i = \frac{\hat{F}_{U_1U_2}(u_{i,1},u_{i,2})
+- \hat{F}_{U_1}(u_{i,1})\hat{F}_{U_2}(u_{i,2})}{
+\sqrt{\hat{F}_{U_1}(u_{i,1})(1-\hat{F}_{U_1}(u_{i,1}))
+\hat{F}_{U_2}(u_{i,2})(1-\hat{F}_{U_2}(u_{i,2}))}}, }{
+\chi_i = F_{U_1,U_2}(u_{i,1},u_{i,2}) - F_{U_1}(u_{i,1})F_{U_2}(u_{i,2})
+/ (F_{U_1}(u_{i,1}) (1-F_{U_1}(u_{i,1}))F_{U_2}(u_{i,2})
+(1-F_{U_2}(u_{i,2}))^0.5, } and the lambda-statistics
+\deqn{\lambda_i = 4 sgn\left( \tilde{F}_{U_1}(u_{i,1}),\tilde{F}_{U_2}(u_{i,2}) \right)
+\cdot \max\left( \tilde{F}_{U_1}(u_{i,1})^2,\tilde{F}_{U_2}(u_{i,2})^2 \right), }{
+\lambda_i = 4 sgn( tildeF_{U_1}(u_{i,1}),tildeF_{U_2}(u_{i,2}) )
+* max( tildeF_{U_1}(u_{i,1})^2,tildeF_{U_2}(u_{i,2})^2 ), }
+where \eqn{\hat{F}_{U_1}}{F_{U_1}}, \eqn{\hat{F}_{U_2}}{F_{U_2}} and
 \eqn{\hat{F}_{U_1U_2}}{F_{U_1U_2}} are the empirical distribution functions
 of the uniform random variables \eqn{U_1} and \eqn{U_2} and of
 \eqn{(U_1,U_2)}, respectively. Further,
@@ -80,24 +76,25 @@ smaller/larger than the respective means of
 \code{u2}\eqn{=(u_{1,2},...,u_{N,2})}.
 }
 \examples{
-# chi-plots for bivariate Gaussian copula data
-n <- 500
-tau <- 0.5
+## chi-plots for bivariate Gaussian copula data
 
 # simulate copula data
 fam <- 1
-theta <- BiCopTau2Par(fam, tau)
+tau <- 0.5
+par <- BiCopTau2Par(fam, tau)
+cop <- BiCop(fam, par)
 set.seed(123)
-dat <- BiCopSim(n, fam, theta)
+dat <- BiCopSim(500, cop)
 
 # create chi-plots
-par(mfrow = c(1,3))
+op <- par(mfrow = c(1, 3))
 BiCopChiPlot(dat[,1], dat[,2], xlim = c(-1,1), ylim = c(-1,1),
              main="General chi-plot")
 BiCopChiPlot(dat[,1], dat[,2], mode = "lower", xlim = c(-1,1),
              ylim = c(-1,1), main = "Lower chi-plot")
 BiCopChiPlot(dat[,1], dat[,2], mode = "upper", xlim = c(-1,1),
              ylim = c(-1,1), main = "Upper chi-plot")
+par(op)
 }
 \author{
 Natalia Belgorodski, Ulf Schepsmeier

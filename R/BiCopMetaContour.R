@@ -441,41 +441,41 @@ cop.pdf <- function(u1, u2, param, copula) {
 
 
 
-### Density of a meta-distribution with normal margins 
-# Input: 
-# x1,x2 vectors 
-# param Copula parameter(s) 
-# copula copula family 
-# Output: 
+### Density of a meta-distribution with normal margins
+# Input:
+# x1,x2 vectors
+# param Copula parameter(s)
+# copula copula family
+# Output:
 # density
 
 
 meta.dens <- function(x1, x2, param, copula, margins, margins.par) {
     if (margins == "norm") {
-        return(cop.pdf(u1 = pnorm(x1), 
+        return(cop.pdf(u1 = pnorm(x1),
                        u2 = pnorm(x2),
-                       param = param, 
+                       param = param,
                        copula = copula)  * dnorm(x1) * dnorm(x2))
-    } else if (margins == "t") { 
-        return(cop.pdf(u1 = pt(x1, df = margins.par), 
-                       u2 = pt(x2, df = margins.par), 
-                       param = param, 
-                       copula = copula) * dt(x1, df = margins.par) * dt(x2, df = margins.par)) 
+    } else if (margins == "t") {
+        return(cop.pdf(u1 = pt(x1, df = margins.par),
+                       u2 = pt(x2, df = margins.par),
+                       param = param,
+                       copula = copula) * dt(x1, df = margins.par) * dt(x2, df = margins.par))
     } else if (margins == "unif") {
         return(cop.pdf(u1 = x1,
-                       u2 = x2, 
+                       u2 = x2,
                        param = param,
-                       copula = copula)) 
+                       copula = copula))
     } else if (margins == "gamma") {
-        return(cop.pdf(u1 = pgamma(x1, shape = margins.par[1], scale = margins.par[2]), 
+        return(cop.pdf(u1 = pgamma(x1, shape = margins.par[1], scale = margins.par[2]),
                        u2 = pgamma(x2, shape = margins.par[1], scale = margins.par[2]),
-                       param = param, 
+                       param = param,
                        copula = copula) *
-                   dgamma(x1, shape = margins.par[1], scale = margins.par[2]) * 
+                   dgamma(x1, shape = margins.par[1], scale = margins.par[2]) *
                    dgamma(x2, shape = margins.par[1], scale = margins.par[2]))
-    } else if (margins == "exp") { 
-        return(cop.pdf(u1 = pexp(x1, rate = margins.par), 
-                       u2 = pexp(x2, rate = margins.par), 
+    } else if (margins == "exp") {
+        return(cop.pdf(u1 = pexp(x1, rate = margins.par),
+                       u2 = pexp(x2, rate = margins.par),
                        param = param, copula = copula) * dexp(x1, rate = margins.par) * dexp(x2,  rate = margins.par))
     }
 }
@@ -483,66 +483,81 @@ meta.dens <- function(x1, x2, param, copula, margins, margins.par) {
 
 
 ### CopulaContour2D
-# Input: 
-# u1, u2 data-vectors 
-# bw bandwidth 
+# Input:
+# u1, u2 data-vectors
+# bw bandwidth
 # size number of grid points
 # levels Vector of contour levels
-# family copula family 
+# family copula family
 # parCopula parameter(s)
-# Output: 
+# Output:
 # theo. and emp. contourplot
 
 
 
 
 #' Contour Plot of Bivariate Meta Distribution
-#' 
+#'
 #' This function plots a bivariate contour plot corresponding to a bivariate
 #' meta distribution with different margins and specified bivariate copula and
 #' parameter values or creates corresponding empirical contour plots based on
 #' bivariate copula data.
-#' 
-#' 
+#'
+#'
 #' @param u1,u2 Data vectors of equal length with values in [0,1] (default:
 #' \code{u1} and \code{u2 = NULL}).
 #' @param bw Bandwidth (smoothing factor; default: \code{bw = 1}).
 #' @param size Number of grid points; default: \code{size = 100}.
-#' @param levels Vector of contour levels.  For Gaussian, Student t or
+#' @param levels Vector of contour levels. For Gaussian, Student-t or
 #' exponential margins the default value (\code{levels = c(0.01, 0.05, 0.1,
-#' 0.15, 0.2)}) typically is a good choice.  For uniform margins we
+#' 0.15, 0.2)}) typically is a good choice. For uniform margins we
 #' recommend\cr \code{levels = c(0.1, 0.3, 0.5, 0.7, 0.9, 1.1, 1.3, 1.5)}\cr
 #' and for Gamma margins\cr \code{levels = c(0.005, 0.01, 0.03, 0.05, 0.07,
 #' 0.09)}.
 #' @param family An integer defining the bivariate copula family or indicating
-#' an empirical contour plot: \cr \code{"emp"} = empirical contour plot
-#' (default; margins can be specified by \code{margins}) \cr \code{0} =
-#' independence copula \cr \code{1} = Gaussian copula \cr \code{2} = Student t
-#' copula (t-copula) \cr \code{3} = Clayton copula \cr \code{4} = Gumbel copula
-#' \cr \code{5} = Frank copula \cr \code{6} = Joe copula \cr \code{7} = BB1
-#' copula \cr \code{8} = BB6 copula \cr \code{9} = BB7 copula \cr \code{10} =
-#' BB8 copula \cr \code{13} = rotated Clayton copula (180 degrees; ``survival
-#' Clayton'') \cr \code{14} = rotated Gumbel copula (180 degrees; ``survival
-#' Gumbel'') \cr \code{16} = rotated Joe copula (180 degrees; ``survival Joe'')
-#' \cr \code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
-#' \code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr \code{19}
-#' = rotated BB7 copula (180 degrees; ``survival BB7'')\cr \code{20} = rotated
-#' BB8 copula (180 degrees; ``survival BB8'')\cr \code{23} = rotated Clayton
-#' copula (90 degrees) \cr \code{24} = rotated Gumbel copula (90 degrees) \cr
-#' \code{26} = rotated Joe copula (90 degrees) \cr \code{27} = rotated BB1
-#' copula (90 degrees) \cr \code{28} = rotated BB6 copula (90 degrees) \cr
-#' \code{29} = rotated BB7 copula (90 degrees) \cr \code{30} = rotated BB8
-#' copula (90 degrees) \cr \code{33} = rotated Clayton copula (270 degrees) \cr
-#' \code{34} = rotated Gumbel copula (270 degrees) \cr \code{36} = rotated Joe
-#' copula (270 degrees) \cr \code{37} = rotated BB1 copula (270 degrees) \cr
-#' \code{38} = rotated BB6 copula (270 degrees) \cr \code{39} = rotated BB7
-#' copula (270 degrees) \cr \code{40} = rotated BB8 copula (270 degrees) \cr
-#' \code{104} = Tawn type 1 copula \cr \code{114} = rotated Tawn type 1 copula
-#' (180 degrees) \cr \code{124} = rotated Tawn type 1 copula (90 degrees) \cr
-#' \code{134} = rotated Tawn type 1 copula (270 degrees) \cr \code{204} = Tawn
-#' type 2 copula \cr \code{214} = rotated Tawn type 2 copula (180 degrees) \cr
-#' \code{224} = rotated Tawn type 2 copula (90 degrees) \cr \code{234} =
-#' rotated Tawn type 2 copula (270 degrees) \cr
+#' an empirical contour plot: \cr
+#' \code{"emp"} = empirical contour plot
+#' (default; margins can be specified by \code{margins}) \cr
+#' \code{0} = independence copula \cr
+#' \code{1} = Gaussian copula \cr
+#' \code{2} = Student t copula (t-copula) \cr
+#' \code{3} = Clayton copula \cr
+#' \code{4} = Gumbel copula \cr
+#' \code{5} = Frank copula \cr
+#' \code{6} = Joe copula \cr
+#' \code{7} = BB1 copula \cr
+#' \code{8} = BB6 copula \cr
+#' \code{9} = BB7 copula \cr
+#' \code{10} = BB8 copula \cr
+#' \code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
+#' \code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+#' \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
+#' \code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
+#' \code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
+#' \code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
+#' \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
+#' \code{23} = rotated Clayton copula (90 degrees) \cr
+#' \code{24} = rotated Gumbel copula (90 degrees) \cr
+#' \code{26} = rotated Joe copula (90 degrees) \cr
+#' \code{27} = rotated BB1 copula (90 degrees) \cr
+#' \code{28} = rotated BB6 copula (90 degrees) \cr
+#' \code{29} = rotated BB7 copula (90 degrees) \cr
+#' \code{30} = rotated BB8 copula (90 degrees) \cr
+#' \code{33} = rotated Clayton copula (270 degrees) \cr
+#' \code{34} = rotated Gumbel copula (270 degrees) \cr
+#' \code{36} = rotated Joe copula (270 degrees) \cr
+#' \code{37} = rotated BB1 copula (270 degrees) \cr
+#' \code{38} = rotated BB6 copula (270 degrees) \cr
+#' \code{39} = rotated BB7 copula (270 degrees) \cr
+#' \code{40} = rotated BB8 copula (270 degrees) \cr
+#' \code{104} = Tawn type 1 copula \cr
+#' \code{114} = rotated Tawn type 1 copula (180 degrees) \cr
+#' \code{124} = rotated Tawn type 1 copula (90 degrees) \cr
+#' \code{134} = rotated Tawn type 1 copula (270 degrees) \cr
+#' \code{204} = Tawn type 2 copula \cr
+#' \code{214} = rotated Tawn type 2 copula (180 degrees) \cr
+#' \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
+#' \code{234} = rotated Tawn type 2 copula (270 degrees) \cr
 #' @param par Copula parameter; if empirical contour plot, \code{par = NULL} or
 #' \code{0} (default).
 #' @param par2 Second copula parameter for t-, BB1, BB6, BB7, BB8, Tawn type 1
@@ -551,19 +566,25 @@ meta.dens <- function(x1, x2, param, copula, margins, margins.par) {
 #' FALSE}, the values \code{x}, \code{y} and \code{z} are returned (see below;
 #' default: \code{PLOT = TRUE}).
 #' @param margins Character; margins for the bivariate copula contour plot.
-#' Possible margins are:\cr \code{"norm"} = standard normal margins
-#' (default)\cr \code{"t"} = Student t margins with degrees of freedom as
-#' specified by \code{margins.par}\cr \code{"gamma"} = Gamma margins with shape
-#' and scale as specified by \code{margins.par}\cr \code{"exp"} = Exponential
-#' margins with rate as specified by \code{margins.par}\cr \code{"unif"} =
-#' uniform margins
+#' Possible margins are:\cr
+#' \code{"norm"} = standard normal margins (default)\cr
+#' \code{"t"} = Student t margins with degrees of freedom as
+#' specified by \code{margins.par}\cr
+#' \code{"gamma"} = Gamma margins with shape and scale as
+#' specified by \code{margins.par}\cr
+#' \code{"exp"} = Exponential margins with rate as
+#' specified by \code{margins.par}\cr
+#' \code{"unif"} = uniform margins
 #' @param margins.par Parameter(s) of the distribution of the margins if
-#' necessary (default: \code{margins.par = 0}), i.e., \itemize{ \item a
-#' positive real number for the degrees of freedom of Student t margins (see
-#' \code{\link{dt}}), \item a 2-dimensional vector of positive real numbers for
+#' necessary (default: \code{margins.par = 0}), i.e.,
+#' \itemize{
+#' \item a positive real number for the degrees of freedom of
+#' Student t margins (see \code{\link{dt}}),
+#' \item a 2-dimensional vector of positive real numbers for
 #' the shape and scale parameters of Gamma margins (see \code{\link{dgamma}}),
-#' \item a positive real number for the rate parameter of exponential margins
-#' (see \code{\link{dexp}}).  }
+#' \item a positive real number for the rate parameter of
+#' exponential margins (see \code{\link{dexp}}).
+#' }
 #' @param xylim A 2-dimensional vector of the x- and y-limits.  By default
 #' (\code{xylim = NA}) standard limits for the selected margins are used.
 #' @param obj \code{BiCop} object containing the family and parameter
@@ -572,10 +593,12 @@ meta.dens <- function(x1, x2, param, copula, margins, margins.par) {
 #' @return \item{x}{A vector of length \code{size} with the x-values of the
 #' kernel density estimator with Gaussian kernel if the empirical contour plot
 #' is chosen and a sequence of values in \code{xylim} if the theoretical
-#' contour plot is chosen.} \item{y}{A vector of length \code{size} with the
+#' contour plot is chosen.}
+#' \item{y}{A vector of length \code{size} with the
 #' y-values of the kernel density estimator with Gaussian kernel if the
 #' empirical contour plot is chosen and a sequence of values in \code{xylim} if
-#' the theoretical contour plot is chosen.} \item{z}{A matrix of dimension
+#' the theoretical contour plot is chosen.}
+#' \item{z}{A matrix of dimension
 #' \code{size} with the values of the density of the meta distribution with
 #' chosen margins (see \code{margins} and \code{margins.par}) evaluated at the
 #' grid points given by \code{x} and \code{y}.}
@@ -586,29 +609,28 @@ meta.dens <- function(x1, x2, param, copula, margins, margins.par) {
 #' @seealso \code{\link{BiCopChiPlot}}, \code{\link{BiCopKPlot}},
 #' \code{\link{BiCopLambda}}
 #' @examples
-#' 
+#'
 #' ## Example 1: contour plot of meta Gaussian copula distribution
 #' ## with Gaussian margins
-#' tau <- 0.5
+#' tau <- 0.6
 #' fam <- 1
-#' theta <- BiCopTau2Par(fam, tau)	
-#' BiCopMetaContour(u1 = NULL, u2 = NULL, bw = 1, size = 100,
-#'                  levels = c(0.01, 0.05, 0.1, 0.15, 0.2),
-#'                  family = fam, par = theta, main = "tau = 0.5")
-#' 
-#' 
+#' theta <- BiCopTau2Par(fam, tau)
+#' cop <- BiCop(family = fam, par = theta)
+#' BiCopMetaContour(u1 = NULL, u2 = NULL, obj = cop,
+#'                  main = "Gaussian - normal margins")
+#'
+#'
 #' ## Example 2: empirical contour plot with standard normal margins
-#' dat <- BiCopSim(N = 1000, fam, theta)
-#' BiCopMetaContour(dat[,1], dat[,2], bw = 2, size = 100,
-#'                  levels = c(0.01, 0.05, 0.1, 0.15, 0.2),
-#'                  par = 0, family = "emp", main = "N = 1000")
-#' 
-#' # empirical contour plot with exponential margins
-#' BiCopMetaContour(dat[,1], dat[,2], bw = 2, size = 100,
-#'                  levels = c(0.01, 0.05, 0.1, 0.15, 0.2),
-#'                  par = 0, family = "emp", main = "n = 500",
+#' dat <- BiCopSim(N = 1000, cop)
+#' BiCopMetaContour(dat[,1], dat[,2], bw = 2, family = "emp",
+#'                  main = "empirical - normal margins")
+#'
+#'
+#' ## Example 3: empirical contour plot with exponential margins
+#' BiCopMetaContour(dat[,1], dat[,2], bw = 2,
+#'                  main = "empirical - exponential margins",
 #'                  margins = "exp", margins.par = 1)
-#' 
+#'
 #' @export BiCopMetaContour
 BiCopMetaContour <- function(u1 = NULL, u2 = NULL, bw = 1, size = 100,
                              levels = c(0.01, 0.05, 0.1, 0.15, 0.2), family = "emp",

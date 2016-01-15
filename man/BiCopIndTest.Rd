@@ -18,35 +18,39 @@ This function returns the p-value of a bivariate asymptotic independence
 test based on Kendall's tau.
 }
 \details{
-The test exploits the asymptotic normality of the test statistic \deqn{ }{
-statistic := T = ( (9N(N-1)) / (2(2N+5)) )^0.5 * |\tau|,
-}\deqn{\texttt{statistic} := T = \sqrt{\frac{9N(N - 1)}{2(2N + 5)}} \times
-|\hat{\tau}|, }{ statistic := T = ( (9N(N-1)) / (2(2N+5)) )^0.5 * |\tau|, }
+The test exploits the asymptotic normality of the test statistic
+\deqn{\texttt{statistic} := T =
+\sqrt{\frac{9N(N - 1)}{2(2N + 5)}} \times |\hat{\tau}|, }{
+statistic := T = ( (9N(N-1)) / (2(2N+5)) )^0.5 * |\tau|, }
 where \eqn{N} is the number of observations (length of \code{u1}) and
 \eqn{\hat{\tau}} the empirical Kendall's tau of the data vectors \code{u1}
 and \code{u2}. The p-value of the null hypothesis of bivariate independence
-hence is asymptotically \deqn{ }{ p.value = 2*(1-\Phi(T)),
-}\deqn{\texttt{p.value} = 2 \times \left(1 - \Phi\left(T\right)\right), }{
-p.value = 2*(1-\Phi(T)), } where \eqn{\Phi} is the standard normal
-distribution function.
+hence is asymptotically
+\deqn{\texttt{p.value} = 2 \times \left(1 - \Phi\left(T\right)\right), }{
+p.value = 2*(1-\Phi(T)), }
+where \eqn{\Phi} is the standard normal distribution function.
 }
 \examples{
 ## Example 1: Gaussian copula with large dependence parameter
-par1 <- 0.7
-fam1 <- 1
-dat1 <- BiCopSim(500, fam1, par1)
+par <- 0.7
+fam <- 1
+cop <- BiCop(fam, par)
+set.seed(123)
+dat <- BiCopSim(500, cop)
 
 # perform the asymptotic independence test
-BiCopIndTest(dat1[,1], dat1[,2])
+BiCopIndTest(dat[,1], dat[,2])
 
 
 ## Example 2: Gaussian copula with small dependence parameter
-par2 <- 0.01
-fam2 <- 1
-dat2 <- BiCopSim(500, fam2, par2)
+par <- 0.01
+fam <- 1
+cop <- BiCop(fam, par)
+set.seed(123)
+dat <- BiCopSim(500, cop)
 
 # perform the asymptotic independence test
-BiCopIndTest(dat2[,1], dat2[,2])
+BiCopIndTest(dat[,1], dat[,2])
 }
 \author{
 Jeffrey Dissmann

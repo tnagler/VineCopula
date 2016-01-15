@@ -33,10 +33,10 @@ of size \eqn{N} of the random variable \eqn{W=C(U_1,U_2)} under the null
 hypothesis of independence between \eqn{U_1} and \eqn{U_2}. \eqn{W_{i:N}}
 can be calculated as follows \deqn{ W_{i:n}= N {N-1 \choose i-1}
 \int\limits_{0}^1 \omega k_0(\omega) ( K_0(\omega) )^{i-1} ( 1-K_0(\omega)
-)^{N-i} d\omega, } where \deqn{ }{ K_=(\omega)=\omega - \omega log(\omega)
-}\deqn{K_0(\omega)=\omega - \omega \log(\omega), }{ K_=(\omega)=\omega -
-\omega log(\omega) }\deqn{\nonumber }{ K_=(\omega)=\omega - \omega
-log(\omega) } and \eqn{k_0(\cdot)}{k_0()} is the corresponding density.
+)^{N-i} d\omega, } where
+\deqn{K_0(\omega) = \omega - \omega \log(\omega), }{
+K_=(\omega) = \omega - \omega log(\omega) }
+and \eqn{k_0(\cdot)}{k_0()} is the corresponding density.
 
 K-plots can be seen as the bivariate copula equivalent to QQ-plots. If the
 points of a K-plot lie approximately on the diagonal \eqn{y=x}, then
@@ -52,26 +52,29 @@ this indicates a perfect negative dependence between \eqn{U_1} and
 \eqn{U_2}.
 }
 \examples{
-# Gaussian and Clayton copulas
+## Gaussian and Clayton copulas
 n <- 500
 tau <- 0.5
 
 # simulate from Gaussian copula
-fam1 <- 1
-theta1 <- BiCopTau2Par(fam1, tau)
+fam <- 1
+par <- BiCopTau2Par(fam, tau)
+cop1 <- BiCop(fam, par)
 set.seed(123)
-dat1 <- BiCopSim(n, fam1, theta1)
+dat1 <- BiCopSim(n, cop1)
 
 # simulate from Clayton copula
-fam2 <- 3
-theta2 <- BiCopTau2Par(fam2, tau)
+fam <- 3
+par <- BiCopTau2Par(fam, tau)
+cop2 <- BiCop(fam, par)
 set.seed(123)
-dat2 <- BiCopSim(n, fam2, theta2)
+dat2 <- BiCopSim(n, cop2)
 
 # create K-plots
-par(mfrow=c(1,2))
+op <- par(mfrow = c(1, 2))
 BiCopKPlot(dat1[,1], dat1[,2], main = "Gaussian copula")
 BiCopKPlot(dat2[,1], dat2[,2], main = "Clayton copula")
+par(op)
 }
 \author{
 Natalia Belgorodski, Ulf Schepsmeier
