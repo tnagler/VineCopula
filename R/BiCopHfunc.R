@@ -4,13 +4,11 @@
 #' of a given parametric bivariate copula.
 #'
 #' The h-function is defined as the conditional distribution function of a
-#' bivariate copula, i.e., \deqn{ }{ h(u|v,\theta) := F(u|v) = \partial C(u,v)
-#' / \partial v, }\deqn{h(u|v,\boldsymbol{\theta}) := F(u|v) = }{ h(u|v,\theta)
-#' := F(u|v) = \partial C(u,v) / \partial v, }\deqn{\frac{\partial
-#' C(u,v)}{\partial v}, }{ h(u|v,\theta) := F(u|v) = \partial C(u,v) / \partial
-#' v, } where \eqn{C} is a bivariate copula distribution function with
-#' parameter(s) \eqn{\boldsymbol{\theta}}{\theta}.  For more details see Aas et
-#' al. (2009). \cr \cr
+#' bivariate copula, i.e.,
+#' \deqn{h(u|v,\boldsymbol{\theta}) := F(u|v) = \frac{\partial C(u,v)}{\partial v}, }{
+#' h(u|v,\theta) := F(u|v) = \partial C(u,v) / \partial v, }
+#' where \eqn{C} is a bivariate copula distribution function with parameter(s)
+#' \eqn{\boldsymbol{\theta}}{\theta}. For more details see Aas et al. (2009). \cr \cr
 #'
 #' If the family and parameter specification is stored in a \code{\link{BiCop}}
 #' object \code{obj}, the alternative version
@@ -95,7 +93,8 @@
 #' data(daxreturns)
 #'
 #' # h-functions of the Gaussian copula
-#' h1 <- BiCopHfunc(daxreturns[,2], daxreturns[,1], 1, 0.5)
+#' cop <- BiCop(family = 1, par = 0.5)
+#' h1 <- BiCopHfunc(daxreturns[,2], daxreturns[,1], cop)
 #' \dontshow{
 #' h1
 #' }
