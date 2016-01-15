@@ -55,9 +55,10 @@ tau <- BiCopPar2Tau(family = 1, par = rho)
 tau - 2/pi*asin(rho)
 
 
-## Example 2: Clayton copula
-theta <- BiCopTau2Par(family = 3, tau = c(0.4, 0.5, 0.6))
-BiCopPar2Tau(family = 3, par = theta)
+## Example 2: Student-t copula
+rho <- BiCopTau2Par(family = 2, tau = c(0.4, 0.5, 0.6))
+obj <- BiCop(family = 2, par = rho, par2 = 6:8)
+BiCopPar2Tau(obj)
 
 
 ## Example 3:
@@ -70,6 +71,11 @@ plot(thetaC ~ vtau, type = "l", ylim = range(thetaF))
 lines(thetaG ~ vtau, col = 2)
 lines(thetaF ~ vtau, col = 3)
 lines(thetaJ ~ vtau, col = 4)
+
+
+## Example 4: different copula families
+theta <- BiCopTau2Par(family = c(3,4,6), tau = c(0.4, 0.5, 0.6))
+BiCopPar2Tau(family = c(3,4,6), par = theta)
 
 \dontshow{
 # Test BiCopTau2Par

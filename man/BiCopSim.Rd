@@ -91,7 +91,7 @@ set.seed(123)
 simdata2 <- BiCopSim(100, obj)
 
 \dontshow{
-if(!all(simdata == simdata2)) stop("simulation results differ")
+    if(!all(simdata == simdata2)) stop("simulation results differ")
 }
 }
 \author{

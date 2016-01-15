@@ -1,41 +1,55 @@
 #' Blomqvist's Beta Value of a Bivariate Copula
-#' 
+#'
 #' This function computes the theoretical Blomqvist's beta value of a bivariate
 #' copula for given parameter values.
-#' 
+#'
 #' If the family and parameter specification is stored in a \code{\link{BiCop}}
 #' object \code{obj}, the alternative version \cr
 #' \preformatted{BiCopPar2Beta(obj)} can be used.
-#' 
+#'
 #' @param family integer; single number or vector of size \code{m}; defines the
-#' bivariate copula family: \cr \code{0} = independence copula \cr \code{1} =
-#' Gaussian copula \cr \code{3} = Clayton copula \cr \code{4} = Gumbel copula
-#' \cr \code{5} = Frank copula \cr \code{6} = Joe copula \cr \code{7} = BB1
-#' copula \cr \code{8} = BB6 copula \cr \code{9} = BB7 copula \cr \code{10} =
-#' BB8 copula \cr \code{13} = rotated Clayton copula (180 degrees; ``survival
-#' Clayton'') \cr \code{14} = rotated Gumbel copula (180 degrees; ``survival
-#' Gumbel'') \cr \code{16} = rotated Joe copula (180 degrees; ``survival Joe'')
-#' \cr \code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
-#' \code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr \code{19}
-#' = rotated BB7 copula (180 degrees; ``survival BB7'')\cr \code{20} = rotated
-#' BB8 copula (180 degrees; ``survival BB8'')\cr \code{23} = rotated Clayton
-#' copula (90 degrees) \cr \code{24} = rotated Gumbel copula (90 degrees) \cr
-#' \code{26} = rotated Joe copula (90 degrees) \cr \code{27} = rotated BB1
-#' copula (90 degrees) \cr \code{28} = rotated BB6 copula (90 degrees) \cr
-#' \code{29} = rotated BB7 copula (90 degrees) \cr \code{30} = rotated BB8
-#' copula (90 degrees) \cr \code{33} = rotated Clayton copula (270 degrees) \cr
-#' \code{34} = rotated Gumbel copula (270 degrees) \cr \code{36} = rotated Joe
-#' copula (270 degrees) \cr \code{37} = rotated BB1 copula (270 degrees) \cr
-#' \code{38} = rotated BB6 copula (270 degrees) \cr \code{39} = rotated BB7
-#' copula (270 degrees) \cr \code{40} = rotated BB8 copula (270 degrees) \cr
-#' \code{104} = Tawn type 1 copula \cr \code{114} = rotated Tawn type 1 copula
-#' (180 degrees) \cr \code{124} = rotated Tawn type 1 copula (90 degrees) \cr
-#' \code{134} = rotated Tawn type 1 copula (270 degrees) \cr \code{204} = Tawn
-#' type 2 copula \cr \code{214} = rotated Tawn type 2 copula (180 degrees) \cr
-#' \code{224} = rotated Tawn type 2 copula (90 degrees) \cr \code{234} =
-#' rotated Tawn type 2 copula (270 degrees) \cr Note that the Student's
-#' t-copula is not allowed since the CDF of the t-copula is not implemented
-#' (see \code{\link{BiCopCDF}}).
+#' bivariate copula family: \cr
+#' \code{0} = independence copula \cr
+#' \code{1} = Gaussian copula \cr
+#' \code{3} = Clayton copula \cr
+#' \code{4} = Gumbel copula \cr
+#' \code{5} = Frank copula \cr
+#' \code{6} = Joe copula \cr
+#' \code{7} = BB1 copula \cr
+#' \code{8} = BB6 copula \cr
+#' \code{9} = BB7 copula \cr
+#' \code{10} = BB8 copula \cr
+#' \code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
+#' \code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+#' \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
+#' \code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
+#' \code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
+#' \code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
+#' \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
+#' \code{23} = rotated Clayton copula (90 degrees) \cr
+#' \code{24} = rotated Gumbel copula (90 degrees) \cr
+#' \code{26} = rotated Joe copula (90 degrees) \cr
+#' \code{27} = rotated BB1 copula (90 degrees) \cr
+#' \code{28} = rotated BB6 copula (90 degrees) \cr
+#' \code{29} = rotated BB7 copula (90 degrees) \cr
+#' \code{30} = rotated BB8 copula (90 degrees) \cr
+#' \code{33} = rotated Clayton copula (270 degrees) \cr
+#' \code{34} = rotated Gumbel copula (270 degrees) \cr
+#' \code{36} = rotated Joe copula (270 degrees) \cr
+#' \code{37} = rotated BB1 copula (270 degrees) \cr
+#' \code{38} = rotated BB6 copula (270 degrees) \cr
+#' \code{39} = rotated BB7 copula (270 degrees) \cr
+#' \code{40} = rotated BB8 copula (270 degrees) \cr
+#' \code{104} = Tawn type 1 copula \cr
+#' \code{114} = rotated Tawn type 1 copula (180 degrees) \cr
+#' \code{124} = rotated Tawn type 1 copula (90 degrees) \cr
+#' \code{134} = rotated Tawn type 1 copula (270 degrees) \cr
+#' \code{204} = Tawn type 2 copula \cr
+#' \code{214} = rotated Tawn type 2 copula (180 degrees) \cr
+#' \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
+#' \code{234} =  rotated Tawn type 2 copula (270 degrees) \cr
+#' Note that the Student's t-copula is not allowed since the CDF of the t-copula
+#' is not implemented (see \code{\link{BiCopCDF}}).
 #' @param par numeric; single number or vector of size \code{m}; copula
 #' parameter.
 #' @param par2 numeric; single number or vector of size \code{m}; second
@@ -52,13 +66,19 @@
 #' @author Ulf Schepsmeier
 #' @references Blomqvist, N. (1950).  On a measure of dependence between two
 #' random variables. The Annals of Mathematical Statistics, 21(4), 593-600.
-#' 
+#'
 #' Nelsen, R. (2006). An introduction to copulas.  Springer
 #' @examples
-#' 
-#' #Blomqvist's beta for the Clayton copula
+#'
+#' ## Example 1: Gaussian copula
+#' BiCopPar2Beta(family = 1, par = 0.7)
+#'
+#' ## Example 2: Clayton copula
 #' BiCopPar2Beta(family = 3, par = 2)
-#' 
+#'
+#' ## Example 3: different copula families
+#' BiCopPar2Beta(family = c(3,4,6), par = 2:4)
+#'
 #' @export BiCopPar2Beta
 BiCopPar2Beta <- function(family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
     ## extract family and parameters if BiCop object is provided
@@ -81,7 +101,7 @@ BiCopPar2Beta <- function(family, par, par2 = 0, obj = NULL, check.pars = TRUE) 
     n <- max(length(family), length(par), length(par2))
     if (!all(c(length(family), length(par), length(par2)) %in% c(1, n)))
         stop("Input lengths don't match")
-    
+
     ## calculate beta
     Cuv <- BiCopCDF(rep(0.5, n),
                     rep(0.5, n),
