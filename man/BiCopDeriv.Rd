@@ -11,17 +11,23 @@ BiCopDeriv(u1, u2, family, par, par2 = 0, deriv = "par", log = FALSE,
 \item{u1,u2}{numeric vectors of equal length with values in [0,1].}
 
 \item{family}{integer; single number or vector of size \code{length(u1)};
-defines the bivariate copula family: \cr \code{0} = independence copula \cr
-\code{1} = Gaussian copula \cr \code{2} = Student t copula (t-copula) \cr
-\code{3} = Clayton copula \cr \code{4} = Gumbel copula \cr \code{5} = Frank
-copula \cr \code{6} = Joe copula \cr \code{13} = rotated Clayton copula (180
-degrees; ``survival Clayton'') \cr \code{14} = rotated Gumbel copula (180
-degrees; ``survival Gumbel'') \cr \code{16} = rotated Joe copula (180
-degrees; ``survival Joe'') \cr \code{23} = rotated Clayton copula (90
-degrees) \cr \code{24} = rotated Gumbel copula (90 degrees) \cr \code{26} =
-rotated Joe copula (90 degrees) \cr \code{33} = rotated Clayton copula (270
-degrees) \cr \code{34} = rotated Gumbel copula (270 degrees) \cr \code{36} =
-rotated Joe copula (270 degrees) \cr}
+defines the bivariate copula family: \cr
+\code{0} = independence copula \cr
+\code{1} = Gaussian copula \cr
+\code{2} = Student t copula (t-copula) \cr
+\code{3} = Clayton copula \cr
+\code{4} = Gumbel copula \cr
+\code{5} = Frank copula \cr
+\code{6} = Joe copula \cr
+\code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
+\code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+\code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
+\code{23} = rotated Clayton copula (90 degrees) \cr
+\code{24} = rotated Gumbel copula (90 degrees) \cr
+\code{26} = rotated Joe copula (90 degrees) \cr
+\code{33} = rotated Clayton copula (270 degrees) \cr
+\code{34} = rotated Gumbel copula (270 degrees) \cr
+\code{36} = rotated Joe copula (270 degrees) \cr}
 
 \item{par}{numeric; single number or vector of size \code{length(u1)};
 copula parameter.}
@@ -30,11 +36,12 @@ copula parameter.}
 second parameter for the t-Copula; default is \code{par2 = 0}, should be an
 positive integer for the Students's t copula \code{family = 2}.}
 
-\item{deriv}{Derivative argument \cr \code{"par"} = derivative with respect
-to the first parameter (default)\cr \code{"par2"} = derivative with respect
-to the second parameter (only available for the t-copula) \cr \code{"u1"} =
-derivative with respect to the first argument \code{u1} \cr \code{"u2"} =
-derivative with respect to the second argument \code{u2} \cr}
+\item{deriv}{Derivative argument \cr
+\code{"par"} = derivative with respect to the first parameter (default)\cr
+\code{"par2"} = derivative with respect to the second parameter
+(only available for the t-copula) \cr
+\code{"u1"} = derivative with respect to the first argument \code{u1} \cr
+\code{"u2"} = derivative with respect to the second argument \code{u2} \cr}
 
 \item{log}{Logical; if \code{TRUE} than the derivative of the log-likelihood
 is returned (default: \code{log = FALSE}; only available for the derivatives
@@ -63,29 +70,32 @@ copula density with respect to its parameter(s) or one of its arguments.
 }
 \details{
 If the family and parameter specification is stored in a \code{\link{BiCop}}
-object \code{obj}, the alternative version \cr \preformatted{BiCopDeriv(u1,
-u2, obj, deriv = "par", log = FALSE)} can be used.
+object \code{obj}, the alternative version \cr
+\preformatted{BiCopDeriv(u1, u2, obj, deriv = "par", log = FALSE)}
+can be used.
 }
 \examples{
-## simulate from a bivariate t-copula
-simdata <- BiCopSim(300, 2, -0.7, par2 = 4)
+## simulate from a bivariate Student-t copula
+set.seed(123)
+cop <- BiCop(family = 2, par = -0.7, par2 = 4)
+simdata <- BiCopSim(100, cop)
 
 ## derivative of the bivariate t-copula with respect to the first parameter
 u1 <- simdata[,1]
 u2 <- simdata[,2]
-BiCopDeriv(u1, u2, 2, -0.7, par2 = 4, deriv = "par")
-
-## estimate a bivariate copula from the data
-## and evaluate its derivative w.r.t. the parameter
-cop <- BiCopEst(u1, u2, family = 2)
 BiCopDeriv(u1, u2, cop, deriv = "par")
+
+## estimate a Student-t copula for the simulated data
+cop <- BiCopEst(u1, u2, family = 2)
+## and evaluate its derivative w.r.t. the second argument u2
+BiCopDeriv(u1, u2, cop, deriv = "u2")
 }
 \author{
 Ulf Schepsmeier
 }
 \references{
-Schepsmeier, U. and J. Stoeber (2012). Derivatives and Fisher
-information of bivariate copulas. Statistical Papers.
+Schepsmeier, U. and J. Stoeber (2014). Derivatives and Fisher
+information of bivariate copulas. Statistical Papers, 55 (2), 525-542. \cr
 \url{http://link.springer.com/article/10.1007/s00362-013-0498-x}.
 }
 \seealso{

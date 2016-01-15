@@ -86,7 +86,7 @@ Handbook. Singapore: World Scientific Publishing Co.
 
 Nelsen, R. (2006).  An introduction to copulas.  Springer
 
-Schepsmeier, U. and J. Stoeber (2012). Derivatives and Fisher information of
+Schepsmeier, U. and J. Stoeber (2014). Derivatives and Fisher information of
 bivariate copulas. Statistical Papers, 55 (2), 525-542. \cr
 \url{http://link.springer.com/article/10.1007/s00362-013-0498-x}.
 

@@ -81,20 +81,25 @@ parametric bivariate copula.
 }
 \details{
 If the family and parameter specification is stored in a \code{\link{BiCop}}
-object \code{obj}, the alternative version \cr \preformatted{BiCopPDF(u1,
-u2, obj)} can be used.
+object \code{obj}, the alternative version \cr
+\preformatted{BiCopPDF(u1, u2, obj)}
+can be used.
 }
 \examples{
-## simulate from a bivariate t-copula
-simdata <- BiCopSim(300, 2, -0.7, par2 = 4)
+## simulate from a bivariate Student-t copula
+set.seed(123)
+cop <- BiCop(family = 2, par = -0.7, par2 = 4)
+simdata <- BiCopSim(100, cop)
 
 ## evaluate the density of the bivariate t-copula
 u1 <- simdata[,1]
 u2 <- simdata[,2]
-BiCopPDF(u1, u2, 2, -0.7, par2 = 4)
+BiCopPDF(u1, u2, cop)
 
-## estimate a bivariate copula from the data and evaluate its PDF
+## select a bivariate copula for the simulated data
 cop <- BiCopSelect(u1, u2)
+summary(cop)
+## and evaluate its PDF
 round(BiCopPDF(u1, u2, cop), 8)
 }
 \author{
