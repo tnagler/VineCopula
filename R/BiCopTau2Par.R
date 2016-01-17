@@ -109,7 +109,7 @@ BiCopTau2Par <- function(family, tau, check.taus = TRUE) {
         stop("For two parameter copulas (except t) Kendall's tau cannot be inverted.")
 
     if (any(abs(tau) > 0.99999))
-        stop("some tau is too close to -1 or 1")
+        warning("some tau is too close to -1 or 1")
 
     ## adjust length for input vectors; stop if not matching
     n <- max(length(family), length(tau))
@@ -171,6 +171,9 @@ calcPar <- function(family, tau) {
 }
 
 Frank.itau.JJ <- function(tau) {
+    if(abs(tau) > .99999) {
+        return(sign(tau) * 5e5)
+    }
     a <- 1
     if (tau < 0) {
         a <- -1
@@ -184,23 +187,25 @@ Frank.itau.JJ <- function(tau) {
 
 
 Joe.itau.JJ <- function(tau) {
+    if(tau > 0.99999) {
+        return(5e5)
+    }
     if (tau < 0) {
         return(1.000001)
-    } else {
-        tauF <- function(par) {
-            param1 <- 2/par + 1
-            tem <- digamma(2) - digamma(param1)
-            tau <- 1 + tem * 2/(2 - par)
-            tau[par == 2] <- 1 - trigamma(2)
-            tau
-        }
-
-        v <- uniroot(function(x) tau - tauF(x),
-                     lower = 1,
-                     upper = 5e5,
-                     tol = .Machine$double.eps^0.5)$root
-        return(v)
     }
+	tauF <- function(par) {
+		param1 <- 2/par + 1
+		tem <- digamma(2) - digamma(param1)
+		tau <- 1 + tem * 2/(2 - par)
+		tau[par == 2] <- 1 - trigamma(2)
+		tau
+	}
+
+	v <- uniroot(function(x) tau - tauF(x),
+				 lower = 1,
+				 upper = 5e5,
+				 tol = .Machine$double.eps^0.5)$root
+	return(v)
 }
 
 ipsA.tau2cpar <- function(tau, mxiter = 20, eps = 1e-06, dstart = 0, iprint = FALSE) {
