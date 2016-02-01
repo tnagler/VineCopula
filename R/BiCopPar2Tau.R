@@ -336,7 +336,7 @@ calcTau <- function(family, par, par2) {
             integrate(function(t) {
                 kt(t, th = theta, de = delta)
             }, 0, 1)$value
-        }, theta, delta))
+        }, theta, delta), silent = TRUE)
         if (inherits(tau, "try-error"))
             tau <- NA
     } else if (family == 9 || family == 19) {
@@ -348,7 +348,7 @@ calcTau <- function(family, par, par2) {
         }
         tau <- try(1 + 4 * mapply(function(theta, delta) {
             integrate(function(t)  kt(t, th = theta, de = delta), 0, 1)$value
-        }, theta, delta))
+        }, theta, delta), silent = TRUE)
         if (inherits(tau, "try-error"))
             tau <- NA
     } else if (family == 10 || family == 20) {
@@ -361,7 +361,7 @@ calcTau <- function(family, par, par2) {
             integrate(function(t) {
                 kt(t, th = theta, de = delta)
             }, 0, 1)$value
-        }, theta, delta))
+        }, theta, delta), silent = TRUE)
         if (inherits(tau, "try-error"))
             tau <- NA
     } else if (family == 23 || family == 33) {
@@ -390,7 +390,7 @@ calcTau <- function(family, par, par2) {
             integrate(function(t) {
                 kt(t, th = theta, de = delta)
             }, 0, 1)$value
-        }, theta, delta))
+        }, theta, delta), silent = TRUE)
         if (inherits(tau, "try-error"))
             tau <- NA
         tau <- -tau
@@ -405,7 +405,7 @@ calcTau <- function(family, par, par2) {
             integrate(function(t) {
                 kt(t, th = theta, de = delta)
             }, 0, 1)$value
-        }, theta, delta))
+        }, theta, delta), silent = TRUE)
         if (inherits(tau, "try-error"))
             tau <- NA
         tau <- -tau
@@ -419,7 +419,7 @@ calcTau <- function(family, par, par2) {
             integrate(function(t) {
                 kt(t, th = theta, de = delta)
             }, 0, 1)$value
-        }, theta, delta))
+        }, theta, delta), silent = TRUE)
         if (inherits(tau, "try-error"))
             tau <- NA
         tau <- -tau
@@ -461,7 +461,7 @@ calcTau <- function(family, par, par2) {
             integrate(function(t) {
                 tau_int(t, th = par, de = par2)
             }, 0, 1)$value
-        }, par, par2))
+        }, par, par2), silent = TRUE)
         if (inherits(tau, "try-error"))
             tau <- NA
     } else if (family == 124 || family == 134 || family == 224 || family == 234) {
@@ -489,7 +489,7 @@ calcTau <- function(family, par, par2) {
             integrate(function(t) {
                 tau_int(t, th = par, de = par2)
             }, 0, 1)$value
-        }, par, par2))
+        }, par, par2), silent = TRUE)
         if (inherits(tau, "try-error"))
             tau <- NA
         tau <- -tau
