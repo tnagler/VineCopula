@@ -224,6 +224,10 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
 
     ## estimation in higher trees --------------------------
     for (tree in 2:(d - 1)) {
+        ## old pseudo-observations are uneccessary in RVine object
+        RVine$Tree[[tree - 1]]$E$Copula.CondData.1 <- NULL
+        RVine$Tree[[tree - 1]]$E$Copula.CondData.2 <- NULL
+
         # only estimate pair-copulas if not truncated
         if (trunclevel == tree - 1)
             familyset <- 0
@@ -370,8 +374,8 @@ fit.FirstTreeCopulas2 <- function(MST, data.univ, type, copulaSelectionBy, testF
         a <- MST$E$nums[i, ]
         pc.data[[i]]$zr1 <- data.univ[, a[1]]
         pc.data[[i]]$zr2 <- data.univ[, a[2]]
-        MST$E$Copula.Data.1[i] <- list(data.univ[, a[1]])
-        MST$E$Copula.Data.2[i] <- list(data.univ[, a[2]])
+#         MST$E$Copula.Data.1[i] <- list(data.univ[, a[1]])
+#         MST$E$Copula.Data.2[i] <- list(data.univ[, a[2]])
 
         ## set names for this edge
         if (is.null(MST$V$names[a[1]])) {
@@ -488,8 +492,8 @@ fit.TreeCopulas2 <- function(MST, oldVineGraph, type, copulaSelectionBy,
         pc.data[[i]]$zr1 <- zr1a
         pc.data[[i]]$zr2 <- zr2a
 
-        MST$E$Copula.Data.1[i] <- list(zr1a)
-        MST$E$Copula.Data.2[i] <- list(zr2a)
+#         MST$E$Copula.Data.1[i] <- list(zr1a)
+#         MST$E$Copula.Data.2[i] <- list(zr2a)
 
         MST$E$Copula.CondName.1[i] <- n1a
         MST$E$Copula.CondName.2[i] <- n2a

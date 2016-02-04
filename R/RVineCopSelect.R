@@ -146,13 +146,13 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
     N <- nrow(data)
 
     ## sanity checks
-    if (dim(Matrix)[1] != dim(Matrix)[2])
+    if (nrow(Matrix) != ncol(Matrix))
         stop("Structure matrix has to be quadratic.")
-    if (max(Matrix) > dim(Matrix)[1])
+    if (max(Matrix) > nrow(Matrix))
         stop("Error in the structure matrix.")
     if (N < 2)
         stop("Number of observations has to be at least 2.")
-    if (n < 2)
+    if (d < 2)
         stop("Dimension has to be at least 2.")
     if (any(data > 1) || any(data < 0))
         stop("Data has be in the interval [0,1].")
@@ -168,10 +168,10 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
 
     ## set variable names and trunclevel if not provided
     if (is.null(colnames(data)))
-        colnames(data) <- paste("V", 1:n, sep = "")
+        colnames(data) <- paste("V", 1:d, sep = "")
     varnames <- colnames(data)
     if (is.na(trunclevel))
-        trunclevel <- n
+        trunclevel <- d
 
     ## adjust familyset
     types <- familyset
@@ -191,13 +191,13 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
     CondDistr <- neededCondDistr(M)
 
     ## create objects for results
-    Types <- matrix(0, n, n)
-    Params <- matrix(0, n, n)
-    Params2 <- matrix(0, n, n)
+    Types   <- matrix(0, d, d)
+    Params  <- matrix(0, d, d)
+    Params2 <- matrix(0, d, d)
     V <- list()
-    V$direct <- array(NA, dim = c(n, n, N))
-    V$indirect <- array(NA, dim = c(n, n, N))
-    V$direct[n, , ] <- t(data[, n:1])
+    V$direct <- array(NA, dim = c(d, N))
+    V$indirect <- array(NA, dim = c(d, N))
+    V$direct <- t(data[, d:1])
 
     ## register parallel backend
     if (cores != 1 | is.na(cores)) {
@@ -217,18 +217,17 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
             if (k > i) {
                 ## get pseudo-observaions
                 m <- MaxMat[k, i]
-                zr1 <- V$direct[k, i, ]
+                zr1 <- V$direct[i, ]
 
                 zr2 <- if (m == M[k, i]) {
-                    V$direct[k, (d - m + 1), ]
+                    V$direct[(d - m + 1), ]
                 } else {
-                    V$indirect[k, (d - m + 1), ]
+                    V$indirect[(d - m + 1), ]
                 }
 
                 ## select pair-copula
                 if (trunclevel <= (d-k)) {
                     cfit <- BiCop(0, 0, check.pars = FALSE)
-                    class(cfit) <- c("kdecopula", "indep.copula")
                 } else {
                     cfit <- BiCopSelect(zr2,
                                         zr1,
@@ -275,9 +274,9 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
             Params[k, i] <- res.k[[i]]$cfit$par
             Params2[k, i] <- res.k[[i]]$cfit$par2
             if (!is.null(res.k[[i]]$direct))
-                V$direct[k - 1, i, ] <- res.k[[i]]$direct
+                V$direct[i, ] <- res.k[[i]]$direct
             if (!is.null(res.k[[i]]$indirect))
-                V$indirect[k - 1, i, ] <- res.k[[i]]$indirect
+                V$indirect[i, ] <- res.k[[i]]$indirect
         } # end i = 1:(d-1)
     } # end k = d:2
 
