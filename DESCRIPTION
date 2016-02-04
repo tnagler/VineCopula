@@ -46,4 +46,4 @@ License: GPL (>= 2)
 LazyLoad: yes
 BugReports: https://github.com/tnagler/VineCopula/issues
 URL: https://github.com/tnagler/VineCopula
-
+RoxygenNote: 5.0.1
