@@ -82,7 +82,7 @@
 #' the function allows upper triangular matrices as its input, it will always
 #' store them as lower triangular matrices.
 #'
-#' @author Jeffrey Dissmann
+#' @author Jeffrey Dissmann, Thomas Nagler
 #'
 #' @seealso
 #' \code{\link{RVineMatrixCheck}},
@@ -287,108 +287,104 @@ dim.RVineMatrix <- function(x) {
     NextMethod("dim")
 }
 
-print.RVineMatrix <- function(x, detail = FALSE, ...) {
+print.RVineMatrix <- function(x, ...) {
     RVine <- x
-    message("R-vine matrix:")
-    print(RVine$Matrix, ...)
-
-    # Falls namen diese auch ausgeben
-    if (!is.null(RVine$names)) {
-        message("")
-        message("Where")
-        for (i in 1:length(RVine$names)) {
-            message(i, " <-> ", RVine$names[[i]])
-        }
-    }
-    # NextMethod('print')
+    cat("R-vine copula with the following pair-copulas:\n\n")
+    #     print(RVine$Matrix, ...)
+    #
+    #     # show names if provided
+    #     if (!is.null(RVine$names)) {
+    #         cat("")
+    #         cat("Where")
+    #         for (i in 1:length(RVine$names)) {
+    #             cat(i, " <-> ", RVine$names[[i]])
+    #         }
+    #     }
 
     d <- dim(RVine)
-    if (detail == TRUE || detail == T) {
-        message("")
-        message("Tree 1:")
-        for (i in 1:(d - 1)) {
-            a <- paste(RVine$names[[RVine$Matrix[i, i]]],
-                       ",",
-                       RVine$names[[RVine$Matrix[d, i]]],
-                       sep = "")
+    cat("")
+    cat("Tree 1:\n")
+    for (i in 1:(d - 1)) {
+        a <- paste(RVine$Matrix[i, i],
+                   ",",
+                   RVine$Matrix[d, i],
+                   sep = "")
+        a <- paste(a,
+                   "   ",
+                   BiCopName(RVine$family[d, i], short = FALSE),
+                   sep = "")
+        if (RVine$family[d, i] != 0) {
+            a <- paste(a, " (par = ", round(RVine$par[d, i], 2), sep = "")
+            if (RVine$family[d, i] %in% c(2, 7, 8, 9, 10,
+                                          17, 18, 19, 20,
+                                          27, 28, 29, 30,
+                                          37, 38, 39, 40,
+                                          104, 114, 124, 134,
+                                          204, 214, 224, 234)) {
+                a <- paste(a, ", par2 = ", round(RVine$par2[d, i], 2), sep = "")
+            }
             a <- paste(a,
-                       ": ",
-                       BiCopName(RVine$family[d, i], short = FALSE),
+                       ", tau = ",
+                       round(BiCopPar2Tau(RVine$family[d, i],
+                                          RVine$par[d, i],
+                                          RVine$par2[d, i]), 2),
+                       ")\n",
                        sep = "")
-            if (RVine$family[d, i] != 0) {
-                a <- paste(a, " with par=", round(RVine$par[d, i], 2), sep = "")
-                if (RVine$family[d, i] %in% c(2, 7, 8, 9, 10,
-                                              17, 18, 19, 20,
-                                              27, 28, 29, 30,
-                                              37, 38, 39, 40,
-                                              104, 114, 124, 134,
-                                              204, 214, 224, 234)) {
-                    a <- paste(a, " and par2=", round(RVine$par2[d, i], 2), sep = "")
-                }
-                a <- paste(a,
-                           " (tau=",
-                           round(BiCopPar2Tau(RVine$family[d, i],
-                                              RVine$par[d, i],
-                                              RVine$par2[d, i]), 2),
-                           ")",
-                           sep = "")
-            }
-            message(a)
         }
-        for (j in 2:(d - 1)) {
-            message("")
-            a <- paste("Tree ", j, ":", sep = "")
-            message(a)
-            for (i in 1:(d - j)) {
-                a <- paste(RVine$names[[RVine$Matrix[i, i]]],
-                           ",",
-                           RVine$names[[RVine$Matrix[d - j + 1, i]]],
-                           sep = "")
-                a <- paste(a, "|", sep = "")
-                conditioningSet <- (d - j + 2):d
-                for (k in 1:length(conditioningSet)) {
-                    if (k > 1) {
-                        a <- paste(a, ",", sep = "")
-                    }
-                    a <- paste(a,
-                               RVine$names[[RVine$Matrix[conditioningSet[k], i]]],
-                               sep = "")
-                }
-                a <- paste(a,
-                           ": ",
-                           BiCopName(RVine$family[d - j + 1, i], short = FALSE),
-                           sep = "")
-                if (RVine$family[d - j + 1, i] != 0) {
-                    a <- paste(a,
-                               " with par=",
-                               round(RVine$par[d - j + 1, i], 2),
-                               sep = "")
-                    if (RVine$family[d - j + 1, i] %in% c(2, 7, 8, 9, 10,
-                                                          17, 18, 19, 20,
-                                                          27, 28, 29, 30,
-                                                          37, 38, 39, 40,
-                                                          104, 114, 124, 134,
-                                                          204, 214, 224, 234)) {
-                        a <- paste(a,
-                                   " and par2=",
-                                   round(RVine$par2[d - j + 1, i], 2),
-                                   sep = "")
-                    }
-                    a <- paste(a,
-                               " (tau=",
-                               round(BiCopPar2Tau(RVine$family[d - j + 1, i],
-                                                  RVine$par[d - j + 1, i],
-                                                  RVine$par2[d - j + 1, i]), 2),
-                               ")",
-                               sep = "")
-                }
-                message(a)
-            }
-        }
-
+        cat(a)
     }
-}
+    cat("\n")
+    for (j in 2:(d - 1)) {
+        cat("")
+        a <- paste("Tree ", j, ":\n", sep = "")
+        cat(a)
+        for (i in 1:(d - j)) {
+            a <- paste(RVine$Matrix[i, i],
+                       ",",
+                       RVine$Matrix[d - j + 1, i],
+                       sep = "")
+            a <- paste(a, ";", sep = "")
+            conditioningSet <- (d - j + 2):d
+            for (k in 1:length(conditioningSet)) {
+                if (k > 1) {
+                    a <- paste(a, ",", sep = "")
+                }
+                a <- paste(a,
+                           RVine$Matrix[conditioningSet[k], i],
+                           sep = "")
+            }
+            a <- paste(a,
+                       "   ",
+                       BiCopName(RVine$family[d - j + 1, i], short = FALSE),
+                       sep = "")
+            if (RVine$family[d - j + 1, i] != 0) {
+                a <- paste(a,
+                           " (par = ",
+                           round(RVine$par[d - j + 1, i], 2),
+                           sep = "")
+                if (RVine$family[d - j + 1, i] %in% c(2, 7, 8, 9, 10,
+                                                      17, 18, 19, 20,
+                                                      27, 28, 29, 30,
+                                                      37, 38, 39, 40,
+                                                      104, 114, 124, 134,
+                                                      204, 214, 224, 234)) {
+                    a <- paste(a,
+                               ", par2 = ",
+                               round(RVine$par2[d - j + 1, i], 2),
+                               sep = "")
+                }
+                a <- paste(a,
+                           ", tau = ",
+                           round(RVine$tau[d - j + 1, i], 2),
+                           ")\n",
+                           sep = "")
+            }
+            cat(a)
+        }
+        if (j < d - 1) cat("\n")
+    }
 
+}
 
 
 createMaxMat <- function(Matrix) {
