@@ -819,10 +819,10 @@ as.RVM2 <- function(RVine, data, callexp) {
     like <- RVineLogLik(data, RVM)
     RVM$logLik <- like$loglik
     RVM$pair.logLik <- like$V$value
-    npar <- sum(.RVM$family %in% allfams[onepar], na.rm = TRUE) +
-        2 * sum(.RVM$family %in% allfams[twopar], na.rm = TRUE)
-    npar_pair <- (.RVM$family %in% allfams[onepar]) +
-        2 * (.RVM$family %in% allfams[twopar])
+    npar <- sum(RVM$family %in% allfams[onepar], na.rm = TRUE) +
+        2 * sum(RVM$family %in% allfams[twopar], na.rm = TRUE)
+    npar_pair <- (RVM$family %in% allfams[onepar]) +
+        2 * (RVM$family %in% allfams[twopar])
     RVM$AIC <- -2 * like$loglik + 2 * npar
     RVM$pair.AIC <- -2 * like$V$value + 2 * npar_pair
     RVM$BIC <- -2 * like$loglik + log(T) * npar
