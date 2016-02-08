@@ -175,9 +175,10 @@ RVineAIC <- function(data, RVM, par = RVM$par, par2 = RVM$par2) {
         }
     }
 
-    npar <- sum(RVM$family >= 1, na.rm = TRUE) + sum(RVM$family %in% c(2,  7:10, 17:20, 27:30, 37:40, 104, 114, 124, 134, 204, 214, 224, 234),
-                                                     na.rm = TRUE)
-    npar_pair <- (RVM$family >= 1) + (RVM$family %in% c(2, 7:10, 17:20, 27:30, 37:40, 104, 114, 124, 134, 204, 214, 224, 234))
+    npar <- sum(RVM$family %in% allfams[onepar], na.rm = TRUE) +
+        2 * sum(RVM$family %in% allfams[twopar], na.rm = TRUE)
+    npar_pair <- RVM$family %in% allfams[onepar] +
+        2 * (RVM$family %in% allfams[twopar])
 
     RVM2 <- RVM
     RVM2$par <- par
@@ -286,9 +287,10 @@ RVineBIC <- function(data, RVM, par = RVM$par, par2 = RVM$par2) {
         }
     }
 
-    npar <- sum(RVM$family >= 1, na.rm = TRUE) + sum(RVM$family %in% c(2, 7:10, 17:20, 27:30, 37:40, 104, 114, 124, 134, 204, 214, 224, 234),
-                                                     na.rm = TRUE)
-    npar_pair <- (RVM$family >= 1) + (RVM$family %in% c(2, 7:10, 17:20, 27:30, 37:40, 104, 114, 124, 134, 204, 214, 224, 234))
+    npar <- sum(RVM$family %in% allfams[onepar], na.rm = TRUE) +
+        2 * sum(RVM$family %in% allfams[twopar], na.rm = TRUE)
+    npar_pair <- RVM$family %in% allfams[onepar] +
+        2 * (RVM$family %in% allfams[twopar])
 
     RVM2 <- RVM
     RVM2$par <- par
