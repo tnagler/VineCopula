@@ -158,6 +158,7 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
     Types   <- matrix(0, d, d)
     Params  <- matrix(0, d, d)
     Params2 <- matrix(0, d, d)
+    emptaus <- matrix(0, d, d)
     if (se)
         Se <- Se2 <- matrix(0, d, d)
     V <- list()
@@ -247,9 +248,10 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
 
         for (i in 1:(k-1)) {
             ## store results in matrices
-            Types[k, i] <- res.k[[i]]$cfit$family
-            Params[k, i] <- res.k[[i]]$cfit$par
+            Types[k, i]   <- res.k[[i]]$cfit$family
+            Params[k, i]  <- res.k[[i]]$cfit$par
             Params2[k, i] <- res.k[[i]]$cfit$par2
+            emptaus[k, i] <- res.k[[i]]$cfit$emptau
             if (se == TRUE) {
                 # se1 <- par.out$se
                 Se[k, i] <- res.k[[i]]$cfit$se
@@ -262,7 +264,7 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
         } # end i = 1:(d-1)
     } # end k = d:2
 
-    ## free memory and return results
+    ## store results in RVineMatrix object
     .RVM <- RVineMatrix(Mold,
                         family = Types,
                         par = Params,
@@ -272,6 +274,22 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
         .RVM$se <- Se
         .RVM$se2 <- Se2
     }
+    .RVM$nobs <- N
+    revo <- sapply(1:d, function(i) which(o[length(o):1] == i))
+    like <- RVineLogLik(data[, revo], .RVM)
+    .RVM$logLik <- like$loglik
+    .RVM$pair.logLik <- like$V$value
+    npar <- sum(.RVM$family %in% allfams[onepar], na.rm = TRUE) +
+        2 * sum(.RVM$family %in% allfams[twopar], na.rm = TRUE)
+    npar_pair <- (.RVM$family %in% allfams[onepar]) +
+        2 * (.RVM$family %in% allfams[twopar])
+    .RVM$AIC <- -2 * like$loglik + 2 * npar
+    .RVM$pair.AIC <- -2 * like$V$value + 2 * npar_pair
+    .RVM$BIC <- -2 * like$loglik + log(T) * npar
+    .RVM$pair.BIC <- -2 * like$V$value + log(T) * npar_pair
+    .RVM$emptau <- emptaus
+
+    ## free memory and return results
     rm(list = ls())
     .RVM
 }

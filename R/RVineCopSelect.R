@@ -194,6 +194,9 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
     Types   <- matrix(0, d, d)
     Params  <- matrix(0, d, d)
     Params2 <- matrix(0, d, d)
+    Ses     <- matrix(0, d, d)
+    Se2s    <- matrix(0, d, d)
+    emptaus <- matrix(0, d, d)
     V <- list()
     V$direct <- array(NA, dim = c(d, N))
     V$indirect <- array(NA, dim = c(d, N))
@@ -269,10 +272,16 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
         }
 
         for (i in 1:(k-1)) {
-            ## store results in matrices
-            Types[k, i] <- res.k[[i]]$cfit$family
-            Params[k, i] <- res.k[[i]]$cfit$par
+            ## store info about selected pair-copula in matrices
+            Types[k, i]   <- res.k[[i]]$cfit$family
+            Params[k, i]  <- res.k[[i]]$cfit$par
             Params2[k, i] <- res.k[[i]]$cfit$par2
+            Ses[k, i]     <- res.k[[i]]$cfit$se
+            tmpse2        <- res.k[[i]]$cfit$se2
+            Se2s[k, i]    <- ifelse(is.null(tmpse2), NA, tmpse2)
+            emptaus[k, i] <- res.k[[i]]$cfit$emptau
+
+            ## replace pseudo observations for estimation of next tree
             if (!is.null(res.k[[i]]$direct))
                 V$direct[i, ] <- res.k[[i]]$direct
             if (!is.null(res.k[[i]]$indirect))
@@ -280,12 +289,30 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
         } # end i = 1:(d-1)
     } # end k = d:2
 
-    ## free memory and return results
+    ## store results in RVineMatrix object
     .RVM <- RVineMatrix(Mold,
                         family = Types,
                         par = Params,
                         par2 = Params2,
                         names = varnames)
+    .RVM$se <- Ses
+    .RVM$se2 <- Se2s
+    .RVM$nobs <- N
+    revo <- sapply(1:d, function(i) which(o[length(o):1] == i))
+    like <- RVineLogLik(data[, revo], .RVM)
+    .RVM$logLik <- like$loglik
+    .RVM$pair.logLik <- like$V$value
+    npar <- sum(.RVM$family %in% allfams[onepar], na.rm = TRUE) +
+        2 * sum(.RVM$family %in% allfams[twopar], na.rm = TRUE)
+    npar_pair <- (.RVM$family %in% allfams[onepar]) +
+        2 * (.RVM$family %in% allfams[twopar])
+    .RVM$AIC <- -2 * like$loglik + 2 * npar
+    .RVM$pair.AIC <- -2 * like$V$value + 2 * npar_pair
+    .RVM$BIC <- -2 * like$loglik + log(T) * npar
+    .RVM$pair.BIC <- -2 * like$V$value + log(T) * npar_pair
+    .RVM$emptau <- emptaus
+
+    ## free memory and return final object
     rm(list = ls())
     .RVM
 }

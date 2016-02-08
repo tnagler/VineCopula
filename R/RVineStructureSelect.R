@@ -252,9 +252,10 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
 
     ## free memory and return results as 'RVineMatrix' object
     .RVine <- RVine
+    .data <- data
     .callexp <- match.call()
     rm(list = ls())
-    as.RVM2(.RVine, .callexp)
+    as.RVM2(.RVine, .data, .callexp)
 }
 
 initializeFirstGraph2 <- function(data.univ, weights) {
@@ -708,7 +709,7 @@ fit.ACopula <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
 }
 
 ## build R-Vine matrix object based on nested set of trees
-as.RVM2 <- function(RVine, callexp) {
+as.RVM2 <- function(RVine, data, callexp) {
 
     ## initialize objects
     n <- length(RVine$Tree) + 1
@@ -741,15 +742,10 @@ as.RVM2 <- function(RVine, callexp) {
     Params2 <- array(0, dim = c(n, n))
     Type <- array(dim = c(n, n))
     M <- matrix(NA, n, n)
-    AICs    <- array(dim = c(n, n))
-    Ses     <- array(dim = c(n, n))
-    tmps    <- array(dim = c(n, n))
-    Se2s    <- array(dim = c(n, n))
-    logLiks <- array(dim = c(n, n))
-    AICs    <- array(dim = c(n, n))
-    BICs    <- array(dim = c(n, n))
-    emptaus <- array(dim = c(n, n))
-
+    Ses     <- matrix(0, n, n)
+    tmps    <- matrix(0, n, n)
+    Se2s    <- matrix(0, n, n)
+    emptaus <- matrix(0, n, n)
     ## store structure, families and parameters in matrices
     for (k in 1:(n - 1)) {
         w <- nedSets[[n - k]][[1]][1]
@@ -763,9 +759,6 @@ as.RVM2 <- function(RVine, callexp) {
         Ses[(k + 1), k]     <- crspfits[[n - k]][[1]]$se
         tmpse2              <- crspfits[[n - k]][[1]]$se2
         Se2s[(k + 1), k]    <- ifelse(is.null(tmpse2), NA, tmpse2)
-        logLiks[(k + 1), k] <- crspfits[[n - k]][[1]]$logLik
-        AICs[(k + 1), k]    <- crspfits[[n - k]][[1]]$AIC
-        BICs[(k + 1), k]    <- crspfits[[n - k]][[1]]$BIC
         emptaus[(k + 1), k] <- crspfits[[n - k]][[1]]$emptau
 
         if (k == (n - 1)) {
@@ -802,9 +795,6 @@ as.RVM2 <- function(RVine, callexp) {
                 Ses[i, k]     <- crspfits[[n - i + 1]][[j]]$se
                 tmpse2        <- crspfits[[n - i + 1]][[j]]$se2
                 Se2s[i, k]    <- ifelse(is.null(tmpse2), NA, tmpse2)
-                logLiks[i, k] <- crspfits[[n - i + 1]][[j]]$logLik
-                AICs[i, k]    <- crspfits[[n - i + 1]][[j]]$AIC
-                BICs[i, k]    <- crspfits[[n - i + 1]][[j]]$BIC
                 emptaus[i, k] <- crspfits[[n - i + 1]][[j]]$emptau
                 nedSets[[n - i + 1]][[j]]    <- NULL
                 crspParams[[n - i + 1]][[j]] <- NULL
@@ -817,9 +807,6 @@ as.RVM2 <- function(RVine, callexp) {
     ## clean NAs
     M[is.na(M)] <- 0
     Type[is.na(Type)] <- 0
-    logLiks[is.na(logLiks)] <- 0
-    AICs[is.na(AICs)] <- 0
-    BICs[is.na(BICs)] <- 0
 
     ## create RVineMatrix object
     RVM <- RVineMatrix(M, family = Type, par = Param, par2 = Params2, names = nam)
@@ -829,12 +816,17 @@ as.RVM2 <- function(RVine, callexp) {
     RVM$se <- Ses
     RVM$se2 <- Se2s
     RVM$nobs <- crspfits[[1]][[1]]$nobs
-    RVM$logLik <- sum(logLiks)
-    RVM$pair.logLik <- logLiks
-    RVM$AIC <- sum(AICs)
-    RVM$pair.AIC <- AICs
-    RVM$BIC <- sum(BICs)
-    RVM$pair.BIC <- BICs
+    like <- RVineLogLik(data, RVM)
+    RVM$logLik <- like$loglik
+    RVM$pair.logLik <- like$V$value
+    npar <- sum(.RVM$family %in% allfams[onepar], na.rm = TRUE) +
+        2 * sum(.RVM$family %in% allfams[twopar], na.rm = TRUE)
+    npar_pair <- (.RVM$family %in% allfams[onepar]) +
+        2 * (.RVM$family %in% allfams[twopar])
+    RVM$AIC <- -2 * like$loglik + 2 * npar
+    RVM$pair.AIC <- -2 * like$V$value + 2 * npar_pair
+    RVM$BIC <- -2 * like$loglik + log(T) * npar
+    RVM$pair.BIC <- -2 * like$V$value + log(T) * npar_pair
     RVM$emptau <- emptaus
 
     ## return final object
