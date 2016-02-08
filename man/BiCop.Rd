@@ -65,9 +65,11 @@ for family/parameter-consistency are ommited (should only be used with
 care).}
 }
 \value{
-An object of class \code{\link{BiCop}}. Objects of this class are
-also returned by the \code{\link{BiCopEst}} and \code{\link{BiCopSelect}}
-functions.
+An object of class \code{\link{BiCop}}. It is a list containing
+information about the bivariate copula; use \code{str(object)} to see its
+content. Objects of this class are also returned by the
+\code{\link{BiCopEst}} and \code{\link{BiCopSelect}} functions. In this case,
+further information about the fit is added.
 }
 \description{
 This function creates an object of class \code{BiCop} and checks for
@@ -77,6 +79,11 @@ family/parameter consistency.
 
 ## create BiCop object for bivariate t-copula
 obj <- BiCop(family = 2, par = 0.4, par2 = 6)
+obj
+
+## see the objects' content or a summary
+str(obj)
+summary(obj)
 
 ## a selection of functions that can be used with BiCop objects
 simdata <- BiCopSim(300, obj)  # simulate data

@@ -56,9 +56,11 @@
 #' for family/parameter-consistency are ommited (should only be used with
 #' care).
 #'
-#' @return An object of class \code{\link{BiCop}}. Objects of this class are
-#' also returned by the \code{\link{BiCopEst}} and \code{\link{BiCopSelect}}
-#' functions.
+#' @return An object of class \code{\link{BiCop}}. It is a list containing
+#' information about the bivariate copula; use \code{str(object)} to see its
+#' content. Objects of this class are also returned by the
+#' \code{\link{BiCopEst}} and \code{\link{BiCopSelect}} functions. In this case,
+#' further information about the fit is added.
 #'
 #' @author Thomas Nagler
 #'
@@ -74,6 +76,11 @@
 #'
 #' ## create BiCop object for bivariate t-copula
 #' obj <- BiCop(family = 2, par = 0.4, par2 = 6)
+#' obj
+#'
+#' ## see the objects' content or a summary
+#' str(obj)
+#' summary(obj)
 #'
 #' ## a selection of functions that can be used with BiCop objects
 #' simdata <- BiCopSim(300, obj)  # simulate data
@@ -177,7 +184,10 @@ summary.BiCop <- function(object, ...) {
     #     object$rho <- BiCopPar2Rho(object)
     cat("Dependence measures\n")
     cat("-------------------\n")
-    cat("Kendall's tau:   ", as.character(round(object$tau, 2)), "\n")
+    cat("Kendall's tau:   ", as.character(round(object$tau, 2)))
+    if (!is.null(object$emptau))
+        cat(" (empirical = ", as.character(round(object$emptau, 2)), ")", sep = "")
+    cat("\n")
     cat("Upper TD:        ", as.character(round(object$taildep$upper, 2)), "\n")
     cat("Lower TD:        ", as.character(round(object$taildep$lower, 2)), "\n")
     cat("Blomqvist's beta:", as.character(round(object$beta, 2)), "\n")
