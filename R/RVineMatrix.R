@@ -289,18 +289,7 @@ dim.RVineMatrix <- function(x) {
 
 print.RVineMatrix <- function(x, ...) {
     RVine <- x
-    cat("R-vine copula with the following pair-copulas:\n\n")
-    #     print(RVine$Matrix, ...)
-    #
-    #     # show names if provided
-    #     if (!is.null(RVine$names)) {
-    #         cat("")
-    #         cat("Where")
-    #         for (i in 1:length(RVine$names)) {
-    #             cat(i, " <-> ", RVine$names[[i]])
-    #         }
-    #     }
-
+    cat("R-vine copula with the following pair-copulas:\n")
     d <- dim(RVine)
     cat("")
     cat("Tree 1:\n")
@@ -382,6 +371,16 @@ print.RVineMatrix <- function(x, ...) {
             cat(a)
         }
         if (j < d - 1) cat("\n")
+    }
+    # show names if provided
+    if (!is.null(RVine$names)) {
+        cat("\n")
+        cat("Where  ")
+        for (i in 1:length(RVine$names)) {
+            cat(i, "<->", RVine$names[[i]])
+            if (i < length(RVine$names))
+                cat(",   ")
+        }
     }
 
 }
