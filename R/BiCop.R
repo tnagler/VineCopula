@@ -148,6 +148,7 @@ print.BiCop <- function(x, ...) {
     cat(x$familyname, " (par = ", round(x$par, 2), sep = "")
     if (x$family %in% allfams[twopar])
         cat(", par2 = ", round(x$par2, 2), sep = "")
+    cat(", tau = ", round(x$tau, 2), sep = "")
     cat(") \n")
 
     ## return BiCop object invsibly
