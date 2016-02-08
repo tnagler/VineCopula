@@ -147,7 +147,8 @@
 #'
 RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit = "AIC",
                                  indeptest = FALSE, level = 0.05, trunclevel = NA,
-                                 progress = FALSE,  weights = NA, rotations = TRUE, cores = 1) {
+                                 progress = FALSE,  weights = NA, rotations = TRUE,
+                                 cores = 1) {
     d <- ncol(data)
     n <- nrow(data)
 
@@ -251,8 +252,9 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
 
     ## free memory and return results as 'RVineMatrix' object
     .RVine <- RVine
+    .callexp <- match.call()
     rm(list = ls())
-    as.RVM2(.RVine)
+    as.RVM2(.RVine, .callexp)
 }
 
 initializeFirstGraph2 <- function(data.univ, weights) {
@@ -374,8 +376,8 @@ fit.FirstTreeCopulas2 <- function(MST, data.univ, type, copulaSelectionBy, testF
         a <- MST$E$nums[i, ]
         pc.data[[i]]$zr1 <- data.univ[, a[1]]
         pc.data[[i]]$zr2 <- data.univ[, a[2]]
-#         MST$E$Copula.Data.1[i] <- list(data.univ[, a[1]])
-#         MST$E$Copula.Data.2[i] <- list(data.univ[, a[2]])
+        #         MST$E$Copula.Data.1[i] <- list(data.univ[, a[1]])
+        #         MST$E$Copula.Data.2[i] <- list(data.univ[, a[2]])
 
         ## set names for this edge
         if (is.null(MST$V$names[a[1]])) {
@@ -395,6 +397,7 @@ fit.FirstTreeCopulas2 <- function(MST, data.univ, type, copulaSelectionBy, testF
                                           MST$V$names[a[2]],
                                           sep = " , ")
         }
+
     }
 
     ## estimate parameters and select family
@@ -424,7 +427,7 @@ fit.FirstTreeCopulas2 <- function(MST, data.univ, type, copulaSelectionBy, testF
         MST$E$Copula.param[[i]] <- c(pc.fits[[i]]$par,
                                      pc.fits[[i]]$par2)
         MST$E$Copula.type[i] <- pc.fits[[i]]$family
-        MST$E$Copula.out[i] <- list(pc.fits[[i]])
+        MST$E$fits[[i]] <- pc.fits[[i]]
 
         MST$E$Copula.CondData.1[i] <- list(pc.fits[[i]]$CondOn.1)
         MST$E$Copula.CondData.2[i] <- list(pc.fits[[i]]$CondOn.2)
@@ -492,8 +495,8 @@ fit.TreeCopulas2 <- function(MST, oldVineGraph, type, copulaSelectionBy,
         pc.data[[i]]$zr1 <- zr1a
         pc.data[[i]]$zr2 <- zr2a
 
-#         MST$E$Copula.Data.1[i] <- list(zr1a)
-#         MST$E$Copula.Data.2[i] <- list(zr2a)
+        #         MST$E$Copula.Data.1[i] <- list(zr1a)
+        #         MST$E$Copula.Data.2[i] <- list(zr2a)
 
         MST$E$Copula.CondName.1[i] <- n1a
         MST$E$Copula.CondName.2[i] <- n2a
@@ -521,12 +524,12 @@ fit.TreeCopulas2 <- function(MST, oldVineGraph, type, copulaSelectionBy,
     }
 
     ## store estimated model and pseudo-obversations for next tree
+
     for (i in 1:d) {
         MST$E$Copula.param[[i]] <- c(pc.fits[[i]]$par,
                                      pc.fits[[i]]$par2)
         MST$E$Copula.type[i] <- pc.fits[[i]]$family
-        MST$E$Copula.out[i] <- list(pc.fits[[i]])
-
+        MST$E$fits[[i]] <- pc.fits[[i]]
         MST$E$Copula.CondData.1[i] <- list(pc.fits[[i]]$CondOn.1)
         MST$E$Copula.CondData.2[i] <- list(pc.fits[[i]]$CondOn.2)
     }
@@ -705,7 +708,7 @@ fit.ACopula <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
 }
 
 ## build R-Vine matrix object based on nested set of trees
-as.RVM2 <- function(RVine) {
+as.RVM2 <- function(RVine, callexp) {
 
     ## initialize objects
     n <- length(RVine$Tree) + 1
@@ -714,16 +717,20 @@ as.RVM2 <- function(RVine) {
     nedSets <- list()
     crspParams <- list()
     crspTypes <- list()
+    crspfits <- list()
 
     ## get selected pairs, families and estimated parameters
     for (k in 1:(n - 2)) {
         nedSets[[k]]    <- RVine$Tree[[k]]$E$conditionedSet
         crspParams[[k]] <- as.list(RVine$Tree[[k]]$E$Copula.param)
         crspTypes[[k]]  <- as.list(RVine$Tree[[k]]$E$Copula.type)
+        crspfits[[k]]   <- as.list(RVine$Tree[[k]]$E$fits)
+
     }
     crspParams[[n - 1]] <- as.list(RVine$Tree[[n - 1]]$E$Copula.param)
     crspTypes[[n - 1]]  <- as.list(RVine$Tree[[n - 1]]$E$Copula.type)
-    if (is.list(RVine$Tree[[n - 1]]$E$conditionedSet)) {
+    crspfits[[n - 1]]   <- as.list(RVine$Tree[[n - 1]]$E$fits)
+    if (is.list(RVine$Tree[[1]]$E$conditionedSet)) {
         nedSets[[n - 1]] <- list(RVine$Tree[[n - 1]]$E$conditionedSet[[1]])
     } else {
         nedSets[[n - 1]] <- list(RVine$Tree[[n - 1]]$E$conditionedSet)
@@ -734,6 +741,14 @@ as.RVM2 <- function(RVine) {
     Params2 <- array(0, dim = c(n, n))
     Type <- array(dim = c(n, n))
     M <- matrix(NA, n, n)
+    AICs    <- array(dim = c(n, n))
+    Ses     <- array(dim = c(n, n))
+    tmps    <- array(dim = c(n, n))
+    Se2s    <- array(dim = c(n, n))
+    logLiks <- array(dim = c(n, n))
+    AICs    <- array(dim = c(n, n))
+    BICs    <- array(dim = c(n, n))
+    emptaus <- array(dim = c(n, n))
 
     ## store structure, families and parameters in matrices
     for (k in 1:(n - 1)) {
@@ -745,6 +760,13 @@ as.RVM2 <- function(RVine) {
         Param[(k + 1), k]   <- crspParams[[n - k]][[1]][1]
         Params2[(k + 1), k] <- crspParams[[n - k]][[1]][2]
         Type[(k + 1), k]    <- crspTypes[[n - k]][[1]]
+        Ses[(k + 1), k]     <- crspfits[[n - k]][[1]]$se
+        tmpse2              <- crspfits[[n - k]][[1]]$se2
+        Se2s[(k + 1), k]    <- ifelse(is.null(tmpse2), NA, tmpse2)
+        logLiks[(k + 1), k] <- crspfits[[n - k]][[1]]$logLik
+        AICs[(k + 1), k]    <- crspfits[[n - k]][[1]]$AIC
+        BICs[(k + 1), k]    <- crspfits[[n - k]][[1]]$BIC
+        emptaus[(k + 1), k] <- crspfits[[n - k]][[1]]$emptau
 
         if (k == (n - 1)) {
             M[(k + 1), (k + 1)] <- nedSets[[n - k]][[1]][2]
@@ -777,9 +799,17 @@ as.RVM2 <- function(RVine) {
                 }
                 Param[i, k]   <- crspParams[[n - i + 1]][[j]][1]
                 Params2[i, k] <- crspParams[[n - i + 1]][[j]][2]
+                Ses[i, k]     <- crspfits[[n - i + 1]][[j]]$se
+                tmpse2        <- crspfits[[n - i + 1]][[j]]$se2
+                Se2s[i, k]    <- ifelse(is.null(tmpse2), NA, tmpse2)
+                logLiks[i, k] <- crspfits[[n - i + 1]][[j]]$logLik
+                AICs[i, k]    <- crspfits[[n - i + 1]][[j]]$AIC
+                BICs[i, k]    <- crspfits[[n - i + 1]][[j]]$BIC
+                emptaus[i, k] <- crspfits[[n - i + 1]][[j]]$emptau
                 nedSets[[n - i + 1]][[j]]    <- NULL
                 crspParams[[n - i + 1]][[j]] <- NULL
                 crspTypes[[n - i + 1]][[j]]  <- NULL
+                crspfits[[n - i + 1]][[j]] <- NULL
             }
         }
     }
@@ -787,9 +817,28 @@ as.RVM2 <- function(RVine) {
     ## clean NAs
     M[is.na(M)] <- 0
     Type[is.na(Type)] <- 0
+    logLiks[is.na(logLiks)] <- 0
+    AICs[is.na(AICs)] <- 0
+    BICs[is.na(BICs)] <- 0
 
-    ## return RVineMatrix object
-    RVineMatrix(M, family = Type, par = Param, par2 = Params2, names = nam)
+    ## create RVineMatrix object
+    RVM <- RVineMatrix(M, family = Type, par = Param, par2 = Params2, names = nam)
+    RVM$call <- callexp
+
+    ## add information about pair-copulas
+    RVM$se <- Ses
+    RVM$se2 <- Se2s
+    RVM$nobs <- crspfits[[1]][[1]]$nobs
+    RVM$logLik <- sum(logLiks)
+    RVM$pair.logLik <- logLiks
+    RVM$AIC <- sum(AICs)
+    RVM$pair.AIC <- AICs
+    RVM$BIC <- sum(BICs)
+    RVM$pair.BIC <- BICs
+    RVM$emptau <- emptaus
+
+    ## return final object
+    RVM
 }
 
 
