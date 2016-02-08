@@ -456,6 +456,7 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
                          "mle"  = out$value)
     obj$AIC    <- - 2 * obj$logLik + 2 * obj$npars
     obj$BIC    <- - 2 * obj$logLik + log(obj$nobs) * obj$npars
+    obj$emptau <- tau
 
     ## store the call that created the BiCop object
     obj$call <- match.call()
@@ -913,7 +914,7 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
             }
             out$se <- suppressWarnings(sqrt(diag(var)))
 
-            if (family == 2 && out$par[2] >= (max.df - 1e-04))
+            if ((family == 2) && (out$par[2] >= (max.df - 1e-04)))
                 out$se[2] <- NA
 
         } else {
@@ -933,17 +934,15 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
         }
     } else {
         if (family %in% c(2, 7, 8, 9, 10, 17, 18, 19, 20, 27, 28, 29, 30, 37, 38, 39, 40)) {
-
             out$par <- optimout$par
-
         } else {
-
             out$par[1] <- optimout$par[1]
         }
 
     }
+
     out$value <- optimout$value
-    return(out)
+    out
 }
 
 

@@ -293,6 +293,8 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                                                           weights = weights,
                                                           se = se))
                 optiout[[2]]$par <- c(optiout[[2]]$par, optiout[[2]]$par2)
+                if (se)
+                    optiout[[2]]$se <- c(optiout[[2]]$se, optiout[[2]]$se2)
                 if (optiout[[2]]$par[2] >= 30) {
                     todo[todo == 2] <- 1
                     todo <- unique(todo)
@@ -666,6 +668,7 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         out$AIC    <- AICs[out$family]
         out$BIC    <- BICs[out$family]
     }
+    out$emptau <- emp_tau
     out$p.value.indeptest <- out$p.value.indeptest
 
     ## store the call that created the BiCop object
