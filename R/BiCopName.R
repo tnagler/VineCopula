@@ -15,30 +15,30 @@
 #' \code{4}   \tab \code{"G"}         \tab \code{"Gumbel"} \cr
 #' \code{5}   \tab \code{"F"}         \tab \code{"Frank"} \cr
 #' \code{6}   \tab \code{"J"}         \tab \code{"Joe"} \cr
-#' \code{7}   \tab \code{"BB1"}       \tab \code{"Clayton-Gumbel"} \cr
-#' \code{8}   \tab \code{"BB6"}       \tab \code{"Joe-Gumbel"} \cr
-#' \code{9}   \tab \code{"BB7"}       \tab \code{"Joe-Clayton"} \cr
+#' \code{7}   \tab \code{"BB1"}       \tab \code{"BB1"} \cr
+#' \code{8}   \tab \code{"BB6"}       \tab \code{"BB6"} \cr
+#' \code{9}   \tab \code{"BB7"}       \tab \code{"BB7"} \cr
 #' \code{10}  \tab \code{"BB8"}       \tab \code{"Frank-Joe"} \cr
 #' \code{13}  \tab \code{"SC"}        \tab \code{"Survival Clayton"} \cr
 #' \code{14}  \tab \code{"SG"}        \tab \code{"Survival Gumbel"} \cr
 #' \code{16}  \tab \code{"SJ"}        \tab \code{"Survival Joe"} \cr
-#' \code{17}  \tab \code{"SBB1"}      \tab \code{"Survival Clayton-Gumbel"} \cr
-#' \code{18}  \tab \code{"SBB6"}      \tab \code{"Survival Joe-Gumbel"} \cr
-#' \code{19}  \tab \code{"SBB7"}      \tab \code{"Survival Joe-Clayton"} \cr
-#' \code{20}  \tab \code{"SBB8"}      \tab \code{"Survival Joe-Frank"} \cr
+#' \code{17}  \tab \code{"SBB1"}      \tab \code{"Survival BB1"} \cr
+#' \code{18}  \tab \code{"SBB6"}      \tab \code{"Survival BB6"} \cr
+#' \code{19}  \tab \code{"SBB7"}      \tab \code{"Survival BB7"} \cr
+#' \code{20}  \tab \code{"SBB8"}      \tab \code{"Survival BB8"} \cr
 #' \code{23}  \tab \code{"C90"}       \tab \code{"Rotated Clayton 90 degrees"} \cr
 #' \code{24}  \tab \code{"G90"}       \tab \code{"Rotated Gumbel 90 degrees"} \cr
 #' \code{26}  \tab \code{"J90"}       \tab \code{"Rotated Joe 90 degrees"} \cr
-#' \code{27}  \tab \code{"BB1_90"}    \tab \code{"Rotated Clayton-Gumbel 90 degrees"} \cr
-#' \code{28}  \tab \code{"BB6_90"}    \tab \code{"Rotated Joe-Gumbel 90 degrees"} \cr
-#' \code{29}  \tab \code{"BB7_90"}    \tab \code{"Rotated Joe-Clayton 90 degrees"} \cr
+#' \code{27}  \tab \code{"BB1_90"}    \tab \code{"Rotated BB1 90 degrees"} \cr
+#' \code{28}  \tab \code{"BB6_90"}    \tab \code{"Rotated BB6 90 degrees"} \cr
+#' \code{29}  \tab \code{"BB7_90"}    \tab \code{"Rotated BB7 90 degrees"} \cr
 #' \code{30}  \tab \code{"BB8_90"}    \tab \code{"Rotated Frank-Joe 90 degrees"} \cr
 #' \code{33}  \tab \code{"C270"}      \tab \code{"Rotated Clayton 270 degrees"} \cr
 #' \code{34}  \tab \code{"G270"}      \tab \code{"Rotated Gumbel 270 degrees"} \cr
 #' \code{36}  \tab \code{"J270"}      \tab \code{"Rotated Joe 270 degrees"} \cr
-#' \code{37}  \tab \code{"BB1_270"}   \tab \code{"Rotated Clayton-Gumbel 270 degrees"} \cr
-#' \code{38}  \tab \code{"BB6_270"}   \tab \code{"Rotated Joe-Gumbel 270 degrees"} \cr
-#' \code{39}  \tab \code{"BB7_270"}   \tab \code{"Rotated Joe-Clayton 270 degrees"} \cr
+#' \code{37}  \tab \code{"BB1_270"}   \tab \code{"Rotated BB1 270 degrees"} \cr
+#' \code{38}  \tab \code{"BB6_270"}   \tab \code{"Rotated BB6 270 degrees"} \cr
+#' \code{39}  \tab \code{"BB7_270"}   \tab \code{"Rotated BB7 270 degrees"} \cr
 #' \code{40}  \tab \code{"BB8_270"}   \tab \code{"Rotated Frank-Joe 270 degrees"} \cr
 #' \code{104} \tab \code{"Tawn"}      \tab \code{"Tawn type 1"} \cr
 #' \code{114} \tab \code{"Tawn180"}   \tab \code{"Rotated Tawn type 1 180 degrees"} \cr
@@ -197,13 +197,13 @@ fam_name <- function(family, short) {
             if (family == 6)
                 fam <- "Joe"
             if (family == 7)
-                fam <- "Clayton-Gumbel"
+                fam <- "BB1"
             if (family == 8)
-                fam <- "Joe-Gumbel"
+                fam <- "BB6"
             if (family == 9)
-                fam <- "Joe-Clayton"
+                fam <- "BB7"
             if (family == 10)
-                fam <- "Joe-Frank"
+                fam <- "BB8"
             if (family == 13)
                 fam <- "Survival Clayton"
             if (family == 14)
@@ -211,13 +211,13 @@ fam_name <- function(family, short) {
             if (family == 16)
                 fam <- "Survival Joe"
             if (family == 17)
-                fam <- "Survival Clayton-Gumbel"
+                fam <- "Survival BB1"
             if (family == 18)
-                fam <- "Survival Joe-Gumbel"
+                fam <- "Survival BB6"
             if (family == 19)
-                fam <- "Survival Joe-Clayton"
+                fam <- "Survival BB7"
             if (family == 20)
-                fam <- "Survival Joe-Frank"
+                fam <- "Survival BB8"
             if (family == 23)
                 fam <- "Rotated Clayton 90 degrees"
             if (family == 24)
@@ -225,13 +225,13 @@ fam_name <- function(family, short) {
             if (family == 26)
                 fam <- "Rotated Joe 90 degrees"
             if (family == 27)
-                fam <- "Rotated Clayton-Gumbel 90 degrees"
+                fam <- "Rotated BB1 90 degrees"
             if (family == 28)
-                fam <- "Rotated Joe-Gumbel 90 degrees"
+                fam <- "Rotated BB6 90 degrees"
             if (family == 29)
-                fam <- "Rotated Joe-Clayton 90 degrees"
+                fam <- "Rotated BB7 90 degrees"
             if (family == 30)
-                fam <- "Rotated Joe-Frank 90 degrees"
+                fam <- "Rotated BB8 90 degrees"
             if (family == 33)
                 fam <- "Rotated Clayton 270 degrees"
             if (family == 34)
@@ -239,13 +239,13 @@ fam_name <- function(family, short) {
             if (family == 36)
                 fam <- "Rotated Joe 270 degrees"
             if (family == 37)
-                fam <- "Rotated Clayton-Gumbel 270 degrees"
+                fam <- "Rotated BB1 270 degrees"
             if (family == 38)
-                fam <- "Rotated Joe-Gumbel 270 degrees"
+                fam <- "Rotated BB6 270 degrees"
             if (family == 39)
-                fam <- "Rotated Joe-Clayton 270 degrees"
+                fam <- "Rotated BB7 270 degrees"
             if (family == 40)
-                fam <- "Rotated Joe-Frank 270 degrees"
+                fam <- "Rotated BB8 270 degrees"
             if (family == 100)
                 fam <- "Nonparametric"  #changed Mathias
             if (family == 41)
@@ -289,11 +289,11 @@ fam_name <- function(family, short) {
             fam <- 5
         if (family == "J" || family == "Joe")
             fam <- 6
-        if (family == "BB1" || family == "Clayton-Gumbel")
+        if (family == "BB1" || family == "BB1")
             fam <- 7
-        if (family == "BB6" || family == "Joe-Gumbel")
+        if (family == "BB6" || family == "BB6")
             fam <- 8
-        if (family == "BB7" || family == "Joe-Clayton")
+        if (family == "BB7" || family == "BB7")
             fam <- 9
         if (family == "SC" || family == "Survival Clayton")
             fam <- 13
@@ -301,13 +301,13 @@ fam_name <- function(family, short) {
             fam <- 14
         if (family == "SJ" || family == "Survival Joe")
             fam <- 16
-        if (family == "SBB1" || family == "Survival Clayton-Gumbel")
+        if (family == "SBB1" || family == "Survival BB1")
             fam <- 17
-        if (family == "SBB6" || family == "Survival Joe-Gumbel")
+        if (family == "SBB6" || family == "Survival BB6")
             fam <- 18
-        if (family == "SBB7" || family == "Survival Joe-Clayton")
+        if (family == "SBB7" || family == "Survival BB7")
             fam <- 19
-        if (family == "SBB8" || family == "Survival Joe-Frank")
+        if (family == "SBB8" || family == "Survival BB8")
             fam <- 20
         if (family == "C90" || family == "Rotated Clayton 90 degrees")
             fam <- 23
@@ -315,13 +315,13 @@ fam_name <- function(family, short) {
             fam <- 24
         if (family == "J90" || family == "Rotated Joe 90 degrees")
             fam <- 26
-        if (family == "BB1_90" || family == "Rotated Clayton-Gumbel 90 degrees")
+        if (family == "BB1_90" || family == "Rotated BB1 90 degrees")
             fam <- 27
-        if (family == "BB6_90" || family == "Rotated Joe-Gumbel 90 degrees")
+        if (family == "BB6_90" || family == "Rotated BB6 90 degrees")
             fam <- 28
-        if (family == "BB7_90" || family == "Rotated Joe-Clayton 90 degrees")
+        if (family == "BB7_90" || family == "Rotated BB7 90 degrees")
             fam <- 29
-        if (family == "BB8_90" || family == "Rotated Joe-Frank 90 degrees")
+        if (family == "BB8_90" || family == "Rotated BB8 90 degrees")
             fam <- 30
         if (family == "C270" || family == "Rotated Clayton 270 degrees")
             fam <- 33
@@ -329,13 +329,13 @@ fam_name <- function(family, short) {
             fam <- 34
         if (family == "J270" || family == "Rotated Joe 270 degrees")
             fam <- 36
-        if (family == "BB1_270" || family == "Rotated Clayton-Gumbel 270 degrees")
+        if (family == "BB1_270" || family == "Rotated BB1 270 degrees")
             fam <- 37
-        if (family == "BB6_270" || family == "Rotated Joe-Gumbel 270 degrees")
+        if (family == "BB6_270" || family == "Rotated BB6 270 degrees")
             fam <- 38
-        if (family == "BB7_270" || family == "Rotated Joe-Clayton 270 degrees")
+        if (family == "BB7_270" || family == "Rotated BB7 270 degrees")
             fam <- 39
-        if (family == "BB8_270" || family == "Rotated Joe-Frank 270 degrees")
+        if (family == "BB8_270" || family == "Rotated BB8 270 degrees")
             fam <- 40
         if (family == "NP" || family == "Nonparametric")
             fam <- 100

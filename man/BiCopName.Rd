@@ -18,30 +18,30 @@ No.        \tab Short name         \tab Long name \cr
 \code{4}   \tab \code{"G"}         \tab \code{"Gumbel"} \cr
 \code{5}   \tab \code{"F"}         \tab \code{"Frank"} \cr
 \code{6}   \tab \code{"J"}         \tab \code{"Joe"} \cr
-\code{7}   \tab \code{"BB1"}       \tab \code{"Clayton-Gumbel"} \cr
-\code{8}   \tab \code{"BB6"}       \tab \code{"Joe-Gumbel"} \cr
-\code{9}   \tab \code{"BB7"}       \tab \code{"Joe-Clayton"} \cr
+\code{7}   \tab \code{"BB1"}       \tab \code{"BB1"} \cr
+\code{8}   \tab \code{"BB6"}       \tab \code{"BB6"} \cr
+\code{9}   \tab \code{"BB7"}       \tab \code{"BB7"} \cr
 \code{10}  \tab \code{"BB8"}       \tab \code{"Frank-Joe"} \cr
 \code{13}  \tab \code{"SC"}        \tab \code{"Survival Clayton"} \cr
 \code{14}  \tab \code{"SG"}        \tab \code{"Survival Gumbel"} \cr
 \code{16}  \tab \code{"SJ"}        \tab \code{"Survival Joe"} \cr
-\code{17}  \tab \code{"SBB1"}      \tab \code{"Survival Clayton-Gumbel"} \cr
-\code{18}  \tab \code{"SBB6"}      \tab \code{"Survival Joe-Gumbel"} \cr
-\code{19}  \tab \code{"SBB7"}      \tab \code{"Survival Joe-Clayton"} \cr
-\code{20}  \tab \code{"SBB8"}      \tab \code{"Survival Joe-Frank"} \cr
+\code{17}  \tab \code{"SBB1"}      \tab \code{"Survival BB1"} \cr
+\code{18}  \tab \code{"SBB6"}      \tab \code{"Survival BB6"} \cr
+\code{19}  \tab \code{"SBB7"}      \tab \code{"Survival BB7"} \cr
+\code{20}  \tab \code{"SBB8"}      \tab \code{"Survival BB8"} \cr
 \code{23}  \tab \code{"C90"}       \tab \code{"Rotated Clayton 90 degrees"} \cr
 \code{24}  \tab \code{"G90"}       \tab \code{"Rotated Gumbel 90 degrees"} \cr
 \code{26}  \tab \code{"J90"}       \tab \code{"Rotated Joe 90 degrees"} \cr
-\code{27}  \tab \code{"BB1_90"}    \tab \code{"Rotated Clayton-Gumbel 90 degrees"} \cr
-\code{28}  \tab \code{"BB6_90"}    \tab \code{"Rotated Joe-Gumbel 90 degrees"} \cr
-\code{29}  \tab \code{"BB7_90"}    \tab \code{"Rotated Joe-Clayton 90 degrees"} \cr
+\code{27}  \tab \code{"BB1_90"}    \tab \code{"Rotated BB1 90 degrees"} \cr
+\code{28}  \tab \code{"BB6_90"}    \tab \code{"Rotated BB6 90 degrees"} \cr
+\code{29}  \tab \code{"BB7_90"}    \tab \code{"Rotated BB7 90 degrees"} \cr
 \code{30}  \tab \code{"BB8_90"}    \tab \code{"Rotated Frank-Joe 90 degrees"} \cr
 \code{33}  \tab \code{"C270"}      \tab \code{"Rotated Clayton 270 degrees"} \cr
 \code{34}  \tab \code{"G270"}      \tab \code{"Rotated Gumbel 270 degrees"} \cr
 \code{36}  \tab \code{"J270"}      \tab \code{"Rotated Joe 270 degrees"} \cr
-\code{37}  \tab \code{"BB1_270"}   \tab \code{"Rotated Clayton-Gumbel 270 degrees"} \cr
-\code{38}  \tab \code{"BB6_270"}   \tab \code{"Rotated Joe-Gumbel 270 degrees"} \cr
-\code{39}  \tab \code{"BB7_270"}   \tab \code{"Rotated Joe-Clayton 270 degrees"} \cr
+\code{37}  \tab \code{"BB1_270"}   \tab \code{"Rotated BB1 270 degrees"} \cr
+\code{38}  \tab \code{"BB6_270"}   \tab \code{"Rotated BB6 270 degrees"} \cr
+\code{39}  \tab \code{"BB7_270"}   \tab \code{"Rotated BB7 270 degrees"} \cr
 \code{40}  \tab \code{"BB8_270"}   \tab \code{"Rotated Frank-Joe 270 degrees"} \cr
 \code{104} \tab \code{"Tawn"}      \tab \code{"Tawn type 1"} \cr
 \code{114} \tab \code{"Tawn180"}   \tab \code{"Rotated Tawn type 1 180 degrees"} \cr
