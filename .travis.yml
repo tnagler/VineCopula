@@ -1,8 +1,9 @@
-language: r
+language: R
 
 warnings_are_errors: true
 
 sudo: required
+
 
 apt_packages:
   - gsl-bin
