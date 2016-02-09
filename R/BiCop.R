@@ -191,7 +191,7 @@ summary.BiCop <- function(object, ...) {
     cat("\n")
     cat("Upper TD:        ", as.character(round(object$taildep$upper, 2)), "\n")
     cat("Lower TD:        ", as.character(round(object$taildep$lower, 2)), "\n")
-    cat("Blomqvist's beta:", as.character(round(object$beta, 2)), "\n")
+#     cat("Blomqvist's beta:", as.character(round(object$beta, 2)), "\n")
     cat("\n")
 
     ## print fit statistics if available
