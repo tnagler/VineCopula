@@ -1,12 +1,13 @@
 language: R
-
 warnings_are_errors: true
 
 sudo: required
-
 
 apt_packages:
   - gsl-bin
   - libgsl0-dbg
   - libgsl0-dev
   - libgsl0ldbl
+
+repos:
+  CRAN: http://cran.rstudio.com
