@@ -162,9 +162,9 @@ summary.BiCop <- function(object, ...) {
     ## print family name
     cat("Family\n")
     cat("------ \n")
-    cat("Name:  ", object$familyname)
+    cat("No:   ", object$family)
     cat("\n")
-    cat("Number:", object$family)
+    cat("Name: ", object$familyname)
     cat("\n")
     cat("\n")
 
