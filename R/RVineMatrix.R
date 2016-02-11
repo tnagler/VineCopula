@@ -489,6 +489,7 @@ summary.RVineMatrix <- function(object, with.se = TRUE, ...) {
     }
     # show names if provided
     if (!is.null(object$names)) {
+        linelen <- min(linelen, 90)
         cat("\n")
         cat("---\n")
         txt <- paste0(1, " <-> ", object$names[[1]])
@@ -508,7 +509,7 @@ summary.RVineMatrix <- function(object, with.se = TRUE, ...) {
         }
         cat(txt)
     }
-
+    invisible(object)
 }
 
 draw_blanks <- function(len) {
