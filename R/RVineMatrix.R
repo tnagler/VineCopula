@@ -191,6 +191,15 @@ RVineMatrix <- function(Matrix,
                 CondDistr = CondDistr)
     class(RVM) <- "RVineMatrix"
 
+    ## add vine type
+    if (is.CVine(RVM)) {
+        RVM$type <- "C-vine"
+    } else if (is.DVine(RVM)) {
+        RVM$type <- "D-vine"
+    } else {
+        RVM$type <- "R-vine"
+    }
+
     ## add dependence measures
     # create list of BiCop ojbects
     objlst <- apply(cbind(family[sel], par[sel], par2[sel]),
@@ -289,61 +298,23 @@ dim.RVineMatrix <- function(x) {
 
 print.RVineMatrix <- function(x, ...) {
     RVine <- x
-    cat("R-vine copula with the following pair-copulas:\n")
+    cat(x$type, "copula with the following pair-copulas:\n")
     d <- dim(RVine)
-    cat("")
-    cat("Tree 1:\n")
-    for (i in 1:(d - 1)) {
-        a <- paste(RVine$Matrix[i, i],
-                   ",",
-                   RVine$Matrix[d, i],
-                   sep = "")
-        a <- paste(a,
-                   "   ",
-                   BiCopName(RVine$family[d, i], short = FALSE),
-                   sep = "")
-        if (RVine$family[d, i] != 0) {
-            a <- paste(a, " (par = ", round(RVine$par[d, i], 2), sep = "")
-            if (RVine$family[d, i] %in% c(2, 7, 8, 9, 10,
-                                          17, 18, 19, 20,
-                                          27, 28, 29, 30,
-                                          37, 38, 39, 40,
-                                          104, 114, 124, 134,
-                                          204, 214, 224, 234)) {
-                a <- paste(a, ", par2 = ", round(RVine$par2[d, i], 2), sep = "")
-            }
-            a <- paste(a,
-                       ", tau = ",
-                       round(BiCopPar2Tau(RVine$family[d, i],
-                                          RVine$par[d, i],
-                                          RVine$par2[d, i]), 2),
-                       ")\n",
-                       sep = "")
-        }
-        cat(a)
-    }
-    cat("\n")
-    for (j in 2:(d - 1)) {
+    for (j in 1:(d - 1)) {
         cat("")
         a <- paste("Tree ", j, ":\n", sep = "")
         cat(a)
+
+        pc.nums <- sapply(1:(d - j), get_num, tree = j, RVM = RVine)
+        pc.nums <- sapply(pc.nums, function(x) gsub(" ", "", x))
+        pc.nums.len <- nchar(pc.nums)
+        pc.nums.space <- max(pc.nums.len) - pc.nums.len
+        maxa <- 0
         for (i in 1:(d - j)) {
-            a <- paste(RVine$Matrix[i, i],
-                       ",",
-                       RVine$Matrix[d - j + 1, i],
-                       sep = "")
-            a <- paste(a, ";", sep = "")
-            conditioningSet <- (d - j + 2):d
-            for (k in 1:length(conditioningSet)) {
-                if (k > 1) {
-                    a <- paste(a, ",", sep = "")
-                }
-                a <- paste(a,
-                           RVine$Matrix[conditioningSet[k], i],
-                           sep = "")
-            }
+            a <- draw_blanks(pc.nums.space[i])
+            a <- paste0(a, pc.nums[i])
             a <- paste(a,
-                       "   ",
+                       "  ",
                        BiCopName(RVine$family[d - j + 1, i], short = FALSE),
                        sep = "")
             if (RVine$family[d - j + 1, i] != 0) {
@@ -351,12 +322,7 @@ print.RVineMatrix <- function(x, ...) {
                            " (par = ",
                            round(RVine$par[d - j + 1, i], 2),
                            sep = "")
-                if (RVine$family[d - j + 1, i] %in% c(2, 7, 8, 9, 10,
-                                                      17, 18, 19, 20,
-                                                      27, 28, 29, 30,
-                                                      37, 38, 39, 40,
-                                                      104, 114, 124, 134,
-                                                      204, 214, 224, 234)) {
+                if (RVine$family[d - j + 1, i] %in% allfams[twopar]) {
                     a <- paste(a,
                                ", par2 = ",
                                round(RVine$par2[d - j + 1, i], 2),
@@ -365,25 +331,217 @@ print.RVineMatrix <- function(x, ...) {
                 a <- paste(a,
                            ", tau = ",
                            round(RVine$tau[d - j + 1, i], 2),
-                           ")\n",
+                           ")",
                            sep = "")
             }
+            a <- paste(a, "\n")
+            maxa <- max(maxa, nchar(a))
             cat(a)
         }
         if (j < d - 1) cat("\n")
     }
     # show names if provided
     if (!is.null(RVine$names)) {
+        linelen <- maxa
         cat("\n")
-        cat("Where  ")
-        for (i in 1:length(RVine$names)) {
-            cat(i, "<->", RVine$names[[i]])
-            if (i < length(RVine$names))
-                cat(",   ")
+        cat("---\n")
+        txt <- paste0(1, " <-> ", RVine$names[[1]])
+        for (i in 2:(d - 1)) {
+            if (nchar(txt) > linelen) {
+                cat(txt, ",\n", sep = "")
+                txt <- paste0(i, " <-> ", RVine$names[[i]])
+            } else {
+                txt <- paste0(txt, ",   ", i, " <-> ", RVine$names[[i]])
+            }
+        }
+        if (nchar(txt) > linelen) {
+            cat(txt, ",\n", sep = "")
+            txt <- paste0(d, " <-> ", RVine$names[[d]])
+        } else {
+            txt <- paste0(txt, ",   ", d, " <-> ", RVine$names[[d]])
+        }
+        cat(txt)
+    }
+}
+
+summary.RVineMatrix <- function(object, with.se = TRUE, ...) {
+
+    ## create character matrices with pair-copula info
+    #     cat("Pair-copulas:\n")
+    d <- nrow(object$Matrix)
+    fammat  <- matrix("", d, d)
+    parmat  <- formatC(object$par, 2, format = "f")
+    par2mat <- formatC(object$par2, 2, format = "f")
+    taumat  <- formatC(object$tau, 2, format = "f")
+    utdmat  <- formatC(object$taildep$upper, 2, format = "f")
+    ltdmat  <- formatC(object$taildep$lower, 2, format = "f")
+    nammat  <- matrix("", d, d)
+    nummat  <- matrix("", d, d)
+    with.se <- with.se & !is.null(object$se)
+    if (with.se) {
+        semat  <- formatC(object$se, 2, format = "f")
+        se2mat <- formatC(object$se2, 2, format = "f")
+    }
+
+    ## get names and clean matrices
+    for (i in 2:d) {
+        for (j in 1:(i - 1)) {
+            fammat[i, j] <- BiCopName(object$family[i, j])
+            nummat[i, j] <- formatC(object$family[i, j], 3)
+            nammat[i, j] <- gsub(" ", "", get_num(j, d - i + 1, object))
+            if (fammat[i, j] == "I") {
+                parmat[i, j] <- "-"
+                par2mat[i, j] <- "-"
+            } else {
+                if (with.se) {
+                    parmat[i, j] <- paste0(parmat[i, j],
+                                           " (",
+                                           semat[i, j],
+                                           ")")
+                    if (object$family[i, j] %in% allfams[twopar]) {
+                        par2mat[i, j] <- paste0(par2mat[i, j],
+                                                " (",
+                                                se2mat[i, j],
+                                                ")")
+                    } else {
+                        par2mat[i, j] <- "-"
+                    }
+                }
+            }
+            if (object$taildep$upper[i, j] == 0)
+                utdmat[i, j] <- "-"
+            if (object$taildep$lower[i, j] == 0)
+                ltdmat[i, j] <- "-"
         }
     }
 
+    ## maximal number of characters for each category
+    ltree <- nchar("tree")
+    lfam  <- max(nchar("family"), max(sapply(fammat, nchar)))
+    lpar  <- max(nchar("par"), max(sapply(parmat, nchar)))
+    lpar2 <- max(nchar("par2"), max(sapply(par2mat, nchar)))
+    ltau  <- max(nchar("tau"), max(sapply(taumat, nchar)))
+    lutd  <- max(nchar("UTD"), max(sapply(utdmat, nchar)))
+    lltd  <- max(nchar("LTD"), max(sapply(ltdmat, nchar)))
+    lnam  <- max(nchar("edge"), max(sapply(nammat, nchar)))
+
+
+    ## line with headings
+    txt <- "tree "
+    txt <- paste0(txt, draw_blanks(max(1, lnam - 3)), "edge ")
+    txt <- paste0(txt, " No.")
+    txt <- paste0(txt, draw_blanks(max(1, lfam - 4)), "family ")
+    txt <- paste0(txt, draw_blanks(max(1, lpar - 2)), "par ")
+    txt <- paste0(txt, draw_blanks(max(1, lpar2 - 3)), "par2 ")
+    txt <- paste0(txt, draw_blanks(max(1, ltau - 2)), "tau ")
+    txt <- paste0(txt, draw_blanks(max(1, lutd - 2)), "UTD ")
+    txt <- paste0(txt, draw_blanks(max(1, lltd - 2)), "LTD")
+    cat(txt, "\n")
+    linelen <- nchar(txt)
+    cat(draw_lines(linelen), "\n")
+
+    for (tree in 1:(d-1)) {
+        for (edge in 1:(d - tree)) {
+            ## print tree number
+            if (edge == 1) {
+                cat(draw_blanks(max(0, ltree - nchar(tree))))
+                cat(tree, "")
+            } else {
+                cat("     ")
+            }
+
+            ## print edge label
+            tmpch <- nammat[d + 1 - tree, edge]
+            cat(draw_blanks(max(0, lnam - nchar(tmpch))), tmpch)
+
+            ## print copula family
+            cat("", formatC(nummat[d + 1 - tree, edge], 3))
+            tmpch <- fammat[d + 1 - tree, edge]
+            cat(draw_blanks(min(max(0, lfam - nchar(tmpch))) + 1), tmpch)
+
+            ## print parameters
+            tmpch <- parmat[d + 1 - tree, edge]
+            cat(draw_blanks(min(max(0, lpar - nchar(tmpch)) + 1)), tmpch)
+            tmpch <- par2mat[d + 1 - tree, edge]
+            cat(draw_blanks(min(max(0, lpar2 - nchar(tmpch)) + 1)), tmpch)
+
+            ## print dependence measures
+            tmpch <- taumat[d + 1 - tree, edge]
+            cat(draw_blanks(min(max(0, ltau - nchar(tmpch)) + 1)), tmpch)
+            tmpch <- utdmat[d + 1 - tree, edge]
+            cat(draw_blanks(min(max(0, lutd - nchar(tmpch)) + 1)), tmpch)
+            tmpch <- ltdmat[d + 1 - tree, edge]
+            cat(draw_blanks(min(max(0, lltd - nchar(tmpch)) + 1)), tmpch)
+
+
+            cat("\n")
+
+        }
+    }
+
+    ## print general info
+    cat("---\n")
+    cat("type:", object$type, "   ")
+    if (!is.null(object$logLik)) {
+        cat("logLik:", round(object$logLik, 2), "   ")
+        cat("AIC:", round(object$AIC, 2), "   ")
+        cat("BIC:", round(object$BIC, 2), "   ")
+    }
+    # show names if provided
+    if (!is.null(object$names)) {
+        cat("\n")
+        cat("---\n")
+        txt <- paste0(1, " <-> ", object$names[[1]])
+        for (i in 2:(d - 1)) {
+            if (nchar(txt) > linelen) {
+                cat(txt, ",\n", sep = "")
+                txt <- paste0(i, " <-> ", object$names[[i]])
+            } else {
+                txt <- paste0(txt, ",   ", i, " <-> ", object$names[[i]])
+            }
+        }
+        if (nchar(txt) > linelen) {
+            cat(txt, ",\n", sep = "")
+            txt <- paste0(d, " <-> ", object$names[[d]])
+        } else {
+            txt <- paste0(txt, ",   ", d, " <-> ", object$names[[d]])
+        }
+        cat(txt)
+    }
+
 }
+
+draw_blanks <- function(len) {
+    do.call(paste0, as.list(rep(" ", len)))
+}
+
+draw_lines <- function(len) {
+    do.call(paste0, as.list(rep("-", len)))
+}
+
+is.DVine <- function(Matrix) {
+    if (inherits(Matrix, "RVineMatrix"))
+        Matrix <- Matrix$Matrix
+    Matrix <- reorderRVineMatrix(Matrix)
+    ## A D-vine has a path in the first tree (and thus in all trees)
+    d <- nrow(Matrix)
+    length(unique(Matrix[d, ])) == d - 1
+}
+
+is.CVine <- function(Matrix) {
+    if (inherits(Matrix, "RVineMatrix"))
+        Matrix <- Matrix$Matrix
+    Matrix <- reorderRVineMatrix(Matrix)
+    ## A C-vine has a star in each tree
+    d <- nrow(Matrix)
+    all.trees.star <- (length(unique(Matrix[d, ])) == 1)
+    for (tree in 2:(d - 2)) {
+        ## the zero now appears in all trees
+        all.trees.star <- all.trees.star & (length(unique(Matrix[tree, ])) == 2)
+    }
+    all.trees.star
+}
+
 
 
 createMaxMat <- function(Matrix) {

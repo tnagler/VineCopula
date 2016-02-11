@@ -137,7 +137,7 @@ print(RVM, detail = TRUE)
 
 }
 \author{
-Jeffrey Dissmann
+Jeffrey Dissmann, Thomas Nagler
 }
 \references{
 Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
