@@ -118,6 +118,8 @@ BiCopPDF <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRU
     }
 
     ## check for reasonable input
+    if (missing(par) & (all(family == 0)))
+        par <- 0
     if (any(is.na(family)) | any(is.na(par)))
         stop("Provide either 'family' and 'par' or 'obj'")
 

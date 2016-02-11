@@ -128,6 +128,8 @@ BiCopHfunc <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = T
     }
 
     ## adjust length for parameter vectors; stop if not matching
+    if (missing(par) & (all(family == 0)))
+        par <- 0
     if (any(c(length(family), length(par), length(par2)) == n)) {
         if (length(family) == 1)
             family <- rep(family, n)

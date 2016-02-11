@@ -139,6 +139,8 @@ BiCopPar2TailDep <- function(family, par, par2 = 0, obj = NULL, check.pars = TRU
     }
 
     ## adjust length for parameter vectors; stop if not matching
+    if (missing(par) & (all(family == 0)))
+        par <- 0
     n <- max(length(family), length(par), length(par2))
     if (length(family) == 1)
         family <- rep(family, n)
@@ -200,7 +202,7 @@ calcTD <- function(family, par, par2) {
         upper <- 2 - 2^(1/par)
     } else if (family == 10) {
         lower <- 0
-        if (par2 == 1) 
+        if (par2 == 1)
             upper <- 2 - 2^(1/par) else upper <- 0
     } else if (family == 13) {
         lower <- 0
@@ -218,7 +220,7 @@ calcTD <- function(family, par, par2) {
         lower <- 2 - 2^(1/par)
         upper <- 2^(-1/par2)
     } else if (family == 20) {
-        if (par2 == 1) 
+        if (par2 == 1)
             lower <- 2 - 2^(1/par) else lower <- 0
             upper <- 0
     } else if (family == 104) {
@@ -240,7 +242,7 @@ calcTD <- function(family, par, par2) {
         lower <- par2 + par3 - 2 * ((0.5 * par2)^par + (0.5 * par3)^par)^(1/par)
         upper <- 0
     }
-    
+
     ## return result
     c(upper, lower)
 }

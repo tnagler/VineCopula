@@ -165,10 +165,6 @@
 BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                         indeptest = FALSE, level = 0.05, weights = NA,
                         rotations = TRUE, se = TRUE) {
-    allfams <- c(1:10,
-                 13, 14, 16:20,
-                 23, 24, 26:30, 33, 34, 36:40,
-                 104, 114, 124, 134, 204, 214, 224, 234)
     if (is.na(familyset[1]))
         familyset <- allfams
 

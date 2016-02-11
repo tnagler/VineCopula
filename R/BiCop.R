@@ -94,6 +94,8 @@ BiCop <- function(family, par, par2 = 0, tau = NULL, check.pars = TRUE) {
     ## use tau to construct object (if provided)
     if (!is.null(tau))
         par <- BiCopTau2Par(family, tau)
+    if (missing(par) & (family == 0))
+        par <- 0
     stopifnot(is.logical(check.pars))
 
     ## family/parameter consistency checks

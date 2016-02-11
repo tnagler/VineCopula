@@ -271,6 +271,8 @@ BiCopPar2Tau <- function(family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
     }
 
     ## adjust length for parameter vectors; stop if not matching
+    if (missing(par) & (all(family == 0)))
+        par <- 0
     n <- max(length(family), length(par), length(par2))
     if (length(family) == 1)
         family <- rep(family, n)

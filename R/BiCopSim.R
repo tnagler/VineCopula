@@ -97,6 +97,8 @@ BiCopSim <- function(N, family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
         par <- obj$par
         par2 <- obj$par2
     }
+    if (missing(par) & (all(family == 0)))
+        par <- 0
 
     ## adjust length for parameter vectors; stop if not matching
     if (any(c(length(family), length(par), length(par2)) == N)) {

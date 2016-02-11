@@ -105,6 +105,8 @@ BiCopHfuncDeriv <- function(u1, u2, family, par, par2 = 0, deriv = "par", obj = 
     }
 
     ## check for reasonable input
+    if (missing(par) & (all(family == 0)))
+        par <- 0
     if (any(is.na(family)) | any(is.na(par)))
         stop("Provide either 'family' and 'par' or 'obj'")
     if (!all(family %in% c(0, 1, 2, 3, 4, 5, 6, 13, 14, 16, 23, 24, 26, 33, 34, 36)))
