@@ -429,10 +429,10 @@ summary.RVineMatrix <- function(object, with.se = TRUE, ...) {
     ## line with headings
     txt <- "tree "
     txt <- paste0(txt, draw_blanks(max(1, lnam - 3)), "edge ")
-    txt <- paste0(txt, " No.")
-    txt <- paste0(txt, draw_blanks(max(1, lfam - 4)), "family ")
+    txt <- paste0(txt, "|  No.")
+    txt <- paste0(txt, draw_blanks(max(1, lfam - 5)), "family ")
     txt <- paste0(txt, draw_blanks(max(1, lpar - 2)), "par ")
-    txt <- paste0(txt, draw_blanks(max(1, lpar2 - 3)), "par2 ")
+    txt <- paste0(txt, draw_blanks(max(1, lpar2 - 3)), "par2 |")
     txt <- paste0(txt, draw_blanks(max(1, ltau - 2)), "tau ")
     txt <- paste0(txt, draw_blanks(max(1, lutd - 2)), "UTD ")
     txt <- paste0(txt, draw_blanks(max(1, lltd - 2)), "LTD")
@@ -455,7 +455,8 @@ summary.RVineMatrix <- function(object, with.se = TRUE, ...) {
             cat(draw_blanks(max(0, lnam - nchar(tmpch))), tmpch)
 
             ## print copula family
-            cat("", formatC(nummat[d + 1 - tree, edge], 3))
+            cat(" |")
+            cat(formatC(nummat[d + 1 - tree, edge], 3))
             tmpch <- fammat[d + 1 - tree, edge]
             cat(draw_blanks(min(max(0, lfam - nchar(tmpch))) + 1), tmpch)
 
@@ -466,8 +467,9 @@ summary.RVineMatrix <- function(object, with.se = TRUE, ...) {
             cat(draw_blanks(min(max(0, lpar2 - nchar(tmpch)) + 1)), tmpch)
 
             ## print dependence measures
+            cat(" |")
             tmpch <- taumat[d + 1 - tree, edge]
-            cat(draw_blanks(min(max(0, ltau - nchar(tmpch)) + 1)), tmpch)
+            cat(draw_blanks(min(max(0, ltau - nchar(tmpch)))), tmpch)
             tmpch <- utdmat[d + 1 - tree, edge]
             cat(draw_blanks(min(max(0, lutd - nchar(tmpch)) + 1)), tmpch)
             tmpch <- ltdmat[d + 1 - tree, edge]
