@@ -71,8 +71,8 @@ contour.RVineMatrix <- function(x, tree = "ALL", xylim = NULL, cex.nums = 1, ...
                         plot.window(xlim = xlim, ylim = ylim,
                                     xaxs = "i",  yaxs = "i")
 
-                        # call plot.BiCop with ... arguments
-                        do.call(plot, modifyList(args, list(...)))
+                        # call contour.BiCop with ... arguments
+                        do.call(contour, modifyList(args, list(...)))
 
                         # draw area for headings
                         abline(h = ylim[2] - diff(ylim)/mult*offs)
