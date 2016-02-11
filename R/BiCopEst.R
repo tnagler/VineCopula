@@ -990,14 +990,15 @@ MLE_intern_Tawn <- function(data, start.parm, family, se = FALSE) {
                           upper = parupper,
                           control = list(fnscale = -1, maxit = 500),
                           hessian = TRUE)
-        if (det(optimout$hessian) == 0) {
-            var <- diag(1, dim(optimout$hessian)[1])
+        if (!is.finite(det(optimout$hessian))) {
+            var <- matrix(NA, 2, 2)
+        } else if (det(optimout$hessian) == 0) {
+            var <- diag(NA, dim(optimout$hessian)[1])
         } else {
             var <- try((-solve(optimout$hessian)), silent = TRUE)
             if (inherits(var, 'try-error'))
                 var <- c(NA, NA)
         }
-
         out$se <- suppressWarnings(sqrt(diag(var)))
     } else {
         optimout <- optim(par = start.parm,
