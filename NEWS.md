@@ -14,9 +14,12 @@ DEPENDS
 
 NEW FEATURES
 
-  * Extend `BiCop` objects (now includes: associated dependence measures; fit statistics, if available).
+  * Extend `BiCop` and `RVineMatrix` objects (now include: associated dependence
+    measures; fit statistics, if available).
 
   * New methods `print` and `summary` for objects of class `BiCop`.
+
+  * New methods `print` and `summary` for objects of class `RVineMatrix`.
 
   * New generic `plot.RVineMatrix` for plotting vine trees.
   
@@ -34,6 +37,11 @@ NEW FEATURES
       
     * in R: `BiCopCDF`, `BiCopPar2Tau`, `BiCopPar2Beta`, `BiCopPar2TailDep`.
 
+  * Useful for high-dimensional data: estimation of vine copulas 
+    (`RVineStructureSelect`, `RVineCopSelect`, `RVineSeqEst`) can now be done in 
+    parallel using the `cores` argument (based on `foreach`) and is more memory
+    efficient (pseudo-observations are discarded as soon they are useless).
+  
   * New function `BiCopCheck` (internal) for checking of family/parameter
     consistency.
     
@@ -43,6 +51,7 @@ NEW FEATURES
     
   * Faster implementations of `BiCopPar2Tau`/`BiCopTau2Par` for Frank copula and
     `BiCopTau2Par` conversion for Joe copula. 
+    
     
     
 BUG FIXES
@@ -67,7 +76,8 @@ BUG FIXES
   * Increased upper limit for uniroot in `Joe.itau.JJ`.
   
   * Fixed rotations of Tawns (they were actually reflection w.r.t. the axes 
-   u = 0.5 and u2 = 0.5)
+    u = 0.5 and u2 = 0.5)
+   
   
 
 VineCopula 1.6 (July 16, 2015)
