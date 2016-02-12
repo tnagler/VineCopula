@@ -77,6 +77,11 @@ BUG FIXES
   
   * Fixed rotations of Tawns (they were actually reflection w.r.t. the axes 
     u = 0.5 and u2 = 0.5)
+	
+  * Correct calculation of the goodness-of-fit test based on Whites Information matrix test 
+    for bivariate copulas `BiCopGofTest(..., method = "white")`.
+	The variance matrix needed for the test statistic had a poor approximation.
+	Thereby the asymptotic p-values are corrected.
    
   
 
