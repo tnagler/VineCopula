@@ -70,8 +70,9 @@
 #' }
 #'
 #' @note The calculation of the cumulative distribution function (CDF) of the
-#' Student's t copula (\code{family = 2}) is not implemented any more since the
-#' calculation was wrong for non-integer degrees-of-freedom.
+#' Student's t copula (\code{family = 2}) is only approximate. For numerical
+#' reasons, the degree of freedom parameter (\code{par2}) is rounded to an
+#' integer before calculation of the CDF.
 #'
 #' @author Eike Brechmann
 #'
@@ -132,8 +133,6 @@ BiCopCDF <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRU
         par <- 0
     if (any(is.na(family)) | any(is.na(par)))
         stop("Provide either 'family' and 'par' or 'obj'")
-    if (any(family == 2))
-        stop("The CDF of the t-copula is not implemented.")
 
     ## adjust length for parameter vectors; stop if not matching
     if (any(c(length(family), length(par), length(par2)) == n)) {
@@ -186,9 +185,12 @@ calcCDF <- function(u1, u2, family, par, par2) {
         cdf <- function(u, v) pmvnorm(upper = c(qnorm(u), qnorm(v)),
                                       corr = matrix(c(1,   par, par, 1), 2, 2))
         res <- mapply(cdf, u1, u2, SIMPLIFY = TRUE)
-        # }else if(family == 2){ par2=round(par2) cdf = function(u,v)
-        # pmvt(upper=c(qt(u,df=par2),qt(v,df=par2)), corr=matrix(c(1,par,par,1),2,2),
-        # df=par2) res = mapply(cdf, u1, u2, SIMPLIFY=TRUE)
+    } else if(family == 2) {
+        par2 = round(par2)
+        cdf = function(u,v) pmvt(upper = c(qt(u,df = par2), qt(v,df = par2)),
+                                 corr = matrix(c(1, par, par, 1), 2, 2),
+                                 df = par2)
+        res = mapply(cdf, u1, u2, SIMPLIFY = TRUE)
     } else if (family %in% c(3:10, 41)) {
         res <- .C("archCDF",
                   as.double(u1),

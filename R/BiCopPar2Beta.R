@@ -10,6 +10,7 @@
 #' @param family integer; single number or vector of size \code{m}; defines the
 #' bivariate copula family: \cr
 #' \code{0} = independence copula \cr
+#' \code{2} = Student t copula (t-copula) \cr
 #' \code{1} = Gaussian copula \cr
 #' \code{3} = Clayton copula \cr
 #' \code{4} = Gumbel copula \cr
@@ -60,14 +61,19 @@
 #' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
 #' for family/parameter-consistency are ommited (should only be used with
 #' care).
+#'
 #' @return Theoretical value of Blomqvist's beta corresponding to the bivariate
 #' copula \code{family} and parameter(s) \code{par}, \code{par2}.
+#'
 #' @note The number \code{m} can be chosen arbitrarily.
+#'
 #' @author Ulf Schepsmeier
+#'
 #' @references Blomqvist, N. (1950).  On a measure of dependence between two
 #' random variables. The Annals of Mathematical Statistics, 21(4), 593-600.
 #'
 #' Nelsen, R. (2006). An introduction to copulas.  Springer
+#'
 #' @examples
 #'
 #' ## Example 1: Gaussian copula
