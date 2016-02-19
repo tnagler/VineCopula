@@ -18,6 +18,27 @@ simulation, goodness-of-fit tests, and visualization. Tools for estimation,
 selection and exploratory data analysis of **bivariate copula** models are also
 provided. 
 
+
+Table of contents
+-----------------
+
+- [How to install](#how-to-install)
+- [Package overview](#package-overview)
+	- [Bivariate copula modeling: the BiCop-family](#bivariate-copula-modeling-the-bicop-family)
+	- [Vine copula modeling: the RVine-family](#vine-copula-modeling-the-rvine-family)
+	- [Additional features](#additional-features)
+	- [Bivariate copula families](#bivariate-copula-families)
+- [Associated shiny apps](#associated-shiny-apps)
+- [References](#references)
+
+
+------------------------------------------------------------------------
+
+
+How to install
+--------------
+
+
 You can install:
 
 -   the stable release on CRAN:
@@ -256,7 +277,7 @@ Kurowicka, D. and H. Joe (Eds.) (2011). Dependence Modeling: Vine Copula Handboo
 Nelsen, R. (2006). An introduction to copulas. Springer
 
 Nagler, T. (2015). kdecopula: Kernel Smoothing for Bivariate Copula Densities. R package
-version 0.2.0. <http://cran.r-project.org/web/packages/kdecopula>
+version 0.5.0. <http://cran.r-project.org/web/packages/kdecopula>
 
 Schepsmeier, U. and J. Stoeber (2012). Derivatives and Fisher information of bivariate copulas. Statistical Papers, 55 (2), 525-542. <http://link.springer.com/article/10.1007/s00362-013-0498-x>.
 
