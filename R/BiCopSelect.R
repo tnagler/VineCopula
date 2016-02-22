@@ -134,9 +134,9 @@
 #' # select the bivariate copula family and estimate the parameter(s)
 #' cop1 <- BiCopSelect(dat1[,1], dat1[,2], familyset = 1:10,
 #'                     indeptest = FALSE, level = 0.05)
-#' cop1$family
-#' cop1$par
-#' cop1$par2
+#' cop1  # short overview
+#' summary(cop1)  # comprehensive overview
+#' str(cop1)  # see all contents of the object
 #'
 #'
 #' ## Example 2: Gaussian copula with small dependence parameter
@@ -147,17 +147,13 @@
 #' # select the bivariate copula family and estimate the parameter(s)
 #' cop2 <- BiCopSelect(dat2[,1], dat2[,2], familyset = 0:10,
 #'                     indeptest = TRUE, level = 0.05)
-#' cop2$family
-#' cop2$par
-#' cop2$par2
+#' summary(cop2)
 #'
 #'
 #' ## Example 3: empirical data
 #' data(daxreturns)
 #' cop3 <- BiCopSelect(daxreturns[,1], daxreturns[,4], familyset = 0:10)
-#' cop3$family
-#' cop3$par
-#' cop3$par2
+#' summary(cop3)
 #'
 BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                          indeptest = FALSE, level = 0.05, weights = NA,
