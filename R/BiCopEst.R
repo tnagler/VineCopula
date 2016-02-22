@@ -196,20 +196,16 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
 
     if (method != "mle" && method != "itau")
         stop("Estimation method has to be either 'mle' or 'itau'.")
-    if ((method == "itau") && (!(family %in% c(allfams[onepar], 2)))) {
+    if ((method == "itau") && (!(family %in% c(0, 2, allfams[onepar])))) {
         message("For two parameter copulas the estimation method 'itau' cannot be used. The method is automatically set to 'mle'.")
         method <- "mle"
     }
     if (is.logical(se) == FALSE)
         stop("'se' has to be a logical variable (TRUE or FALSE).")
 
-    ## return independence immediately
-    if (family == 0)
-        return(BiCop(0, 0))
-
     ## calculate empirical Kendall's tau and invert for initial estimate
     tau <- fasttau(u1, u2)
-    if (family %in% c(2, allfams[onepar]))
+    if (family %in% c(0, 2, allfams[onepar]))
         theta <- BiCopTau2Par(family, tau)
 
     ## inversion of kendall's tau -----------------------------
@@ -419,8 +415,12 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
             }
         }
 
-        ## likelihood optimization
-        if (family < 100) {
+        ## maximum likelihood optimization
+        if (family == 0) {
+            theta <- 0
+            se1 <- 0
+            out <- list(value = 0)
+        } else if (family < 100) {
             out <- MLE_intern(cbind(u1, u2),
                               c(theta1, delta),
                               family = family,
@@ -484,13 +484,9 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
                             max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6), BB8 = c(6, 1)),
                             weights = NA, as.BiCop = TRUE) {
 
-    ## return independence immediately
-    if (family == 0)
-        return(BiCop(0, 0))
-
     ## calculate empirical Kendall's tau and invert for initial estimate
     tau <- fasttau(u1, u2)
-    if (family %in% c(2, allfams[onepar]))
+    if (family %in% c(0, 2, allfams[onepar]))
         theta <- BiCopTau2Par(family, tau)
 
     ## inversion of kendall's tau -----------------------------
@@ -627,8 +623,11 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
             theta1 <- 1 + 6 * abs(tau)
         }
 
-        ## likelihood optimization
-        if (family < 100) {
+        ## maximum likelihood optimization
+        if (family == 0) {
+            theta <- 0
+            se1 <- 0
+        } else if (family < 100) {
             out <- MLE_intern(cbind(u1, u2),
                               c(theta1, delta),
                               family = family,
