@@ -27,11 +27,9 @@
 #' Additionally a test for independence can be performed beforehand.
 #'
 #' @param u1,u2 Data vectors of equal length with values in [0,1].
-#' @param familyset Vector of bivariate copula families to select from (the
-#' independence copula MUST NOT be specified in this vector, otherwise it will
-#' be selected).  The vector has to include at least one bivariate copula
+#' @param familyset Vector of bivariate copula families to select from.
+#' The vector has to include at least one bivariate copula
 #' family that allows for positive and one that allows for negative dependence.
-#' Not listed copula families might be included to better handle limit cases.
 #' If \code{familyset = NA} (default), selection among all possible families is
 #' performed.  Coding of bivariate copula families: \cr
 #' \code{0} = independence copula \cr
@@ -90,19 +88,19 @@
 #' @param se Logical; whether standard error(s) of parameter estimates is/are
 #' estimated (default: \code{se = TRUE}).
 #'
-#' @return An object of class \code{\link{BiCop}}, i.e., a list containing
-#' \item{family}{The selected bivariate copula family.}
-#' \item{par, par2}{The estimated bivariate copula parameter(s).}
-#' \item{p.value.indeptest}{P-value of the independence test if performed.}
+#' @return An object of class \code{\link{BiCop}}, augmented with the following
+#' entries:
+#' \item{se, se2}{standard errors for the parameter estimates (if
+#' \code{se = TRUE},}
+#' \item{nobs}{number of observations,}
+#' \item{logLik}{log likelihood}
+#' \item{AIC}{Aikaike's Informaton Criterion,}
+#' \item{BIC}{Bayesian's Informaton Criterion,}
+#' \item{emptau}{empirical value of Kendall's tau,}
+#' \item{p.value.indeptest}{p-value of the independence test.}
 #'
-#' @note When the bivariate t-copula is considered and the degrees of freedom
-#' are estimated to be larger than 30, then the bivariate Gaussian copula is
-#' taken into account instead. Similarly, when BB1 (Clayton-Gumbel), BB6
-#' (Joe-Gumbel), BB7 (Joe-Clayton) or BB8 (Joe-Frank) copulas are considered
-#' and the parameters are estimated to be very close to one of their boundary
-#' cases, the respective one parameter copula is taken into account instead.
 #'
-#' @author Eike Brechmann, Jeffrey Dissmann
+#' @author Thomas Nagler
 #'
 #' @seealso
 #' \code{\link{RVineStructureSelect}},
@@ -147,7 +145,7 @@
 #' dat2 <- BiCopSim(500, fam, par)
 #'
 #' # select the bivariate copula family and estimate the parameter(s)
-#' cop2 <- BiCopSelect(dat2[,1], dat2[,2], familyset = 1:10,
+#' cop2 <- BiCopSelect(dat2[,1], dat2[,2], familyset = 0:10,
 #'                     indeptest = TRUE, level = 0.05)
 #' cop2$family
 #' cop2$par
@@ -156,17 +154,16 @@
 #'
 #' ## Example 3: empirical data
 #' data(daxreturns)
-#' cop3 <- BiCopSelect(daxreturns[,1], daxreturns[,4], familyset = 1:10)
+#' cop3 <- BiCopSelect(daxreturns[,1], daxreturns[,4], familyset = 0:10)
 #' cop3$family
 #' cop3$par
 #' cop3$par2
 #'
-#' @export BiCopSelect
 BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
-                        indeptest = FALSE, level = 0.05, weights = NA,
-                        rotations = TRUE, se = TRUE) {
+                         indeptest = FALSE, level = 0.05, weights = NA,
+                         rotations = TRUE, se = TRUE) {
     if (is.na(familyset[1]))
-        familyset <- allfams
+        familyset <- c(0, allfams)
 
     ## sanity checks
     if ((is.null(u1) == TRUE) || (is.null(u2) == TRUE))
@@ -186,490 +183,126 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
     if ((level) < 0 & (level > 1))
         stop("Significance level has to be between 0 and 1.")
 
-    ## prepare objects
-    out <- list()
-    data1 <- u1
-    data2 <- u2
-
     ## adjust familyset if rotations = TRUE
     if (rotations)
         familyset <- with_rotations(familyset)
 
-    if (!is.na(familyset[1]) & any(familyset == 0)) {
-        ## select independence if allowed
-        out$p.value.indeptest <- NA
-        out$family <- 0
-        out$par <- out$par2 <- 0
-    } else {
-        ## sets of families for negative and positive dependence
-        negfams <- c(1, 2, 5, 23, 24, 26:30, 33, 34, 36:40, 124, 134, 224, 234)
-        posfams <- c(1:10, 13, 14, 16:20, 104, 114, 204, 214)
+    # calculate empirical kendall's tau
+    emp_tau <- fasttau(u1, u2, weights)
 
-        ## stop if familyset not sufficient
-        if (!is.na(familyset[1]) &&
-            !(any(familyset %in% negfams) && any(familyset %in% posfams))) {
-            txt <- paste0("'familyset' has to include at least one bivariate ",
-                          "copula family for positive and one for negative ",
-                          "dependence.")
-            stop(txt)
-        }
+    ## perform independence test
+    p.value.indeptest <- BiCopIndTest(u1, u2)$p.value
 
-        # calculate empirical kendall's tau
-        emp_tau <- fasttau(data1, data2, weights)
+    ## sets of families for negative and positive dependence
+    negfams <- c(1, 2, 5, 23, 24, 26:30, 33, 34, 36:40, 124, 134, 224, 234)
+    posfams <- c(1:10, 13, 14, 16:20, 104, 114, 204, 214)
 
-        ## perform independence test
-        p.value.indeptest <- BiCopIndTest(data1, data2)$p.value
-
-        if (indeptest & (p.value.indeptest >= level)) {
-            ## select independence copula, if not rejected
-            out$family <- 0
-            out$par <- out$par2 <- 0
-        } else {
-            ## initial values for parameter optimization
-            start <- list()
-            start[[1]] <- sin(pi * emp_tau/2)
-            start[[2]] <- c(sin(emp_tau * pi/2), 10)
-            start[[3]] <- start[[13]] <- 2 * abs(emp_tau)/(1 - abs(emp_tau))
-            start[[4]] <- start[[14]] <- 1/(1 - abs(emp_tau))
-            if (5 %in% familyset) {
-                start[[5]] <- Frank.itau.JJ(emp_tau)
-            } else {
-                start[[5]] <- 0
-            }
-            if (any(c(6, 16) %in% familyset)) {
-                start[[6]] <- start[[16]] <- Joe.itau.JJ(abs(emp_tau))
-            } else {
-                start[[6]] <- start[[16]] <- 0
-            }
-            start[[7]] <- start[[17]] <- c(0.5, 1.5)
-            start[[8]] <- start[[18]] <- c(1.5, 1.5)
-            start[[9]] <- start[[19]] <- c(1.5, 0.5)
-            start[[10]] <- start[[20]] <- c(1.5, 0.5)
-            start[[23]] <- start[[33]] <- -2 * abs(emp_tau)/(1 - abs(emp_tau))
-            start[[24]] <- start[[34]] <- -1/(1 - abs(emp_tau))
-            if (any(c(26, 36) %in% familyset)) {
-                start[[26]] <- start[[36]] <- -Joe.itau.JJ(abs(emp_tau))
-            } else {
-                start[[26]] <- start[[36]] <- 0
-            }
-            start[[27]] <- start[[37]] <- c(-0.5, -1.5)
-            start[[28]] <- start[[38]] <- c(-1.5, -1.5)
-            start[[29]] <- start[[39]] <- c(-1.5, -0.5)
-            start[[30]] <- start[[40]] <- c(-1.5, -0.5)
-            delta <- min(abs(emp_tau) + 0.1, 0.999)
-            theta1 <- 1 + 6 * abs(emp_tau)
-            start[[104]] <- start[[204]] <- c(theta1, delta)
-            start[[114]] <- start[[214]] <- c(theta1, delta)
-            start[[124]] <- start[[224]] <- c(-theta1, delta)
-            start[[134]] <- start[[234]] <- c(-theta1, delta)
-
-            ## find families for which estimation is required (only families that allow for
-            ## the empirical kendall's tau)
-            if (emp_tau < 0) {
-                todo <- negfams
-            } else {
-                todo <- posfams
-            }
-            todo <- todo[which(todo %in% familyset)]
-
-
-            ## estimate parameters for each of the families (in 'todo')
-            optiout <- list()
-
-            # t
-            if (any(todo == 2)) {
-                optiout[[2]] <- suppressWarnings(BiCopEst(data1,
-                                                          data2,
-                                                          family = 2,
-                                                          max.df = 30,
-                                                          weights = weights,
-                                                          se = se))
-                optiout[[2]]$par <- c(optiout[[2]]$par, optiout[[2]]$par2)
-                if (se)
-                    optiout[[2]]$se <- c(optiout[[2]]$se, optiout[[2]]$se2)
-                if (optiout[[2]]$par[2] >= 30) {
-                    todo[todo == 2] <- 1
-                    todo <- unique(todo)
-                    optiout[[2]] <- list()
-                }
-            }
-            # BB1
-            if (any(todo == 7)) {
-                optiout[[7]] <- MLE_intern(cbind(data1, data2),
-                                           start[[7]],
-                                           7,
-                                           weights = weights,
-                                           se = se)
-                if (optiout[[7]]$par[1] <= 0.1 | optiout[[7]]$par[2] <= 1.1) {
-                    if (optiout[[7]]$par[1] <= 0.1) {
-                        todo[todo == 7] <- 4
-                        todo <- unique(todo)
-                    } else if (optiout[[7]]$par[2] <= 1.1) {
-                        todo[todo == 7] <- 3
-                        todo <- unique(todo)
-                    }
-                    optiout[[7]] <- list()
-                }
-            }
-            # BB6
-            if (any(todo == 8)) {
-                optiout[[8]] <- MLE_intern(cbind(data1, data2),
-                                           start[[8]],
-                                           8,
-                                           weights = weights,
-                                           se = se)
-                if (optiout[[8]]$par[1] <= 1.1 | optiout[[8]]$par[2] <= 1.1) {
-                    if (optiout[[8]]$par[1] <= 1.1) {
-                        todo[todo == 8] <- 4
-                        todo <- unique(todo)
-                    } else if (optiout[[8]]$par[2] <= 1.1) {
-                        todo[todo == 8] <- 6
-                        todo <- unique(todo)
-                    }
-                    optiout[[8]] <- list()
-                }
-            }
-            # BB7
-            if (any(todo == 9)) {
-                optiout[[9]] <- MLE_intern(cbind(data1, data2),
-                                           start[[9]],
-                                           9,
-                                           weights = weights,
-                                           se = se)
-                if (optiout[[9]]$par[1] <= 1.1 | optiout[[9]]$par[2] <= 0.1) {
-                    if (optiout[[9]]$par[1] <= 1.1) {
-                        todo[todo == 9] <- 3
-                        todo <- unique(todo)
-                    } else if (optiout[[9]]$par[2] <= 0.1) {
-                        todo[todo == 9] <- 6
-                        todo <- unique(todo)
-                    }
-                    optiout[[9]] <- list()
-                }
-            }
-            # BB8
-            if (any(todo == 10)) {
-                optiout[[10]] <- MLE_intern(cbind(data1, data2),
-                                            start[[10]],
-                                            10,
-                                            weights = weights,
-                                            se = se)
-                if (optiout[[10]]$par[2] >= 0.99) {
-                    todo[todo == 10] <- 6
-                    todo <- unique(todo)
-                    optiout[[10]] <- list()
-                }
-            }
-            # SBB1
-            if (any(todo == 17)) {
-                optiout[[17]] <- MLE_intern(cbind(data1, data2),
-                                            start[[17]],
-                                            17,
-                                            weights = weights,
-                                            se = se)
-                if (optiout[[17]]$par[1] <= 0.1 | optiout[[17]]$par[2] <= 1.1) {
-                    if (optiout[[17]]$par[1] <= 0.1) {
-                        todo[todo == 17] <- 14
-                        todo <- unique(todo)
-                    } else if (optiout[[17]]$par[2] <= 1.1) {
-                        todo[todo == 17] <- 13
-                        todo <- unique(todo)
-                    }
-                    optiout[[17]] <- list()
-                }
-            }
-            # SBB6
-            if (any(todo == 18)) {
-                optiout[[18]] <- MLE_intern(cbind(data1, data2),
-                                            start[[18]],
-                                            18,
-                                            weights = weights,
-                                            se = se)
-                if (optiout[[18]]$par[1] <= 1.1 | optiout[[18]]$par[2] <= 1.1) {
-                    if (optiout[[18]]$par[1] <= 1.1) {
-                        todo[todo == 18] <- 14
-                        todo <- unique(todo)
-                    } else if (optiout[[18]]$par[2] <= 1.1) {
-                        todo[todo == 18] <- 16
-                        todo <- unique(todo)
-                    }
-                    optiout[[18]] <- list()
-                }
-            }
-            # SBB7
-            if (any(todo == 19)) {
-                optiout[[19]] <- MLE_intern(cbind(data1, data2),
-                                            start[[19]],
-                                            19,
-                                            weights = weights,
-                                            se = se)
-                if (optiout[[19]]$par[1] <= 1.1 | optiout[[19]]$par[2] <= 0.1) {
-                    if (optiout[[19]]$par[1] <= 1.1) {
-                        todo[todo == 19] <- 13
-                        todo <- unique(todo)
-                    } else if (optiout[[19]]$par[2] <= 0.1) {
-                        todo[todo == 19] <- 16
-                        todo <- unique(todo)
-                    }
-                    optiout[[19]] <- list()
-                }
-            }
-            # SBB8
-            if (any(todo == 20)) {
-                optiout[[20]] <- MLE_intern(cbind(data1, data2),
-                                            start[[20]],
-                                            20,
-                                            weights = weights,
-                                            se = se)
-                if (optiout[[20]]$par[2] >= 0.99) {
-                    todo[todo == 20] <- 16
-                    todo <- unique(todo)
-                    optiout[[20]] <- list()
-                }
-            }
-            # BB1_90
-            if (any(todo == 27)) {
-                optiout[[27]] <- MLE_intern(cbind(data1, data2),
-                                            start[[27]],
-                                            27,
-                                            weights = weights,
-                                            se = se)
-                if (optiout[[27]]$par[1] >= -0.1 | optiout[[27]]$par[2] >= -1.1) {
-                    if (optiout[[27]]$par[1] >= -0.1) {
-                        todo[todo == 27] <- 24
-                        todo <- unique(todo)
-                    } else if (optiout[[27]]$par[2] >= -1.1) {
-                        todo[todo == 27] <- 23
-                        todo <- unique(todo)
-                    }
-                    optiout[[27]] <- list()
-                }
-            }
-            # BB6_90
-            if (any(todo == 28)) {
-                optiout[[28]] <- MLE_intern(cbind(data1, data2),
-                                            start[[28]],
-                                            28,
-                                            weights = weights,
-                                            se = se)
-                if (optiout[[28]]$par[1] >= -1.1 | optiout[[28]]$par[2] >= -1.1) {
-                    if (optiout[[28]]$par[1] >= -1.1) {
-                        todo[todo == 28] <- 24
-                        todo <- unique(todo)
-                    } else if (optiout[[28]]$par[2] >= -1.1) {
-                        todo[todo == 28] <- 26
-                        todo <- unique(todo)
-                    }
-                    optiout[[28]] <- list()
-                }
-            }
-            # BB7_90
-            if (any(todo == 29)) {
-                optiout[[29]] <- MLE_intern(cbind(data1, data2),
-                                            start[[29]],
-                                            29,
-                                            weights = weights,
-                                            se = se)
-                if (optiout[[29]]$par[1] >= -1.1 | optiout[[29]]$par[2] >= -0.1) {
-                    if (optiout[[29]]$par[1] >= -1.1) {
-                        todo[todo == 29] <- 23
-                        todo <- unique(todo)
-                    } else if (optiout[[29]]$par[2] >= -0.1) {
-                        todo[todo == 29] <- 26
-                        todo <- unique(todo)
-                    }
-                    optiout[[29]] <- list()
-                }
-            }
-
-            if (any(todo == 30)) {
-                # BB8_90
-                optiout[[30]] <- MLE_intern(cbind(data1, data2),
-                                            start[[30]],
-                                            30,
-                                            weights = weights,
-                                            se = se)
-                if (optiout[[30]]$par[2] <= -0.99) {
-                    todo[todo == 30] <- 26
-                    todo <- unique(todo)
-                    optiout[[30]] <- list()
-                }
-            }
-            # BB1_270
-            if (any(todo == 37)) {
-                optiout[[37]] <- MLE_intern(cbind(data1, data2),
-                                            start[[37]],
-                                            37,
-                                            weights = weights,
-                                            se = se)
-                if (optiout[[37]]$par[1] >= -0.1 | optiout[[37]]$par[2] >= -1.1) {
-                    if (optiout[[37]]$par[1] >= -0.1) {
-                        todo[todo == 37] <- 34
-                        todo <- unique(todo)
-                    } else if (optiout[[37]]$par[2] >= -1.1) {
-                        todo[todo == 37] <- 33
-                        todo <- unique(todo)
-                    }
-                    optiout[[37]] <- list()
-                }
-            }
-            # BB6_270
-            if (any(todo == 38)) {
-                optiout[[38]] <- MLE_intern(cbind(data1, data2),
-                                            start[[38]],
-                                            38,
-                                            weights = weights,
-                                            se = se)
-                if (optiout[[38]]$par[1] >= -1.1 | optiout[[38]]$par[2] >= -1.1) {
-                    if (optiout[[38]]$par[1] >= -1.1) {
-                        todo[todo == 38] <- 34
-                        todo <- unique(todo)
-                    } else if (optiout[[38]]$par[2] >= -1.1) {
-                        todo[todo == 38] <- 36
-                        todo <- unique(todo)
-                    }
-                    optiout[[38]] <- list()
-                }
-            }
-            # BB7_270
-            if (any(todo == 39)) {
-                optiout[[39]] <- MLE_intern(cbind(data1, data2),
-                                            start[[39]],
-                                            39,
-                                            weights = weights,
-                                            se = se)
-                if (optiout[[39]]$par[1] >= -1.1 | optiout[[39]]$par[2] >= -0.1) {
-                    if (optiout[[39]]$par[1] >= -1.1) {
-                        todo[todo == 39] <- 33
-                        todo <- unique(todo)
-                    } else if (optiout[[39]]$par[2] >= -0.1) {
-                        todo[todo == 39] <- 36
-                        todo <- unique(todo)
-                    }
-                    optiout[[39]] <- list()
-                }
-            }
-            # BB8_270
-            if (any(todo == 40)) {
-                optiout[[40]] <- MLE_intern(cbind(data1, data2),
-                                            start[[40]],
-                                            40,
-                                            weights = weights,
-                                            se = se)
-                if (optiout[[40]]$par[2] <= -0.99) {
-                    todo[todo == 40] <- 36
-                    todo <- unique(todo)
-                    optiout[[40]] <- list()
-                }
-            }
-            # Tawns
-            for (i in todo[(todo %in% allfams[tawns])]) {
-                optiout[[i]] <- MLE_intern_Tawn(cbind(data1, data2),
-                                                start[[i]],
-                                                i,
-                                                se = se)
-            }
-            # one parameter families
-            for (i in todo[todo %in% allfams[onepar]]) {
-                optiout[[i]] <- MLE_intern(cbind(data1, data2),
-                                           start[[i]],
-                                           i,
-                                           weights = weights,
-                                           se = se)
-            }
-
-            ## calculate AIC and BIC
-            AICs <- rep(Inf, max(todo))
-            BICs <- rep(Inf, max(todo))
-            lls  <- rep(Inf, max(todo))
-            for (i in todo) {
-                if (i %in% allfams[twopar]) {
-                    if (any(is.na(weights))) {
-                        lls[i] <- sum(log(BiCopPDF(data1,
-                                                   data2,
-                                                   i,
-                                                   optiout[[i]]$par[1],
-                                                   optiout[[i]]$par[2],
-                                                   check.pars = FALSE)))
-                    } else {
-                        lls[i] <- sum(log(BiCopPDF(data1,
-                                                   data2,
-                                                   i,
-                                                   optiout[[i]]$par[1],
-                                                   optiout[[i]]$par[2],
-                                                   check.pars = FALSE)) %*% weights)
-                    }
-                    AICs[i] <- -2 * lls[i] + 4
-                    BICs[i] <- -2 * lls[i] + 2 * log(length(data1))
-                } else {
-                    if (any(is.na(weights))) {
-                        lls[i] <- sum(log(BiCopPDF(data1,
-                                                   data2,
-                                                   i,
-                                                   optiout[[i]]$par,
-                                                   check.pars = FALSE)))
-                    } else {
-                        lls[i] <- sum(log(BiCopPDF(data1,
-                                                   data2,
-                                                   i,
-                                                   optiout[[i]]$par,
-                                                   check.pars = FALSE)) %*% weights)
-                    }
-                    AICs[i] <- -2 * lls[i] + 2
-                    BICs[i] <- -2 * lls[i] + 1 * log(length(data1))
-                }
-            }
-
-            ## select the best fitting model
-            if (selectioncrit == "logLik") {
-                out$family <- todo[which.max(lls[todo])][1]
-            } else if (selectioncrit == "AIC") {
-                out$family <- todo[which.min(AICs[todo])][1]
-            } else {
-                out$family <- todo[which.min(BICs[todo])][1]
-            }
-
-            ## for one-parameter families, set par2 = 0 (default)
-            out$par <- optiout[[out$family]]$par[1]
-            if (out$family %in% allfams[onepar]) {
-                out$par2 <- 0
-            } else {
-                out$par2 <- optiout[[out$family]]$par[2]
-            }
-        }
+    ## stop if familyset not sufficient
+    if (!is.na(familyset[1]) &&
+        !(any(familyset %in% negfams) && any(familyset %in% posfams))) {
+        txt <- paste0("'familyset' has to include at least one bivariate ",
+                      "copula family for positive and one for negative ",
+                      "dependence.")
+        stop(txt)
     }
 
-    ## store results in BiCop object (dependence measures are calculated)
-    p.value.indeptest <- out$p.value.indeptest
-    out <- BiCop(out$family, out$par, out$par2, check.pars = FALSE)
+    if (indeptest & (p.value.indeptest >= level)) {
+        ## select independence copula, if not rejected
+        obj <- BiCop(0)
+    } else {
+        ## find families for which estimation is required
+        ## (only families that allow for the empirical kendall's tau)
+        if (emp_tau < 0) {
+            todo <- negfams
+        } else {
+            todo <- posfams
+        }
+        todo <- todo[which(todo %in% familyset)]
+
+        ## maximum likelihood estimation
+        optiout <- list()
+        for (i in seq_along(todo)) {
+            optiout[[i]] <- BiCopEst.intern(u1, u2,
+                                            family = todo[i],
+                                            se = se,
+                                            weights = weights,
+                                            as.BiCop = FALSE)
+        }
+
+        ## calculate logLik, AIC and BIC
+        lls  <- rep(Inf, length(todo))
+        AICs <- rep(Inf, length(todo))
+        BICs <- rep(Inf, length(todo))
+        for (i in seq_along(todo)) {
+            if (any(is.na(weights))) {
+                lls[i] <- sum(log(BiCopPDF(u1,
+                                           u2,
+                                           todo[i],
+                                           optiout[[i]]$par,
+                                           optiout[[i]]$par2,
+                                           check.pars = FALSE)))
+            } else {
+                lls[i] <- sum(log(BiCopPDF(u1,
+                                           u2,
+                                           todo[i],
+                                           optiout[[i]]$par,
+                                           optiout[[i]]$par2,
+                                           check.pars = FALSE)) %*% weights)
+            }
+            npars <- ifelse(todo[i] %in% allfams[onepar], 1, 2)
+            AICs[i] <- -2 * lls[i] + 2 * npars
+            BICs[i] <- -2 * lls[i] + log(length(u1)) * npars
+
+        }
+
+        ## add independence copula
+        if (0 %in% familyset) {
+            optiout[[length(todo) + 1]] <- list(family = 0, par = 0, par2 = 0)
+            lls[length(todo) + 1] <- 0
+            AICs[length(todo) + 1] <- 0
+            BICs[length(todo) + 1] <- 0
+        }
+
+        ## select the best fitting model
+        sel <- switch(selectioncrit,
+                      "logLik" = which.max(lls),
+                      "AIC"    = which.min(AICs),
+                      "BIC"    = which.min(BICs))
+
+        ## store results in BiCop object (dependence measures are calculated)
+        obj <- BiCop(optiout[[sel]]$family,
+                     optiout[[sel]]$par,
+                     optiout[[sel]]$par2,
+                     check.pars = FALSE)
+    }
 
     ## add more information about the fit
-    if (out$family == 0) {
+    if (obj$family == 0) {
         if (se)
-            out$se <- NA
-        out$nobs   <- length(u1)
-        out$logLik <- 0
-        out$AIC    <- 0
-        out$BIC    <- 0
+            obj$se <- NA
+        obj$nobs   <- length(u1)
+        obj$logLik <- 0
+        obj$AIC    <- 0
+        obj$BIC    <- 0
     } else {
         if (se) {
-            out$se <- optiout[[out$family]]$se[1]
-            if (out$family %in% allfams[twopar])
-                out$se2 <- optiout[[out$family]]$se[2]
+            obj$se <- optiout[[sel]]$se1
+            if (obj$family %in% allfams[twopar])
+                obj$se2 <- optiout[[sel]]$se2
         }
-        out$nobs   <- length(u1)
-        out$logLik <- lls[out$family]
-        out$AIC    <- AICs[out$family]
-        out$BIC    <- BICs[out$family]
+        obj$nobs   <- length(u1)
+        obj$logLik <- lls[sel]
+        obj$AIC    <- AICs[sel]
+        obj$BIC    <- BICs[sel]
     }
-    out$emptau <- emp_tau
-    out$p.value.indeptest <- p.value.indeptest
+    obj$emptau <- emp_tau
+    obj$p.value.indeptest <- p.value.indeptest
 
     ## store the call that created the BiCop object
-    out$call <- match.call()
+    obj$call <- match.call()
 
     ## return final BiCop objectz
-    out
+    obj
 }
 
 
