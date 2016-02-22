@@ -85,19 +85,27 @@
 #' \code{max.BB = list(BB1=c(5,6),BB6=c(6,6),BB7=c(5,6),BB8=c(6,1))}).
 #' @param weights Numerical; weights for each observation (opitional).
 #'
-#' @return An object of class \code{\link{BiCop}}, i.e., a list containing
-#' \item{family}{Copula family} \item{par, par2}{Estimated copula
-#' parameter(s).} \item{se, se2}{Standard error(s) of the parameter estimate(s)
-#' (if \code{se = TRUE}).}
+#' @return An object of class \code{\link{BiCop}}, augmented with the following
+#' entries:
+#' \item{se, se2}{standard errors for the parameter estimates (if
+#' \code{se = TRUE},}
+#' \item{nobs}{number of observations,}
+#' \item{logLik}{log likelihood}
+#' \item{AIC}{Aikaike's Informaton Criterion,}
+#' \item{BIC}{Bayesian's Informaton Criterion,}
+#' \item{emptau}{empirical value of Kendall's tau,}
+#' \item{p.value.indeptest}{p-value of the independence test.}
+#' For a comprehensive summary of the fitted model, use \code{summary(object)};
+#' to see all its contents, use \code{str(object)}.
 #'
 #' @author Ulf Schepsmeier, Eike Brechmann, Jakob Stoeber, Carlos Almeida
 #'
 #' @seealso
+#' \code{\link{BiCop}},
 #' \code{\link{BiCopPar2Tau}},
 #' \code{\link{BiCopTau2Par}},
 #' \code{\link{RVineSeqEst}},
 #' \code{\link{BiCopSelect}},
-#' \code{\link{BiCop}}
 #'
 #' @references Joe, H. (1997). Multivariate Models and Dependence Concepts.
 #' Chapman and Hall, London.
@@ -109,15 +117,19 @@
 #' u1 <- dat[,1]
 #' v1 <- dat[,2]
 #'
-#' # empirical Kendall's tau
-#' tau1 <- cor(u1, v1, method = "kendall")
+#' # estimate parameters of Gaussian copula by inversion of Kendall's tau
+#' est1.tau <- BiCopEst(u1, v1, family = 1, method = "itau")
+#' est1.tau  # short overview
+#' summary(est1.tau)  # comprehensive overview
+#' str(est1.tau)  # see all contents of the object
 #'
-#' # inversion of empirical Kendall's tau
-#' BiCopTau2Par(1, tau1)
-#' BiCopEst(u1, v1, family = 1, method = "itau")$par
+#' # check if parameter actually coincides with inversion of Kendall's tau
+#' tau1 <- cor(u1, v1, method = "kendall")
+#' all.equal(BiCopTau2Par(1, tau1), est1.tau$par)
 #'
 #' # maximum likelihood estimate for comparison
-#' BiCopEst(u1, v1, family = 1, method = "mle")$par
+#' est1.mle <- BiCopEst(u1, v1, family = 1, method = "mle")
+#' summary(est1.mle)
 #'
 #'
 #' ## Example 2: bivariate Clayton and survival Gumbel copulas

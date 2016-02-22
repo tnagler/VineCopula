@@ -98,15 +98,22 @@
 #' \item{BIC}{Bayesian's Informaton Criterion,}
 #' \item{emptau}{empirical value of Kendall's tau,}
 #' \item{p.value.indeptest}{p-value of the independence test.}
-#'
+#' For a comprehensive summary of the fitted model, use \code{summary(object)};
+#' to see all its contents, use \code{str(object)}.
 #'
 #' @author Thomas Nagler
 #'
+#' @note The parameters of the Student t and BB copulas are restricted (see
+#' defaults in \code{\link{BiCopEst}} to avoid being to close to their limiting
+#' cases.
+#'
 #' @seealso
+#' \code{\link{BiCop}},
+#' \code{\link{BiCopEst}},
 #' \code{\link{RVineStructureSelect}},
 #' \code{\link{RVineCopSelect}},
 #' \code{\link{BiCopIndTest}},
-#' \code{\link{BiCop}}
+#'
 #'
 #' @references Akaike, H. (1973). Information theory and an extension of the
 #' maximum likelihood principle. In B. N. Petrov and F. Csaki (Eds.),
