@@ -81,8 +81,8 @@
 #' models with pre-specified tree structure can be specified using
 #' \code{\link{RVineCopSelect}}.
 #' @param selectioncrit Character indicating the criterion for pair-copula
-#' selection. Possible choices: \code{selectioncrit = "AIC"} (default) or
-#' \code{"BIC"} (see \code{\link{BiCopSelect}}).
+#' selection. Possible choices:\code{selectioncrit = "AIC"} (default),
+#' \code{"BIC"}, or \code{"logLik"} (see \code{\link{BiCopSelect}}).
 #' @param indeptest logical; whether a hypothesis test for the independence of
 #' \code{u1} and \code{u2} is performed before bivariate copula selection
 #' (default: \code{indeptest = FALSE}; see \code{\link{BiCopIndTest}}).  The
@@ -172,7 +172,7 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
                 stop("Copula family not implemented.")
         }
     }
-    if (selectioncrit != "AIC" && selectioncrit != "BIC")
+    if (!(selectioncrit %in% c("AIC", "BIC", "logLik")))
         stop("Selection criterion not implemented.")
     if (level < 0 & level > 1)
         stop("Significance level has to be between 0 and 1.")
@@ -746,6 +746,8 @@ as.RVM2 <- function(RVine, data, callexp) {
     tmps    <- matrix(0, n, n)
     Se2s    <- matrix(0, n, n)
     emptaus <- matrix(0, n, n)
+    pvals   <- matrix(0, n, n)
+
     ## store structure, families and parameters in matrices
     for (k in 1:(n - 1)) {
         w <- nedSets[[n - k]][[1]][1]
@@ -760,6 +762,7 @@ as.RVM2 <- function(RVine, data, callexp) {
         tmpse2              <- crspfits[[n - k]][[1]]$se2
         Se2s[(k + 1), k]    <- ifelse(is.null(tmpse2), NA, tmpse2)
         emptaus[(k + 1), k] <- crspfits[[n - k]][[1]]$emptau
+        pvals[(k + 1), k]   <- crspfits[[n - k]][[1]]$p.value.indeptest
 
         if (k == (n - 1)) {
             M[(k + 1), (k + 1)] <- nedSets[[n - k]][[1]][2]
@@ -796,6 +799,7 @@ as.RVM2 <- function(RVine, data, callexp) {
                 tmpse2        <- crspfits[[n - i + 1]][[j]]$se2
                 Se2s[i, k]    <- ifelse(is.null(tmpse2), NA, tmpse2)
                 emptaus[i, k] <- crspfits[[n - i + 1]][[j]]$emptau
+                pvals[i, k]   <- crspfits[[n - i + 1]][[j]]$p.value.indeptest
                 nedSets[[n - i + 1]][[j]]    <- NULL
                 crspParams[[n - i + 1]][[j]] <- NULL
                 crspTypes[[n - i + 1]][[j]]  <- NULL

@@ -69,8 +69,8 @@ models with pre-specified tree structure can be specified using
 \code{\link{RVineCopSelect}}.}
 
 \item{selectioncrit}{Character indicating the criterion for pair-copula
-selection. Possible choices: \code{selectioncrit = "AIC"} (default) or
-\code{"BIC"} (see \code{\link{BiCopSelect}}).}
+selection. Possible choices:\code{selectioncrit = "AIC"} (default),
+\code{"BIC"}, or \code{"logLik"} (see \code{\link{BiCopSelect}}).}
 
 \item{indeptest}{logical; whether a hypothesis test for the independence of
 \code{u1} and \code{u2} is performed before bivariate copula selection

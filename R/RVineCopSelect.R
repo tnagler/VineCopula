@@ -19,8 +19,8 @@
 #' @param Matrix lower or upper triangular d x d matrix that defines the R-vine
 #' tree structure.
 #' @param selectioncrit Character indicating the criterion for pair-copula
-#' selection. Possible choices: \code{selectioncrit = "AIC"} (default) or
-#' \code{"BIC"} (see \code{\link{BiCopSelect}}).
+#' selection. Possible choices: \code{selectioncrit = "AIC"} (default),
+#' \code{"BIC"}, or \code{"logLik"} (see \code{\link{BiCopSelect}}).
 #' @param indeptest Logical; whether a hypothesis test for the independence of
 #' \code{u1} and \code{u2} is performed before bivariate copula selection
 #' (default: \code{indeptest = FALSE}; see \code{\link{BiCopIndTest}}).  The
@@ -161,7 +161,7 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
                                    104, 114, 124, 134, 204, 214, 224, 234))))
             stop("Copula family not implemented.")
     }
-    if (selectioncrit != "AIC" && selectioncrit != "BIC")
+    if (!(selectioncrit %in% c("AIC", "BIC", "logLik")))
         stop("Selection criterion not implemented.")
     if (level < 0 & level > 1)
         stop("Significance level has to be between 0 and 1.")
@@ -197,6 +197,7 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
     Ses     <- matrix(0, d, d)
     Se2s    <- matrix(0, d, d)
     emptaus <- matrix(0, d, d)
+    pvals   <- matrix(0, d, d)
     V <- list()
     V$direct <- array(NA, dim = c(d, N))
     V$indirect <- array(NA, dim = c(d, N))
@@ -280,6 +281,7 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
             tmpse2        <- res.k[[i]]$cfit$se2
             Se2s[k, i]    <- ifelse(is.null(tmpse2), NA, tmpse2)
             emptaus[k, i] <- res.k[[i]]$cfit$emptau
+            pvals[k, i]   <- res.k[[i]]$cfit$p.value.indeptest
 
             ## replace pseudo observations for estimation of next tree
             if (!is.null(res.k[[i]]$direct))
@@ -311,6 +313,7 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
     .RVM$BIC <- -2 * like$loglik + log(T) * npar
     .RVM$pair.BIC <- -2 * like$V$value + log(T) * npar_pair
     .RVM$emptau <- emptaus
+    .RVM$p.value.indeptest <- pvals
 
     ## free memory and return final object
     rm(list = ls())
