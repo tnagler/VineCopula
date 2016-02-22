@@ -24,6 +24,7 @@ importFrom("parallel", "makeCluster", "stopCluster", "detectCores")
 export(pobs)
 
 export(BiCop)
+export(BiCopCheck)
 export(BiCopEst)
 export(BiCopMetaContour)
 export(BiCopChiPlot)
