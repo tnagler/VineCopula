@@ -114,8 +114,8 @@
 #'
 #' ## Example 1: bivariate Gaussian copula
 #' dat <- BiCopSim(500, 1, 0.7)
-#' u1 <- dat[,1]
-#' v1 <- dat[,2]
+#' u1 <- dat[, 1]
+#' v1 <- dat[, 2]
 #'
 #' # estimate parameters of Gaussian copula by inversion of Kendall's tau
 #' est1.tau <- BiCopEst(u1, v1, family = 1, method = "itau")
@@ -135,8 +135,8 @@
 #' ## Example 2: bivariate Clayton and survival Gumbel copulas
 #' # simulate from a Clayton copula
 #' dat <- BiCopSim(500, 3, 2.5)
-#' u2 <- dat[,1]
-#' v2 <- dat[,2]
+#' u2 <- dat[, 1]
+#' v2 <- dat[, 2]
 #'
 #' # empirical Kendall's tau
 #' tau2 <- cor(u2, v2, method = "kendall")
@@ -625,6 +625,7 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
 
         ## maximum likelihood optimization
         if (family == 0) {
+            out <- list(value = 0)
             theta <- 0
             se1 <- 0
         } else if (family < 100) {

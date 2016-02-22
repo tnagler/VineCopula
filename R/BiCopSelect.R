@@ -12,13 +12,11 @@
 #' copulas are not considered) and the family with the minimum value is chosen.
 #' For observations \eqn{u_{i,j},\ i=1,...,N,\ j=1,2,}{u_{i,j}, i=1,...,N,\
 #' j=1,2,} the AIC of a bivariate copula family \eqn{c} with parameter(s)
-#' \eqn{\boldsymbol{\theta}} is defined as \deqn{ }{ AIC := -2 \sum_{i=1}^N
-#' ln[c(u_{i,1},u_{i,2}|\theta)] + 2k, }\deqn{AIC := -2 \sum_{i=1}^N
+#' \eqn{\boldsymbol{\theta}} is defined as \deqn{AIC := -2 \sum_{i=1}^N
 #' \ln[c(u_{i,1},u_{i,2}|\boldsymbol{\theta})] + 2k, }{ AIC := -2 \sum_{i=1}^N
 #' ln[c(u_{i,1},u_{i,2}|\theta)] + 2k, } where \eqn{k=1} for one parameter
 #' copulas and \eqn{k=2} for the two parameter t-, BB1, BB6, BB7 and BB8
-#' copulas. Similarly, the BIC is given by \deqn{ }{ BIC := -2 \sum_{i=1}^N
-#' ln[c(u_{i,1},u_{i,2}|\theta)] + ln(N)k. }\deqn{BIC := -2 \sum_{i=1}^N
+#' copulas. Similarly, the BIC is given by \deqn{BIC := -2 \sum_{i=1}^N
 #' \ln[c(u_{i,1},u_{i,2}|\boldsymbol{\theta})] + \ln(N)k. }{ BIC := -2
 #' \sum_{i=1}^N ln[c(u_{i,1},u_{i,2}|\theta)] + ln(N)k. } Evidently, if the BIC
 #' is chosen, the penalty for two parameter families is stronger than when
@@ -73,8 +71,8 @@
 #' \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
 #' \code{234} = rotated Tawn type 2 copula (270 degrees) \cr
 #' @param selectioncrit Character indicating the criterion for bivariate copula
-#' selection. Possible choices: \code{selectioncrit = "AIC"} (default) or
-#' \code{"BIC"}.
+#' selection. Possible choices: \code{selectioncrit = "AIC"} (default),
+#' \code{"BIC"}, or \code{"logLik"}.
 #' @param indeptest Logical; whether a hypothesis test for the independence of
 #' \code{u1} and \code{u2} is performed before bivariate copula selection
 #' (default: \code{indeptest = FALSE}; see \code{\link{BiCopIndTest}}).  The
@@ -139,7 +137,7 @@
 #' dat1 <- BiCopSim(500, fam, par)
 #'
 #' # select the bivariate copula family and estimate the parameter(s)
-#' cop1 <- BiCopSelect(dat1[,1], dat1[,2], familyset = 1:10,
+#' cop1 <- BiCopSelect(dat1[, 1], dat1[, 2], familyset = 1:10,
 #'                     indeptest = FALSE, level = 0.05)
 #' cop1  # short overview
 #' summary(cop1)  # comprehensive overview
@@ -152,14 +150,14 @@
 #' dat2 <- BiCopSim(500, fam, par)
 #'
 #' # select the bivariate copula family and estimate the parameter(s)
-#' cop2 <- BiCopSelect(dat2[,1], dat2[,2], familyset = 0:10,
+#' cop2 <- BiCopSelect(dat2[, 1], dat2[, 2], familyset = 0:10,
 #'                     indeptest = TRUE, level = 0.05)
 #' summary(cop2)
 #'
 #'
 #' ## Example 3: empirical data
 #' data(daxreturns)
-#' cop3 <- BiCopSelect(daxreturns[,1], daxreturns[,4], familyset = 0:10)
+#' cop3 <- BiCopSelect(daxreturns[, 1], daxreturns[, 4], familyset = 0:10)
 #' summary(cop3)
 #'
 BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
