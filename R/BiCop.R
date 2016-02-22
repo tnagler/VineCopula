@@ -188,8 +188,18 @@ summary.BiCop <- function(object, ...) {
     cat("Dependence measures\n")
     cat("-------------------\n")
     cat("Kendall's tau:   ", as.character(round(object$tau, 2)))
-    if (!is.null(object$emptau))
-        cat(" (empirical = ", as.character(round(object$emptau, 2)), ")", sep = "")
+    if (!is.null(object$emptau)) {
+        p <- object$p.value.indeptest
+        cat(" (empirical = ",
+            as.character(round(object$emptau, 2)),
+            ", ",
+            "p value ",
+            ifelse(p < 0.01,
+                   "< 0.01",
+                   paste0("= ", as.character(round(p, 2)))),
+            ")",
+            sep = "")
+    }
     cat("\n")
     cat("Upper TD:        ", as.character(round(object$taildep$upper, 2)), "\n")
     cat("Lower TD:        ", as.character(round(object$taildep$lower, 2)), "\n")

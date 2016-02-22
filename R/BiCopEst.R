@@ -457,6 +457,7 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
     obj$AIC    <- - 2 * obj$logLik + 2 * obj$npars
     obj$BIC    <- - 2 * obj$logLik + log(obj$nobs) * obj$npars
     obj$emptau <- tau
+    obj$p.value.indeptest <- BiCopIndTest(u1, u2)$p.value
 
     ## store the call that created the BiCop object
     obj$call <- match.call()

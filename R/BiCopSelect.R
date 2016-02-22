@@ -181,7 +181,7 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         stop("Data has to be in the interval [0,1].")
     if (!all(familyset %in% c(0, allfams)))
         stop("Copula family not implemented.")
-    if ((selectioncrit != "AIC") && (selectioncrit != "BIC"))
+    if (!(selectioncrit %in% c("AIC", "BIC", "logLik")))
         stop("Selection criterion not implemented.")
     if ((level) < 0 & (level > 1))
         stop("Significance level has to be between 0 and 1.")
@@ -217,14 +217,10 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         # calculate empirical kendall's tau
         emp_tau <- fasttau(data1, data2, weights)
 
-        ## perform independence test (if asked for)
-        if (indeptest == TRUE) {
-            out$p.value.indeptest <- BiCopIndTest(data1, data2)$p.value
-        } else {
-            out$p.value.indeptest <- NA
-        }
+        ## perform independence test
+        p.value.indeptest <- BiCopIndTest(data1, data2)$p.value
 
-        if ((!is.na(out$p.value.indeptest)) & (out$p.value.indeptest >= level)) {
+        if (indeptest & (p.value.indeptest >= level)) {
             ## select independence copula, if not rejected
             out$family <- 0
             out$par <- out$par2 <- 0
@@ -625,7 +621,9 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
             }
 
             ## select the best fitting model
-            if (selectioncrit == "AIC") {
+            if (selectioncrit == "logLik") {
+                out$family <- todo[which.max(lls[todo])][1]
+            } else if (selectioncrit == "AIC") {
                 out$family <- todo[which.min(AICs[todo])][1]
             } else {
                 out$family <- todo[which.min(BICs[todo])][1]
@@ -665,7 +663,7 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         out$BIC    <- BICs[out$family]
     }
     out$emptau <- emp_tau
-    out$p.value.indeptest <- out$p.value.indeptest
+    out$p.value.indeptest <- p.value.indeptest
 
     ## store the call that created the BiCop object
     out$call <- match.call()
