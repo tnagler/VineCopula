@@ -467,6 +467,226 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
 }
 
 
+## internal version without checking and option for reduced outpout
+BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
+                            max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6), BB8 = c(6, 1)),
+                            weights = NA, as.BiCop = TRUE) {
+
+    ## return independence immediately
+    if (family == 0)
+        return(BiCop(0, 0))
+
+    ## calculate empirical Kendall's tau and invert for initial estimate
+    tau <- fasttau(u1, u2)
+    if (family %in% c(2, allfams[onepar]))
+        theta <- BiCopTau2Par(family, tau)
+
+    ## inversion of kendall's tau -----------------------------
+    if (method == "itau") {
+
+        ## standard errors for method itau
+        se1 <- 0
+        if (se == TRUE) {
+            p <- 2
+            n <- length(u1)
+            ec <- numeric(n)
+            u <- cbind(u1, u2)
+            v <- matrix(0, n, p * (p - 1)/2)
+
+            if (family == 1)
+                tauder <- function(x) {
+                    2/(pi * sqrt(1 - x^2))
+                } else if (family %in% c(3, 13, 23, 33)) {
+                    tauder <- function(x) 2 * (2 + x)^(-2)
+                } else if (family %in% c(4, 14, 24, 34)) {
+                    tauder <- function(x) x^(-2)
+                } else if (family == 5) {
+                    f <- function(x) x/(exp(x) - 1)
+                    tauder <- function(x) {
+                        lwr <- 0 + .Machine$double.eps^0.5
+                        intgrl <- integrate(f,
+                                            lower = lwr,
+                                            upper = x)$value
+                        4/x^2 - 8/x^3 * intgrl + 4/(x * (exp(x) - 1))
+                    }
+                } else if (family %in% c(6, 16, 26, 36)) {
+                    tauder <- function(x) {
+                        euler <- 0.577215664901533
+                        -((-2 + 2 * euler + 2 * log(2) + digamma(1/x) +
+                               digamma(1/2 * (2 + x)/x) + x)/(-2 + x)^2) +
+                            ((-trigamma(1/x)/x^2 + trigamma(1/2 * (2 + x)/x) *
+                                  (1/(2 + x) - (2 + x)/(2 * x^2)) + 1)/(-2 + x))
+                    }
+                } else if (family %in% c(41, 51, 61, 71)) {
+                    tauder <- function(x) {
+                        2 * sqrt(pi) * gamma(0.5 + x) *
+                            (digamma(1 + x) - digamma(0.5 + x))/gamma(1 + x)
+                    }
+                }
+
+            l <- 1
+            for (j in 1:(p - 1)) {
+                for (i in (j + 1):p) {
+                    for (k in 1:n)
+                        ec[k] <- sum(u[, i] <= u[k, i] & u[, j] <= u[k, j])/n
+                    v[, l] <- 2 * ec - u[, i] - u[, j]
+                    l <- l + 1
+                }
+            }
+
+            if (family == 0) {
+                D <- 0
+            } else if (family %in% c(1, 3, 4, 5, 6, 13, 14, 16, 41, 51)) {
+                D <- 1/tauder(theta)
+            } else if (family %in% c(23, 33, 24, 34, 26, 36, 61, 71)) {
+                D <- 1/tauder(-theta)
+            }
+
+
+            se1 <- as.numeric(sqrt(16/n * var(v %*% D)))
+        }  # end if (se == TRUE)
+    }  # end if (method == "itau")
+
+    ## MLE ------------------------------------------
+    if (method == "mle") {
+        ## set starting parameters for maximum likelihood estimation
+        theta1 <- 0
+        delta <- 0
+
+        if (!(family %in% c(2, 6, 7, 8, 9, 10,
+                            17, 18, 19, 20,
+                            27, 28, 29, 30,
+                            37, 38, 39, 40,
+                            104, 114, 124, 134,
+                            204, 214, 224, 234))) {
+            theta1 <- theta
+        }
+        if (family == 2) {
+            ## t
+            theta1 <- sin(tau * pi/2)
+            delta1 <- min(10, (max.df + 2)/2)  # Take the middle between 2 and max.df
+            delta <- MLE_intern(cbind(u1, u2),
+                                c(theta1, delta1),
+                                family = family,
+                                se = FALSE,
+                                max.df,
+                                max.BB,
+                                cor.fixed = TRUE,
+                                weights)$par[2]
+        } else if (family == 7 || family == 17) {
+            ## BB1
+            delta <- 1.5
+            theta1 <- 0.5
+
+        } else if (family == 27 || family == 37) {
+            ## BB1
+            delta <- -1.5
+            theta1 <- -0.5
+        } else if (family == 8 || family == 18) {
+            ## BB6
+            delta <- 1.5
+            theta1 <- 1.5
+
+        } else if (family == 28 || family == 38) {
+            ## BB6
+            delta <- -1.5
+            theta1 <- -1.5
+        } else if (family == 9 || family == 19) {
+            ## BB7
+            delta <- 0.5
+            theta1 <- 1.5
+        } else if (family == 29 || family == 39) {
+            ## BB7
+            delta <- max(-0.5, -max((max.BB$BB7[2] + 0.001)/2, 0.001))
+            theta1 <- max(-1.5, -max((max.BB$BB7[1] + 1.001)/2, 1.001))
+        } else if (family == 10 || family == 20) {
+            ## BB8
+            delta <- 0.5
+            theta1 <- 1.5
+        } else if (family == 30 || family == 40) {
+            ## BB8
+            delta <- -0.5
+            theta1 <- -1.5
+        } else if (family %in% allfams[tawns]) {
+            ## Tawn
+            # the folllowing gives a theoretical kendall's tau close
+            #  to the empirical one
+            delta <- min(abs(tau) + 0.1, 0.999)
+            theta1 <- 1 + 6 * abs(tau)
+        }
+
+        ## likelihood optimization
+        if (family < 100) {
+            out <- MLE_intern(cbind(u1, u2),
+                              c(theta1, delta),
+                              family = family,
+                              se,
+                              max.df,
+                              max.BB,
+                              weights)
+            theta <- out$par
+            if (se == TRUE)
+                se1 <- out$se
+        } else if (family > 100) {
+            # New
+            out <- MLE_intern_Tawn(cbind(u1, u2),
+                                   c(theta1, delta),
+                                   family = family,
+                                   se)
+            theta <- out$par
+            if (se == TRUE)
+                se1 <- out$se
+        }
+    }
+
+    ## store estimated parameters
+    if (length(theta) == 1)
+        theta <- c(theta, 0)
+    if (!as.BiCop) {
+        obj <- list(family = family, par = theta[1], par2 = theta[2])
+        ## store standard errors (if asked for)
+        if (se == TRUE) {
+            if (length(se1) == 1)
+                se1 <- c(se1, 0)
+            obj$se <- se1[1]
+            obj$se2 <- se1[2]
+        }
+    } else {
+        obj <- BiCop(family, theta[1], theta[2])
+
+        ## store standard errors (if asked for)
+        if (se == TRUE) {
+            if (length(se1) == 1)
+                se1 <- c(se1, 0)
+            obj$se <- se1[1]
+            obj$se2 <- se1[2]
+        }
+
+        ## add more information about the fit
+        obj$nobs   <- length(u1)
+        # for method "itau" the log-likelihood hasn't been calculated yet
+        obj$logLik <- switch(method,
+                             "itau" = sum(log(BiCopPDF(u1, u2,
+                                                       obj$family,
+                                                       obj$par,
+                                                       obj$par2,
+                                                       check.pars = FALSE))),
+                             "mle"  = out$value)
+        obj$AIC    <- - 2 * obj$logLik + 2 * obj$npars
+        obj$BIC    <- - 2 * obj$logLik + log(obj$nobs) * obj$npars
+        obj$emptau <- tau
+        obj$p.value.indeptest <- BiCopIndTest(u1, u2)$p.value
+
+        ## store the call that created the BiCop object
+        obj$call <- match.call()
+    }
+
+    ## return results
+    obj
+}
+
+
+
 
 #############################################################
 # bivariate MLE function
@@ -486,7 +706,8 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
 #---------------------------------------------------------------
 
 MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
-                       max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6), BB8 = c(6, 1)),
+                       max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6),
+                                     BB7 = c(5, 6), BB8 = c(6, 1)),
                        weights = NULL, cor.fixed = FALSE) {
 
     n <- dim(data)[1]
@@ -661,11 +882,6 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
                                       upper = c(0.9999, max.df))
                 }
             }
-
-            if (optimout$par[2] >= (max.df - 1e-04))
-                warning(paste("Degrees of freedom of the t-copula estimated to be larger than ",
-                              max.df, ". Consider using the Gaussian copula instead.",
-                              sep = ""))
 
         } else {
             t_LL <- function(param) {
