@@ -10,6 +10,7 @@ BiCopPar2Beta(family, par, par2 = 0, obj = NULL, check.pars = TRUE)
 \item{family}{integer; single number or vector of size \code{m}; defines the
 bivariate copula family: \cr
 \code{0} = independence copula \cr
+\code{2} = Student t copula (t-copula) \cr
 \code{1} = Gaussian copula \cr
 \code{3} = Clayton copula \cr
 \code{4} = Gumbel copula \cr

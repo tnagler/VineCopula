@@ -86,8 +86,9 @@ can be used.
 }
 \note{
 The calculation of the cumulative distribution function (CDF) of the
-Student's t copula (\code{family = 2}) is not implemented any more since the
-calculation was wrong for non-integer degrees-of-freedom.
+Student's t copula (\code{family = 2}) is only approximate. For numerical
+reasons, the degree of freedom parameter (\code{par2}) is rounded to an
+integer before calculation of the CDF.
 }
 \examples{
 
