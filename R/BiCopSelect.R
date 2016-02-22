@@ -280,14 +280,14 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
     ## add more information about the fit
     if (obj$family == 0) {
         if (se)
-            obj$se <- NA
+            obj$se  <- NA
         obj$nobs   <- length(u1)
         obj$logLik <- 0
         obj$AIC    <- 0
         obj$BIC    <- 0
     } else {
         if (se) {
-            obj$se <- optiout[[sel]]$se1
+            obj$se <- optiout[[sel]]$se
             if (obj$family %in% allfams[twopar])
                 obj$se2 <- optiout[[sel]]$se2
         }
