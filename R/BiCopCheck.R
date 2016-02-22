@@ -56,7 +56,9 @@
 #' @examples
 #' ## check parameter of Clayton copula
 #' BiCopCheck(3, 1)  # works
+#' \dontrun{
 #' BiCopCheck(3, -1)  # does not work (only positive parameter is allowed)
+#' }
 #'
 BiCopCheck <- function(family, par, par2 = 0) {
     ## check if all required parameters are set
