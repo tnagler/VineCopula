@@ -118,14 +118,15 @@ BiCop <- function(family, par, par2 = 0, tau = NULL, check.pars = TRUE) {
     if (family != 2)
         beta <- BiCopPar2Beta(family, par, par2, check.pars = FALSE)
 
-    ## get full family name
+    ## get full family name and calculate number of parameters
     familyname <- BiCopName(family, short = FALSE)
+    npars <- if (family == 0) 0 else ifelse(family %in% allfams[onepar], 1, 2)
 
     ## return BiCop object
     out <- list(family     = family,
                 par        = par,
                 par2       = par2,
-                npars      = ifelse(family %in% allfams[onepar], 1, 2),
+                npars      = npars,
                 familyname = familyname,
                 tau        = tau,
                 beta       = beta,
