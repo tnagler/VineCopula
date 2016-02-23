@@ -62,7 +62,10 @@
 #'
 BiCopCheck <- function(family, par, par2 = 0) {
     ## check if all required parameters are set
-    if (!(all(family %in% c(0, allfams))))
+    if (!(all(family %in% c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 16, 17, 18, 19,
+                            20, 23, 24, 26, 27, 28, 29, 30, 33, 34, 36, 37, 38, 39,
+                            40, 41, 42, 51, 52,  61, 62, 71, 72,
+                            104, 114, 124, 134, 204, 214, 224, 234))))
         stop("Copula family not implemented.")
     if (any((family %in% allfams[twopar]) & (par2 == 0)))
         stop("For t-, BB1, BB6, BB7, BB8 and Tawn copulas, 'par2' must be set.")
@@ -86,57 +89,61 @@ checkPars <- function(x) {
             stop("The parameter of the Gaussian and t-copula has to be in the interval (-1,1).")
         if (family == 2 && par2 <= 2)
             stop("The degrees of freedom parameter of the t-copula has to be larger than 2.")
-    } else if ((family == 3 || family == 13) && par <= 0) {
-        stop("The parameter of the Clayton copula has to be positive.")
-    } else if ((family == 4 || family == 14) && par < 1) {
-        stop("The parameter of the Gumbel copula has to be in the interval [1,oo).")
-    } else if ((family == 6 || family == 16) && par <= 1) {
-        stop("The parameter of the Joe copula has to be in the interval (1,oo).")
-    } else if (family == 5 && par == 0) {
-        stop("The parameter of the Frank copula has to be unequal to 0.")
-    } else if ((family == 7 || family == 17) && par <= 0) {
-        stop("The first parameter of the BB1 copula has to be positive.")
-    } else if ((family == 7 || family == 17) && par2 < 1) {
-        stop("The second parameter of the BB1 copula has to be in the interval [1,oo).")
+    } else if ((family == 3 || family == 13) && (par <= 0 || par > 100)) {
+        stop("The parameter of the Clayton copula has to be in the interval (0,100]")
+    } else if ((family == 4 || family == 14) && (par < 1 || par > 100)) {
+        stop("The parameter of the Gumbel copula has to be in the interval [1,100].")
+    } else if (family == 5) {
+        if (par == 0)
+            stop("The parameter of the Frank copula has to be unequal to 0.")
+        if (abs(par) > 100)
+            stop("The parameter of the Frank copula has to be in the interval [-100, 100].")
+    } else if ((family == 6 || family == 16) && (par <= 1 || par > 50)) {
+        stop("The parameter of the Joe copula has to be in the interval (1,50].")
+    } else if ((family == 7 || family == 17)) {
+        if (par <= 0 || par > 7)
+            stop("The first parameter of the BB1 copula has to be in the interval [0,7]")
+        if (par2 < 1 || par2 > 7)
+            stop("The second parameter of the BB1 copula has to be in the interval [1,7].")
     } else if ((family == 8 || family == 18)) {
-        if (par <= 0)
-            stop("The first parameter of the BB6 copula has to be in the interval [1,oo).")
-        if (par2 < 1)
-            stop("The second parameter of the BB6 copula has to be in the interval [1,oo).")
+        if (par <= 0 || par > 6)
+            stop("The first parameter of the BB6 copula has to be in the interval [1,6].")
+        if (par2 < 1 || par2 > 8)
+            stop("The second parameter of the BB6 copula has to be in the interval [1,8].")
     } else if ((family == 9 || family == 19)) {
-        if (par < 1)
-            stop("The first parameter of the BB7 copula has to be in the interval [1,oo).")
-        if (par2 <= 0)
-            stop("The second parameter of the BB7 copula has to be positive.")
+        if (par < 1 || par > 6)
+            stop("The first parameter of the BB7 copula has to be in the interval [1,6].")
+        if (par2 <= 0 || par2 > 75)
+            stop("The second parameter of the BB7 copula has to be in the interval [0,75]")
     } else if ((family == 10 || family == 20)) {
-        if (par < 1)
-            stop("The first parameter of the BB8 copula has to be in the interval [1,oo).")
+        if (par < 1 || par > 8)
+            stop("The first parameter of the BB8 copula has to be in the interval [1,8].")
         if (par2 <= 0 || par2 > 1)
             stop("The second parameter of the BB8 copula has to be in the interval (0,1].")
-    } else if ((family == 23 || family == 33) && par >= 0) {
-        stop("The parameter of the rotated Clayton copula has to be negative.")
-    } else if ((family == 24 || family == 34) && par > -1) {
-        stop("The parameter of the rotated Gumbel copula has to be in the interval (-oo,-1].")
-    } else if ((family == 26 || family == 36) && par >= -1) {
-        stop("The parameter of the rotated Joe copula has to be in the interval (-oo,-1).")
+    } else if ((family == 23 || family == 33) && (par >= 0 || par < -100)) {
+        stop("The parameter of the rotated Clayton copula has to be be in the interval [-100,0)")
+    } else if ((family == 24 || family == 34) && (par > -1 || par < -100)) {
+        stop("The parameter of the rotated Gumbel copula has to be in the interval [-100,-1].")
+    } else if ((family == 26 || family == 36) && (par >= -1 || par < -50)) {
+        stop("The parameter of the rotated Joe copula has to be in the interval [-50,-1).")
     } else if ((family == 27 || family == 37)) {
-        if (par >= 0)
-            stop("The first parameter of the rotated BB1 copula has to be negative.")
-        if (par2 > -1)
-            stop("The second parameter of the rotated BB1 copula has to be in the interval (-oo,-1].")
+        if (par >= 0 || par < -7)
+            stop("The first parameter of the rotated BB1 copula has to be in the interval [-7,0]")
+        if (par2 > -1 || par < -7)
+            stop("The second parameter of the rotated BB1 copula has to be in the interval [-7,-1].")
     } else if ((family == 28 || family == 38)) {
-        if (par >= 0)
-            stop("The first parameter of the rotated BB6 copula has to be in the interval (-oo,-1].")
-        if (par2 > -1)
-            stop("The second parameter of the rotated BB6 copula has to be in the interval (-oo,-1].")
+        if (par >= 0 || par < -6)
+            stop("The first parameter of the rotated BB6 copula has to be in the interval [-6,-1].")
+        if (par2 > -1 || par2 < -8)
+            stop("The second parameter of the rotated BB6 copula has to be in the interval [-8,-1].")
     } else if ((family == 29 || family == 39)) {
-        if (par > -1)
-            stop("The first parameter of the rotated BB7 copula has to be in the interval (-oo,-1].")
-        if (par2 >= 0)
-            stop("The second parameter of the rotated BB7 copula has to be negative.")
+        if (par > -1 || par < -6)
+            stop("The first parameter of the rotated BB7 copula has to be in the interval [-6,-1].")
+        if (par2 >= 0 || par2 < -75)
+            stop("The second parameter of the rotated BB7 copula has to be in the interval [-75,0]")
     } else if ((family == 30 || family == 40)) {
-        if (par > -1)
-            stop("The first parameter of the rotated BB8 copula has to be in the interval (-oo,-1].")
+        if (par > -1 || par < -8)
+            stop("The first parameter of the rotated BB8 copula has to be in the interval [-8,-1].")
         if (par2 >= 0 || par2 < -1)
             stop("The second parameter of the rotated BB8 copula has to be in the interval [-1,0).")
     } else if ((family == 41 || family == 51) && par <= 0) {

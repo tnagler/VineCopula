@@ -760,28 +760,28 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
 
         if (family == 7 || family == 17) {
             low <- c(0.001, 1.001)
-            up <- max.BB$BB1
+            up <- pmin(max.BB$BB1, c(7, 7))
         } else if (family == 8 || family == 18) {
             low <- c(1.001, 1.001)
-            up <- max.BB$BB6
+            up <- pmin(max.BB$BB6, c(6, 8))
         } else if (family == 9 | family == 19) {
             low <- c(1.001, 0.001)
-            up <- max.BB$BB7
+            up <- pmin(max.BB$BB7, c(6, 75))
         } else if (family == 10 | family == 20) {
             low <- c(1.001, 0.001)
-            up <- max.BB$BB8
+            up <- pmin(max.BB$BB8, c(8, 1))
         } else if (family == 27 | family == 37) {
             up <- c(-0.001, -1.001)
-            low <- -max.BB$BB1
+            low <- -pmin(max.BB$BB1, c(7, 7))
         } else if (family == 28 | family == 38) {
             up <- c(-1.001, -1.001)
-            low <- -max.BB$BB6
+            low <- -pmin(max.BB$BB6, c(6, 8))
         } else if (family == 29 | family == 39) {
             up <- c(-1.001, -0.001)
-            low <- -max.BB$BB7
+            low <- -pmin(max.BB$BB7, c(6, 75))
         } else if (family == 30 | family == 40) {
             up <- c(-1.001, -0.001)
-            low <- -max.BB$BB8
+            low <- -pmin(max.BB$BB8, c(8, 1))
         }
 
         if (se == TRUE) {
@@ -1015,57 +1015,25 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
             up <- 0.9999
         } else if (family %in% c(3, 13)) {
             low <- 1e-04
-            up <- BiCopTau2Par(family, 0.99)
-            if (t_LL(up) == -10^250)
-                up <- BiCopTau2Par(family, 0.95)
-            if (t_LL(up) == -10^250)
-                up <- BiCopTau2Par(family, 0.9)
+            up <- 100
         } else if (family %in% c(4, 14)) {
             low <- 1.0001
-            up <- BiCopTau2Par(family, 0.99)
-            if (t_LL(up) == -10^250)
-                up <- BiCopTau2Par(family, 0.95)
-            if (t_LL(up) == -10^250)
-                up <- BiCopTau2Par(family, 0.9)
+            up <- 100
         } else if (family %in% c(5)) {
-            low <- BiCopTau2Par(family, -0.99)
-            if (t_LL(low) == -10^250)
-                low <- BiCopTau2Par(family, -0.95)
-            if (t_LL(low) == -10^250)
-                low <- BiCopTau2Par(family, -0.9)
-            up <- BiCopTau2Par(family, 0.99)
-            if (t_LL(up) == -10^250)
-                up <- BiCopTau2Par(family, 0.95)
-            if (t_LL(up) == -10^250)
-                up <- BiCopTau2Par(family, 0.9)
+            low <- -100
+            up <- 100
         } else if (family %in% c(6, 16)) {
             low <- 1.0001
-            up <- BiCopTau2Par(family, 0.99)
-            if (t_LL(up) == -10^250)
-                up <- BiCopTau2Par(family, 0.95)
-            if (t_LL(up) == -10^250)
-                up <- BiCopTau2Par(family, 0.9)
+            up <- 50
         } else if (family %in% c(23, 33)) {
             up <- -1e-04
-            low <- BiCopTau2Par(family, -0.99)
-            if (t_LL(low) == -10^250)
-                low <- BiCopTau2Par(family, -0.95)
-            if (t_LL(low) == -10^250)
-                low <- BiCopTau2Par(family, -0.9)
+            low <- -100
         } else if (family %in% c(24, 34)) {
             up <- -1.0001
-            low <- BiCopTau2Par(family, -0.99)
-            if (t_LL(low) == -10^250)
-                low <- BiCopTau2Par(family, -0.95)
-            if (t_LL(low) == -10^250)
-                low <- BiCopTau2Par(family, -0.9)
+            low <- -100
         } else if (family %in% c(26, 36)) {
             up <- -1.0001
-            low <- BiCopTau2Par(family, -0.99)
-            if (t_LL(low) == -10^250)
-                low <- BiCopTau2Par(family, -0.95)
-            if (t_LL(low) == -10^250)
-                low <- BiCopTau2Par(family, -0.9)
+            low <- -50
         } else if (family %in% c(41, 51)) {
             low <- 1e-04
             up <- BiCopTau2Par(family, 0.85)
