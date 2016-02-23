@@ -56,7 +56,8 @@ contour.RVineMatrix <- function(x, tree = "ALL", xylim = NULL, cex.nums = 1, ...
                         # set up list of contour arguments
                         args <- list(x = BiCop(family=x$family[d-i+1,j],
                                                par=x$par[d-i+1,j],
-                                               par2=x$par2[d-i+1,j]),
+                                               par2=x$par2[d-i+1,j],
+                                               check.pars = FALSE),
                                      drawlabels = FALSE,
                                      xlab = "",
                                      ylab = "",
