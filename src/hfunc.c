@@ -1101,9 +1101,14 @@ void Hinv(int* family, int* n, double* u, double* v, double* theta, double* nu, 
         }
         else if(*family==3) //clayton
         {
-            if(*theta < XEPS) hinv[j]=u[j];
-            else
+            if(*theta < XEPS) {
+                hinv[j]=u[j];
+            } else if (*theta < 75) {
                 hinv[j] = pow(pow(u[j]*pow(v[j],*theta+1.0),-*theta/(*theta+1.0))+1.0-pow(v[j],-*theta),-1.0/(*theta));
+            } else {
+                double nu=0.0;
+                HNumInv(family,&u[j],&v[j],theta,&nu,&hinv[j]);
+            }
         }
         else if(*family==4) //gumbel - must turn to numerical inversion
         {
@@ -1111,7 +1116,9 @@ void Hinv(int* family, int* n, double* u, double* v, double* theta, double* nu, 
         }
         else if(*family==5) //frank - numerical inversion
         {
-            hinv[j] = -1/(*theta)*log(1-(1-exp(-*theta)) / ((1/u[j]-1)*exp(-*theta*v[j])+1));
+            //hinv[j] = -1/(*theta)*log(1-(1-exp(-*theta)) / ((1/u[j]-1)*exp(-*theta*v[j])+1));
+            double nu=0.0;
+            HNumInv(family,&u[j],&v[j],theta,&nu,&hinv[j]);
         }
         else if(*family==6) //joe - numerical inversion
         {
