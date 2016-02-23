@@ -96,8 +96,9 @@
 #' \item{BIC}{Bayesian's Informaton Criterion,}
 #' \item{emptau}{empirical value of Kendall's tau,}
 #' \item{p.value.indeptest}{p-value of the independence test.}
-#' For a comprehensive summary of the fitted model, use \code{summary(object)};
-#' to see all its contents, use \code{str(object)}.
+#'
+#' @note For a comprehensive summary of the fitted model, use
+#' \code{summary(object)}; to see all its contents, use \code{str(object)}.
 #'
 #' @author Thomas Nagler
 #'
