@@ -56,7 +56,8 @@ optimization is produced.) \cr For more details see the documentation of
 }
 \value{
 \item{RVM}{\code{\link{RVineMatrix}} object with the calculated
-parameters stored in \code{RVM$par} and \code{RVM$par2}.}
+parameters stored in \code{RVM$par} and \code{RVM$par2}. Additional
+information about the fit is added (e.g., log-likelihood, AIC, BIC).}
 \item{value}{Optimized log-likelihood value corresponding to the estimated
 pair-copula parameters.} \item{convergence}{An integer code indicating
 either successful convergence (\code{convergence = 0}) or an error:\cr
@@ -71,8 +72,6 @@ needed to compute the Hessian, if requested, and any calls to \code{fn} to
 compute a finite-difference approximation to the gradient.}
 \item{hessian}{If \code{hessian = TRUE}, the Hessian matrix is returned. Its
 calculation is on the basis of finite differences (output of \code{optim}).}
-\item{se}{If \code{se = TRUE}, the standard errors of parameter estimates
-are returned. Their calculation is based on the Hesse matrix (see above).}
 }
 \description{
 This function calculates the maxiumum likelihood estimate (MLE) of the
@@ -142,8 +141,10 @@ vine copula models. Computational Statistics, 1-29
 \url{http://link.springer.com/article/10.1007/s00180-013-0423-8#}.
 }
 \seealso{
-\code{\link{RVineSeqEst}}, \code{\link{RVineStructureSelect}},
-\code{\link{RVineMatrix}}, \code{\link{RVineGrad}}, \cr
+\code{\link{RVineSeqEst}},
+\code{\link{RVineStructureSelect}},
+\code{\link{RVineMatrix}},
+\code{\link{RVineGrad}},
 \code{\link{RVineHessian}}
 }
 
