@@ -67,26 +67,44 @@
 #' for family/parameter-consistency are ommited (should only be used with
 #' care).
 #'
-#' @return An \code{\link{RVineMatrix}} object with the following matrix
-#' components: \item{Matrix}{R-vine tree structure matrix.}
-#' \item{family}{Pair-copula family matrix with values as above.}
-#' \item{par}{Pair-copula parameter matrix.} \item{par2}{Second pair-copula
-#' parameter matrix with parameters necessary for pair-copula families with two
-#' parameters.}
+#' @return An object of class \code{\link{RVineMatrix}}, i.e., a list with the
+#' following components:
+#' \item{Matrix}{R-vine tree structure matrix.}
+#' \item{family}{pair-copula family matrix with values as above.}
+#' \item{par}{pair-copula parameter matrix.}
+#' \item{par2}{second pair-copula parameter matrix with parameters necessary for
+#'  pair-copula families with two parameters.}
+#' \item{names}{variable names (defaults to \code{V1, V2, ...}).}
+#' \item{MaxMat, CondDistr}{additional matrices required internally for
+#' evaluating the density etc.,}
+#' \item{type}{the type of the vine copula structure; possible types are:
+#' \itemize{
+#' \item{\code{"C-vine": }}{all trees consist of a star,}
+#' \item{\code{"D-vine": }}{all trees consist of a path,}
+#' \item{\code{"R-vine": }}{all strucutres that are neither a C- nor D-vine,}
+#' }}
+#' \item{tau}{Kendall's tau matrix,}
+#' \item{taildep}{matrices of lower and upper tail dependence coefficients,}
+#' \item{beta}{Blomqvist's beta matrix.}
+#' Objects of this class are also returned by the \code{\link{RVineSeqEst}},
+#' \code{\link{RVineCopSelect}}, and \code{\link{RVineStructureSelect}}
+#' functions. In this case, further information about the fit is added.
 #'
-#' @note The \code{print} function writes the R-vine matrix defined by
-#' \code{Matrix}. A detailed output is given by \code{print(RVM, detail=TRUE)},
-#' where \code{RVM} is the \code{\link{RVineMatrix}} object. \cr The
-#' \code{\link{RVineMatrix}} function automatically checks if the given matrix
-#' is a valid R-vine matrix (see \code{\link{RVineMatrixCheck}}). \cr Although
-#' the function allows upper triangular matrices as its input, it will always
-#' store them as lower triangular matrices.
+#'
+#' @note For a comprehensive summary of the vine copula model, use
+#' \code{summary(object)}; to see all its contents, use \code{str(object)}.\cr
+#' The \code{\link{RVineMatrix}} function automatically checks if the given
+#' matrix is a valid R-vine matrix (see \code{\link{RVineMatrixCheck}}). \cr
+#' Although the function allows upper triangular matrices as its input, it will
+#' always store them as lower triangular matrices.
 #'
 #' @author Jeffrey Dissmann, Thomas Nagler
 #'
 #' @seealso
 #' \code{\link{RVineMatrixCheck}},
-#' \code{\link{RVineMLE}},
+#' \code{\link{RVineSeqEst}},
+#' \code{\link{RVineCopSelect}},
+#' \code{\link{RVineStructureSelect}},
 #' \code{\link{RVineSim}},
 #' \code{\link{C2RVine}},
 #' \code{\link{D2RVine}}
@@ -104,7 +122,6 @@
 #'             0, 0, 0, 4, 1,
 #'             0, 0, 0, 0, 1)
 #' Matrix <- matrix(Matrix, 5, 5)
-#'
 #' # define R-vine pair-copula family matrix
 #' family <- c(0, 1, 3, 4, 4,
 #'             0, 0, 3, 4, 1,
@@ -112,7 +129,6 @@
 #'             0, 0, 0, 0, 3,
 #'             0, 0, 0, 0, 0)
 #' family <- matrix(family, 5, 5)
-#'
 #' # define R-vine pair-copula parameter matrix
 #' par <- c(0, 0.2, 0.9, 1.5, 3.9,
 #'          0, 0, 1.1, 1.6, 0.9,
@@ -120,17 +136,26 @@
 #'          0, 0, 0, 0, 4.8,
 #'          0, 0, 0, 0, 0)
 #' par <- matrix(par, 5, 5)
-#'
 #' # define second R-vine pair-copula parameter matrix
 #' par2 <- matrix(0, 5, 5)
 #'
-#' # define RVineMatrix object
+#' ## define RVineMatrix object
 #' RVM <- RVineMatrix(Matrix = Matrix, family = family,
 #'                    par = par, par2 = par2,
 #'                    names = c("V1", "V2", "V3", "V4", "V5"))
 #'
-#' # Print detailed information
-#' print(RVM, detail = TRUE)
+#' ## see the object's content or a summary
+#' str(RVM)
+#' summary(RVM)
+#'
+#' ## inspect the model using plots
+#' \dontrun{
+#' plot(RVM)  # tree structure
+#' }
+#' contour(RVM)  # contour plots of all pair-copulas
+#'
+#' ## simulate from the vine copula model
+#' plot(RVineSim(500, RVM))
 #'
 RVineMatrix <- function(Matrix,
                         family = array(0, dim = dim(Matrix)),

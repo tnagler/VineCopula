@@ -32,20 +32,30 @@
 #' @param cores integer; if \code{cores > 1}, estimation will be parallized
 #' within each tree (using \code{\link[foreach]{foreach}}).
 #'
-#' @return \item{RVM}{\code{\link{RVineMatrix}} object with the sequentially
-#' estimated parameters stored in \code{RVM$par} and \code{RVM$par2}.}
-#' \item{se}{Lower triangular d x d matrix with estimated standard errors of
-#' the (first) pair-copula parameters for each (conditional) pair defined in
-#' the \code{\link{RVineMatrix}} object (if \code{se = TRUE}).}
-#' \item{se2}{Lower triangular d x d matrix with estimated standard errors of
-#' the second parameters for pair-copula families with two parameters for each
-#' (conditional) pair defined in the \code{\link{RVineMatrix}} object (if
-#' \code{se = TRUE}).}
+#' @return An \code{\link{RVineMatrix}} object with the sequentially
+#' estimated parameters stored in \code{RVM$par} and \code{RVM$par2}. The object
+#' is augmented by the following information about the fit:
+#' \item{se, se2}{standard errors for the parameter estimates (if
+#' \code{se = TRUE}); note that these are only approximate since they do not
+#' account for the sequential nature of the estimation,}
+#' \item{nobs}{number of observations,}
+#' \item{logLik, pair.logLik}{log likelihood (overall and pairwise)}
+#' \item{AIC, pair.AIC}{Aikaike's Informaton Criterion (overall and pairwise),}
+#' \item{BIC, pair.BIC}{Bayesian's Informaton Criterion (overall and pairwise),}
+#' \item{emptau}{matrix of empirical values of Kendall's tau,}
+#' \item{p.value.indeptest}{matrix of p-values of the independence test.}
+#'
+#' @note For a comprehensive summary of the fitted model, use
+#' \code{summary(object)}; to see all its contents, use \code{str(object)}.
 #'
 #' @author Ulf Schepsmeier, Jeffrey Dissmann, Thomas Nagler
 #'
-#' @seealso \code{\link{BiCopEst}}, \code{\link{BiCopHfunc}},
-#' \code{\link{RVineLogLik}}, \code{\link{RVineMLE}}, \code{\link{RVineMatrix}},
+#' @seealso
+#' \code{\link{RVineMatrix}},
+#' \code{\link{BiCop}},
+#' \code{\link{BiCopEst}},
+#' \code{\link{plot.RVineMatrix}},
+#' \code{\link{contour.RVineMatrix}},
 #' \code{\link[foreach]{foreach}}
 #'
 #' @examples
@@ -87,8 +97,8 @@
 #' simdata <- RVineSim(300, RVM)
 #'
 #' # sequential estimation
-#' RVineSeqEst(simdata, RVM, method = "itau", se = TRUE)
-#' RVineSeqEst(simdata, RVM, method = "mle", se = TRUE)
+#' summary(RVineSeqEst(simdata, RVM, method = "itau", se = TRUE))
+#' summary(RVineSeqEst(simdata, RVM, method = "mle", se = TRUE))
 #'
 #' @export RVineSeqEst
 RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,

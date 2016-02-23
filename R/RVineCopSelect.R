@@ -8,14 +8,13 @@
 #' \code{\link{RVineStructureSelect}}.
 #'
 #' @param data N x d data matrix (with uniform margins).
-#' @param familyset integer vector of pair-copula families to select from
-#' (the independence copula MUST NOT be specified in this vector unless one
-#' wants to fit an independence vine!).  The vector has to include at least one
+#' @param familyset integer vector of pair-copula families to select from.
+#' The vector has to include at least one
 #' pair-copula family that allows for positive and one that allows for negative
 #' dependence. Not listed copula families might be included to better handle
 #' limit cases.  If \code{familyset = NA} (default), selection among all
-#' possible families is performed.  The coding of pair-copula families is shown
-#' below.
+#' possible families is performed.  Coding of pair-copula families is the same
+#' as in \code{\link{BiCop}}.
 #' @param Matrix lower or upper triangular d x d matrix that defines the R-vine
 #' tree structure.
 #' @param selectioncrit Character indicating the criterion for pair-copula
@@ -34,59 +33,31 @@
 #' @param cores integer; if \code{cores > 1}, estimation will be parallized
 #' within each tree (using \code{\link[foreach]{foreach}}).
 #'
-#' @return An \code{\link{RVineMatrix}} object with the following matrix
-#' components \item{Matrix}{R-vine tree structure matrix as given by the
-#' argument \code{Matrix}.}
-#' \item{family}{Selected pair-copula family matrix
-#' with values corresponding to\cr
-#' \code{0} = independence copula \cr
-#' \code{1} = Gaussian copula \cr
-#' \code{2} = Student t copula (t-copula) \cr
-#' \code{3} = Clayton copula \cr
-#' \code{4} = Gumbel copula \cr
-#' \code{5} = Frank copula \cr
-#' \code{6} = Joe copula \cr
-#' \code{7} = BB1 copula \cr
-#' \code{8} = BB6 copula \cr
-#' \code{9} = BB7 copula \cr
-#' \code{10} = BB8 copula \cr
-#' \code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-#' \code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-#' \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
-#' \code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
-#' \code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
-#' \code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
-#' \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
-#' \code{23} = rotated Clayton copula (90 degrees) \cr
-#' \code{24} = rotated Gumbel copula (90 degrees) \cr
-#' \code{26} = rotated Joe copula (90 degrees) \cr
-#' \code{27} = rotated BB1 copula (90 degrees) \cr
-#' \code{28} = rotated BB6 copula (90 degrees) \cr
-#' \code{29} = rotated BB7 copula (90 degrees) \cr
-#' \code{30} = rotated BB8 copula (90 degrees) \cr
-#' \code{33} = rotated Clayton copula (270 degrees) \cr
-#' \code{34} = rotated Gumbel copula (270 degrees) \cr
-#' \code{36} = rotated Joe copula (270 degrees) \cr
-#' \code{37} = rotated BB1 copula (270 degrees) \cr
-#' \code{38} = rotated BB6 copula (270 degrees) \cr
-#' \code{39} = rotated BB7 copula (270 degrees) \cr
-#' \code{40} = rotated BB8 copula (270 degrees) \cr
-#' \code{104} = Tawn type 1 copula \cr
-#' \code{114} = rotated Tawn type 1 copula (180 degrees) \cr
-#' \code{124} = rotated Tawn type 1 copula (90 degrees) \cr
-#' \code{134} = rotated Tawn type 1 copula (270 degrees) \cr
-#' \code{204} = Tawn type 2 copula \cr
-#' \code{214} = rotated Tawn type 2 copula (180 degrees) \cr
-#' \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
-#' \code{234} = rotated Tawn type 2 copula (270 degrees)
-#' }
+#' @return An \code{\link{RVineMatrix}} object with the selected families
+#' (\code{RVM$family}) as well as sequentially
+#' estimated parameters stored in \code{RVM$par} and \code{RVM$par2}. The object
+#' is augmented by the following information about the fit:
+#' \item{se, se2}{standard errors for the parameter estimates  (if
+#' \code{se = TRUE}; note that these are only approximate since they do not
+#' account for the sequential nature of the estimation,}
+#' \item{nobs}{number of observations,}
+#' \item{logLik, pair.logLik}{log likelihood (overall and pairwise)}
+#' \item{AIC, pair.AIC}{Aikaike's Informaton Criterion (overall and pairwise),}
+#' \item{BIC, pair.BIC}{Bayesian's Informaton Criterion (overall and pairwise),}
+#' \item{emptau}{matrix of empirical values of Kendall's tau,}
+#' \item{p.value.indeptest}{matrix of p-values of the independence test.}#'
+#'
+#' @note For a comprehensive summary of the vine copula model, use
+#' \code{summary(object)}; to see all its contents, use \code{str(object)}.
 #'
 #' @author Eike Brechmann, Thomas Nagler
 #'
 #' @seealso
-#' \code{\link{RVineStructureSelect}},
+#' \code{\link{RVineMatrix}},
+#' \code{\link{BiCop}},
 #' \code{\link{BiCopSelect}},
-#' \code{\link{RVineSeqEst}},
+#' \code{\link{plot.RVineMatrix}},
+#' \code{\link{contour.RVineMatrix}},
 #' \code{\link[foreach]{foreach}}
 #'
 #' @references Brechmann, E. C., C. Czado, and K. Aas (2012). Truncated regular
@@ -106,7 +77,6 @@
 #'             0, 0, 0, 4, 1,
 #'             0, 0, 0, 0, 1)
 #' Matrix <- matrix(Matrix, 5, 5)
-#'
 #' # define R-vine pair-copula family matrix
 #' family <- c(0, 1, 3, 4, 4,
 #'             0, 0, 3, 4, 1,
@@ -114,7 +84,6 @@
 #'             0, 0, 0, 0, 3,
 #'             0, 0, 0, 0, 0)
 #' family <- matrix(family, 5, 5)
-#'
 #' # define R-vine pair-copula parameter matrix
 #' par <- c(0, 0.2, 0.9, 1.5, 3.9,
 #'          0, 0, 1.1, 1.6, 0.9,
@@ -122,23 +91,30 @@
 #'          0, 0, 0, 0, 4.8,
 #'          0, 0, 0, 0, 0)
 #' par <- matrix(par, 5, 5)
-#'
 #' # define second R-vine pair-copula parameter matrix
 #' par2 <- matrix(0, 5, 5)
 #'
-#' # define RVineMatrix object
+#' ## define RVineMatrix object
 #' RVM <- RVineMatrix(Matrix = Matrix, family = family,
 #'                    par = par, par2 = par2,
 #'                    names = c("V1", "V2", "V3", "V4", "V5"))
 #'
-#' # simulate a sample of size 1000 from the R-vine copula model
+#' ## simulate a sample of size 1000 from the R-vine copula model
 #' set.seed(123)
 #' simdata <- RVineSim(1000, RVM)
 #'
-#' # determine the pair-copula families and parameters
+#' ## determine the pair-copula families and parameters
 #' RVM1 <- RVineCopSelect(simdata, familyset = c(1, 3, 4, 5 ,6), Matrix)
-#' RVM1$family
-#' round(RVM1$par, 2)
+#'
+#' ## see the object's content or a summary
+#' str(RVM1)
+#' summary(RVM1)
+#'
+#' ## inspect the fitted model using plots
+#' \dontrun{
+#' plot(RVM1)  # tree structure
+#' }
+#' contour(RVM1)  # contour plots of all pair-copulas
 #'
 RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", indeptest = FALSE,
                            level = 0.05, trunclevel = NA, rotations = TRUE, cores = 1) {
@@ -310,8 +286,8 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
         2 * (.RVM$family %in% allfams[twopar])
     .RVM$AIC <- -2 * like$loglik + 2 * npar
     .RVM$pair.AIC <- -2 * like$V$value + 2 * npar_pair
-    .RVM$BIC <- -2 * like$loglik + log(T) * npar
-    .RVM$pair.BIC <- -2 * like$V$value + log(T) * npar_pair
+    .RVM$BIC <- -2 * like$loglik + log(N) * npar
+    .RVM$pair.BIC <- -2 * like$V$value + log(N) * npar_pair
     .RVM$emptau <- emptaus
     .RVM$p.value.indeptest <- pvals
 

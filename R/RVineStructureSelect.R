@@ -26,53 +26,13 @@
 #' TSP. Example code is shown below.
 #'
 #' @param data An N x d data matrix (with uniform margins).
-#' @param familyset An integer vector of pair-copula families to select from
-#' (the independence copula MUST NOT be specified in this vector unless one
-#' wants to fit an independence vine!).  The vector has to include at least one
+#' @param familyset An integer vector of pair-copula families to select from.
+#' The vector has to include at least one
 #' pair-copula family that allows for positive and one that allows for negative
 #' dependence. Not listed copula families might be included to better handle
 #' limit cases.  If \code{familyset = NA} (default), selection among all
-#' possible families is performed.  Coding of pair-copula families:
-#' \code{0} = independence copula \cr
-#' \code{1} = Gaussian copula \cr
-#' \code{2} = Student t copula (t-copula) \cr
-#' \code{3} = Clayton copula \cr
-#' \code{4} = Gumbel copula \cr
-#' \code{5} = Frank copula \cr
-#' \code{6} = Joe copula \cr
-#' \code{7} = BB1 copula \cr
-#' \code{8} = BB6 copula \cr
-#' \code{9} = BB7 copula \cr
-#' \code{10} = BB8 copula \cr
-#' \code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-#' \code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-#' \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
-#' \code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
-#' \code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
-#' \code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
-#' \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
-#' \code{23} = rotated Clayton copula (90 degrees) \cr
-#' \code{24} = rotated Gumbel copula (90 degrees) \cr
-#' \code{26} = rotated Joe copula (90 degrees) \cr
-#' \code{27} = rotated BB1 copula (90 degrees) \cr
-#' \code{28} = rotated BB6 copula (90 degrees) \cr
-#' \code{29} = rotated BB7 copula (90 degrees) \cr
-#' \code{30} = rotated BB8 copula (90 degrees) \cr
-#' \code{33} = rotated Clayton copula (270 degrees) \cr
-#' \code{34} = rotated Gumbel copula (270 degrees) \cr
-#' \code{36} = rotated Joe copula (270 degrees) \cr
-#' \code{37} = rotated BB1 copula (270 degrees) \cr
-#' \code{38} = rotated BB6 copula (270 degrees) \cr
-#' \code{39} = rotated BB7 copula (270 degrees) \cr
-#' \code{40} = rotated BB8 copula (270 degrees) \cr
-#' \code{104} = Tawn type 1 copula \cr
-#' \code{114} = rotated Tawn type 1 copula (180 degrees) \cr
-#' \code{124} = rotated Tawn type 1 copula (90 degrees) \cr
-#' \code{134} = rotated Tawn type 1 copula (270 degrees) \cr
-#' \code{204} = Tawn type 2 copula \cr
-#' \code{214} = rotated Tawn type 2 copula (180 degrees) \cr
-#' \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
-#' \code{234} = rotated Tawn type 2 copula (270 degrees) \cr
+#' possible families is performed.  Coding of pair-copula families is the same
+#' as in \code{\link{BiCop}}.
 #' @param type Type of the vine model to be specified:\cr
 #' \code{0} or \code{"RVine"} = R-vine (default) \cr
 #' \code{1} or \code{"CVine"} = C-vine \cr
@@ -101,13 +61,29 @@
 #'
 #' @return An \code{\link{RVineMatrix}} object with the selected structure
 #' (\code{RVM$Matrix}) and families (\code{RVM$family}) as well as sequentially
-#' estimated parameters stored in \code{RVM$par} and \code{RVM$par2}.
+#' estimated parameters stored in \code{RVM$par} and \code{RVM$par2}. The object
+#' is augmented by the following information about the fit:
+#' \item{se, se2}{standard errors for the parameter estimates; note that these
+#' are only approximate since they do not
+#' account for the sequential nature of the estimation,}
+#' \item{nobs}{number of observations,}
+#' \item{logLik, pair.logLik}{log likelihood (overall and pairwise)}
+#' \item{AIC, pair.AIC}{Aikaike's Informaton Criterion (overall and pairwise),}
+#' \item{BIC, pair.BIC}{Bayesian's Informaton Criterion (overall and pairwise),}
+#' \item{emptau}{matrix of empirical values of Kendall's tau,}
+#' \item{p.value.indeptest}{matrix of p-values of the independence test.}
+#'
+#' @note For a comprehensive summary of the vine copula model, use
+#' \code{summary(object)}; to see all its contents, use \code{str(object)}.
 #'
 #' @author Jeffrey Dissmann, Eike Brechmann, Ulf Schepsmeier, Thomas Nagler
 #'
 #' @seealso
-#' \code{\link{RVineTreePlot}},
-#' \code{\link{RVineCopSelect}}
+#' \code{\link{RVineMatrix}},
+#' \code{\link{BiCop}},
+#' \code{\link{RVineCopSelect}},
+#' \code{\link{plot.RVineMatrix}},
+#' \code{\link{contour.RVineMatrix}},
 #' \code{\link[foreach]{foreach}}
 #'
 #' @references Brechmann, E. C., C. Czado, and K. Aas (2012). Truncated regular
@@ -128,13 +104,23 @@
 #' # we allow for the copula families: Gauss, t, Clayton, Gumbel, Frank and Joe
 #' RVM <- RVineStructureSelect(daxreturns[1:750,1:4], c(1:6), progress = TRUE)
 #'
+#' ## see the object's content or a summary
+#' str(RVM)
+#' summary(RVM)
+#'
+#' ## inspect the fitted model using plots
 #' \dontrun{
-#' # specify a C-vine copula model with only Clayton, Gumbel and Frank copulas
+#' plot(RVM)  # tree structure
+#' }
+#' contour(RVM)  # contour plots of all pair-copulas
+#'
+#' \dontrun{
+#' ## estimate a C-vine copula model with only Clayton, Gumbel and Frank copulas
 #' CVM <- RVineStructureSelect(daxreturns, c(3,4,5), "CVine")
 #' }
 #'
 #' \dontrun{
-#' # determine the order of the nodes in a D-vine using the package TSP
+#' ## determine the order of the nodes in a D-vine using the package TSP
 #' library(TSP)
 #' d <- dim(daxreturns)[2]
 #' M <- 1 - abs(TauMatrix(daxreturns))
