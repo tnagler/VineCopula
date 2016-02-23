@@ -89,8 +89,6 @@ entries:
 \item{BIC}{Bayesian's Informaton Criterion,}
 \item{emptau}{empirical value of Kendall's tau,}
 \item{p.value.indeptest}{p-value of the independence test.}
-For a comprehensive summary of the fitted model, use \code{summary(object)};
-to see all its contents, use \code{str(object)}.
 }
 \description{
 This function selects an appropriate bivariate copula family for given
@@ -119,6 +117,9 @@ using the AIC.
 Additionally a test for independence can be performed beforehand.
 }
 \note{
+For a comprehensive summary of the fitted model, use
+\code{summary(object)}; to see all its contents, use \code{str(object)}.
+
 The parameters of the Student t and BB copulas are restricted (see
 defaults in \code{\link{BiCopEst}} to avoid being to close to their limiting
 cases.

@@ -42,15 +42,18 @@ details see \code{\link{BiCopEst}}).}
 within each tree (using \code{\link[foreach]{foreach}}).}
 }
 \value{
-\item{RVM}{\code{\link{RVineMatrix}} object with the sequentially
-estimated parameters stored in \code{RVM$par} and \code{RVM$par2}.}
-\item{se}{Lower triangular d x d matrix with estimated standard errors of
-the (first) pair-copula parameters for each (conditional) pair defined in
-the \code{\link{RVineMatrix}} object (if \code{se = TRUE}).}
-\item{se2}{Lower triangular d x d matrix with estimated standard errors of
-the second parameters for pair-copula families with two parameters for each
-(conditional) pair defined in the \code{\link{RVineMatrix}} object (if
-\code{se = TRUE}).}
+An \code{\link{RVineMatrix}} object with the sequentially
+estimated parameters stored in \code{RVM$par} and \code{RVM$par2}. The object
+is augmented by the following information about the fit:
+\item{se, se2}{standard errors for the parameter estimates (if
+\code{se = TRUE}); note that these are only approximate since they do not
+account for the sequential nature of the estimation,}
+\item{nobs}{number of observations,}
+\item{logLik, pair.logLik}{log likelihood (overall and pairwise)}
+\item{AIC, pair.AIC}{Aikaike's Informaton Criterion (overall and pairwise),}
+\item{BIC, pair.BIC}{Bayesian's Informaton Criterion (overall and pairwise),}
+\item{emptau}{matrix of empirical values of Kendall's tau,}
+\item{p.value.indeptest}{matrix of p-values of the independence test.}
 }
 \description{
 This function sequentially estimates the pair-copula parameters of a
@@ -61,6 +64,10 @@ d-dimensional R-vine copula model as specified by the corresponding
 The pair-copula parameter estimation is performed tree-wise, i.e., for each
 R-vine tree the results from the previous tree(s) are used to calculate the
 new copula parameters using \code{\link{BiCopEst}}.
+}
+\note{
+For a comprehensive summary of the fitted model, use
+\code{summary(object)}; to see all its contents, use \code{str(object)}.
 }
 \examples{
 
@@ -101,16 +108,19 @@ set.seed(123)
 simdata <- RVineSim(300, RVM)
 
 # sequential estimation
-RVineSeqEst(simdata, RVM, method = "itau", se = TRUE)
-RVineSeqEst(simdata, RVM, method = "mle", se = TRUE)
+summary(RVineSeqEst(simdata, RVM, method = "itau", se = TRUE))
+summary(RVineSeqEst(simdata, RVM, method = "mle", se = TRUE))
 
 }
 \author{
 Ulf Schepsmeier, Jeffrey Dissmann, Thomas Nagler
 }
 \seealso{
-\code{\link{BiCopEst}}, \code{\link{BiCopHfunc}},
-\code{\link{RVineLogLik}}, \code{\link{RVineMLE}}, \code{\link{RVineMatrix}},
+\code{\link{RVineMatrix}},
+\code{\link{BiCop}},
+\code{\link{BiCopEst}},
+\code{\link{plot.RVineMatrix}},
+\code{\link{contour.RVineMatrix}},
 \code{\link[foreach]{foreach}}
 }
 

@@ -82,8 +82,6 @@ entries:
 \item{BIC}{Bayesian's Informaton Criterion,}
 \item{emptau}{empirical value of Kendall's tau,}
 \item{p.value.indeptest}{p-value of the independence test.}
-For a comprehensive summary of the fitted model, use \code{summary(object)};
-to see all its contents, use \code{str(object)}.
 }
 \description{
 This function estimates the parameter(s) of a bivariate copula using either
@@ -115,6 +113,10 @@ freedom the t-copula is almost indistinguishable from the Gaussian and it is
 advised to use the Gaussian copula in this case. As a rule of thumb
 \code{max.df = 30} typically is a good choice. Moreover, standard errors of
 the degrees of freedom parameter estimate cannot be estimated in this case.
+}
+\note{
+For a comprehensive summary of the fitted model, use \code{summary(object)};
+to see all its contents, use \code{str(object)}.
 }
 \examples{
 

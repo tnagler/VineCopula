@@ -74,14 +74,17 @@ information about the bivariate copula. Its components are:
 \item{beta}{Blomqvist's beta,}
 \item{taildep}{lower and upper tail dependence coefficients,}
 \item{call}{the call that created the object.}
-For a comprehensive summary of the model, use \code{summary(object)};
-to see all its contents, use \code{str(object)}. Objects of this class are
-also returned by the \code{\link{BiCopEst}} and \code{\link{BiCopSelect}}
-functions. In this case, further information about the fit is added.
+Objects of this class are also returned by the \code{\link{BiCopEst}} and
+\code{\link{BiCopSelect}} functions. In this case, further information about
+the fit is added.
 }
 \description{
 This function creates an object of class \code{BiCop} and checks for
 family/parameter consistency.
+}
+\note{
+For a comprehensive summary of the model, use \code{summary(object)};
+to see all its contents, use \code{str(object)}.
 }
 \examples{
 
