@@ -66,10 +66,18 @@ care).}
 }
 \value{
 An object of class \code{\link{BiCop}}. It is a list containing
-information about the bivariate copula; use \code{str(object)} to see its
-content. Objects of this class are also returned by the
-\code{\link{BiCopEst}} and \code{\link{BiCopSelect}} functions. In this case,
-further information about the fit is added.
+information about the bivariate copula. Its components are:
+\item{family, par, par2}{copula family number and parameter(s),}
+\item{npars}{number of parameters,}
+\item{familyname}{name of the copula family,}
+\item{tau}{Kendall's tau,}
+\item{beta}{Blomqvist's beta,}
+\item{taildep}{lower and upper tail dependence coefficients,}
+\item{call}{the call that created the object.}
+For a comprehensive summary of the model, use \code{summary(object)};
+to see all its contents, use \code{str(object)}. Objects of this class are
+also returned by the \code{\link{BiCopEst}} and \code{\link{BiCopSelect}}
+functions. In this case, further information about the fit is added.
 }
 \description{
 This function creates an object of class \code{BiCop} and checks for
@@ -81,7 +89,7 @@ family/parameter consistency.
 obj <- BiCop(family = 2, par = 0.4, par2 = 6)
 obj
 
-## see the objects' content or a summary
+## see the object's content or a summary
 str(obj)
 summary(obj)
 
@@ -103,6 +111,7 @@ Thomas Nagler
 \code{\link{BiCopSim}},
 \code{\link{BiCopEst}},
 \code{\link{BiCopSelect}},
-\code{\link{plot.BiCop}}
+\code{\link{plot.BiCop}},
+\code{\link{contour.BiCop}}
 }
 
