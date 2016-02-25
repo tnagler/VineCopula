@@ -200,7 +200,7 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
     posfams <- c(1:10, 13, 14, 16:20, 104, 114, 204, 214)
 
     ## stop if familyset not sufficient
-    if (!is.na(familyset[1]) &&
+    if (!is.na(familyset[1]) && !all(familyset == 0) &&
         !(any(familyset %in% negfams) && any(familyset %in% posfams))) {
         txt <- paste0("'familyset' has to include at least one bivariate ",
                       "copula family for positive and one for negative ",
