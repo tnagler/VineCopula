@@ -162,10 +162,10 @@
 #' summary(cop3)
 #'
 BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
-                         indeptest = FALSE, level = 0.05, weights = NA,
-                         rotations = TRUE, se = TRUE) {
+                        indeptest = FALSE, level = 0.05, weights = NA,
+                        rotations = TRUE, se = TRUE) {
     if (is.na(familyset[1]))
-        familyset <- c(0, allfams)
+        familyset <- allfams
 
     ## sanity checks
     if ((is.null(u1) == TRUE) || (is.null(u2) == TRUE))
@@ -178,16 +178,23 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         stop("Data has to be in the interval [0,1].")
     if (any(u2 > 1) || any(u2 < 0))
         stop("Data has to be in the interval [0,1].")
-    if (!all(familyset %in% c(0, allfams)))
+    if (!all(abs(familyset) %in% allfams))
         stop("Copula family not implemented.")
     if (!(selectioncrit %in% c("AIC", "BIC", "logLik")))
         stop("Selection criterion not implemented.")
     if ((level) < 0 & (level > 1))
         stop("Significance level has to be between 0 and 1.")
 
-    ## adjust familyset if rotations = TRUE
+    ## adjust familyset
+    # add rotations
     if (rotations)
         familyset <- with_rotations(familyset)
+    # negative family selection
+    if (any(familyset < 0)) {
+        if (length(unique(sign(familyset))) != 1)
+            stop("'familyset' must not contain positive AND negative numbers")
+        familyset <- setdiff(allfams, -familyset)
+    }
 
     # calculate empirical kendall's tau
     emp_tau <- fasttau(u1, u2, weights)
@@ -316,20 +323,33 @@ with_rotations <- function(nums) {
     unique(unlist(lapply(nums, get_rotations)))
 }
 
-get_rotations <- function(i) {
-    # no roations for independence, gaussian, student and frank copulas
-    out <- i
+get_rotations <- function(fam) {
+    sgn <- sign(fam)  # indicator for negative selection
+    fam <- sgn * fam  # ensure that fam is positive from here on
 
-    ## rotations for other families
-    if(i %in% c(3, 13, 23, 33)) out <- c(3, 13, 23, 33)
-    if(i %in% c(4, 14, 24, 34)) out <- c(4, 14, 24, 34)
-    if(i %in% c(6, 16, 26, 36)) out <- c(6, 16, 26, 36)
-    if(i %in% c(7, 17, 27, 37)) out <- c(7, 17, 27, 37)
-    if(i %in% c(8, 18, 28, 38)) out <- c(8, 18, 28, 38)
-    if(i %in% c(9, 19, 29, 39)) out <- c(9, 19, 29, 39)
-    if(i %in% c(10, 20, 30, 40)) out <- c(10, 20, 30, 40)
-    if(i %in% c(104, 114, 124, 134)) out <- c(104, 114, 124, 134)
-    if(i %in% c(204, 214, 224, 234)) out <- c(204, 214, 224, 234)
+    if (fam %in% c(0, 1, 2, 5)) {
+        # no roations for independence, gaussian, student and frank copulas
+        out <- fam
+    } else if (fam %in% c(3, 13, 23, 33)) {
+        out <- c(3, 13, 23, 33)
+    } else if(fam %in% c(4, 14, 24, 34)) {
+        out <- c(4, 14, 24, 34)
+    } else if(fam %in% c(6, 16, 26, 36)) {
+        out <- c(6, 16, 26, 36)
+    } else if(fam %in% c(7, 17, 27, 37)) {
+        out <- c(7, 17, 27, 37)
+    } else if(fam %in% c(8, 18, 28, 38)) {
+        out <- c(8, 18, 28, 38)
+    } else if(fam %in% c(9, 19, 29, 39)) {
+        out <- c(9, 19, 29, 39)
+    } else if(fam %in% c(10, 20, 30, 40)) {
+        out <- c(10, 20, 30, 40)
+    } else if(fam %in% c(104, 114, 124, 134)) {
+        out <- c(104, 114, 124, 134)
+    } else if(fam %in% c(204, 214, 224, 234)) {
+        out <- c(204, 214, 224, 234)
+    }
 
-    out
+    # adjust for negative selection
+    sgn * out
 }

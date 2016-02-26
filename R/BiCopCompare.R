@@ -105,7 +105,7 @@
 BiCopCompare <- function(u1, u2, familyset = NA, weights = NA, rotations = TRUE,
                          ...) {
     if (is.na(familyset[1]))
-        familyset <- c(0, allfams)
+        familyset <- allfams
 
     ## sanity checks
     if ((is.null(u1) == TRUE) || (is.null(u2) == TRUE))
@@ -121,9 +121,16 @@ BiCopCompare <- function(u1, u2, familyset = NA, weights = NA, rotations = TRUE,
     if (!all(familyset %in% c(0, allfams)))
         stop("Copula family not implemented.")
 
-    ## adjust familyset if rotations = TRUE
+    ## adjust familyset
+    # add rotations
     if (rotations)
         familyset <- with_rotations(familyset)
+    # negative family selection
+    if (any(familyset < 0)) {
+        if (length(unique(sign(familyset))) != 1)
+            stop("'familyset' must not contain positive AND negative numbers")
+        familyset <- setdiff(allfams, -familyset)
+    }
 
     # calculate empirical kendall's tau
     emp_tau <- fasttau(u1, u2, weights)

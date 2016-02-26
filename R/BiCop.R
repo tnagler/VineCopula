@@ -148,14 +148,13 @@ BiCop <- function(family, par, par2 = 0, tau = NULL, check.pars = TRUE) {
 }
 
 ## sets of families
-allfams <- c(1:10,
+allfams <- c(0:10,
              13, 14, 16:20,
              23, 24, 26:30, 33, 34, 36:40,
              104, 114, 124, 134, 204, 214, 224, 234)
-tawns <- which(floor(allfams / 100) > 0)
+tawns <- which(allfams > 100)
 onepar <- setdiff(which(allfams %% 10 %in% c(1, 3, 4, 5, 6)), tawns)
-twopar <- setdiff(seq_along(allfams), onepar)
-
+twopar <- seq_along(allfams)[-c(1, onepar)]
 
 print.BiCop <- function(x, ...) {
     cat("Bivariate copula: ")

@@ -151,12 +151,10 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
     if (any(data > 1) || any(data < 0))
         stop("Data has to be in the interval [0,1].")
     if (!is.na(familyset[1])) {
-        for (i in 1:length(familyset)) {
-            if (!(familyset[i] %in% c(0, 1:10, 13, 14, 16:20,
-                                      23, 24, 26:30, 33, 34, 36:40,
-                                      104, 114, 124, 134, 204, 214, 224, 234)))
-                stop("Copula family not implemented.")
-        }
+        if (!all(abs(familyset) %in% allfams))
+            stop("Copula family not implemented.")
+        if (length(unique(sign(familyset))) != 1)
+            stop("'familyset' must not contain positive AND negative numbers")
     }
     if (!(selectioncrit %in% c("AIC", "BIC", "logLik")))
         stop("Selection criterion not implemented.")
