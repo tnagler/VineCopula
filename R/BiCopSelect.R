@@ -216,8 +216,10 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         ## (only families that allow for the empirical kendall's tau)
         if (emp_tau < 0) {
             todo <- negfams
-        } else {
+        } else if (emp_tau < 0) {
             todo <- posfams
+        } else {
+            todo <- c(negfams, posfams)
         }
         todo <- todo[which(todo %in% familyset)]
 

@@ -488,7 +488,7 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
     ## calculate empirical Kendall's tau and invert for initial estimate
     tau <- fasttau(u1, u2)
     if (family %in% c(0, 2, allfams[onepar]))
-        theta <- BiCopTau2Par(family, tau)
+        theta <- BiCopTau2Par(family, tau, check.taus = FALSE)
 
     ## inversion of kendall's tau -----------------------------
     if (method == "itau") {
