@@ -1047,6 +1047,9 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
                 low <- BiCopTau2Par(family, -0.9)
         }
 
+        ## ensure that starting parameters are withing bounds
+        start.parm[1] <- min(max(start.parm[1], low), up)
+
         pscale <- ifelse(family == 1, 0.001, 1)
 
         if (se == TRUE) {
