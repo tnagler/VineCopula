@@ -112,7 +112,6 @@ exportClasses(tawnT2Copula, surTawnT2Copula, r90TawnT2Copula, r270TawnT2Copula)
 exportClasses(vineCopula)
 
 
-S3method(print, RVineMatrix)
 S3method(as.copuladata, data.frame)
 S3method(as.copuladata, matrix)
 S3method(as.copuladata, list)
@@ -123,5 +122,7 @@ S3method(print, BiCop)
 S3method(summary, BiCop)
 S3method(plot, RVineMatrix)
 S3method(contour, RVineMatrix)
+S3method(print, RVineMatrix)
+S3method(summary, RVineMatrix)
 
 useDynLib("VineCopula")
