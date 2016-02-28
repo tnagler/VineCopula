@@ -29,7 +29,9 @@
 #' The vector has to include at least one bivariate copula
 #' family that allows for positive and one that allows for negative dependence.
 #' If \code{familyset = NA} (default), selection among all possible families is
-#' performed.  Coding of bivariate copula families: \cr
+#' performed. If a vector of negative numbers is provided, selection among all
+#' but \code{abs(familyset)} families is performed. Coding of bivariate copula
+#' families: \cr
 #' \code{0} = independence copula \cr
 #' \code{1} = Gaussian copula \cr
 #' \code{2} = Student t copula (t-copula) \cr
@@ -82,7 +84,7 @@
 #' \code{level = 0.05}).
 #' @param weights Numerical; weights for each observation (optional).
 #' @param rotations If \code{TRUE}, all rotations of the families in
-#' \code{familyset} are included.
+#' \code{familyset} are included (or substracted).
 #' @param se Logical; whether standard error(s) of parameter estimates is/are
 #' estimated (default: \code{se = TRUE}).
 #'

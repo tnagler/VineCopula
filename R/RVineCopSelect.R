@@ -13,8 +13,9 @@
 #' pair-copula family that allows for positive and one that allows for negative
 #' dependence. Not listed copula families might be included to better handle
 #' limit cases.  If \code{familyset = NA} (default), selection among all
-#' possible families is performed.  Coding of pair-copula families is the same
-#' as in \code{\link{BiCop}}.
+#' possible families is performed. If a vector of negative numbers is provided,
+#' selection among all but \code{abs(familyset)} is performed. Coding of
+#' pair copula families is the same as in \code{\link{BiCop}}.
 #' @param Matrix lower or upper triangular d x d matrix that defines the R-vine
 #' tree structure.
 #' @param selectioncrit Character indicating the criterion for pair-copula
@@ -207,18 +208,16 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
                 }
 
                 ## select pair-copula
-                if (trunclevel <= (d-k)) {
-                    cfit <- BiCop(0, 0, check.pars = FALSE)
-                } else {
-                    cfit <- BiCopSelect(zr2,
-                                        zr1,
-                                        familyset,
-                                        selectioncrit,
-                                        indeptest,
-                                        level,
-                                        weights = NA,
-                                        rotations)
-                }
+                if (trunclevel <= (d-k))
+                    familyset <- 0
+                cfit <- BiCopSelect(zr2,
+                                    zr1,
+                                    familyset,
+                                    selectioncrit,
+                                    indeptest,
+                                    level,
+                                    weights = NA,
+                                    rotations)
 
                 ## transform data to pseudo-oberstavions in next tree
                 direct <- indirect <- NULL
