@@ -16,8 +16,9 @@ The vector has to include at least one
 pair-copula family that allows for positive and one that allows for negative
 dependence. Not listed copula families might be included to better handle
 limit cases.  If \code{familyset = NA} (default), selection among all
-possible families is performed.  Coding of pair-copula families is the same
-as in \code{\link{BiCop}}.}
+possible families is performed. If a vector of negative numbers is provided,
+selection among all but \code{abs(familyset)} is performed. Coding of
+pair copula families is the same as in \code{\link{BiCop}}.}
 
 \item{Matrix}{lower or upper triangular d x d matrix that defines the R-vine
 tree structure.}
