@@ -15,18 +15,18 @@ DEPENDS
 NEW FEATURES
 
   * Extend `BiCop` and `RVineMatrix` objects (now include: associated dependence
-    measures; fit statistics, if available).
+    measures; fit statistics and p-values, if available).
 
-  * New methods `print` and `summary` for objects of class `BiCop`.
+  * New methods `print` and `summary` for objects of class `BiCop` and 
+    `RVineMatrix`.
 
-  * New methods `print` and `summary` for objects of class `RVineMatrix`.
-
-  * New generic `plot.RVineMatrix` for plotting vine trees.
+  * New plotting generics:
   
-  * New generic `contour.RVineMatrix` for a matrix of contour plots.
+    * `plot.RVineMatrix` for plotting vine trees,
   
-  * New generic `contour.BiCop` as short hand for 
-    `plot.BiCop(..., type = "contour")`.
+    * `contour.RVineMatrix` for a matrix of contour plots,
+  
+    * `contour.BiCop` as short hand for `plot.BiCop(..., type = "contour")`.
 
   * New function `BiCopHinv` for computation of inverse h-functions.
   
@@ -51,7 +51,16 @@ NEW FEATURES
     
   * Faster implementations of `BiCopPar2Tau`/`BiCopTau2Par` for Frank copula and
     `BiCopTau2Par` conversion for Joe copula. 
+
+  * Treatment of `familyset` in the -Select functions:
+  
+    * independence copula is handled as a regular family,
     
+    * negative integers can be used to select from all but a subset of 
+      families.
+      
+  * New function `BiCopCompare` to compare fitted models with different
+    families.
     
     
 BUG FIXES
@@ -78,10 +87,13 @@ BUG FIXES
   * Fixed rotations of Tawns (they were actually reflection w.r.t. the axes 
     u = 0.5 and u2 = 0.5)
 	
-  * Correct calculation of the goodness-of-fit test based on Whites Information matrix test 
-    for bivariate copulas `BiCopGofTest(..., method = "white")`.
+  * Correct calculation of the goodness-of-fit test based on Whites Information 
+    matrix test for bivariate copulas `BiCopGofTest(..., method = "white")`.
 	The variance matrix needed for the test statistic had a poor approximation.
 	Thereby the asymptotic p-values are corrected.
+	
+  * Bound parameter ranges for Archimedean copulas to avoid numerical 
+    instabilities in -PDF and -Sim functions.
    
   
 
