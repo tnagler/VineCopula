@@ -155,6 +155,8 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
             stop("Copula family not implemented.")
         if (length(unique(sign(familyset))) != 1)
             stop("'familyset' must not contain positive AND negative numbers")
+    } else {
+        familyset <- allfams
     }
     if (!(selectioncrit %in% c("AIC", "BIC", "logLik")))
         stop("Selection criterion not implemented.")
