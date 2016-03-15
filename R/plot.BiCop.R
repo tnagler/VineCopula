@@ -78,7 +78,7 @@ plot.BiCop <- function(x, type = "surface", margins, size, ...) {
         stop("'margins' has to be one of 'unif', 'norm', 'exp', or 'flexp'.")
     if (is.null(list(...)$xlim) & is.null(list(...)$ylim)) {
         xylim <- switch(margins,
-                        "unif"  = c(1e-1, 1 - 1e-1),
+                        "unif"  = c(1e-2, 1 - 1e-2),
                         "norm"  = c(-3, 3),
                         "exp"   = c(0, 10),
                         "flexp" = c(-10, 0))
