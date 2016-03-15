@@ -151,9 +151,3 @@ contour.RVineMatrix <- function(x, tree = "ALL", xylim = NULL, cex.nums = 1, ...
         message(paste(msg.space, msg.tree))
     }
 }
-
-tint <- function(x, fac, alpha = 1) {
-    x <- c(col2rgb(x))
-    x <- (x + (255 - x) * fac) / 255
-    rgb(x[1], x[2], x[3], alpha)
-}

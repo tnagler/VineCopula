@@ -17,9 +17,10 @@
 implemented for a few families (c.f., \code{\link{BiCopLambda}}).}
 
 \item{margins}{only relevant for types \code{"contour"} and
-\code{"surface"}; either \code{"unif"} for the original copula density or
-\code{"norm"} for the transformed density with standard normal margins
-(partial matching is activated). Default is \code{"norm"} for \code{type =
+\code{"surface"}; options are: \code{"unif"} for the original copula density,
+\code{"norm"} for the transformed density with standard normal margins,
+\code{"exp"} with standard exponential margins, and  \code{"flexp"} with
+flipped exponential margins. Default is \code{"norm"} for \code{type =
 "contour"}, and \code{"unif"} for \code{type = "surface"}.}
 
 \item{size}{integer; only relevant for types \code{"contour"} and
@@ -34,7 +35,7 @@ default is 100 for \code{type = "contour"}, and 25 for \code{type =
 There are several options for plotting BiCop objects. The density of a
 bivariate copula density can be visualized as surface/perspective or contour
 plot. Optionally, the density can be coupled with standard normal margins
-(default for contour plots). Furthermore, a lambda-plot is available (c.f.
+(default for contour plots). Furthermore, a lambda-plot is available (cf.,
 \code{\link{BiCopLambda}}).
 }
 \examples{
