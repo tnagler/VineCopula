@@ -23,20 +23,22 @@ contour.RVineMatrix <- function(x, tree = "ALL", xylim = NULL, cex.nums = 1, ...
     # contours: set limits for plots
     if (!is.null(list(...)$margins)) {
         margins <- list(...)$margins
-        if (!(margins %in% c("norm", "unif")))
-            stop("margins not supported")
+        if (!(margins %in% c("norm", "unif", "exp", "flexp")))
+            contour(BiCop(0), margins =c(0, 10))
     } else {
         margins <- "norm"
     }
     if (is.null(xylim))
         xylim <- switch(margins,
-                        "norm" = c(-3, 3),
-                        "unif" = c(1e-1, 1 - 1e-1))
+                        "norm"  = c(-3, 3),
+                        "unif"  = c(0, 1 - 1e-2),
+                        "exp"   = c(0, 10),
+                        "flexp" = c(-10, 0))
     xlim <- ylim <- xylim
 
     # contours: adjust limits for headings
     offs <- 0.25
-    mult <- 1.5
+    mult <- 1.35
     ylim[2] <- ylim[2] + offs*diff(ylim)
 
 
@@ -54,9 +56,9 @@ contour.RVineMatrix <- function(x, tree = "ALL", xylim = NULL, cex.nums = 1, ...
                 for (j in 1:(d - min(tree))) {
                     if (d - i >= j) {
                         # set up list of contour arguments
-                        args <- list(x = BiCop(family=x$family[d-i+1,j],
-                                               par=x$par[d-i+1,j],
-                                               par2=x$par2[d-i+1,j],
+                        args <- list(x = BiCop(family = x$family[d-i+1,j],
+                                               par    = x$par[d-i+1,j],
+                                               par2   = x$par2[d-i+1,j],
                                                check.pars = FALSE),
                                      drawlabels = FALSE,
                                      xlab = "",
@@ -93,11 +95,9 @@ contour.RVineMatrix <- function(x, tree = "ALL", xylim = NULL, cex.nums = 1, ...
                         abline(h = ylim)
 
                         # add pair-copula ID
-                        cx1 <- 0.95 * diff(xlim) / strwidth(maxnums)
-                        cx1 <- cx1
+                        cx1 <- 0.75 * diff(xlim) / strwidth(maxnums)
                         ty <- ylim[2] - diff(ylim)/mult*offs
-                        cx2 <- 0.95 * (ylim[2] - ty) / strheight(maxnums)
-                        cx2 <- cx2
+                        cx2 <- 0.75 * (ylim[2] - ty) / strheight(maxnums)
                         cx <- min(cx1, cx2)
                         text(x = sum(xlim)/2,
                              y = ty + 0.225 / cex.nums * (ylim[2] - ty),
