@@ -219,7 +219,7 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
         if (trunclevel == tree - 1)
             familyset <- 0
         # find optimal tree
-        g <- buildNextGraph2(VineTree, weights)
+        g <- buildNextGraph2(VineTree, weights, cores > 1)
         MST <- findMaximumTauTree2(g, mode = type)
         # estimate pair-copulas
         VineTree <- fit.TreeCopulas2(MST,
@@ -526,7 +526,7 @@ fit.TreeCopulas2 <- function(MST, oldVineGraph, type, copulaSelectionBy,
 }
 
 ## initialize graph for next vine tree (possible edges)
-buildNextGraph2 <- function(oldVineGraph, weights = NA) {
+buildNextGraph2 <- function(oldVineGraph, weights = NA, parallel) {
 
     d <- nrow(oldVineGraph$E$nums)
 
@@ -537,11 +537,17 @@ buildNextGraph2 <- function(oldVineGraph, weights = NA) {
     g$V$conditioningSet <- oldVineGraph$E$conditioningSet
 
     ## get info for all edges
-    out <- lapply(1:nrow(g$E$nums),
-                  getEdgeInfo2,
-                  g = g,
-                  oldVineGraph = oldVineGraph,
-                  weights = weights)
+    if (parallel) {
+        out <- foreach(i = 1:nrow(g$E$nums)) %dopar% {
+            getEdgeInfo2(i, g = g, oldVineGraph = oldVineGraph, weights = weights)
+        }
+    } else {
+        out <- lapply(1:nrow(g$E$nums),
+                      getEdgeInfo2,
+                      g = g,
+                      oldVineGraph = oldVineGraph,
+                      weights = weights)
+    }
 
     ## annotate graph (same order as in old version of this function)
     g$E$weights         <- sapply(out, function(x) x$tau)
