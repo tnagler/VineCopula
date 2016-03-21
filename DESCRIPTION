@@ -41,7 +41,8 @@ Imports:
     foreach
 Suggests:
     CDVine,
-    TSP
+    TSP,
+    shiny
 License: GPL (>= 2)
 LazyLoad: yes
 BugReports: https://github.com/tnagler/VineCopula/issues
