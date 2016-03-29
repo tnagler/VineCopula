@@ -148,7 +148,6 @@ BiCopApp <- function(u, familyset = NA, rotations = TRUE) {
     comp <- BiCopCompare(u1 = u1, u2 = u2, familyset = familyset)
     lst <- list(u = u, comp = comp)
 
-
     ## start shiny app
     shiny::runApp(list(
         ui = shiny::fluidPage(
@@ -165,20 +164,20 @@ BiCopApp <- function(u, familyset = NA, rotations = TRUE) {
                                                       "normal" = "normal",
                                                       "exponential" = "exp",
                                                       "flipped exponential" = "flexp"),
-                                                 "normal")),
+                                                 "uniform")),
                 # Display mode
                 shiny::column(3,
                               shiny::selectInput("dispmod", "Display mode:",
-                                                 list("contours" = "contours",
-                                                      "simulated data" = "simdata",
+                                                 list("simulated data" = "simdata",
+                                                      "contours" = "contours",
                                                       "contours and simulated data" = "both"),
-                                                 "contours")
+                                                 "simulated data")
                 ),
                 # Sample size
                 shiny::column(3,
                               shiny::conditionalPanel(condition = "input.dispmod != 'contours'",
                                                       shiny::sliderInput("nsim", "Sample size:",
-                                                                         min=0, max=10000, value=5000, step=500),
+                                                                         min=0, max=20000, value=5000, step=1000),
                                                       width = "80%")
                               #),shiny::column(1, shiny::textOutput("")
                 ),
