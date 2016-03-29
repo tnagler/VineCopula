@@ -538,9 +538,12 @@ buildNextGraph2 <- function(oldVineGraph, weights = NA, parallel) {
 
     ## get info for all edges
     if (parallel) {
-        out <- foreach(i = 1:nrow(g$E$nums)) %dopar% {
-            getEdgeInfo2(i, g = g, oldVineGraph = oldVineGraph, weights = weights)
-        }
+        i <- NA  # dummy for CRAN checks
+        out <- foreach(i = 1:nrow(g$E$nums)) %dopar%
+            getEdgeInfo2(i,
+                         g = g,
+                         oldVineGraph = oldVineGraph,
+                         weights = weights)
     } else {
         out <- lapply(1:nrow(g$E$nums),
                       getEdgeInfo2,
