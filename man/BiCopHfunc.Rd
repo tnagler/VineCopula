@@ -2,9 +2,15 @@
 % Please edit documentation in R/BiCopHfunc.R
 \name{BiCopHfunc}
 \alias{BiCopHfunc}
+\alias{BiCopHfunc1}
+\alias{BiCopHfunc2}
 \title{Conditional Distribution Function of a Bivariate Copula}
 \usage{
 BiCopHfunc(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE)
+
+BiCopHfunc1(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE)
+
+BiCopHfunc2(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE)
 }
 \arguments{
 \item{u1, u2}{numeric vectors of equal length with values in [0,1].}
@@ -68,6 +74,7 @@ for family/parameter-consistency are ommited (should only be used with
 care).}
 }
 \value{
+\code{BiCopHfunc} returns a list with
 \item{hfunc1}{Numeric vector of the conditional distribution
 function (h-function) of the copula \code{family} with parameter(s)
 \code{par}, \code{par2} evaluated at \code{u2} given \code{u1}, i.e.,
@@ -76,9 +83,11 @@ function (h-function) of the copula \code{family} with parameter(s)
 (h-function) of the copula \code{family} with parameter(s) \code{par},
 \code{par2} evaluated at \code{u1} given \code{u2}, i.e.,
 \eqn{h(\code{u1}|\code{u2},\boldsymbol{\theta})}{h(u1|u2,\theta)}.}
+\code{BiCopHfunc1} is a faster version that only calculates \code{hfunc1};
+\code{BiCopHfunc1} only calculates \code{hfunc2}.
 }
 \description{
-This function evaluates the conditional distribution function (h-function)
+Evaluate the conditional distribution function (h-function)
 of a given parametric bivariate copula.
 }
 \details{
@@ -90,21 +99,26 @@ where \eqn{C} is a bivariate copula distribution function with parameter(s)
 \eqn{\boldsymbol{\theta}}{\theta}. For more details see Aas et al. (2009). \cr \cr
 
 If the family and parameter specification is stored in a \code{\link{BiCop}}
-object \code{obj}, the alternative version
-\preformatted{BiCopHfunc(u1, u2, obj)}
+object \code{obj}, the alternative versions
+\preformatted{BiCopHfunc(u1, u2, obj),
+BiCopHfunc1(u1, u2, obj),
+BiCopHfunc2(u1, u2, obj),}
 can be used.
 }
 \examples{
-
-# load data set
 data(daxreturns)
 
 # h-functions of the Gaussian copula
 cop <- BiCop(family = 1, par = 0.5)
-h1 <- BiCopHfunc(daxreturns[,2], daxreturns[,1], cop)
+h <- BiCopHfunc(daxreturns[, 2], daxreturns[, 1], cop)
 \dontshow{
-h1
+h
 }
+# or using the fast versions
+h1 <- BiCopHfunc1(daxreturns[, 2], daxreturns[, 1], cop)
+h2 <- BiCopHfunc2(daxreturns[, 2], daxreturns[, 1], cop)
+all.equal(h$hfunc1, h1)
+all.equal(h$hfunc2, h2)
 
 }
 \author{
