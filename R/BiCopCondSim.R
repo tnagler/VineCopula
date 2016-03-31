@@ -1,13 +1,20 @@
-#' Simulation from a Bivariate Copula
+#' Conditional simulation from a Bivariate Copula
 #'
-#' This function simulates from a given parametric bivariate copula.
+#' This function simulates from a parametric bivariate copula, where on of
+#' the variables is fixed. I.e., we simulate either from
+#' \eqn{C_{2|1}(u2|u1;\theta)} or \eqn{C_{1|2}(u1|u2;\theta)}, which are both
+#' conditional distribution functions of one variable given another.
 #'
 #' If the family and parameter specification is stored in a \code{\link{BiCop}}
 #' object \code{obj}, the alternative version
-#' \preformatted{BiCopSim(N, obj)}
+#' \preformatted{BiCopCondSim(N, cond.val, cond.var, obj)}
 #' can be used.
 #'
-#' @param N Number of bivariate observations simulated.
+#'
+#' @param N Number of observations simulated.
+#' @param cond.val numeric vector of length \code{N} containing the values to
+#' condition on.
+#' @param cond.var either \code{1} or \code{2}; the variable to condition on.
 #' @param family integer; single number or vector of size \code{N}; defines the
 #' bivariate copula family: \cr
 #' \code{0} = independence copula \cr
@@ -62,95 +69,52 @@
 #' for family/parameter-consistency are ommited (should only be used with
 #' care).
 #'
-#' @return An \code{N} x 2 matrix of data simulated from the bivariate copula
-#' with \code{family} and parameter(s) \code{par}, \code{par2}.
+#' @return A length \code{N} vector of simulated from conditional distributions
+#' related to bivariate copula with \code{family} and parameter(s) \code{par},
+#' \code{par2}.
 #'
-#' @author Ulf Schepsmeier
+#' @author Thomas Nagler
 #'
-#' @seealso
-#' \code{\link{BiCop}},
+#' @seealso \code{\link{BiCopCDF}}, \code{\link{BiCopPDF}},
 #' \code{\link{RVineSim}}
+#'
 #' @examples
-#' # simulate from a bivariate t-copula
-#' simdata <- BiCopSim(100, 2, -0.7, par2 = 4)
-#'
-#' # or alternatively
+#' # create bivariate t-copula
 #' obj <- BiCop(family = 2, par = -0.7, par2 = 4)
-#' simdata2 <- BiCopSim(100, obj)
 #'
-BiCopSim <- function(N, family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
-    ## extract family and parameters if BiCop object is provided
+#' # simulate 500 observations of (U1, U2)
+#' sim <- BiCopSim(500, obj)
+#' hist(sim[, 1])  # data have uniform distribution
+#' hist(sim[, 2])  # data have uniform distribution
+#'
+#' # simulate 500 observations of (U2 | U1 = 0.7)
+#' sim1 <- BiCopCondSim(500, cond.val = 0.7, cond.var = 1, obj)
+#' hist(sim1)  # not uniform!
+#'
+#' # simulate 500 observations of (U1 | U2 = 0.1)
+#' sim2 <- BiCopCondSim(500, cond.val = 0.1, cond.var = 2, obj)
+#' hist(sim2)  # not uniform!
+#'
+BiCopCondSim <- function(N, cond.val, cond.var, family, par, par2 = 0,
+                         obj = NULL, check.pars = TRUE) {
+    if (length(cond.val) == 1)
+        cond.val <- rep(cond.val, N)
+    if (length(cond.val) != N)
+        stop("cond.val must be a numeric vector of length 1 or N")
+    if ((cond.val <= 0)  || (cond.val >= 1))
+        stop("cond.val must be in the interval (0, 1)")
+    if (!(cond.var %in% 1:2))
+        stop("cond.var has to be either 1 or 2")
     if (missing(family))
         family <- NA
     if (missing(par))
         par <- NA
-    # for short hand usage extract obj from family
-    if (class(family) == "BiCop")
-        obj <- family
-    if (!is.null(obj)) {
-        stopifnot(class(obj) == "BiCop")
-        family <- obj$family
-        par <- obj$par
-        par2 <- obj$par2
-    }
-    if (missing(par) & (all(family == 0)))
-        par <- 0
-
-    ## adjust length for parameter vectors; stop if not matching
-    if (any(c(length(family), length(par), length(par2)) == N)) {
-        if (length(family) == 1)
-            family <- rep(family, N)
-        if (length(par) == 1)
-            par <- rep(par, N)
-        if (length(par2) == 1)
-            par2 <- rep(par2, N)
-    }
-    if (!(length(family) %in% c(1, N)))
-        stop("'family' has to be a single number or a size N vector")
-    if (!(length(par) %in% c(1, N)))
-        stop("'par' has to be a single number or a size N vector")
-    if (!(length(par2) %in% c(1, N)))
-        stop("'par2' has to be a single number or a size N vector")
-
-    ## sanity checks for family and parameters
-    if (check.pars) {
-        BiCopCheck(family, par, par2)
-    } else {
-        # allow zero parameter for Clayton an Frank otherwise
-        family[(family %in% c(3, 13, 23, 33)) & (par == 0)] <- 0
-        family[(family == 5) & (par == 0)] <- 0
-    }
-
 
     ## start with independent uniforms (byrow for backwards compatibility)
-    w <- matrix(runif(2*N), ncol = 2, byrow = TRUE)
+    w <- runif(N)
 
-    ## simulate from copula by inverse rosenblatt transform
-    if (length(par) == 1) {
-        # call for single parameters
-        tmp <- .C("Hinv1",
-                  as.integer(family),
-                  as.integer(N),
-                  as.double(w[, 2]),
-                  as.double(w[, 1]),
-                  as.double(par),
-                  as.double(par2),
-                  as.double(rep(0, N)),
-                  PACKAGE = "VineCopula")[[7]]
-    } else {
-        # vectorized call
-        tmp <- .C("Hinv1_vec",
-                  as.integer(family),
-                  as.integer(N),
-                  as.double(w[, 2]),
-                  as.double(w[, 1]),
-                  as.double(par),
-                  as.double(par2),
-                  as.double(rep(0, N)),
-                  PACKAGE = "VineCopula")[[7]]
-    }
-
-    ## return results
-    U <- matrix(c(w[, 1], tmp), ncol = 2)
-    U
+    ## simulate from copula conditional on U_cond.var = cond.val
+    switch(cond.var,
+           "1" = BiCopHinv1(cond.val, w, family, par, par2, obj, check.pars),
+           "2" = BiCopHinv2(w, cond.val, family, par, par2, obj, check.pars))
 }
