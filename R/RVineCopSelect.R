@@ -222,15 +222,15 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
                 ## transform data to pseudo-oberstavions in next tree
                 direct <- indirect <- NULL
                 if (CondDistr$direct[k - 1, i])
-                    direct <- BiCopHfunc(zr1,
-                                         zr2,
+                    direct <- BiCopHfunc(zr2,
+                                         zr1,
                                          cfit,
-                                         check.pars = FALSE)$hfunc2
+                                         check.pars = FALSE)$hfunc1
                 if (CondDistr$indirect[k - 1, i])
-                    indirect <- BiCopHfunc(zr1,
-                                           zr2,
+                    indirect <- BiCopHfunc(zr2,
+                                           zr1,
                                            cfit,
-                                           check.pars = FALSE)$hfunc1
+                                           check.pars = FALSE)$hfunc2
 
                 ## return results
                 list(direct = direct, indirect = indirect, cfit = cfit)
