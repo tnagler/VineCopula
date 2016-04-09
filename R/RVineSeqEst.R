@@ -295,8 +295,8 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
         2 * (.RVM$family %in% allfams[twopar])
     .RVM$AIC <- -2 * like$loglik + 2 * npar
     .RVM$pair.AIC <- -2 * like$V$value + 2 * npar_pair
-    .RVM$BIC <- -2 * like$loglik + log(T) * npar
-    .RVM$pair.BIC <- -2 * like$V$value + log(T) * npar_pair
+    .RVM$BIC <- -2 * like$loglik + log(N) * npar
+    .RVM$pair.BIC <- -2 * like$V$value + log(N) * npar_pair
     .RVM$emptau <- emptaus
 
     ## free memory and return results
