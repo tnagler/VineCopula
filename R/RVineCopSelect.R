@@ -243,7 +243,7 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
         res.k <- if (cores > 1) {
             foreach(i = 1:(k-1),
                     .packages = c("VineCopula"),
-                    .export = ) %dopar% doEst(i)
+                    .export = "familyset") %dopar% doEst(i)
         } else {
             lapply(1:(k-1), doEst)
         }
