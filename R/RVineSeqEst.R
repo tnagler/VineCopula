@@ -102,8 +102,8 @@
 #'
 #' @export RVineSeqEst
 RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
-                         max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6), BB8 = c(6, 1)),
-                         progress = FALSE, weights = NA, cores = 1) {
+                        max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6), BB8 = c(6, 1)),
+                        progress = FALSE, weights = NA, cores = 1) {
     data <- as.matrix(data)
     Matrix <- RVM$Matrix
     d <- n <- ncol(data)
@@ -230,15 +230,15 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
                 ## transform data to pseudo-oberstavions in next tree
                 direct <- indirect <- NULL
                 if (CondDistr$direct[k - 1, i])
-                    direct <- BiCopHfunc(zr1,
-                                         zr2,
-                                         cfit,
-                                         check.pars = FALSE)$hfunc2
+                    direct <- BiCopHfunc1(zr2,
+                                          zr1,
+                                          cfit,
+                                          check.pars = FALSE)
                 if (CondDistr$indirect[k - 1, i])
-                    indirect <- BiCopHfunc(zr1,
-                                           zr2,
-                                           cfit,
-                                           check.pars = FALSE)$hfunc1
+                    indirect <- BiCopHfunc2(zr2,
+                                            zr1,
+                                            cfit,
+                                            check.pars = FALSE)
 
                 ## return results
                 list(direct = direct, indirect = indirect, cfit = cfit)
@@ -295,8 +295,8 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
         2 * (.RVM$family %in% allfams[twopar])
     .RVM$AIC <- -2 * like$loglik + 2 * npar
     .RVM$pair.AIC <- -2 * like$V$value + 2 * npar_pair
-    .RVM$BIC <- -2 * like$loglik + log(T) * npar
-    .RVM$pair.BIC <- -2 * like$V$value + log(T) * npar_pair
+    .RVM$BIC <- -2 * like$loglik + log(N) * npar
+    .RVM$pair.BIC <- -2 * like$V$value + log(N) * npar_pair
     .RVM$emptau <- emptaus
 
     ## free memory and return results

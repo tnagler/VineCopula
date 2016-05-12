@@ -1,6 +1,6 @@
 #' Inverse Conditional Distribution Function of a Bivariate Copula
 #'
-#' This function evaluates the inverse conditional distribution function
+#' Evaluate the inverse conditional distribution function
 #' (inverse h-function) of a given parametric bivariate copula.
 #'
 #' The h-function is defined as the conditional distribution function of a
@@ -12,8 +12,12 @@
 #'
 #' If the family and parameter specification is stored in a \code{\link{BiCop}}
 #' object \code{obj}, the alternative version
-#' \preformatted{BiCopHinv(u1, u2, obj)}
+#' \preformatted{BiCopHinv(u1, u2, obj),
+#' BiCopHinv1(u1, u2, obj),
+#' BiCopHinv2(u1, u2, obj)}
 #' can be used.
+#'
+#' @aliases BiCopHinv1 BiCopHinv2
 #'
 #' @param u1,u2 numeric vectors of equal length with values in [0,1].
 #' @param family integer; single number or vector of size \code{length(u1)};
@@ -70,7 +74,8 @@
 #' for family/parameter-consistency are ommited (should only be used with
 #' care).
 #'
-#' @return \item{hinv1}{Numeric vector of the inverse conditional distribution
+#' @return \code{BiCopHinv} returns a list with
+#' \item{hinv1}{Numeric vector of the inverse conditional distribution
 #' function (inverse h-function) of the copula \code{family} with parameter(s)
 #' \code{par}, \code{par2} evaluated at \code{u2} given \code{u1}, i.e.,
 #' \eqn{h^{-1}(\code{u2}|\code{u1},\boldsymbol{\theta})}{h^{-1}(u2|u1,\theta)}.}
@@ -78,6 +83,8 @@
 #' (inverse h-function) of the copula \code{family} with parameter(s)
 #' \code{par}, \code{par2}evaluated at \code{u1} given \code{u2}, i.e.,
 #' \eqn{h^{-1}(\code{u1}|\code{u2},\boldsymbol{\theta})}{h^{-1}(u1|u2,\theta)}.}
+#' \code{BiCopHinv1} is a faster version that only calculates \code{hinv1};
+#' \code{BiCopHinv2} only calculates \code{hinv2}.
 #'
 #' @author Thomas Nagler
 #'
@@ -88,18 +95,22 @@
 #' Economics 44 (2), 182-198.
 #'
 #' @examples
-#'
 #' # inverse h-functions of the Gaussian copula
 #' cop <- BiCop(1, 0.5)
-#' h1 <- BiCopHinv(0.1, 0.2, cop)
+#' hi <- BiCopHinv(0.1, 0.2, cop)
 #' \dontshow{
-#' h1
+#' hi
 #' }
-#' ## check if it is actually the inverse
-#' cop <- BiCop(3, 3)
-#' all.equal(0.2, BiCopHfunc(0.1, BiCopHinv(0.1, 0.2, cop)$hinv1, cop)$hfunc1)
-#' all.equal(0.1, BiCopHfunc(BiCopHinv(0.1, 0.2, cop)$hinv2, 0.2, cop)$hfunc2)
+#' # or using the fast versions
+#' hi1 <- BiCopHinv1(0.1, 0.2, cop)
+#' hi2 <- BiCopHinv2(0.1, 0.2, cop)
+#' all.equal(hi$hinv1, hi1)
+#' all.equal(hi$hinv2, hi2)
 #'
+#' # check if it is actually the inverse
+#' cop <- BiCop(3, 3)
+#' all.equal(0.2, BiCopHfunc1(0.1, BiCopHinv1(0.1, 0.2, cop), cop))
+#' all.equal(0.1, BiCopHfunc2(BiCopHinv2(0.1, 0.2, cop), 0.2, cop))
 #'
 #' @export BiCopHinv
 BiCopHinv <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
@@ -199,5 +210,169 @@ BiCopHinv <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TR
 
     ## return results
     list(hinv1 = hinv1, hinv2 = hinv2)
+}
+
+#' @rdname BiCopHinv
+BiCopHinv1 <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
+    ## sanity checks for u1, u2
+    if (is.null(u1) == TRUE || is.null(u2) == TRUE)
+        stop("u1 and/or u2 are not set or have length zero.")
+    if (length(u1) != length(u2))
+        stop("Lengths of 'u1' and 'u2' do not match.")
+    if (any(c(u1, u2) > 1) || any(c(u1, u2) < 0))
+        stop("Data has be in the interval [0,1].")
+    n <- length(u1)
+
+    ## extract family and parameters if BiCop object is provided
+    if (missing(family))
+        family <- NA
+    if (missing(par))
+        par <- NA
+    # for short hand usage extract obj from family
+    if (class(family) == "BiCop")
+        obj <- family
+    if (!is.null(obj)) {
+        stopifnot(class(obj) == "BiCop")
+        family <- obj$family
+        par <- obj$par
+        par2 <- obj$par2
+    }
+
+    ## adjust length for parameter vectors; stop if not matching
+    if (missing(par) & (all(family == 0)))
+        par <- 0
+    if (any(c(length(family), length(par), length(par2)) == n)) {
+        if (length(family) == 1)
+            family <- rep(family, n)
+        if (length(par) == 1)
+            par <- rep(par, n)
+        if (length(par2) == 1)
+            par2 <- rep(par2, n)
+    }
+    if (!(length(family) %in% c(1, n)))
+        stop("'family' has to be a single number or a size n vector")
+    if (!(length(par) %in% c(1, n)))
+        stop("'par' has to be a single number or a size n vector")
+    if (!(length(par2) %in% c(1, n)))
+        stop("'par2' has to be a single number or a size n vector")
+
+    ## sanity checks for family and parameters
+    if (check.pars) {
+        BiCopCheck(family, par, par2)
+    } else {
+        # allow zero parameter for Clayton an Frank otherwise
+        family[(family %in% c(3, 13, 23, 33)) & (par == 0)] <- 0
+        family[(family == 5) & (par == 0)] <- 0
+    }
+
+    ## calculate inverse h-functions
+    if (length(par) == 1) {
+        # call for single parameters
+        hinv1 <- .C("Hinv1",                      # h^{-1}(u2|u1)
+                    as.integer(family),
+                    as.integer(n),
+                    as.double(u2),
+                    as.double(u1),
+                    as.double(par),
+                    as.double(par2),
+                    as.double(rep(0, n)),
+                    PACKAGE = "VineCopula")[[7]]
+    } else {
+        # vectorized call
+        hinv1 <- .C("Hinv1_vec",                      # h^{-1}(u2|u1)
+                    as.integer(family),
+                    as.integer(n),
+                    as.double(u2),
+                    as.double(u1),
+                    as.double(par),
+                    as.double(par2),
+                    as.double(rep(0, n)),
+                    PACKAGE = "VineCopula")[[7]]
+    }
+
+    ## return results
+    hinv1
+}
+
+#' @rdname BiCopHinv
+BiCopHinv2 <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
+    ## sanity checks for u1, u2
+    if (is.null(u1) == TRUE || is.null(u2) == TRUE)
+        stop("u1 and/or u2 are not set or have length zero.")
+    if (length(u1) != length(u2))
+        stop("Lengths of 'u1' and 'u2' do not match.")
+    if (any(c(u1, u2) > 1) || any(c(u1, u2) < 0))
+        stop("Data has be in the interval [0,1].")
+    n <- length(u1)
+
+    ## extract family and parameters if BiCop object is provided
+    if (missing(family))
+        family <- NA
+    if (missing(par))
+        par <- NA
+    # for short hand usage extract obj from family
+    if (class(family) == "BiCop")
+        obj <- family
+    if (!is.null(obj)) {
+        stopifnot(class(obj) == "BiCop")
+        family <- obj$family
+        par <- obj$par
+        par2 <- obj$par2
+    }
+
+    ## adjust length for parameter vectors; stop if not matching
+    if (missing(par) & (all(family == 0)))
+        par <- 0
+    if (any(c(length(family), length(par), length(par2)) == n)) {
+        if (length(family) == 1)
+            family <- rep(family, n)
+        if (length(par) == 1)
+            par <- rep(par, n)
+        if (length(par2) == 1)
+            par2 <- rep(par2, n)
+    }
+    if (!(length(family) %in% c(1, n)))
+        stop("'family' has to be a single number or a size n vector")
+    if (!(length(par) %in% c(1, n)))
+        stop("'par' has to be a single number or a size n vector")
+    if (!(length(par2) %in% c(1, n)))
+        stop("'par2' has to be a single number or a size n vector")
+
+    ## sanity checks for family and parameters
+    if (check.pars) {
+        BiCopCheck(family, par, par2)
+    } else {
+        # allow zero parameter for Clayton an Frank otherwise
+        family[(family %in% c(3, 13, 23, 33)) & (par == 0)] <- 0
+        family[(family == 5) & (par == 0)] <- 0
+    }
+
+    ## calculate inverse h-functions
+    if (length(par) == 1) {
+        # call for single parameters
+        hinv2 <- .C("Hinv2",                      # h^{-1}(u1|u2)
+                    as.integer(family),
+                    as.integer(n),
+                    as.double(u1),
+                    as.double(u2),
+                    as.double(par),
+                    as.double(par2),
+                    as.double(rep(0, n)),
+                    PACKAGE = "VineCopula")[[7]]
+    } else {
+        # vectorized call
+        hinv2 <- .C("Hinv2_vec",                      # h^{-1}(u1|u2)
+                    as.integer(family),
+                    as.integer(n),
+                    as.double(u1),
+                    as.double(u2),
+                    as.double(par),
+                    as.double(par2),
+                    as.double(rep(0, n)),
+                    PACKAGE = "VineCopula")[[7]]
+    }
+
+    ## return results
+    hinv2
 }
 

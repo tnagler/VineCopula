@@ -2,9 +2,15 @@
 % Please edit documentation in R/BiCopHinv.R
 \name{BiCopHinv}
 \alias{BiCopHinv}
+\alias{BiCopHinv1}
+\alias{BiCopHinv2}
 \title{Inverse Conditional Distribution Function of a Bivariate Copula}
 \usage{
 BiCopHinv(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE)
+
+BiCopHinv1(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE)
+
+BiCopHinv2(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE)
 }
 \arguments{
 \item{u1, u2}{numeric vectors of equal length with values in [0,1].}
@@ -68,6 +74,7 @@ for family/parameter-consistency are ommited (should only be used with
 care).}
 }
 \value{
+\code{BiCopHinv} returns a list with
 \item{hinv1}{Numeric vector of the inverse conditional distribution
 function (inverse h-function) of the copula \code{family} with parameter(s)
 \code{par}, \code{par2} evaluated at \code{u2} given \code{u1}, i.e.,
@@ -76,9 +83,11 @@ function (inverse h-function) of the copula \code{family} with parameter(s)
 (inverse h-function) of the copula \code{family} with parameter(s)
 \code{par}, \code{par2}evaluated at \code{u1} given \code{u2}, i.e.,
 \eqn{h^{-1}(\code{u1}|\code{u2},\boldsymbol{\theta})}{h^{-1}(u1|u2,\theta)}.}
+\code{BiCopHinv1} is a faster version that only calculates \code{hinv1};
+\code{BiCopHinv2} only calculates \code{hinv2}.
 }
 \description{
-This function evaluates the inverse conditional distribution function
+Evaluate the inverse conditional distribution function
 (inverse h-function) of a given parametric bivariate copula.
 }
 \details{
@@ -91,22 +100,28 @@ where \eqn{C} is a bivariate copula distribution function with parameter(s)
 
 If the family and parameter specification is stored in a \code{\link{BiCop}}
 object \code{obj}, the alternative version
-\preformatted{BiCopHinv(u1, u2, obj)}
+\preformatted{BiCopHinv(u1, u2, obj),
+BiCopHinv1(u1, u2, obj),
+BiCopHinv2(u1, u2, obj)}
 can be used.
 }
 \examples{
-
 # inverse h-functions of the Gaussian copula
 cop <- BiCop(1, 0.5)
-h1 <- BiCopHinv(0.1, 0.2, cop)
+hi <- BiCopHinv(0.1, 0.2, cop)
 \dontshow{
-h1
+hi
 }
-## check if it is actually the inverse
-cop <- BiCop(3, 3)
-all.equal(0.2, BiCopHfunc(0.1, BiCopHinv(0.1, 0.2, cop)$hinv1, cop)$hfunc1)
-all.equal(0.1, BiCopHfunc(BiCopHinv(0.1, 0.2, cop)$hinv2, 0.2, cop)$hfunc2)
+# or using the fast versions
+hi1 <- BiCopHinv1(0.1, 0.2, cop)
+hi2 <- BiCopHinv2(0.1, 0.2, cop)
+all.equal(hi$hinv1, hi1)
+all.equal(hi$hinv2, hi2)
 
+# check if it is actually the inverse
+cop <- BiCop(3, 3)
+all.equal(0.2, BiCopHfunc1(0.1, BiCopHinv1(0.1, 0.2, cop), cop))
+all.equal(0.1, BiCopHfunc2(BiCopHinv2(0.1, 0.2, cop), 0.2, cop))
 
 }
 \author{

@@ -538,9 +538,12 @@ buildNextGraph2 <- function(oldVineGraph, weights = NA, parallel) {
 
     ## get info for all edges
     if (parallel) {
-        out <- foreach(i = 1:nrow(g$E$nums)) %dopar% {
-            getEdgeInfo2(i, g = g, oldVineGraph = oldVineGraph, weights = weights)
-        }
+        i <- NA  # dummy for CRAN checks
+        out <- foreach(i = 1:nrow(g$E$nums)) %dopar%
+            getEdgeInfo2(i,
+                         g = g,
+                         oldVineGraph = oldVineGraph,
+                         weights = weights)
     } else {
         out <- lapply(1:nrow(g$E$nums),
                       getEdgeInfo2,
@@ -819,10 +822,11 @@ as.RVM2 <- function(RVine, data, callexp) {
         2 * sum(RVM$family %in% allfams[twopar], na.rm = TRUE)
     npar_pair <- (RVM$family %in% allfams[onepar]) +
         2 * (RVM$family %in% allfams[twopar])
+    N <- nrow(data)
     RVM$AIC <- -2 * like$loglik + 2 * npar
     RVM$pair.AIC <- -2 * like$V$value + 2 * npar_pair
-    RVM$BIC <- -2 * like$loglik + log(T) * npar
-    RVM$pair.BIC <- -2 * like$V$value + log(T) * npar_pair
+    RVM$BIC <- -2 * like$loglik + log(N) * npar
+    RVM$pair.BIC <- -2 * like$V$value + log(N) * npar_pair
     RVM$emptau <- emptaus
 
     ## return final object

@@ -319,16 +319,14 @@ get_name <-  function(j, tree, RVM) {
 
 get_family <- function(j, tree, RVM) {
     d <- nrow(RVM$family)
-    M <- RVM$Matrix
-    paste(RVM$family[M[d - tree + 1, j]])
+    paste(RVM$family[d - tree + 1, j])
 }
 
 get_par <- function(j, tree, RVM) {
     d <- nrow(RVM$family)
-    M <- RVM$Matrix
     # get parameters
-    par  <- round(RVM$par[M[d - tree + 1, j]], digits = 2)
-    par2 <- round(RVM$par2[M[d - tree + 1, j]], digits = 2)
+    par  <- round(RVM$par[d - tree + 1, j], digits = 2)
+    par2 <- round(RVM$par2[d - tree + 1, j], digits = 2)
     # add brackets if par2 != 0
     apply(cbind(par, par2), 1, join_par)
 }

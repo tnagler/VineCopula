@@ -398,10 +398,11 @@ score <- function(dat) {
 #' @export BiCopVuongClarke
 BiCopVuongClarke <- function(u1, u2, familyset = NA, correction = FALSE, level = 0.05) {
 
-    if (is.na(familyset[1]))
-        familyset <- c(1:10, 13, 14, 16:20, 23, 24, 26:30,
-                       33, 34, 36:40, 41, 51,  61, 71,
-                       104, 114, 124, 134, 204, 214, 224, 234)
+    tau <- TauMatrix(cbind(u1, u2))[1, 2]
+    if (is.na(familyset[1])) {
+        familyset <- if (tau > 0) posfams else negfams
+        familyset <- c(0, familyset)
+    }
     # Sicherheitsabfragen
     if (is.null(u1) == TRUE || is.null(u2) == TRUE)
         stop("u1 and/or u2 are not set or have length zero.")
@@ -413,12 +414,7 @@ BiCopVuongClarke <- function(u1, u2, familyset = NA, correction = FALSE, level =
         stop("Data has be in the interval [0,1].")
     if (any(u2 > 1) || any(u2 < 0))
         stop("Data has be in the interval [0,1].")
-    for (i in 1:length(familyset)) {
-        if (!(familyset[i] %in% c(1:10, 13, 14, 16:20, 23, 24, 26:30,
-                                  33, 34, 36:40, 41, 51, 61, 71,
-                                  104, 114, 124, 134, 204, 214, 224, 234)))
-            stop("Copula family not implemented.")
-    }
+
 
     xy <- cbind(u1, u2)
     score.gof <- matrix(rep(NA, 2 * length(familyset)), nrow = 2)
