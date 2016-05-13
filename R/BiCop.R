@@ -155,6 +155,9 @@ allfams <- c(0:10,
 tawns <- which(allfams > 100)
 onepar <- setdiff(which(allfams %% 10 %in% c(1, 3, 4, 5, 6)), tawns)
 twopar <- seq_along(allfams)[-c(1, onepar)]
+negfams <- c(1, 2, 5, 23, 24, 26:30, 33, 34, 36:40, 124, 134, 224, 234)
+posfams <- c(1:10, 13, 14, 16:20, 104, 114, 204, 214)
+
 
 print.BiCop <- function(x, ...) {
     cat("Bivariate copula: ")
