@@ -34,6 +34,7 @@ Imports:
     network,
     methods,
     copula,
+    kdecopula,
     ADGofTest,
     lattice,
     doParallel,

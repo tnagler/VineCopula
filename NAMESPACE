@@ -54,6 +54,7 @@ export(BiCopDeriv2)
 export(BiCopHfuncDeriv)
 export(BiCopHfuncDeriv2)
 export(BiCopGofTest)
+export(BiCopKDE)
 
 export(RVineLogLik)
 export(RVinePDF)

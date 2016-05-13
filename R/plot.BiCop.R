@@ -65,7 +65,7 @@ plot.BiCop <- function(x, type = "surface", margins, size, ...) {
     if (missing(size))
         size <- switch(type,
                        "contour" = 100L,
-                       "surface" = 25L)
+                       "surface" = 20L)
     stopifnot(is.numeric(size))
     size <- round(size)
 
@@ -80,8 +80,8 @@ plot.BiCop <- function(x, type = "surface", margins, size, ...) {
         xylim <- switch(margins,
                         "unif"  = c(1e-2, 1 - 1e-2),
                         "norm"  = c(-3, 3),
-                        "exp"   = c(0, 10),
-                        "flexp" = c(-10, 0))
+                        "exp"   = c(0, 6),
+                        "flexp" = c(-6, 0))
     } else {
         xylim <- range(c(list(...)$xlim, list(...)$ylim))
     }
@@ -110,23 +110,23 @@ plot.BiCop <- function(x, type = "surface", margins, size, ...) {
         xlim <- ylim <- xylim
         at <- c(seq(0, 0.3, length.out = 50), seq(0.3, 100, length.out = 50))
     } else if (margins == "exp") {
-        ll <- ifelse(type == "contour", 1e-4, 1e-1)
+        ll <- ifelse(type == "contour", 1e-2, 1e-1)
         points <- pexp(seq(ll, xylim[2L], length.out = size))
         g <- as.matrix(expand.grid(points, points))
         points <- qexp(g[1L:size, 1L])
         adj <- tcrossprod(dexp(points))
-        levels <- c(0.00005, 0.001, 0.01, 0.025, 0.05, 0.1, 0.2, 0.3, 0.5)
+        levels <- c(0.005, 0.01, 0.025, 0.05, 0.1, 0.2, 0.3, 0.5)
         gu <- qexp(g[, 1L])
         gv <- qexp(g[, 2L])
         xlim <- ylim <- xylim
         at <- c(0, exp(seq(-10, 0, length.out = 79)), seq(1, 10, length.out = 20))
     } else if (margins == "flexp") {
-        ll <- ifelse(type == "contour", 1e-4, 1e-1)
+        ll <- ifelse(type == "contour", 1e-2, 1e-1)
         points <- pexp(-seq(xylim[1L], -ll, length.out = size))
         g <- as.matrix(expand.grid(points, points))
         points <- -qexp(g[1L:size, 1L])
         adj <- tcrossprod(dexp(qexp(g[1L:size, 1L])))
-        levels <- c(0.00005, 0.001, 0.01, 0.025, 0.05, 0.1, 0.2, 0.3, 0.5)
+        levels <- c(0.005, 0.01, 0.025, 0.05, 0.1, 0.2, 0.3, 0.5)
         gu <- -qexp(g[, 1L])
         gv <- -qexp(g[, 2L])
         g <- 1 - g
@@ -186,7 +186,7 @@ plot.BiCop <- function(x, type = "surface", margins, size, ...) {
                      screen = list(z = 25, x = -55),
                      shade = FALSE,
                      aspect = c(1, 1),
-                     light.source = c(10, 0, 10),
+                     light.source = c(10,0,10),
                      zoom = 0.85,
                      par.settings = list(axis.line = list(col = "transparent")),
                      at = at,
