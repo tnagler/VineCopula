@@ -2,18 +2,20 @@
 % Please edit documentation in R/BiCopCompare.R
 \name{BiCopCompare}
 \alias{BiCopCompare}
-\title{Compare Maximum Likelihood Estimates of Bivariate Copula Families}
+\title{Shiny app for bivariate copula selection}
 \usage{
-BiCopCompare(u1, u2, familyset = NA, weights = NA, rotations = TRUE, ...)
+BiCopCompare(u, familyset = NA, rotations = TRUE)
 }
 \arguments{
-\item{u1, u2}{Data vectors of equal length with values in [0,1].}
+\item{u}{\eqn{n x 2} matrix of copula data.}
 
 \item{familyset}{Vector of bivariate copula families to select from.
 The vector has to include at least one bivariate copula
 family that allows for positive and one that allows for negative dependence.
 If \code{familyset = NA} (default), selection among all possible families is
-performed.  Coding of bivariate copula families: \cr
+performed. If a vector of negative numbers is provided, selection among all
+but \code{abs(familyset)} families is performed. Coding of bivariate copula
+families: \cr
 \code{0} = independence copula \cr
 \code{1} = Gaussian copula \cr
 \code{2} = Student t copula (t-copula) \cr
@@ -55,66 +57,30 @@ performed.  Coding of bivariate copula families: \cr
 \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
 \code{234} = rotated Tawn type 2 copula (270 degrees) \cr}
 
-\item{weights}{Numerical; weights for each observation (optional).}
-
 \item{rotations}{If \code{TRUE}, all rotations of the families in
-\code{familyset} are included.}
-
-\item{...}{further arguments passed to \code{\link{BiCopEst}}.}
+\code{familyset} are included (or substracted).}
 }
 \value{
-A list containing
-\item{models}{a list of \code{\link{BiCop}} objects corresponding to the
-familyset (only families corresponding to the sign of the empirical
-Kendall's tau are used),}
-\item{summary}{a data frame containing the log-likelihoods, AICs, and BICs
-of all the fitted models.}
+A \code{\link{BiCop}} object containing the model selected by the
+user.
 }
 \description{
-This function allows to compare bivariate copula models accross a number of
-families w.r.t. the fit statistics log-likelihood, AIC, and BIC. For each
-family, the parameters are estimated by maximum likelihood.
-}
-\details{
-First all available copulas are fitted using maximum likelihood estimation.
-Then the criteria are computed for all available copula families (e.g., if
-\code{u1} and \code{u2} are negatively
-dependent, Clayton, Gumbel, Joe, BB1, BB6, BB7 and BB8 and their survival
-copulas are not considered) and the family with the minimum value is chosen.
-For observations \eqn{u_{i,j},\ i=1,...,N,\ j=1,2,}{u_{i,j}, i=1,...,N,\
-j=1,2,} the AIC of a bivariate copula family \eqn{c} with parameter(s)
-\eqn{\boldsymbol{\theta}} is defined as \deqn{AIC := -2 \sum_{i=1}^N
-\ln[c(u_{i,1},u_{i,2}|\boldsymbol{\theta})] + 2k, }{ AIC := -2 \sum_{i=1}^N
-ln[c(u_{i,1},u_{i,2}|\theta)] + 2k, } where \eqn{k=1} for one parameter
-copulas and \eqn{k=2} for the two parameter t-, BB1, BB6, BB7 and BB8
-copulas. Similarly, the BIC is given by \deqn{BIC := -2 \sum_{i=1}^N
-\ln[c(u_{i,1},u_{i,2}|\boldsymbol{\theta})] + \ln(N)k. }{ BIC := -2
-\sum_{i=1}^N ln[c(u_{i,1},u_{i,2}|\theta)] + ln(N)k. } Evidently, if the BIC
-is chosen, the penalty for two parameter families is stronger than when
-using the AIC.
+The function starts a shiny app which visualizes copula data and allows to
+compare it with overlays of density contours or simulated data from different
+copula families with fitted parameters. Several specifications for the
+margins are available.
 }
 \examples{
-
-## compare models
+# load data
 data(daxreturns)
-comp <- BiCopCompare(daxreturns[, 1], daxreturns[, 4])
 
+# find a suitable copula family for the first two stocks
+\dontrun{
+fit <- BiCopCompare(daxreturns[, 1:2])
+}
 
 }
 \author{
-Thomas Nagler
-}
-\references{
-Akaike, H. (1973). Information theory and an extension of the
-maximum likelihood principle. In B. N. Petrov and F. Csaki (Eds.),
-Proceedings of the Second International Symposium on Information Theory
-Budapest, Akademiai Kiado, pp. 267-281.
-
-Schwarz, G. E. (1978). Estimating the dimension of a model. Annals of
-Statistics 6 (2), 461-464.
-}
-\seealso{
-\code{\link{BiCop}},
-\code{\link{BiCopEst}}
+Matthias Killiches, Thomas Nagler
 }
 

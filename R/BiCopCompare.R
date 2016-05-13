@@ -1,32 +1,18 @@
-#' Compare Maximum Likelihood Estimates of Bivariate Copula Families
+#' Shiny app for bivariate copula selection
 #'
-#' This function allows to compare bivariate copula models accross a number of
-#' families w.r.t. the fit statistics log-likelihood, AIC, and BIC. For each
-#' family, the parameters are estimated by maximum likelihood.
+#' The function starts a shiny app which visualizes copula data and allows to
+#' compare it with overlays of density contours or simulated data from different
+#' copula families with fitted parameters. Several specifications for the
+#' margins are available.
 #'
-#' First all available copulas are fitted using maximum likelihood estimation.
-#' Then the criteria are computed for all available copula families (e.g., if
-#' \code{u1} and \code{u2} are negatively
-#' dependent, Clayton, Gumbel, Joe, BB1, BB6, BB7 and BB8 and their survival
-#' copulas are not considered) and the family with the minimum value is chosen.
-#' For observations \eqn{u_{i,j},\ i=1,...,N,\ j=1,2,}{u_{i,j}, i=1,...,N,\
-#' j=1,2,} the AIC of a bivariate copula family \eqn{c} with parameter(s)
-#' \eqn{\boldsymbol{\theta}} is defined as \deqn{AIC := -2 \sum_{i=1}^N
-#' \ln[c(u_{i,1},u_{i,2}|\boldsymbol{\theta})] + 2k, }{ AIC := -2 \sum_{i=1}^N
-#' ln[c(u_{i,1},u_{i,2}|\theta)] + 2k, } where \eqn{k=1} for one parameter
-#' copulas and \eqn{k=2} for the two parameter t-, BB1, BB6, BB7 and BB8
-#' copulas. Similarly, the BIC is given by \deqn{BIC := -2 \sum_{i=1}^N
-#' \ln[c(u_{i,1},u_{i,2}|\boldsymbol{\theta})] + \ln(N)k. }{ BIC := -2
-#' \sum_{i=1}^N ln[c(u_{i,1},u_{i,2}|\theta)] + ln(N)k. } Evidently, if the BIC
-#' is chosen, the penalty for two parameter families is stronger than when
-#' using the AIC.
-#'
-#' @param u1,u2 Data vectors of equal length with values in [0,1].
+#' @param u \eqn{n x 2} matrix of copula data.
 #' @param familyset Vector of bivariate copula families to select from.
 #' The vector has to include at least one bivariate copula
 #' family that allows for positive and one that allows for negative dependence.
 #' If \code{familyset = NA} (default), selection among all possible families is
-#' performed.  Coding of bivariate copula families: \cr
+#' performed. If a vector of negative numbers is provided, selection among all
+#' but \code{abs(familyset)} families is performed. Coding of bivariate copula
+#' families: \cr
 #' \code{0} = independence copula \cr
 #' \code{1} = Gaussian copula \cr
 #' \code{2} = Student t copula (t-copula) \cr
@@ -67,115 +53,349 @@
 #' \code{214} = rotated Tawn type 2 copula (180 degrees) \cr
 #' \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
 #' \code{234} = rotated Tawn type 2 copula (270 degrees) \cr
-#' @param weights Numerical; weights for each observation (optional).
 #' @param rotations If \code{TRUE}, all rotations of the families in
-#' \code{familyset} are included.
-#' @param ... further arguments passed to \code{\link{BiCopEst}}.
+#' \code{familyset} are included (or substracted).
 #'
-#' @return A list containing
-#' \item{models}{a list of \code{\link{BiCop}} objects corresponding to the
-#' familyset (only families corresponding to the sign of the empirical
-#' Kendall's tau are used),}
-#' \item{summary}{a data frame containing the log-likelihoods, AICs, and BICs
-#' of all the fitted models.}
+#' @return A \code{\link{BiCop}} object containing the model selected by the
+#' user.
 #'
-#'
-#' @author Thomas Nagler
-#'
-#' @seealso
-#' \code{\link{BiCop}},
-#' \code{\link{BiCopEst}}
-#'
-#'
-#' @references Akaike, H. (1973). Information theory and an extension of the
-#' maximum likelihood principle. In B. N. Petrov and F. Csaki (Eds.),
-#' Proceedings of the Second International Symposium on Information Theory
-#' Budapest, Akademiai Kiado, pp. 267-281.
-#'
-#' Schwarz, G. E. (1978). Estimating the dimension of a model. Annals of
-#' Statistics 6 (2), 461-464.
+#' @author Matthias Killiches, Thomas Nagler
 #'
 #' @examples
+#'# load data
+#'data(daxreturns)
 #'
-#' ## compare models
-#' data(daxreturns)
-#' comp <- BiCopCompare(daxreturns[, 1], daxreturns[, 4])
+#'# find a suitable copula family for the first two stocks
+#'\dontrun{
+#'fit <- BiCopCompare(daxreturns[, 1:2])
+#'}
 #'
-#'
-BiCopCompare <- function(u1, u2, familyset = NA, weights = NA, rotations = TRUE,
-                         ...) {
-    if (is.na(familyset[1]))
-        familyset <- allfams
+BiCopCompare <- function(u, familyset = NA, rotations = TRUE) {
+    if (!requireNamespace("shiny"))
+        stop("The 'shiny' package must be installed to run the app.")
+    stopifnot(ncol(u) == 2)
+    stopifnot(nrow(u) > 2)
 
-    ## sanity checks
-    if ((is.null(u1) == TRUE) || (is.null(u2) == TRUE))
-        stop("u1 and/or u2 are not set or have length zero.")
-    if (length(u1) != length(u2))
-        stop("Lengths of 'u1' and 'u2' do not match.")
-    if (length(u1) < 2)
-        stop("Number of observations has to be at least 2.")
-    if (any(u1 > 1) || any(u1 < 0))
-        stop("Data has to be in the interval [0,1].")
-    if (any(u2 > 1) || any(u2 < 0))
-        stop("Data has to be in the interval [0,1].")
-    if (!all(familyset %in% c(0, allfams)))
-        stop("Copula family not implemented.")
+    ## assign data to global environment
+    u1 <- u[ , 1]
+    u2 <- u[ , 2]
+    z1 <- qnorm(u1)
+    z2 <- qnorm(u2)
 
     ## adjust familyset
-    # add rotations
+    if (is.na(familyset[1]))
+        familyset <- allfams
     if (rotations)
         familyset <- with_rotations(familyset)
-    # negative family selection
     if (any(familyset < 0)) {
         if (length(unique(sign(familyset))) != 1)
             stop("'familyset' must not contain positive AND negative numbers")
         familyset <- setdiff(allfams, -familyset)
     }
 
-    # calculate empirical kendall's tau
-    emp_tau <- fasttau(u1, u2, weights)
-
-    ## perform independence test
-    p.value.indeptest <- BiCopIndTest(u1, u2)$p.value
-
-    ## sets of families for negative and positive dependence
-    negfams <- c(1, 2, 5, 23, 24, 26:30, 33, 34, 36:40, 124, 134, 224, 234)
-    posfams <- c(1:10, 13, 14, 16:20, 104, 114, 204, 214)
-
-    ## stop if familyset not sufficient
-    if (!is.na(familyset[1]) &&
-        !(any(familyset %in% negfams) && any(familyset %in% posfams))) {
-        txt <- paste0("'familyset' has to include at least one bivariate ",
-                      "copula family for positive and one for negative ",
-                      "dependence.")
-        stop(txt)
-    }
-
-    ## find families for which estimation is required
-    ## (only families that allow for the empirical kendall's tau)
-    if (emp_tau < 0) {
-        todo <- c(0, negfams)
+    ## create list of admissible families
+    tau <- cor(u1, u2, method = "kendall")
+    if (tau > 0) {
+        allfamlst <- list("0 - Independence " = 0,
+                          "1 - Gaussian " = 1,
+                          "2 - Student t " = 2,
+                          "3 - Clayton " = 3,
+                          "4 - Gumbel " = 4,
+                          "5 - Frank " = 5,
+                          "6 - Joe " = 6,
+                          "7 - BB1 " = 7,
+                          "8 - BB6 " = 8,
+                          "9 - BB7 " = 9,
+                          "10 - BB8 " = 10,
+                          "13 -  Clayton  (180 deg)" = 13,
+                          "14 -  Gumbel  (180 deg)" = 14,
+                          "16 -  Joe  (180 deg)" = 16,
+                          "17 -  BB1  (180 deg)" = 17,
+                          "18 -  BB6  (180 deg)" = 18,
+                          "19 -  BB7  (180 deg)" = 19,
+                          "20 -  BB8  (180 deg)" = 20,
+                          "104 - Tawn 1 " = 104,
+                          "114 -  Tawn 1  (180 deg)" = 114,
+                          "204 - Tawn 2 " = 204,
+                          "214 -  Tawn 2  (180 deg)" = 214)
     } else {
-        todo <- c(0, posfams)
+        allfamlst <- list("0 - Independence " = 0,
+                          "1 - Gaussian " = 1,
+                          "2 - Student t " = 2,
+                          "5 - Frank " = 5,
+                          "23 -  Clayton  (90 deg)" = 23,
+                          "24 -  Gumbel  (90 deg)" = 24,
+                          "26 -  Joe  (90 deg)" = 26,
+                          "27 -  BB1  (90 deg)" = 27,
+                          "28 -  BB6  (90 deg)" = 28,
+                          "29 -  BB7  (90 deg)" = 29,
+                          "30 -  BB8  (90 deg)" = 30,
+                          "33 -  Clayton  (270 deg)" = 33,
+                          "34 -  Gumbel  (270 deg)" = 34,
+                          "36 -  Joe  (270 deg)" = 36,
+                          "37 -  BB1  (270 deg)" = 37,
+                          "38 -  BB6  (270 deg)" = 38,
+                          "39 -  BB7  (270 deg)" = 39,
+                          "40 -  BB8  (270 deg)" = 40,
+                          "124 -  Tawn 1  (90 deg)" = 124,
+                          "134 -  Tawn 1  (270 deg)" = 134,
+                          "224 -  Tawn 2  (90 deg)" = 224,
+                          "234 -  Tawn 2  (270 deg)" = 234)
     }
-    todo <- todo[which(todo %in% familyset)]
+    famlst <- allfamlst[unlist(allfamlst) %in% familyset]
 
-    ## maximum likelihood estimation
-    optiout <- list()
-    for (i in seq_along(todo)) {
-        optiout[[i]] <- BiCopEst.intern(u1, u2,
-                                        family = todo[i],
-                                        as.BiCop = TRUE,
-                                        ...)
+    ## gather information about fits of bivariate copulas
+    comp <- BiCopEstList(u1 = u1, u2 = u2, familyset = familyset)
+    lst <- list(u = u, comp = comp)
+
+    ## start shiny app
+    shiny::runApp(list(
+        ui = shiny::fluidPage(
+
+            # Application title
+            shiny::titlePanel("Compare bivariate copulas"),
+
+            # General settings
+            shiny::wellPanel(shiny::fluidRow(
+                # Level
+                shiny::column(3,
+                              shiny::selectInput("margins", "Margins:",
+                                                 list("uniform" = "unif",
+                                                      "normal" = "normal",
+                                                      "exponential" = "exp",
+                                                      "flipped exponential" = "flexp"),
+                                                 "uniform")),
+                # Display mode
+                shiny::column(3,
+                              shiny::selectInput("dispmod", "Display mode:",
+                                                 list("simulated data" = "simdata",
+                                                      "contours" = "contours",
+                                                      "contours and simulated data" = "both"),
+                                                 "simulated data")
+                ),
+                # Sample size
+                shiny::column(3,
+                              shiny::conditionalPanel(condition = "input.dispmod != 'contours'",
+                                                      shiny::sliderInput("nsim", "Sample size:",
+                                                                         min=0, max=20000, value=5000, step=1000),
+                                                      width = "80%")
+                              #),shiny::column(1, shiny::textOutput("")
+                ),
+                # Select & close
+                shiny::column(3,
+                              shiny::radioButtons("radio", label = "Select family:",
+                                                  choices = list("A" = "1", "B" = "2",
+                                                                 "C" = "3", "D" = "4"),
+                                                  selected = 1, inline = TRUE),
+                              shiny::actionButton("close", "select & close",
+                                                  width="100%", class="btn-primary btn-lg")
+                )
+            )
+            ),
+            shiny::wellPanel(
+                shiny::fluidRow(
+                    # specifications
+                    shiny::column(3, shiny::selectInput("fam1", "Family A:", famlst, 1)),
+                    shiny::column(3, shiny::selectInput("fam2", "Family B:", famlst, 1)),
+                    shiny::column(3, shiny::selectInput("fam3", "Family C:", famlst, 1)),
+                    shiny::column(3, shiny::selectInput("fam4", "Family D:", famlst, 1)))
+                ,
+                shiny::fluidRow(
+                    # plots
+                    shiny::column(3, shiny::plotOutput("plot1")),
+                    shiny::column(3, shiny::plotOutput("plot2")),
+                    shiny::column(3, shiny::plotOutput("plot3")),
+                    shiny::column(3, shiny::plotOutput("plot4")))
+            ),
+            shiny::wellPanel(shiny::fluidRow(
+                # AIC/BIC/ll ranking plot
+                shiny::column(9, shiny::plotOutput("rankingplot")
+                ),
+
+                shiny::column(3,
+                              # Selection criterion
+                              shiny::selectInput("selcrit",
+                                                 "Selection criterion:",
+                                                 list("AIC" = "AIC",
+                                                      "BIC" = "BIC",
+                                                      "log-likelihood" = "logLik"),
+                                                 "AIC"),
+                              shiny::br(),
+                              # Order plots according to selected criterion
+                              shiny::actionButton("order",
+                                                  "sort",
+                                                  width="33%",
+                                                  class="btn-primary btn-lg"))
+            )
+            )
+        ),
+        server = ## server function
+            function(input, output, session) {
+
+                # needed so that 'positive' can be used in ui.R
+                # plot 1
+                output$plot1 <- shiny::renderPlot({
+                    # determine family number and corresponding parameters
+                    fam <- input$fam1
+                    index <- which(comp$summary$family == fam)
+                    par <- comp$models[[index]]$par
+                    par2 <- comp$models[[index]]$par2
+
+                    # plot
+                    plot_function(index, input, lst)
+                })
+                # plot 2
+                output$plot2 <- shiny::renderPlot({
+                    # determine family number and corresponding parameters
+                    fam <- input$fam2
+                    index <- which(comp$summary$family == fam)
+                    par <- comp$models[[index]]$par
+                    par2 <- comp$models[[index]]$par2
+
+                    # plot
+                    plot_function(index, input, lst)
+                })
+                # plot 3
+                output$plot3 <- shiny::renderPlot({
+                    # determine family number and corresponding parameters
+                    fam <- input$fam3
+                    index <- which(comp$summary$family == fam)
+                    par <- comp$models[[index]]$par
+                    par2 <- comp$models[[index]]$par2
+
+                    # plot
+                    plot_function(index, input, lst)
+                })
+                # plot 4
+                output$plot4 <- shiny::renderPlot({
+                    # determine family number and corresponding parameters
+                    fam <- input$fam4
+                    index <- which(comp$summary$family == fam)
+                    par <- comp$models[[index]]$par
+                    par2 <- comp$models[[index]]$par2
+
+                    # plot
+                    plot_function(index, input, lst)
+                })
+
+
+                # AIC/BIC/ll ranking plot
+                output$rankingplot <- shiny::renderPlot({
+                    if (input$selcrit == "AIC"){
+                        val <- sort(comp$summary$AIC)
+                        cop_names <- as.character(comp$summary$family[order(comp$summary$AIC)])
+                    } else if (input$selcrit == "BIC"){
+                        val <- sort(comp$summary$BIC)
+                        cop_names <- as.character(comp$summary$family[order(comp$summary$BIC)])
+                    } else {
+                        val <- sort(comp$summary$logLik, decreasing = TRUE)
+                        cop_names <- as.character(comp$summary$family[order(comp$summary$logLik,
+                                                                            decreasing = TRUE)])
+                    }
+                    barplot(height = val, names.arg = cop_names, border = TUMivory, col = TUMlightblue)
+                })
+
+
+                # select families according to selected ranking criterion
+                shiny::observe({
+                    input$order
+
+                    # ranking of models according to selection criterion
+                    if (input$selcrit == "AIC"){
+                        max_ind <- comp$summary$family[order(comp$summary$AIC)]
+                    } else if (input$selcrit == "BIC"){
+                        max_ind <- comp$summary$family[order(comp$summary$BIC)]
+                    } else {
+                        max_ind <- comp$summary$family[order(comp$summary$logLik, decreasing = TRUE)]
+                    }
+                    if (length(max_ind) < 4)
+                        max_ind <- c(max_ind, rep(max_ind[length(max_ind)], 4 - length(max_ind)))
+
+                    # overwrite 'fam' and 'rot' for plots 1-4
+                    for (i in 1:4){
+                        shiny::updateSelectInput(session, paste0("fam", i),
+                                                 selected = as.character(max_ind[i]))
+                    }
+                })
+
+                # select family and close app
+                shiny::observe({
+                    if(input$close > 0){
+                        fam <- switch(input$radio,
+                                      "1" = as.numeric(input$fam1),
+                                      "2" = as.numeric(input$fam2),
+                                      "3" = as.numeric(input$fam3),
+                                      "4" = as.numeric(input$fam4))
+                        shiny::stopApp(comp$models[[which(comp$summary$family == fam)]])
+                    }
+                })
+            }
+    )
+    )
+}
+
+
+## TUM colors
+TUMblue <- rgb(0, 101, 189, maxColorValue=255)
+TUMlightblue <- rgb(100, 160, 200, maxColorValue=255)
+TUMtrlightblue <- rgb(100, 160, 200, 25, maxColorValue=255)
+TUMgreen <- rgb(162, 173, 0, maxColorValue=255)
+TUMorange <- rgb(227, 114, 034, maxColorValue=255)
+TUMivory <- rgb(218, 215, 203, maxColorValue=255)
+tr_gray <- gray(0.25, 0.5)
+
+
+## functions
+
+# generates plots according to specified settings
+plot_function <- function(index, input, lst){
+    # plotting input depending on specified settings
+    x <- switch(input$margins,
+                "unif" = lst$u[, 1],
+                "normal" = qnorm(lst$u[, 1]),
+                "exp" = qexp(lst$u[, 1]),
+                "flexp" = -qexp(1 - lst$u[, 1]))
+    y <- switch(input$margins,
+                "unif" = lst$u[, 2],
+                "normal" = qnorm(lst$u[, 2]),
+                "exp" = qexp(lst$u[, 2]),
+                "flexp" = -qexp(1 - lst$u[, 2]))
+    xlim <- switch(input$margins,
+                   "unif" = c(0,1),
+                   "normal" = c(-3.5,3.5),
+                   "exp" = c(0,10),
+                   "flexp" = c(-10,0))
+    ylim <- xlim
+
+    plot(NULL, xlab = "", ylab = "", xlim = xlim, ylim = ylim)
+
+    # plot simulated data (if required)
+    if (input$dispmod %in% c("simdata", "both")){
+        set.seed(7)
+        temp <- BiCopSim(N = input$nsim, lst$comp$models[[index]])
+        simdata <- switch(input$margins,
+                          "unif" = temp,
+                          "normal" = qnorm(temp),
+                          "exp" = qexp(temp),
+                          "flexp" = -qexp(1 - temp))
+        points(simdata, pch = 20, col = TUMtrlightblue)
     }
 
+    # plot actual data
+    points(x, y, pch = ".", cex = 2, col = TUMblue)
 
-    ## store model information in data.frame
-    tab <- data.frame(family = todo,
-                      logLik = sapply(optiout, function(x) x$logLik),
-                      AIC = sapply(optiout, function(x) x$AIC),
-                      BIC = sapply(optiout, function(x) x$BIC))
+    # plot contour lines (if required)
+    if (input$dispmod %in% c("contours", "both")) {
+        cont_margin <- switch(input$margins,
+                              "unif" = "unif",
+                              "normal" = "norm",
+                              "exp" = "exp",
+                              "flexp" = "flexp")
+        suppressWarnings(contour(lst$comp$models[[index]],
+                                 margins = cont_margin,
+                                 lwd = 1,
+                                 drawlabels = FALSE,
+                                 add = TRUE))
+    }
 
-    ## return along with estimated models
-    list(models = optiout, summary = round(tab, 2))
 }
