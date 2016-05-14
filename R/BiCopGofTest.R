@@ -270,7 +270,6 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
         if(B == 0){  # asymptotic p-value
             out <- list(statistic = test, p.value = pvalue)
         } else {
-            # TODO: Bootstrapped p-value
             test_boot <- bootWhite(family, theta, nu, B, N=length(u1))
             pvalue <- mean(test_boot >= as.numeric(test))
             out <- list(statistic = test, p.value = pvalue)
@@ -423,6 +422,11 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
 }
 
 
+
+###########################
+
+# sub functions for the calculation of the Hessian matrix of the t-copula
+
 f_rho <- function(u1, u2, par, par2) {
     a <- .C("diff2lPDF_rho_tCopula",
             as.double(u1),
@@ -461,6 +465,12 @@ f_rho_nu <- function(u1, u2, par, par2) {
 
     return(sum(a))
 }
+
+
+#####################
+
+# sub functions for the Kendall GOF
+
 
 boot.stat <- function(u, v, fam) {
 
@@ -681,7 +691,21 @@ obs.stat <- function(u, v, fam) {
 
 ############################
 
-# bootstrap for IR
+
+#' boot.IR
+#'
+#' bootstrap for IR
+#'
+#' @param family copula family
+#' @param theta first copula parameter
+#' @param nu second copula parameter
+#' @param B number of bootstraps
+#' @param n Number of observations
+#'
+#' @return IR vector of test statistics
+#'
+#' @author Ulf Schepsmeier
+#'
 
 boot.IR <- function(family, theta, nu, B, n) {
     # theta und nu sind die geschaetzten Parameter
@@ -743,7 +767,21 @@ boot.IR <- function(family, theta, nu, B, n) {
 
 
 
-## sub-function
+## sub-functions
+
+#' hesseTcopula
+#'
+#' This small function calculates the Hessian matrix for the t-copula
+#'
+#' @param u1 first copula argument
+#' @param u2 second copula argument
+#' @param theta first copula parameter
+#' @param nu second copula parameter
+#'
+#' @return H Hesse matrix for the t-copula
+#'
+#' @author Ulf Schepsmeier
+#'
 
 hesseTcopula <- function(u1, u2, theta, nu){
     rho_teil <- f_rho(u1, u2, theta, nu)
@@ -751,6 +789,23 @@ hesseTcopula <- function(u1, u2, theta, nu){
     rho_nu_teil <- f_rho_nu(u1, u2, theta, nu)
     H <- matrix(c(rho_teil, rho_nu_teil, rho_nu_teil, nu_teil), 2, 2)
 }
+
+
+
+#' OPGtcopula
+#'
+#' This small function calculates the outer product of gradient for the t-copula
+#'
+#' @param u1 first copula argument
+#' @param u2 second copula argument
+#' @param family copula family (here Student's t copula = 2)
+#' @param theta first copula parameter
+#' @param nu second copula parameter
+#'
+#' @return C outer product of gradient
+#'
+#' @author Ulf Schepsmeier
+#'
 
 OPGtcopula <- function(u1, u2, family, theta, nu){
     # gradient
@@ -774,7 +829,20 @@ OPGtcopula <- function(u1, u2, family, theta, nu){
 }
 
 
-# derivative of D (i.e. gradD) for the t-copula
+#' gradDtcopula
+#'
+#' derivative of D (i.e. gradD) for the t-copula
+#'
+#' @param u1 first copula argument
+#' @param u2 second copula argument
+#' @param theta first copula parameter
+#' @param nu second copula parameter
+#'
+#' @return gradD gradient of D
+#'
+#' @author Ulf Schepsmeier
+#'
+
 gradDtcopula <- function(u1, u2, theta, nu){
     eps <- 0.001
     H_theta_eps_plus <- hesseTcopula(u1, u2, theta+eps, nu)
@@ -807,6 +875,24 @@ gradDtcopula <- function(u1, u2, theta, nu){
 }
 
 
+
+
+
+#' bootWhite
+#'
+#' This small function provides the code to calculated bootstrapped p-values
+#' for the White test.
+#'
+#' @param family copula family
+#' @param theta first copula parameter
+#' @param nu second copula parameter
+#' @param B number of bootstraps
+#' @param N number of observations
+#'
+#' @return testStat
+#'
+#' @author Ulf Schepsmeier
+#'
 
 bootWhite <- function(family, theta, nu, B, N){
     testStat <- rep(0, B)
