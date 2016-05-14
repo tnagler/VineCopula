@@ -82,8 +82,9 @@
 #' @param obj \code{BiCop} object containing the family and parameter
 #' specification.
 #' @return For \code{method = "white"}: \item{p.value}{Asymptotic p-value.}
-#' \item{statistic}{The observed test statistic.}\cr For \code{method =
-#' "kendall"} \item{p.value.CvM}{Bootstrapped p-value of the goodness-of-fit
+#' \item{statistic}{The observed test statistic.}\cr
+#' For \code{method ="kendall"}
+#' \item{p.value.CvM}{Bootstrapped p-value of the goodness-of-fit
 #' test using the Cramer-von Mises statistic (if \code{B > 0}).}
 #' \item{p.value.KS}{Bootstrapped p-value of the goodness-of-fit test using the
 #' Kolmogorov-Smirnov statistic (if \code{B > 0}).} \item{statistic.CvM}{The
@@ -193,8 +194,6 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
                 pars <- BiCopEst(u1, u2, family = family, method = "mle", max.df = max.df)
                 theta <- pars$par
                 nu <- pars$par2
-                print(theta)
-                print(nu)
             } else {
                 theta <- par
                 nu <- par2
@@ -225,7 +224,6 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
                 Dprime[, t] <- Hprime + Cprime
                 Bt[,,t] <- H  # brauche ich noch fuer Vt
 
-                # TODO: correct Vt
                 tmp <- Dprime[,t]-gradD%*%solve(Bt[,,t])%*%grad
                 Vt[, , t] <- (tmp) %*% t(tmp)
                 #vt[,,t] <- Dprime[,t] %*% t(Dprime[,t])
@@ -268,7 +266,17 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
             test <- T * D * solve(V0) * D
             pvalue <- 1 - pchisq(test, df = 1)
         }
-        out <- list(p.value = pvalue, statistic = test)
+
+        if(B == 0){  # asymptotic p-value
+            out <- list(statistic = test, p.value = pvalue)
+        } else {
+            # TODO: Bootstrapped p-value
+            test_boot <- bootWhite(family, theta, nu, B, N=length(u1))
+            pvalue <- mean(test_boot >= as.numeric(test))
+            out <- list(statistic = test, p.value = pvalue)
+        }
+
+
     } else if (method == "IR") {
         # Information ratio GOF Step 1: maximum likelihood estimation
         if (family == 2) {
@@ -280,8 +288,6 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
                                  max.df = max.df)
                 theta <- pars$par
                 nu <- pars$par2
-                print(theta)
-                print(nu)
             } else {
                 theta <- par
                 nu <- par2
@@ -711,12 +717,12 @@ boot.IR <- function(family, theta, nu, B, n) {
             nu2 <- 0
             d <- rep(0, T)
             for (t in 1:T) {
-                b <- BiCopPDF(sam[t, 1], sam[t, 2], family, theta, nu)
+                b <- BiCopPDF(sam[t, 1], sam[t, 2], family, theta2, nu2)
                 d[t] <- BiCopDeriv2(sam[t, 1],
                                     sam[t, 2],
                                     family = family,
-                                    par = theta,
-                                    par2 = nu,
+                                    par = theta2,
+                                    par2 = nu2,
                                     deriv = "par")/b
             }
             H <- mean(d)
@@ -775,10 +781,10 @@ gradDtcopula <- function(u1, u2, theta, nu){
     H_theta_eps_minus <- hesseTcopula(u1, u2, theta-eps, nu)
     H_nu_eps_plus <- hesseTcopula(u1, u2, theta, nu+eps)
     H_nu_eps_minus <- hesseTcopula(u1, u2, theta, nu-eps)
-    C_theta_eps_plus <- OPGtcopula(u1, u2, theta+eps, nu)
-    C_theta_eps_minus <- OPGtcopula(u1, u2, theta-eps, nu)
-    C_nu_eps_plus <- OPGtcopula(u1, u2, theta, nu+eps)
-    C_nu_eps_minus <- OPGtcopula(u1, u2, theta, nu-eps)
+    C_theta_eps_plus <- OPGtcopula(u1, u2, family=2, theta=(theta+eps), nu=nu)
+    C_theta_eps_minus <- OPGtcopula(u1, u2, family=2, theta=(theta-eps), nu=nu)
+    C_nu_eps_plus <- OPGtcopula(u1, u2, family=2, theta=theta, nu=(nu+eps))
+    C_nu_eps_minus <- OPGtcopula(u1, u2, family=2, theta=theta, nu=(nu-eps))
 
     Hprime_theta_eps_plus <- as.vector(H_theta_eps_plus[lower.tri(H_theta_eps_plus, diag = TRUE)])
     Hprime_theta_eps_minus <- as.vector(H_theta_eps_minus[lower.tri(H_theta_eps_minus, diag = TRUE)])
@@ -799,3 +805,19 @@ gradDtcopula <- function(u1, u2, theta, nu){
 
     gradD <- cbind(gradD_theta, gradD_nu)
 }
+
+
+
+bootWhite <- function(family, theta, nu, B, N){
+    testStat <- rep(0, B)
+    for(i in 1:B){
+        sam <- BiCopSim(N, family, theta, nu)
+        sam.par <- BiCopEst(sam[, 1], sam[, 2], family = family)  # parameter estimation of sample data
+        testStat[i] <- BiCopGofTest(u1 = sam[,1], u2 = sam[,2], family = family,
+                                    par = sam.par[1], par2 = sam.par[2], method = "White",
+                                    B = 0)$statistic
+    }
+    return(testStat)
+}
+
+

@@ -16,7 +16,7 @@ testRunBiCopPar <- function(FUN){
   #familyset <- c(1:10,13:20,23:30)
   familyset <- familyset[-which(familyset %in% c(15,25,35))]
 
-  if(FUN == "BiCopPar2Beta") familyset <- familyset[-which(familyset == 2)]
+  if (FUN == "BiCopPar2Beta") familyset <- familyset[-which(familyset == 2)]
 
   ## parameter sets
   parset3 <- seq(0, 0.999, 0.001)
@@ -29,40 +29,40 @@ testRunBiCopPar <- function(FUN){
   results <- list()
 
   k <- 1
-  for(fam in familyset){  # run over all families
+  for (fam in familyset) {  # run over all families
     ## set the correct parameter set
-    if(fam == 1){
+    if (fam == 1) {
       res <- rep(0, length(parset3))
       par <- parset3
-    } else if(fam == 2){
+    } else if (fam == 2) {
       res <- matrix(0, length(parset3), length(parset4))
       par <- parset3
       par2 <- parset4
-    } else if(fam %in% c(3, 13, 23, 33)){
-      res <- rep(0,length(parset1)-1)
+    } else if (fam %in% c(3, 13, 23, 33)) {
+      res <- rep(0,length(parset1) - 1)
       par <- parset1[-1]
-    } else if(fam %in% c(4, 14, 24, 34)){
+    } else if (fam %in% c(4, 14, 24, 34)) {
       res <- rep(0,length(parset2))
       par <- parset2
-    } else if(fam == 5){
-      res <- rep(0,length(parset1)-1)
+    } else if (fam == 5) {
+      res <- rep(0,length(parset1) - 1)
       par <- parset1[-1]
-    } else if(fam %in% c(6, 16, 26, 36)){
-      res <- rep(0,length(parset2)-1)
+    } else if (fam %in% c(6, 16, 26, 36)) {
+      res <- rep(0,length(parset2) - 1)
       par <- parset2[-1]
-    } else if(fam %in% c(7, 17, 27, 37, 8, 18, 28, 38)){
-      res <- matrix(0, length(parset1)-1, length(parset2))
+    } else if (fam %in% c(7, 17, 27, 37, 8, 18, 28, 38)) {
+      res <- matrix(0, length(parset1) - 1, length(parset2))
       par <- parset1[-1]
       par2 <- parset2
-    } else if(fam %in% c(9, 19, 29, 39)){
-      res <- matrix(0, length(parset2), length(parset1)-1)
+    } else if (fam %in% c(9, 19, 29, 39)) {
+      res <- matrix(0, length(parset2), length(parset1) - 1)
       par <- parset2
       par2 <- parset1[-1]
-    } else if(fam %in% c(10, 20, 30, 40)){
-      res <- matrix(0, length(parset2), length(parset3)-1)
+    } else if (fam %in% c(10, 20, 30, 40)){
+      res <- matrix(0, length(parset2), length(parset3) - 1)
       par <- parset2
       par2 <- parset3[-1]
-    } else if(fam > 100){
+    } else if (fam > 100) {
       res <- matrix(0, length(parset2), length(parset3))
       par <- parset2
       par2 <- parset3
