@@ -130,7 +130,7 @@ Pair-copula constructions of multiple dependence. Insurance: Mathematics and
 Economics 44 (2), 182-198.
 }
 \seealso{
-\code{\link{BiCopPDF}}, \code{\link{BiCopCDF}},
+\code{\link{BiCopHinv}}, \code{\link{BiCopPDF}}, \code{\link{BiCopCDF}},
 \code{\link{RVineLogLik}}, \code{\link{RVineSeqEst}}, \code{\link{BiCop}}
 }
 

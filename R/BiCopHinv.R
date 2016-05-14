@@ -88,7 +88,7 @@
 #'
 #' @author Thomas Nagler
 #'
-#' @seealso \code{\link{BiCopPDF}}, \code{\link{BiCopCDF}},
+#' @seealso \code{\link{BiCopHfunc}}, \code{\link{BiCopPDF}}, \code{\link{BiCopCDF}},
 #' \code{\link{RVineLogLik}}, \code{\link{RVineSeqEst}}, \code{\link{BiCop}}
 #' @references Aas, K., C. Czado, A. Frigessi, and H. Bakken (2009).
 #' Pair-copula constructions of multiple dependence. Insurance: Mathematics and
