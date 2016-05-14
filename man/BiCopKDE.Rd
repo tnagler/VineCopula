@@ -2,14 +2,13 @@
 % Please edit documentation in R/BiCopKDE.R
 \name{BiCopKDE}
 \alias{BiCopKDE}
-\alias{contour.kdecopula}
-\alias{plot.kdecopula}
 \title{Kernel estimate of  a Bivariate Copula Density}
 \usage{
-\method{plot}{kdecopula}(u1, u2, type = "contour", margins, size,
-  kde.pars = list(), ...)
+BiCopKDE(u1, u2, type = "contour", margins, size, kde.pars = list(), ...)
 }
 \arguments{
+\item{u1, }{u2 data vecotrs.}
+
 \item{type}{plot type; either \code{"contour"} or \code{"surface"} (partial
 matching is activated) for a contour or perspective/surface plot
 respectively.}
@@ -30,8 +29,6 @@ grid; default is 100 for \code{type = "contour"}, and 25 for \code{type =
 
 \item{kde.pars}{list of arguments passed to
 \code{\link[kdecopula::kdecop]{kdecop}}.}
-
-\item{x}{\code{kdecopula} object.}
 
 \item{\dots}{optional arguments passed to \code{\link{contour}} or
 \code{\link{wireframe}}.}

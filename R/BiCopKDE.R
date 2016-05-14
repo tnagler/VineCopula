@@ -4,10 +4,7 @@
 #' provides the same options as \code{\link{plot.BiCop}}. Further arguments can
 #' be passed to \code{\link[kdecopula::kdecop]{kdecop}} to modify the estimate.
 #'
-#' @method plot kdecopula
-#'
-#' @aliases plot.kdecopula contour.kdecopula
-#' @param x \code{kdecopula} object.
+#' @param u1, u2 data vecotrs.
 #' @param type plot type; either \code{"contour"} or \code{"surface"} (partial
 #' matching is activated) for a contour or perspective/surface plot
 #' respectively.
@@ -44,20 +41,20 @@ BiCopKDE <- function(u1, u2, type = "contour", margins, size,
         udata$udata <- unname(udata$udata)
 
     ## estimate copula density with kde.pars
-    args <- modifyList(udata, kde.pars)
-    est <- do.call(kdecopula::kdecop, args)
-
-    ## choose margins if missing
-    if (missing(margins)) {
-        margins <- switch(type,
-                          "contour" = "norm",
-                          "surface" = "unif")
-    }
-
-    # plot
-    return(plot(est,
-                type = type,
-                margins = margins,
-                size = size,
-                ...))
+    # args <- modifyList(udata, kde.pars)
+    # est <- do.call(kdecopula::kdecop, args)
+    #
+    # ## choose margins if missing
+    # if (missing(margins)) {
+    #     margins <- switch(type,
+    #                       "contour" = "norm",
+    #                       "surface" = "unif")
+    # }
+    #
+    # # plot
+    # return(plot(est,
+    #             type = type,
+    #             margins = margins,
+    #             size = size,
+    #             ...))
 }
