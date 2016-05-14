@@ -900,7 +900,7 @@ bootWhite <- function(family, theta, nu, B, N){
         sam <- BiCopSim(N, family, theta, nu)
         sam.par <- BiCopEst(sam[, 1], sam[, 2], family = family)  # parameter estimation of sample data
         testStat[i] <- BiCopGofTest(u1 = sam[,1], u2 = sam[,2], family = family,
-                                    par = sam.par[1], par2 = sam.par[2], method = "White",
+                                    par = sam.par$par, par2 = sam.par$par2, method = "White",
                                     B = 0)$statistic
     }
     return(testStat)
