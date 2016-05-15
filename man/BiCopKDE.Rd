@@ -7,7 +7,7 @@
 BiCopKDE(u1, u2, type = "contour", margins, size, kde.pars = list(), ...)
 }
 \arguments{
-\item{u1, }{u2 data vecotrs.}
+\item{u1, u2}{numeric vectors of equal length with values in [0,1].}
 
 \item{type}{plot type; either \code{"contour"} or \code{"surface"} (partial
 matching is activated) for a contour or perspective/surface plot
@@ -28,7 +28,7 @@ grid; default is 100 for \code{type = "contour"}, and 25 for \code{type =
 "surface"}.}
 
 \item{kde.pars}{list of arguments passed to
-\code{\link[kdecopula::kdecop]{kdecop}}.}
+\code{\link[kdecopula]{kdecop}}.}
 
 \item{\dots}{optional arguments passed to \code{\link{contour}} or
 \code{\link{wireframe}}.}
@@ -36,13 +36,25 @@ grid; default is 100 for \code{type = "contour"}, and 25 for \code{type =
 \description{
 A kernel density estimate of the copula density is visualized. The function
 provides the same options as \code{\link{plot.BiCop}}. Further arguments can
-be passed to \code{\link[kdecopula::kdecop]{kdecop}} to modify the estimate.
+be passed to \code{\link[kdecopula]{kdecop}} to modify the estimate.
 }
 \details{
-For further details on estimation see \code{\link[kdecopula::kdecop]{kdecop}}.
+For further details on estimation see \code{\link[kdecopula]{kdecop}}.
 }
 \examples{
+# simulate data from Joe copula
+cop <- BiCop(3, tau = 0.3)
+u <- BiCopSim(1000, cop)
+contour(cop)  # true contours
 
+# kernel contours with standard normal margins
+BiCopKDE(u[, 1], u[, 2])
+BiCopKDE(u[, 1], u[, 2], kde.pars = list(mult = 0.5))  # undersmooth
+BiCopKDE(u[, 1], u[, 2], kde.pars = list(mult = 2))  # oversmooth
+
+# kernel density with uniform margins
+BiCopKDE(u[, 1], u[, 2], type = "surface", zlim = c(0, 4))
+plot(cop, zlim = c(0, 4))  # true density
 
 }
 \author{
