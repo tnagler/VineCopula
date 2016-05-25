@@ -102,79 +102,56 @@
 #'
 #' @export BiCopCDF
 BiCopCDF <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
-    ## sanity checks for u1, u2
     if (is.null(u1) == TRUE || is.null(u2) == TRUE)
         stop("u1 and/or u2 are not set or have length zero.")
-    if (any(u1 > 1) || any(u1 < 0))
-        stop("Data has be in the interval [0,1].")
-    if (any(u2 > 1) || any(u2 < 0))
-        stop("Data has be in the interval [0,1].")
     if (length(u1) != length(u2))
         stop("Lengths of 'u1' and 'u2' do not match.")
-    n <- length(u1)
 
-    ## extract family and parameters if BiCop object is provided
+    ## preprocessing of arguments
+    # store all arguments with call into a list
+    args <- as.list(environment())
+    args$call <- match.call()
+    # set dummys if family and par are missing (-> when obj is provided)
     if (missing(family))
-        family <- NA
+        args$family <- NA
     if (missing(par))
-        par <- NA
-    # for short hand usage extract obj from family
-    if (class(family) == "BiCop")
-        obj <- family
-    if (!is.null(obj)) {
-        stopifnot(class(obj) == "BiCop")
-        family <- obj$family
-        par <- obj$par
-        par2 <- obj$par2
-    }
-
-    ## check for reasonable input
-    if (missing(par) & (all(family == 0)))
-        par <- 0
-    if (any(is.na(family)) | any(is.na(par)))
-        stop("Provide either 'family' and 'par' or 'obj'")
-
-    ## adjust length for parameter vectors; stop if not matching
-    if (any(c(length(family), length(par), length(par2)) == n)) {
-        if (length(family) == 1)
-            family <- rep(family, n)
-        if (length(par) == 1)
-            par <- rep(par, n)
-        if (length(par2) == 1)
-            par2 <- rep(par2, n)
-    }
-    if (!(length(family) %in% c(1, n)))
-        stop("'family' has to be a single number or a size n vector")
-    if (!(length(par) %in% c(1, n)))
-        stop("'par' has to be a single number or a size n vector")
-    if (!(length(par2) %in% c(1, n)))
-        stop("'par2' has to be a single number or a size n vector")
+        args$par <- NA
+    # set all NA values to 0.5, but store the index (will be reset to NA)
+    args <- fix_nas(args)
+    # check if all data are in (0, 1)^2
+    check_if_01(args)
+    # extract family and parameters if BiCop object is provided
+    args <- extract_from_BiCop(args)
+    # make sure that family, par, par2 have the same length
+    args <- match_spec_lengths(args)
 
     ## sanity checks for family and parameters
     if (check.pars) {
-        BiCopCheck(family, par, par2)
+        BiCopCheck(args$family, args$par, args$par2)
     } else {
         # allow zero parameter for Clayton an Frank otherwise
-        family[(family %in% c(3, 13, 23, 33)) & (par == 0)] <- 0
-        family[(family == 5) & (par == 0)] <- 0
+        args$family[(args$family %in% c(3, 13, 23, 33)) & (args$par == 0)] <- 0
+        args$family[(args$family == 5) & (args$par == 0)] <- 0
     }
 
     ## calculate CDF
-    if (length(par) == 1) {
+    if (length(args$par) == 1) {
         # call for single parameters
-        out <- calcCDF(u1, u2, family, par, par2)
+        out <- calcCDF(args$u1, args$u2, args$family, args$par, args$par2)
     } else {
         # vectorized call
-        out <- vapply(1:length(par),
-                      function(i) calcCDF(u1[i],
-                                          u2[i],
-                                          family[i],
-                                          par[i],
-                                          par2[i]),
+        out <- vapply(1:length(args$par),
+                      function(i) calcCDF(args$u1[i],
+                                          args$u2[i],
+                                          args$family[i],
+                                          args$par[i],
+                                          args$par2[i]),
                       numeric(1))
     }
 
-    ## return result
+    # reset NAs
+    out <- reset_nas(out, args)
+    # return result
     out
 }
 
