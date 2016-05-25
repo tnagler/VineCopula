@@ -95,7 +95,7 @@ extract_from_BiCop <- function(args) {
 check_args <- function(args) {
     if (args$check.pars) {
         # check for family/parameter consistency (if not disabled)
-        BiCopCheck(args$family, args$par, args$par2)
+        BiCopCheck(args$family, args$par, args$par2, call = args$call)
     } else {
         # allow zero parameter for Clayton an Frank otherwise
         args$family[(args$family %in% c(3, 13, 23, 33)) & (args$par == 0)] <- 0

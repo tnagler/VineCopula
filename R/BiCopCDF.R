@@ -124,15 +124,8 @@ BiCopCDF <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRU
     args <- extract_from_BiCop(args)
     # make sure that family, par, par2 have the same length
     args <- match_spec_lengths(args)
-
-    ## sanity checks for family and parameters
-    if (check.pars) {
-        BiCopCheck(args$family, args$par, args$par2)
-    } else {
-        # allow zero parameter for Clayton an Frank otherwise
-        args$family[(args$family %in% c(3, 13, 23, 33)) & (args$par == 0)] <- 0
-        args$family[(args$family == 5) & (args$par == 0)] <- 0
-    }
+    # sanity checks for family and parameters
+    args <- check_args(args)
 
     ## calculate CDF
     if (length(args$par) == 1) {
