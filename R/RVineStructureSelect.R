@@ -5,25 +5,6 @@
 #' families are selected using \code{\link{BiCopSelect}} and estimated
 #' sequentially (forward selection of trees).
 #'
-#' R-vine trees are selected using maximum spanning trees with absolute values
-#' of pairwise Kendall's taus as weights, i.e., the following optimization
-#' problem is solved for each tree: \deqn{ }{ \max \sum_{edges e_{ij} in
-#' spanning tree} |\hat{\tau}_{ij}|, }\deqn{\max \sum_{edges\ e_{ij}\ in\
-#' spanning\ tree} |\hat{\tau}_{ij}|, }{ \max \sum_{edges e_{ij} in spanning
-#' tree} |\hat{\tau}_{ij}|, } where \eqn{\hat{\tau}_{ij}} denote the pairwise
-#' empirical Kendall's taus and a spanning tree is a tree on all nodes. The
-#' setting of the first tree selection step is always a complete graph. For
-#' subsequent trees, the setting depends on the R-vine construction principles,
-#' in particular on the proximity condition.
-#'
-#' The root nodes of C-vine trees are determined similarly by identifying the
-#' node with strongest dependencies to all other nodes. That is we take the
-#' node with maximum column sum in the empirical Kendall's tau matrix.
-#'
-#' Note that a possible way to determine the order of the nodes in the D-vine
-#' is to identify a shortest Hamiltonian path in terms of weights
-#' \eqn{1-|\tau_{ij}|}. This can be established for example using the package
-#' TSP. Example code is shown below.
 #'
 #' @param data An N x d data matrix (with uniform margins).
 #' @param familyset An integer vector of pair-copula families to select from.
@@ -54,6 +35,8 @@
 #' @param progress logical; whether the tree-wise specification progress is
 #' printed (default: \code{progress = FALSE}).
 #' @param weights numeric; weights for each observation (opitional).
+#' @param treecrit edge weight for Dissman's structure selection algorithm, see
+#' \emph{Details}.
 #' @param rotations If \code{TRUE}, all rotations of the families in
 #' \code{familyset} are included.
 #' @param cores integer; if \code{cores > 1}, estimation will be parallized
@@ -75,6 +58,47 @@
 #'
 #' @note For a comprehensive summary of the vine copula model, use
 #' \code{summary(object)}; to see all its contents, use \code{str(object)}.
+#'
+#' @details
+#' R-vine trees are selected using maximum spanning trees w.r.t. some edge
+#' weights. The most commonly used edge weigth is the absolute value of the
+#' empirical Kendall's tau, say \eqn{\hat{\tau}_{ij}}. Then, the following o
+#' ptimization problem is solved for each tree:
+#' \deqn{\max \sum_{edges e_{ij} in spanning tree} |\hat{\tau}_{ij}|, }{
+#' \max \sum_{edges e_{ij} in spanning tree} |\hat{\tau}_{ij}|, }
+#' where a spanning tree is a tree on all nodes. The
+#' setting of the first tree selection step is always a complete graph. For
+#' subsequent trees, the setting depends on the R-vine construction principles,
+#' in particular on the proximity condition.
+#'
+#' Some commonly used edge weights are implemented:
+#' \tabular{ll}{
+#' \code{"tau"} \tab absolute value of empirical Kendall's tau. \cr
+#' \code{"rho"} \tab absolute value of empirical Spearman's rho. \cr
+#' \code{"AIC"} \tab Akaike information (multiplied by -1). \cr
+#' \code{"BIC"} \tab Bayesian information criterion (multiplied by -1). \cr
+#' \code{"cAIC"}\tab corrected Akaike information criterion (multiplied by -1). \cr
+#' }
+#' The criteria \code{"AIC"}, \code{"BIC"}, and \code{"cAIC"} require estimation and
+#' model selection for all possible pairs. This is computationally expensive and
+#' much slower than \code{"tau"} or \code{"rho"}.
+#' The user can also specify a custom function to calculate the edge weights.
+#' The function has to be of type \code{function(u1, u2, weights) ...} and must
+#' return a numeric value. The weigths argument must exist, but does not has to
+#' be used. For example, \code{"tau"} (withouth using weights) can be implemented
+#' as follows:\cr
+#' \code{function(u1, u2, weights)
+#'     abs(cor(u1, u2, method = "kendall", use = "complete.obs"))}
+#'
+#'
+#' The root nodes of C-vine trees are determined similarly by identifying the
+#' node with strongest dependencies to all other nodes. That is we take the
+#' node with maximum column sum in the empirical Kendall's tau matrix.
+#'
+#' Note that a possible way to determine the order of the nodes in the D-vine
+#' is to identify a shortest Hamiltonian path in terms of weights
+#' \eqn{1-|\tau_{ij}|}. This can be established for example using the package
+#' TSP. Example code is shown below.
 #'
 #' @author Jeffrey Dissmann, Eike Brechmann, Ulf Schepsmeier, Thomas Nagler
 #'
@@ -109,18 +133,13 @@
 #' summary(RVM)
 #'
 #' ## inspect the fitted model using plots
-#' \dontrun{
-#' plot(RVM)  # tree structure
-#' }
+#' \donttest{plot(RVM)  # tree structure}
 #' contour(RVM)  # contour plots of all pair-copulas
 #'
-#' \dontrun{
-#' ## estimate a C-vine copula model with only Clayton, Gumbel and Frank copulas
-#' CVM <- RVineStructureSelect(daxreturns, c(3,4,5), "CVine")
-#' }
+#' \donttest{## estimate a C-vine copula model with only Clayton, Gumbel and Frank copulas
+#' CVM <- RVineStructureSelect(daxreturns, c(3,4,5), "CVine")}
 #'
-#' \dontrun{
-#' ## determine the order of the nodes in a D-vine using the package TSP
+#' \donttest{## determine the order of the nodes in a D-vine using the package TSP
 #' library(TSP)
 #' d <- dim(daxreturns)[2]
 #' M <- 1 - abs(TauMatrix(daxreturns))
@@ -128,13 +147,11 @@
 #' sol <- solve_TSP(hamilton, method = "repetitive_nn")
 #' order <- cut_tour(sol, "cut")
 #' DVM <- D2RVine(order, family = rep(0,d*(d-1)/2), par = rep(0, d*(d-1)/2))
-#' RVineCopSelect(daxreturns, c(1:6), DVM$Matrix)
-#' }
+#' RVineCopSelect(daxreturns, c(1:6), DVM$Matrix)}
 #'
-RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit = "AIC",
-                                 indeptest = FALSE, level = 0.05, trunclevel = NA,
-                                 progress = FALSE,  weights = NA, rotations = TRUE,
-                                 cores = 1) {
+RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit = "AIC", indeptest = FALSE,
+                                 level = 0.05, trunclevel = NA, progress = FALSE,  weights = NA,
+                                 treecrit = "tau", rotations = TRUE, cores = 1) {
     d <- ncol(data)
     n <- nrow(data)
 
@@ -148,7 +165,7 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
         stop("Number of observations has to be at least 2.")
     if (d < 3)
         stop("Dimension has to be at least 3.")
-    if (any(data > 1) || any(data < 0))
+    if (any(data[!is.na(data)] > 1) || any(data[!is.na(data)] < 0))
         stop("Data has to be in the interval [0,1].")
     if (!is.na(familyset[1])) {
         if (!all(abs(familyset) %in% allfams))
@@ -162,6 +179,7 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
         stop("Selection criterion not implemented.")
     if (level < 0 & level > 1)
         stop("Significance level has to be between 0 and 1.")
+    treecrit <- set_treecrit(treecrit, familyset)
 
     ## set variable names and trunclevel if not provided
     if (is.null(colnames(data)))
@@ -180,8 +198,8 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
 
     ## estimation in first tree ----------------------------
     # find optimal tree
-    g <- initializeFirstGraph2(data, weights)
-    MST <- findMaximumTauTree2(g, mode = type)
+    g <- initializeFirstGraph(data, treecrit, weights)
+    MST <- findMaxTree(g, mode = type)
 
     ## register parallel backend
     if (cores != 1 | is.na(cores)) {
@@ -196,14 +214,14 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
     }
 
     # estimate pair-copulas
-    VineTree <- fit.FirstTreeCopulas2(MST,
-                                      data,
-                                      familyset,
-                                      selectioncrit,
-                                      indeptest,
-                                      level,
-                                      weights = weights,
-                                      cores = cores)
+    VineTree <- fit.FirstTreeCopulas(MST,
+                                     data,
+                                     familyset,
+                                     selectioncrit,
+                                     indeptest,
+                                     level,
+                                     weights = weights,
+                                     cores = cores)
     # store results
     RVine$Tree[[1]] <- VineTree
     RVine$Graph[[1]] <- g
@@ -219,18 +237,18 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
         if (trunclevel == tree - 1)
             familyset <- 0
         # find optimal tree
-        g <- buildNextGraph2(VineTree, weights, cores > 1)
-        MST <- findMaximumTauTree2(g, mode = type)
+        g <- buildNextGraph(VineTree, weights, treecrit = treecrit, cores > 1)
+        MST <- findMaxTree(g, mode = type)
         # estimate pair-copulas
-        VineTree <- fit.TreeCopulas2(MST,
-                                     VineTree,
-                                     familyset,
-                                     selectioncrit,
-                                     indeptest,
-                                     level,
-                                     progress,
-                                     weights = weights,
-                                     cores = cores)
+        VineTree <- fit.TreeCopulas(MST,
+                                    VineTree,
+                                    familyset,
+                                    selectioncrit,
+                                    indeptest,
+                                    level,
+                                    progress,
+                                    weights = weights,
+                                    cores = cores)
         # store results
         RVine$Tree[[tree]] <- VineTree
         RVine$Graph[[tree]] <- g
@@ -244,15 +262,80 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
     as.RVM2(.RVine, .data, .callexp)
 }
 
-initializeFirstGraph2 <- function(data.univ, weights) {
-    ## calculate Kendall's tau
-    taus <- TauMatrix(data = data.univ, weights = weights)
 
-    ## return full graph with tau as weights
-    graphFromTauMatrix(taus)
+set_treecrit <- function(treecrit, famset) {
+    ## check if function is appropriate or type is implemented
+    if (is.function(treecrit)) {
+        if (!all(names(formals(treecrit)) == c("u1", "u2", "weights")))
+            stop("treecrit must be of the form 'function(u1, u2, weights)'")
+        if (!is.numeric(treecrit(runif(10), runif(10), rep(1, 10))))
+            stop("treecrit does not return a numeric value")
+    } else if (all(treecrit == "tau")) {
+        treecrit <- function(u1, u2, weights) {
+            complete.i <- which(!is.na(u1 + u2))
+            complete.freq <- mean(!is.na(u1 + u2))
+            tau <- abs(fasttau(u1[complete.i], u2[complete.i], weights))
+            tau * sqrt(complete.freq)
+        }
+    } else if (all(treecrit == "rho")) {
+        treecrit <- function(u1, u2, weights) {
+            complete.freq <- mean(!is.na(u1 + u2))
+            rho <- abs(cor(u1, u2, method = "spearman", use = complete.obs))
+            rho * sqrt(complete.freq)
+        }
+    } else if (all(treecrit == "AIC")) {
+        treecrit <- function(u1, u2, weights)
+            - suppressWarnings(BiCopSelect(u1, u2,
+                                           familyset = famset,
+                                           weights = weights)$AIC)
+    } else if (all(treecrit == "BIC")) {
+        treecrit <- function(u1, u2, weights)
+            - suppressWarnings(BiCopSelect(u1, u2,
+                                           familyset = famset,
+                                           weights = weights)$BIC)
+    } else if (all(treecrit == "cAIC")) {
+        treecrit <- function(u1, u2, weights) {
+            fit <- suppressWarnings(BiCopSelect(u1, u2,
+                                                familyset = famset,
+                                                weights = weights))
+            n <- fit$nobs
+            p <- fit$npars
+            - (fit$AIC + 2 * p * (p + 1) / (n - p - 1))
+        }
+    } else {
+        txt1 <- 'treecrit must be one of "tau", "rho", "AIC", "BIC", "cAIC"'
+        txt2 <- 'or a function like function(u1, u2, weights) ... returning a numeric value.'
+        stop(paste(txt1, txt2))
+    }
+
+    ## return treecrit function
+    treecrit
 }
 
-findMaximumTauTree2 <- function(g, mode = "RVine") {
+initializeFirstGraph <- function(data, treecrit, weights) {
+    ## calculate edge weight for each possible pair
+    all.pairs <- combn(1:ncol(data), 2)
+    edge.ws <- apply(all.pairs, 2,
+                     function(ind)
+                         treecrit(data[, ind[1]], data[, ind[2]], weights))
+    # number of pairwise complete observations / all observations
+    rel.nobs <- apply(all.pairs, 2,
+                      function(ind)
+                          mean(!is.na(data[, ind[1]] + data[, ind[2]])))
+    edge.ws <- edge.ws
+
+
+    ## store in symmetric matrix with appropriate names
+    W <- diag(ncol(data))
+    W[lower.tri(W)] <- edge.ws
+    W <- t(W)
+    colnames(W) <- rownames(W) <- colnames(data)
+
+    ## return full graph with edge weights
+    graphFromWeightMatrix(W)
+}
+
+findMaxTree <- function(g, mode = "RVine") {
     ## construct adjency matrix
     A <- adjacencyMatrix(g)
     d <- ncol(A)
@@ -351,7 +434,9 @@ fasttau <- function(x, y, weights = NA) {
 }
 
 ## fit pair-copulas for the first vine tree
-fit.FirstTreeCopulas2 <- function(MST, data.univ, type, copulaSelectionBy, testForIndependence, testForIndependence.level, weights = NA, cores = 1) {
+fit.FirstTreeCopulas <- function(MST, data.univ, type, copulaSelectionBy,
+                                 testForIndependence, testForIndependence.level,
+                                 weights = NA, cores = 1) {
 
     ## initialize estimation results with empty list
     d <- nrow(MST$E$nums)
@@ -425,9 +510,9 @@ fit.FirstTreeCopulas2 <- function(MST, data.univ, type, copulaSelectionBy, testF
 }
 
 ## fit pair-copulas for vine trees 2,...
-fit.TreeCopulas2 <- function(MST, oldVineGraph, type, copulaSelectionBy,
-                             testForIndependence, testForIndependence.level,
-                             progress, weights = NA, cores = 1) {
+fit.TreeCopulas <- function(MST, oldVineGraph, type, copulaSelectionBy,
+                            testForIndependence, testForIndependence.level,
+                            progress, weights = NA, cores = 1) {
 
     ## initialize estimation results with empty list
     d <- nrow(MST$E$nums)
@@ -526,7 +611,7 @@ fit.TreeCopulas2 <- function(MST, oldVineGraph, type, copulaSelectionBy,
 }
 
 ## initialize graph for next vine tree (possible edges)
-buildNextGraph2 <- function(oldVineGraph, weights = NA, parallel) {
+buildNextGraph <- function(oldVineGraph, treecrit, weights = NA, parallel) {
 
     d <- nrow(oldVineGraph$E$nums)
 
@@ -540,20 +625,22 @@ buildNextGraph2 <- function(oldVineGraph, weights = NA, parallel) {
     if (parallel) {
         i <- NA  # dummy for CRAN checks
         out <- foreach(i = 1:nrow(g$E$nums)) %dopar%
-            getEdgeInfo2(i,
-                         g = g,
-                         oldVineGraph = oldVineGraph,
-                         weights = weights)
+            getEdgeInfo(i,
+                        g = g,
+                        oldVineGraph = oldVineGraph,
+                        treecrit = treecrit,
+                        weights = weights)
     } else {
         out <- lapply(1:nrow(g$E$nums),
-                      getEdgeInfo2,
+                      getEdgeInfo,
                       g = g,
                       oldVineGraph = oldVineGraph,
+                      treecrit = treecrit,
                       weights = weights)
     }
 
     ## annotate graph (same order as in old version of this function)
-    g$E$weights         <- sapply(out, function(x) x$tau)
+    g$E$weights         <- sapply(out, function(x) x$w)
     g$E$names           <- sapply(out, function(x) x$name)
     g$E$conditionedSet  <- lapply(out, function(x) x$nedSet)
     g$E$conditioningSet <- lapply(out, function(x) x$ningSet)
@@ -564,7 +651,7 @@ buildNextGraph2 <- function(oldVineGraph, weights = NA, parallel) {
 }
 
 ## function for obtaining edge information
-getEdgeInfo2 <- function(i, g, oldVineGraph, weights) {
+getEdgeInfo <- function(i, g, oldVineGraph, treecrit, weights) {
 
     ## get edge
     con <- g$E$nums[i, ]
@@ -583,7 +670,7 @@ getEdgeInfo2 <- function(i, g, oldVineGraph, weights) {
     }
 
     ## dummy output
-    tau <- nedSet <- ningSet <- name <- NA
+    w <- nedSet <- ningSet <- name <- NA
     todel <- TRUE
 
     # info if proximity condition is fulfilled ...
@@ -609,7 +696,7 @@ getEdgeInfo2 <- function(i, g, oldVineGraph, weights) {
 
         ## calculate Kendall's tau
         keine_nas <- !(is.na(zr1a) | is.na(zr2a))
-        tau <- fasttau(zr1a[keine_nas], zr2a[keine_nas], weights)
+        w <- treecrit(zr1a[keine_nas], zr2a[keine_nas], weights)
 
         ## get names
         name.node1 <- strsplit(g$V$names[con[1]], split = " *[,;] *")[[1]]
@@ -636,7 +723,7 @@ getEdgeInfo2 <- function(i, g, oldVineGraph, weights) {
     }
 
     ## return edge information
-    list(tau = tau,
+    list(w = w,
          nedSet = nedSet,
          ningSet = ningSet,
          name = name,
@@ -835,17 +922,19 @@ as.RVM2 <- function(RVine, data, callexp) {
 
 
 ## functions for handling the tree structure -------------------------
-graphFromTauMatrix <- function(tau) {
-    d <- ncol(tau)
+graphFromWeightMatrix <- function(W) {
+    d <- ncol(W)
     # get variable names
-    nms <- colnames(tau)
+    nms <- colnames(W)
+    if (is.null(nms))
+        nms <- paste0("V", 1:d)
     # construct edge set
     E <- cbind(do.call(c, sapply(1:(d-1), function(i) seq.int(i))),
                do.call(c, sapply(1:(d-1), function(i) rep(i+1, i))))
     # add edge names
     E.names <- apply(E, 1, function(x) paste(nms[x[1]],  nms[x[2]], sep = ","))
     # set weights
-    w <- tau[upper.tri(tau)]
+    w <- W[upper.tri(W)]
 
     ## return results
     list(V = list(names = nms,
@@ -895,8 +984,9 @@ adjacencyMatrix <- function(g) {
 }
 
 set_weight <- function(x, E) {
+    ## convert weights so that minimum spanning tree algorithm can be applied
     is.edge <- (x[1] == E$nums[, 1]) & (x[2] == E$nums[, 2])
-    if (!any(is.edge)) Inf else (1 - abs(E$weights[which(is.edge)]))
+    if (!any(is.edge)) Inf else -E$weights[which(is.edge)]
 }
 
 

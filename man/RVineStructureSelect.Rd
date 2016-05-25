@@ -6,8 +6,8 @@
 \usage{
 RVineStructureSelect(data, familyset = NA, type = 0,
   selectioncrit = "AIC", indeptest = FALSE, level = 0.05,
-  trunclevel = NA, progress = FALSE, weights = NA, rotations = TRUE,
-  cores = 1)
+  trunclevel = NA, progress = FALSE, weights = NA, treecrit = "tau",
+  rotations = TRUE, cores = 1)
 }
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}
@@ -48,6 +48,9 @@ printed (default: \code{progress = FALSE}).}
 
 \item{weights}{numeric; weights for each observation (opitional).}
 
+\item{treecrit}{edge weight for Dissman's structure selection algorithm, see
+\emph{Details}.}
+
 \item{rotations}{If \code{TRUE}, all rotations of the families in
 \code{familyset} are included.}
 
@@ -76,16 +79,36 @@ families are selected using \code{\link{BiCopSelect}} and estimated
 sequentially (forward selection of trees).
 }
 \details{
-R-vine trees are selected using maximum spanning trees with absolute values
-of pairwise Kendall's taus as weights, i.e., the following optimization
-problem is solved for each tree: \deqn{ }{ \max \sum_{edges e_{ij} in
-spanning tree} |\hat{\tau}_{ij}|, }\deqn{\max \sum_{edges\ e_{ij}\ in\
-spanning\ tree} |\hat{\tau}_{ij}|, }{ \max \sum_{edges e_{ij} in spanning
-tree} |\hat{\tau}_{ij}|, } where \eqn{\hat{\tau}_{ij}} denote the pairwise
-empirical Kendall's taus and a spanning tree is a tree on all nodes. The
+R-vine trees are selected using maximum spanning trees w.r.t. some edge
+weights. The most commonly used edge weigth is the absolute value of the
+empirical Kendall's tau, say \eqn{\hat{\tau}_{ij}}. Then, the following o
+ptimization problem is solved for each tree:
+\deqn{\max \sum_{edges e_{ij} in spanning tree} |\hat{\tau}_{ij}|, }{
+\max \sum_{edges e_{ij} in spanning tree} |\hat{\tau}_{ij}|, }
+where a spanning tree is a tree on all nodes. The
 setting of the first tree selection step is always a complete graph. For
 subsequent trees, the setting depends on the R-vine construction principles,
 in particular on the proximity condition.
+
+Some commonly used edge weights are implemented:
+\tabular{ll}{
+\code{"tau"} \tab absolute value of empirical Kendall's tau. \cr
+\code{"rho"} \tab absolute value of empirical Spearman's rho. \cr
+\code{"AIC"} \tab Akaike information (multiplied by -1). \cr
+\code{"BIC"} \tab Bayesian information criterion (multiplied by -1). \cr
+\code{"cAIC"}\tab corrected Akaike information criterion (multiplied by -1). \cr
+}
+The criteria \code{"AIC"}, \code{"BIC"}, and \code{"cAIC"} require estimation and
+model selection for all possible pairs. This is computationally expensive and
+much slower than \code{"tau"} or \code{"rho"}.
+The user can also specify a custom function to calculate the edge weights.
+The function has to be of type \code{function(u1, u2, weights) ...} and must
+return a numeric value. The weigths argument must exist, but does not has to
+be used. For example, \code{"tau"} (withouth using weights) can be implemented
+as follows:\cr
+\code{function(u1, u2, weights)
+    abs(cor(u1, u2, method = "kendall", use = "complete.obs"))}
+
 
 The root nodes of C-vine trees are determined similarly by identifying the
 node with strongest dependencies to all other nodes. That is we take the
@@ -115,18 +138,13 @@ str(RVM)
 summary(RVM)
 
 ## inspect the fitted model using plots
-\dontrun{
-plot(RVM)  # tree structure
-}
+\donttest{plot(RVM)  # tree structure}
 contour(RVM)  # contour plots of all pair-copulas
 
-\dontrun{
-## estimate a C-vine copula model with only Clayton, Gumbel and Frank copulas
-CVM <- RVineStructureSelect(daxreturns, c(3,4,5), "CVine")
-}
+\donttest{## estimate a C-vine copula model with only Clayton, Gumbel and Frank copulas
+CVM <- RVineStructureSelect(daxreturns, c(3,4,5), "CVine")}
 
-\dontrun{
-## determine the order of the nodes in a D-vine using the package TSP
+\donttest{## determine the order of the nodes in a D-vine using the package TSP
 library(TSP)
 d <- dim(daxreturns)[2]
 M <- 1 - abs(TauMatrix(daxreturns))
@@ -134,8 +152,7 @@ hamilton <- insert_dummy(TSP(M), label = "cut")
 sol <- solve_TSP(hamilton, method = "repetitive_nn")
 order <- cut_tour(sol, "cut")
 DVM <- D2RVine(order, family = rep(0,d*(d-1)/2), par = rep(0, d*(d-1)/2))
-RVineCopSelect(daxreturns, c(1:6), DVM$Matrix)
-}
+RVineCopSelect(daxreturns, c(1:6), DVM$Matrix)}
 
 }
 \author{
