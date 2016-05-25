@@ -4,7 +4,7 @@
 \alias{BiCopCheck}
 \title{Check for family/parameter consistency in bivariate copula models}
 \usage{
-BiCopCheck(family, par, par2 = 0)
+BiCopCheck(family, par, par2 = 0, ...)
 }
 \arguments{
 \item{family}{An integer defining the bivariate copula family: \cr
@@ -53,6 +53,8 @@ BiCopCheck(family, par, par2 = 0)
 
 \item{par2}{Second parameter for bivariate copulas with two parameters (t,
 BB1, BB6, BB7, BB8, Tawn type 1 and type 2; default is \code{par2 = 0}).}
+
+\item{\dots}{used internally.}
 }
 \value{
 A logical indicating wether the family can be used with the parameter
