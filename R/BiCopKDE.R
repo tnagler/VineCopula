@@ -45,6 +45,11 @@
 #' BiCopKDE(u[, 1], u[, 2], type = "surface", zlim = c(0, 4))
 #' plot(cop, zlim = c(0, 4))  # true density
 #'
+#' # kernel contours are also used in pairs.copuladata
+#' data(daxreturns)
+#' data <- as.copuladata(daxreturns)
+#' pairs(data[c(4, 5, 14, 15)])
+#'
 BiCopKDE <- function(u1, u2, type = "contour", margins, size,
                      kde.pars = list(), ...) {
     ## prepare the data for usage with plot.kdecopula function

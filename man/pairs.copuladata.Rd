@@ -7,8 +7,7 @@
 \method{pairs}{copuladata}(x, labels = names(x), ...,
   lower.panel = lp.copuladata, upper.panel = up.copuladata,
   diag.panel = dp.copuladata, label.pos = 0.85, cex.labels = 1, gap = 0,
-  method = "kendall", ccols = terrain.colors(30), margins = "norm",
-  margins.par = 0)
+  method = "kendall", ccols = terrain.colors(11), margins = "norm")
 }
 \arguments{
 \item{x}{\code{copuladata} object.}
@@ -40,22 +39,14 @@ are computed. One of \code{"pearson"}, \code{"kendall"} (default), or
 \item{ccols}{colour to be used for the contour plots; default: \code{ccols =
 terrain.colors(30)}.}
 
-\item{margins}{character; margins for the contour plots. Possible margins
-are:\cr \code{"norm"} = standard normal margins (default)\cr \code{"t"} =
-Student t margins with degrees of freedom as specified by
-\code{margins.par}\cr \code{"gamma"} = Gamma margins with shape and scale as
-specified by \code{margins.par}\cr \code{"exp"} = Exponential margins with
-rate as specified by \code{margins.par}\cr \code{"unif"} = uniform margins}
+\item{margins}{character; margins for the contour plots. Options are:\cr
+\code{"unif"} for the original copula density,
+\code{"norm"} for the transformed density with standard normal margins,
+\code{"exp"} with standard exponential margins, and  \code{"flexp"} with
+flipped exponential margins.}
 
-\item{margins.par}{parameter(s) of the distribution of the margins (of the
-contour plots) if necessary (default: \code{margins.par = 0}), i.e.,
-\itemize{ \item a positive real number for the degrees of freedom of Student
-t margins (see \code{\link{dt}}), \item a 2-dimensional vector of positive
-real numbers for the shape and scale parameters of Gamma margins (see
-\code{\link{dgamma}}), \item a positive real number for the rate parameter
-of exponential margins (see \code{\link{dexp}}).  }}
-
-\item{\dots}{other graphical parameters (see \code{\link[graphics]{par}}).}
+\item{\dots}{other graphical parameters (see \code{\link[graphics]{par}}) or
+options passed to \code{\link{BiCopKDE}}.}
 }
 \description{
 This function provides pair plots for copula data. Using default setting it
@@ -84,16 +75,16 @@ pairs(data[sel], cex = 2, pch = 1, col = "black",
       diag.panel = NULL, label.pos = 0.5,
       cex.labels = 2.5, gap = 1,
       method = "pearson", ccols = heat.colors(nlevels),
-      margins = "gamma", margins.par = c(1,1))
-      
+      margins = "flexp")
+
 ## pairs plot with own panel functions
 up <- function(x, y) {
   # upper panel: empirical contour plot
   op <- par(usr = c(-3, 3, -3, 3), new = TRUE)
-  BiCopMetaContour(x, y, bw = 2, levels = c(0.01, 0.05, 0.1, 0.15, 0.2),
-                    # exponential margins
-                    margins = "exp", margins.par = 1,
-                    axes = FALSE)
+  BiCopKDE(x, y,
+           levels = c(0.01, 0.05, 0.1, 0.15, 0.2),
+           margins = "exp",
+           axes = FALSE)
   on.exit(par(op))
 }
 
@@ -125,6 +116,6 @@ Tobias Erhardt
 }
 \seealso{
 \code{\link[graphics]{pairs}}, \code{\link{as.copuladata}},
-\code{\link{BiCopMetaContour}}
+\code{\link{BiCopKDE}}
 }
 
