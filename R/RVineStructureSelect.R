@@ -280,7 +280,7 @@ set_treecrit <- function(treecrit, famset) {
     } else if (all(treecrit == "rho")) {
         treecrit <- function(u1, u2, weights) {
             complete.freq <- mean(!is.na(u1 + u2))
-            rho <- abs(cor(u1, u2, method = "spearman", use = complete.obs))
+            rho <- abs(cor(u1, u2, method = "spearman", use = "complete.obs"))
             rho * sqrt(complete.freq)
         }
     } else if (all(treecrit == "AIC")) {
