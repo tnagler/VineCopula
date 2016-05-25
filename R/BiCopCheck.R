@@ -99,6 +99,8 @@ checkPars <- function(x, cl) {
             stop("\n In ", cl, ": ",
                  "The parameter of the Gaussian and t-copula has to be in the interval (-1,1).",
                  call. = FALSE)
+        if (any((family == 2) & (par2 == 0)))
+            stop("For t-copulas, 'par2' must be set.")
         if (family == 2 && par2 <= 2)
             stop("\n In ", cl, ": ",
                  "The degrees of freedom parameter of the t-copula has to be larger than 2.",
