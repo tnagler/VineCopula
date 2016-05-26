@@ -1,15 +1,298 @@
-### gen 
-# Input: 
-# u data vector 
-# param copula parameters 
+#' Contour Plot of Bivariate Meta Distribution
+#'
+#' Note: This function is redundant and only available for backwards
+#' compatibility. See \code{\link{contour.BiCop}} for contour plots of
+#' parametric copulas, and \code{\link{BiCopKDE}} for kernel estimates.
+#'
+#' @param u1,u2 Data vectors of equal length with values in [0,1] (default:
+#' \code{u1} and \code{u2 = NULL}).
+#' @param bw Bandwidth (smoothing factor; default: \code{bw = 1}).
+#' @param size Number of grid points; default: \code{size = 100}.
+#' @param levels Vector of contour levels. For Gaussian, Student-t or
+#' exponential margins the default value (\code{levels = c(0.01, 0.05, 0.1,
+#' 0.15, 0.2)}) typically is a good choice. For uniform margins we
+#' recommend\cr \code{levels = c(0.1, 0.3, 0.5, 0.7, 0.9, 1.1, 1.3, 1.5)}\cr
+#' and for Gamma margins\cr \code{levels = c(0.005, 0.01, 0.03, 0.05, 0.07,
+#' 0.09)}.
+#' @param family An integer defining the bivariate copula family or indicating
+#' an empirical contour plot: \cr
+#' \code{"emp"} = empirical contour plot
+#' (default; margins can be specified by \code{margins}) \cr
+#' \code{0} = independence copula \cr
+#' \code{1} = Gaussian copula \cr
+#' \code{2} = Student t copula (t-copula) \cr
+#' \code{3} = Clayton copula \cr
+#' \code{4} = Gumbel copula \cr
+#' \code{5} = Frank copula \cr
+#' \code{6} = Joe copula \cr
+#' \code{7} = BB1 copula \cr
+#' \code{8} = BB6 copula \cr
+#' \code{9} = BB7 copula \cr
+#' \code{10} = BB8 copula \cr
+#' \code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
+#' \code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+#' \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
+#' \code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
+#' \code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
+#' \code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
+#' \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
+#' \code{23} = rotated Clayton copula (90 degrees) \cr
+#' \code{24} = rotated Gumbel copula (90 degrees) \cr
+#' \code{26} = rotated Joe copula (90 degrees) \cr
+#' \code{27} = rotated BB1 copula (90 degrees) \cr
+#' \code{28} = rotated BB6 copula (90 degrees) \cr
+#' \code{29} = rotated BB7 copula (90 degrees) \cr
+#' \code{30} = rotated BB8 copula (90 degrees) \cr
+#' \code{33} = rotated Clayton copula (270 degrees) \cr
+#' \code{34} = rotated Gumbel copula (270 degrees) \cr
+#' \code{36} = rotated Joe copula (270 degrees) \cr
+#' \code{37} = rotated BB1 copula (270 degrees) \cr
+#' \code{38} = rotated BB6 copula (270 degrees) \cr
+#' \code{39} = rotated BB7 copula (270 degrees) \cr
+#' \code{40} = rotated BB8 copula (270 degrees) \cr
+#' \code{104} = Tawn type 1 copula \cr
+#' \code{114} = rotated Tawn type 1 copula (180 degrees) \cr
+#' \code{124} = rotated Tawn type 1 copula (90 degrees) \cr
+#' \code{134} = rotated Tawn type 1 copula (270 degrees) \cr
+#' \code{204} = Tawn type 2 copula \cr
+#' \code{214} = rotated Tawn type 2 copula (180 degrees) \cr
+#' \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
+#' \code{234} = rotated Tawn type 2 copula (270 degrees) \cr
+#' @param par Copula parameter; if empirical contour plot, \code{par = NULL} or
+#' \code{0} (default).
+#' @param par2 Second copula parameter for t-, BB1, BB6, BB7, BB8, Tawn type 1
+#' and type 2 copulas (default: \code{par2 = 0}).
+#' @param PLOT Logical; whether the results are plotted.  If \code{PLOT =
+#' FALSE}, the values \code{x}, \code{y} and \code{z} are returned (see below;
+#' default: \code{PLOT = TRUE}).
+#' @param margins Character; margins for the bivariate copula contour plot.
+#' Possible margins are:\cr
+#' \code{"norm"} = standard normal margins (default)\cr
+#' \code{"t"} = Student t margins with degrees of freedom as
+#' specified by \code{margins.par}\cr
+#' \code{"gamma"} = Gamma margins with shape and scale as
+#' specified by \code{margins.par}\cr
+#' \code{"exp"} = Exponential margins with rate as
+#' specified by \code{margins.par}\cr
+#' \code{"unif"} = uniform margins
+#' @param margins.par Parameter(s) of the distribution of the margins if
+#' necessary (default: \code{margins.par = 0}), i.e.,
+#' \itemize{
+#' \item a positive real number for the degrees of freedom of
+#' Student t margins (see \code{\link{dt}}),
+#' \item a 2-dimensional vector of positive real numbers for
+#' the shape and scale parameters of Gamma margins (see \code{\link{dgamma}}),
+#' \item a positive real number for the rate parameter of
+#' exponential margins (see \code{\link{dexp}}).
+#' }
+#' @param xylim A 2-dimensional vector of the x- and y-limits.  By default
+#' (\code{xylim = NA}) standard limits for the selected margins are used.
+#' @param obj \code{BiCop} object containing the family and parameter
+#' specification.
+#' @param ... Additional plot arguments.
+#'
+#' @return \item{x}{A vector of length \code{size} with the x-values of the
+#' kernel density estimator with Gaussian kernel if the empirical contour plot
+#' is chosen and a sequence of values in \code{xylim} if the theoretical
+#' contour plot is chosen.}
+#' \item{y}{A vector of length \code{size} with the
+#' y-values of the kernel density estimator with Gaussian kernel if the
+#' empirical contour plot is chosen and a sequence of values in \code{xylim} if
+#' the theoretical contour plot is chosen.}
+#' \item{z}{A matrix of dimension
+#' \code{size} with the values of the density of the meta distribution with
+#' chosen margins (see \code{margins} and \code{margins.par}) evaluated at the
+#' grid points given by \code{x} and \code{y}.}
+#'
+#' @note The combination \code{family = 0} (independence copula) and
+#' \code{margins = "unif"} (uniform margins) is not possible because all
+#' \code{z}-values are equal.
+#'
+#' @author Ulf Schepsmeier, Alexander Bauer
+#'
+#' @seealso \code{\link{BiCopChiPlot}}, \code{\link{BiCopKPlot}},
+#' \code{\link{BiCopLambda}}
+#'
+#' @examples
+#' ## meta Clayton distribution  with Gaussian margins
+#' cop <- BiCop(family = 1, tau = 0.5)
+#' BiCopMetaContour(obj = cop, main = "Clayton - normal margins")
+#' # better:
+#' contour(cop, main = "Clayton - normal margins")
+#'
+#' ## empirical contour plot with standard normal margins
+#' dat <- BiCopSim(1000, cop)
+#' BiCopMetaContour(dat[, 1], dat[, 2], bw = 2, family = "emp",
+#'                  main = "empirical - normal margins")
+#' # better:
+#' BiCopKDE(dat[, 1], dat[, 2],
+#'         main = "empirical - normal margins")
+#'
+#' ## empirical contour plot with exponential margins
+#' BiCopMetaContour(dat[, 1], dat[, 2], bw = 2,
+#'                  main = "empirical - exponential margins",
+#'                  margins = "exp", margins.par = 1)
+#' # better:
+#' BiCopKDE(dat[, 1], dat[, 2],
+#'          main = "empirical - exponential margins",
+#'          margins = "exp")
+#'
+BiCopMetaContour <- function(u1 = NULL, u2 = NULL, bw = 1, size = 100,
+                             levels = c(0.01, 0.05, 0.1, 0.15, 0.2), family = "emp",
+                             par = 0, par2 = 0, PLOT = TRUE, margins = "norm",
+                             margins.par = 0, xylim = NA, obj = NULL,...) {
+    warning("This function is deprecated. ",
+            "See ?contour.BiCop for contour plots of parametric copulas\n",
+            "and ?BiCopKDE for kernel estimates.")
+
+    ## preprocessing of arguments
+    if ((family == "emp") & is.null(obj)) {
+        args <- preproc(c(as.list(environment()), call = match.call()),
+                        check_u,
+                        remove_nas,
+                        check_if_01,
+                        na.txt = " Only complete observations are used.")
+    } else {
+        args <- preproc(c(as.list(environment()),
+                          call = match.call(),
+                          check.pars = TRUE),
+                        extract_from_BiCop,
+                        check_fam_par)
+    }
+    list2env(args, environment())
+
+    # check plot option
+    if (PLOT != TRUE && PLOT != FALSE)
+        stop("The parameter 'PLOT' has to be set to 'TRUE' or 'FALSE'.")
+    # limits for size parameter
+    if (size > 1000)
+        stop("Size parameter should not be greater than 1000. Otherwise computational time and memory space are too large.")
+    if (size < 50)
+        stop("Size parameter should not be smaller than 50.")
+    # limits bandwidth parameter
+    if (bw < 1)
+        stop("The bandwidth parameter 'bw' should be greater or equal to 1.")
+    if (bw > 5)
+        stop("The bandwidth parameter 'bw' should not be greater than 5.")
+
+    ## check for appropriate call w.r.t. margins
+    if (margins != "norm" && margins != "t" && margins != "exp" && margins != "gamma" &&
+        margins != "unif")
+        stop("The function only supports Gaussian ('norm'), Student t ('t'), exponential ('exp'), Gamma ('gamma') and uniform ('unif') margins.")
+    if (margins == "t" && margins.par <= 0)
+        stop("The degrees of freedom parameter for the Student t margins has to positive.")
+    if (margins == "Gamma" && length(margins.par) != 2)
+        stop("For Gamma margins two parameters are required in 'margins.par'.")
+    if (margins == "exp" && margins.par == 0)
+        stop("Exponential margins require one parameter in 'margins.par'.")
+    if (margins == "unif" && family == 0)
+        stop("The combination independence copula and uniform margins is not possible because all z-values are equal.")
+
+    ## set margins for theoretical contour plot
+    if (is.null(u1) && is.null(u2) && family != "emp") {
+        u1 <- runif(1000)
+        u2 <- runif(1000)
+    }
+    if (!is.na(xylim) && length(xylim) != 2)
+        stop("'xylim' has to be a vector of length 2.")
+
+    ## transform grid marginally
+    if (margins == "norm") {
+        x1 <- qnorm(p = u1)
+        x2 <- qnorm(p = u2)
+        if (any(is.na(xylim)))
+            xylim <- c(-3, 3)
+    } else if (margins == "t") {
+        x1 <- qt(p = u1, df = margins.par)
+        x2 <- qt(p = u2, df = margins.par)
+        if (any(is.na(xylim)))
+            xylim <- c(-3, 3)
+    } else if (margins == "exp") {
+        x1 <- qexp(p = u1, rate = margins.par)
+        x2 <- qexp(p = u2, rate = margins.par)
+        if (any(is.na(xylim)))
+            xylim <- c(0, 5)
+    } else if (margins == "gamma") {
+        x1 <- qgamma(p = u1, shape = margins.par[1], scale = margins.par[2])
+        x2 <- qgamma(p = u2, shape = margins.par[1], scale = margins.par[2])
+        if (any(is.na(xylim)))
+            xylim <- c(0, 5)
+    } else if (margins == "unif") {
+        x1 <- u1
+        x2 <- u2
+        if (any(is.na(xylim)))
+            xylim <- c(0, 1)
+    }
+
+    x <- y <- seq(from = xylim[1], to = xylim[2], length.out = size)
+
+    if (family != "emp") {
+        ## calculate theoretical contours
+        if (family %in% c(2, 7, 8, 9, 10, 17, 18, 19, 20, 27, 28, 29, 30, 37, 38,
+                          39, 40, 42, 52, 62, 72, 104, 114, 124, 134, 204, 214, 224, 234)) {
+            z <- matrix(data = meta.dens(x1 = rep(x = x, each = size),
+                                         x2 = rep(x = y, times = size),
+                                         param = c(par, par2),
+                                         copula = family,
+                                         margins = margins,
+                                         margins.par = margins.par),
+                        nrow = size,
+                        byrow = TRUE)
+        } else {
+            z <- matrix(data = meta.dens(x1 = rep(x = x, each = size),
+                                         x2 = rep(x = y, times = size),
+                                         param = par,
+                                         copula = family,
+                                         margins = margins,
+                                         margins.par = margins.par),
+                        nrow = size,
+                        byrow = TRUE)
+        }
+    } else {
+        ## calculate empirical contours
+        bw1 <- bw * bandwidth.nrd(x1)
+        bw2 <- bw * bandwidth.nrd(x2)
+
+        kd.est <- kde2d(x = x1, y = x2, h = c(bw1, bw2), n = size)
+
+        x <- kd.est$x
+        y <- kd.est$y
+        z <- kd.est$z
+    }
+
+    if (PLOT) {
+        ## plot contour lines
+        contour(x = x,
+                y = y,
+                z = z,
+                levels = levels,
+                ylim = xylim,
+                xlim = xylim,
+                ...)
+    } else {
+        ## output bivarate meta density z(x,y)
+        out <- list()
+        out$x <- x
+        out$y <- y
+        out$z <- z
+
+        return(out)
+    }
+}
+
+
+### gen
+# Input:
+# u data vector
+# param copula parameters
 # copula copula family (7=BB1, 8=BB6, 9=BB7, 10=BB8)
 # Output:
-# out generator 
+# out generator
 
 gen <- function(u, param, copula) {
     # param == c(theta, delta)
     out <- numeric(length(u))
-    
+
     if (copula == 7) {
         out <- (u^(-param[1]) - 1)^param[2]
     } else if (copula == 8) {
@@ -19,22 +302,22 @@ gen <- function(u, param, copula) {
     } else if (copula == 10) {
         out <- -log((1 - (1 - param[2] * u)^param[1])/(1 - (1 - param[2])^param[1]))
     }
-    
+
     return(out)
 }
 
 
-### gen.inv 
-# Input: 
+### gen.inv
+# Input:
 # u data vector
-# param copula parameters 
-# copula copula family (7=BB1, 8=BB6, 9=BB7, 10=BB8) 
-# Output: 
+# param copula parameters
+# copula copula family (7=BB1, 8=BB6, 9=BB7, 10=BB8)
+# Output:
 # out inverse generator
 
 gen.inv <- function(u, param, copula) {
     out <- numeric(length(u))
-    
+
     if (copula == 7) {
         out <- (1 + u^(1/param[2]))^(-1/param[1])
     } else if (copula == 8) {
@@ -44,22 +327,22 @@ gen.inv <- function(u, param, copula) {
     } else if (copula == 10) {
         out <- 1/param[2] * (1 - (1 - (1 - (1 - param[2])^param[1]) * exp(-u))^(1/param[1]))
     }
-    
+
     return(out)
 }
 
 
-### gen.drv 
+### gen.drv
 # Input:
 # u data vector
 # param copula parameters
 # copula copula  family (7=BB1, 8=BB6, 9=BB7, 10=BB8)
-# Output: 
-# out First derivative of the generator 
+# Output:
+# out First derivative of the generator
 
 gen.drv <- function(u, param, copula) {
     out <- numeric(length(u))
-    
+
     if (copula == 7) {
         out <- -prod(param) * (u^-(param[1]) - 1)^(param[2] - 1) * u^(-1 - param[1])
     } else if (copula == 8) {
@@ -69,22 +352,22 @@ gen.drv <- function(u, param, copula) {
     } else if (copula == 10) {
         out <- -prod(param) * ((1 - param[2] * u)^(param[1] - 1))/(1 - (1 - param[2] * u)^param[1])
     }
-    
+
     return(out)
 }
 
 
 #### gen.drv2
-# Input: 
-# u data vector 
+# Input:
+# u data vector
 # param copula parameters
-# copula copula family (7=BB1, 8=BB6, 9=BB7, 10=BB8) 
-# Output: 
+# copula copula family (7=BB1, 8=BB6, 9=BB7, 10=BB8)
+# Output:
 # out Second derivative of the generator
 
 gen.drv2 <- function(u, param, copula) {
     out <- numeric(length(u))
-    
+
     if (copula == 7) {
         out <- prod(param) * u^(-2 - param[1]) * (u^(-param[1]) - 1)^(param[2] - 2) * ((1 + prod(param)) * u^(-param[1]) - param[1] - 1)
     } else if (copula == 8) {
@@ -94,17 +377,17 @@ gen.drv2 <- function(u, param, copula) {
     } else if (copula == 10) {
         out <- (param[2]^2 * param[1] * ((1 - u * param[2])^(param[1] - 2) * param[1] + (1 - u * param[2])^(2 * param[1] - 2) - (1 - u * param[2])^(param[1] - 2)))/(((1 - u * param[2])^param[1] - 1)^2)
     }
-    
+
     return(out)
 }
 
 
-### cop.cdf 
+### cop.cdf
 # Input:
 # u1,u2 data vectors
 # param copula parameters
-# copula copula family (7=BB1, 8=BB6, 9=BB7, 10=BB8) 
-# Output: 
+# copula copula family (7=BB1, 8=BB6, 9=BB7, 10=BB8)
+# Output:
 # out copula
 
 cop.cdf <- function(u1, u2, param, copula) {
@@ -164,19 +447,19 @@ bb6pdf <- function(u, v, th, de) {
 
 
 
-#### cop.pdf 
-# Input: 
-# u1,u2 data vectors 
+#### cop.pdf
+# Input:
+# u1,u2 data vectors
 # param copula parameters
 # copula copula
 # family (1,2,3,...14)
-# Output: 
+# Output:
 # out copula density #
 
 cop.pdf <- function(u1, u2, param, copula) {
     if (copula == 7 | copula == 9 | copula == 10) {
         return(-gen.drv2(u = cop.cdf(u1 = u1, u2 = u2, param = param, copula = copula), param = param, copula = copula) *
-                   gen.drv(u = u1, param = param, copula = copula) * 
+                   gen.drv(u = u1, param = param, copula = copula) *
                    gen.drv(u = u2, param = param, copula = copula)/
                    gen.drv(u = cop.cdf(u1 = u1, u2 = u2, param = param, copula = copula), param = param, copula = copula)^3)
     } else if (copula == 8) {
@@ -185,7 +468,7 @@ cop.pdf <- function(u1, u2, param, copula) {
         d1 <- 1 - u1
         d2 <- 1 - u2
         return(-gen.drv2(u = cop.cdf(u1 = d1, u2 = d2, param = param, copula = copula - 10), param = param, copula = copula - 10) *
-                   gen.drv(u = d1, param = param, copula = copula - 10) * 
+                   gen.drv(u = d1, param = param, copula = copula - 10) *
                    gen.drv(u = d2, param = param, copula = copula - 10)/
                    gen.drv(u = cop.cdf(u1 = d1, u2 = d2, param = param, copula = copula - 10), param = param, copula = copula - 10)^3)
     } else if (copula == 18) {
@@ -197,7 +480,7 @@ cop.pdf <- function(u1, u2, param, copula) {
         d2 <- u2
         param <- -param
         return(-gen.drv2(u = cop.cdf(u1 = d1, u2 = d2, param = param, copula = copula - 20), param = param,  copula = copula - 20) *
-                   gen.drv(u = d1, param = param, copula = copula - 20) * 
+                   gen.drv(u = d1, param = param, copula = copula - 20) *
                    gen.drv(u = d2, param = param, copula = copula - 20)/
                    gen.drv(u = cop.cdf(u1 = d1, u2 = d2, param = param, copula = copula - 20), param = param, copula = copula - 20)^3)
     } else if (copula == 28) {
@@ -229,7 +512,7 @@ cop.pdf <- function(u1, u2, param, copula) {
         # t-copula
         rho <- param[1]
         nu <- param[2]
-        
+
         t1 <- qt(u1, nu)
         t2 <- qt(u2, nu)
         return(1/(2 * pi * sqrt(1 - rho^2) * dt(t1, nu) * dt(t2, nu)) * (1 + (t1^2 + t2^2 - 2 * rho * t1 * t2)/(nu * (1 - rho^2)))^(-(nu + 2)/2))
@@ -250,8 +533,8 @@ cop.pdf <- function(u1, u2, param, copula) {
     } else if (copula == 6) {
         # Joe
         theta <- param
-        return(((1 - u1)^(theta) + (1 - u2)^(theta) - (1 - u1)^(theta) * (1 - u2)^(theta))^(1/(theta) - 2) * (1 - u1)^(theta - 1) * (1 - u2)^(theta - 1) * (theta - 1 + (1 - 
-                                                                                                                                                                     u1)^(theta) + (1 - u2)^(theta) - (1 - u1)^(theta) * (1 - u2)^(theta)))
+        return(((1 - u1)^(theta) + (1 - u2)^(theta) - (1 - u1)^(theta) * (1 - u2)^(theta))^(1/(theta) - 2) * (1 - u1)^(theta - 1) * (1 - u2)^(theta - 1) * (theta - 1 + (1 -
+                                                                                                                                                                             u1)^(theta) + (1 - u2)^(theta) - (1 - u1)^(theta) * (1 - u2)^(theta)))
     } else if (copula == 13) {
         # rotated Clayton (180)
         theta <- param
@@ -271,8 +554,8 @@ cop.pdf <- function(u1, u2, param, copula) {
         theta <- param
         d1 <- 1 - u1
         d2 <- 1 - u2
-        return(((1 - d1)^(theta) + (1 - d2)^(theta) - (1 - d1)^(theta) * (1 - d2)^(theta))^(1/(theta) - 2) * (1 - d1)^(theta - 1) * (1 - d2)^(theta - 1) * (theta - 1 + (1 - 
-                                                                                                                                                                     d1)^(theta) + (1 - d2)^(theta) - (1 - d1)^(theta) * (1 - d2)^(theta)))
+        return(((1 - d1)^(theta) + (1 - d2)^(theta) - (1 - d1)^(theta) * (1 - d2)^(theta))^(1/(theta) - 2) * (1 - d1)^(theta - 1) * (1 - d2)^(theta - 1) * (theta - 1 + (1 -
+                                                                                                                                                                             d1)^(theta) + (1 - d2)^(theta) - (1 - d1)^(theta) * (1 - d2)^(theta)))
     } else if (copula == 23) {
         # rotated Clayton (90)
         theta <- -param
@@ -292,8 +575,8 @@ cop.pdf <- function(u1, u2, param, copula) {
         theta <- -param
         d1 <- 1 - u1
         d2 <- u2
-        return(((1 - d1)^(theta) + (1 - d2)^(theta) - (1 - d1)^(theta) * (1 - d2)^(theta))^(1/(theta) - 2) * (1 - d1)^(theta - 1) * (1 - d2)^(theta - 1) * (theta - 1 + (1 - 
-                                                                                                                                                                     d1)^(theta) + (1 - d2)^(theta) - (1 - d1)^(theta) * (1 - d2)^(theta)))
+        return(((1 - d1)^(theta) + (1 - d2)^(theta) - (1 - d1)^(theta) * (1 - d2)^(theta))^(1/(theta) - 2) * (1 - d1)^(theta - 1) * (1 - d2)^(theta - 1) * (theta - 1 + (1 -
+                                                                                                                                                                             d1)^(theta) + (1 - d2)^(theta) - (1 - d1)^(theta) * (1 - d2)^(theta)))
     } else if (copula == 33) {
         # rotaed Clayton (270)
         theta <- -param
@@ -313,8 +596,8 @@ cop.pdf <- function(u1, u2, param, copula) {
         theta <- -param
         d1 <- u1
         d2 <- 1 - u2
-        return(((1 - d1)^(theta) + (1 - d2)^(theta) - (1 - d1)^(theta) * (1 - d2)^(theta))^(1/(theta) - 2) * (1 - d1)^(theta - 1) * (1 - d2)^(theta - 1) * (theta - 1 + (1 - 
-                                                                                                                                                                     d1)^(theta) + (1 - d2)^(theta) - (1 - d1)^(theta) * (1 - d2)^(theta)))
+        return(((1 - d1)^(theta) + (1 - d2)^(theta) - (1 - d1)^(theta) * (1 - d2)^(theta))^(1/(theta) - 2) * (1 - d1)^(theta - 1) * (1 - d2)^(theta - 1) * (theta - 1 + (1 -
+                                                                                                                                                                             d1)^(theta) + (1 - d2)^(theta) - (1 - d1)^(theta) * (1 - d2)^(theta)))
     } else if (copula == 41) {
         # New: Archimedean copula based on integrated positive stable LT; reflection
         # asymmetric copula (from Harry Joe)
@@ -480,307 +763,3 @@ meta.dens <- function(x1, x2, param, copula, margins, margins.par) {
     }
 }
 
-
-
-### CopulaContour2D
-# Input:
-# u1, u2 data-vectors
-# bw bandwidth
-# size number of grid points
-# levels Vector of contour levels
-# family copula family
-# parCopula parameter(s)
-# Output:
-# theo. and emp. contourplot
-
-
-
-
-#' Contour Plot of Bivariate Meta Distribution
-#'
-#' This function plots a bivariate contour plot corresponding to a bivariate
-#' meta distribution with different margins and specified bivariate copula and
-#' parameter values or creates corresponding empirical contour plots based on
-#' bivariate copula data.
-#'
-#'
-#' @param u1,u2 Data vectors of equal length with values in [0,1] (default:
-#' \code{u1} and \code{u2 = NULL}).
-#' @param bw Bandwidth (smoothing factor; default: \code{bw = 1}).
-#' @param size Number of grid points; default: \code{size = 100}.
-#' @param levels Vector of contour levels. For Gaussian, Student-t or
-#' exponential margins the default value (\code{levels = c(0.01, 0.05, 0.1,
-#' 0.15, 0.2)}) typically is a good choice. For uniform margins we
-#' recommend\cr \code{levels = c(0.1, 0.3, 0.5, 0.7, 0.9, 1.1, 1.3, 1.5)}\cr
-#' and for Gamma margins\cr \code{levels = c(0.005, 0.01, 0.03, 0.05, 0.07,
-#' 0.09)}.
-#' @param family An integer defining the bivariate copula family or indicating
-#' an empirical contour plot: \cr
-#' \code{"emp"} = empirical contour plot
-#' (default; margins can be specified by \code{margins}) \cr
-#' \code{0} = independence copula \cr
-#' \code{1} = Gaussian copula \cr
-#' \code{2} = Student t copula (t-copula) \cr
-#' \code{3} = Clayton copula \cr
-#' \code{4} = Gumbel copula \cr
-#' \code{5} = Frank copula \cr
-#' \code{6} = Joe copula \cr
-#' \code{7} = BB1 copula \cr
-#' \code{8} = BB6 copula \cr
-#' \code{9} = BB7 copula \cr
-#' \code{10} = BB8 copula \cr
-#' \code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-#' \code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-#' \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
-#' \code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
-#' \code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
-#' \code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
-#' \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
-#' \code{23} = rotated Clayton copula (90 degrees) \cr
-#' \code{24} = rotated Gumbel copula (90 degrees) \cr
-#' \code{26} = rotated Joe copula (90 degrees) \cr
-#' \code{27} = rotated BB1 copula (90 degrees) \cr
-#' \code{28} = rotated BB6 copula (90 degrees) \cr
-#' \code{29} = rotated BB7 copula (90 degrees) \cr
-#' \code{30} = rotated BB8 copula (90 degrees) \cr
-#' \code{33} = rotated Clayton copula (270 degrees) \cr
-#' \code{34} = rotated Gumbel copula (270 degrees) \cr
-#' \code{36} = rotated Joe copula (270 degrees) \cr
-#' \code{37} = rotated BB1 copula (270 degrees) \cr
-#' \code{38} = rotated BB6 copula (270 degrees) \cr
-#' \code{39} = rotated BB7 copula (270 degrees) \cr
-#' \code{40} = rotated BB8 copula (270 degrees) \cr
-#' \code{104} = Tawn type 1 copula \cr
-#' \code{114} = rotated Tawn type 1 copula (180 degrees) \cr
-#' \code{124} = rotated Tawn type 1 copula (90 degrees) \cr
-#' \code{134} = rotated Tawn type 1 copula (270 degrees) \cr
-#' \code{204} = Tawn type 2 copula \cr
-#' \code{214} = rotated Tawn type 2 copula (180 degrees) \cr
-#' \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
-#' \code{234} = rotated Tawn type 2 copula (270 degrees) \cr
-#' @param par Copula parameter; if empirical contour plot, \code{par = NULL} or
-#' \code{0} (default).
-#' @param par2 Second copula parameter for t-, BB1, BB6, BB7, BB8, Tawn type 1
-#' and type 2 copulas (default: \code{par2 = 0}).
-#' @param PLOT Logical; whether the results are plotted.  If \code{PLOT =
-#' FALSE}, the values \code{x}, \code{y} and \code{z} are returned (see below;
-#' default: \code{PLOT = TRUE}).
-#' @param margins Character; margins for the bivariate copula contour plot.
-#' Possible margins are:\cr
-#' \code{"norm"} = standard normal margins (default)\cr
-#' \code{"t"} = Student t margins with degrees of freedom as
-#' specified by \code{margins.par}\cr
-#' \code{"gamma"} = Gamma margins with shape and scale as
-#' specified by \code{margins.par}\cr
-#' \code{"exp"} = Exponential margins with rate as
-#' specified by \code{margins.par}\cr
-#' \code{"unif"} = uniform margins
-#' @param margins.par Parameter(s) of the distribution of the margins if
-#' necessary (default: \code{margins.par = 0}), i.e.,
-#' \itemize{
-#' \item a positive real number for the degrees of freedom of
-#' Student t margins (see \code{\link{dt}}),
-#' \item a 2-dimensional vector of positive real numbers for
-#' the shape and scale parameters of Gamma margins (see \code{\link{dgamma}}),
-#' \item a positive real number for the rate parameter of
-#' exponential margins (see \code{\link{dexp}}).
-#' }
-#' @param xylim A 2-dimensional vector of the x- and y-limits.  By default
-#' (\code{xylim = NA}) standard limits for the selected margins are used.
-#' @param obj \code{BiCop} object containing the family and parameter
-#' specification.
-#' @param ... Additional plot arguments.
-#' @return \item{x}{A vector of length \code{size} with the x-values of the
-#' kernel density estimator with Gaussian kernel if the empirical contour plot
-#' is chosen and a sequence of values in \code{xylim} if the theoretical
-#' contour plot is chosen.}
-#' \item{y}{A vector of length \code{size} with the
-#' y-values of the kernel density estimator with Gaussian kernel if the
-#' empirical contour plot is chosen and a sequence of values in \code{xylim} if
-#' the theoretical contour plot is chosen.}
-#' \item{z}{A matrix of dimension
-#' \code{size} with the values of the density of the meta distribution with
-#' chosen margins (see \code{margins} and \code{margins.par}) evaluated at the
-#' grid points given by \code{x} and \code{y}.}
-#' @note The combination \code{family = 0} (independence copula) and
-#' \code{margins = "unif"} (uniform margins) is not possible because all
-#' \code{z}-values are equal.
-#' @author Ulf Schepsmeier, Alexander Bauer
-#' @seealso \code{\link{BiCopChiPlot}}, \code{\link{BiCopKPlot}},
-#' \code{\link{BiCopLambda}}
-#' @examples
-#'
-#' ## Example 1: contour plot of meta Gaussian copula distribution
-#' ## with Gaussian margins
-#' tau <- 0.6
-#' fam <- 1
-#' theta <- BiCopTau2Par(fam, tau)
-#' cop <- BiCop(family = fam, par = theta)
-#' BiCopMetaContour(u1 = NULL, u2 = NULL, obj = cop,
-#'                  main = "Gaussian - normal margins")
-#'
-#'
-#' ## Example 2: empirical contour plot with standard normal margins
-#' dat <- BiCopSim(N = 1000, cop)
-#' BiCopMetaContour(dat[,1], dat[,2], bw = 2, family = "emp",
-#'                  main = "empirical - normal margins")
-#'
-#'
-#' ## Example 3: empirical contour plot with exponential margins
-#' BiCopMetaContour(dat[,1], dat[,2], bw = 2,
-#'                  main = "empirical - exponential margins",
-#'                  margins = "exp", margins.par = 1)
-#'
-#' @export BiCopMetaContour
-BiCopMetaContour <- function(u1 = NULL, u2 = NULL, bw = 1, size = 100,
-                             levels = c(0.01, 0.05, 0.1, 0.15, 0.2), family = "emp",
-                             par = 0, par2 = 0, PLOT = TRUE, margins = "norm",
-                             margins.par = 0, xylim = NA, obj = NULL,...) {
-    ## extract family and parameters if BiCop object is provided
-    if (class(family) == "BiCop")
-        obj <- family
-    if (!is.null(obj)) {
-        stopifnot(class(obj) == "BiCop")
-        family <- obj$family
-        par <- obj$par
-        par2 <- obj$par2
-    }
-    
-    ## check plot option
-    if (PLOT != TRUE && PLOT != FALSE) 
-        stop("The parameter 'PLOT' has to be set to 'TRUE' or 'FALSE'.")
-    
-    ## sanity checks
-    if ((is.null(u1) == TRUE || is.null(u2) == TRUE) && family == "emp") 
-        stop("'u1' and/or 'u2' not set or of length zero.")
-    if (is.null(u1) == FALSE && (any(u1 > 1) || any(u1 < 0))) 
-        stop("Data has to be in the interval [0,1].")
-    if (is.null(u2) == FALSE && (any(u2 > 1) || any(u2 < 0))) 
-        stop("Data has to be in the interval [0,1].")
-    # if(length(u1)!=length(u2)) stop('Lengths of 'u1' and 'u2' do not match.')
-    if (!(family %in% c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 16, 17, 18, 19, 
-                        20, 23, 24, 26, 27, 28, 29, 30, 33, 34, 36, 37, 38, 39,
-                        40, 41, 42, 51, 52,  61, 62, 71, 72, 104, 114, 124, 134,
-                        204, 214, 224, 234, "emp"))) 
-        stop("Copula family not implemented.")
-
-    ## limits for size parameter
-    if (size > 1000) 
-        stop("Size parameter should not be greater than 1000. Otherwise computational time and memory space are too large.")
-    if (size < 50) 
-        stop("Size parameter should not be smaller than 50.")
-    
-    ## limits bandwidth parameter
-    if (bw < 1) 
-        stop("The bandwidth parameter 'bw' should be greater or equal to 1.")
-    if (bw > 5) 
-        stop("The bandwidth parameter 'bw' should not be greater than 5.")
-    
-    ## sanity checks for copula parameters
-    if (family != "emp")
-        BiCopCheck(family, par, par2)
-    
-    ## check for appropriate call w.r.t. margins
-    if (margins != "norm" && margins != "t" && margins != "exp" && margins != "gamma" && 
-            margins != "unif") 
-        stop("The function only supports Gaussian ('norm'), Student t ('t'), exponential ('exp'), Gamma ('gamma') and uniform ('unif') margins.")
-    if (margins == "t" && margins.par <= 0) 
-        stop("The degrees of freedom parameter for the Student t margins has to positive.")
-    if (margins == "Gamma" && length(margins.par) != 2) 
-        stop("For Gamma margins two parameters are required in 'margins.par'.")
-    if (margins == "exp" && margins.par == 0) 
-        stop("Exponential margins require one parameter in 'margins.par'.")
-    if (margins == "unif" && family == 0) 
-        stop("The combination independence copula and uniform margins is not possible because all z-values are equal.")
-    
-    ## set margins for theoretical contour plot
-    if (is.null(u1) && is.null(u2) && family != "emp") {
-        u1 <- runif(1000)
-        u2 <- runif(1000)
-    }
-    if (!is.na(xylim) && length(xylim) != 2) 
-        stop("'xylim' has to be a vector of length 2.")
-    
-    ## transform grid marginally
-    if (margins == "norm") {
-        x1 <- qnorm(p = u1)
-        x2 <- qnorm(p = u2)
-        if (any(is.na(xylim))) 
-            xylim <- c(-3, 3)
-    } else if (margins == "t") {
-        x1 <- qt(p = u1, df = margins.par)
-        x2 <- qt(p = u2, df = margins.par)
-        if (any(is.na(xylim))) 
-            xylim <- c(-3, 3)
-    } else if (margins == "exp") {
-        x1 <- qexp(p = u1, rate = margins.par)
-        x2 <- qexp(p = u2, rate = margins.par)
-        if (any(is.na(xylim))) 
-            xylim <- c(0, 5)
-    } else if (margins == "gamma") {
-        x1 <- qgamma(p = u1, shape = margins.par[1], scale = margins.par[2])
-        x2 <- qgamma(p = u2, shape = margins.par[1], scale = margins.par[2])
-        if (any(is.na(xylim))) 
-            xylim <- c(0, 5)
-    } else if (margins == "unif") {
-        x1 <- u1
-        x2 <- u2
-        if (any(is.na(xylim))) 
-            xylim <- c(0, 1)
-    }
-    
-    x <- y <- seq(from = xylim[1], to = xylim[2], length.out = size)
-    
-    if (family != "emp") {
-        ## calculate theoretical contours
-        if (family %in% c(2, 7, 8, 9, 10, 17, 18, 19, 20, 27, 28, 29, 30, 37, 38, 
-                          39, 40, 42, 52, 62, 72, 104, 114, 124, 134, 204, 214, 224, 234)) {
-            z <- matrix(data = meta.dens(x1 = rep(x = x, each = size),
-                                         x2 = rep(x = y, times = size),
-                                         param = c(par, par2),
-                                         copula = family,
-                                         margins = margins, 
-                                         margins.par = margins.par), 
-                        nrow = size,
-                        byrow = TRUE) 
-        } else {
-            z <- matrix(data = meta.dens(x1 = rep(x = x, each = size), 
-                                         x2 = rep(x = y, times = size),
-                                         param = par,
-                                         copula = family,
-                                         margins = margins,
-                                         margins.par = margins.par), 
-                        nrow = size, 
-                        byrow = TRUE)
-        }
-    } else {
-        ## calculate empirical contours 
-        bw1 <- bw * bandwidth.nrd(x1)
-        bw2 <- bw * bandwidth.nrd(x2)
-        
-        kd.est <- kde2d(x = x1, y = x2, h = c(bw1, bw2), n = size)
-        
-        x <- kd.est$x
-        y <- kd.est$y
-        z <- kd.est$z
-    }
-    
-    if (PLOT) {
-        ## plot contour lines
-        contour(x = x,
-                y = y,
-                z = z, 
-                levels = levels, 
-                ylim = xylim,
-                xlim = xylim, 
-                ...)
-    } else {
-        ## output bivarate meta density z(x,y)
-        out <- list()
-        out$x <- x
-        out$y <- y
-        out$z <- z
-        
-        return(out)
-    }
-}
