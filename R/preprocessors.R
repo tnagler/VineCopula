@@ -193,85 +193,173 @@ prep_familyset <- function(args) {
     if (any(args$familyset < 0)) {
         if (length(unique(sign(args$familyset))) != 1)
             stop("\n In ", args$call[1], ": ",
-                 "'familyset' must not contain positive AND negative numbers",
+                 "'familyset' must not contain positive AND negative numbers.",
                  call. = FALSE)
         args$familyset <- setdiff(allfams, -args$familyset)
     }
     args
 }
 
+## check if familyset has at least one family corresponding to empirical tau
+check_famset_tau <- function(args) {
+    args$emp_tau <- fasttau(args$u1, args$u2, args$weights)
+    if ((args$emp_tau > 0) & !(any(args$familyset %in% posfams))) {
+        warning("In ", args$call[1], ": ",
+                "empirical Kendall's tau is positive, but familyset contains ",
+                "no family with positive dependence.",
+                call. = FALSE)
+    } else if ((args$emp_tau < 0) & !(any(args$familyset %in% negfams))){
+        warning("In ", args$call[1], ": ",
+                "empirical Kendall's tau is negaive, but familyset contains ",
+                "no family with negative dependence.",
+                call. = FALSE)
+    }
+
+    args
+}
+
+## check if familyset has at least one family corresponding to empirical tau
+check_fam_tau <- function(args) {
+    args$emp_tau <- fasttau(args$u1, args$u2, args$weights)
+    if ((args$emp_tau > 0) & all(args$familyset %in% negfams)) {
+        stop("\n In ", args$call[1], ": ",
+             "empirical Kendall's tau is positive, but familyset contains ",
+             "no family with positive dependence.",
+             call. = FALSE)
+    } else if ((args$emp_tau < 0) & all(args$familyset %in% posfams)){
+        stop("\n In ", args$call[1], ": ",
+             "empirical Kendall's tau is negaive, but familyset contains ",
+             "no family with negative dependence.",
+             call. = FALSE)
+    }
+
+    args
+}
+
+
 ## check max.BB and max.df specifications
 check_est_pars <- function(args) {
-    if (!is.list(args$max.BB))
-        stop("\n In ", args$call[1], ": ",
-             "'args$max.BB' has to be a list.",
-             call. = FALSE)
-    if (args$max.df <= 2)
-        stop("\n In ", args$call[1], ": ",
-             "The upper bound for the degrees of freedom parameter has to be",
-             "larger than 2.",
-             call. = FALSE)
-    if (args$max.BB$BB1[1] < 0.001)
-        stop("\n In ", args$call[1], ": ",
-             "The upper bound for the first parameter of the BB1 copula should",
-             "be greater than 0.001 (lower bound for estimation).",
-             call. = FALSE)
-    if (args$max.BB$BB1[2] < 1.001)
-        stop("\n In ", args$call[1], ": ",
-             "The upper bound for the second parameter of the BB1 copula should",
-             "be greater than 1.001 (lower bound for estimation).",
-             call. = FALSE)
-    if (args$max.BB$BB6[1] < 1.001)
-        stop("\n In ", args$call[1], ": ",
-             "The upper bound for the first parameter of the BB6 copula should",
-             "be greater than 1.001 (lower bound for estimation).",
-             call. = FALSE)
-    if (args$max.BB$BB6[2] < 1.001)
-        stop("\n In ", args$call[1], ": ",
-             "The upper bound for the second parameter of the BB6 copula should",
-             "be greater than 1.001 (lower bound for estimation).",
-             call. = FALSE)
-    if (args$max.BB$BB7[1] < 1.001)
-        stop("\n In ", args$call[1], ": ",
-             "The upper bound for the first parameter of the BB7 copula should", "
-             be greater than 1.001 (lower bound for estimation).",
-             call. = FALSE)
-    if (args$max.BB$BB7[2] < 0.001)
-        stop("\n In ", args$call[1], ": ",
-             "The upper bound for the second parameter of the BB7 copula should",
-             "be greater than 0.001 (lower bound for estimation).",
-             call. = FALSE)
-    if (args$max.BB$BB8[1] < 1.001)
-        stop("\n In ", args$call[1], ": ",
-             "The upper bound for the first parameter of the BB1 copula should",
-             "be greater than 0.001 (lower bound for estimation).",
-             call. = FALSE)
-    if (args$max.BB$BB8[2] < 0.001 || args$max.BB$BB8[2] > 1)
-        stop("\n In ", args$call[1], ": ",
-             "The upper bound for the second parameter of the BB1 copula should",
-             "be in the interval [0,1].",
-             call. = FALSE)
+    if (!is.null(args$max.df)) {
+        if (args$max.df <= 2)
+            stop("\n In ", args$call[1], ": ",
+                 "The upper bound for the degrees of freedom parameter has to be",
+                 "larger than 2.",
+                 call. = FALSE)
+    } else {
+        args$max.df <- 30
+    }
 
-    if (!(args$family %in% allfams))
-        stop("\n In ", args$call[1], ": ",
-             "Copula family not implemented.",
-             call. = FALSE)
+    if (!is.null(args$max.BB)) {
+        if (!is.list(args$max.BB))
+            stop("\n In ", args$call[1], ": ",
+                 "max.BB has to be a list.",
+                 call. = FALSE)
+        if (!all(names(args$max.BB) == c("BB1", "BB6", "BB7", "BB8")))
+            stop("\n In ", args$call[1], ": ",
+                 'max.BB has to be a named list with entries "BB1", "BB6", "BB7", "BB8".',
+                 call. = FALSE)
+        if (any(sapply(args$max.BB, length) != 2))
+            stop("\n In ", args$call[1], ": ",
+                 'All components of max.BB have to be two-dimensional numeric vectors.',
+                 call. = FALSE)
+        if (args$max.BB$BB1[1] < 0.001)
+            stop("\n In ", args$call[1], ": ",
+                 "The upper bound for the first parameter of the BB1 copula should ",
+                 "be greater than 0.001 (lower bound for estimation).",
+                 call. = FALSE)
+        if (args$max.BB$BB1[2] < 1.001)
+            stop("\n In ", args$call[1], ": ",
+                 "The upper bound for the second parameter of the BB1 copula should ",
+                 "be greater than 1.001 (lower bound for estimation).",
+                 call. = FALSE)
+        if (args$max.BB$BB6[1] < 1.001)
+            stop("\n In ", args$call[1], ": ",
+                 "The upper bound for the first parameter of the BB6 copula should ",
+                 "be greater than 1.001 (lower bound for estimation).",
+                 call. = FALSE)
+        if (args$max.BB$BB6[2] < 1.001)
+            stop("\n In ", args$call[1], ": ",
+                 "The upper bound for the second parameter of the BB6 copula should ",
+                 "be greater than 1.001 (lower bound for estimation).",
+                 call. = FALSE)
+        if (args$max.BB$BB7[1] < 1.001)
+            stop("\n In ", args$call[1], ": ",
+                 "The upper bound for the first parameter of the BB7 copula should ",
+                 "be greater than 1.001 (lower bound for estimation).",
+                 call. = FALSE)
+        if (args$max.BB$BB7[2] < 0.001)
+            stop("\n In ", args$call[1], ": ",
+                 "The upper bound for the second parameter of the BB7 copula should ",
+                 "be greater than 0.001 (lower bound for estimation).",
+                 call. = FALSE)
+        if (args$max.BB$BB8[1] < 1.001)
+            stop("\n In ", args$call[1], ": ",
+                 "The upper bound for the first parameter of the BB8 copula should ",
+                 "be greater than 1.001 (lower bound for estimation).",
+                 call. = FALSE)
+        if (args$max.BB$BB8[2] < 0.001 || args$max.BB$BB8[2] > 1)
+            stop("\n In ", args$call[1], ": ",
+                 "The upper bound for the second parameter of the BB8 copula should ",
+                 "be in the interval [0.001,1].",
+                 call. = FALSE)
+    } else {
+        args$max.BB <- list(BB1 = c(5, 6),
+                            BB6 = c(6, 6),
+                            BB7 = c(5, 6),
+                            BB8 = c(6, 1))
+    }
 
-    if (args$method != "mle" && args$method != "itau")
-        stop("\n In ", args$call[1], ": ",
-             "Estimation method has to be either 'mle' or 'itau'.",
-             call. = FALSE)
-    if ((args$method == "itau") && (!(args$family %in% c(0, 2, allfams[onepar])))) {
-        warning("\n In ", args$call[1], ": ",
-                "For two parameter copulas the estimation method 'itau' cannot",
-                "be used. The method is automatically set to 'mle'.",
-                call. = FALSE)
+    if (!is.null(args$family)) {
+        if (!(all(args$family %in% allfams)))
+            stop("\n In ", args$call[1], ": ",
+                 "Copula family not implemented.",
+                 call. = FALSE)
+    }
+
+    if (!is.null(args$familyset)) {
+        if (!(all(args$familyset %in% allfams)))
+            stop("\n In ", args$call[1], ": ",
+                 "Copula family not implemented.",
+                 call. = FALSE)
+    }
+
+    if (!is.null(args$method)) {
+        if (args$method != "mle" && args$method != "itau")
+            stop("\n In ", args$call[1], ": ",
+                 "Estimation method has to be either 'mle' or 'itau'.",
+                 call. = FALSE)
+        if (!is.null(args$family)) {
+            if ((args$method == "itau") && (!(args$family %in% c(0, allfams[onepar])))) {
+                warning("In ", args$call[1], ": ",
+                        "For two parameter copulas the estimation method 'itau' cannot ",
+                        "be used. The method is automatically set to 'mle'.",
+                        call. = FALSE)
+                args$method <- "mle"
+            }
+        }
+        if (!is.null(args$familyset)) {
+            if ((args$method == "itau") && (!all(args$familyset %in% c(0, allfams[onepar])))) {
+                warning("In ", args$call[1], ": ",
+                        "For two parameter copulas the estimation method 'itau' cannot ",
+                        "be used. The method is automatically set to 'mle'.",
+                        call. = FALSE)
+                args$method <- "mle"
+            }
+        }
+    } else {
         args$method <- "mle"
     }
-    if (is.logical(args$se) == FALSE)
-        stop("\n In ", args$call[1], ": ",
-             "'se' has to be a logical variable (TRUE or FALSE).",
-             call. = FALSE)
+
+    if (!is.null(args$se)) {
+        if (is.logical(args$se) == FALSE)
+            stop("\n In ", args$call[1], ": ",
+                 "se has to be a logical variable (TRUE or FALSE).",
+                 call. = FALSE)
+    } else {
+        args$se = TRUE
+    }
+
+    args$weights <- ifelse(is.null(args$weights), NA, args$weights)
 
     args
 }
