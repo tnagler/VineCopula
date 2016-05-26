@@ -75,9 +75,9 @@
 #' Nelsen, R. (2006). An introduction to copulas.  Springer
 #'
 #' @examples
-#'
 #' ## Example 1: Gaussian copula
 #' BiCopPar2Beta(family = 1, par = 0.7)
+#' BiCop(1, 0.7)$beta  # alternative
 #'
 #' ## Example 2: Clayton copula
 #' BiCopPar2Beta(family = 3, par = 2)
@@ -85,34 +85,17 @@
 #' ## Example 3: different copula families
 #' BiCopPar2Beta(family = c(3,4,6), par = 2:4)
 #'
-#' @export BiCopPar2Beta
 BiCopPar2Beta <- function(family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
-    ## extract family and parameters if BiCop object is provided
-    if (missing(family))
-        family <- NA
-    if (missing(par))
-        par <- NA
-    # for short hand usage extract obj from family
-    if (class(family) == "BiCop")
-        obj <- family
-    if (!is.null(obj)) {
-        stopifnot(class(obj) == "BiCop")
-        family <- obj$family
-        par <- obj$par
-        par2 <- obj$par2
-    }
-    ## check for reasonable input
-    if (missing(par) & (all(family == 0)))
-        par <- 0
-    if (any(is.na(family)) | any(is.na(par)))
-        stop("Provide either 'family' and 'par' or 'obj'")
-    n <- max(length(family), length(par), length(par2))
-    if (!all(c(length(family), length(par), length(par2)) %in% c(1, n)))
-        stop("Input lengths don't match")
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    extract_from_BiCop,
+                    match_spec_lengths,
+                    check_fam_par)
+    list2env(args, environment())
 
     ## calculate beta
-    Cuv <- BiCopCDF(rep(0.5, n),
-                    rep(0.5, n),
+    Cuv <- BiCopCDF(rep(0.5, length(par)),
+                    rep(0.5, length(par)),
                     family,
                     par,
                     par2,

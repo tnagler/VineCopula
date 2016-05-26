@@ -124,10 +124,9 @@ chosen margins (see \code{margins} and \code{margins.par}) evaluated at the
 grid points given by \code{x} and \code{y}.}
 }
 \description{
-This function plots a bivariate contour plot corresponding to a bivariate
-meta distribution with different margins and specified bivariate copula and
-parameter values or creates corresponding empirical contour plots based on
-bivariate copula data.
+Note: This function is redundant and only available for backwards
+compatibility. See \code{\link{contour.BiCop}} for contour plots of
+parametric copulas, and \code{\link{BiCopKDE}} for kernel estimates.
 }
 \note{
 The combination \code{family = 0} (independence copula) and
@@ -135,27 +134,28 @@ The combination \code{family = 0} (independence copula) and
 \code{z}-values are equal.
 }
 \examples{
+## meta Clayton distribution  with Gaussian margins
+cop <- BiCop(family = 1, tau = 0.5)
+BiCopMetaContour(obj = cop, main = "Clayton - normal margins")
+# better:
+contour(cop, main = "Clayton - normal margins")
 
-## Example 1: contour plot of meta Gaussian copula distribution
-## with Gaussian margins
-tau <- 0.6
-fam <- 1
-theta <- BiCopTau2Par(fam, tau)
-cop <- BiCop(family = fam, par = theta)
-BiCopMetaContour(u1 = NULL, u2 = NULL, obj = cop,
-                 main = "Gaussian - normal margins")
-
-
-## Example 2: empirical contour plot with standard normal margins
-dat <- BiCopSim(N = 1000, cop)
-BiCopMetaContour(dat[,1], dat[,2], bw = 2, family = "emp",
+## empirical contour plot with standard normal margins
+dat <- BiCopSim(1000, cop)
+BiCopMetaContour(dat[, 1], dat[, 2], bw = 2, family = "emp",
                  main = "empirical - normal margins")
+# better:
+BiCopKDE(dat[, 1], dat[, 2],
+        main = "empirical - normal margins")
 
-
-## Example 3: empirical contour plot with exponential margins
-BiCopMetaContour(dat[,1], dat[,2], bw = 2,
+## empirical contour plot with exponential margins
+BiCopMetaContour(dat[, 1], dat[, 2], bw = 2,
                  main = "empirical - exponential margins",
                  margins = "exp", margins.par = 1)
+# better:
+BiCopKDE(dat[, 1], dat[, 2],
+         main = "empirical - exponential margins",
+         margins = "exp")
 
 }
 \author{

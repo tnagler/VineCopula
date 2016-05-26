@@ -104,9 +104,12 @@ check_if_01 <- function(args) {
 
 ## make sure that family, par, par2 have the same length
 match_spec_lengths <- function(args) {
-    n <- length(args$u1)
+    n <- ifelse(!is.null(args$u1),
+                length(args$u1),
+                max(length(args$family), length(args$par), length(args$par2)))
+
     # if one vector is size n, expand all vectors to size n
-    if (any(c(length(args$family), length(args$par), length(args$par2)) == n)) {
+    if (any(c(length(args$family), length(args$par), length(args$par2)) != n)) {
         if (length(args$family) == 1)
             args$family <- rep(args$family, n)
         if (length(args$par) == 1)
