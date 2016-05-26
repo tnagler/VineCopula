@@ -5,7 +5,7 @@
 #' copula families with fitted parameters. Several specifications for the
 #' margins are available.
 #'
-#' @param u \eqn{n x 2} matrix of copula data.
+#' @param u1,u2 Data vectors of equal length with values in [0,1].
 #' @param familyset Vector of bivariate copula families to select from.
 #' The vector has to include at least one bivariate copula
 #' family that allows for positive and one that allows for negative dependence.
@@ -66,32 +66,25 @@
 #'data(daxreturns)
 #'
 #'# find a suitable copula family for the first two stocks
-#'\dontrun{
-#'fit <- BiCopCompare(daxreturns[, 1:2])
-#'}
+#'\donttest{fit <- BiCopCompare(daxreturns[, 1], daxreturns[, 2])}
 #'
-BiCopCompare <- function(u, familyset = NA, rotations = TRUE) {
+BiCopCompare <- function(u1, u2, familyset = NA, rotations = TRUE) {
     if (!requireNamespace("shiny"))
         stop("The 'shiny' package must be installed to run the app.")
-    stopifnot(ncol(u) == 2)
-    stopifnot(nrow(u) > 2)
+
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_u,
+                    remove_nas,
+                    check_nobs,
+                    check_if_01,
+                    prep_familyset,
+                    na.txt = " Only complete observations are used.")
+    list2env(args, environment())
 
     ## assign data to global environment
-    u1 <- u[ , 1]
-    u2 <- u[ , 2]
     z1 <- qnorm(u1)
     z2 <- qnorm(u2)
-
-    ## adjust familyset
-    if (is.na(familyset[1]))
-        familyset <- allfams
-    if (rotations)
-        familyset <- with_rotations(familyset)
-    if (any(familyset < 0)) {
-        if (length(unique(sign(familyset))) != 1)
-            stop("'familyset' must not contain positive AND negative numbers")
-        familyset <- setdiff(allfams, -familyset)
-    }
 
     ## create list of admissible families
     tau <- cor(u1, u2, method = "kendall")
@@ -146,10 +139,10 @@ BiCopCompare <- function(u, familyset = NA, rotations = TRUE) {
 
     ## gather information about fits of bivariate copulas
     comp <- BiCopEstList(u1 = u1, u2 = u2, familyset = familyset)
-    lst <- list(u = u, comp = comp)
+    lst <- list(u1 = u1, u2 = u2, comp = comp)
 
     ## start shiny app
-    shiny::runApp(list(
+    suppressWarnings(shiny::runApp(list(
         ui = shiny::fluidPage(
 
             # Application title
@@ -314,7 +307,7 @@ BiCopCompare <- function(u, familyset = NA, rotations = TRUE) {
                     # overwrite 'fam' and 'rot' for plots 1-4
                     for (i in 1:4){
                         shiny::updateSelectInput(session, paste0("fam", i),
-                                                 selected = as.character(max_ind[i]))
+                                                 selected = max_ind[i])
                     }
                 })
 
@@ -331,7 +324,7 @@ BiCopCompare <- function(u, familyset = NA, rotations = TRUE) {
                 })
             }
     )
-    )
+    ))
 }
 
 
@@ -351,15 +344,15 @@ tr_gray <- gray(0.25, 0.5)
 plot_function <- function(index, input, lst){
     # plotting input depending on specified settings
     x <- switch(input$margins,
-                "unif" = lst$u[, 1],
-                "normal" = qnorm(lst$u[, 1]),
-                "exp" = qexp(lst$u[, 1]),
-                "flexp" = -qexp(1 - lst$u[, 1]))
+                "unif" = lst$u1,
+                "normal" = qnorm(lst$u1),
+                "exp" = qexp(lst$u1),
+                "flexp" = -qexp(1 - lst$u1))
     y <- switch(input$margins,
-                "unif" = lst$u[, 2],
-                "normal" = qnorm(lst$u[, 2]),
-                "exp" = qexp(lst$u[, 2]),
-                "flexp" = -qexp(1 - lst$u[, 2]))
+                "unif" = lst$u2,
+                "normal" = qnorm(lst$u2),
+                "exp" = qexp(lst$u2),
+                "flexp" = -qexp(1 - lst$u2))
     xlim <- switch(input$margins,
                    "unif" = c(0,1),
                    "normal" = c(-3.5,3.5),
