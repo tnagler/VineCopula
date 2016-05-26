@@ -86,9 +86,8 @@ object \code{obj}, the alternative version \cr
 can be used.
 }
 \examples{
-
+\dontshow{set.seed(123)}
 ## simulate from a bivariate Student-t copula
-set.seed(123)
 cop <- BiCop(family = 2, par = -0.7, par2 = 4)
 simdata <- BiCopSim(100, cop)
 
@@ -98,10 +97,10 @@ u2 <- simdata[,2]
 BiCopPDF(u1, u2, cop)
 
 ## select a bivariate copula for the simulated data
-cop <- BiCopSelect(u1, u2)
-summary(cop)
+fit <- BiCopSelect(u1, u2)
+summary(fit)
 ## and evaluate its PDF
-round(BiCopPDF(u1, u2, cop), 8)
+round(BiCopPDF(u1, u2, fit), 3)
 
 }
 \author{
