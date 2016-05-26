@@ -107,31 +107,32 @@
 #' \tab with \eqn{A(t) = (1-\delta)(1-t)+[(1-t)^{-\theta}+(\delta t)^{-\theta}]^{-1/\theta}} \cr
 #'
 #' }
+#'
 #' @note The number \code{m} can be chosen arbitrarily.
+#'
 #' @author Ulf Schepsmeier, Tobias Erhardt
+#'
 #' @seealso \code{\link{BiCopTau2Par}}, \code{\link{BiCop}}
+#'
 #' @references Joe, H. (1997). Multivariate Models and Dependence Concepts.
 #' Chapman and Hall, London.
 #'
 #' Czado, C., U. Schepsmeier, and A. Min (2012). Maximum likelihood estimation
 #' of mixed C-vines with application to exchange rates. Statistical Modelling,
 #' 12(3), 229-255.
-#' @examples
 #'
+#' @examples
 #' ## Example 1: Gaussian copula
 #' tau0 <- 0.5
 #' rho <- BiCopTau2Par(family = 1, tau = tau0)
-#'
-#' # transform back
+#' BiCop(1, tau = tau0)$par  # alternative
 #' tau <- BiCopPar2Tau(family = 1, par = rho)
 #' tau - 2/pi*asin(rho)
-#'
 #'
 #' ## Example 2: Student-t copula
 #' rho <- BiCopTau2Par(family = 2, tau = c(0.4, 0.5, 0.6))
 #' obj <- BiCop(family = 2, par = rho, par2 = 6:8)
 #' BiCopPar2Tau(obj)
-#'
 #'
 #' ## Example 3:
 #' vpar <- seq(from = 1.1, to = 10, length.out = 100)
@@ -143,7 +144,6 @@
 #' lines(tauG ~ vpar, col = 2)
 #' lines(tauF ~ vpar, col = 3)
 #' lines(tauJ ~ vpar, col = 4)
-#'
 #'
 #' ## Example 4: different copula families
 #' theta <- BiCopTau2Par(family = c(3,4,6), tau = c(0.4, 0.5, 0.6))
@@ -255,51 +255,20 @@
 #'
 #' @export BiCopPar2Tau
 BiCopPar2Tau <- function(family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
-    ## extract family and parameters if BiCop object is provided
-    if (missing(family))
-        family <- NA
-    if (missing(par))
-        par <- NA
-    # for short hand usage extract obj from family
-    if (class(family) == "BiCop")
-        obj <- family
-    if (!is.null(obj)) {
-        stopifnot(class(obj) == "BiCop")
-        family <- obj$family
-        par <- obj$par
-        par2 <- obj$par2
-    }
-
-    ## adjust length for parameter vectors; stop if not matching
-    if (missing(par) & (all(family == 0)))
-        par <- 0
-    n <- max(length(family), length(par), length(par2))
-    if (length(family) == 1)
-        family <- rep(family, n)
-    if (length(par) == 1)
-        par <- rep(par, n)
-    if (length(par2) == 1)
-        par2 <- rep(par2, n)
-    if (!all(c(length(family), length(par), length(par2)) %in% c(1, n)))
-        stop("Input lenghts don't match")
-
     # set arbitrary par2 for t-copula
-    par2[family == 2] <- par2[family == 2] + 4
-
-    ## check for family/parameter consistency
-    if (check.pars)
-        BiCopCheck(family, par, par2)
+    if (class(family) != "BiCop")
+        par2[family == 2] <- par2[family == 2] + 4
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    extract_from_BiCop,
+                    match_spec_lengths,
+                    check_fam_par)
+    list2env(args, environment())
 
     ## calculate Kendall's tau
-    if (length(par) == 1) {
-        # call for single parameters
-        out <- calcTau(family, par, par2)
-    } else {
-        # vectorized call
-        out <- vapply(1:length(par),
-                      function(i) calcTau(family[i], par[i], par2[i]),
-                      numeric(1))
-    }
+    out <- vapply(1:length(par),
+                  function(i) calcTau(family[i], par[i], par2[i]),
+                  numeric(1))
 
     ## return result
     out
