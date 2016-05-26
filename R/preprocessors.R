@@ -1,3 +1,36 @@
+preproc <- function(args, ...) {
+    # what has to be done?
+    tasks <- list(...)
+
+    # perform all tasks sequentially
+    for (i in seq_along(tasks)) {
+        stopifnot(is.function(tasks[[i]]))
+        args <- tasks[[i]](args)
+    }
+
+    # return preprocessed arguments
+    args
+}
+
+#' check if all data have been provided and have same length
+check_u <- function(args) {
+    if (is.symbol(args$u1) | is.symbol(args$u2))
+        stop("\n In ", args$call[1], ": ",
+             "u1 and/or u2 are missing.",
+             call. = FALSE)
+    if (is.null(args$u1) == TRUE || is.null(args$u2) == TRUE)
+        stop("\n In ", args$call[1], ": ",
+             "u1 and/or u2 are not set or have length zero.",
+             call. = FALSE)
+    if (length(args$u1) != length(args$u2))
+        stop("\n In ", args$call[1], ": ",
+             "Lengths of 'u1' and 'u2' do not match.",
+             call. = FALSE)
+
+    args
+}
+
+#' set all NA values to 0.5, but store the index (will be reset to NA)
 fix_nas <- function(args, add.txt = NULL) {
     if (any(is.na(args$u1 + args$u2))) {
         # set warning message
@@ -14,9 +47,11 @@ fix_nas <- function(args, add.txt = NULL) {
         args$msg <- na.ind <- NULL
     }
 
+    args$n <- length(args$u1)
     args
 }
 
+#' reset output to NA if input was
 reset_nas <- function(out, args) {
     if (!is.null(args$na.ind))
         # set output to NA if input was
@@ -28,6 +63,7 @@ reset_nas <- function(out, args) {
     out
 }
 
+#' check if all data are in (0, 1)^2
 check_if_01 <- function(args) {
     if (any(args$u1 > 1) || any(args$u1 < 0))
         stop("\n In ", args$call[1], ": ",
@@ -37,8 +73,11 @@ check_if_01 <- function(args) {
         stop("\n In ", args$call[1], ": ",
              "Data has be in the interval [0,1].",
              call. = FALSE)
+
+    args
 }
 
+#' make sure that family, par, par2 have the same length
 match_spec_lengths <- function(args) {
     n <- length(args$u1)
     # if one vector is size n, expand all vectors to size n
@@ -68,8 +107,13 @@ match_spec_lengths <- function(args) {
     args
 }
 
-
+#' extract family and parameters if BiCop object is provided
 extract_from_BiCop <- function(args) {
+    # set dummys if family and par are missing (-> when obj is provided)
+    if (is.symbol(args$family))
+        args$family <- NA
+    if (is.symbol(args$par))
+        args$par <- NA
     # has the short version BiCop...(u1, u2, obj) been used?
     if (class(args$family) == "BiCop")
         args$obj <- args$family
@@ -92,7 +136,8 @@ extract_from_BiCop <- function(args) {
     args
 }
 
-check_args <- function(args) {
+#' sanity checks for family and parameters
+check_fam_par <- function(args) {
     if (args$check.pars) {
         # check for family/parameter consistency (if not disabled)
         BiCopCheck(args$family, args$par, args$par2, call = args$call)

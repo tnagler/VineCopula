@@ -114,71 +114,56 @@
 #'
 #' @export BiCopHinv
 BiCopHinv <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
-    if (is.null(u1) == TRUE || is.null(u2) == TRUE)
-        stop("u1 and/or u2 are not set or have length zero.")
-    if (length(u1) != length(u2))
-        stop("Lengths of 'u1' and 'u2' do not match.")
-
     ## preprocessing of arguments
-    # store all arguments with call into a list
-    args <- as.list(environment())
-    args$call <- match.call()
-    # set dummys if family and par are missing (-> when obj is provided)
-    if (missing(family))
-        args$family <- NA
-    if (missing(par))
-        args$par <- NA
-    # set all NA values to 0.5, but store the index (will be reset to NA)
-    args <- fix_nas(args)
-    # check if all data are in (0, 1)^2
-    check_if_01(args)
-    # extract family and parameters if BiCop object is provided
-    args <- extract_from_BiCop(args)
-    # make sure that family, par, par2 have the same length
-    args <- match_spec_lengths(args)
-    # sanity checks for family and parameters
-    args <- check_args(args)
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_u,
+                    fix_nas,
+                    check_if_01,
+                    extract_from_BiCop,
+                    match_spec_lengths,
+                    check_fam_par)
+    list2env(args, environment())
 
     ## calculate inverse h-functions
-    if (length(args$par) == 1) {
+    if (length(par) == 1) {
         # call for single parameters
         hinv1 <- .C("Hinv1",                      # h(u2|u1)
-                    as.integer(args$family),
-                    as.integer(args$n),
-                    as.double(args$u2),
-                    as.double(args$u1),
-                    as.double(args$par),
-                    as.double(args$par2),
-                    as.double(rep(0, args$n)),
+                    as.integer(family),
+                    as.integer(n),
+                    as.double(u2),
+                    as.double(u1),
+                    as.double(par),
+                    as.double(par2),
+                    as.double(rep(0, n)),
                     PACKAGE = "VineCopula")[[7]]
         hinv2 <- .C("Hinv2",                      # h(u1|u2)
-                    as.integer(args$family),
-                    as.integer(args$n),
-                    as.double(args$u1),
-                    as.double(args$u2),
-                    as.double(args$par),
-                    as.double(args$par2),
-                    as.double(rep(0, args$n)),
+                    as.integer(family),
+                    as.integer(n),
+                    as.double(u1),
+                    as.double(u2),
+                    as.double(par),
+                    as.double(par2),
+                    as.double(rep(0, n)),
                     PACKAGE = "VineCopula")[[7]]
     } else {
         # vectorized call
         hinv1 <- .C("Hinv1_vec",                      # h(u2|u1)
-                    as.integer(args$family),
-                    as.integer(args$n),
-                    as.double(args$u2),
-                    as.double(args$u1),
-                    as.double(args$par),
-                    as.double(args$par2),
-                    as.double(rep(0, args$n)),
+                    as.integer(family),
+                    as.integer(n),
+                    as.double(u2),
+                    as.double(u1),
+                    as.double(par),
+                    as.double(par2),
+                    as.double(rep(0, n)),
                     PACKAGE = "VineCopula")[[7]]
         hinv2 <- .C("Hinv2_vec",                      # h(u1|u2)
-                    as.integer(args$family),
-                    as.integer(args$n),
-                    as.double(args$u1),
-                    as.double(args$u2),
-                    as.double(args$par),
-                    as.double(args$par2),
-                    as.double(rep(0, args$n)),
+                    as.integer(family),
+                    as.integer(n),
+                    as.double(u1),
+                    as.double(u2),
+                    as.double(par),
+                    as.double(par2),
+                    as.double(rep(0, n)),
                     PACKAGE = "VineCopula")[[7]]
     }
 
@@ -192,53 +177,38 @@ BiCopHinv <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TR
 
 #' @rdname BiCopHinv
 BiCopHinv1 <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
-    if (is.null(u1) == TRUE || is.null(u2) == TRUE)
-        stop("u1 and/or u2 are not set or have length zero.")
-    if (length(u1) != length(u2))
-        stop("Lengths of 'u1' and 'u2' do not match.")
-
     ## preprocessing of arguments
-    # store all arguments with call into a list
-    args <- as.list(environment())
-    args$call <- match.call()
-    # set dummys if family and par are missing (-> when obj is provided)
-    if (missing(family))
-        args$family <- NA
-    if (missing(par))
-        args$par <- NA
-    # set all NA values to 0.5, but store the index (will be reset to NA)
-    args <- fix_nas(args)
-    # check if all data are in (0, 1)^2
-    check_if_01(args)
-    # extract family and parameters if BiCop object is provided
-    args <- extract_from_BiCop(args)
-    # make sure that family, par, par2 have the same length
-    args <- match_spec_lengths(args)
-    # sanity checks for family and parameters
-    args <- check_args(args)
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_u,
+                    fix_nas,
+                    check_if_01,
+                    extract_from_BiCop,
+                    match_spec_lengths,
+                    check_fam_par)
+    list2env(args, environment())
 
     ## calculate inverse h-function
-    if (length(args$par) == 1) {
+    if (length(par) == 1) {
         # call for single parameters
         hinv1 <- .C("Hinv1",                      # h(u2|u1)
-                    as.integer(args$family),
-                    as.integer(args$n),
-                    as.double(args$u2),
-                    as.double(args$u1),
-                    as.double(args$par),
-                    as.double(args$par2),
-                    as.double(rep(0, args$n)),
+                    as.integer(family),
+                    as.integer(n),
+                    as.double(u2),
+                    as.double(u1),
+                    as.double(par),
+                    as.double(par2),
+                    as.double(rep(0, n)),
                     PACKAGE = "VineCopula")[[7]]
     } else {
         # vectorized call
         hinv1 <- .C("Hinv1_vec",                      # h(u2|u1)
-                    as.integer(args$family),
-                    as.integer(args$n),
-                    as.double(args$u2),
-                    as.double(args$u1),
-                    as.double(args$par),
-                    as.double(args$par2),
-                    as.double(rep(0, args$n)),
+                    as.integer(family),
+                    as.integer(n),
+                    as.double(u2),
+                    as.double(u1),
+                    as.double(par),
+                    as.double(par2),
+                    as.double(rep(0, n)),
                     PACKAGE = "VineCopula")[[7]]
     }
 
@@ -250,53 +220,38 @@ BiCopHinv1 <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = T
 
 #' @rdname BiCopHinv
 BiCopHinv2 <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
-    if (is.null(u1) == TRUE || is.null(u2) == TRUE)
-        stop("u1 and/or u2 are not set or have length zero.")
-    if (length(u1) != length(u2))
-        stop("Lengths of 'u1' and 'u2' do not match.")
-
     ## preprocessing of arguments
-    # store all arguments with call into a list
-    args <- as.list(environment())
-    args$call <- match.call()
-    # set dummys if family and par are missing (-> when obj is provided)
-    if (missing(family))
-        args$family <- NA
-    if (missing(par))
-        args$par <- NA
-    # set all NA values to 0.5, but store the index (will be reset to NA)
-    args <- fix_nas(args)
-    # check if all data are in (0, 1)^2
-    check_if_01(args)
-    # extract family and parameters if BiCop object is provided
-    args <- extract_from_BiCop(args)
-    # make sure that family, par, par2 have the same length
-    args <- match_spec_lengths(args)
-    # sanity checks for family and parameters
-    args <- check_args(args)
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_u,
+                    fix_nas,
+                    check_if_01,
+                    extract_from_BiCop,
+                    match_spec_lengths,
+                    check_fam_par)
+    list2env(args, environment())
 
     ## calculate inverse h-functions
-    if (length(args$par) == 1) {
+    if (length(par) == 1) {
         # call for single parameters
         hinv2 <- .C("Hinv2",                      # h(u1|u2)
-                    as.integer(args$family),
-                    as.integer(args$n),
-                    as.double(args$u1),
-                    as.double(args$u2),
-                    as.double(args$par),
-                    as.double(args$par2),
-                    as.double(rep(0, args$n)),
+                    as.integer(family),
+                    as.integer(n),
+                    as.double(u1),
+                    as.double(u2),
+                    as.double(par),
+                    as.double(par2),
+                    as.double(rep(0, n)),
                     PACKAGE = "VineCopula")[[7]]
     } else {
         # vectorized call
         hinv2 <- .C("Hinv2_vec",                      # h(u1|u2)
-                    as.integer(args$family),
-                    as.integer(args$n),
-                    as.double(args$u1),
-                    as.double(args$u2),
-                    as.double(args$par),
-                    as.double(args$par2),
-                    as.double(rep(0, args$n)),
+                    as.integer(family),
+                    as.integer(n),
+                    as.double(u1),
+                    as.double(u2),
+                    as.double(par),
+                    as.double(par2),
+                    as.double(rep(0, n)),
                     PACKAGE = "VineCopula")[[7]]
     }
 
