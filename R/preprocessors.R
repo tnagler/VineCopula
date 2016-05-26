@@ -192,8 +192,60 @@ prep_familyset <- function(args) {
         args$familyset <- with_rotations(args$familyset)
     if (any(args$familyset < 0)) {
         if (length(unique(sign(args$familyset))) != 1)
-            stop("'familyset' must not contain positive AND negative numbers")
+            stop("\n In ", args$call[1], ": ",
+                 "'familyset' must not contain positive AND negative numbers",
+                 call. = FALSE)
         args$familyset <- setdiff(allfams, -args$familyset)
     }
+    args
+}
+
+## check maxBB specifications
+check_max.BB <- function(args) {
+    if (!is.list(args$max.BB))
+        stop("\n In ", args$call[1], ": ",
+             "'args$max.BB' has to be a list.",
+             call. = FALSE)
+    if (args$max.BB$BB1[1] < 0.001)
+        stop("\n In ", args$call[1], ": ",
+             "The upper bound for the first parameter of the BB1 copula should",
+             "be greater than 0.001 (lower bound for estimation).",
+             call. = FALSE)
+    if (args$max.BB$BB1[2] < 1.001)
+        stop("\n In ", args$call[1], ": ",
+             "The upper bound for the second parameter of the BB1 copula should",
+             "be greater than 1.001 (lower bound for estimation).",
+             call. = FALSE)
+    if (args$max.BB$BB6[1] < 1.001)
+        stop("\n In ", args$call[1], ": ",
+             "The upper bound for the first parameter of the BB6 copula should",
+             "be greater than 1.001 (lower bound for estimation).",
+             call. = FALSE)
+    if (args$max.BB$BB6[2] < 1.001)
+        stop("\n In ", args$call[1], ": ",
+             "The upper bound for the second parameter of the BB6 copula should",
+             "be greater than 1.001 (lower bound for estimation).",
+             call. = FALSE)
+    if (args$max.BB$BB7[1] < 1.001)
+        stop("\n In ", args$call[1], ": ",
+             "The upper bound for the first parameter of the BB7 copula should", "
+             be greater than 1.001 (lower bound for estimation).",
+             call. = FALSE)
+    if (args$max.BB$BB7[2] < 0.001)
+        stop("\n In ", args$call[1], ": ",
+             "The upper bound for the second parameter of the BB7 copula should",
+             "be greater than 0.001 (lower bound for estimation).",
+             call. = FALSE)
+    if (args$max.BB$BB8[1] < 1.001)
+        stop("\n In ", args$call[1], ": ",
+             "The upper bound for the first parameter of the BB1 copula should",
+             "be greater than 0.001 (lower bound for estimation).",
+             call. = FALSE)
+    if (args$max.BB$BB8[2] < 0.001 || args$max.BB$BB8[2] > 1)
+        stop("\n In ", args$call[1], ": ",
+             "The upper bound for the second parameter of the BB1 copula should",
+             "be in the interval [0,1].",
+             call. = FALSE)
+
     args
 }
