@@ -1,4 +1,8 @@
-preproc <- function(args, ...) {
+preproc <- function(args, ..., na.txt = NULL) {
+    # augment arguments
+    args$na.txt <- na.txt
+    args$n <- length(args$u1)
+
     # what has to be done?
     tasks <- list(...)
 
@@ -31,14 +35,14 @@ check_u <- function(args) {
 }
 
 #' set all NA values to 0.5, but store the index (will be reset to NA)
-fix_nas <- function(args, add.txt = NULL) {
+fix_nas <- function(args) {
     if (any(is.na(args$u1 + args$u2))) {
         # set warning message
         args$msg <- paste0("In ",
                            args$call[1],
                            ": ",
                            "Some of the data are NA.",
-                           add.txt)
+                           args$na.txt)
         # set NA values to 0.5 so that C code can operate (will be reset to NA)
         args$na.ind <- which(is.na(args$u1 + args$u2))
         args$u1[args$na.ind] <- 0.5
@@ -47,7 +51,6 @@ fix_nas <- function(args, add.txt = NULL) {
         args$msg <- na.ind <- NULL
     }
 
-    args$n <- length(args$u1)
     args
 }
 
@@ -61,6 +64,28 @@ reset_nas <- function(out, args) {
         warning(args$msg, call. = FALSE)
 
     out
+}
+
+#' remove all NA values from the data
+remove_nas <- function(args) {
+    if (any(is.na(args$u1 + args$u2))) {
+        # set warning message
+        msg <- paste0("In ",
+                      args$call[1],
+                      ": ",
+                      "Some of the data are NA.",
+                      args$na.txt)
+        warning(msg, call. = FALSE)
+        # remove NAs
+        args$na.ind <- which(is.na(args$u1 + args$u2))
+        args$u1 <- args$u1[-args$na.ind]
+        args$u2 <- args$u2[-args$na.ind]
+    } else {
+        args$msg <- na.ind <- NULL
+    }
+
+    args$n <- length(args$u1)
+    args
 }
 
 #' check if all data are in (0, 1)^2
@@ -147,5 +172,28 @@ check_fam_par <- function(args) {
         args$family[(args$family == 5) & (args$par == 0)] <- 0
     }
 
+    args
+}
+
+#' check if more than one observation has been provided
+check_nobs <- function(args) {
+    if (length(args$u1) < 2)
+        stop("\n In ", args$call[1], ": ",
+             "Number of observations has to be at least 2.",
+             call. = FALSE)
+    args
+}
+
+#' add or remove families (rotations or negative index)
+prep_familyset <- function(args) {
+    if (is.na(args$familyset[1]))
+        args$familyset <- allfams
+    if (args$rotations)
+        args$familyset <- with_rotations(args$familyset)
+    if (any(args$familyset < 0)) {
+        if (length(unique(sign(args$familyset))) != 1)
+            stop("'familyset' must not contain positive AND negative numbers")
+        args$familyset <- setdiff(allfams, -args$familyset)
+    }
     args
 }
