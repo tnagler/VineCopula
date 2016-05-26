@@ -78,104 +78,75 @@
 #'
 #' @export BiCopHfuncDeriv
 BiCopHfuncDeriv <- function(u1, u2, family, par, par2 = 0, deriv = "par", obj = NULL, check.pars = TRUE) {
-    ## sanity checks for u1, u2
     if (is.null(u1) == TRUE || is.null(u2) == TRUE)
         stop("u1 and/or u2 are not set or have length zero.")
     if (length(u1) != length(u2))
         stop("Lengths of 'u1' and 'u2' do not match.")
-    if (any(u1 > 1) || any(u1 < 0))
-        stop("Data has be in the interval [0,1].")
-    if (any(u2 > 1) || any(u2 < 0))
-        stop("Data has be in the interval [0,1].")
-    n <- length(u1)
 
-    ## extract family and parameters if BiCop object is provided
+    ## preprocessing of arguments
+    # store all arguments with call into a list
+    args <- as.list(environment())
+    args$call <- match.call()
+    # set dummys if family and par are missing (-> when obj is provided)
     if (missing(family))
-        family <- NA
+        args$family <- NA
     if (missing(par))
-        par <- NA
-    # for short hand usage extract obj from family
-    if (class(family) == "BiCop")
-        obj <- family
-    if (!is.null(obj)) {
-        stopifnot(class(obj) == "BiCop")
-        family <- obj$family
-        par <- obj$par
-        par2 <- obj$par2
-    }
-
-    ## check for reasonable input
-    if (missing(par) & (all(family == 0)))
-        par <- 0
-    if (any(is.na(family)) | any(is.na(par)))
-        stop("Provide either 'family' and 'par' or 'obj'")
+        args$par <- NA
+    # set all NA values to 0.5, but store the index (will be reset to NA)
+    args <- fix_nas(args)
+    # check if all data are in (0, 1)^2
+    check_if_01(args)
+    # extract family and parameters if BiCop object is provided
+    args <- extract_from_BiCop(args)
+    # make sure that family, par, par2 have the same length
+    args <- match_spec_lengths(args)
+    # sanity checks for family and parameters
+    args <- check_args(args)
     if (!all(family %in% c(0, 1, 2, 3, 4, 5, 6, 13, 14, 16, 23, 24, 26, 33, 34, 36)))
         stop("Copula family not implemented.")
-    if (any((family == 2) & (par2 == 0)))
-        stop("For t-copulas, 'par2' must be set.")
     if ((deriv == "par2") && any(family != 2))
         stop("The derivative with respect to the second parameter can only be derived for the t-copula.")
 
-    ## adjust length for parameter vectors; stop if not matching
-    if (any(c(length(family), length(par), length(par2)) == n)) {
-        if (length(family) == 1)
-            family <- rep(family, n)
-        if (length(par) == 1)
-            par <- rep(par, n)
-        if (length(par2) == 1)
-            par2 <- rep(par2, n)
-    }
-    if (!(length(family) %in% c(1, n)))
-        stop("'family' has to be a single number or a size n vector")
-    if (!(length(par) %in% c(1, n)))
-        stop("'par' has to be a single number or a size n vector")
-    if (!(length(par2) %in% c(1, n)))
-        stop("'par2' has to be a single number or a size n vector")
-
-    ## check for family/parameter consistency
-    if (check.pars)
-        BiCopCheck(family, par, par2)
-
     ## call C routines for specified 'deriv' case
-    if (length(par) == 1) {
+    if (length(args$par) == 1) {
         ## call for single parameters
         if (deriv == "par") {
-            if (family == 2) {
+            if (args$family == 2) {
                 out <- .C("diffhfunc_rho_tCopula",
-                          as.double(u1),
-                          as.double(u2),
-                          as.integer(n),
-                          as.double(c(par, par2)),
+                          as.double(args$u1),
+                          as.double(args$u2),
+                          as.integer(args$n),
+                          as.double(c(args$par, args$par2)),
                           as.integer(2),
-                          as.double(rep(0, n)),
+                          as.double(rep(0, args$n)),
                           PACKAGE = "VineCopula")[[6]]
             } else {
                 out <- .C("diffhfunc_mod",
-                          as.double(u1),
-                          as.double(u2),
-                          as.integer(n),
-                          as.double(par),
-                          as.integer(family),
-                          as.double(rep(0, n)),
+                          as.double(args$u1),
+                          as.double(args$u2),
+                          as.integer(args$n),
+                          as.double(args$par),
+                          as.integer(args$family),
+                          as.double(rep(0, args$n)),
                           PACKAGE = "VineCopula")[[6]]
             }
         } else if (deriv == "par2") {
             out <- .C("diffhfunc_nu_tCopula_new",
-                      as.double(u1),
-                      as.double(u2),
-                      as.integer(n),
-                      as.double(c(par, par2)),
+                      as.double(args$u1),
+                      as.double(args$u2),
+                      as.integer(args$n),
+                      as.double(c(args$par, args$par2)),
                       as.integer(2),
-                      as.double(rep(0, n)),
+                      as.double(rep(0, args$n)),
                       PACKAGE = "VineCopula")[[6]]
         } else if (deriv == "u2") {
             out <- .C("diffhfunc_v_mod",
-                      as.double(u1),
-                      as.double(u2),
-                      as.integer(n),
-                      as.double(c(par, par2)),
-                      as.integer(family),
-                      as.double(rep(0, n)),
+                      as.double(args$u1),
+                      as.double(args$u2),
+                      as.integer(args$n),
+                      as.double(c(args$par, args$par2)),
+                      as.integer(args$family),
+                      as.double(rep(0, args$n)),
                       PACKAGE = "VineCopula")[[6]]
         } else {
             stop("This kind of derivative is not implemented")
@@ -184,39 +155,41 @@ BiCopHfuncDeriv <- function(u1, u2, family, par, par2 = 0, deriv = "par", obj = 
         # vectorized call
         if (deriv == "par") {
                 out <- .C("diffhfunc_mod_vec",
-                          as.double(u1),
-                          as.double(u2),
-                          as.integer(n),
-                          as.double(par),
-                          as.double(par2),
-                          as.integer(family),
-                          as.double(rep(0, n)),
+                          as.double(args$u1),
+                          as.double(args$u2),
+                          as.integer(args$n),
+                          as.double(args$par),
+                          as.double(args$par2),
+                          as.integer(args$family),
+                          as.double(rep(0, args$n)),
                           PACKAGE = "VineCopula")[[7]]
         } else if (deriv == "par2") {
             out <- .C("diffhfunc_nu_tCopula_new_vec",
-                      as.double(u1),
-                      as.double(u2),
-                      as.integer(n),
-                      as.double(par),
-                      as.double(par2),
-                      as.integer(family),
-                      as.double(rep(0, n)),
+                      as.double(args$u1),
+                      as.double(args$u2),
+                      as.integer(args$n),
+                      as.double(args$par),
+                      as.double(args$par2),
+                      as.integer(args$family),
+                      as.double(rep(0, args$n)),
                       PACKAGE = "VineCopula")[[7]]
         } else if (deriv == "u2") {
             out <- .C("diffhfunc_v_mod_vec",
-                      as.double(u1),
-                      as.double(u2),
-                      as.integer(n),
-                      as.double(par),
-                      as.double(par2),
-                      as.integer(family),
-                      as.double(rep(0, n)),
+                      as.double(args$u1),
+                      as.double(args$u2),
+                      as.integer(args$n),
+                      as.double(args$par),
+                      as.double(args$par2),
+                      as.integer(args$family),
+                      as.double(rep(0, args$n)),
                       PACKAGE = "VineCopula")[[7]]
         } else {
             stop("This kind of derivative is not implemented")
         }
     }
 
-    ## return results
+    # reset NAs
+    out <- reset_nas(out, args)
+    # return results
     out
 }
