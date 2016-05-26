@@ -109,37 +109,29 @@
 #'
 #' @export BiCopChiPlot
 BiCopChiPlot <- function(u1, u2, PLOT = TRUE, mode = "NULL", ...) {
-    # -----------------------------------------------------------------------------
-    # PARAMETER DESCRIPTION: u1,u2 -> numeric, two vectors u1 and u2 of the same
-    # length or u1 is a data frame of dimension d=2 PLOT -> logical, should the
-    # results be plotted? If FALSE, the values W.in and Hi and contron bounds
-    # will be returned mode -> character or NULL, generall chi plot or
-    # lower/upper chi plot. Possible values are NULL, 'upper','lower'
-    # -----------------------------------------------------------------------------
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_u,
+                    remove_nas,
+                    check_nobs,
+                    check_if_01,
+                    na.txt = " Only complete observations are used.")
+    list2env(args, environment())
 
-    # validation of input parameter
-    if (any(u1 > 1) || any(u1 < 0))
-        stop("Data has be in the interval [0,1].")
-    if (any(u2 > 1) || any(u2 < 0))
-        stop("Data has be in the interval [0,1].")
-    if (is.null(u1) == TRUE || is.null(u2) == TRUE)
-        stop("u1 and/or u2 are not set or have length zero.")
-    if (length(u1) != length(u2))
-        stop("Lengths of 'u1' and 'u2' do not match.")
+    ## sanity checks
     if (length(u1) < 2)
         stop("Number of observations has to be at least 2.")
+    stopifnot(is.logical(PLOT))
 
-    if (PLOT != TRUE && PLOT != FALSE)
-        stop("The parameter 'PLOT' has to be set to 'TRUE' or 'FALSE'.")
-
-    # Computing of results
+    ## Computations
     n <- length(u1)
-    Hi <- H(u1, u2)
-    Fi <- F(u1)
-    Gi <- F(u2)
-
+    Hi <- Hn(u1, u2)
+    Fi <- Fn(u1)
+    Gi <- Fn(u2)
     lambda <- 4 * sign((Fi - 0.5) * (Gi - 0.5)) * apply(data.frame((Fi - 0.5)^2,
-                                                                   (Gi - 0.5)^2), 1, max)
+                                                                   (Gi - 0.5)^2),
+                                                        1,
+                                                        max)
     control.bounds <- c(1.54/sqrt(n), -1.54/sqrt(n))
 
     if (mode == "upper") {
@@ -274,38 +266,29 @@ BiCopChiPlot <- function(u1, u2, PLOT = TRUE, mode = "NULL", ...) {
 #'
 #' @export BiCopKPlot
 BiCopKPlot <- function(u1, u2, PLOT = TRUE, ...) {
-    # -----------------------------------------------------------------------------
-    # INPUT: PARAMETER DESCRIPTION: u1,u2 - numeric, two vectors u1 and u2 of
-    # the same length or u1 is a data frame of dimension d=2 PLOT - logical,
-    # should the results be plotted? If FALSE, the values W.in and Hi will be
-    # return.
-    # -----------------------------------------------------------------------------
+    stopifnot(is.logical(PLOT))
 
-    # validation of input data
-    if (is.null(u1) == TRUE || is.null(u2) == TRUE)
-        stop("u1 and/or u2 are not set or have length zero.")
-    if (length(u1) != length(u2))
-        stop("Lengths of 'u1' and 'u2' do not match.")
-    if (length(u1) < 2)
-        stop("Number of observations has to be at least 2.")
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_u,
+                    remove_nas,
+                    check_nobs,
+                    check_if_01,
+                    na.txt = " Only complete observations are used.")
+    list2env(args, environment())
 
-    if (PLOT != TRUE && PLOT != FALSE)
-        stop("The parameter 'PLOT' has to be set to 'TRUE' or 'FALSE'.")
-
-    # Computing of results
-    Wi <- W(u1, u2)
-    Hi <- H(u1, u2)
+    # Computations
+    Wi <- Wn(u1, u2)
+    Hi <- Hn(u1, u2)
     Hi.sort <- sort(Hi)
-
     n <- length(u1)
-
     W.in <- rep(NA, n)
     for (i in 1:n) {
+        # function to be integrated
         f <- function(w) {
-            w * (-log(w)) * (w - w * log(w))^(i - 1) * (1 - w + w * log(w))^(n -
-                                                                                 i)
-        }  # function to be integrated
-        W.in[i] <- n * choose(n - 1, i - 1) * (integrate(f, lower = 0, upper = 1)$value)  # W_{i:n} for i=1:n
+            w * (-log(w)) * (w - w * log(w))^(i - 1) * (1 - w + w * log(w))^(n - i)
+        }
+        W.in[i] <- n * choose(n - 1, i - 1) * (integrate(f, lower = 0, upper = 1)$value)
     }
     g <- function(w) {
         w - w * log(w)
@@ -331,14 +314,14 @@ BiCopKPlot <- function(u1, u2, PLOT = TRUE, ...) {
 # --------------- HELP FUNCTIONS FOR CHI- AND KENDALL-PLOTS
 # --------------------
 # ===============================================================================
-F <- function(t) {
+Fn <- function(t) {
     # help function for chi-plot
     n <- length(t)
     result <- (rank(t) - 1)/(n - 1)
     return(result)
 }
 # -------------------------------------------------------------------------------
-H <- function(t, s) {
+Hn <- function(t, s) {
     # help function for chi-plot
     n <- length(t)
     H.result <- c()
@@ -353,10 +336,10 @@ H <- function(t, s) {
     return(H.result)
 }
 # -------------------------------------------------------------------------------
-W <- function(t, s) {
+Wn <- function(t, s) {
     # Help function for kendall.plot
     n <- length(t)
-    result <- ((n - 1) * H(t, s) + 1)/n
+    result <- ((n - 1) * Hn(t, s) + 1)/n
     return(result)
 }
 # -------------------------------------------------------------------------------
