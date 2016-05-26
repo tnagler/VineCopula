@@ -213,7 +213,7 @@ check_famset_tau <- function(args) {
                 call. = FALSE)
     } else if ((args$emp_tau < 0) & !(any(args$familyset %in% negfams))){
         warning("In ", args$call[1], ": ",
-                "empirical Kendall's tau is negaive, but familyset contains ",
+                "empirical Kendall's tau is negative, but familyset contains ",
                 "no family with negative dependence.",
                 call. = FALSE)
     }
@@ -231,7 +231,7 @@ check_fam_tau <- function(args) {
              call. = FALSE)
     } else if ((args$emp_tau < 0) & all(args$familyset %in% posfams)){
         stop("\n In ", args$call[1], ": ",
-             "empirical Kendall's tau is negaive, but familyset contains ",
+             "empirical Kendall's tau is negative, but familyset contains ",
              "no family with negative dependence.",
              call. = FALSE)
     }
