@@ -16,7 +16,7 @@ preproc <- function(args, ..., na.txt = NULL) {
     args
 }
 
-#' check if all data have been provided and have same length
+## check if all data have been provided and have same length
 check_u <- function(args) {
     if (is.symbol(args$u1) | is.symbol(args$u2))
         stop("\n In ", args$call[1], ": ",
@@ -34,7 +34,7 @@ check_u <- function(args) {
     args
 }
 
-#' set all NA values to 0.5, but store the index (will be reset to NA)
+## set all NA values to 0.5, but store the index (will be reset to NA)
 fix_nas <- function(args) {
     if (any(is.na(args$u1 + args$u2))) {
         # set warning message
@@ -54,7 +54,7 @@ fix_nas <- function(args) {
     args
 }
 
-#' reset output to NA if input was
+## reset output to NA if input was
 reset_nas <- function(out, args) {
     if (!is.null(args$na.ind))
         # set output to NA if input was
@@ -66,7 +66,7 @@ reset_nas <- function(out, args) {
     out
 }
 
-#' remove all NA values from the data
+## remove all NA values from the data
 remove_nas <- function(args) {
     if (any(is.na(args$u1 + args$u2))) {
         # set warning message
@@ -88,7 +88,7 @@ remove_nas <- function(args) {
     args
 }
 
-#' check if all data are in (0, 1)^2
+## check if all data are in (0, 1)^2
 check_if_01 <- function(args) {
     if (any(args$u1 > 1) || any(args$u1 < 0))
         stop("\n In ", args$call[1], ": ",
@@ -102,7 +102,7 @@ check_if_01 <- function(args) {
     args
 }
 
-#' make sure that family, par, par2 have the same length
+## make sure that family, par, par2 have the same length
 match_spec_lengths <- function(args) {
     n <- length(args$u1)
     # if one vector is size n, expand all vectors to size n
@@ -132,7 +132,7 @@ match_spec_lengths <- function(args) {
     args
 }
 
-#' extract family and parameters if BiCop object is provided
+## extract family and parameters if BiCop object is provided
 extract_from_BiCop <- function(args) {
     # set dummys if family and par are missing (-> when obj is provided)
     if (is.symbol(args$family))
@@ -161,7 +161,7 @@ extract_from_BiCop <- function(args) {
     args
 }
 
-#' sanity checks for family and parameters
+## sanity checks for family and parameters
 check_fam_par <- function(args) {
     if (args$check.pars) {
         # check for family/parameter consistency (if not disabled)
@@ -175,7 +175,7 @@ check_fam_par <- function(args) {
     args
 }
 
-#' check if more than one observation has been provided
+## check if more than one observation has been provided
 check_nobs <- function(args) {
     if (length(args$u1) < 2)
         stop("\n In ", args$call[1], ": ",
@@ -184,7 +184,7 @@ check_nobs <- function(args) {
     args
 }
 
-#' add or remove families (rotations or negative index)
+## add or remove families (rotations or negative index)
 prep_familyset <- function(args) {
     if (is.na(args$familyset[1]))
         args$familyset <- allfams

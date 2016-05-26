@@ -692,20 +692,20 @@ obs.stat <- function(u, v, fam) {
 ############################
 
 
-#' boot.IR
-#'
-#' bootstrap for IR
-#'
-#' @param family copula family
-#' @param theta first copula parameter
-#' @param nu second copula parameter
-#' @param B number of bootstraps
-#' @param n Number of observations
-#'
-#' @return IR vector of test statistics
-#'
-#' @author Ulf Schepsmeier
-#'
+# boot.IR
+#
+# bootstrap for IR
+#
+# @param family copula family
+# @param theta first copula parameter
+# @param nu second copula parameter
+# @param B number of bootstraps
+# @param n Number of observations
+#
+# @return IR vector of test statistics
+#
+# @author Ulf Schepsmeier
+#
 
 boot.IR <- function(family, theta, nu, B, n) {
     # theta und nu sind die geschaetzten Parameter
@@ -769,19 +769,19 @@ boot.IR <- function(family, theta, nu, B, n) {
 
 ## sub-functions
 
-#' hesseTcopula
-#'
-#' This small function calculates the Hessian matrix for the t-copula
-#'
-#' @param u1 first copula argument
-#' @param u2 second copula argument
-#' @param theta first copula parameter
-#' @param nu second copula parameter
-#'
-#' @return H Hesse matrix for the t-copula
-#'
-#' @author Ulf Schepsmeier
-#'
+# hesseTcopula
+#
+# This small function calculates the Hessian matrix for the t-copula
+#
+# @param u1 first copula argument
+# @param u2 second copula argument
+# @param theta first copula parameter
+# @param nu second copula parameter
+#
+# @return H Hesse matrix for the t-copula
+#
+# @author Ulf Schepsmeier
+#
 
 hesseTcopula <- function(u1, u2, theta, nu){
     rho_teil <- f_rho(u1, u2, theta, nu)
@@ -792,20 +792,20 @@ hesseTcopula <- function(u1, u2, theta, nu){
 
 
 
-#' OPGtcopula
-#'
-#' This small function calculates the outer product of gradient for the t-copula
-#'
-#' @param u1 first copula argument
-#' @param u2 second copula argument
-#' @param family copula family (here Student's t copula = 2)
-#' @param theta first copula parameter
-#' @param nu second copula parameter
-#'
-#' @return C outer product of gradient
-#'
-#' @author Ulf Schepsmeier
-#'
+# OPGtcopula
+#
+# This small function calculates the outer product of gradient for the t-copula
+#
+# @param u1 first copula argument
+# @param u2 second copula argument
+# @param family copula family (here Student's t copula = 2)
+# @param theta first copula parameter
+# @param nu second copula parameter
+#
+# @return C outer product of gradient
+#
+# @author Ulf Schepsmeier
+#
 
 OPGtcopula <- function(u1, u2, family, theta, nu){
     # gradient
@@ -829,19 +829,19 @@ OPGtcopula <- function(u1, u2, family, theta, nu){
 }
 
 
-#' gradDtcopula
-#'
-#' derivative of D (i.e. gradD) for the t-copula
-#'
-#' @param u1 first copula argument
-#' @param u2 second copula argument
-#' @param theta first copula parameter
-#' @param nu second copula parameter
-#'
-#' @return gradD gradient of D
-#'
-#' @author Ulf Schepsmeier
-#'
+# gradDtcopula
+#
+# derivative of D (i.e. gradD) for the t-copula
+#
+# @param u1 first copula argument
+# @param u2 second copula argument
+# @param theta first copula parameter
+# @param nu second copula parameter
+#
+# @return gradD gradient of D
+#
+# @author Ulf Schepsmeier
+#
 
 gradDtcopula <- function(u1, u2, theta, nu){
     eps <- 0.001
@@ -878,21 +878,21 @@ gradDtcopula <- function(u1, u2, theta, nu){
 
 
 
-#' bootWhite
-#'
-#' This small function provides the code to calculated bootstrapped p-values
-#' for the White test.
-#'
-#' @param family copula family
-#' @param theta first copula parameter
-#' @param nu second copula parameter
-#' @param B number of bootstraps
-#' @param N number of observations
-#'
-#' @return testStat
-#'
-#' @author Ulf Schepsmeier
-#'
+# bootWhite
+#
+# This small function provides the code to calculated bootstrapped p-values
+# for the White test.
+#
+# @param family copula family
+# @param theta first copula parameter
+# @param nu second copula parameter
+# @param B number of bootstraps
+# @param N number of observations
+#
+# @return testStat
+#
+# @author Ulf Schepsmeier
+#
 
 bootWhite <- function(family, theta, nu, B, N){
     testStat <- rep(0, B)
