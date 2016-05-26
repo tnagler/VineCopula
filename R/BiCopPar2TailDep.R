@@ -59,16 +59,15 @@
 #' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
 #' for family/parameter-consistency are ommited (should only be used with
 #' care).
+#'
 #' @return \item{lower}{Lower tail dependence coefficient for the given
 #' bivariate copula \code{family} and parameter(s) \code{par}, \code{par2}:
-#' \deqn{ }{ \lambda_L = lim_{u->0} C(u,u)/u }
-#' \deqn{ \lambda_L = \lim_{u\searrow 0}\frac{C(u,u)}{u} }{ \lambda_L = lim_{u->0} C(u,u)/u }
-#' \deqn{ }{ \lambda_L = lim_{u->0} C(u,u)/u } }
+#' \deqn{ \lambda_L = \lim_{u\searrow 0}\frac{C(u,u)}{u} }{
+#' \lambda_L = lim_{u->0} C(u,u)/u }}
 #' \item{upper}{Upper tail dependence coefficient for the given bivariate
 #' copula family \code{family} and parameter(s) \code{par}, \code{par2}:
-#' \deqn{ }{ \lambda_U = lim_{u->1}(1-2u+C(u,u))/(1-u) }
-#' \deqn{ \lambda_U = \lim_{u\nearrow 1}\frac{1-2u+C(u,u)}{1-u} }{ \lambda_U = lim_{u->1}(1-2u+C(u,u))/(1-u) }
-#' \deqn{ }{ \lambda_U = lim_{u->1}(1-2u+C(u,u))/(1-u) } }
+#' \deqn{ \lambda_U = \lim_{u\nearrow 1}\frac{1-2u+C(u,u)}{1-u} }{
+#' \lambda_U = lim_{u->1}(1-2u+C(u,u))/(1-u) }}
 #' Lower and upper tail dependence coefficients for bivariate copula families
 #' and parameters (\eqn{\theta} for one parameter families and the first
 #' parameter of the t-copula with \eqn{\nu} degrees of freedom,
@@ -105,71 +104,40 @@
 #' \code{114, 214} \tab \eqn{1+\delta-(\delta^{\theta}+1)^{1/\theta}} \tab - \cr
 #' \code{124, 224} \tab - \tab - \cr
 #' \code{134, 234} \tab - \tab - \cr }
+#'
 #' @note The number \code{m} can be chosen arbitrarily.
+#'
 #' @author Eike Brechmann
+#'
 #' @seealso \code{\link{BiCopPar2Tau}}
+#'
 #' @references Joe, H. (1997). Multivariate Models and Dependence Concepts.
 #' Chapman and Hall, London.
-#' @examples
 #'
+#' @examples
 #' ## Example 1: Gaussian copula
 #' BiCopPar2TailDep(1, 0.7)
+#' BiCop(1, 0.7)$taildep  # alternative
 #'
 #' ## Example 2: Student-t copula
-#' BiCopPar2TailDep(2, c(0.6, 0.7, 0.8), 4:6)
+#' BiCopPar2TailDep(2, c(0.6, 0.7, 0.8), 4)
 #'
 #' ## Example 3: different copula families
-#' BiCopPar2TailDep(c(3, 4, 6), 2:4)
+#' BiCopPar2TailDep(c(3, 4, 6), 2)
 #'
-#' @export BiCopPar2TailDep
 BiCopPar2TailDep <- function(family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
     ## extract family and parameters if BiCop object is provided
-    if (missing(family))
-        family <- NA
-    if (missing(par))
-        par <- NA
-    # for short hand usage extract obj from family
-    if (class(family) == "BiCop")
-        obj <- family
-    if (!is.null(obj)) {
-        stopifnot(class(obj) == "BiCop")
-        family <- obj$family
-        par <- obj$par
-        par2 <- obj$par2
-    }
-
-    ## adjust length for parameter vectors; stop if not matching
-    if (missing(par) & (all(family == 0)))
-        par <- 0
-    n <- max(length(family), length(par), length(par2))
-    if (length(family) == 1)
-        family <- rep(family, n)
-    if (length(par) == 1)
-        par <- rep(par, n)
-    if (length(par2) == 1)
-        par2 <- rep(par2, n)
-    if (!all(c(length(family), length(par), length(par2)) %in% c(1, n)))
-        stop("Input lenghts don't match")
-
-    ## sanity checks for family and parameters
-    if (check.pars) {
-        BiCopCheck(family, par, par2)
-    } else {
-        # allow zero parameter for Clayton an Frank otherwise
-        family[(family %in% c(3, 13, 23, 33)) & (par == 0)] <- 0
-        family[(family == 5) & (par == 0)] <- 0
-    }
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    extract_from_BiCop,
+                    match_spec_lengths,
+                    check_fam_par)
+    list2env(args, environment())
 
     ## calculate tail dependence coefficient
-    if (length(par) == 1) {
-        # call for single parameters
-        out <- matrix(calcTD(family, par, par2), ncol = 2)
-    } else {
-        # vectorized call
-        out <- t(vapply(1:length(par),
-                        function(i) calcTD(family[i], par[i], par2[i]),
-                        numeric(2)))
-    }
+    out <- t(vapply(1:length(par),
+                    function(i) calcTD(family[i], par[i], par2[i]),
+                    numeric(2)))
 
     ## return result
     list(lower = out[, 1], upper = out[, 2])

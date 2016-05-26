@@ -67,14 +67,12 @@ care).}
 \value{
 \item{lower}{Lower tail dependence coefficient for the given
 bivariate copula \code{family} and parameter(s) \code{par}, \code{par2}:
-\deqn{ }{ \lambda_L = lim_{u->0} C(u,u)/u }
-\deqn{ \lambda_L = \lim_{u\searrow 0}\frac{C(u,u)}{u} }{ \lambda_L = lim_{u->0} C(u,u)/u }
-\deqn{ }{ \lambda_L = lim_{u->0} C(u,u)/u } }
+\deqn{ \lambda_L = \lim_{u\searrow 0}\frac{C(u,u)}{u} }{
+\lambda_L = lim_{u->0} C(u,u)/u }}
 \item{upper}{Upper tail dependence coefficient for the given bivariate
 copula family \code{family} and parameter(s) \code{par}, \code{par2}:
-\deqn{ }{ \lambda_U = lim_{u->1}(1-2u+C(u,u))/(1-u) }
-\deqn{ \lambda_U = \lim_{u\nearrow 1}\frac{1-2u+C(u,u)}{1-u} }{ \lambda_U = lim_{u->1}(1-2u+C(u,u))/(1-u) }
-\deqn{ }{ \lambda_U = lim_{u->1}(1-2u+C(u,u))/(1-u) } }
+\deqn{ \lambda_U = \lim_{u\nearrow 1}\frac{1-2u+C(u,u)}{1-u} }{
+\lambda_U = lim_{u->1}(1-2u+C(u,u))/(1-u) }}
 Lower and upper tail dependence coefficients for bivariate copula families
 and parameters (\eqn{\theta} for one parameter families and the first
 parameter of the t-copula with \eqn{\nu} degrees of freedom,
@@ -125,15 +123,15 @@ can be used.
 The number \code{m} can be chosen arbitrarily.
 }
 \examples{
-
 ## Example 1: Gaussian copula
 BiCopPar2TailDep(1, 0.7)
+BiCop(1, 0.7)$taildep  # alternative
 
 ## Example 2: Student-t copula
-BiCopPar2TailDep(2, c(0.6, 0.7, 0.8), 4:6)
+BiCopPar2TailDep(2, c(0.6, 0.7, 0.8), 4)
 
 ## Example 3: different copula families
-BiCopPar2TailDep(c(3, 4, 6), 2:4)
+BiCopPar2TailDep(c(3, 4, 6), 2)
 
 }
 \author{

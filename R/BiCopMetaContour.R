@@ -143,7 +143,7 @@ BiCopMetaContour <- function(u1 = NULL, u2 = NULL, bw = 1, size = 100,
                              margins.par = 0, xylim = NA, obj = NULL,...) {
     warning("This function is deprecated. ",
             "See ?contour.BiCop for contour plots of parametric copulas\n",
-            "and ?BiCopKDE for kernel estimates.")
+            "  and ?BiCopKDE for kernel estimates.")
 
     ## preprocessing of arguments
     if ((family == "emp") & is.null(obj)) {
