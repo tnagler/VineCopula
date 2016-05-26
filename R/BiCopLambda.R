@@ -42,6 +42,7 @@
 #' @param ... Additional plot arguments.
 #' @param obj \code{BiCop} object containing the family and parameter
 #' specification.
+#'
 #' @return \item{empLambda}{If the empirical lambda-function is chosen and
 #' \code{PLOT = FALSE}, a vector of the empirical lambda's is returned.}
 #' \item{theoLambda}{If the theoretical lambda-function is chosen and
@@ -74,9 +75,12 @@
 #' \code{1-u2} and for survival copulas \code{u1} and \code{u2} to \code{1-u1}
 #' and \code{1-u2}, respectively. Then \eqn{\lambda}-functions for the
 #' corresponding non-rotated copula families can be considered.
+#'
 #' @author Ulf Schepsmeier
+#'
 #' @seealso \code{\link{BiCopMetaContour}}, \code{\link{BiCopKPlot}},
 #' \code{\link{BiCopChiPlot}}, \code{\link{BiCop}}
+#'
 #' @references Genest, C. and L.-P. Rivest (1993). Statistical inference
 #' procedures for bivariate Archimedean copulas. Journal of the American
 #' Statistical Association, 88 (423), 1034-1043.
@@ -85,18 +89,12 @@
 #' constructions based on bivariate copulas from different families. Diploma
 #' thesis, Technische Universitaet Muenchen.\cr
 #' \url{http://mediatum.ub.tum.de/?id=1079296}.
+#'
 #' @examples
-#'
-#' ## Example 1: Clayton copula
-#' n <- 1000
-#' tau <- 0.5
-#'
+#' \dontshow{set.seed(123)}
 #' # simulate from Clayton copula
-#' fam <- 3
-#' theta <- BiCopTau2Par(fam, tau)
-#' cop <- BiCop(fam, theta)
-#' set.seed(123)
-#' dat <- BiCopSim(n, cop)
+#' cop <- BiCop(3, tau = 0.5)
+#' dat <- BiCopSim(1000, cop)
 #'
 #' # create lambda-function plots
 #' op <- par(mfrow = c(1, 3))
@@ -106,30 +104,8 @@
 #' par(op)
 #'
 #'
-#' ## Example 2: lambda-function of estimated copula
-#' cop <- BiCopSelect(dat[, 1], dat[, 2])
-#' BiCopLambda(cop)
-#'
-#'
-#' ## Example 3: rotated Clayton copula (90 degrees)
-#' fam <- 23
-#' theta <- BiCopTau2Par(fam, -tau)
-#' cop <- BiCop(fam, theta)
-#' set.seed(123)
-#' dat <- BiCopSim(n, cop)
-#'
-#' # rotate the data to standard Clayton copula data
-#' rot_dat <- 1 - dat[, 1]
-#'
-#' # create lambda-function plots
-#' op <- par(mfrow = c(1, 3))
-#' BiCopLambda(rot_dat, dat[, 2])  # empirical lambda-function
-#' BiCopLambda(family = 3, par = -theta)	# theoretical lambda-function
-#' BiCopLambda(rot_dat, dat[, 2], family = 3, par = -theta)	# both
-#' par(op)
-#'
-#' @export BiCopLambda
-BiCopLambda <- function(u1 = NULL, u2 = NULL, family = "emp", par = 0, par2 = 0, PLOT = TRUE, obj = NULL, ...) {
+BiCopLambda <- function(u1 = NULL, u2 = NULL, family = "emp", par = 0, par2 = 0,
+                        PLOT = TRUE, obj = NULL, ...) {
     ## extract family and parameters if BiCop object is provided
     if (!is.null(obj)) {
         stopifnot(class(obj) == "BiCop")
@@ -168,6 +144,15 @@ BiCopLambda <- function(u1 = NULL, u2 = NULL, family = "emp", par = 0, par2 = 0,
         stop("For t-, BB1 and BB7 copulas, 'par2' must be set.")
     if (c(1, 3, 4, 5, 6, 13, 14, 16, 23, 24, 26, 33, 34, 36) %in% family && length(par) < 1)
         stop("'par' not set.")
+    if (any(is.na(u1 + u2))) {
+        # send warning message
+        warning("Some of the data are NA. ",
+                "Only complete observations are used.")
+        # remove NAs
+        na.ind <- which(is.na(u1 + u2))
+        u1 <- u1[-na.ind]
+        u2 <- u2[-na.ind]
+    }
     if (is.null(u1) == FALSE && (any(u1 > 1) || any(u1 < 0)))
         stop("Data has be in the interval [0,1].")
     if (is.null(u2) == FALSE && (any(u2 > 1) || any(u2 < 0)))
@@ -175,6 +160,8 @@ BiCopLambda <- function(u1 = NULL, u2 = NULL, family = "emp", par = 0, par2 = 0,
 
     if (PLOT != TRUE && PLOT != FALSE)
         stop("The parameter 'PLOT' has to be set to 'TRUE' or 'FALSE'.")
+
+
 
     ## check for parameter consistency
     if (family != "emp")
