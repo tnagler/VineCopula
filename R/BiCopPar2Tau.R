@@ -125,16 +125,11 @@
 #' ## Example 1: Gaussian copula
 #' tau0 <- 0.5
 #' rho <- BiCopTau2Par(family = 1, tau = tau0)
-#' BiCop(1, tau = tau0)$par  # alternative
+#' # transform back
 #' tau <- BiCopPar2Tau(family = 1, par = rho)
 #' tau - 2/pi*asin(rho)
 #'
-#' ## Example 2: Student-t copula
-#' rho <- BiCopTau2Par(family = 2, tau = c(0.4, 0.5, 0.6))
-#' obj <- BiCop(family = 2, par = rho, par2 = 6:8)
-#' BiCopPar2Tau(obj)
-#'
-#' ## Example 3:
+#' ## Example 2:
 #' vpar <- seq(from = 1.1, to = 10, length.out = 100)
 #' tauC <- BiCopPar2Tau(family = 3, par = vpar)
 #' tauG <- BiCopPar2Tau(family = 4, par = vpar)
@@ -145,7 +140,7 @@
 #' lines(tauF ~ vpar, col = 3)
 #' lines(tauJ ~ vpar, col = 4)
 #'
-#' ## Example 4: different copula families
+#' ## Example 3: different copula families
 #' theta <- BiCopTau2Par(family = c(3,4,6), tau = c(0.4, 0.5, 0.6))
 #' BiCopPar2Tau(family = c(3,4,6), par = theta)
 #'
