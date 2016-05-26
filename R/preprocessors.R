@@ -200,11 +200,16 @@ prep_familyset <- function(args) {
     args
 }
 
-## check maxBB specifications
-check_max.BB <- function(args) {
+## check max.BB and max.df specifications
+check_est_pars <- function(args) {
     if (!is.list(args$max.BB))
         stop("\n In ", args$call[1], ": ",
              "'args$max.BB' has to be a list.",
+             call. = FALSE)
+    if (args$max.df <= 2)
+        stop("\n In ", args$call[1], ": ",
+             "The upper bound for the degrees of freedom parameter has to be",
+             "larger than 2.",
              call. = FALSE)
     if (args$max.BB$BB1[1] < 0.001)
         stop("\n In ", args$call[1], ": ",
@@ -245,6 +250,27 @@ check_max.BB <- function(args) {
         stop("\n In ", args$call[1], ": ",
              "The upper bound for the second parameter of the BB1 copula should",
              "be in the interval [0,1].",
+             call. = FALSE)
+
+    if (!(args$family %in% allfams))
+        stop("\n In ", args$call[1], ": ",
+             "Copula family not implemented.",
+             call. = FALSE)
+
+    if (args$method != "mle" && args$method != "itau")
+        stop("\n In ", args$call[1], ": ",
+             "Estimation method has to be either 'mle' or 'itau'.",
+             call. = FALSE)
+    if ((args$method == "itau") && (!(args$family %in% c(0, 2, allfams[onepar])))) {
+        warning("\n In ", args$call[1], ": ",
+                "For two parameter copulas the estimation method 'itau' cannot",
+                "be used. The method is automatically set to 'mle'.",
+                call. = FALSE)
+        args$method <- "mle"
+    }
+    if (is.logical(args$se) == FALSE)
+        stop("\n In ", args$call[1], ": ",
+             "'se' has to be a logical variable (TRUE or FALSE).",
              call. = FALSE)
 
     args

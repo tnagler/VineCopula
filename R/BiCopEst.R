@@ -158,54 +158,18 @@
 BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
                      max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6), BB8 = c(6, 1)),
                      weights = NA) {
-    ## sanity checks
-    if (is.null(u1) == TRUE || is.null(u2) == TRUE)
-        stop("u1 and/or u2 are not set or have length zero.")
-    if (length(u1) != length(u2))
-        stop("Lengths of 'u1' and 'u2' do not match.")
-    if (length(u1) < 2)
-        stop("Number of observations has to be at least 2.")
-    if (any(u1 > 1) || any(u1 < 0))
-        stop("Data has be in the interval [0,1].")
-    if (any(u2 > 1) || any(u2 < 0))
-        stop("Data has be in the interval [0,1].")
-    if (!(family %in% c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 16, 17, 18, 19, 20,
-                        23, 24, 26, 27, 28, 29, 30, 33, 34, 36, 37, 38, 39, 40,
-                        41, 51, 61,  71, 104, 114, 124, 134, 204, 214, 224, 234)))
-        stop("Copula family not implemented.")
-
-    if (max.df <= 2)
-        stop("The upper bound for the degrees of freedom parameter has to be larger than 2.")
-    if (!is.list(max.BB))
-        stop("'max.BB' has to be a list.")
-    if (max.BB$BB1[1] < 0.001)
-        stop("The upper bound for the first parameter of the BB1 copula should be greater than 0.001 (lower bound for estimation).")
-    if (max.BB$BB1[2] < 1.001)
-        stop("The upper bound for the second parameter of the BB1 copula should be greater than 1.001 (lower bound for estimation).")
-    if (max.BB$BB6[1] < 1.001)
-        stop("The upper bound for the first parameter of the BB6 copula should be greater than 1.001 (lower bound for estimation).")
-    if (max.BB$BB6[2] < 1.001)
-        stop("The upper bound for the second parameter of the BB6 copula should be greater than 1.001 (lower bound for estimation).")
-    if (max.BB$BB7[1] < 1.001)
-        stop("The upper bound for the first parameter of the BB7 copula should be greater than 1.001 (lower bound for estimation).")
-    if (max.BB$BB7[2] < 0.001)
-        stop("The upper bound for the second parameter of the BB7 copula should be greater than 0.001 (lower bound for estimation).")
-    if (max.BB$BB8[1] < 1.001)
-        stop("The upper bound for the first parameter of the BB1 copula should be greater than 0.001 (lower bound for estimation).")
-    if (max.BB$BB8[2] < 0.001 || max.BB$BB8[2] > 1)
-        stop("The upper bound for the second parameter of the BB1 copula should be in the interval [0,1].")
-
-    if (method != "mle" && method != "itau")
-        stop("Estimation method has to be either 'mle' or 'itau'.")
-    if ((method == "itau") && (!(family %in% c(0, 2, allfams[onepar])))) {
-        message("For two parameter copulas the estimation method 'itau' cannot be used. The method is automatically set to 'mle'.")
-        method <- "mle"
-    }
-    if (is.logical(se) == FALSE)
-        stop("'se' has to be a logical variable (TRUE or FALSE).")
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_u,
+                    remove_nas,
+                    check_nobs,
+                    check_if_01,
+                    check_est_pars,
+                    na.txt = " Only complete observations are used.")
+    list2env(args, environment())
 
     ## calculate empirical Kendall's tau and invert for initial estimate
-    tau <- fasttau(u1, u2)
+    tau <- fasttau(u1, u2, weights)
     if (family %in% c(0, 2, allfams[onepar]))
         theta <- BiCopTau2Par(family, tau)
 
@@ -486,7 +450,7 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
                             weights = NA, as.BiCop = TRUE) {
 
     ## calculate empirical Kendall's tau and invert for initial estimate
-    tau <- fasttau(u1, u2)
+    tau <- fasttau(u1, u2, weights)
     if (family %in% c(0, 2, allfams[onepar]))
         theta <- BiCopTau2Par(family, tau, check.taus = FALSE)
 
