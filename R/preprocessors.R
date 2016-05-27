@@ -194,42 +194,29 @@ prep_familyset <- function(args) {
     if (args$rotations)
         args$familyset <- with_rotations(args$familyset)
     if (any(args$familyset < 0)) {
-        if (length(unique(sign(args$familyset))) != 1)
+        if (length(unique(sign(args$familyset[args$familyset != 0]))) > 1)
             stop("\n In ", args$call[1], ": ",
                  "'familyset' must not contain positive AND negative numbers.",
                  call. = FALSE)
         args$familyset <- setdiff(allfams, -args$familyset)
     }
-    args
-}
-
-## check if familyset has at least one family corresponding to empirical tau
-check_famset_tau <- function(args) {
-    args$emp_tau <- fasttau(args$u1, args$u2, args$weights)
-    if ((args$emp_tau > 0) & !(any(args$familyset %in% posfams))) {
-        warning("In ", args$call[1], ": ",
-                "empirical Kendall's tau is positive, but familyset contains ",
-                "no family with positive dependence.",
-                call. = FALSE)
-    } else if ((args$emp_tau < 0) & !(any(args$familyset %in% negfams))){
-        warning("In ", args$call[1], ": ",
-                "empirical Kendall's tau is negative, but familyset contains ",
-                "no family with negative dependence.",
-                call. = FALSE)
-    }
 
     args
 }
+
 
 ## check if familyset has at least one family corresponding to empirical tau
 check_fam_tau <- function(args) {
+    if (is.null(args$weights))
+        args$weights <- NA
     args$emp_tau <- fasttau(args$u1, args$u2, args$weights)
-    if ((args$emp_tau > 0) & all(args$familyset %in% negfams)) {
+    if ((args$emp_tau > 0) & !any(args$familyset %in% posfams)) {
+        browser()
         stop("\n In ", args$call[1], ": ",
              "empirical Kendall's tau is positive, but familyset contains ",
              "no family with positive dependence.",
              call. = FALSE)
-    } else if ((args$emp_tau < 0) & all(args$familyset %in% posfams)){
+    } else if ((args$emp_tau < 0) & !any(args$familyset %in% negfams)){
         stop("\n In ", args$call[1], ": ",
              "empirical Kendall's tau is negative, but familyset contains ",
              "no family with negative dependence.",
@@ -239,6 +226,17 @@ check_fam_tau <- function(args) {
     args
 }
 
+todo_fams <- function(args) {
+    if (args$emp_tau < 0) {
+        todo <- negfams
+    } else if (args$emp_tau > 0) {
+        todo <- posfams
+    } else {
+        todo <- c(negfams, posfams)
+    }
+    args$familyset <- todo[which(todo %in% args$familyset)]
+    args
+}
 
 ## check max.BB and max.df specifications
 check_est_pars <- function(args) {
