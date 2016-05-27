@@ -170,7 +170,7 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
     if (!is.na(familyset[1])) {
         if (!all(abs(familyset) %in% allfams))
             stop("Copula family not implemented.")
-        if (length(unique(sign(familyset))) != 1)
+        if (length(unique(sign(familyset[familyset != 0]))) > 1)
             stop("'familyset' must not contain positive AND negative numbers")
     } else {
         familyset <- allfams
