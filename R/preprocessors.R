@@ -235,11 +235,10 @@ prep_familyset <- function(args) {
         args$familyset <- allfams
     if (args$rotations)
         args$familyset <- with_rotations(args$familyset)
-    if (any(args$familyset < 0)) {
-        if (length(unique(sign(args$familyset[args$familyset != 0]))) > 1)
-            stop("\n In ", args$call[1], ": ",
-                 "'familyset' must not contain positive AND negative numbers.",
-                 call. = FALSE)
+    if (length(unique(sign(args$familyset[args$familyset != 0]))) > 1) {
+        stop("\n In ", args$call[1], ": ",
+             "'familyset' must not contain positive AND negative numbers.",
+             call. = FALSE)
         args$familyset <- setdiff(allfams, -args$familyset)
     }
 
@@ -253,14 +252,13 @@ check_fam_tau <- function(args) {
         args$weights <- NA
     args$emp_tau <- fasttau(args$u1, args$u2, args$weights)
     if ((args$emp_tau > 0) & !any(args$familyset %in% posfams)) {
-        browser()
         stop("\n In ", args$call[1], ": ",
-             "empirical Kendall's tau is positive, but familyset contains ",
+             "Empirical Kendall's tau is positive, but familyset contains ",
              "no family with positive dependence.",
              call. = FALSE)
     } else if ((args$emp_tau < 0) & !any(args$familyset %in% negfams)){
         stop("\n In ", args$call[1], ": ",
-             "empirical Kendall's tau is negative, but familyset contains ",
+             "Empirical Kendall's tau is negative, but familyset contains ",
              "no family with negative dependence.",
              call. = FALSE)
     }
@@ -417,6 +415,12 @@ check_data <- function(args) {
     } else {
         args$data <- as.matrix(args$data)
     }
+    if (ncol(args$data) < 2)
+        stop("\n In ", args$call[1], ": ",
+             "Dimension has to be at least 2.",
+             call. = FALSE)
+    if (is.null(colnames(args$data)))
+        colnames(args$data) <- paste("V", seq.int(ncol(args$data)), sep = "")
     args$n <- nrow(args$data)
     args$d <- ncol(args$data)
 
@@ -484,6 +488,30 @@ prep_RVMs <- function(args) {
         args$RVM2$par2[is.na(args$RVM2$par2)] <- 0
         args$RVM2$par2[upper.tri(args$RVM2$par2, diag = TRUE)] <- 0
     }
+
+    args
+}
+
+check_matrix <- function(args) {
+    if (is.symbol(args$Matrix))
+        stop("\n In ", args$call[1], ": ",
+             "Matrix is missing.",
+             call. = FALSE)
+    if (nrow(args$Matrix) != ncol(args$Matrix))
+        stop("\n In ", args$call[1], ": ",
+             "Structure matrix has to be quadratic.",
+             call. = FALSE)
+    if (max(args$Matrix) > nrow(args$Matrix))
+        stop("\n In ", args$call[1], ": ",
+             "Structure matrix can only contain numbers 0:",
+             nrow(args$Matrix), ".",
+             call. = FALSE)
+
+    args$Matrix <- ToLowerTri(args$Matrix)
+    if (RVineMatrixCheck(args$Matrix) != 1)
+        stop("\n In ", args$call[1], ": ",
+             "args$Matrix is not a valid R-vine matrix.",
+             call. = FALSE)
 
     args
 }

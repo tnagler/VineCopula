@@ -119,34 +119,26 @@
 #'
 RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", indeptest = FALSE,
                            level = 0.05, trunclevel = NA, rotations = TRUE, cores = 1) {
-    d <- n <- ncol(data)
-    N <- nrow(data)
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_data,
+                    remove_nas,
+                    check_if_01,
+                    check_nobs,
+                    prep_familyset,
+                    check_matrix,
+                    na.txt = " Only complete observations are used.")
+    list2env(args, environment())
 
     ## sanity checks
-    if (nrow(Matrix) != ncol(Matrix))
-        stop("Structure matrix has to be quadratic.")
-    if (max(Matrix) > nrow(Matrix))
-        stop("Error in the structure matrix.")
-    if (N < 2)
-        stop("Number of observations has to be at least 2.")
-    if (d < 2)
-        stop("Dimension has to be at least 2.")
-    if (any(data > 1) || any(data < 0))
-        stop("Data has be in the interval [0,1].")
-    if (!is.na(familyset[1])) {
-        if (!all(abs(familyset) %in% allfams))
-            stop("Copula family not implemented.")
-        if (length(unique(sign(familyset))) != 1)
-            stop("'familyset' must not contain positive AND negative numbers")
-    }
     if (!(selectioncrit %in% c("AIC", "BIC", "logLik")))
         stop("Selection criterion not implemented.")
     if (level < 0 & level > 1)
         stop("Significance level has to be between 0 and 1.")
 
-    ## set variable names and trunclevel if not provided
-    if (is.null(colnames(data)))
-        colnames(data) <- paste("V", 1:d, sep = "")
+    d <- n <- ncol(data)
+    N <- nrow(data)
+    ## set variable names and trunclevel
     varnames <- colnames(data)
     if (is.na(trunclevel))
         trunclevel <- d
@@ -157,7 +149,6 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
         types <- 0
 
     ## reorder matrix to natural order
-    Matrix <- ToLowerTri(Matrix)
     M <- Matrix
     Mold <- M
     o <- diag(M)
