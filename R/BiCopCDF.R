@@ -113,19 +113,13 @@ BiCopCDF <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRU
     list2env(args, environment())
 
     ## calculate CDF
-    if (length(par) == 1) {
-        # call for single parameters
-        out <- calcCDF(u1, u2, family, par, par2)
-    } else {
-        # vectorized call
-        out <- vapply(1:length(par),
-                      function(i) calcCDF(u1[i],
-                                          u2[i],
-                                          family[i],
-                                          par[i],
-                                          par2[i]),
-                      numeric(1))
-    }
+    out <- vapply(1:length(par),
+                  function(i) calcCDF(u1[i],
+                                      u2[i],
+                                      family[i],
+                                      par[i],
+                                      par2[i]),
+                  numeric(1))
 
     # reset NAs
     out <- reset_nas(out, args)
