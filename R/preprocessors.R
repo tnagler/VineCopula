@@ -34,9 +34,21 @@ check_u <- function(args) {
     args
 }
 
+
+
 ## set all NA values to 0.5, but store the index (will be reset to NA)
 fix_nas <- function(args) {
-    if (any(is.na(args$u1 + args$u2))) {
+    if (!is.null(args$data)) {
+        # set warning message
+        args$msg <- paste0("In ",
+                           args$call[1],
+                           ": ",
+                           "Some of the data are NA.",
+                           args$na.txt)
+        # set NA values to 0.5 so that C code can operate (will be reset to NA)
+        args$na.ind <- which(!complete.cases(args$data))
+        args$data[args$na.ind, , drop = FALSE] <- args$data
+    } else if (any(is.na(args$u1 + args$u2))) {
         # set warning message
         args$msg <- paste0("In ",
                            args$call[1],
@@ -68,36 +80,57 @@ reset_nas <- function(out, args) {
 
 ## remove all NA values from the data
 remove_nas <- function(args) {
-    if (any(is.na(args$u1 + args$u2))) {
-        # set warning message
-        msg <- paste0("In ",
-                      args$call[1],
-                      ": ",
-                      "Some of the data are NA.",
-                      args$na.txt)
-        warning(msg, call. = FALSE)
-        # remove NAs
-        args$na.ind <- which(is.na(args$u1 + args$u2))
-        args$u1 <- args$u1[-args$na.ind]
-        args$u2 <- args$u2[-args$na.ind]
+    if (!is.null(args$data)) {
+        if (any(is.na(args$data))) {
+            # set warning message
+            msg <- paste0("In ",
+                               args$call[1],
+                               ": ",
+                               "Some of the data are NA.",
+                               args$na.txt)
+            warning(msg, call. = FALSE)
+            # remove NAs
+            args$data <- args$data[complete.cases(args$data), , drop = FALSE]
+        }
     } else {
-        args$msg <- na.ind <- NULL
+        if (any(is.na(args$u1 + args$u2))) {
+            # set warning message
+            msg <- paste0("In ",
+                          args$call[1],
+                          ": ",
+                          "Some of the data are NA.",
+                          args$na.txt)
+            warning(msg, call. = FALSE)
+            # remove NAs
+            args$na.ind <- which(is.na(args$u1 + args$u2))
+            args$u1 <- args$u1[-args$na.ind]
+            args$u2 <- args$u2[-args$na.ind]
+        } else {
+            args$msg <- na.ind <- NULL
+        }
+        args$n <- length(args$u1)
     }
 
-    args$n <- length(args$u1)
     args
 }
 
 ## check if all data are in (0, 1)^2
 check_if_01 <- function(args) {
-    if (any(args$u1 > 1) || any(args$u1 < 0))
-        stop("\n In ", args$call[1], ": ",
-             "Data has be in the interval [0,1].",
-             call. = FALSE)
-    if (any(args$u2 > 1) || any(args$u2 < 0))
-        stop("\n In ", args$call[1], ": ",
-             "Data has be in the interval [0,1].",
-             call. = FALSE)
+    if (!is.null(args$data)) {
+        if (any(args$data > 1) || any(args$data < 0))
+            stop("\n In ", args$call[1], ": ",
+                 "Data have to be in the interval [0,1]^d.",
+                 call. = FALSE)
+    } else {
+        if (any(args$u1 > 1) || any(args$u1 < 0))
+            stop("\n In ", args$call[1], ": ",
+                 "Data have to be in the interval [0,1].",
+                 call. = FALSE)
+        if (any(args$u2 > 1) || any(args$u2 < 0))
+            stop("\n In ", args$call[1], ": ",
+                 "Data have to be in the interval [0,1].",
+                 call. = FALSE)
+    }
 
     args
 }
@@ -361,6 +394,52 @@ check_est_pars <- function(args) {
     }
 
     args$weights <- ifelse(is.null(args$weights), NA, args$weights)
+
+    args
+}
+
+check_data <- function(args) {
+    if (is.symbol(data))
+        stop("\n In ", args$call[1], ": ",
+             "Argument data is missing.",
+             call. = FALSE)
+    if (is.vector(args$data)) {
+        args$data <- t(as.matrix(args$data))
+    } else {
+        args$data <- as.matrix(args$data)
+    }
+    args$n <- nrow(args$data)
+    args$d <- ncol(args$data)
+
+    args
+}
+
+check_RVM <- function(args) {
+    if (!is(args$RVM, "RVineMatrix"))
+        stop("'RVM' has to be an RVineMatrix object.")
+    if (args$d != dim(args$RVM))
+        stop("Dimensions of 'data' and 'RVM' do not match.")
+
+    args$RVM$par[is.na(args$RVM$par)] <- 0
+    args$RVM$par[upper.tri(args$RVM$par, diag = TRUE)] <- 0
+    args$RVM$par2[is.na(args$RVM$par2)] <- 0
+    args$RVM$par2[upper.tri(args$RVM$par2, diag = TRUE)] <- 0
+
+    if (any(!is.na(args$RVM$par)) & (nrow(args$RVM$par) != ncol(args$RVM$par)))
+        stop("Parameter matrix has to be quadratic.")
+    if (any(!is.na(args$RVM$par2)) & (nrow(args$RVM$par2) != ncol(args$RVM$par2)))
+        stop("Second parameter matrix has to be quadratic.")
+
+    if (!all(args$RVM$par %in% c(0, NA))) {
+        for (i in 2:dim(args$RVM$Matrix)[1]) {
+            for (j in 1:(i - 1)) {
+                BiCopCheck(args$RVM$family[i, j],
+                           args$RVM$par[i, j],
+                           args$RVM$par2[i, j],
+                           call = args$call)
+            }
+        }
+    }
 
     args
 }
