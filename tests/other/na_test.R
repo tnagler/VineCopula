@@ -398,11 +398,10 @@ par <- c(0, 0.2, 0.9, 1.5, 3.9,
          0, 0, 0, 0, 0)
 par <- matrix(par, 5, 5)
 par2 <- matrix(0, 5, 5)
-RVM <- RVineMatrix(Matrix = Matrix, family = family, par = par, par2 = par2,
-                   names=c("V1", "V2", "V3", "V4", "V5"))
+RVM <- RVineMatrix(Matrix = Matrix, family = family, par = par, par2 = par2)
 
 
-## RVineAIC -----------------------------------------------
+## RVineAIC / RVineBIC ----------------------------
 simdata <- RVineSim(10, RVM)
 simdata[2, 2] <- NA
 RVineAIC(simdata, RVM)
@@ -412,4 +411,11 @@ e <- try(RVineAIC(simdata, RVM))
 stopifnot(inherits(e, "try-error"))
 e <- try(RVineBIC(simdata, RVM))
 stopifnot(inherits(e, "try-error"))
+simdata[1, 1] <- 2
+e <- try(RVineAIC(simdata, RVM))
+stopifnot(inherits(e, "try-error"))
+e <- try(RVineBIC(simdata, RVM))
+stopifnot(inherits(e, "try-error"))
+
+## RVineClarkeTest
 

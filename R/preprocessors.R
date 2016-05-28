@@ -40,7 +40,7 @@ check_u <- function(args) {
 fix_nas <- function(args) {
     if (!is.null(args$data)) {
         # set warning message
-        args$msg <- paste0("In ",
+        args$msg <- paste0(" In ",
                            args$call[1],
                            ": ",
                            "Some of the data are NA.",
@@ -50,7 +50,7 @@ fix_nas <- function(args) {
         args$data[args$na.ind, , drop = FALSE] <- args$data
     } else if (any(is.na(args$u1 + args$u2))) {
         # set warning message
-        args$msg <- paste0("In ",
+        args$msg <- paste0(" In ",
                            args$call[1],
                            ": ",
                            "Some of the data are NA.",
@@ -83,19 +83,20 @@ remove_nas <- function(args) {
     if (!is.null(args$data)) {
         if (any(is.na(args$data))) {
             # set warning message
-            msg <- paste0("In ",
-                               args$call[1],
-                               ": ",
-                               "Some of the data are NA.",
-                               args$na.txt)
+            msg <- paste0(" In ",
+                          args$call[1],
+                          ": ",
+                          "Some of the data are NA.",
+                          args$na.txt)
             warning(msg, call. = FALSE)
             # remove NAs
             args$data <- args$data[complete.cases(args$data), , drop = FALSE]
+            args$n <- nrow(args$data)
         }
     } else {
         if (any(is.na(args$u1 + args$u2))) {
             # set warning message
-            msg <- paste0("In ",
+            msg <- paste0(" In ",
                           args$call[1],
                           ": ",
                           "Some of the data are NA.",
@@ -213,10 +214,18 @@ check_fam_par <- function(args) {
 
 ## check if more than one observation has been provided
 check_nobs <- function(args) {
-    if (length(args$u1) < 2)
-        stop("\n In ", args$call[1], ": ",
-             "Number of observations has to be at least 2.",
-             call. = FALSE)
+    if (!is.null(args$data)) {
+        if (nrow(args$data) < 2)
+            stop("\n In ", args$call[1], ": ",
+                 "Number of observations has to be at least 2.",
+                 call. = FALSE)
+    } else {
+        if (length(args$u1) < 2)
+            stop("\n In ", args$call[1], ": ",
+                 "Number of observations has to be at least 2.",
+                 call. = FALSE)
+    }
+
     args
 }
 
@@ -364,7 +373,7 @@ check_est_pars <- function(args) {
                  call. = FALSE)
         if (!is.null(args$family)) {
             if ((args$method == "itau") && (!(args$family %in% c(0, allfams[onepar])))) {
-                warning("In ", args$call[1], ": ",
+                warning(" In ", args$call[1], ": ",
                         "For two parameter copulas the estimation method 'itau' cannot ",
                         "be used. The method is automatically set to 'mle'.",
                         call. = FALSE)
@@ -373,7 +382,7 @@ check_est_pars <- function(args) {
         }
         if (!is.null(args$familyset)) {
             if ((args$method == "itau") && (!all(args$familyset %in% c(0, allfams[onepar])))) {
-                warning("In ", args$call[1], ": ",
+                warning(" In ", args$call[1], ": ",
                         "For two parameter copulas the estimation method 'itau' cannot ",
                         "be used. The method is automatically set to 'mle'.",
                         call. = FALSE)
@@ -414,31 +423,66 @@ check_data <- function(args) {
     args
 }
 
-check_RVM <- function(args) {
-    if (!is(args$RVM, "RVineMatrix"))
-        stop("'RVM' has to be an RVineMatrix object.")
-    if (args$d != dim(args$RVM))
-        stop("Dimensions of 'data' and 'RVM' do not match.")
+check_RVMs <- function(args) {
+    if (!is.null(args$RVM))
+        check_RVM(args$RVM, "RVM", args$call, args$d)
+    if (!is.null(args$RVM1))
+        check_RVM(args$RVM1, "RVM1", args$call, args$d)
+    if (!is.null(args$RVM2))
+        check_RVM(args$RVM2, "RVM2", args$call, args$d)
 
-    args$RVM$par[is.na(args$RVM$par)] <- 0
-    args$RVM$par[upper.tri(args$RVM$par, diag = TRUE)] <- 0
-    args$RVM$par2[is.na(args$RVM$par2)] <- 0
-    args$RVM$par2[upper.tri(args$RVM$par2, diag = TRUE)] <- 0
+    args
+}
 
-    if (any(!is.na(args$RVM$par)) & (nrow(args$RVM$par) != ncol(args$RVM$par)))
-        stop("Parameter matrix has to be quadratic.")
-    if (any(!is.na(args$RVM$par2)) & (nrow(args$RVM$par2) != ncol(args$RVM$par2)))
-        stop("Second parameter matrix has to be quadratic.")
+check_RVM <- function(RVM, name, call, d) {
+    if (!is(RVM, "RVineMatrix"))
+        stop("\n In ", call[1], ": ",
+             name,  " has to be an RVineMatrix object.",
+             call. = FALSE)
+    if (!is.null(d)) {
+        if (d != dim(RVM))
+            stop("\n In ", call[1], ": ",
+                 "Dimensions of data and ", name, " do not match.",
+                 call. = FALSE)
+    }
 
-    if (!all(args$RVM$par %in% c(0, NA))) {
-        for (i in 2:dim(args$RVM$Matrix)[1]) {
+    if (any(!is.na(RVM$par)) & (nrow(RVM$par) != ncol(RVM$par)))
+        stop("\n In ", call[1], ": ",
+             "Parameter matrix has to be quadratic.",
+             call. = FALSE)
+    if (any(!is.na(RVM$par2)) & (nrow(RVM$par2) != ncol(RVM$par2)))
+        stop("\n In ", call[1], ": ",
+             "Second parameter matrix has to be quadratic.",
+             call. = FALSE)
+
+    if (!all(RVM$par %in% c(0, NA))) {
+        for (i in 2:dim(RVM$Matrix)[1]) {
             for (j in 1:(i - 1)) {
-                BiCopCheck(args$RVM$family[i, j],
-                           args$RVM$par[i, j],
-                           args$RVM$par2[i, j],
-                           call = args$call)
+                BiCopCheck(RVM$family[i, j],
+                           RVM$par[i, j],
+                           RVM$par2[i, j],
+                           call = call)
             }
         }
+    }
+}
+
+prep_RVMs <- function(args) {
+    if (!is.null(args$RVM)) {
+        args$RVM$par[is.na(args$RVM$par)] <- 0
+        args$RVM$par[upper.tri(args$RVM$par, diag = TRUE)] <- 0
+        args$RVM$par2[is.na(args$RVM$par2)] <- 0
+        args$RVM$par2[upper.tri(args$RVM$par2, diag = TRUE)] <- 0
+    } else {
+        args$RVM1$par[is.na(args$RVM1$par)] <- 0
+        args$RVM1$par[upper.tri(args$RVM1$par, diag = TRUE)] <- 0
+        args$RVM1$par2[is.na(args$RVM1$par2)] <- 0
+        args$RVM1$par2[upper.tri(args$RVM1$par2, diag = TRUE)] <- 0
+
+        args$RVM2$par[is.na(args$RVM2$par)] <- 0
+        args$RVM2$par[upper.tri(args$RVM2$par, diag = TRUE)] <- 0
+        args$RVM2$par2[is.na(args$RVM2$par2)] <- 0
+        args$RVM2$par2[upper.tri(args$RVM2$par2, diag = TRUE)] <- 0
     }
 
     args
