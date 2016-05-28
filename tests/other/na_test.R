@@ -271,7 +271,7 @@ suppressWarnings(BiCopHinv2(s[, 1], s[, 2], 3, 3))
 suppressWarnings(BiCopHinv2(s[, 1], s[, 2], 2, 1:10/11, 4))
 
 ## BiCopIndTest -------------------------
-dat <- BiCopSim(500, cop)
+dat <- BiCopSim(500, BiCop(3, 3))
 dat[1, 1] <- dat[3, 2] <- NA
 BiCopIndTest(dat[, 1], dat[, 2])
 
@@ -377,4 +377,39 @@ dat <- BiCopSim(500, 2, 0.7, 5)
 BiCopVuongClarke(dat[,1], dat[,2], familyset = 1:6)
 
 
+
+#-----------------------------------------------------------------#
+Matrix <- c(5, 2, 3, 1, 4,
+            0, 2, 3, 4, 1,
+            0, 0, 3, 4, 1,
+            0, 0, 0, 4, 1,
+            0, 0, 0, 0, 1)
+Matrix <- matrix(Matrix, 5, 5)
+family <- c(0, 1, 3, 4, 4,
+            0, 0, 3, 4, 1,
+            0, 0, 0, 4, 1,
+            0, 0, 0, 0, 3,
+            0, 0, 0, 0, 0)
+family <- matrix(family, 5, 5)
+par <- c(0, 0.2, 0.9, 1.5, 3.9,
+         0, 0, 1.1, 1.6, 0.9,
+         0, 0, 0, 1.9, 0.5,
+         0, 0, 0, 0, 4.8,
+         0, 0, 0, 0, 0)
+par <- matrix(par, 5, 5)
+par2 <- matrix(0, 5, 5)
+RVM <- RVineMatrix(Matrix = Matrix, family = family, par = par, par2 = par2,
+                   names=c("V1", "V2", "V3", "V4", "V5"))
+
+
+## RVineAIC -----------------------------------------------
+simdata <- RVineSim(10, RVM)
+simdata[2, 2] <- NA
+RVineAIC(simdata, RVM)
+RVineBIC(simdata, RVM)
+RVM$family[5, 1] <- -3
+e <- try(RVineAIC(simdata, RVM))
+stopifnot(inherits(e, "try-error"))
+e <- try(RVineBIC(simdata, RVM))
+stopifnot(inherits(e, "try-error"))
 
