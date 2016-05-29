@@ -84,7 +84,7 @@ par2 <- matrix(0, 5, 5)
 RVM <- RVineMatrix(Matrix = Matrix, family = family,
                    par = par, par2 = par2,
                    names = c("V1", "V2", "V3", "V4", "V5"))
-                  
+
 # compute the density at (0.1, 0.2, 0.3, 0.4, 0.5)
 RVinePDF(c(0.1, 0.2, 0.3, 0.4, 0.5), RVM)
 

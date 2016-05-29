@@ -36,7 +36,6 @@ i.i.d. with \eqn{y_i \sim U[0, 1]}. The algorithm for the R-vine PIT is
 given in the appendix of Schepsmeier (2015).
 }
 \examples{
-
 # load data set
 data(daxreturns)
 

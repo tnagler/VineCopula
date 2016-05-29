@@ -18,7 +18,7 @@
 plotted.}
 
 \item{xylim}{numeric vector of length 2; sets \code{xlim} and \code{ylim}
-for the contours.}
+for the contours}
 
 \item{cex.nums}{numeric; expansion factor for font of the numbers.}
 
