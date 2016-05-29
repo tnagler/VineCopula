@@ -5,7 +5,6 @@
 #' families are selected using \code{\link{BiCopSelect}} and estimated
 #' sequentially (forward selection of trees).
 #'
-#'
 #' @param data An N x d data matrix (with uniform margins).
 #' @param familyset An integer vector of pair-copula families to select from.
 #' The vector has to include at least one
@@ -79,6 +78,10 @@
 #' \code{"BIC"} \tab Bayesian information criterion (multiplied by -1). \cr
 #' \code{"cAIC"}\tab corrected Akaike information criterion (multiplied by -1). \cr
 #' }
+#' If the data contain NAs, the edge weights in \code{"tau"} and \code{"rho"} are
+#' multiplied by the square root of the proportion of complete observations. This
+#' penalizes pairs where less observations are used. \cr
+#'
 #' The criteria \code{"AIC"}, \code{"BIC"}, and \code{"cAIC"} require estimation and
 #' model selection for all possible pairs. This is computationally expensive and
 #' much slower than \code{"tau"} or \code{"rho"}.
@@ -126,7 +129,8 @@
 #' # select the R-vine structure, families and parameters
 #' # using only the first 4 variables and the first 750 observations
 #' # we allow for the copula families: Gauss, t, Clayton, Gumbel, Frank and Joe
-#' RVM <- RVineStructureSelect(daxreturns[1:750,1:4], c(1:6), progress = TRUE)
+#' daxreturns <- daxreturns[1:750,1:4]
+#' RVM <- RVineStructureSelect(daxreturns, c(1:6), progress = TRUE)
 #'
 #' ## see the object's content or a summary
 #' str(RVM)
@@ -152,6 +156,15 @@
 RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit = "AIC", indeptest = FALSE,
                                  level = 0.05, trunclevel = NA, progress = FALSE,  weights = NA,
                                  treecrit = "tau", rotations = TRUE, cores = 1) {
+
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_data,
+                    check_nobs,
+                    check_if_01,
+                    prep_familyset)
+    list2env(args, environment())
+
     d <- ncol(data)
     n <- nrow(data)
 
@@ -159,42 +172,23 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
     if (type == 0)
         type <- "RVine" else if (type == 1)
             type <- "CVine"
-    if (type != "RVine" & type != "CVine")
-        stop("Vine model not implemented.")
-    if (n < 2)
-        stop("Number of observations has to be at least 2.")
     if (d < 3)
         stop("Dimension has to be at least 3.")
-    if (any(data[!is.na(data)] > 1) || any(data[!is.na(data)] < 0))
-        stop("Data has to be in the interval [0,1].")
-    if (!is.na(familyset[1])) {
-        if (!all(abs(familyset) %in% allfams))
-            stop("Copula family not implemented.")
-        if (length(unique(sign(familyset[familyset != 0]))) > 1)
-            stop("'familyset' must not contain positive AND negative numbers")
-    } else {
-        familyset <- allfams
-    }
     if (!(selectioncrit %in% c("AIC", "BIC", "logLik")))
         stop("Selection criterion not implemented.")
     if (level < 0 & level > 1)
         stop("Significance level has to be between 0 and 1.")
     treecrit <- set_treecrit(treecrit, familyset)
 
-    ## set variable names and trunclevel if not provided
-    if (is.null(colnames(data)))
-        colnames(data) <- paste0("V", 1:d)
+    ## set trunclevel if not provided
     if (is.na(trunclevel))
         trunclevel <- d
-
-    ## adjust familyset
     if (trunclevel == 0)
         familyset <- 0
-    if (rotations)
-        familyset <- with_rotations(familyset)
 
     ## initialize object for results
     RVine <- list(Tree = NULL, Graph = NULL)
+    warn <- NULL
 
     ## estimation in first tree ----------------------------
     # find optimal tree
@@ -223,6 +217,8 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
                                      weights = weights,
                                      cores = cores)
     # store results
+    if (!is.null(VineTree$warn))
+        warn <- VineTree$warn
     RVine$Tree[[1]] <- VineTree
     RVine$Graph[[1]] <- g
     oldVineGraph <- VineTree
@@ -250,9 +246,21 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
                                     weights = weights,
                                     cores = cores)
         # store results
+        if (!is.null(VineTree$warn))
+            warn <- VineTree$warn
         RVine$Tree[[tree]] <- VineTree
         RVine$Graph[[tree]] <- g
     }
+    if (any(is.na(data)))
+        warning(" In ", args$call[1], ": ",
+                "Some of the data are NA. ",
+                "Only pairwise complete observations are used.",
+                call. = FALSE)
+    if (!is.null(warn))
+        warning(" In ", args$call[1], ": ",
+                warn,
+                call. = FALSE)
+
 
     ## free memory and return results as 'RVineMatrix' object
     .RVine <- RVine
@@ -273,34 +281,66 @@ set_treecrit <- function(treecrit, famset) {
     } else if (all(treecrit == "tau")) {
         treecrit <- function(u1, u2, weights) {
             complete.i <- which(!is.na(u1 + u2))
-            complete.freq <- mean(!is.na(u1 + u2))
-            tau <- abs(fasttau(u1[complete.i], u2[complete.i], weights))
-            tau * sqrt(complete.freq)
+            if (length(complete.i) < 2) {
+                tau <- 0
+            } else {
+                complete.freq <- mean(!is.na(u1 + u2))
+                tau <- abs(fasttau(u1[complete.i], u2[complete.i], weights))
+                tau * sqrt(complete.freq)
+            }
         }
     } else if (all(treecrit == "rho")) {
         treecrit <- function(u1, u2, weights) {
-            complete.freq <- mean(!is.na(u1 + u2))
-            rho <- abs(cor(u1, u2, method = "spearman", use = "complete.obs"))
-            rho * sqrt(complete.freq)
+            complete.i <- which(!is.na(u1 + u2))
+            if (length(complete.i) < 2) {
+                tau <- 0
+            } else {
+                complete.freq <- mean(!is.na(u1 + u2))
+                rho <- abs(cor(u1, u2, method = "spearman", use = "complete.obs"))
+                rho * sqrt(complete.freq)
+            }
         }
     } else if (all(treecrit == "AIC")) {
-        treecrit <- function(u1, u2, weights)
-            - suppressWarnings(BiCopSelect(u1, u2,
-                                           familyset = famset,
-                                           weights = weights)$AIC)
+        treecrit <- function(u1, u2, weights) {
+            complete.i <- which(!is.na(u1 + u2))
+            if (length(complete.i) < 2) {
+                AIC <- 0
+            } else {
+                AIC <- -suppressWarnings(BiCopSelect(u1[complete.i], u2[complete.i],
+                                                     familyset = famset,
+                                                     weights = weights)$AIC)
+            }
+
+            AIC
+        }
     } else if (all(treecrit == "BIC")) {
-        treecrit <- function(u1, u2, weights)
-            - suppressWarnings(BiCopSelect(u1, u2,
-                                           familyset = famset,
-                                           weights = weights)$BIC)
+        treecrit <- function(u1, u2, weights) {
+            complete.i <- which(!is.na(u1 + u2))
+            if (length(complete.i) < 2) {
+                BIC <- 0
+            } else {
+                BIC <- -suppressWarnings(BiCopSelect(u1[complete.i], u2[complete.i],
+                                                     familyset = famset,
+                                                     weights = weights)$BIC)
+            }
+
+            BIC
+        }
     } else if (all(treecrit == "cAIC")) {
         treecrit <- function(u1, u2, weights) {
-            fit <- suppressWarnings(BiCopSelect(u1, u2,
-                                                familyset = famset,
-                                                weights = weights))
-            n <- fit$nobs
-            p <- fit$npars
-            - (fit$AIC + 2 * p * (p + 1) / (n - p - 1))
+            complete.i <- which(!is.na(u1 + u2))
+            if (length(complete.i) < 2) {
+                cAIC <- 0
+            } else {
+                fit <- suppressWarnings(BiCopSelect(u1[complete.i], u2[complete.i],
+                                                    familyset = famset,
+                                                    weights = weights))
+                n <- fit$nobs
+                p <- fit$npars
+                cAIC <- - (fit$AIC + 2 * p * (p + 1) / (n - p - 1))
+            }
+
+            cAIC
         }
     } else {
         txt1 <- 'treecrit must be one of "tau", "rho", "AIC", "BIC", "cAIC"'
@@ -503,6 +543,9 @@ fit.FirstTreeCopulas <- function(MST, data.univ, type, copulaSelectionBy,
 
         MST$E$Copula.CondData.1[i] <- list(pc.fits[[i]]$CondOn.1)
         MST$E$Copula.CondData.2[i] <- list(pc.fits[[i]]$CondOn.2)
+
+        if (!is.null(pc.fits[[i]]$warn))
+            MST$warn <- pc.fits[[i]]$warn
     }
 
     ## return results
@@ -604,6 +647,8 @@ fit.TreeCopulas <- function(MST, oldVineGraph, type, copulaSelectionBy,
         MST$E$fits[[i]] <- pc.fits[[i]]
         MST$E$Copula.CondData.1[i] <- list(pc.fits[[i]]$CondOn.1)
         MST$E$Copula.CondData.2[i] <- list(pc.fits[[i]]$CondOn.2)
+        if (!is.null(pc.fits[[i]]$warn))
+            MST$warn <- pc.fits[[i]]$warn
     }
 
     ## return results
@@ -744,13 +789,31 @@ fit.ACopula <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                         indeptest = FALSE, level = 0.05, weights = NA) {
 
     ## select family and estimate parameter(s) for the pair copula
-    out <- BiCopSelect(u1, u2,
-                       familyset,
-                       selectioncrit,
-                       indeptest,
-                       level,
-                       weights = weights,
-                       rotations = FALSE)
+    complete.i <- which(!is.na(u1 + u2))
+
+    if (length(complete.i) < 10) {
+        out <- BiCop(0)
+        ## add more information about the fit
+        out$se  <- NA
+        out$se2 <- NA
+        out$nobs   <- 0
+        out$logLik <- 0
+        out$AIC    <- 0
+        out$BIC    <- 0
+        out$emptau <- NA
+        out$p.value.indeptest <- NA
+        out$warn <- paste("Insufficient data for at least one pair.",
+                          "Independence has been selected automatically.")
+    } else {
+        out <- suppressWarnings(BiCopSelect(u1[complete.i], u2[complete.i],
+                                            familyset,
+                                            selectioncrit,
+                                            indeptest,
+                                            level,
+                                            weights = weights,
+                                            rotations = FALSE))
+        out$warn <- NULL
+    }
 
     ## change rotation if family is not symmetric wrt the main diagonal
     if (out$family %in% c(23, 24, 26:30, 124, 224)) {
@@ -767,24 +830,8 @@ fit.ACopula <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
     }
 
     ## store pseudo-observations for estimation in next tree
-    out$CondOn.1 <- .C("Hfunc1",
-                       as.integer(out$family),
-                       as.integer(length(u1)),
-                       as.double(u1),
-                       as.double(u2),
-                       as.double(out$par),
-                       as.double(out$par2),
-                       as.double(rep(0, length(u1))),
-                       PACKAGE = "VineCopula")[[7]]
-    out$CondOn.2 <- .C("Hfunc2",
-                       as.integer(out$family),
-                       as.integer(length(u1)),
-                       as.double(u2),
-                       as.double(u1),
-                       as.double(out$par),
-                       as.double(out$par2),
-                       as.double(rep(0, length(u1))),
-                       PACKAGE = "VineCopula")[[7]]
+    out$CondOn.1 <- suppressWarnings(BiCopHfunc1(u1, u2, out))
+    out$CondOn.2 <- suppressWarnings(BiCopHfunc2(u1, u2, out))
 
     ## return results
     out
@@ -902,7 +949,7 @@ as.RVM2 <- function(RVine, data, callexp) {
     RVM$se <- Ses
     RVM$se2 <- Se2s
     RVM$nobs <- crspfits[[1]][[1]]$nobs
-    like <- RVineLogLik(data, RVM)
+    like <- suppressWarnings(RVineLogLik(data, RVM))
     RVM$logLik <- like$loglik
     RVM$pair.logLik <- like$V$value
     npar <- sum(RVM$family %in% allfams[onepar], na.rm = TRUE) +
@@ -1002,3 +1049,4 @@ deleteEdges <- function(g) {
     ## return reduced graph
     list(V = g$V, E = E)
 }
+
