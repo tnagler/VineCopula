@@ -439,6 +439,7 @@ RVineLogLik(simdata, RVM, separate = FALSE)
 ## RVineCopSelect ----------------------------
 RVM <- RVineMatrix(Matrix = Matrix, family = family, par = par, par2 = par2)
 simdata <- RVineSim(100, RVM)
+RVM1 <- RVineCopSelect(simdata, familyset = c(1, 3, 4, 5 ,6), Matrix)
 simdata[1:99, 2] <- NA
 RVM1 <- RVineCopSelect(simdata, familyset = c(1, 3, 4, 5 ,6), Matrix)
 
@@ -450,7 +451,11 @@ RVineGofTest(daxreturns[1:100,1:5], RVM, B = 0)
 RVineGofTest(daxreturns[1:100,1:5], RVM, method = "ECP2",
              statistic = "CvM", B = 200)
 
-## RVineGrad -------------------------------------
+## RVineGrad / RVineHessian -------------------------------------
 simdata <- RVineSim(300, RVM)
+RVineGrad(simdata, RVM)
+RVineHessian(simdata[1,], RVM)
 simdata[1, 1] <- NA
 RVineGrad(simdata, RVM)
+RVineHessian(simdata[1,], RVM)
+
