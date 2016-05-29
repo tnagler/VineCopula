@@ -99,6 +99,7 @@ remove_nas <- function(args) {
                           args$na.txt)
             warning(msg, call. = FALSE)
             # remove NAs
+            args$na.ind <- which(!complete.cases(args$data))
             args$data <- args$data[complete.cases(args$data), , drop = FALSE]
             args$n <- nrow(args$data)
         }
