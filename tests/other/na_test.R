@@ -450,13 +450,14 @@ RVineGofTest(daxreturns[1:100,1:5], RVM, B = 0)
 RVineGofTest(daxreturns[1:100,1:5], RVM, method = "ECP2",
              statistic = "CvM", B = 200)
 
-## RVineGrad / RVineHessian ----------------------------
+## RVineGrad / RVineHessian / RVineStdError ----------------------------
 simdata <- RVineSim(300, RVM)
 RVineGrad(simdata, RVM)
 RVineHessian(simdata[1,], RVM)
 simdata[1, 1] <- NA
 RVineGrad(simdata, RVM)
-RVineHessian(simdata[1,], RVM)
+out2 <- RVineHessian(simdata, RVM)
+RVineStdError(out2$hessian, RVM)
 
 ## RVineMatrix -----------------------------------------
 RVM <- RVineMatrix(Matrix = Matrix, family = family,
@@ -477,7 +478,10 @@ RVinePIT(simdata, RVM)
 
 ## RVineSeqEst --------------------------------------
 simdata <- RVineSim(50, RVM)
-RVineSeqEst(simdata, RVM, method = "itau", se = TRUE)
+RVineSeqEst(simdata, RVM, method = "itau", se = FALSE)
 simdata[1:49, 2] <- NA
 RVineSeqEst(simdata, RVM, method = "itau", se = TRUE)
+
+
+
 

@@ -92,11 +92,20 @@
 #' RVineStdError(out2$hessian, RVM)
 #'
 RVineStdError <- function(hessian, RVM) {
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_RVMs,
+                    prep_RVMs)
+    list2env(args, environment())
+
     # Test auf pos. semidef.
     se3 <- numeric()
     a <- eigen(-hessian, only.values = TRUE)
     if (any(a$values < 0)) {
-        warning("The negative Hessian matrix is not positive definite. Thus NAs will be returned in some entries.")
+        warning(" In ", args$call[1], ": ",
+                "The negative Hessian matrix is not positive definite. ",
+                "Thus NAs will be returned in some entries.",
+                call. = FALSE)
     }
     se <- sqrt((diag(solve(-hessian))))
 
