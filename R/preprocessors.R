@@ -47,7 +47,7 @@ fix_nas <- function(args) {
                            args$na.txt)
         # set NA values to 0.5 so that C code can operate (will be reset to NA)
         args$na.ind <- which(!complete.cases(args$data))
-        args$data[args$na.ind, , drop = FALSE] <- args$data
+        args$data[args$na.ind, ] <- 0.5
     } else if (any(is.na(args$u1 + args$u2))) {
         # set warning message
         args$msg <- paste0(" In ",
@@ -68,12 +68,19 @@ fix_nas <- function(args) {
 
 ## reset output to NA if input was
 reset_nas <- function(out, args) {
-    if (!is.null(args$na.ind))
-        # set output to NA if input was
-        out[args$na.ind] <- NA
-    # print warning if necessary
-    if (!is.null(args$msg))
-        warning(args$msg, call. = FALSE)
+    if (is.vector(out)) {
+        if (!is.null(args$na.ind))
+            # set output to NA if input was
+            out[args$na.ind] <- NA
+        # print warning if necessary
+        if (!is.null(args$msg))
+            warning(args$msg, call. = FALSE)
+    } else {
+        if (length(dim(out)) == 2)
+            out[args$na.ind, ] <- NA
+        if (length(dim(out)) == 3)
+            out[, , args$na.ind] <- NA
+    }
 
     out
 }
@@ -117,11 +124,15 @@ remove_nas <- function(args) {
 
 ## check if all data are in (0, 1)^2
 check_if_01 <- function(args) {
-    if (!is.null(args$data)) {
-        if (any(args$data > 1) || any(args$data < 0))
-            stop("\n In ", args$call[1], ": ",
-                 "Data have to be in the interval [0,1]^d.",
-                 call. = FALSE)
+    u <- args$data
+    if (!is.null(u)) {
+        i <- complete.cases(u)
+        if (sum(i) > 0) {
+            if (any(u[i] > 1) || any(u[i] < 0))
+                stop("\n In ", args$call[1], ": ",
+                     "Data have to be in the interval [0,1]^d.",
+                     call. = FALSE)
+        }
     } else {
         if (any(args$u1 > 1) || any(args$u1 < 0))
             stop("\n In ", args$call[1], ": ",

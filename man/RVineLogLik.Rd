@@ -39,32 +39,25 @@ model for a given copula data set.
 For observations
 \eqn{\boldsymbol{u}=(\boldsymbol{u}_1^\prime,...,\boldsymbol{u}_N^\prime)^\prime}{u=(u_1',...,u_N')'}
 the log-likelihood of a \eqn{d}-dimensional R-vine copula with \eqn{d-1}
-trees and corresponding edge sets \eqn{E_1,...,E_{d-1}} is given by \deqn{
-}{loglik:=ll_{RVine}(\theta|u)}\deqn{\texttt{loglik}:=l_{RVine}\left(\boldsymbol{\theta}|\boldsymbol{u}\right)
-}{loglik:=ll_{RVine}(\theta|u)} \deqn{ }{ =\sum_{i=1}^N \sum_{k=1}^{d-1}
-\sum_{e\in E_k}
-\ln[c_{j(e),k(e)|D(e)}(F(u_{i,j(e)}|u_{i,D(e)}),F(u_{i,k(e)}|u_{i,D(e)})|\theta_{j(e),k(e)|D(e)})],
-}\deqn{=\sum_{i=1}^N \sum_{\ell=1}^{d-1} \sum_{e\in E_\ell} }{ =\sum_{i=1}^N
+trees and corresponding edge sets \eqn{E_1,...,E_{d-1}} is given by
+\deqn{\texttt{loglik}:=l_{RVine}\left(\boldsymbol{\theta}|\boldsymbol{u}\right)
+}{loglik:=ll_{RVine}(\theta|u)}
+\deqn{=\sum_{i=1}^N \sum_{\ell=1}^{d-1} \sum_{e\in E_\ell} }{ =\sum_{i=1}^N
 \sum_{k=1}^{d-1} \sum_{e\in E_k}
 \ln[c_{j(e),k(e)|D(e)}(F(u_{i,j(e)}|u_{i,D(e)}),F(u_{i,k(e)}|u_{i,D(e)})|\theta_{j(e),k(e)|D(e)})],
-}\deqn{\ln\left[c_{j(e),k(e)|D(e)}\left(F(u_{i,j(e)}|\boldsymbol{u}_{i,D(e)}),F(u_{i,k(e)}|\boldsymbol{u}_{i,D(e)})|\boldsymbol{\theta}_{j(e),k(e)|D(e)}\right)\right],
-}{ =\sum_{i=1}^N \sum_{k=1}^{d-1} \sum_{e\in E_k}
-\ln[c_{j(e),k(e)|D(e)}(F(u_{i,j(e)}|u_{i,D(e)}),F(u_{i,k(e)}|u_{i,D(e)})|\theta_{j(e),k(e)|D(e)})],
-} where \eqn{\boldsymbol{u}_i=(u_{i,1},...,u_{i,d})^\prime\in[0,1]^d,\
+}
+ where \eqn{\boldsymbol{u}_i=(u_{i,1},...,u_{i,d})^\prime\in[0,1]^d,\
 i=1,...,N}{u_i=(u_{i,1},...,u_{i,d})'\in[0,1]^d, i=1,...,N}. Further
 \eqn{c_{j(e),k(e)|D(e)}} denotes a bivariate copula density associated to an
 edge \eqn{e} and with parameter(s)
 \eqn{\boldsymbol{\theta}_{j(e),k(e)|D(e)}}{\theta_{j(e),k(e)|D(e)}}.
 Conditional distribution functions such as
 \eqn{F(u_{i,j(e)}|\boldsymbol{u}_{i,D(e)})}{F(u_{i,j(e)}|u_{i,D(e)})} are
-obtained recursively using the relationship \deqn{ }{ h(u|v,\theta) :=
-F(u|v) = d C_{uv_j|v_{-j}}(F(u|v_{-j}),F(v_j|v_{-j}))/d F(v_j|v_{-j}),
-}\deqn{h(u|\boldsymbol{v},\boldsymbol{\theta}) := F(u|\boldsymbol{v}) = }{
+obtained recursively using the relationship
+\deqn{h(u|\boldsymbol{v},\boldsymbol{\theta}) := F(u|\boldsymbol{v}) = }{
 h(u|v,\theta) := F(u|v) = d C_{uv_j|v_{-j}}(F(u|v_{-j}),F(v_j|v_{-j}))/d
-F(v_j|v_{-j}), }\deqn{\frac{\partial
-C_{uv_j|\boldsymbol{v}_{-j}}(F(u|\boldsymbol{v}_{-j}),F(v_j|\boldsymbol{v}_{-j}))}{\partial
-F(v_j|\boldsymbol{v}_{-j})}, }{ h(u|v,\theta) := F(u|v) = d
-C_{uv_j|v_{-j}}(F(u|v_{-j}),F(v_j|v_{-j}))/d F(v_j|v_{-j}), } where
+F(v_j|v_{-j}), }
+where
 \eqn{C_{uv_j|\boldsymbol{v}_{-j}}}{C_{uv_j|v_{-j}}} is a bivariate copula
 distribution function with parameter(s) \eqn{\boldsymbol{\theta}}{\theta}
 and \eqn{\boldsymbol{v}_{-j}}{v_{-j}} denotes a vector with the \eqn{j}-th
@@ -104,7 +97,7 @@ par2 <- matrix(0, 5, 5)
 RVM <- RVineMatrix(Matrix = Matrix, family = family,
                    par = par, par2 = par2,
                    names = c("V1", "V2", "V3", "V4", "V5"))
-                  
+
 # simulate a sample of size 300 from the R-vine copula model
 set.seed(123)
 simdata <- RVineSim(300, RVM)

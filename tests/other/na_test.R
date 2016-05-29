@@ -1,5 +1,6 @@
 library("VineCopula")
 
+
 ## BiCopCDF -------------------------------------
 s <- BiCopSim(10, 3, 3)
 e <- try(BiCopCDF(s[, 1], s[, 2], 1:5, 0.5), silent = TRUE)
@@ -428,12 +429,16 @@ clarke$statistic.Schwarz
 clarke$p.value
 clarke$p.value.Schwarz
 
+## RVineLogLik --------------------------
+RVM <- RVineMatrix(Matrix = Matrix, family = family, par = par, par2 = par2)
+simdata <- RVineSim(10, RVM)
+simdata[2, 2] <- NA
+RVineLogLik(simdata, RVM, separate = TRUE)
 
 ## RVineCopSelect ----------------------------
 RVM <- RVineMatrix(Matrix = Matrix, family = family, par = par, par2 = par2)
 simdata <- RVineSim(100, RVM)
 simdata[2, 2] <- NA
 RVM1 <- RVineCopSelect(simdata, familyset = c(1, 3, 4, 5 ,6), Matrix)
-
 
 
