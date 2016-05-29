@@ -207,7 +207,7 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
                     familyset <- 0
 
                 na.ind <- which(is.na(zr1 + zr2))
-                if (length(na.ind) >= length(zr1) - 1) {
+                if (length(na.ind) >= length(zr1) - 10) {
                     cfit <- BiCop(0)
                     ## add more information about the fit
                     cfit$se  <- NA

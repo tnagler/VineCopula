@@ -189,7 +189,7 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
                 }
 
                 na.ind <- which(is.na(zr1 + zr2))
-                if (length(na.ind) >= length(zr1) - 1) {
+                if (length(na.ind) >= length(zr1) - 10) {
                     cfit <- BiCop(0)
                     ## add more information about the fit
                     cfit$se  <- NA

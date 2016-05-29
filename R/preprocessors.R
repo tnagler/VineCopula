@@ -255,7 +255,7 @@ prep_familyset <- function(args) {
              call. = FALSE)
         args$familyset <- setdiff(allfams, -args$familyset)
     }
-    if (!all(abs(familyset) %in% allfams))
+    if (!all(abs(args$familyset) %in% allfams))
         stop("Copula family not implemented.")
 
     args

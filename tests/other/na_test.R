@@ -479,6 +479,10 @@ RVineSeqEst(simdata, RVM, method = "itau", se = FALSE)
 simdata[1:49, 2] <- NA
 RVineSeqEst(simdata, RVM, method = "itau", se = TRUE)
 
-
-
-
+## RVineStructureSelect ----------------------
+data(daxreturns)
+RVM <- RVineStructureSelect(daxreturns[1:750,1:4], c(1:6), progress = TRUE)
+daxreturns[1, 1] <- NA
+RVM <- RVineStructureSelect(daxreturns[1:750,1:4], c(1:6), progress = TRUE)
+daxreturns[1:749, 1] <- NA
+RVM <- RVineStructureSelect(daxreturns[1:750,1:4], c(1:6), progress = TRUE, treecrit = "rho")
