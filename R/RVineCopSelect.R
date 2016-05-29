@@ -122,6 +122,7 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),
                     check_data,
+                    check_nobs,
                     check_if_01,
                     prep_familyset,
                     check_matrix)
