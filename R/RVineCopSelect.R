@@ -123,13 +123,13 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
     args <- preproc(c(as.list(environment()), call = match.call()),
                     check_data,
                     check_if_01,
-                    check_nobs,
                     prep_familyset,
                     check_matrix)
     list2env(args, environment())
-    if (any(is.na(data)))
-        warning("Some of the data are NA. ",
-                "Only pairwise complete observations are used.")
+    warning(" In ", args$call[1], ": ",
+            "Some of the data are NA. ",
+            "Only pairwise complete observations are used.",
+            call. = FALSE)
 
     ## sanity checks
     if (!(selectioncrit %in% c("AIC", "BIC", "logLik")))
@@ -205,29 +205,18 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
                 if (trunclevel <= (d-k))
                     familyset <- 0
 
-                warn <- NULL
                 na.ind <- which(is.na(zr1 + zr2))
                 if (length(na.ind) >= length(zr1) - 1) {
                     cfit <- BiCop(0)
                     ## add more information about the fit
                     cfit$se  <- NA
+                    cfit$se2 <- NA
                     cfit$nobs   <- 0
                     cfit$logLik <- 0
                     cfit$AIC    <- 0
                     cfit$BIC    <- 0
                     cfit$emptau <- NA
                     cfit$p.value.indeptest <- NA
-                    warn <- paste("Insufficient data for at least one pair.",
-                                  "Independence has been selected automatically.")
-                } else if (length(na.ind) >= length(zr1) - 10) {
-                    cfit <- suppressWarnings(BiCopSelect(zr2,
-                                                         zr1,
-                                                         0,
-                                                         selectioncrit,
-                                                         indeptest,
-                                                         level,
-                                                         weights = NA,
-                                                         rotations))
                     warn <- paste("Insufficient data for at least one pair.",
                                   "Independence has been selected automatically.")
                 } else {
@@ -238,7 +227,9 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
                                                          indeptest,
                                                          level,
                                                          weights = NA,
-                                                         rotations))
+                                                         rotations,
+                                                         se = TRUE))
+                    warn <- NULL
                 }
 
                 ## transform data to pseudo-oberstavions in next tree
@@ -283,7 +274,6 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
             Se2s[k, i]    <- ifelse(is.null(tmpse2), NA, tmpse2)
             emptaus[k, i] <- res.k[[i]]$cfit$emptau
             pvals[k, i]   <- res.k[[i]]$cfit$p.value.indeptest
-            nobs[k, i]    <- res.k[[i]]$cfit$nobs
             if (!is.null(res.k[[i]]$warn))
                 warn <- res.k[[i]]$warn
             ## replace pseudo observations for estimation of next tree
@@ -294,7 +284,7 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
         } # end i = 1:(d-1)
     } # end k = d:2
     if (!is.null(warn))
-        warning(warn)
+        warning(" In ", args$call[1], ": ", warn, call. = FALSE)
 
     ## store results in RVineMatrix object
     .RVM <- RVineMatrix(Mold,
