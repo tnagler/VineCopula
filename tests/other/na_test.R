@@ -444,7 +444,6 @@ simdata[1:99, 2] <- NA
 RVM1 <- RVineCopSelect(simdata, familyset = c(1, 3, 4, 5 ,6), Matrix)
 
 ## RVineGofTest ----------------------------------
-# load data set
 data(daxreturns)
 daxreturns[1, 2] <- NA
 RVineGofTest(daxreturns[1:100,1:5], RVM, B = 0)
@@ -471,7 +470,14 @@ simdata[1:2, 2] <- NA
 RVineMLE(simdata, RVM, grad = FALSE, trace = 0)
 
 ## RVinePIT -----------------------------------------
-simdata <- RVineSim(100, RVM)
+simdata <- RVineSim(10, RVM)
 RVinePIT(simdata, RVM)
 simdata[1:2, 2] <- NA
 RVinePIT(simdata, RVM)
+
+## RVineSeqEst --------------------------------------
+simdata <- RVineSim(50, RVM)
+RVineSeqEst(simdata, RVM, method = "itau", se = TRUE)
+simdata[1:49, 2] <- NA
+RVineSeqEst(simdata, RVM, method = "itau", se = TRUE)
+
