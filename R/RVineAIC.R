@@ -119,6 +119,7 @@ RVineBIC <- function(data, RVM, par = RVM$par, par2 = RVM$par2) {
                     na.txt = " Only complete observations are used.")
     list2env(args, environment())
 
+    n <- args$n
     npar <- sum(RVM$family %in% allfams[onepar], na.rm = TRUE) +
         2 * sum(RVM$family %in% allfams[twopar], na.rm = TRUE)
     npar_pair <- RVM$family %in% allfams[onepar] +

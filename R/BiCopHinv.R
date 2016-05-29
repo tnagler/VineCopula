@@ -125,6 +125,7 @@ BiCopHinv <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TR
     list2env(args, environment())
 
     ## calculate inverse h-functions
+    n <- args$n
     if (length(par) == 1) {
         # call for single parameters
         hinv1 <- .C("Hinv1",                      # h(u2|u1)
@@ -188,6 +189,7 @@ BiCopHinv1 <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = T
     list2env(args, environment())
 
     ## calculate inverse h-function
+    n <- args$n
     if (length(par) == 1) {
         # call for single parameters
         hinv1 <- .C("Hinv1",                      # h(u2|u1)
@@ -231,6 +233,7 @@ BiCopHinv2 <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = T
     list2env(args, environment())
 
     ## calculate inverse h-functions
+    n <- args$n
     if (length(par) == 1) {
         # call for single parameters
         hinv2 <- .C("Hinv2",                      # h(u1|u2)

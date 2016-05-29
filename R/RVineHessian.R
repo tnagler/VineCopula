@@ -119,7 +119,7 @@ RVineHessian <- function(data, RVM) {
     if (any(!(RVM$family %in% c(0, 1:6, 13, 14, 16, 23, 24, 26, 33, 34, 36))))
         stop("Copula family not implemented.")
 
-    n <- d
+    n <- d <- args$d
     N <- T
 
     o <- diag(RVM$Matrix)

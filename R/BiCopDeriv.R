@@ -99,6 +99,7 @@ BiCopDeriv <- function(u1, u2, family, par, par2 = 0, deriv = "par", log = FALSE
         stop("The derivative with respect to one of the arguments is not available in the log case.")
 
     ## call C routines for specified 'deriv' case
+    n <- args$n
     if (length(par) == 1) {
         ## call for single parameters
         if (log == TRUE) {

@@ -122,6 +122,7 @@ BiCopHfunc <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = T
     list2env(args, environment())
 
     ## calculate h-functions
+    n <- args$n
     if (length(par) == 1) {
         # call for single parameters
         hfunc1 <- .C("Hfunc1",                      # h(u2|u1)
@@ -186,6 +187,7 @@ BiCopHfunc1 <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = 
     list2env(args, environment())
 
     ## calculate h-function
+    n <- args$n
     if (length(par) == 1) {
         # call for single parameters
         hfunc1 <- .C("Hfunc1",                      # h(u2|u1)
@@ -229,6 +231,7 @@ BiCopHfunc2 <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = 
     list2env(args, environment())
 
     ## calculate h-function
+    n <- args$n
     if (length(par) == 1) {
         # call for single parameters
         hfunc2 <- .C("Hfunc2",                      # h(u1|u2)

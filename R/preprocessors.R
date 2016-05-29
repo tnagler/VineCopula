@@ -422,7 +422,7 @@ check_est_pars <- function(args) {
 }
 
 check_data <- function(args) {
-    if (is.symbol(data))
+    if (is.symbol(args$data))
         stop("\n In ", args$call[1], ": ",
              "Argument data is missing.",
              call. = FALSE)

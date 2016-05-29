@@ -11,8 +11,8 @@ importFrom("graphics", "abline", "box", "hist", "legend", "lines",
 importFrom("stats", "cor", "dexp", "dgamma", "dnorm", "dt",
            "integrate", "ks.test", "optim", "optimize", "pbinom",
            "pchisq", "pexp", "pgamma", "pnorm", "pt", "qexp", "qgamma",
-           "qnorm", "qt", "runif", "uniroot", "var")
-importFrom("utils", "combn", "getFromNamespace", "modifyList")
+           "qnorm", "qt", "runif", "uniroot", "var", "complete.cases")
+importFrom("utils", "combn", "getFromNamespace", "modifyList", "data")
 
 importFrom("ADGofTest", "ad.test")
 importFrom("MASS", "bandwidth.nrd", "ginv", "kde2d")

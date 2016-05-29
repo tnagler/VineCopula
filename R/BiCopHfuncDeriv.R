@@ -95,6 +95,7 @@ BiCopHfuncDeriv <- function(u1, u2, family, par, par2 = 0, deriv = "par", obj = 
         stop("The derivative with respect to the second parameter can only be derived for the t-copula.")
 
     ## call C routines for specified 'deriv' case
+    n <- args$n
     if (length(par) == 1) {
         ## call for single parameters
         if (deriv == "par") {

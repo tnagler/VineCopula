@@ -105,6 +105,7 @@ BiCopPDF <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRU
     list2env(args, environment())
 
     ## evaluate log-density
+    n <- args$n
     if (length(par) == 1) {
         # unvectorized call
         coplik <- .C("LL_mod_seperate",
