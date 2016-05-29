@@ -56,6 +56,11 @@ BiCopKDE(u[, 1], u[, 2], kde.pars = list(mult = 2))  # oversmooth
 BiCopKDE(u[, 1], u[, 2], type = "surface", zlim = c(0, 4))
 plot(cop, zlim = c(0, 4))  # true density
 
+# kernel contours are also used in pairs.copuladata
+data(daxreturns)
+data <- as.copuladata(daxreturns)
+pairs(data[c(4, 5, 14, 15)])
+
 }
 \author{
 Thomas Nagler
