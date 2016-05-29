@@ -14,6 +14,9 @@ DEPENDS
 
 NEW FEATURES
 
+  * All functions in the package can now handle NAs in the data. A warning
+    message indicates presence of NAs and explains how they are treated.
+
   * Extend `BiCop` and `RVineMatrix` objects (now include: associated dependence
     measures; fit statistics and p-values, if available).
 
@@ -37,7 +40,7 @@ NEW FEATURES
       
     * in R: `BiCopCDF`, `BiCopPar2Tau`, `BiCopPar2Beta`, `BiCopPar2TailDep`.
 
-  * Useful for high-dimensional data: estimation of vine copulas 
+  * Etimation of vine copulas 
     (`RVineStructureSelect`, `RVineCopSelect`, `RVineSeqEst`) can now be done in 
     parallel using the `cores` argument (based on `foreach`) and is more memory
     efficient (pseudo-observations are discarded as soon they are useless).
@@ -59,9 +62,18 @@ NEW FEATURES
     * negative integers can be used to select from all but a subset of 
       families.
       
-  * New function `BiCopCompare` to compare fitted models with different
-    families.
+  * New function `BiCopCompare`: A shiny app where the user can visually assess 
+    how well several families fit the data. 
     
+  * New function `BiCopKDE` for kernel density plots (based on kdecopula 
+    package). 
+  
+  * `RVineStructureSelect?` now takes an argument `treecrit` allowing for 
+    several preimplemented (and custom) choices of the edge weight used in 
+    Dissmann's algorithm.
+    
+  * New function `BiCopCondSim` for conditional simulation from a bivariate 
+    copula.
     
 BUG FIXES
 
