@@ -438,7 +438,7 @@ RVineLogLik(simdata, RVM, separate = TRUE)
 ## RVineCopSelect ----------------------------
 RVM <- RVineMatrix(Matrix = Matrix, family = family, par = par, par2 = par2)
 simdata <- RVineSim(100, RVM)
-simdata[2, 2] <- NA
+simdata[1:99, 2] <- NA
 RVM1 <- RVineCopSelect(simdata, familyset = c(1, 3, 4, 5 ,6), Matrix)
 
 
