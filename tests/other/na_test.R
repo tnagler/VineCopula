@@ -464,3 +464,14 @@ RVM <- RVineMatrix(Matrix = Matrix, family = family,
                    par = par, par2 = par2,
                    names = c("V1", "V2", "V3", "V4", "V5"))
 
+## RVineMLE -------------------------------------------
+simdata <- RVineSim(100, RVM)
+RVineMLE(simdata, RVM, grad = FALSE, trace = 0)
+simdata[1:2, 2] <- NA
+RVineMLE(simdata, RVM, grad = FALSE, trace = 0)
+
+## RVinePIT -----------------------------------------
+simdata <- RVineSim(100, RVM)
+RVinePIT(simdata, RVM)
+simdata[1:2, 2] <- NA
+RVinePIT(simdata, RVM)

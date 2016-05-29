@@ -70,19 +70,19 @@ fix_nas <- function(args) {
 
 ## reset output to NA if input was
 reset_nas <- function(out, args) {
+    # set output to NA if input was
     if (is.vector(out)) {
         if (!is.null(args$na.ind))
-            # set output to NA if input was
             out[args$na.ind] <- NA
-        # print warning if necessary
-        if (!is.null(args$msg))
-            warning(args$msg, call. = FALSE)
     } else {
         if (length(dim(out)) == 2)
             out[args$na.ind, ] <- NA
         if (length(dim(out)) == 3)
             out[, , args$na.ind] <- NA
     }
+    # print warning if necessary
+    if (!is.null(args$msg))
+        warning(args$msg, call. = FALSE)
 
     out
 }

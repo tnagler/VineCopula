@@ -22,16 +22,19 @@
 #' @param RVM \code{\link{RVineMatrix}} objects of the R-vine model.
 #' @return An \code{N} x d matrix of PIT data from the given R-vine copula
 #' model.
+#'
 #' @author Ulf Schepsmeier
+#'
 #' @seealso \code{\link{RVineGofTest}}
+#'
 #' @references Rosenblatt, M. (1952).  Remarks on a Multivariate
 #' Transformation. The Annals of Mathematical Statistics 23 (3), 470-472.
 #'
 #' Schepsmeier, U. (2015) Efficient information based goodness-of-fit tests for
 #' vine copula models with fixed margins. Journal of Multivariate Analysis 138,
 #' 34-52.
-#' @examples
 #'
+#' @examples
 #' # load data set
 #' data(daxreturns)
 #'
@@ -47,29 +50,22 @@
 #'
 #' cor(pit, method = "kendall")
 #'
-#' @export RVinePIT
 RVinePIT <- function(data, RVM) {
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_data,
+                    fix_nas,
+                    check_if_01,
+                    check_RVMs,
+                    prep_RVMs)
+    list2env(args, environment())
+
     if (any(!(RVM$family %in% c(0, 1:6, 13, 14, 16, 23, 24, 26, 33, 34, 36,
                                 104, 114, 124, 134, 204, 214, 224, 234))))
         stop("Copula family not implemented.")
 
-    if (is.vector(data)) {
-        data <- t(as.matrix(data))
-    } else {
-        data <- as.matrix(data)
-    }
-
-    if (any(data > 1) || any(data < 0))
-        stop("Data has be in the interval [0,1].")
     T <- dim(data)[1]
     d <- dim(data)[2]
-
-    if (d != dim(RVM))
-        stop("Dimensions of 'data' and 'RVM' do not match.")
-    if (is(RVM)[1] != "RVineMatrix")
-        stop("'RVM' has to be an RVineMatrix object.")
-
-
     o <- diag(RVM$Matrix)
     if (any(o != length(o):1)) {
         oldRVM <- RVM
@@ -124,6 +120,7 @@ RVinePIT <- function(data, RVM) {
               as.integer(calcup),
               PACKAGE = 'VineCopula')[[11]]
     U <- matrix(tmp, ncol = d)
+    U <- reset_nas(U, args)
     U <- U[, sort(o[length(o):1], index.return = TRUE)$ix]
 
     return(U)
