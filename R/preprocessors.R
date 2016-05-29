@@ -520,11 +520,57 @@ check_matrix <- function(args) {
              nrow(args$Matrix), ".",
              call. = FALSE)
 
+    args$Matrix[is.na(args$Matrix)] <- 0
     args$Matrix <- ToLowerTri(args$Matrix)
+
     if (RVineMatrixCheck(args$Matrix) != 1)
         stop("\n In ", args$call[1], ": ",
-             "args$Matrix is not a valid R-vine matrix.",
+             "Matrix is not a valid R-vine matrix.",
              call. = FALSE)
 
     args
 }
+
+check_parmat <- function(args) {
+    if (nrow(args$family) != ncol(args$family))
+        stop("\n In ", args$call[1], ": ",
+             "family has to be quadratic.",
+             call. = FALSE)
+
+    args$family[is.na(args$family)] <- 0
+    args$family <- ToLowerTri(args$family)
+    args$family[upper.tri(args$family, diag = T)] <- 0
+
+    args
+}
+
+check_fammat <- function(args) {
+    if (nrow(args$par) != ncol(args$par))
+        stop("\n In ", args$call[1], ": ",
+             "family has to be quadratic.",
+             call. = FALSE)
+
+    args$par[is.na(args$par)] <- 0
+    args$par <- ToLowerTri(args$par)
+    args$par[upper.tri(args$par, diag = T)] <- 0
+
+    args
+}
+
+check_par2mat <- function(args) {
+    if (nrow(args$par2) != ncol(args$par2))
+        stop("\n In ", args$call[1], ": ",
+             "family has to be quadratic.",
+             call. = FALSE)
+
+    args$par2[is.na(args$par2)] <- 0
+    args$par2 <- ToLowerTri(args$par2)
+    args$par2[upper.tri(args$par2, diag = T)] <- 0
+
+    args
+}
+
+
+
+
+

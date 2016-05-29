@@ -149,9 +149,7 @@
 #' summary(RVM)
 #'
 #' ## inspect the model using plots
-#' \dontrun{
-#' plot(RVM)  # tree structure
-#' }
+#' \donttest{plot(RVM)  # tree structure}
 #' contour(RVM)  # contour plots of all pair-copulas
 #'
 #' ## simulate from the vine copula model
@@ -162,44 +160,22 @@ RVineMatrix <- function(Matrix,
                         par = array(NA, dim = dim(Matrix)),
                         par2 = array(NA, dim = dim(Matrix)),
                         names = NULL, check.pars = TRUE) {
-
-    ## set NAs to zero
-    Matrix[is.na(Matrix)] <- 0
-    family[is.na(family)] <- 0
-    par[is.na(par)] <- 0
-    par2[is.na(par2)] <- 0
-
-    ## convert to lower triangular matrix if necessary
-    Matrix <- ToLowerTri(Matrix)
-    family <- ToLowerTri(family)
-    par    <- ToLowerTri(par)
-    par2   <- ToLowerTri(par2)
-
-    ## set upper triangle to zero
-    family[upper.tri(family, diag = T)] <- 0
-    par[upper.tri(par, diag = T)] <- 0
-    par2[upper.tri(par2, diag = T)] <- 0
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_matrix,
+                    check_fammat,
+                    check_parmat,
+                    check_par2mat)
+    list2env(args, environment())
 
     ## check matrices
-    if (dim(Matrix)[1] != dim(Matrix)[2])
-        stop("Structure matrix has to be quadratic.")
-    if (any(par != NA) & dim(par)[1] != dim(par)[2])
-        stop("Parameter matrix has to be quadratic.")
-    if (any(par2 != NA) & dim(par2)[1] != dim(par2)[2])
-        stop("Second parameter matrix has to be quadratic.")
-    if (any(family != 0) & dim(family)[1] != dim(family)[2])
-        stop("Copula family matrix has to be quadratic.")
-    if (max(Matrix) > dim(Matrix)[1])
-        stop("Error in the structure matrix.")
     if (length(names) > 0 & length(names) != dim(Matrix)[1])
         stop("Length of the vector 'names' is not correct.")
-    if (RVineMatrixCheck(Matrix) != 1)
-        stop("'Matrix' is not a valid R-vine matrix")
 
     ## check for family/parameter consistency
     sel <- lower.tri(family)  # selector for lower triangular matrix
     if (check.pars & (any(family != 0) | any(!is.na(par)))) {
-        BiCopCheck(family[sel], par[sel], par2[sel])
+        BiCopCheck(family[sel], par[sel], par2[sel], call = match.call())
     }
 
     ## create help matrices

@@ -451,11 +451,16 @@ RVineGofTest(daxreturns[1:100,1:5], RVM, B = 0)
 RVineGofTest(daxreturns[1:100,1:5], RVM, method = "ECP2",
              statistic = "CvM", B = 200)
 
-## RVineGrad / RVineHessian -------------------------------------
+## RVineGrad / RVineHessian ----------------------------
 simdata <- RVineSim(300, RVM)
 RVineGrad(simdata, RVM)
 RVineHessian(simdata[1,], RVM)
 simdata[1, 1] <- NA
 RVineGrad(simdata, RVM)
 RVineHessian(simdata[1,], RVM)
+
+## RVineMatrix -----------------------------------------
+RVM <- RVineMatrix(Matrix = Matrix, family = family,
+                   par = par, par2 = par2,
+                   names = c("V1", "V2", "V3", "V4", "V5"))
 
