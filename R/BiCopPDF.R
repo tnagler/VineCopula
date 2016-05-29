@@ -62,19 +62,22 @@
 #' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
 #' for family/parameter-consistency are ommited (should only be used with
 #' care).
+#'
 #' @return A numeric vector of the bivariate copula density
 #' \itemize{
 #' \item of the copula \code{family}
 #' \item with parameter(s) \code{par}, \code{par2}
 #' \item evaluated at \code{u1} and \code{u2}.
 #' }
+#'
 #' @author Eike Brechmann
+#'
 #' @seealso \code{\link{BiCopCDF}}, \code{\link{BiCopHfunc}},
 #' \code{\link{BiCopSim}}, \code{\link{BiCop}}
-#' @examples
 #'
+#' @examples
+#' \dontshow{set.seed(123)}
 #' ## simulate from a bivariate Student-t copula
-#' set.seed(123)
 #' cop <- BiCop(family = 2, par = -0.7, par2 = 4)
 #' simdata <- BiCopSim(100, cop)
 #'
@@ -84,71 +87,25 @@
 #' BiCopPDF(u1, u2, cop)
 #'
 #' ## select a bivariate copula for the simulated data
-#' cop <- BiCopSelect(u1, u2)
-#' summary(cop)
+#' fit <- BiCopSelect(u1, u2)
+#' summary(fit)
 #' ## and evaluate its PDF
-#' round(BiCopPDF(u1, u2, cop), 8)
+#' round(BiCopPDF(u1, u2, fit), 3)
 #'
 #' @export BiCopPDF
 BiCopPDF <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
-    ## sanity checks for u1, u2
-    if (is.null(u1) == TRUE || is.null(u2) == TRUE)
-        stop("u1 and/or u2 are not set or have length zero.")
-    if (length(u1) != length(u2))
-        stop("Lengths of 'u1' and 'u2' do not match.")
-    if (any(u1 > 1) || any(u1 < 0))
-        stop("Data has be in the interval [0,1].")
-    if (any(u2 > 1) || any(u2 < 0))
-        stop("Data has be in the interval [0,1].")
-    n <- length(u1)
-
-    ## extract family and parameters if BiCop object is provided
-    if (missing(family))
-        family <- NA
-    if (missing(par))
-        par <- NA
-    # for short hand usage extract obj from family
-    if (class(family) == "BiCop")
-        obj <- family
-    if (!is.null(obj)) {
-        stopifnot(class(obj) == "BiCop")
-        family <- obj$family
-        par <- obj$par
-        par2 <- obj$par2
-    }
-
-    ## check for reasonable input
-    if (missing(par) & (all(family == 0)))
-        par <- 0
-    if (any(is.na(family)) | any(is.na(par)))
-        stop("Provide either 'family' and 'par' or 'obj'")
-
-    ## adjust length for parameter vectors; stop if not matching
-    if (any(c(length(family), length(par), length(par2)) == n)) {
-        if (length(family) == 1)
-            family <- rep(family, n)
-        if (length(par) == 1)
-            par <- rep(par, n)
-        if (length(par2) == 1)
-            par2 <- rep(par2, n)
-    }
-    if (!(length(family) %in% c(1, n)))
-        stop("'family' has to be a single number or a size n vector")
-    if (!(length(par) %in% c(1, n)))
-        stop("'par' has to be a single number or a size n vector")
-    if (!(length(par2) %in% c(1, n)))
-        stop("'par2' has to be a single number or a size n vector")
-
-    ## sanity checks for family and parameters
-    if (check.pars) {
-        BiCopCheck(family, par, par2)
-    } else {
-        # allow zero parameter for Clayton an Frank otherwise
-        family[(family %in% c(3, 13, 23, 33)) & (par == 0)] <- 0
-        family[(family == 5) & (par == 0)] <- 0
-    }
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_u,
+                    fix_nas,
+                    check_if_01,
+                    extract_from_BiCop,
+                    match_spec_lengths,
+                    check_fam_par)
+    list2env(args, environment())
 
     ## evaluate log-density
+    n <- args$n
     if (length(par) == 1) {
         # unvectorized call
         coplik <- .C("LL_mod_seperate",
@@ -173,6 +130,8 @@ BiCopPDF <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRU
                      PACKAGE = "VineCopula")[[7]]
     }
 
-    ## return density
-    exp(coplik)
+    # reset NAs
+    out <- reset_nas(exp(coplik), args)
+    # return result
+    out
 }

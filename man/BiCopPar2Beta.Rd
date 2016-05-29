@@ -83,9 +83,9 @@ object \code{obj}, the alternative version \cr
 The number \code{m} can be chosen arbitrarily.
 }
 \examples{
-
 ## Example 1: Gaussian copula
 BiCopPar2Beta(family = 1, par = 0.7)
+BiCop(1, 0.7)$beta  # alternative
 
 ## Example 2: Clayton copula
 BiCopPar2Beta(family = 3, par = 2)

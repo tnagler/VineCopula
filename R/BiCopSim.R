@@ -79,48 +79,20 @@
 #' simdata2 <- BiCopSim(100, obj)
 #'
 BiCopSim <- function(N, family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
-    ## extract family and parameters if BiCop object is provided
-    if (missing(family))
-        family <- NA
-    if (missing(par))
-        par <- NA
-    # for short hand usage extract obj from family
-    if (class(family) == "BiCop")
-        obj <- family
-    if (!is.null(obj)) {
-        stopifnot(class(obj) == "BiCop")
-        family <- obj$family
-        par <- obj$par
-        par2 <- obj$par2
-    }
-    if (missing(par) & (all(family == 0)))
-        par <- 0
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    extract_from_BiCop,
+                    match_spec_lengths,
+                    check_fam_par)
+    list2env(args, environment())
 
-    ## adjust length for parameter vectors; stop if not matching
-    if (any(c(length(family), length(par), length(par2)) == N)) {
-        if (length(family) == 1)
-            family <- rep(family, N)
-        if (length(par) == 1)
-            par <- rep(par, N)
-        if (length(par2) == 1)
-            par2 <- rep(par2, N)
-    }
+    ## stop if lengths are not 1 or N
     if (!(length(family) %in% c(1, N)))
         stop("'family' has to be a single number or a size N vector")
     if (!(length(par) %in% c(1, N)))
         stop("'par' has to be a single number or a size N vector")
     if (!(length(par2) %in% c(1, N)))
         stop("'par2' has to be a single number or a size N vector")
-
-    ## sanity checks for family and parameters
-    if (check.pars) {
-        BiCopCheck(family, par, par2)
-    } else {
-        # allow zero parameter for Clayton an Frank otherwise
-        family[(family %in% c(3, 13, 23, 33)) & (par == 0)] <- 0
-        family[(family == 5) & (par == 0)] <- 0
-    }
-
 
     ## start with independent uniforms (byrow for backwards compatibility)
     w <- matrix(runif(2*N), ncol = 2, byrow = TRUE)

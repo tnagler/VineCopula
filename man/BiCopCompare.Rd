@@ -4,10 +4,10 @@
 \alias{BiCopCompare}
 \title{Shiny app for bivariate copula selection}
 \usage{
-BiCopCompare(u, familyset = NA, rotations = TRUE)
+BiCopCompare(u1, u2, familyset = NA, rotations = TRUE)
 }
 \arguments{
-\item{u}{\eqn{n x 2} matrix of copula data.}
+\item{u1, u2}{Data vectors of equal length with values in [0,1].}
 
 \item{familyset}{Vector of bivariate copula families to select from.
 The vector has to include at least one bivariate copula
@@ -75,9 +75,7 @@ margins are available.
 data(daxreturns)
 
 # find a suitable copula family for the first two stocks
-\dontrun{
-fit <- BiCopCompare(daxreturns[, 1:2])
-}
+\donttest{fit <- BiCopCompare(daxreturns[, 1], daxreturns[, 2])}
 
 }
 \author{

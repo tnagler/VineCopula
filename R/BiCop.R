@@ -108,17 +108,18 @@ BiCop <- function(family, par, par2 = 0, tau = NULL, check.pars = TRUE) {
     if (missing(par) & (family == 0))
         par <- 0
     stopifnot(is.logical(check.pars))
+    if (length(c(family, par, par2)) != 3)
+        stop("family, par, and par2 have to be a single number.")
 
     ## family/parameter consistency checks
     if (check.pars) {
         # check for consistency
-        BiCopCheck(family, par, par2)
+        BiCopCheck(family, par, par2, call = match.call()[1])
         # warn if par2 is unused
         if ((family %in% allfams[onepar]) && (par2 != 0)) {
-            txt <- paste0("The ",
-                          BiCopName(family, short = FALSE),
-                          " copula has only one parameter; 'par2' is useless.")
-            warning(txt)
+            warning("The ",
+                    BiCopName(family, short = FALSE),
+                    " copula has only one parameter; 'par2' is useless.")
         }
     }
 

@@ -6,7 +6,7 @@
 #'
 #' @param RVM An \code{\link{RVineMatrix}} object.
 #' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
-#' for family/parameter-consistency are ommited (should only be used with
+#' for family/parameter-consistency are ommited (should only be used with care).
 #'
 #' @return Matrix with the same structure as the family and parameter matrices
 #' of the \code{\link{RVineMatrix}} object \code{RVM} where the entries are

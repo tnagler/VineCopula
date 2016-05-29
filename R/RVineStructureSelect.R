@@ -1002,4 +1002,3 @@ deleteEdges <- function(g) {
     ## return reduced graph
     list(V = g$V, E = E)
 }
-

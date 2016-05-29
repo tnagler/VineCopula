@@ -31,27 +31,20 @@ p.value = 2*(1-\Phi(T)), }
 where \eqn{\Phi} is the standard normal distribution function.
 }
 \examples{
-
+\dontshow{set.seed(123)}
 ## Example 1: Gaussian copula with large dependence parameter
-par <- 0.7
-fam <- 1
-cop <- BiCop(fam, par)
-set.seed(123)
+cop <- BiCop(1, 0.7)
 dat <- BiCopSim(500, cop)
 
 # perform the asymptotic independence test
-BiCopIndTest(dat[,1], dat[,2])
-
+BiCopIndTest(dat[, 1], dat[, 2])
 
 ## Example 2: Gaussian copula with small dependence parameter
-par <- 0.01
-fam <- 1
-cop <- BiCop(fam, par)
-set.seed(123)
+cop <- BiCop(1, 0.01)
 dat <- BiCopSim(500, cop)
 
 # perform the asymptotic independence test
-BiCopIndTest(dat[,1], dat[,2])
+BiCopIndTest(dat[, 1], dat[, 2])
 
 }
 \author{

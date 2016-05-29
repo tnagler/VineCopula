@@ -52,13 +52,21 @@
 #'
 BiCopKDE <- function(u1, u2, type = "contour", margins, size,
                      kde.pars = list(), ...) {
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_u,
+                    remove_nas,
+                    check_if_01,
+                    na.txt = " Only complete observations are used.")
+    list2env(args, environment())
+
     ## prepare the data for usage with plot.kdecopula function
-    udata <- list(udata = cbind(u1, u2))
-    if (all(colnames(udata$udata) == c("u1", "u2")))
-        udata$udata <- unname(udata$udata)
+    args <- list(udata = cbind(u1, u2))
+    if (all(colnames(args$udata) == c("u1", "u2")))
+        args$udata <- unname(args$udata)
 
     ## estimate copula density with kde.pars
-    args <- modifyList(udata, kde.pars)
+    args <- modifyList(args, kde.pars)
     est <- do.call(kdecopula::kdecop, args)
 
     ## choose margins if missing

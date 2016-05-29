@@ -93,17 +93,10 @@ and \code{1-u2}, respectively. Then \eqn{\lambda}-functions for the
 corresponding non-rotated copula families can be considered.
 }
 \examples{
-
-## Example 1: Clayton copula
-n <- 1000
-tau <- 0.5
-
+\dontshow{set.seed(123)}
 # simulate from Clayton copula
-fam <- 3
-theta <- BiCopTau2Par(fam, tau)
-cop <- BiCop(fam, theta)
-set.seed(123)
-dat <- BiCopSim(n, cop)
+cop <- BiCop(3, tau = 0.5)
+dat <- BiCopSim(1000, cop)
 
 # create lambda-function plots
 op <- par(mfrow = c(1, 3))
@@ -112,28 +105,6 @@ BiCopLambda(cop)	# theoretical lambda-function
 BiCopLambda(dat[, 1], dat[, 2], cop)	# both
 par(op)
 
-
-## Example 2: lambda-function of estimated copula
-cop <- BiCopSelect(dat[, 1], dat[, 2])
-BiCopLambda(cop)
-
-
-## Example 3: rotated Clayton copula (90 degrees)
-fam <- 23
-theta <- BiCopTau2Par(fam, -tau)
-cop <- BiCop(fam, theta)
-set.seed(123)
-dat <- BiCopSim(n, cop)
-
-# rotate the data to standard Clayton copula data
-rot_dat <- 1 - dat[, 1]
-
-# create lambda-function plots
-op <- par(mfrow = c(1, 3))
-BiCopLambda(rot_dat, dat[, 2])  # empirical lambda-function
-BiCopLambda(family = 3, par = -theta)	# theoretical lambda-function
-BiCopLambda(rot_dat, dat[, 2], family = 3, par = -theta)	# both
-par(op)
 
 }
 \author{

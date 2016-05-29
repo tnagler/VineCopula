@@ -133,12 +133,10 @@
 #' Statistics 6 (2), 461-464.
 #'
 #' @examples
-#'
 #' ## Example 1: Gaussian copula with large dependence parameter
 #' par <- 0.7
 #' fam <- 1
 #' dat1 <- BiCopSim(500, fam, par)
-#'
 #' # select the bivariate copula family and estimate the parameter(s)
 #' cop1 <- BiCopSelect(dat1[, 1], dat1[, 2], familyset = 1:10,
 #'                     indeptest = FALSE, level = 0.05)
@@ -146,17 +144,14 @@
 #' summary(cop1)  # comprehensive overview
 #' str(cop1)  # see all contents of the object
 #'
-#'
 #' ## Example 2: Gaussian copula with small dependence parameter
 #' par <- 0.01
 #' fam <- 1
 #' dat2 <- BiCopSim(500, fam, par)
-#'
 #' # select the bivariate copula family and estimate the parameter(s)
 #' cop2 <- BiCopSelect(dat2[, 1], dat2[, 2], familyset = 0:10,
 #'                     indeptest = TRUE, level = 0.05)
 #' summary(cop2)
-#'
 #'
 #' ## Example 3: empirical data
 #' data(daxreturns)
@@ -166,103 +161,59 @@
 BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                         indeptest = FALSE, level = 0.05, weights = NA,
                         rotations = TRUE, se = TRUE) {
-    if (is.na(familyset[1]))
-        familyset <- allfams
-
-    ## sanity checks
-    if ((is.null(u1) == TRUE) || (is.null(u2) == TRUE))
-        stop("u1 and/or u2 are not set or have length zero.")
-    if (length(u1) != length(u2))
-        stop("Lengths of 'u1' and 'u2' do not match.")
-    if (length(u1) < 2)
-        stop("Number of observations has to be at least 2.")
-    if (any(u1 > 1) || any(u1 < 0))
-        stop("Data has to be in the interval [0,1].")
-    if (any(u2 > 1) || any(u2 < 0))
-        stop("Data has to be in the interval [0,1].")
-    if (!all(abs(familyset) %in% allfams))
-        stop("Copula family not implemented.")
     if (!(selectioncrit %in% c("AIC", "BIC", "logLik")))
         stop("Selection criterion not implemented.")
-    if ((level) < 0 & (level > 1))
-        stop("Significance level has to be between 0 and 1.")
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_u,
+                    remove_nas,
+                    check_nobs,
+                    check_if_01,
+                    prep_familyset,
+                    check_est_pars,
+                    check_fam_tau,
+                    todo_fams,
+                    na.txt = " Only complete observations are used.")
+    list2env(args, environment())
 
-    ## adjust familyset
-    # add rotations
-    if (rotations)
-        familyset <- with_rotations(familyset)
-    # negative family selection
-    if (any(familyset < 0)) {
-        if (length(unique(sign(familyset))) != 1)
-            stop("'familyset' must not contain positive AND negative numbers")
-        familyset <- setdiff(allfams, -familyset)
-    }
-
-    # calculate empirical kendall's tau
-    emp_tau <- fasttau(u1, u2, weights)
-
-    ## perform independence test
+    # perform independence test
     p.value.indeptest <- BiCopIndTest(u1, u2)$p.value
-
-    ## sets of families for negative and positive dependence
-    negfams <- c(1, 2, 5, 23, 24, 26:30, 33, 34, 36:40, 124, 134, 224, 234)
-    posfams <- c(1:10, 13, 14, 16:20, 104, 114, 204, 214)
-
-    ## stop if familyset not sufficient
-    if (!is.na(familyset[1]) && !all(familyset == 0) &&
-        !(any(familyset %in% negfams) && any(familyset %in% posfams))) {
-        txt <- paste0("'familyset' has to include at least one bivariate ",
-                      "copula family for positive and one for negative ",
-                      "dependence.")
-        stop(txt)
-    }
 
     if (indeptest & (p.value.indeptest >= level)) {
         ## select independence copula, if not rejected
         obj <- BiCop(0)
     } else {
-        ## find families for which estimation is required
-        ## (only families that allow for the empirical kendall's tau)
-        if (emp_tau < 0) {
-            todo <- negfams
-        } else if (emp_tau < 0) {
-            todo <- posfams
-        } else {
-            todo <- c(negfams, posfams)
-        }
-        todo <- todo[which(todo %in% familyset)]
-
         ## maximum likelihood estimation
         optiout <- list()
-        for (i in seq_along(todo)) {
+        for (i in seq_along(familyset)) {
             optiout[[i]] <- BiCopEst.intern(u1, u2,
-                                            family = todo[i],
+                                            family = familyset[i],
                                             se = se,
                                             weights = weights,
                                             as.BiCop = FALSE)
         }
 
         ## calculate logLik, AIC and BIC
-        lls  <- rep(Inf, length(todo))
-        AICs <- rep(Inf, length(todo))
-        BICs <- rep(Inf, length(todo))
-        for (i in seq_along(todo)) {
+        lls  <- rep(Inf, length(familyset))
+        AICs <- rep(Inf, length(familyset))
+        BICs <- rep(Inf, length(familyset))
+        for (i in seq_along(familyset)) {
             if (any(is.na(weights))) {
                 lls[i] <- sum(log(BiCopPDF(u1,
                                            u2,
-                                           todo[i],
+                                           familyset[i],
                                            optiout[[i]]$par,
                                            optiout[[i]]$par2,
                                            check.pars = FALSE)))
             } else {
                 lls[i] <- sum(log(BiCopPDF(u1,
                                            u2,
-                                           todo[i],
+                                           familyset[i],
                                            optiout[[i]]$par,
                                            optiout[[i]]$par2,
                                            check.pars = FALSE)) %*% weights)
             }
-            npars <- ifelse(todo[i] %in% allfams[onepar], 1, 2)
+            npars <- ifelse(familyset[i] %in% allfams[onepar], 1, 2)
             AICs[i] <- -2 * lls[i] + 2 * npars
             BICs[i] <- -2 * lls[i] + log(length(u1)) * npars
 
@@ -270,10 +221,10 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
 
         ## add independence copula
         if (0 %in% familyset) {
-            optiout[[length(todo) + 1]] <- list(family = 0, par = 0, par2 = 0)
-            lls[length(todo) + 1] <- 0
-            AICs[length(todo) + 1] <- 0
-            BICs[length(todo) + 1] <- 0
+            optiout[[length(familyset) + 1]] <- list(family = 0, par = 0, par2 = 0)
+            lls[length(familyset) + 1] <- 0
+            AICs[length(familyset) + 1] <- 0
+            BICs[length(familyset) + 1] <- 0
         }
 
         ## select the best fitting model
@@ -308,7 +259,7 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         obj$AIC    <- AICs[sel]
         obj$BIC    <- BICs[sel]
     }
-    obj$emptau <- emp_tau
+    obj$emptau <- args$emp_tau
     obj$p.value.indeptest <- p.value.indeptest
 
     ## store the call that created the BiCop object

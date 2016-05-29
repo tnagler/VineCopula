@@ -70,8 +70,9 @@ specification.}
 }
 \value{
 For \code{method = "white"}: \item{p.value}{Asymptotic p-value.}
-\item{statistic}{The observed test statistic.}\cr For \code{method =
-"kendall"} \item{p.value.CvM}{Bootstrapped p-value of the goodness-of-fit
+\item{statistic}{The observed test statistic.}\cr
+For \code{method ="kendall"}
+\item{p.value.CvM}{Bootstrapped p-value of the goodness-of-fit
 test using the Cramer-von Mises statistic (if \code{B > 0}).}
 \item{p.value.KS}{Bootstrapped p-value of the goodness-of-fit test using the
 Kolmogorov-Smirnov statistic (if \code{B > 0}).} \item{statistic.CvM}{The

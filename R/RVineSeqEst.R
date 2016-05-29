@@ -100,59 +100,29 @@
 #' summary(RVineSeqEst(simdata, RVM, method = "itau", se = TRUE))
 #' summary(RVineSeqEst(simdata, RVM, method = "mle", se = TRUE))
 #'
-#' @export RVineSeqEst
 RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
                         max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6), BB8 = c(6, 1)),
                         progress = FALSE, weights = NA, cores = 1) {
-    data <- as.matrix(data)
-    Matrix <- RVM$Matrix
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_data,
+                    check_if_01,
+                    check_est_pars,
+                    check_RVMs,
+                    prep_RVMs)
+    list2env(args, environment())
+    if (any(is.na(data)))
+        warning(" In ", args$call[1], ": ",
+                "Some of the data are NA. ",
+                "Only pairwise complete observations are used.",
+                call. = FALSE)
+
     d <- n <- ncol(data)
     N <- nrow(data)
-
-    ## sanity checks
-    if (!is(RVM, "RVineMatrix"))
-        stop("'RVM' has to be an RVineMatrix object.")
-    if (nrow(Matrix) != ncol(Matrix))
-        stop("Structure matrix has to be quadratic.")
-    if (max(Matrix) > nrow(Matrix))
-        stop("Error in the structure matrix.")
-    if (N < 2)
-        stop("Number of observations has to be at least 2.")
-    if (d < 2)
-        stop("Dimension has to be at least 2.")
-    if (any(data > 1) || any(data < 0))
-        stop("Data has be in the interval [0,1].")
-    if (method != "mle" && method != "itau")
-        stop("Estimation method has to be either 'mle' or 'itau'.")
-    if (is.logical(se) == FALSE)
-        stop("'se' has to be a logical variable (TRUE or FALSE).")
-    if (max.df <= 1)
-        stop("The upper bound for the degrees of freedom parameter has to be larger than 1.")
-    if (!is.list(max.BB))
-        stop("'max.BB' has to be a list.")
-    if (max.BB$BB1[1] < 0.001)
-        stop("The upper bound for the first parameter of the BB1 copula should be greater than 0.001 (lower bound for estimation).")
-    if (max.BB$BB1[2] < 1.001)
-        stop("The upper bound for the second parameter of the BB1 copula should be greater than 1.001 (lower bound for estimation).")
-    if (max.BB$BB6[1] < 1.001)
-        stop("The upper bound for the first parameter of the BB6 copula should be greater than 1.001 (lower bound for estimation).")
-    if (max.BB$BB6[2] < 1.001)
-        stop("The upper bound for the second parameter of the BB6 copula should be greater than 1.001 (lower bound for estimation).")
-    if (max.BB$BB7[1] < 1.001)
-        stop("The upper bound for the first parameter of the BB7 copula should be greater than 1.001 (lower bound for estimation).")
-    if (max.BB$BB7[2] < 0.001)
-        stop("The upper bound for the second parameter of the BB7 copula should be greater than 0.001 (lower bound for estimation).")
-    if (max.BB$BB8[1] < 1.001)
-        stop("The upper bound for the first parameter of the BB1 copula should be greater than 0.001 (lower bound for estimation).")
-    if (max.BB$BB8[2] < 0.001 || max.BB$BB8[2] > 1)
-        stop("The upper bound for the second parameter of the BB1 copula should be in the interval [0,1].")
-
-    ## set variable names and trunclevel if not provided
-    if (is.null(colnames(data)))
-        colnames(data) <- paste("V", 1:d, sep = "")
     varnames <- colnames(data)
 
     ## reorder matrix to natural order
+    Matrix <- RVM$Matrix
     Matrix <- ToLowerTri(Matrix)
     M <- Matrix
     Mold <- M
@@ -189,6 +159,7 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
     }
 
     ## loop over all trees and pair-copulas
+    warn <- NULL
     for (k in d:2) {
         doEst <- function(i) {
             if (k > i) {
@@ -217,31 +188,51 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
                     }
                 }
 
-                ## select pair-copula
-                cfit <- BiCopEst(zr2,
-                                 zr1,
-                                 RVM$family[k, i],
-                                 method,
-                                 se,
-                                 max.df,
-                                 max.BB,
-                                 weights)
+                na.ind <- which(is.na(zr1 + zr2))
+                if (length(na.ind) >= length(zr1) - 10) {
+                    cfit <- BiCop(0)
+                    ## add more information about the fit
+                    cfit$se  <- NA
+                    cfit$se2 <- NA
+                    cfit$nobs   <- 0
+                    cfit$logLik <- 0
+                    cfit$AIC    <- 0
+                    cfit$BIC    <- 0
+                    cfit$emptau <- NA
+                    cfit$p.value.indeptest <- NA
+                    warn <- paste("Insufficient data for at least one pair;",
+                                  "family has been set to 0.")
+                } else {
+                    ## select pair-copula
+                    cfit <- suppressWarnings(BiCopEst(zr2,
+                                                      zr1,
+                                                      RVM$family[k, i],
+                                                      method,
+                                                      se,
+                                                      max.df,
+                                                      max.BB,
+                                                      weights))
+                    warn <- NULL
+                }
 
                 ## transform data to pseudo-oberstavions in next tree
                 direct <- indirect <- NULL
                 if (CondDistr$direct[k - 1, i])
-                    direct <- BiCopHfunc1(zr2,
-                                          zr1,
-                                          cfit,
-                                          check.pars = FALSE)
+                    direct <- suppressWarnings(BiCopHfunc1(zr2,
+                                                           zr1,
+                                                           cfit,
+                                                           check.pars = FALSE))
                 if (CondDistr$indirect[k - 1, i])
-                    indirect <- BiCopHfunc2(zr2,
-                                            zr1,
-                                            cfit,
-                                            check.pars = FALSE)
+                    indirect <- suppressWarnings(BiCopHfunc2(zr2,
+                                                             zr1,
+                                                             cfit,
+                                                             check.pars = FALSE))
 
                 ## return results
-                list(direct = direct, indirect = indirect, cfit = cfit)
+                list(direct = direct,
+                     indirect = indirect,
+                     cfit = cfit,
+                     warn = warn)
             } else {
                 list(cfit = BiCop(0, 0))
             }
@@ -262,6 +253,9 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
             Params[k, i]  <- res.k[[i]]$cfit$par
             Params2[k, i] <- res.k[[i]]$cfit$par2
             emptaus[k, i] <- res.k[[i]]$cfit$emptau
+            if (!is.null(res.k[[i]]$warn))
+                warn <- res.k[[i]]$warn
+
             if (se == TRUE) {
                 # se1 <- par.out$se
                 Se[k, i] <- res.k[[i]]$cfit$se
@@ -273,6 +267,8 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
                 V$indirect[i, ] <- res.k[[i]]$indirect
         } # end i = 1:(d-1)
     } # end k = d:2
+    if (!is.null(warn))
+        warning(" In ", args$call[1], ": ", warn, call. = FALSE)
 
     ## store results in RVineMatrix object
     .RVM <- RVineMatrix(Mold,
@@ -286,7 +282,7 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
     }
     .RVM$nobs <- N
     revo <- sapply(1:d, function(i) which(o[length(o):1] == i))
-    like <- RVineLogLik(data[, revo], .RVM)
+    like <- suppressWarnings(RVineLogLik(data[, revo], .RVM))
     .RVM$logLik <- like$loglik
     .RVM$pair.logLik <- like$V$value
     npar <- sum(.RVM$family %in% allfams[onepar], na.rm = TRUE) +

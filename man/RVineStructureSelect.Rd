@@ -98,6 +98,10 @@ Some commonly used edge weights are implemented:
 \code{"BIC"} \tab Bayesian information criterion (multiplied by -1). \cr
 \code{"cAIC"}\tab corrected Akaike information criterion (multiplied by -1). \cr
 }
+If the data contain NAs, the edge weights in \code{"tau"} and \code{"rho"} are
+multiplied by the square root of the proportion of complete observations. This
+penalizes pairs where less observations are used. \cr
+
 The criteria \code{"AIC"}, \code{"BIC"}, and \code{"cAIC"} require estimation and
 model selection for all possible pairs. This is computationally expensive and
 much slower than \code{"tau"} or \code{"rho"}.
@@ -131,7 +135,8 @@ data(daxreturns)
 # select the R-vine structure, families and parameters
 # using only the first 4 variables and the first 750 observations
 # we allow for the copula families: Gauss, t, Clayton, Gumbel, Frank and Joe
-RVM <- RVineStructureSelect(daxreturns[1:750,1:4], c(1:6), progress = TRUE)
+daxreturns <- daxreturns[1:750,1:4]
+RVM <- RVineStructureSelect(daxreturns, c(1:6), progress = TRUE)
 
 ## see the object's content or a summary
 str(RVM)

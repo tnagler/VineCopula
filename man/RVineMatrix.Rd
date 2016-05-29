@@ -149,9 +149,7 @@ str(RVM)
 summary(RVM)
 
 ## inspect the model using plots
-\dontrun{
-plot(RVM)  # tree structure
-}
+\donttest{plot(RVM)  # tree structure}
 contour(RVM)  # contour plots of all pair-copulas
 
 ## simulate from the vine copula model

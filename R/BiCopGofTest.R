@@ -142,48 +142,27 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
     if (method == "Kendall")
         method <- "kendall"
 
-    ## sanity checks for u1, u2
-    if (is.null(u1) == TRUE || is.null(u2) == TRUE)
-        stop("u1 and/or u2 are not set or have length zero.")
-    if (length(u1) != length(u2))
-        stop("Lengths of 'u1' and 'u2' do not match.")
-    if (any(u1 > 1) || any(u1 < 0))
-        stop("Data has be in the interval [0,1].")
-    if (any(u2 > 1) || any(u2 < 0))
-        stop("Data has be in the interval [0,1].")
-
-    ## extract family and parameters if BiCop object is provided
-    if (missing(family))
-        family <- NA
-    # for short hand usage extract obj from family
-    if (class(family) == "BiCop")
-        obj <- family
-    if (!is.null(obj)) {
-        stopifnot(class(obj) == "BiCop")
-        family <- obj$family
-        par <- obj$par
-        par2 <- obj$par2
-    }
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_u,
+                    remove_nas,
+                    check_nobs,
+                    check_if_01,
+                    extract_from_BiCop,
+                    na.txt = " Only complete observations are used.")
+    list2env(args, environment())
 
     ## sanity checks for family and parameters
-    if (is.na(family))
-        stop("Provide either 'family' and 'par' or 'obj'")
-    if (!(family %in% c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 16, 17, 18, 19,
-                        20, 23, 24, 26, 27, 28, 29, 30, 33, 34, 36, 37, 38, 39, 40, 43, 44)))
+    if (!(family %in% allfams[-tawns]))
         stop("Copula family not implemented.")
-    #if (c(2, 7, 8, 9, 10, 17, 18, 19, 20, 27, 28, 29, 30, 37, 38, 39, 40) %in% family && par2 == 0)
-    #    stop("For t-, BB1, BB6, BB7 and BB8 copulas, 'par2' must be set.")
-    if (c(1, 3, 4, 5, 6, 13, 14, 16, 23, 24, 26, 33, 34, 36) %in% family && length(par) < 1)
-        stop("'par' not set.")
     if (par != 0)
         BiCopCheck(family, par, par2)
     if (family == 2 && method == "kendall")
-        stop("The goodness-of-fit test based on Kendall's process is not implemented for the t-copula.")
+        stop("The goodness-of-fit test based on Kendall's process is not ", "
+             implemented for the t-copula.")
     if (family %in% c(7, 8, 9, 10, 17, 18, 19, 20, 27, 28, 29, 30, 37, 38, 39, 40) &&
             method == "white")
-        stop("The goodness-of-fit test based on White's information matrix equality is not implemented for the BB copulas.")
-    # if((level < 0 || level > 1) && method=='kendall') stop('Significance level has
-    # to be between 0 and 1.')
+        stop("The goodness-of-fit test based on White's information matrix ",
+             "equality is not implemented for the BB copulas.")
 
     T <- length(u1)
 
@@ -692,20 +671,20 @@ obs.stat <- function(u, v, fam) {
 ############################
 
 
-#' boot.IR
-#'
-#' bootstrap for IR
-#'
-#' @param family copula family
-#' @param theta first copula parameter
-#' @param nu second copula parameter
-#' @param B number of bootstraps
-#' @param n Number of observations
-#'
-#' @return IR vector of test statistics
-#'
-#' @author Ulf Schepsmeier
-#'
+# boot.IR
+#
+# bootstrap for IR
+#
+# @param family copula family
+# @param theta first copula parameter
+# @param nu second copula parameter
+# @param B number of bootstraps
+# @param n Number of observations
+#
+# @return IR vector of test statistics
+#
+# @author Ulf Schepsmeier
+#
 
 boot.IR <- function(family, theta, nu, B, n) {
     # theta und nu sind die geschaetzten Parameter
@@ -769,19 +748,19 @@ boot.IR <- function(family, theta, nu, B, n) {
 
 ## sub-functions
 
-#' hesseTcopula
-#'
-#' This small function calculates the Hessian matrix for the t-copula
-#'
-#' @param u1 first copula argument
-#' @param u2 second copula argument
-#' @param theta first copula parameter
-#' @param nu second copula parameter
-#'
-#' @return H Hesse matrix for the t-copula
-#'
-#' @author Ulf Schepsmeier
-#'
+# hesseTcopula
+#
+# This small function calculates the Hessian matrix for the t-copula
+#
+# @param u1 first copula argument
+# @param u2 second copula argument
+# @param theta first copula parameter
+# @param nu second copula parameter
+#
+# @return H Hesse matrix for the t-copula
+#
+# @author Ulf Schepsmeier
+#
 
 hesseTcopula <- function(u1, u2, theta, nu){
     rho_teil <- f_rho(u1, u2, theta, nu)
@@ -792,20 +771,20 @@ hesseTcopula <- function(u1, u2, theta, nu){
 
 
 
-#' OPGtcopula
-#'
-#' This small function calculates the outer product of gradient for the t-copula
-#'
-#' @param u1 first copula argument
-#' @param u2 second copula argument
-#' @param family copula family (here Student's t copula = 2)
-#' @param theta first copula parameter
-#' @param nu second copula parameter
-#'
-#' @return C outer product of gradient
-#'
-#' @author Ulf Schepsmeier
-#'
+# OPGtcopula
+#
+# This small function calculates the outer product of gradient for the t-copula
+#
+# @param u1 first copula argument
+# @param u2 second copula argument
+# @param family copula family (here Student's t copula = 2)
+# @param theta first copula parameter
+# @param nu second copula parameter
+#
+# @return C outer product of gradient
+#
+# @author Ulf Schepsmeier
+#
 
 OPGtcopula <- function(u1, u2, family, theta, nu){
     # gradient
@@ -829,19 +808,19 @@ OPGtcopula <- function(u1, u2, family, theta, nu){
 }
 
 
-#' gradDtcopula
-#'
-#' derivative of D (i.e. gradD) for the t-copula
-#'
-#' @param u1 first copula argument
-#' @param u2 second copula argument
-#' @param theta first copula parameter
-#' @param nu second copula parameter
-#'
-#' @return gradD gradient of D
-#'
-#' @author Ulf Schepsmeier
-#'
+# gradDtcopula
+#
+# derivative of D (i.e. gradD) for the t-copula
+#
+# @param u1 first copula argument
+# @param u2 second copula argument
+# @param theta first copula parameter
+# @param nu second copula parameter
+#
+# @return gradD gradient of D
+#
+# @author Ulf Schepsmeier
+#
 
 gradDtcopula <- function(u1, u2, theta, nu){
     eps <- 0.001
@@ -878,21 +857,21 @@ gradDtcopula <- function(u1, u2, theta, nu){
 
 
 
-#' bootWhite
-#'
-#' This small function provides the code to calculated bootstrapped p-values
-#' for the White test.
-#'
-#' @param family copula family
-#' @param theta first copula parameter
-#' @param nu second copula parameter
-#' @param B number of bootstraps
-#' @param N number of observations
-#'
-#' @return testStat
-#'
-#' @author Ulf Schepsmeier
-#'
+# bootWhite
+#
+# This small function provides the code to calculated bootstrapped p-values
+# for the White test.
+#
+# @param family copula family
+# @param theta first copula parameter
+# @param nu second copula parameter
+# @param B number of bootstraps
+# @param N number of observations
+#
+# @return testStat
+#
+# @author Ulf Schepsmeier
+#
 
 bootWhite <- function(family, theta, nu, B, N){
     testStat <- rep(0, B)

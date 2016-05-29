@@ -106,31 +106,21 @@
 #' out2$hessian
 #'
 RVineHessian <- function(data, RVM) {
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_data,
+                    remove_nas,
+                    check_if_01,
+                    check_RVMs,
+                    prep_RVMs,
+                    na.txt = " Only complete observations are used.")
+    list2env(args, environment())
 
     if (any(!(RVM$family %in% c(0, 1:6, 13, 14, 16, 23, 24, 26, 33, 34, 36))))
         stop("Copula family not implemented.")
 
-    if (is.vector(data)) {
-        data <- t(as.matrix(data))
-    } else {
-        data <- as.matrix(data)
-    }
-    if (any(data > 1) || any(data < 0))
-        stop("Data has be in the interval [0,1].")
-    if (is.null(dim(data))) {
-        d <- length(data)
-        T <- 1
-    } else {
-        d <- dim(data)[2]
-        T <- dim(data)[1]
-    }
-    n <- d
+    n <- d <- args$d
     N <- T
-    if (n != dim(RVM))
-        stop("Dimensions of 'data' and 'RVM' do not match.")
-    if (!is(RVM, "RVineMatrix"))
-        stop("'RVM' has to be an RVineMatrix object.")
-
 
     o <- diag(RVM$Matrix)
     if (any(o != length(o):1)) {

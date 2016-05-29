@@ -26,42 +26,31 @@
 #' to know about copula modeling but were afraid to ask. Journal of Hydrologic
 #' Engineering, 12 (4), 347-368.
 #' @examples
-#'
+#' \dontshow{set.seed(123)}
 #' ## Example 1: Gaussian copula with large dependence parameter
-#' par <- 0.7
-#' fam <- 1
-#' cop <- BiCop(fam, par)
-#' set.seed(123)
+#' cop <- BiCop(1, 0.7)
 #' dat <- BiCopSim(500, cop)
 #'
 #' # perform the asymptotic independence test
-#' BiCopIndTest(dat[,1], dat[,2])
-#'
+#' BiCopIndTest(dat[, 1], dat[, 2])
 #'
 #' ## Example 2: Gaussian copula with small dependence parameter
-#' par <- 0.01
-#' fam <- 1
-#' cop <- BiCop(fam, par)
-#' set.seed(123)
+#' cop <- BiCop(1, 0.01)
 #' dat <- BiCopSim(500, cop)
 #'
 #' # perform the asymptotic independence test
-#' BiCopIndTest(dat[,1], dat[,2])
+#' BiCopIndTest(dat[, 1], dat[, 2])
 #'
 #' @export BiCopIndTest
 BiCopIndTest <- function(u1, u2) {
-    if (is.null(u1) == TRUE || is.null(u2) == TRUE)
-        stop("u1 and/or u2 are not set or have length zero.")
-    if (length(u1) != length(u2))
-        stop("Lengths of 'u1' and 'u2' do not match.")
-    if (length(u1) < 2)
-        stop("Number of observations has to be at least 2.")
-    if (any(u1 > 1) || any(u1 < 0))
-        stop("Data has be in the interval [0,1].")
-    if (any(u2 > 1) || any(u2 < 0))
-        stop("Data has be in the interval [0,1].")
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_u,
+                    remove_nas,
+                    check_if_01,
+                    na.txt = " Only complete observations are used.")
+    list2env(args, environment())
 
-    # tau = cor(u1,u2,method='kendall')
     tau <- fasttau(u1, u2)
 
     N <- length(u1)

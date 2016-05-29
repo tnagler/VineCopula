@@ -52,7 +52,6 @@ This function transforms a D-vine structure from the package CDVine to the
 corresponding R-vine structure.
 }
 \examples{
-
 # set up D-vine copula model with mixed pair-copulas
 d <- 4
 dd <- d*(d-1)/2
@@ -63,8 +62,7 @@ par2 <- c(0, 5, 0, 0, 2, 0)
 
 # transform to R-vine matrix notation
 RVM <- D2RVine(order, family, par, par2)
-
-\dontrun{
+\donttest{
 # load package CDVine for comparison
 library(CDVine)
 
@@ -80,7 +78,6 @@ out$loglik
 out2 <- RVineLogLik(simdata, RVM)
 out2$loglik
 }
-
 }
 \author{
 Ulf Schepsmeier

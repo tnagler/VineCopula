@@ -149,6 +149,7 @@
 #' WARNING: If \code{B} is chosen too large, computations will take very long.
 #' @param alpha an integer of the set \code{2,4,6,...} for the \code{"Berg2"}
 #' goodness-of-fit test (default \code{alpha = 2})
+#'
 #' @return For \code{method = "White"}:
 #' \item{White}{test statistic}
 #' \item{p.value}{p-value, either asymptotic for \code{B = 0} or bootstrapped
@@ -177,8 +178,11 @@
 #' Warning: The code for all the p-values are not yet approved since some of them are
 #' moved from R-code to C-code. If you need p-values the best way is to write your own
 #' algorithm as suggested in Schepsmeier (2013) to get bootstrapped p-values.
+#'
 #' @author Ulf Schepsmeier
+#'
 #' @seealso \code{\link{BiCopGofTest}}, \code{\link{RVinePIT}}
+#'
 #' @references Berg, D. and H. Bakken (2007) A copula goodness-of-fit apprach
 #' based on the conditional probability integral transformation.
 #' \url{http://www.danielberg.no/publications/Btest.pdf}
@@ -201,10 +205,9 @@
 #'
 #' White, H. (1982) Maximum likelihood estimation of misspecified models,
 #' Econometrica, 50, 1-26.
-#' @examples
 #'
-#' \dontrun{
-#' # time-consuming example
+#' @examples
+#' \donttest{## time-consuming example
 #'
 #' # load data set
 #' data(daxreturns)
@@ -221,27 +224,20 @@
 #'              statistic = "CvM", B = 200)
 #' }
 #'
-#' @export RVineGofTest
 RVineGofTest <- function(data, RVM, method = "White", statistic = "CvM", B = 200, alpha = 2) {
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_data,
+                    remove_nas,
+                    check_if_01,
+                    check_nobs,
+                    check_RVMs,
+                    prep_RVMs,
+                    na.txt = " Only complete observations are used.")
+    list2env(args, environment())
+
     if (any(!(RVM$family %in% c(0, 1:6, 13, 14, 16, 23, 24, 26, 33, 34, 36))))
         stop("Copula family not implemented.")
-
-    if (is.vector(data)) {
-        data <- t(as.matrix(data))
-    } else {
-        data <- as.matrix(data)
-    }
-
-    if (any(data > 1) || any(data < 0))
-        stop("Data has be in the interval [0,1].")
-    T <- dim(data)[1]
-    d <- dim(data)[2]
-
-    if (d != dim(RVM))
-        stop("Dimensions of 'data' and 'RVM' do not match.")
-    if (is(RVM)[1] != "RVineMatrix")
-        stop("'RVM' has to be an RVineMatrix object.")
-
     if (statistic == "Cramer-von Mises") {
         statistic <- "CvM"
     } else if (statistic == "Kolmogorov-Smirnov") {
@@ -249,6 +245,8 @@ RVineGofTest <- function(data, RVM, method = "White", statistic = "CvM", B = 200
     } else if (statistic == "Anderson-Darling") {
         statistic <- "AD"
     }
+    T <- dim(data)[1]
+    d <- dim(data)[2]
 
     if (method == "White") {
         out <- gof_White(data, RVM, B)

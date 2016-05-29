@@ -33,32 +33,25 @@
 #' \eqn{2\frac{\tau}{1+\tau}}{2\tau/(1+\tau)} \cr \code{24, 34} \tab
 #' \eqn{-\frac{1}{1+\tau}}{-1/(1+\tau)} \cr \code{26, 36} \tab no closed form
 #' expression (numerical inversion) }
+#'
 #' @author Jakob Stoeber, Eike Brechmann, Tobias Erhardt
+#'
 #' @seealso \code{\link{BiCopPar2Tau}}
+#'
 #' @references Joe, H. (1997). Multivariate Models and Dependence Concepts.
 #' Chapman and Hall, London.
 #'
 #' Czado, C., U. Schepsmeier, and A. Min (2012). Maximum likelihood estimation
 #' of mixed C-vines with application to exchange rates. Statistical Modelling,
 #' 12(3), 229-255.
-#' @examples
 #'
+#' @examples
 #' ## Example 1: Gaussian copula
 #' tau0 <- 0.5
 #' rho <- BiCopTau2Par(family = 1, tau = tau0)
+#' BiCop(1, tau = tau0)$par  # alternative
 #'
-#' # transform back
-#' tau <- BiCopPar2Tau(family = 1, par = rho)
-#' tau - 2/pi*asin(rho)
-#'
-#'
-#' ## Example 2: Student-t copula
-#' rho <- BiCopTau2Par(family = 2, tau = c(0.4, 0.5, 0.6))
-#' obj <- BiCop(family = 2, par = rho, par2 = 6:8)
-#' BiCopPar2Tau(obj)
-#'
-#'
-#' ## Example 3:
+#' ## Example 2:
 #' vtau <- seq(from = 0.1, to = 0.8, length.out = 100)
 #' thetaC <- BiCopTau2Par(family = 3, tau = vtau)
 #' thetaG <- BiCopTau2Par(family = 4, tau = vtau)
@@ -69,8 +62,7 @@
 #' lines(thetaF ~ vtau, col = 3)
 #' lines(thetaJ ~ vtau, col = 4)
 #'
-#'
-#' ## Example 4: different copula families
+#' ## Example 3: different copula families
 #' theta <- BiCopTau2Par(family = c(3,4,6), tau = c(0.4, 0.5, 0.6))
 #' BiCopPar2Tau(family = c(3,4,6), par = theta)
 #'
@@ -107,7 +99,6 @@ BiCopTau2Par <- function(family, tau, check.taus = TRUE) {
     ## sanity check
     if (any(family %in% setdiff(allfams[twopar], 2)))
         stop("For two parameter copulas (except t) Kendall's tau cannot be inverted.")
-
     if (any(abs(tau) > 0.99999))
         stop("some tau is too close to -1 or 1")
 
@@ -124,17 +115,10 @@ BiCopTau2Par <- function(family, tau, check.taus = TRUE) {
     if (check.taus)
         BiCopCheckTaus(family, tau)
 
-
     ## calculate the parameter
-    if (length(tau) == 1) {
-        # call for single parameters
-        out <- calcPar(family, tau)
-    } else {
-        # vectorized call
-        out <- vapply(1:length(tau),
-                      function(i) calcPar(family[i], tau[i]),
-                      numeric(1))
-    }
+    out <- vapply(1:length(tau),
+                  function(i) calcPar(family[i], tau[i]),
+                  numeric(1))
 
     ## return result
     out

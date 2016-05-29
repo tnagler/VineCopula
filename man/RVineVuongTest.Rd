@@ -32,17 +32,15 @@ standardized sum, \eqn{\nu}, of the log differences of their pointwise
 likelihoods
 \eqn{m_i:=\log\left[\frac{c_1(\boldsymbol{u}_i|\hat{\boldsymbol{\theta}}_1)}{c_2(\boldsymbol{u}_i|\hat{\boldsymbol{\theta}}_2)}\right]}{m_i:=log[c_1(u_i|\theta_1)
 / c_2(u_i|\theta_2) ]} for observations \eqn{\boldsymbol{u}_i\in[0,1],\
-i=1,...,N}{u_i in [0,1],i=1,...,N} , i.e., \deqn{ }{ statistic := \nu =
-(1/n\sum_{i=1}^N m_i) / ((\sum_{i=1}^N (m_i - \bar{m} )^2)^0.5).
-}\deqn{\texttt{statistic} := \nu = \frac{\frac{1}{n}\sum_{i=1}^N
+i=1,...,N}{u_i in [0,1],i=1,...,N} , i.e.,
+\deqn{\texttt{statistic} := \nu = \frac{\frac{1}{n}\sum_{i=1}^N
 m_i}{\sqrt{\sum_{i=1}^N\left(m_i - \bar{m} \right)^2}}. }{ statistic := \nu
 = (1/n\sum_{i=1}^N m_i) / ((\sum_{i=1}^N (m_i - \bar{m} )^2)^0.5). } Vuong
 (1989) shows that \eqn{\nu} is asymptotically standard normal. According to
-the null-hypothesis \deqn{ }{ H_0: E[m_i] = 0 forall i=1,...,N, }\deqn{H_0:
+the null-hypothesis \deqn{H_0:
 E[m_i] = 0\ \forall i=1,...,N, }{ H_0: E[m_i] = 0 forall i=1,...,N, } we
-hence prefer vine model 1 to vine model 2 at level \eqn{\alpha} if \deqn{ }{
-\nu > \Phi^{-1}(1-\alpha/2),
-}\deqn{\nu>\Phi^{-1}\left(1-\frac{\alpha}{2}\right), }{ \nu >
+hence prefer vine model 1 to vine model 2 at level \eqn{\alpha} if
+\deqn{\nu>\Phi^{-1}\left(1-\frac{\alpha}{2}\right), }{ \nu >
 \Phi^{-1}(1-\alpha/2), } where \eqn{\Phi^{-1}} denotes the inverse of the
 standard normal distribution function. If
 \eqn{\nu<-\Phi^{-1}\left(1-\frac{\alpha}{2}\right)}{\nu<-\Phi^{-1}(1-\alpha/2)}
@@ -56,8 +54,7 @@ Akaike and the Schwarz corrections, which correspond to the penalty terms in
 the AIC and the BIC, respectively.
 }
 \examples{
-
-\dontrun{
+\donttest{
 # vine structure selection time-consuming (~ 20 sec)
 
 # load data set
