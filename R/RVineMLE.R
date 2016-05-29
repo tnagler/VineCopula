@@ -126,119 +126,42 @@
 RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200, max.df = 30,
                      max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6),  BB8 = c(6, 1)),
                      grad = FALSE, hessian = FALSE, se = FALSE, ...) {
+    ## preprocessing of arguments
+    args <- preproc(c(as.list(environment()), call = match.call()),
+                    check_data,
+                    remove_nas,
+                    check_nobs,
+                    check_if_01,
+                    check_est_pars,
+                    check_RVMs,
+                    prep_RVMs,
+                    na.txt = " Only complete observations are used.")
+    list2env(args, environment())
 
     ## sanity checks
-    if (is(RVM)[1] != "RVineMatrix")
-        stop("'RVM' has to be an RVineMatrix object.")
     if (maxit <= 0)
         stop("'maxit' has to be greater than zero.")
-    if (max.df <= 2)
-        stop("The upper bound for the degrees of freedom parameter has to be larger than 2.")
-    if (!is.list(max.BB))
-        stop("'max.BB' has to be a list.")
-    if (max.BB$BB1[1] < 0.001)
-        stop("The upper bound for the first parameter of the BB1 copula should be greater than 0.001 (lower bound for estimation).")
-    if (max.BB$BB1[2] < 1.001)
-        stop("The upper bound for the second parameter of the BB1 copula should be greater than 1.001 (lower bound for estimation).")
-    if (max.BB$BB6[1] < 1.001)
-        stop("The upper bound for the first parameter of the BB6 copula should be greater than 1.001 (lower bound for estimation).")
-    if (max.BB$BB6[2] < 1.001)
-        stop("The upper bound for the second parameter of the BB6 copula should be greater than 1.001 (lower bound for estimation).")
-    if (max.BB$BB7[1] < 1.001)
-        stop("The upper bound for the first parameter of the BB7 copula should be greater than 1.001 (lower bound for estimation).")
-    if (max.BB$BB7[2] < 0.001)
-        stop("The upper bound for the second parameter of the BB7 copula should be greater than 0.001 (lower bound for estimation).")
-    if (max.BB$BB8[1] < 1.001)
-        stop("The upper bound for the first parameter of the BB1 copula should be greater than 0.001 (lower bound for estimation).")
-    if (max.BB$BB8[2] < 0.001 || max.BB$BB8[2] > 1)
-        stop("The upper bound for the second parameter of the BB1 copula should be in the interval [0,1].")
 
     ## sanity checks for start parameters
     Matrix <- RVM$Matrix
+    sel <- lower.tri(Matrix)
     if (!all(start %in% c(0, NA))) {
-        for (i in 2:dim(Matrix)[1]) {
-            for (j in 1:(i - 1)) {
-                if ((RVM$family[i, j] == 1 || RVM$family[i, j] == 2) && abs(start[i, j]) >= 1)
-                    stop("The parameter of the Gaussian and t-copula has to be in the interval (-1,1).")
-                if (RVM$family[i, j] == 2 && start2[i, j] <= 1)
-                    stop("The degrees of freedom parameter of the t-copula has to be larger than 1.")
-                if ((RVM$family[i, j] == 3 || RVM$family[i, j] == 13) && start[i, j] <= 0)
-                    stop("The parameter of the Clayton copula has to be positive.")
-                if ((RVM$family[i, j] == 4 || RVM$family[i, j] == 14) && start[i, j] < 1)
-                    stop("The parameter of the Gumbel copula has to be in the interval [1,oo).")
-                if ((RVM$family[i, j] == 6 || RVM$family[i, j] == 16) && start[i, j] <= 1)
-                    stop("The parameter of the Joe copula has to be in the interval (1,oo).")
-                if (RVM$family[i, j] == 5 && start[i, j] == 0)
-                    stop("The parameter of the Frank copula has to be unequal to 0.")
-                if ((RVM$family[i, j] == 7 || RVM$family[i, j] == 17) && start[i, j] <= 0)
-                    stop("The first parameter of the BB1 copula has to be positive.")
-                if ((RVM$family[i, j] == 7 || RVM$family[i, j] == 17) && start2[i, j] < 1)
-                    stop("The second parameter of the BB1 copula has to be in the interval [1,oo).")
-                if ((RVM$family[i, j] == 8 || RVM$family[i, j] == 18) && start[i, j] <= 0)
-                    stop("The first parameter of the BB6 copula has to be in the interval [1,oo).")
-                if ((RVM$family[i, j] == 8 || RVM$family[i, j] == 18) && start2[i, j] < 1)
-                    stop("The second parameter of the BB6 copula has to be in the interval [1,oo).")
-                if ((RVM$family[i, j] == 9 || RVM$family[i, j] == 19) && start[i, j] < 1)
-                    stop("The first parameter of the BB7 copula has to be in the interval [1,oo).")
-                if ((RVM$family[i, j] == 9 || RVM$family[i, j] == 19) && start2[i, j] <= 0)
-                    stop("The second parameter of the BB7 copula has to be positive.")
-                if ((RVM$family[i, j] == 10 || RVM$family[i, j] == 20) && start[i, j] < 1)
-                    stop("The first parameter of the BB8 copula has to be in the interval [1,oo).")
-                if ((RVM$family[i, j] == 10 || RVM$family[i, j] == 20) && (start2[i, j] <= 0 || start2[i, j] > 1))
-                    stop("The second parameter of the BB8 copula has to be in the interval (0,1].")
-                if ((RVM$family[i, j] == 23 || RVM$family[i, j] == 33) && start[i, j] >= 0)
-                    stop("The parameter of the rotated Clayton copula has to be negative.")
-                if ((RVM$family[i, j] == 24 || RVM$family[i, j] == 34) && start[i, j] > -1)
-                    stop("The parameter of the rotated Gumbel copula has to be in the interval (-oo,-1].")
-                if ((RVM$family[i, j] == 26 || RVM$family[i, j] == 36) && start[i, j] >= -1)
-                    stop("The parameter of the rotated Joe copula has to be in the interval (-oo,-1).")
-                if ((RVM$family[i, j] == 27 || RVM$family[i, j] == 37) && start[i, j] >= 0)
-                    stop("The first parameter of the rotated BB1 copula has to be negative.")
-                if ((RVM$family[i, j] == 27 || RVM$family[i, j] == 37) && start2[i, j] > -1)
-                    stop("The second parameter of the rotated BB1 copula has to be in the interval (-oo,-1].")
-                if ((RVM$family[i, j] == 28 || RVM$family[i, j] == 38) && start[i, j] >= 0)
-                    stop("The first parameter of the rotated BB6 copula has to be in the interval (-oo,-1].")
-                if ((RVM$family[i, j] == 28 || RVM$family[i, j] == 38) && start2[i, j] > -1)
-                    stop("The second parameter of the rotated BB6 copula has to be in the interval (-oo,-1].")
-                if ((RVM$family[i, j] == 29 || RVM$family[i, j] == 39) && start[i, j] > -1)
-                    stop("The first parameter of the rotated BB7 copula has to be in the interval (-oo,-1].")
-                if ((RVM$family[i, j] == 29 || RVM$family[i, j] == 39) && start2[i, j] >= 0)
-                    stop("The second parameter of the rotated BB7 copula has to be negative.")
-                if ((RVM$family[i, j] == 30 || RVM$family[i, j] == 40) && start[i, j] > -1)
-                    stop("The first parameter of the rotated BB8 copula has to be in the interval (-oo,-1].")
-                if ((RVM$family[i, j] == 30 || RVM$family[i, j] == 40) && (start2[i, j] >= 0 || start2[i, j] < (-1)))
-                    stop("The second parameter of the rotated BB8 copula has to be in the interval [-1,0).")
-                if ((RVM$family[i, j] == 104 || RVM$family[i, j] == 114 || RVM$family[i, j] == 204 || RVM$family[i, j] == 214) && start[i, j] < 1)
-                    stop("Please choose 'par' of the Tawn copula in [1,oo).")
-                if ((RVM$family[i, j] == 104 || RVM$family[i, j] == 114 || RVM$family[i, j] == 204 || RVM$family[i, j] == 214) && (start2[i, j] < 0 ||  start2[i, j] > 1))
-                    stop("Please choose 'par2' of the Tawn copula in [0,1].")
-                if ((RVM$family[i, j] == 124 || RVM$family[i, j] == 134 || RVM$family[i, j] == 224 || RVM$family[i, j] == 234) && start[i, j] > -1)
-                    stop("Please choose 'par' of the Tawn copula in (-oo,-1].")
-                if ((RVM$family[i, j] == 124 || RVM$family[i, j] == 134 || RVM$family[i, j] == 224 || RVM$family[i, j] == 234) && (start2[i, j] < 0 ||  start2[i, j] > 1))
-                    stop("Please choose 'par2' of the Tawn copula in [0,1].")
+        BiCopCheck(RVM$family[sel], start[sel], start2[sel])
 
-                if (grad == TRUE) {
-                    if (RVM$family[i, j] %in% c(7:10, 17:20, 27:30, 37:40, 104, 114, 124, 134, 204, 214, 224, 234)) {
-                        message("The combination 'grad=TRUE' and a copula family of the vector (7:10,17:20,27:30,37:40,104,114,124,134,204,214,224,234) is not possible. The algorithm will continue with 'grad=FALSE'.")
-                        grad <- FALSE
-                    }
-                }
+        if (grad == TRUE) {
+            if (any(RVM$family %in% c(7:10, 17:20, 27:30, 37:40, 104, 114, 124, 134, 204, 214, 224, 234))) {
+                message("The combination 'grad=TRUE' and a copula family ",
+                        "of the vector (7:10,17:20,27:30,37:40,104,114,124,134,204,214,224,234) ",
+                        "is not possible. The algorithm will continue with 'grad=FALSE'.")
+                grad <- FALSE
             }
         }
     }
 
-    ## sanity checks for input data
-    data <- as.matrix(data)
-    if (any(data > 1) || any(data < 0))
-        stop("Data has be in the interval [0,1].")
     d <- dim(data)[2]
     T <- dim(data)[1]
     n <- d
     N <- T
-    if (n != dim(RVM))
-        stop("Dimensions of 'data' and 'RVM' do not match.")
-    if (T < 2)
-        stop("Number of observations has to be at least 2.")
 
     ## normalization of R-vine matrix
     o <- diag(RVM$Matrix)
