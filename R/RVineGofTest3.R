@@ -231,6 +231,8 @@ RVineGofTest <- function(data, RVM, method = "White", statistic = "CvM", B = 200
                     remove_nas,
                     check_if_01,
                     check_nobs,
+                    check_RVMs,
+                    prep_RVMs,
                     na.txt = " Only complete observations are used.")
     list2env(args, environment())
 

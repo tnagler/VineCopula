@@ -418,16 +418,13 @@ stopifnot(inherits(e, "try-error"))
 e <- try(RVineBIC(simdata, RVM))
 stopifnot(inherits(e, "try-error"))
 
-## RVineClarkeTest ----------------------------
+## RVineClarkeTest/ RVineVuongTest ---------------
 data(daxreturns)
 RVM <- RVineMatrix(Matrix = Matrix, family = family, par = par, par2 = par2)
 CVM <- RVineStructureSelect(daxreturns[,1:5], c(1:6), type = "CVine")
 daxreturns[2, 2] <- NA
-clarke <- RVineClarkeTest(daxreturns[,1:5], RVM, CVM)
-clarke$statistic
-clarke$statistic.Schwarz
-clarke$p.value
-clarke$p.value.Schwarz
+RVineClarkeTest(daxreturns[,1:5], RVM, CVM)
+RVineVuongTest(daxreturns[,1:5], RVM, CVM)
 
 ## RVineLogLik --------------------------
 RVM <- RVineMatrix(Matrix = Matrix, family = family, par = par, par2 = par2)
