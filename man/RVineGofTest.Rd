@@ -196,9 +196,7 @@ is considered. This approach is called ECP2. Again we refer to Schepsmeier
 (2013) for details.
 }
 \examples{
-
-\dontrun{
-# time-consuming example
+\donttest{## time-consuming example
 
 # load data set
 data(daxreturns)
