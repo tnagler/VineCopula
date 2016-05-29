@@ -108,6 +108,7 @@ RVineLogLik <- function(data, RVM, par = RVM$par, par2 = RVM$par2, separate = FA
     args <- preproc(c(as.list(environment()), call = match.call()),
                     check_data,
                     fix_nas,
+                    check_if_01,
                     check_RVMs,
                     prep_RVMs)
     list2env(args, environment())
@@ -190,7 +191,8 @@ RVineLogLik <- function(data, RVM, par = RVM$par, par2 = RVM$par2, separate = FA
     if (separate) {
         loglik <- reset_nas(loglik, args)
     } else {
-        args$msg <- paste(args$msg, "Only complete observations are used.")
+        if (!is.null(args$msg))
+            args$msg <- paste(args$msg, "Only complete observations are used.")
         loglik <- sum(reset_nas(loglik, args), na.rm = TRUE)
         V$value <- apply(V$value, 1:2, sum, na.rm = TRUE)
     }

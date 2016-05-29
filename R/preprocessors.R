@@ -39,15 +39,17 @@ check_u <- function(args) {
 ## set all NA values to 0.5, but store the index (will be reset to NA)
 fix_nas <- function(args) {
     if (!is.null(args$data)) {
-        # set warning message
-        args$msg <- paste0(" In ",
-                           args$call[1],
-                           ": ",
-                           "Some of the data are NA.",
-                           args$na.txt)
-        # set NA values to 0.5 so that C code can operate (will be reset to NA)
-        args$na.ind <- which(!complete.cases(args$data))
-        args$data[args$na.ind, ] <- 0.5
+        if (any(is.na(args$data))) {
+            # set warning message
+            args$msg <- paste0(" In ",
+                               args$call[1],
+                               ": ",
+                               "Some of the data are NA.",
+                               args$na.txt)
+            # set NA values to 0.5 so that C code can operate (will be reset to NA)
+            args$na.ind <- which(!complete.cases(args$data))
+            args$data[args$na.ind, ] <- 0.5
+        }
     } else if (any(is.na(args$u1 + args$u2))) {
         # set warning message
         args$msg <- paste0(" In ",
