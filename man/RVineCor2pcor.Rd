@@ -6,6 +6,8 @@
 \title{(Partial) Correlations for R-Vine Copula Models}
 \usage{
 RVineCor2pcor(RVM, corMat)
+
+RVinePcor2cor(RVM)
 }
 \arguments{
 \item{RVM}{\code{\link{RVineMatrix}} defining only the R-vine structure for
@@ -33,17 +35,17 @@ the row- and column names.
 \examples{
 
 ## create RVineMatrix-object for Gaussian vine
-Matrix <- matrix(c(1, 3, 4, 2, 
+Matrix <- matrix(c(1, 3, 4, 2,
                    0, 3, 4, 2,
-                   0, 0, 4, 2, 
+                   0, 0, 4, 2,
                    0, 0, 0, 2), 4, 4)
-family <- matrix(c(0, 1, 1, 1, 
+family <- matrix(c(0, 1, 1, 1,
                    0, 0, 1, 1,
-                   0, 0, 0, 1, 
+                   0, 0, 0, 1,
                    0, 0, 0, 0), 4, 4)
-par <- matrix(c(0, 0.2,   0, 0.6, 
+par <- matrix(c(0, 0.2,   0, 0.6,
                 0,   0, 0.2, 0.6,
-                0,   0,   0, 0.6, 
+                0,   0,   0, 0.6,
                 0,   0,   0,   0), 4, 4)
 RVM <- RVineMatrix(Matrix, family, par)
 
