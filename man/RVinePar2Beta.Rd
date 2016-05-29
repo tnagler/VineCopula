@@ -4,12 +4,15 @@
 \alias{RVinePar2Beta}
 \title{Blomqvist's Beta Values of an R-Vine Copula Model}
 \usage{
-RVinePar2Beta(RVM)
+RVinePar2Beta(RVM, check.pars = TRUE)
 }
 \arguments{
 \item{RVM}{An \code{\link{RVineMatrix}} object. \cr Note that the Student's
 t-copula is not allowed since the CDF of the t-copula is not implemented
 (see \code{\link{BiCopCDF}} and \code{\link{BiCopPar2Beta}}).}
+
+\item{check.pars}{logical; default is \code{TRUE}; if \code{FALSE}, checks
+for family/parameter-consistency are ommited (should only be used with care).}
 }
 \value{
 Matrix with the same structure as the family and parameter matrices
@@ -22,7 +25,6 @@ This function computes the values of Blomqvist's beta corresponding to the
 parameters of an R-vine copula model.
 }
 \examples{
-
 # define 5-dimensional R-vine tree structure matrix
 Matrix <- c(5, 2, 3, 1, 4,
             0, 2, 3, 4, 1,
