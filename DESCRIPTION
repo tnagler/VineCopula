@@ -34,7 +34,7 @@ Imports:
     mvtnorm,
     network,
     methods,
-    copula,
+    copula (>= 0.999-10),
     kdecopula (>= 0.6.0),
     ADGofTest,
     lattice,
