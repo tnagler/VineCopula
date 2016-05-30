@@ -78,11 +78,11 @@ care).}
 \item{hfunc1}{Numeric vector of the conditional distribution
 function (h-function) of the copula \code{family} with parameter(s)
 \code{par}, \code{par2} evaluated at \code{u2} given \code{u1}, i.e.,
-\eqn{h(\code{u2}|\code{u1},\boldsymbol{\theta})}{h(u2|u1,\theta)}.}
+\eqn{h_1(u_2|u_1;\boldsymbol{\theta})}{h_1(u_2|u_1;\theta)}.}
 \item{hfunc2}{Numeric vector of the conditional distribution function
 (h-function) of the copula \code{family} with parameter(s) \code{par},
 \code{par2} evaluated at \code{u1} given \code{u2}, i.e.,
-\eqn{h(\code{u1}|\code{u2},\boldsymbol{\theta})}{h(u1|u2,\theta)}.}
+\eqn{h_2(u_1|u_2;\boldsymbol{\theta})}{h_2(u_1|u_2; \theta)}.}
 \code{BiCopHfunc1} is a faster version that only calculates \code{hfunc1};
 \code{BiCopHfunc1} only calculates \code{hfunc2}.
 }
@@ -93,16 +93,22 @@ of a given parametric bivariate copula.
 \details{
 The h-function is defined as the conditional distribution function of a
 bivariate copula, i.e.,
-\deqn{h(u|v,\boldsymbol{\theta}) := F(u|v) = \frac{\partial C(u,v)}{\partial v}, }{
-h(u|v,\theta) := F(u|v) = \partial C(u,v) / \partial v, }
-where \eqn{C} is a bivariate copula distribution function with parameter(s)
-\eqn{\boldsymbol{\theta}}{\theta}. For more details see Aas et al. (2009). \cr \cr
+\deqn{h_1(u_2|u_1;\boldsymbol{\theta}) := P(U_2 \le u_2 | U_1 = u_1)
+= \frac{\partial C(u_1, u_2; \boldsymbol{\theta})}{\partial u_1}, }{
+h_1(u_2|u_1,\theta) :=  P(U_2 \le u_2 | U_1 = u_1)
+= \partial C(u_1,u_2) / \partial u_1, }
+\deqn{h_2(u_1|u_2;\boldsymbol{\theta}) := P(U_1 \le u_1 | U_2 = u_2)
+ = \frac{\partial C(u_1, u_2; \boldsymbol{\theta})}{\partial u_2}, }{
+h_2(u_1|u_2,\theta) := P(U_1 \le u_1 | U_2 = u_2) := \partial C(u_1,u_2) / \partial u_2, }
+where \eqn{(U_1, U_2) \sim C}, and \eqn{C} is a bivariate copula distribution
+function with parameter(s) \eqn{\boldsymbol{\theta}}{\theta}.
+For more details see Aas et al. (2009). \cr \cr
 
 If the family and parameter specification is stored in a \code{\link{BiCop}}
 object \code{obj}, the alternative versions
-\preformatted{BiCopHfunc(u1, u2, obj),
-BiCopHfunc1(u1, u2, obj),
-BiCopHfunc2(u1, u2, obj),}
+\preformatted{BiCopHfunc(u1, u2, obj)
+BiCopHfunc1(u1, u2, obj)
+BiCopHfunc2(u1, u2, obj)}
 can be used.
 }
 \examples{
@@ -111,9 +117,7 @@ data(daxreturns)
 # h-functions of the Gaussian copula
 cop <- BiCop(family = 1, par = 0.5)
 h <- BiCopHfunc(daxreturns[, 2], daxreturns[, 1], cop)
-\dontshow{
-h
-}
+\dontshow{h}
 # or using the fast versions
 h1 <- BiCopHfunc1(daxreturns[, 2], daxreturns[, 1], cop)
 h2 <- BiCopHfunc2(daxreturns[, 2], daxreturns[, 1], cop)

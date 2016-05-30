@@ -23,7 +23,7 @@ flipped exponential margins. Default is \code{"norm"} for \code{type =
 (partial matching is activated). Default is \code{"norm"} for \code{type =
 "contour"}, and \code{"unif"} for \code{type = "surface"}.}
 
-\item{size}{integer; the plot is based on values on a \eqn{size x size}
+\item{size}{integer; the plot is based on values on a \code{size x size}
 grid; default is 100 for \code{type = "contour"}, and 25 for \code{type =
 "surface"}.}
 

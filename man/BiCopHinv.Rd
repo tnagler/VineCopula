@@ -75,14 +75,14 @@ care).}
 }
 \value{
 \code{BiCopHinv} returns a list with
-\item{hinv1}{Numeric vector of the inverse conditional distribution
-function (inverse h-function) of the copula \code{family} with parameter(s)
-\code{par}, \code{par2} evaluated at \code{u2} given \code{u1}, i.e.,
-\eqn{h^{-1}(\code{u2}|\code{u1},\boldsymbol{\theta})}{h^{-1}(u2|u1,\theta)}.}
-\item{hinv2}{Numeric vector of the inverse conditional distribution function
+\item{hinv1}{Numeric vector of the inverse conditional distribution function
 (inverse h-function) of the copula \code{family} with parameter(s)
-\code{par}, \code{par2}evaluated at \code{u1} given \code{u2}, i.e.,
-\eqn{h^{-1}(\code{u1}|\code{u2},\boldsymbol{\theta})}{h^{-1}(u1|u2,\theta)}.}
+\code{par}, \code{par2} evaluated at \code{u2} given \code{u1}, i.e.,
+\eqn{h_1^{-1}(u_2|u_1;\boldsymbol{\theta})}{h_1^{-1}(u_2|u_1;\theta)}.}
+\item{hinv2}{Numeric vector of the inverse conditional distribution function
+(inverse h-function) of the copula \code{family} with parameter(s) \code{par},
+\code{par2} evaluated at \code{u1} given \code{u2}, i.e.,
+\eqn{h_2^{-1}(u_1|u_2;\boldsymbol{\theta})}{h_2^{-1}(u_1|u_2; \theta)}.}
 \code{BiCopHinv1} is a faster version that only calculates \code{hinv1};
 \code{BiCopHinv2} only calculates \code{hinv2}.
 }
@@ -93,10 +93,16 @@ Evaluate the inverse conditional distribution function
 \details{
 The h-function is defined as the conditional distribution function of a
 bivariate copula, i.e.,
-\deqn{h(u|v,\boldsymbol{\theta}) := F(u|v) = \frac{\partial C(u,v)}{\partial v}, }{
-h(u|v,\theta) := F(u|v) = \partial C(u,v) / \partial v, }
-where \eqn{C} is a bivariate copula distribution function with parameter(s)
-\eqn{\boldsymbol{\theta}}{\theta}. For more details see Aas et al. (2009). \cr \cr
+\deqn{h_1(u_2|u_1;\boldsymbol{\theta}) := P(U_2 \le u_2 | U_1 = u_1)
+= \frac{\partial C(u_1, u_2; \boldsymbol{\theta})}{\partial u_1}, }{
+h_1(u_2|u_1,\theta) :=  P(U_2 \le u_2 | U_1 = u_1)
+= \partial C(u_1,u_2) / \partial u_1, }
+\deqn{h_2(u_1|u_2;\boldsymbol{\theta}) := P(U_1 \le u_1 | U_2 = u_2)
+ = \frac{\partial C(u_1, u_2; \boldsymbol{\theta})}{\partial u_2}, }{
+h_2(u_1|u_2,\theta) := P(U_1 \le u_1 | U_2 = u_2) := \partial C(u_1,u_2) / \partial u_2, }
+where \eqn{(U_1, U_2) \sim C}, and \eqn{C} is a bivariate copula distribution
+function with parameter(s) \eqn{\boldsymbol{\theta}}{\theta}.
+For more details see Aas et al. (2009). \cr \cr
 
 If the family and parameter specification is stored in a \code{\link{BiCop}}
 object \code{obj}, the alternative version
@@ -109,9 +115,7 @@ can be used.
 # inverse h-functions of the Gaussian copula
 cop <- BiCop(1, 0.5)
 hi <- BiCopHinv(0.1, 0.2, cop)
-\dontshow{
-hi
-}
+\dontshow{hi}
 # or using the fast versions
 hi1 <- BiCopHinv1(0.1, 0.2, cop)
 hi2 <- BiCopHinv2(0.1, 0.2, cop)
@@ -125,7 +129,7 @@ all.equal(0.1, BiCopHfunc2(BiCopHinv2(0.1, 0.2, cop), 0.2, cop))
 
 }
 \author{
-Thomas Nagler
+Ulf Schepsmeier, Thomas Nagler
 }
 \references{
 Aas, K., C. Czado, A. Frigessi, and H. Bakken (2009).

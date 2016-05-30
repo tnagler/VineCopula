@@ -9,8 +9,9 @@
 #' trees and corresponding edge sets \eqn{E_1,...,E_{d-1}} is given by
 #' \deqn{\texttt{loglik}:=l_{RVine}\left(\boldsymbol{\theta}|\boldsymbol{u}\right)
 #' }{loglik:=ll_{RVine}(\theta|u)}
-#' \deqn{=\sum_{i=1}^N \sum_{\ell=1}^{d-1} \sum_{e\in E_\ell} }{ =\sum_{i=1}^N
-#' \sum_{k=1}^{d-1} \sum_{e\in E_k}
+#' \deqn{=\sum_{i=1}^N \sum_{\ell=1}^{d-1} \sum_{e\in E_\ell}
+#'  \ln[c_{j(e),k(e)|D(e)}(F(u_{i,j(e)}|u_{i,D(e)}),F(u_{i,k(e)}|u_{i,D(e)})|\theta_{j(e),k(e)|D(e)})] }{
+#'  =\sum_{i=1}^N \sum_{k=1}^{d-1} \sum_{e\in E_k}
 #' \ln[c_{j(e),k(e)|D(e)}(F(u_{i,j(e)}|u_{i,D(e)}),F(u_{i,k(e)}|u_{i,D(e)})|\theta_{j(e),k(e)|D(e)})],
 #' }
 #'  where \eqn{\boldsymbol{u}_i=(u_{i,1},...,u_{i,d})^\prime\in[0,1]^d,\
@@ -21,7 +22,9 @@
 #' Conditional distribution functions such as
 #' \eqn{F(u_{i,j(e)}|\boldsymbol{u}_{i,D(e)})}{F(u_{i,j(e)}|u_{i,D(e)})} are
 #' obtained recursively using the relationship
-#' \deqn{h(u|\boldsymbol{v},\boldsymbol{\theta}) := F(u|\boldsymbol{v}) = }{
+#' \deqn{h(u|\boldsymbol{v},\boldsymbol{\theta}) := F(u|\boldsymbol{v}) =
+#' d C_{uv_j|v_{-j}}(F(u|v_{-j}),F(v_j|v_{-j}))/d
+#' F(v_j|v_{-j}), }{
 #' h(u|v,\theta) := F(u|v) = d C_{uv_j|v_{-j}}(F(u|v_{-j}),F(v_j|v_{-j}))/d
 #' F(v_j|v_{-j}), }
 #' where
@@ -223,30 +226,25 @@ RVineLogLik <- function(data, RVM, par = RVM$par, par2 = RVM$par2,
 #' R-vine copula.
 #'
 #' The density of a \eqn{d}-dimensional R-vine copula with \eqn{d-1} trees and
-#' corresponding edge sets \eqn{E_1,...,E_{d-1}} is given by \deqn{ }{
-#' =\prod_{k=1}^{d-1} \prod_{e\in E_k}
+#' corresponding edge sets \eqn{E_1,...,E_{d-1}} is given by
+#' \deqn{\prod_{\ell=1}^{d-1} \prod_{e\in E_\ell }
+#' c_{j(e),k(e)|D(e)}(F(u_{j(e)}|u_{D(e)}),F(u_{k(e)}|u_{D(e)})|\theta_{j(e),k(e)|D(e)}), }{
+#'  =\prod_{m=1}^{d-1} \prod_{e\in E_m}
 #' c_{j(e),k(e)|D(e)}(F(u_{j(e)}|u_{D(e)}),F(u_{k(e)}|u_{D(e)})|\theta_{j(e),k(e)|D(e)}),
-#' }\deqn{\prod_{\ell=1}^{d-1} \prod_{e\in E_\ell} }{ =\prod_{k=1}^{d-1}
-#' \prod_{e\in E_k}
-#' c_{j(e),k(e)|D(e)}(F(u_{j(e)}|u_{D(e)}),F(u_{k(e)}|u_{D(e)})|\theta_{j(e),k(e)|D(e)}),
-#' }\deqn{c_{j(e),k(e)|D(e)}\left(F(u_{j(e)}|\boldsymbol{u}_{D(e)}),F(u_{k(e)}|\boldsymbol{u}_{D(e)})|\boldsymbol{\theta}_{j(e),k(e)|D(e)}\right),
-#' }{ =\prod_{k=1}^{d-1} \prod_{e\in E_k}
-#' c_{j(e),k(e)|D(e)}(F(u_{j(e)}|u_{D(e)}),F(u_{k(e)}|u_{D(e)})|\theta_{j(e),k(e)|D(e)}),
-#' } where
+#' }
+#' where
 #' \eqn{\boldsymbol{u}=(u_{1},...,u_{d})^\prime\in[0,1]^d}{u=(u_{1},...,u_{d})'\in[0,1]^d}.
 #' Further \eqn{c_{j(e),k(e)|D(e)}} denotes a bivariate copula density
 #' associated to an edge \eqn{e} and with parameter(s)
 #' \eqn{\boldsymbol{\theta}_{j(e),k(e)|D(e)}}{\theta_{j(e),k(e)|D(e)}}.
 #' Conditional distribution functions such as
 #' \eqn{F(u_{j(e)}|\boldsymbol{u}_{D(e)})}{F(u_{j(e)}|u_{D(e)})} are obtained
-#' recursively using the relationship \deqn{ }{ h(u|v,\theta) := F(u|v) = d
-#' C_{uv_j|v_{-j}}(F(u|v_{-j}),F(v_j|v_{-j}))/d F(v_j|v_{-j}),
-#' }\deqn{h(u|\boldsymbol{v},\boldsymbol{\theta}) := F(u|\boldsymbol{v}) = }{
+#' recursively using the relationship
+#' \deqn{h(u|\boldsymbol{v},\boldsymbol{\theta}) := F(u|\boldsymbol{v}) =
+#' d C_{uv_j|v_{-j}}(F(u|v_{-j}),F(v_j|v_{-j}))/d F(v_j|v_{-j}),}{
 #' h(u|v,\theta) := F(u|v) = d C_{uv_j|v_{-j}}(F(u|v_{-j}),F(v_j|v_{-j}))/d
-#' F(v_j|v_{-j}), }\deqn{\frac{\partial
-#' C_{uv_j|\boldsymbol{v}_{-j}}(F(u|\boldsymbol{v}_{-j}),F(v_j|\boldsymbol{v}_{-j}))}{\partial
-#' F(v_j|\boldsymbol{v}_{-j})}, }{ h(u|v,\theta) := F(u|v) = d
-#' C_{uv_j|v_{-j}}(F(u|v_{-j}),F(v_j|v_{-j}))/d F(v_j|v_{-j}), } where
+#' F(v_j|v_{-j}), }
+#' where
 #' \eqn{C_{uv_j|\boldsymbol{v}_{-j}}}{C_{uv_j|v_{-j}}} is a bivariate copula
 #' distribution function with parameter(s) \eqn{\boldsymbol{\theta}}{\theta}
 #' and \eqn{\boldsymbol{v}_{-j}}{v_{-j}} denotes a vector with the \eqn{j}-th
@@ -259,12 +257,16 @@ RVineLogLik <- function(data, RVM, par = RVM$par, par2 = RVM$par2,
 #' be evaluated.
 #' @param RVM An \code{\link{RVineMatrix}} object including the structure and
 #' the pair-copula families and parameters.
+#'
 #' @author Thomas Nagler
+#'
 #' @seealso \code{\link{BiCopHfunc}}, \code{\link{RVineMatrix}},
 #' \code{\link{RVineMLE}}, \code{\link{RVineAIC}}, \code{\link{RVineBIC}}
+#'
 #' @references Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 #' (2013). Selecting and estimating regular vine copulae and application to
 #' financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
+#'
 #' @examples
 #'
 #' # define 5-dimensional R-vine tree structure matrix
@@ -302,7 +304,6 @@ RVineLogLik <- function(data, RVM, par = RVM$par, par2 = RVM$par2,
 #' # compute the density at (0.1, 0.2, 0.3, 0.4, 0.5)
 #' RVinePDF(c(0.1, 0.2, 0.3, 0.4, 0.5), RVM)
 #'
-#' @export RVinePDF
 RVinePDF <- function(newdata, RVM) {
     exp(RVineLogLik(newdata, RVM, separate = TRUE)$loglik)
 }

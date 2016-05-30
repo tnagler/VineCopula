@@ -46,8 +46,9 @@ the log-likelihood of a \eqn{d}-dimensional R-vine copula with \eqn{d-1}
 trees and corresponding edge sets \eqn{E_1,...,E_{d-1}} is given by
 \deqn{\texttt{loglik}:=l_{RVine}\left(\boldsymbol{\theta}|\boldsymbol{u}\right)
 }{loglik:=ll_{RVine}(\theta|u)}
-\deqn{=\sum_{i=1}^N \sum_{\ell=1}^{d-1} \sum_{e\in E_\ell} }{ =\sum_{i=1}^N
-\sum_{k=1}^{d-1} \sum_{e\in E_k}
+\deqn{=\sum_{i=1}^N \sum_{\ell=1}^{d-1} \sum_{e\in E_\ell}
+ \ln[c_{j(e),k(e)|D(e)}(F(u_{i,j(e)}|u_{i,D(e)}),F(u_{i,k(e)}|u_{i,D(e)})|\theta_{j(e),k(e)|D(e)})] }{
+ =\sum_{i=1}^N \sum_{k=1}^{d-1} \sum_{e\in E_k}
 \ln[c_{j(e),k(e)|D(e)}(F(u_{i,j(e)}|u_{i,D(e)}),F(u_{i,k(e)}|u_{i,D(e)})|\theta_{j(e),k(e)|D(e)})],
 }
  where \eqn{\boldsymbol{u}_i=(u_{i,1},...,u_{i,d})^\prime\in[0,1]^d,\
@@ -58,7 +59,9 @@ edge \eqn{e} and with parameter(s)
 Conditional distribution functions such as
 \eqn{F(u_{i,j(e)}|\boldsymbol{u}_{i,D(e)})}{F(u_{i,j(e)}|u_{i,D(e)})} are
 obtained recursively using the relationship
-\deqn{h(u|\boldsymbol{v},\boldsymbol{\theta}) := F(u|\boldsymbol{v}) = }{
+\deqn{h(u|\boldsymbol{v},\boldsymbol{\theta}) := F(u|\boldsymbol{v}) =
+d C_{uv_j|v_{-j}}(F(u|v_{-j}),F(v_j|v_{-j}))/d
+F(v_j|v_{-j}), }{
 h(u|v,\theta) := F(u|v) = d C_{uv_j|v_{-j}}(F(u|v_{-j}),F(v_j|v_{-j}))/d
 F(v_j|v_{-j}), }
 where

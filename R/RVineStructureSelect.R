@@ -63,7 +63,7 @@
 #' weights. The most commonly used edge weigth is the absolute value of the
 #' empirical Kendall's tau, say \eqn{\hat{\tau}_{ij}}. Then, the following o
 #' ptimization problem is solved for each tree:
-#' \deqn{\max \sum_{edges e_{ij} in spanning tree} |\hat{\tau}_{ij}|, }{
+#' \deqn{\max \sum_{\mathrm{edges }\; e_{ij} \in \; \mathrm{ in \; spanning \; tree}} |\hat{\tau}_{ij}|, }{
 #' \max \sum_{edges e_{ij} in spanning tree} |\hat{\tau}_{ij}|, }
 #' where a spanning tree is a tree on all nodes. The
 #' setting of the first tree selection step is always a complete graph. For
@@ -90,8 +90,8 @@
 #' return a numeric value. The weigths argument must exist, but does not has to
 #' be used. For example, \code{"tau"} (withouth using weights) can be implemented
 #' as follows:\cr
-#' \code{function(u1, u2, weights)
-#'     abs(cor(u1, u2, method = "kendall", use = "complete.obs"))}
+#' \code{function(u1, u2, weights) \cr      abs(cor(u1, u2,
+#'  method = "kendall", use = "complete.obs"))}
 #'
 #'
 #' The root nodes of C-vine trees are determined similarly by identifying the
@@ -100,7 +100,7 @@
 #'
 #' Note that a possible way to determine the order of the nodes in the D-vine
 #' is to identify a shortest Hamiltonian path in terms of weights
-#' \eqn{1-|\tau_{ij}|}. This can be established for example using the package
+#' \eqn{1-|\hat{\tau_{ij}|}}. This can be established for example using the package
 #' TSP. Example code is shown below.
 #'
 #' @author Jeffrey Dissmann, Eike Brechmann, Ulf Schepsmeier, Thomas Nagler

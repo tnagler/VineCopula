@@ -52,7 +52,7 @@ pair-copula. \code{contour.RVineMatrix} produces a matrix of contour plots
 (using \code{\link[VineCopula:plot.BiCop]{plot.BiCop}}).
 }
 \details{
-If you want the contour boxes to be perfect sqaures, the plot height should
+If you want the contour boxes to be perfect squares, the plot height should
 be \code{1.25/length(tree)*(d - min(tree))} times the plot width.
 }
 \examples{

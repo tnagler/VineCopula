@@ -15,7 +15,7 @@ BiCopIndTest(u1, u2)
 }
 \description{
 This function returns the p-value of a bivariate asymptotic independence
-test based on Kendall's tau.
+test based on Kendall's \eqn{\tau}.
 }
 \details{
 The test exploits the asymptotic normality of the test statistic

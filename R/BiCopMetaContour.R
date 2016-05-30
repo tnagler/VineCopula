@@ -1,6 +1,6 @@
 #' Contour Plot of Bivariate Meta Distribution
 #'
-#' Note: This function is redundant and only available for backwards
+#' Note: This function is deprecated and only available for backwards
 #' compatibility. See \code{\link{contour.BiCop}} for contour plots of
 #' parametric copulas, and \code{\link{BiCopKDE}} for kernel estimates.
 #'

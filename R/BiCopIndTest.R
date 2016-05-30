@@ -1,7 +1,7 @@
 #' Independence Test for Bivariate Copula Data
 #'
 #' This function returns the p-value of a bivariate asymptotic independence
-#' test based on Kendall's tau.
+#' test based on Kendall's \eqn{\tau}.
 #'
 #' The test exploits the asymptotic normality of the test statistic
 #' \deqn{\texttt{statistic} := T =

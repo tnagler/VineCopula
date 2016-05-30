@@ -154,7 +154,7 @@ summary(cop3)
 
 }
 \author{
-Thomas Nagler
+Eike Brechmann, Jeffrey Dissmann, Thomas Nagler
 }
 \references{
 Akaike, H. (1973). Information theory and an extension of the

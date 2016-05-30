@@ -81,7 +81,7 @@ related to bivariate copula with \code{family} and parameter(s) \code{par},
 \description{
 This function simulates from a parametric bivariate copula, where on of
 the variables is fixed. I.e., we simulate either from
-\eqn{C_{2|1}(u2|u1;\theta)} or \eqn{C_{1|2}(u1|u2;\theta)}, which are both
+\eqn{C_{2|1}(u_2|u_1;\theta)} or \eqn{C_{1|2}(u_1|u_2;\theta)}, which are both
 conditional distribution functions of one variable given another.
 }
 \details{

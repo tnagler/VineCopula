@@ -20,23 +20,25 @@
 #' For observations \eqn{u_{i,j},\ i=1,...,N,\ j=1,2,}{u_{i,j}, i=1,...,N,
 #' j=1,2,} the chi-plot is based on the following two quantities: the
 #' chi-statistics
-#' \deqn{\chi_i = \frac{\hat{F}_{U_1U_2}(u_{i,1},u_{i,2})
-#' - \hat{F}_{U_1}(u_{i,1})\hat{F}_{U_2}(u_{i,2})}{
-#' \sqrt{\hat{F}_{U_1}(u_{i,1})(1-\hat{F}_{U_1}(u_{i,1}))
-#' \hat{F}_{U_2}(u_{i,2})(1-\hat{F}_{U_2}(u_{i,2}))}}, }{
-#' \chi_i = F_{U_1,U_2}(u_{i,1},u_{i,2}) - F_{U_1}(u_{i,1})F_{U_2}(u_{i,2})
-#' / (F_{U_1}(u_{i,1}) (1-F_{U_1}(u_{i,1}))F_{U_2}(u_{i,2})
-#' (1-F_{U_2}(u_{i,2}))^0.5, } and the lambda-statistics
-#' \deqn{\lambda_i = 4 sgn\left( \tilde{F}_{U_1}(u_{i,1}),\tilde{F}_{U_2}(u_{i,2}) \right)
-#' \cdot \max\left( \tilde{F}_{U_1}(u_{i,1})^2,\tilde{F}_{U_2}(u_{i,2})^2 \right), }{
-#' \lambda_i = 4 sgn( tildeF_{U_1}(u_{i,1}),tildeF_{U_2}(u_{i,2}) )
-#' * max( tildeF_{U_1}(u_{i,1})^2,tildeF_{U_2}(u_{i,2})^2 ), }
-#' where \eqn{\hat{F}_{U_1}}{F_{U_1}}, \eqn{\hat{F}_{U_2}}{F_{U_2}} and
-#' \eqn{\hat{F}_{U_1U_2}}{F_{U_1U_2}} are the empirical distribution functions
+#' \deqn{\chi_i = \frac{\hat{F}_{1,2}(u_{i,1},u_{i,2})
+#' - \hat{F}_{1}(u_{i,1})\hat{F}_{2}(u_{i,2})}{
+#' \sqrt{\hat{F}_{1}(u_{i,1})(1-\hat{F}_{1}(u_{i,1}))
+#' \hat{F}_{2}(u_{i,2})(1-\hat{F}_{2}(u_{i,2}))}}, }{
+#' \chi_i = F_{1,2}(u_{i,1},u_{i,2}) - F_{1}(u_{i,1})F_{2}(u_{i,2})
+#' / (F_{1}(u_{i,1}) (1-F_{1}(u_{i,1}))F_{2}(u_{i,2})
+#' (1-F_{2}(u_{i,2}))^0.5, }
+#' and the lambda-statistics
+#' \deqn{\lambda_i = 4 sgn\left( \tilde{F}_{1}(u_{i,1}),\tilde{F}_{2}(u_{i,2}) \right)
+#' \cdot \max\left( \tilde{F}_{1}(u_{i,1})^2,\tilde{F}_{2}(u_{i,2})^2 \right), }{
+#' \lambda_i = 4 sgn( tildeF_{1}(u_{i,1}),tildeF_{U_2}(u_{i,2}) )
+#' * max( tildeF_{U_1}(u_{i,1})^2,tildeF_{U_2}(u_{i,2})^2 ),
+#' }
+#' where \eqn{\hat{F}_{1}}{F_{1}}, \eqn{\hat{F}_{2}}{F_{2}} and
+#' \eqn{\hat{F}_{1,2}}{F_{1,2}} are the empirical distribution functions
 #' of the uniform random variables \eqn{U_1} and \eqn{U_2} and of
 #' \eqn{(U_1,U_2)}, respectively. Further,
-#' \eqn{\tilde{F}_{U_1}=\hat{F}_{U_1}-0.5}{tildeF_{U_1}=F_{U_1}-0.5} and
-#' \eqn{\tilde{F}_{U_2}=\hat{F}_{U_2}-0.5}{tildeF_{U_2}=F_{U_2}-0.5}.
+#' \eqn{\tilde{F}_{1}=\hat{F}_{1}-0.5}{tildeF_{1}=F_{1}-0.5} and
+#' \eqn{\tilde{F}_{2}=\hat{F}_{2}-0.5}{tildeF_{2}=F_{2}-0.5}.
 #'
 #' These quantities only depend on the ranks of the data and are scaled to the
 #' interval \eqn{[0,1]}. \eqn{\lambda_i} measures a distance of a data point
@@ -47,7 +49,7 @@
 #' \mathcal{N}(0,\frac{1}{N})}{\chi_i~N(0,1/N)} and \eqn{\lambda_i \sim
 #' \mathcal{U}[-1,1]}{\lambda_i~U[0,1]} asymptotically, i.e., values of
 #' \eqn{\chi_i} close to zero indicate independence---corresponding to
-#' \eqn{F_{U_1U_2}=F_{U_1}F_{U_2}}.
+#' \eqn{F_{1, 2}=F_{1}F_{2}}.
 #'
 #' When plotting these quantities, the pairs of \eqn{\left(\lambda_i, \chi_i
 #' \right)}{(\lambda_i,\chi_i)} will tend to be located above zero for
@@ -70,14 +72,18 @@
 #' \code{"lower"}. \cr \code{"NULL"} = general chi-plot (default)\cr
 #' \code{"upper"} = upper chi-plot\cr \code{"lower"} = lower chi-plot
 #' @param ... Additional plot arguments.
+#'
 #' @return \item{lambda}{Lambda-statistics (x-axis).} \item{chi}{Chi-statistics
 #' (y-axis).} \item{control.bounds}{A 2-dimensional vector of bounds
 #' \eqn{((1.54/\sqrt{n},-1.54/\sqrt{n})}, where \eqn{n} is the length of
 #' \code{u1} and where the chosen values correspond to an approximate
 #' significance level of 10\%.}
+#'
 #' @author Natalia Belgorodski, Ulf Schepsmeier
+#'
 #' @seealso \code{\link{BiCopMetaContour}}, \code{\link{BiCopKPlot}},
 #' \code{\link{BiCopLambda}}
+#'
 #' @references Abberger, K. (2004). A simple graphical method to explore
 #' tail-dependence in stock-return pairs. Discussion Paper, University of
 #' Konstanz, Germany.
@@ -85,6 +91,7 @@
 #' Genest, C. and A. C. Favre (2007). Everything you always wanted to know
 #' about copula modeling but were afraid to ask. Journal of Hydrologic
 #' Engineering, 12 (4), 347-368.
+#'
 #' @examples
 #'
 #' ## chi-plots for bivariate Gaussian copula data
@@ -107,7 +114,6 @@
 #'              ylim = c(-1,1), main = "Upper chi-plot")
 #' par(op)
 #'
-#' @export BiCopChiPlot
 BiCopChiPlot <- function(u1, u2, PLOT = TRUE, mode = "NULL", ...) {
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),
