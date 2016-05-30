@@ -830,8 +830,8 @@ fit.ACopula <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
     }
 
     ## store pseudo-observations for estimation in next tree
-    out$CondOn.1 <- suppressWarnings(BiCopHfunc1(u1, u2, out))
-    out$CondOn.2 <- suppressWarnings(BiCopHfunc2(u1, u2, out))
+    out$CondOn.1 <- suppressWarnings(BiCopHfunc1(u1, u2, out, check.pars = FALSE))
+    out$CondOn.2 <- suppressWarnings(BiCopHfunc2(u1, u2, out, check.pars = FALSE))
 
     ## return results
     out
