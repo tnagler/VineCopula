@@ -183,21 +183,17 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         ## select independence copula, if not rejected
         obj <- BiCop(0)
     } else {
-        ## maximum likelihood estimation
         optiout <- list()
+        lls  <- rep(Inf, length(familyset))
+        AICs <- rep(Inf, length(familyset))
+        BICs <- rep(Inf, length(familyset))
+        ## maximum likelihood estimation
         for (i in seq_along(familyset)) {
             optiout[[i]] <- BiCopEst.intern(u1, u2,
                                             family = familyset[i],
                                             se = se,
                                             weights = weights,
                                             as.BiCop = FALSE)
-        }
-
-        ## calculate logLik, AIC and BIC
-        lls  <- rep(Inf, length(familyset))
-        AICs <- rep(Inf, length(familyset))
-        BICs <- rep(Inf, length(familyset))
-        for (i in seq_along(familyset)) {
             if (any(is.na(weights))) {
                 lls[i] <- sum(log(BiCopPDF(u1,
                                            u2,
@@ -214,17 +210,11 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                                            check.pars = FALSE)) %*% weights)
             }
             npars <- ifelse(familyset[i] %in% allfams[onepar], 1, 2)
+            if (familyset[i] == 0)
+                npars <- 0
             AICs[i] <- -2 * lls[i] + 2 * npars
             BICs[i] <- -2 * lls[i] + log(length(u1)) * npars
 
-        }
-
-        ## add independence copula
-        if (0 %in% familyset) {
-            optiout[[length(familyset) + 1]] <- list(family = 0, par = 0, par2 = 0)
-            lls[length(familyset) + 1] <- 0
-            AICs[length(familyset) + 1] <- 0
-            BICs[length(familyset) + 1] <- 0
         }
 
         ## select the best fitting model

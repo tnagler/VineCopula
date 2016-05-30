@@ -156,7 +156,6 @@
 RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit = "AIC", indeptest = FALSE,
                                  level = 0.05, trunclevel = NA, progress = FALSE,  weights = NA,
                                  treecrit = "tau", rotations = TRUE, cores = 1) {
-
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),
                     check_data,
@@ -830,8 +829,8 @@ fit.ACopula <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
     }
 
     ## store pseudo-observations for estimation in next tree
-    out$CondOn.1 <- suppressWarnings(BiCopHfunc1(u1, u2, out, check.pars = FALSE))
-    out$CondOn.2 <- suppressWarnings(BiCopHfunc2(u1, u2, out, check.pars = FALSE))
+    out$CondOn.1 <- suppressWarnings(BiCopHfunc1(u2, u1, out, check.pars = FALSE))
+    out$CondOn.2 <- suppressWarnings(BiCopHfunc2(u2, u1, out, check.pars = FALSE))
 
     ## return results
     out

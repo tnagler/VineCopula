@@ -267,15 +267,15 @@ check_fam_tau <- function(args) {
     if (is.null(args$weights))
         args$weights <- NA
     args$emp_tau <- fasttau(args$u1, args$u2, args$weights)
-    if ((args$emp_tau > 0) & !any(args$familyset %in% posfams)) {
+    if ((args$emp_tau > 0) & !any(args$familyset %in% c(0, posfams))) {
         stop("\n In ", args$call[1], ": ",
-             "Empirical Kendall's tau is positive, but familyset contains ",
-             "no family with positive dependence.",
+             "Empirical Kendall's tau is positive, but familyset only ",
+             "contains families for negative dependence.",
              call. = FALSE)
-    } else if ((args$emp_tau < 0) & !any(args$familyset %in% negfams)){
+    } else if ((args$emp_tau < 0) & !any(args$familyset %in% c(0, negfams))){
         stop("\n In ", args$call[1], ": ",
-             "Empirical Kendall's tau is negative, but familyset contains ",
-             "no family with negative dependence.",
+             "Empirical Kendall's tau is negative, but familyset only ",
+             "contains families for positive dependence.",
              call. = FALSE)
     }
 
@@ -284,11 +284,11 @@ check_fam_tau <- function(args) {
 
 todo_fams <- function(args) {
     if (args$emp_tau < 0) {
-        todo <- negfams
+        todo <- c(0, negfams)
     } else if (args$emp_tau > 0) {
-        todo <- posfams
+        todo <- c(0, posfams)
     } else {
-        todo <- c(negfams, posfams)
+        todo <- allfams
     }
     args$familyset <- todo[which(todo %in% args$familyset)]
     args
@@ -548,6 +548,7 @@ check_matrix <- function(args) {
 }
 
 check_parmat <- function(args) {
+    args$family <- as.matrix(args$family)
     if (nrow(args$family) != ncol(args$family))
         stop("\n In ", args$call[1], ": ",
              "family has to be quadratic.",
@@ -561,9 +562,10 @@ check_parmat <- function(args) {
 }
 
 check_fammat <- function(args) {
+    args$par <- as.matrix(args$par)
     if (nrow(args$par) != ncol(args$par))
         stop("\n In ", args$call[1], ": ",
-             "family has to be quadratic.",
+             "par has to be quadratic.",
              call. = FALSE)
 
     args$par[is.na(args$par)] <- 0
@@ -574,9 +576,10 @@ check_fammat <- function(args) {
 }
 
 check_par2mat <- function(args) {
+    args$par2 <- as.matrix(args$par2)
     if (nrow(args$par2) != ncol(args$par2))
         stop("\n In ", args$call[1], ": ",
-             "family has to be quadratic.",
+             "par2 has to be quadratic.",
              call. = FALSE)
 
     args$par2[is.na(args$par2)] <- 0
