@@ -445,16 +445,19 @@ check_data <- function(args) {
 
 check_RVMs <- function(args) {
     if (!is.null(args$RVM))
-        check_RVM(args$RVM, "RVM", args$call, args$d)
+        args$RVM <- check_RVM(args$RVM, "RVM",
+                              args$call, args$d, args$check.pars)
     if (!is.null(args$RVM1))
-        check_RVM(args$RVM1, "RVM1", args$call, args$d)
+        args$RVM1 <- check_RVM(args$RVM1, "RVM1",
+                               args$call, args$d, args$check.pars)
     if (!is.null(args$RVM2))
-        check_RVM(args$RVM2, "RVM2", args$call, args$d)
+        args$RVM2 <- check_RVM(args$RVM2, "RVM2",
+                               args$call, args$d, args$check.pars)
 
     args
 }
 
-check_RVM <- function(RVM, name, call, d) {
+check_RVM <- function(RVM, name, call, d, check.pars) {
     if (!is(RVM, "RVineMatrix"))
         stop("\n In ", call[1], ": ",
              name,  " has to be an RVineMatrix object.",
@@ -475,16 +478,26 @@ check_RVM <- function(RVM, name, call, d) {
              "Second parameter matrix has to be quadratic.",
              call. = FALSE)
 
+    if (is.null(check.pars))
+        check.pars <- TRUE
     if (!all(RVM$par %in% c(0, NA))) {
         for (i in 2:dim(RVM$Matrix)[1]) {
             for (j in 1:(i - 1)) {
-                BiCopCheck(RVM$family[i, j],
-                           RVM$par[i, j],
-                           RVM$par2[i, j],
-                           call = call)
+                if (check.pars) {
+                    BiCopCheck(RVM$family[i, j],
+                               RVM$par[i, j],
+                               RVM$par2[i, j],
+                               call = call)
+                } else {
+                    ind <- (RVM$family[i, j] %in% c(5, 3, 13, 23, 33)) & (RVM$par[i, j] == 0)
+                    if (indep)
+                        RVM$family[i, j] <- 0
+                }
             }
         }
     }
+
+    RVM
 }
 
 prep_RVMs <- function(args) {

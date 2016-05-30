@@ -42,6 +42,9 @@
 #' (default: \code{separate = FALSE}).
 #' @param verbose In case something goes wrong, additional output will be
 #' plotted.
+#' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
+#' for family/parameter-consistency are ommited (should only be used with
+#' care).
 #'
 #' @return \item{loglik}{The calculated log-likelihood value of the R-vine
 #' copula model.} \item{V}{The stored transformations (h-functions and
@@ -103,8 +106,11 @@
 #' ll <- RVineLogLik(simdata, RVM, separate = TRUE)
 #' ll$loglik
 #'
-RVineLogLik <- function(data, RVM, par = RVM$par, par2 = RVM$par2, separate = FALSE, verbose = TRUE) {
+RVineLogLik <- function(data, RVM, par = RVM$par, par2 = RVM$par2,
+                        separate = FALSE, verbose = TRUE, check.pars = TRUE) {
     ## preprocessing of arguments
+    RVM$par <- par
+    RVM$par2 <- par2
     args <- preproc(c(as.list(environment()), call = match.call()),
                     check_data,
                     fix_nas,
@@ -112,6 +118,8 @@ RVineLogLik <- function(data, RVM, par = RVM$par, par2 = RVM$par2, separate = FA
                     check_RVMs,
                     prep_RVMs)
     list2env(args, environment())
+    par <- RVM$par
+    par2 <- RVM$par2
 
     d <- dim(data)[2]
     T <- dim(data)[1]
