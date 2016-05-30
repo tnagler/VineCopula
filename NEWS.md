@@ -31,8 +31,6 @@ NEW FEATURES
   
     * `contour.BiCop` as short hand for `plot.BiCop(..., type = "contour")`.
 
-  * New function `BiCopHinv` for computation of inverse h-functions.
-  
   * Vectorize `BiCopXyz`-functions w.r.t. `family`, `par`, `par2`:
   
     * in C: `BiCopPDF`, `BiCopHfunc`, `BiCopHinv`, `BiCopDeriv`, `BiCopDeriv2`,
@@ -44,8 +42,33 @@ NEW FEATURES
     (`RVineStructureSelect`, `RVineCopSelect`, `RVineSeqEst`) can now be done in 
     parallel using the `cores` argument (based on `foreach`) and is more memory
     efficient (pseudo-observations are discarded as soon they are useless).
+    
+  * `RVineStructureSelect` now takes an argument `treecrit` allowing for 
+    several preimplemented (and custom) choices of the edge weight used in 
+    Dissmann's algorithm.
   
-  * New function `BiCopCheck` (internal) for checking of family/parameter
+  * Treatment of `familyset` in the -Select functions:
+  
+    * independence copula is handled as a regular family,
+    
+    * negative integers can be used to select from all but a subset of 
+      families.
+     
+  * New function `BiCopCompare`: A shiny app where the user can visually assess 
+    how well several families fit the data. 
+
+  * New function `BiCopKDE` for kernel density plots (based on kdecopula 
+    package). 
+    
+  * New function `BiCopCondSim` for conditional simulation from a bivariate 
+    copula.
+    
+  * New function `BiCopHinv` for computation of inverse h-functions.
+  
+  * New functions `BiCopHfunc1`, `BiCopHfunc2`, `BiCopHinv1`, and `BiCopHinv2`
+    that only compute one of the two h-functions (or inverse h-functions).
+
+  * New function `BiCopCheck`  for checking of family/parameter
     consistency.
     
   * Add `check.pars`/`check.taus` argument to the above functions for the option
@@ -55,25 +78,6 @@ NEW FEATURES
   * Faster implementations of `BiCopPar2Tau`/`BiCopTau2Par` for Frank copula and
     `BiCopTau2Par` conversion for Joe copula. 
 
-  * Treatment of `familyset` in the -Select functions:
-  
-    * independence copula is handled as a regular family,
-    
-    * negative integers can be used to select from all but a subset of 
-      families.
-      
-  * New function `BiCopCompare`: A shiny app where the user can visually assess 
-    how well several families fit the data. 
-    
-  * New function `BiCopKDE` for kernel density plots (based on kdecopula 
-    package). 
-  
-  * `RVineStructureSelect?` now takes an argument `treecrit` allowing for 
-    several preimplemented (and custom) choices of the edge weight used in 
-    Dissmann's algorithm.
-    
-  * New function `BiCopCondSim` for conditional simulation from a bivariate 
-    copula.
     
 BUG FIXES
 
@@ -107,6 +111,18 @@ BUG FIXES
   * Bound parameter ranges for Archimedean copulas to avoid numerical 
     instabilities in -PDF and -Sim functions.
    
+
+VineCopula 1.6-1 (November 9, 2015)
+----------------------------------------------------------------
+
+DEPENDS:
+  
+  * Removed CDVine from Suggests.
+
+BUG FIXES:
+
+  * Fix code/documentation mismatch in function 'pobs' following a 
+    change in the copula package.
   
 
 VineCopula 1.6 (July 16, 2015)
