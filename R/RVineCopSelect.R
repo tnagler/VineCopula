@@ -127,10 +127,11 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
                     prep_familyset,
                     check_matrix)
     list2env(args, environment())
-    warning(" In ", args$call[1], ": ",
-            "Some of the data are NA. ",
-            "Only pairwise complete observations are used.",
-            call. = FALSE)
+    if (any(is.na(data)))
+        warning(" In ", args$call[1], ": ",
+                "Some of the data are NA. ",
+                "Only pairwise complete observations are used.",
+                call. = FALSE)
 
     ## sanity checks
     if (!(selectioncrit %in% c("AIC", "BIC", "logLik")))
