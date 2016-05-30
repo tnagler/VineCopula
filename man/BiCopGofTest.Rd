@@ -113,8 +113,8 @@ procedure for the corresponding non-rotated copula is used.
 \examples{
 
 # simulate from a bivariate Clayton copula
-set.seed(123)
-simdata <- BiCopSim(300, 3, 2)
+\dontshow{set.seed(123)}
+simdata <- BiCopSim(100, 3, 2)
 u1 <- simdata[,1]
 u2 <- simdata[,2]
 
@@ -122,17 +122,13 @@ u2 <- simdata[,2]
 BiCopGofTest(u1, u2, family = 3)
 
 # perform White's goodness-of-fit test for the Frank copula
-BiCopGofTest(u1, u2, family = 5)
+\donttest{BiCopGofTest(u1, u2, family = 5)}
 
 # perform Kendall's goodness-of-fit test for the true copula
-gof <- BiCopGofTest(u1, u2, family = 3, method = "kendall", B=50)
-gof$p.value.CvM
-gof$p.value.KS
+BiCopGofTest(u1, u2, family = 3, method = "kendall", B=50)
 
 # perform Kendall's goodness-of-fit test for the Frank copula
-gof <- BiCopGofTest(u1, u2, family = 5, method = "kendall", B=50)
-gof$p.value.CvM
-gof$p.value.KS
+\donttest{BiCopGofTest(u1, u2, family = 5, method = "kendall", B=50)}
 
 }
 \author{

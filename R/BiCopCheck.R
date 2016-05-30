@@ -57,9 +57,8 @@
 #' @examples
 #' ## check parameter of Clayton copula
 #' BiCopCheck(3, 1)  # works
-#' \dontrun{
-#' BiCopCheck(3, -1)  # does not work (only positive parameter is allowed)
-#' }
+#'
+#' \dontrun{BiCopCheck(3, -1)  # does not work (only positive parameter is allowed)}
 #'
 BiCopCheck <- function(family, par, par2 = 0, ...) {
     # see if call has been passed via ...

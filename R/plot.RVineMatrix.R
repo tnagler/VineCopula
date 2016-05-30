@@ -10,7 +10,9 @@
 #' be \code{1.25/length(tree)*(d - min(tree))} times the plot width.
 #'
 #' @method plot RVineMatrix
+#'
 #' @aliases plot.RVineMatrix contour.RVineMatrix
+#'
 #' @param x \code{RVineMatrix} object.
 #' @param tree \code{"ALL"} or integer vector; specifies which trees are
 #' plotted.
@@ -34,13 +36,17 @@
 #' @param \dots Arguments passed to
 #' \code{\link[network:plot.network]{plot.network}} or
 #' \code{\link[VineCopula:plot.BiCop]{plot.BiCop}} respectively.
+#'
 #' @author Thomas Nagler, Nicole Barthel
+#'
 #' @seealso \code{\link[VineCopula:RVineMatrix]{RVineMatrix}},
 #' \code{\link[network:plot.network]{plot.network}},
 #' \code{\link[VineCopula:plot.BiCop]{plot.BiCop}},
 #' \code{\link[VineCopula:BiCopName]{BiCopName}},
 #' \code{\link[graphics:legend]{legend}}
+#'
 #' @keywords plot
+#'
 #' @examples
 #'
 #' ## build vine model
@@ -50,10 +56,8 @@
 #' par2mat  <- matrix(c(0,   0, 0, 0, 0, 0, 0, 0, 0), 3, 3)
 #' RVM  <- RVineMatrix(strucmat, fammat, parmat, par2mat)
 #'
-#'\dontrun{
 #' # plot trees
 #' plot(RVM)
-#' }
 #'
 #' # show contour plots
 #' contour(RVM)

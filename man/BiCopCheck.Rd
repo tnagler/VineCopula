@@ -67,9 +67,8 @@ can be used within other functions of this package.
 \examples{
 ## check parameter of Clayton copula
 BiCopCheck(3, 1)  # works
-\dontrun{
-BiCopCheck(3, -1)  # does not work (only positive parameter is allowed)
-}
+
+\dontrun{BiCopCheck(3, -1)  # does not work (only positive parameter is allowed)}
 
 }
 \author{

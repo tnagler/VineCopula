@@ -114,9 +114,10 @@ For more and detailed information about the goodness-of-fit test see
 Belgorodski (2010).
 }
 \examples{
+\dontshow{set.seed(123)}
 # simulate from a t-copula
-set.seed(123)
 dat <- BiCopSim(500, 2, 0.7, 5)
+\dontshow{dat <- dat[1:100, ]}
 
 # apply the test for families 1-6
 BiCopVuongClarke(dat[,1], dat[,2], familyset = 1:6)

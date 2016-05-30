@@ -100,9 +100,9 @@
 #'                    par = par, par2 = par2,
 #'                    names = c("V1", "V2", "V3", "V4", "V5"))
 #'
-#' ## simulate a sample of size 1000 from the R-vine copula model
+#' ## simulate a sample of size 500 from the R-vine copula model
 #' set.seed(123)
-#' simdata <- RVineSim(1000, RVM)
+#' simdata <- RVineSim(500, RVM)
 #'
 #' ## determine the pair-copula families and parameters
 #' RVM1 <- RVineCopSelect(simdata, familyset = c(1, 3, 4, 5 ,6), Matrix)
@@ -112,9 +112,8 @@
 #' summary(RVM1)
 #'
 #' ## inspect the fitted model using plots
-#' \dontrun{
 #' plot(RVM1)  # tree structure
-#' }
+#'
 #' contour(RVM1)  # contour plots of all pair-copulas
 #'
 RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", indeptest = FALSE,

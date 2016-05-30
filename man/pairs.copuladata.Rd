@@ -62,7 +62,7 @@ the points in the scatter plot (\code{upper.panel}) }
 \examples{
 
 data(daxreturns)
-
+\dontshow{daxreturns <- daxreturns[1:50, ]}
 data <- as.copuladata(daxreturns)
 sel <- c(4,5,14,15)
 

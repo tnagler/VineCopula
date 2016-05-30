@@ -110,8 +110,8 @@ The function has to be of type \code{function(u1, u2, weights) ...} and must
 return a numeric value. The weigths argument must exist, but does not has to
 be used. For example, \code{"tau"} (withouth using weights) can be implemented
 as follows:\cr
-\code{function(u1, u2, weights) \cr      abs(cor(u1, u2,
- method = "kendall", use = "complete.obs"))}
+\code{function(u1, u2, weights)} \cr
+    \code{abs(cor(u1, u2, method = "kendall", use = "complete.obs"))}
 
 
 The root nodes of C-vine trees are determined similarly by identifying the
@@ -133,9 +133,9 @@ For a comprehensive summary of the vine copula model, use
 data(daxreturns)
 
 # select the R-vine structure, families and parameters
-# using only the first 4 variables and the first 750 observations
+# using only the first 4 variables and the first 250 observations
 # we allow for the copula families: Gauss, t, Clayton, Gumbel, Frank and Joe
-daxreturns <- daxreturns[1:750,1:4]
+daxreturns <- daxreturns[1:250, 1:4]
 RVM <- RVineStructureSelect(daxreturns, c(1:6), progress = TRUE)
 
 ## see the object's content or a summary

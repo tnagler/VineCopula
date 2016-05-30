@@ -46,11 +46,12 @@
 #' Nonnested Model Selection. Political Analysis, 15, 347-363.
 #' @examples
 #'
-#' \dontrun{
+#'
 #' # vine structure selection time-consuming (~ 20 sec)
 #'
 #' # load data set
 #' data(daxreturns)
+#' \dontshow{daxreturns <- daxreturns[1:200, ]}
 #'
 #' # select the R-vine structure, families and parameters
 #' RVM <- RVineStructureSelect(daxreturns[,1:5], c(1:6))
@@ -70,7 +71,7 @@
 #' clarke$statistic.Schwarz
 #' clarke$p.value
 #' clarke$p.value.Schwarz
-#' }
+#'
 #'
 #' @export RVineClarkeTest
 RVineClarkeTest <- function(data, RVM1, RVM2) {
