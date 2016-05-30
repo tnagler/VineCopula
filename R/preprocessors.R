@@ -489,7 +489,7 @@ check_RVM <- function(RVM, name, call, d, check.pars) {
                                RVM$par2[i, j],
                                call = call)
                 } else {
-                    ind <- (RVM$family[i, j] %in% c(5, 3, 13, 23, 33)) & (RVM$par[i, j] == 0)
+                    indep <- (RVM$family[i, j] %in% c(5, 3, 13, 23, 33)) & (RVM$par[i, j] == 0)
                     if (indep)
                         RVM$family[i, j] <- 0
                 }
