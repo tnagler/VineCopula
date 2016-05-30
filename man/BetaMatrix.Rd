@@ -18,10 +18,10 @@ This function computes the empirical Blomqvist's beta.
 \examples{
 
 data(daxreturns)
-Data <- as.matrix(daxreturns)
+data <- as.matrix(daxreturns)
 
 # compute the empirical Blomqvist's betas
-BetaMatrix(Data)
+BetaMatrix(data)
 
 }
 \author{
