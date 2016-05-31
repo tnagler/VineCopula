@@ -30,6 +30,10 @@ check_u <- function(args) {
         stop("\n In ", args$call[1], ": ",
              "Lengths of 'u1' and 'u2' do not match.",
              call. = FALSE)
+    if (!is.numeric(args$u1) | !is.numeric(args$u2))
+        stop("\n In ", args$call[1], ": ",
+             "u1 and/or u2 have to be numeric vectors.",
+             call. = FALSE)
 
     args
 }
@@ -426,11 +430,19 @@ check_data <- function(args) {
         stop("\n In ", args$call[1], ": ",
              "Argument data is missing.",
              call. = FALSE)
+    if (is.null(args$data))
+        stop("\n In ", args$call[1], ": ",
+             "Argument data is missing.",
+             call. = FALSE)
     if (is.vector(args$data)) {
         args$data <- t(as.matrix(args$data))
     } else {
         args$data <- as.matrix(args$data)
     }
+    if (!is.numeric(args$data))
+        stop("\n In ", args$call[1], ": ",
+             "Data have to be numeric.",
+             call. = FALSE)
     if (ncol(args$data) < 2)
         stop("\n In ", args$call[1], ": ",
              "Dimension has to be at least 2.",
