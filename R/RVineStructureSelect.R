@@ -280,7 +280,7 @@ set_treecrit <- function(treecrit, famset) {
     } else if (all(treecrit == "tau")) {
         treecrit <- function(u1, u2, weights) {
             complete.i <- which(!is.na(u1 + u2))
-            if (length(complete.i) < 2) {
+            if (length(complete.i) < 10) {
                 tau <- 0
             } else {
                 complete.freq <- mean(!is.na(u1 + u2))
@@ -291,7 +291,7 @@ set_treecrit <- function(treecrit, famset) {
     } else if (all(treecrit == "rho")) {
         treecrit <- function(u1, u2, weights) {
             complete.i <- which(!is.na(u1 + u2))
-            if (length(complete.i) < 2) {
+            if (length(complete.i) < 10) {
                 tau <- 0
             } else {
                 complete.freq <- mean(!is.na(u1 + u2))
