@@ -7,7 +7,7 @@
 BiCopPar2TailDep(family, par, par2 = 0, obj = NULL, check.pars = TRUE)
 }
 \arguments{
-\item{family}{integer; single number or vector of size \code{m}; defines the
+\item{family}{integer; single number or vector of size \code{n}; defines the
 bivariate copula family: \cr
 \code{0} = independence copula \cr
 \code{1} = Gaussian copula \cr
@@ -50,9 +50,9 @@ bivariate copula family: \cr
 \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
 \code{234} = rotated Tawn type 2 copula (270 degrees) \cr}
 
-\item{par}{numeric; single number or vector of size \code{m}; copula parameter.}
+\item{par}{numeric; single number or vector of size \code{n}; copula parameter.}
 
-\item{par2}{numeric; single number or vector of size \code{m}; second
+\item{par2}{numeric; single number or vector of size \code{n}; second
 parameter for bivariate copulas with two parameters (t, BB1, BB6, BB7, BB8,
 Tawn type 1 and type 2; default: \code{par2 = 0}). \code{par2} should be an
 positive integer for the Students's t copula \code{family = 2}.}
@@ -120,7 +120,8 @@ If the family and parameter specification is stored in a \code{BiCop} object
 can be used.
 }
 \note{
-The number \code{m} can be chosen arbitrarily.
+The number \code{n} can be chosen arbitrarily, but must agree across
+arguments.
 }
 \examples{
 ## Example 1: Gaussian copula

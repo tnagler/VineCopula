@@ -4,7 +4,7 @@
 #' for a given value of Kendall's tau.
 #'
 #'
-#' @param family integer; single number or vector of size \code{m}; defines the
+#' @param family integer; single number or vector of size \code{n}; defines the
 #' bivariate copula family: \cr \code{0} = independence copula \cr \code{1} =
 #' Gaussian copula \cr \code{2} = Student t copula (Here only the first
 #' parameter can be computed) \cr \code{3} = Clayton copula \cr \code{4} =
@@ -18,10 +18,11 @@
 #' (270 degrees) \cr \code{36} = rotated Joe copula (270 degrees)\cr Note that
 #' (with exception of the t-copula) two parameter bivariate copula families
 #' cannot be used.
-#' @param tau numeric; single number or vector of size \code{m}; Kendall's tau
+#' @param tau numeric; single number or vector of size \code{n}; Kendall's tau
 #' value (vector with elements in [-1,1]).
 #' @param check.taus logical; default is \code{TRUE}; if \code{FALSE}, checks
 #' for family/tau-consistency are ommited (should only be used with care).
+#'
 #' @return Parameter (vector) corresponding to the bivariate copula family and
 #' the value(s) of Kendall's tau (\eqn{\tau}). \tabular{ll}{ No.
 #' (\code{family}) \tab Parameter (\code{par}) \cr \code{1, 2} \tab
@@ -33,6 +34,9 @@
 #' \eqn{2\frac{\tau}{1+\tau}}{2\tau/(1+\tau)} \cr \code{24, 34} \tab
 #' \eqn{-\frac{1}{1+\tau}}{-1/(1+\tau)} \cr \code{26, 36} \tab no closed form
 #' expression (numerical inversion) }
+#'
+#' @note The number \code{n} can be chosen arbitrarily, but must agree across
+#' arguments.
 #'
 #' @author Jakob Stoeber, Eike Brechmann, Tobias Erhardt
 #'

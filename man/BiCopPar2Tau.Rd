@@ -50,10 +50,10 @@ bivariate copula family: \cr
 \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
 \code{234} = rotated Tawn type 2 copula (270 degrees) \cr}
 
-\item{par}{numeric; single number or vector of size \code{m}; copula
+\item{par}{numeric; single number or vector of size \code{n}; copula
 parameter.}
 
-\item{par2}{numeric; single number or vector of size \code{m}; second
+\item{par2}{numeric; single number or vector of size \code{n}; second
 parameter for bivariate copulas with two parameters (t, BB1, BB6, BB7, BB8,
 Tawn type 1 and type 2; default: \code{par2 = 0}).  Note that the degrees of
 freedom parameter of the t-copula does not need to be set, because the
@@ -124,7 +124,8 @@ object \code{obj}, the alternative version \cr
 \preformatted{BiCopPar2Tau(obj)} can be used.
 }
 \note{
-The number \code{m} can be chosen arbitrarily.
+The number \code{n} can be chosen arbitrarily, but must agree across
+arguments.
 }
 \examples{
 ## Example 1: Gaussian copula

@@ -7,7 +7,7 @@
 #' object \code{obj}, the alternative version \cr
 #' \preformatted{BiCopPar2Beta(obj)} can be used.
 #'
-#' @param family integer; single number or vector of size \code{m}; defines the
+#' @param family integer; single number or vector of size \code{n}; defines the
 #' bivariate copula family: \cr
 #' \code{0} = independence copula \cr
 #' \code{2} = Student t copula (t-copula) \cr
@@ -51,9 +51,9 @@
 #' \code{234} =  rotated Tawn type 2 copula (270 degrees) \cr
 #' Note that the Student's t-copula is not allowed since the CDF of the t-copula
 #' is not implemented (see \code{\link{BiCopCDF}}).
-#' @param par numeric; single number or vector of size \code{m}; copula
+#' @param par numeric; single number or vector of size \code{n}; copula
 #' parameter.
-#' @param par2 numeric; single number or vector of size \code{m}; second
+#' @param par2 numeric; single number or vector of size \code{n}; second
 #' parameter for the two parameter BB1, BB6, BB7, BB8, Tawn type 1 and type 2
 #' copulas (default: \code{par2 = 0}).
 #' @param obj \code{BiCop} object containing the family and parameter
@@ -65,7 +65,8 @@
 #' @return Theoretical value of Blomqvist's beta corresponding to the bivariate
 #' copula \code{family} and parameter(s) \code{par}, \code{par2}.
 #'
-#' @note The number \code{m} can be chosen arbitrarily.
+#' @note The number \code{n} can be chosen arbitrarily, but must agree across
+#' arguments.
 #'
 #' @author Ulf Schepsmeier
 #'

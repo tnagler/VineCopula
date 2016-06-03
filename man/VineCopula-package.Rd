@@ -6,19 +6,27 @@
 \alias{VineCopula-package}
 \title{Statistical Inference of Vine Copulas}
 \description{
-Tools for bivariate exploratory data analysis, bivariate copula selection
-and (vine) tree construction are provided. Vine copula models can be
-estimated either sequentially or by joint maximum likelihood estimation.
-Sampling algorithms and plotting methods are included. Data is assumed to
-lie in the unit hypercube (so-called copula data). For C- and D-vines links
-to the package 'CDVine' are provided.
+Vine copulas are a flexible class of dependence models consisting of
+bivariate building blocks (see e.g., Aas et al., 2009). This package is
+primarily made for the statistical analysis of vine copula
+models. The package includes tools for parameter estimation, model selection,
+simulation, goodness-of-fit tests, and visualization. Tools for estimation,
+selection and exploratory data analysis of bivariate copula models are
+also provided.
 }
 \details{
-\tabular{ll}{ Package: \tab VineCopula\cr Type: \tab Package\cr Version:
-\tab 1.7\cr Date: \tab 2015-07-30\cr License: \tab GPL (>=2)\cr Depends:
-\tab R (\eqn{\geq 2.11.0}{>= 2.11.0})\cr Imports: \tab graphics, grDevices,
-stats, utils, MASS, mvtnorm, network, methods, copula, ADGofTest, lattice\cr
-Suggests: \tab CDVine, TSP\cr LazyLoad: \tab yes }
+\tabular{ll}{
+Package: \tab VineCopula\cr
+Type: \tab Package\cr
+Version: \tab 2.0.0 \cr
+Date: \tab 2016-06-03\cr
+License: \tab GPL (>=2)\cr
+Depends: \tab R (\eqn{\geq 2.11.0}{>= 2.11.0})\cr
+Imports: \tab graphics, grDevices,
+stats, utils, MASS, mvtnorm, network, methods, copula (>= 0.999-10),
+kdecopula (>= 0.6.0), ADGofTest, lattice, doParallel, parallel, foreach \cr
+Suggests: \tab CDVine, TSP, shiny\cr
+LazyLoad: \tab yes }
 }
 \section{Remark}{
  The package \code{VineCopula} is a continuation of the

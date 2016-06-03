@@ -7,7 +7,7 @@
 BiCopPar2Beta(family, par, par2 = 0, obj = NULL, check.pars = TRUE)
 }
 \arguments{
-\item{family}{integer; single number or vector of size \code{m}; defines the
+\item{family}{integer; single number or vector of size \code{n}; defines the
 bivariate copula family: \cr
 \code{0} = independence copula \cr
 \code{2} = Student t copula (t-copula) \cr
@@ -52,10 +52,10 @@ bivariate copula family: \cr
 Note that the Student's t-copula is not allowed since the CDF of the t-copula
 is not implemented (see \code{\link{BiCopCDF}}).}
 
-\item{par}{numeric; single number or vector of size \code{m}; copula
+\item{par}{numeric; single number or vector of size \code{n}; copula
 parameter.}
 
-\item{par2}{numeric; single number or vector of size \code{m}; second
+\item{par2}{numeric; single number or vector of size \code{n}; second
 parameter for the two parameter BB1, BB6, BB7, BB8, Tawn type 1 and type 2
 copulas (default: \code{par2 = 0}).}
 
@@ -80,7 +80,8 @@ object \code{obj}, the alternative version \cr
 \preformatted{BiCopPar2Beta(obj)} can be used.
 }
 \note{
-The number \code{m} can be chosen arbitrarily.
+The number \code{n} can be chosen arbitrarily, but must agree across
+arguments.
 }
 \examples{
 ## Example 1: Gaussian copula

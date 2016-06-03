@@ -49,9 +49,9 @@
 #' \code{214} = rotated Tawn type 2 copula (180 degrees) \cr
 #' \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
 #' \code{234} = rotated Tawn type 2 copula (270 degrees) \cr
-#' @param par numeric; single number or vector of size \code{m}; copula
+#' @param par numeric; single number or vector of size \code{n}; copula
 #' parameter.
-#' @param par2 numeric; single number or vector of size \code{m}; second
+#' @param par2 numeric; single number or vector of size \code{n}; second
 #' parameter for bivariate copulas with two parameters (t, BB1, BB6, BB7, BB8,
 #' Tawn type 1 and type 2; default: \code{par2 = 0}).  Note that the degrees of
 #' freedom parameter of the t-copula does not need to be set, because the
@@ -108,7 +108,8 @@
 #'
 #' }
 #'
-#' @note The number \code{m} can be chosen arbitrarily.
+#' @note The number \code{n} can be chosen arbitrarily, but must agree across
+#' arguments.
 #'
 #' @author Ulf Schepsmeier, Tobias Erhardt
 #'

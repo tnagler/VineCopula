@@ -7,7 +7,7 @@
 BiCopTau2Par(family, tau, check.taus = TRUE)
 }
 \arguments{
-\item{family}{integer; single number or vector of size \code{m}; defines the
+\item{family}{integer; single number or vector of size \code{n}; defines the
 bivariate copula family: \cr \code{0} = independence copula \cr \code{1} =
 Gaussian copula \cr \code{2} = Student t copula (Here only the first
 parameter can be computed) \cr \code{3} = Clayton copula \cr \code{4} =
@@ -22,7 +22,7 @@ rotated Clayton copula (270 degrees) \cr \code{34} = rotated Gumbel copula
 (with exception of the t-copula) two parameter bivariate copula families
 cannot be used.}
 
-\item{tau}{numeric; single number or vector of size \code{m}; Kendall's tau
+\item{tau}{numeric; single number or vector of size \code{n}; Kendall's tau
 value (vector with elements in [-1,1]).}
 
 \item{check.taus}{logical; default is \code{TRUE}; if \code{FALSE}, checks
@@ -44,6 +44,10 @@ expression (numerical inversion) }
 \description{
 This function computes the parameter of a (one parameter) bivariate copula
 for a given value of Kendall's tau.
+}
+\note{
+The number \code{n} can be chosen arbitrarily, but must agree across
+arguments.
 }
 \examples{
 ## Example 1: Gaussian copula
