@@ -28,11 +28,15 @@ check_u <- function(args) {
              call. = FALSE)
     if (length(args$u1) != length(args$u2))
         stop("\n In ", args$call[1], ": ",
-             "Lengths of 'u1' and 'u2' do not match.",
+             "Lengths of u1 and u2 do not match.",
              call. = FALSE)
-    if (!is.numeric(args$u1) | !is.numeric(args$u2))
+    if ((!is.numeric(args$u1) & !all(is.na(args$u1))))
         stop("\n In ", args$call[1], ": ",
-             "u1 and/or u2 have to be numeric vectors.",
+             "u1 has to be a numeric vector.",
+             call. = FALSE)
+    if ((!is.numeric(args$u2) & !all(is.na(args$u2))))
+        stop("\n In ", args$call[1], ": ",
+             "u2 has to be a numeric vector.",
              call. = FALSE)
 
     args
@@ -44,22 +48,30 @@ check_u <- function(args) {
 fix_nas <- function(args) {
     if (!is.null(args$data)) {
         if (any(is.na(args$data))) {
+            num.na <- sum(!complete.cases(args$data))
+            freq.na <- round(num.na / nrow(args$data) * 100, 1)
             # set warning message
             args$msg <- paste0(" In ",
                                args$call[1],
                                ": ",
-                               "Some of the data are NA.",
+                               num.na, " of the evaluation points",,
+                               " (", freq.na, "%) contain",
+                               ifelse(num.na == 1, "s", ""), " NAs.",
                                args$na.txt)
             # set NA values to 0.5 so that C code can operate (will be reset to NA)
             args$na.ind <- which(!complete.cases(args$data))
             args$data[args$na.ind, ] <- 0.5
         }
     } else if (any(is.na(args$u1 + args$u2))) {
+        num.na <- sum(!complete.cases(args$u1 + args$u2))
+        freq.na <- round(num.na / length(args$u1) * 100, 1)
         # set warning message
         args$msg <- paste0(" In ",
                            args$call[1],
                            ": ",
-                           "Some of the data are NA.",
+                           num.na, " of the evaluation points",
+                           " (", freq.na, "%) contain",
+                           ifelse(num.na == 1, "s", ""), " NAs.",
                            args$na.txt)
         # set NA values to 0.5 so that C code can operate (will be reset to NA)
         args$na.ind <- which(is.na(args$u1 + args$u2))
@@ -96,12 +108,16 @@ remove_nas <- function(args) {
     if (!is.null(args$data)) {
         if (any(is.na(args$data))) {
             # set warning message
-            msg <- paste0(" In ",
-                          args$call[1],
-                          ": ",
-                          "Some of the data are NA.",
-                          args$na.txt)
-            warning(msg, call. = FALSE)
+            num.na <- sum(!complete.cases(args$data))
+            freq.na <- round(num.na / nrow(args$data) * 100, 1)
+            warning(" In ",
+                    args$call[1],
+                    ": ",
+                    num.na, " observation", ifelse(num.na > 1, "s", ""),
+                    " (", freq.na, "%) contain",
+                    ifelse(num.na == 1, "s", ""), " NAs.",
+                    args$na.txt,
+                    call. = FALSE)
             # remove NAs
             args$na.ind <- which(!complete.cases(args$data))
             args$data <- args$data[complete.cases(args$data), , drop = FALSE]
@@ -110,12 +126,16 @@ remove_nas <- function(args) {
     } else {
         if (any(is.na(args$u1 + args$u2))) {
             # set warning message
-            msg <- paste0(" In ",
-                          args$call[1],
-                          ": ",
-                          "Some of the data are NA.",
-                          args$na.txt)
-            warning(msg, call. = FALSE)
+            num.na <- sum(!complete.cases(args$u1 + args$u2))
+            freq.na <- round(num.na / length(args$u1) * 100, 1)
+            warning(" In ",
+                    args$call[1],
+                    ": ",
+                    num.na, " observation", ifelse(num.na > 1, "s", ""),
+                    " (", freq.na, "%) contain",
+                    ifelse(num.na == 1, "s", ""), " NAs.",
+                    args$na.txt,
+                    call. = FALSE)
             # remove NAs
             args$na.ind <- which(is.na(args$u1 + args$u2))
             args$u1 <- args$u1[-args$na.ind]
@@ -439,7 +459,7 @@ check_data <- function(args) {
     } else {
         args$data <- as.matrix(args$data)
     }
-    if (!is.numeric(args$data))
+    if (!is.numeric(args$data) & !all(is.na(args$data)))
         stop("\n In ", args$call[1], ": ",
              "Data have to be numeric.",
              call. = FALSE)
