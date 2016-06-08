@@ -5,8 +5,8 @@ VineCopula
 
 [![Build status Linux](https://travis-ci.org/tnagler/VineCopula.svg?branch=master)](https://travis-ci.org/tnagler/VineCopula)
 [![Windows Build status](http://ci.appveyor.com/api/projects/status/github/tnagler/VineCopula?svg=true)](https://ci.appveyor.com/project/tnagler/VineCopula)
-[![CRAN version](http://www.r-pkg.org/badges/version/VineCopula)](https://cran.r-project.org/web/packages/VineCopula/index.html) 
-[![CRAN downloads](http://cranlogs.r-pkg.org/badges/VineCopula)](https://cran.r-project.org/web/packages/VineCopula/index.html)
+[![CRAN version](http://www.r-pkg.org/badges/version/VineCopula)](https://cran.r-project.org/package=VineCopula) 
+[![CRAN downloads](http://cranlogs.r-pkg.org/badges/VineCopula)](https://cran.r-project.org/package=VineCopula)
 
 Vine copulas are a flexible class of dependence models consisting of bivariate 
 building blocks (see e.g., Aas et al., 2009). You can find a comprehensive 
@@ -100,12 +100,7 @@ hypercube.
     `BiCopHfuncDeriv2`, `BiCopHinv`. Functions are vectorized in the `family`,
     `par`, and `par2` arguments. 
     
-  * `BiCopMetaContour`: Contour plots for a bivariate copula. If data is
-    provided, you can create a plot of a kernel estimate of the copula density.
-    In the latter case, we recommed to use the 
-    [kdecopula](https://github.com/tnagler/kdecopula) package (Nagler, 2015)
-    which implements state-of-the art kernel smoothers for bivariate copula
-    densities.
+  * `BiCopKDE`: Kernel density plots for copula data.
     
   * `BiCopLambda`, `BiCopKPlot`, `BiCopChiPlot`: Further plot types for the 
     analysis of bivariate copulas.
@@ -161,7 +156,7 @@ D-vine copulas. This is particularly useful for former users of the CDVine
 package. 
 
 Furthermore, bivariate and vine copula models from this packages can be used
-with the [copula](https://r-forge.r-project.org/R/?group_id=600) package 
+with the [copula](https://cran.r-project.org/package=copula) package 
 (Hofert et al., 2015). For example, `vineCopula` transforms an `RVineMatrix` 
 object into an object of class `vineCopula` which provides methods for
 `dCopula`, `pCopula`, and `rCopula`. For more details, we refer to the package 
@@ -217,16 +212,6 @@ parameters `par` and `par2` and internal coding `family`:
 Associated shiny apps
 ---------------------
 
-### Copulatheque
-This small shiny app illustrates a couple of bivariate copula families 
-implemented in the [copula](http://cran.r-project.org/web/packages/copula/index.html), [VineCopula](http://cran.r-project.org/web/packages/VineCopula/index.html) and [spcopula](http://r-forge.r-project.org/projects/spcopula/) R packages. Density
-and pairs plots are drawn as well as Kendall's tau and tail dependence 
-coefficients.  
-Author: Benedikt Gräler (Universtity of Münster) 
-
-http://ifgi.uni-muenster.de/~b_grae02/indexCopulatheque.html
-
-
 ### rvinegraph
 This small shiny app enables the user to draw nice tree plots of an R-Vine
 copula model using the package 
@@ -262,7 +247,7 @@ Eschenburg, P. (2013). Properties of extreme-value copulas Diploma thesis, Techn
 
 Hofert, M., I. Kojadinovic, M. Maechler, and J. Yan (2015). copula: Multivariate
 Dependence with Copulas. R package version 0.999-13 
-<http://CRAN.R-project.org/package=copula>
+<https://cran.r-project.org/package=VineCopula>
 
 Joe, H. (1996). Families of m-variate distributions with given margins and m(m-1)/2 bivariate dependence parameters. In L. Rueschendorf, B. Schweizer, and M. D. Taylor (Eds.), Distributions with fixed marginals and related topics, pp. 120-141. Hayward: Institute of Mathematical Statistics.
 
@@ -277,7 +262,7 @@ Kurowicka, D. and H. Joe (Eds.) (2011). Dependence Modeling: Vine Copula Handboo
 Nelsen, R. (2006). An introduction to copulas. Springer
 
 Nagler, T. (2015). kdecopula: Kernel Smoothing for Bivariate Copula Densities. R package
-version 0.5.0. <http://cran.r-project.org/web/packages/kdecopula>
+version 0.6.0. <https://cran.r-project.org/package=kdecopula>
 
 Schepsmeier, U. and J. Stoeber (2012). Derivatives and Fisher information of bivariate copulas. Statistical Papers, 55 (2), 525-542. <http://link.springer.com/article/10.1007/s00362-013-0498-x>.
 
