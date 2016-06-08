@@ -213,5 +213,5 @@ calcTD <- function(family, par, par2) {
     }
 
     ## return result
-    c(upper, lower)
+    c(lower, upper)
 }
