@@ -179,6 +179,9 @@ match_spec_lengths <- function(args) {
     n <- ifelse(!is.null(args$u1),
                 length(args$u1),
                 max(length(args$family), length(args$par), length(args$par2)))
+    args$family <- c(args$family)
+    args$par <- c(args$par)
+    args$par2 <- c(args$par2)
 
     # if one vector is size n, expand all vectors to size n
     if (any(c(length(args$family), length(args$par), length(args$par2)) != n)) {

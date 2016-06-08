@@ -107,6 +107,8 @@ BiCopTau2Par <- function(family, tau, check.taus = TRUE) {
         stop("some tau is too close to -1 or 1")
 
     ## adjust length for input vectors; stop if not matching
+    family <- c(family)
+    tau <- c(tau)
     n <- max(length(family), length(tau))
     if (length(family) == 1)
         family <- rep(family, n)
