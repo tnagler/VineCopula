@@ -3,10 +3,8 @@ Type: Package
 Title: Statistical Inference of Vine Copulas
 Version: 2.0.0
 Date: 2016-06-08
-Description: Vine copulas are a flexible class of dependence models consisting
-    of bivariate building blocks (see e.g., Aas et al., 2009). This package is
-    primarily made for the statistical analysis of vine copula models. The
-    package includes tools for parameter estimation, model selection,
+Description: Provides tools for the statistical analysis of vine copula models. 
+    The package includes tools for parameter estimation, model selection,
     simulation, goodness-of-fit tests, and visualization. Tools for estimation,
     selection and exploratory data analysis of bivariate copula models are also
     provided.
