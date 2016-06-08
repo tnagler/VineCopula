@@ -183,7 +183,7 @@ match_spec_lengths <- function(args) {
     args$par <- c(args$par)
     args$par2 <- c(args$par2)
 
-    # if one vector is size n, expand all vectors to size n
+        # if one vector is size n, expand all vectors to size n
     if (any(c(length(args$family), length(args$par), length(args$par2)) != n)) {
         if (length(args$family) == 1)
             args$family <- rep(args$family, n)
@@ -625,7 +625,7 @@ check_par2mat <- function(args) {
 }
 
 set_dims <- function(family, par = 0, par2 = 0, tau = 0) {
-    dims <- 1
+    dims <- max(length(family), length(par), length(par2), length(tau))
     if (!is.null(dim(family)))
         dims <- dim(family)
     if (!is.null(dim(par)))
