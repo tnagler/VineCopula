@@ -2,7 +2,7 @@ Package: VineCopula
 Type: Package
 Title: Statistical Inference of Vine Copulas
 Version: 2.0.0
-Date: 2016-05-30
+Date: 2016-06-08
 Description: Tools for bivariate exploratory data analysis, bivariate copula
     selection and (vine) tree construction are provided. Vine copula models can
     be estimated either sequentially or by joint maximum likelihood estimation.
