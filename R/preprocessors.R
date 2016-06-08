@@ -624,7 +624,17 @@ check_par2mat <- function(args) {
     args
 }
 
-
-
+set_dims <- function(family, par = 0, par2 = 0, tau = 0) {
+    dims <- 1
+    if (!is.null(dim(family)))
+        dims <- dim(family)
+    if (!is.null(dim(par)))
+        dims <- dim(par)
+    if (!is.null(dim(par2)))
+        dims <- dim(par2)
+    if (!is.null(dim(tau)))
+        dims <- dim(tau)
+    dims
+}
 
 

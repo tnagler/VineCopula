@@ -106,6 +106,9 @@ BiCopTau2Par <- function(family, tau, check.taus = TRUE) {
     if (any(abs(tau) > 0.99999))
         stop("some tau is too close to -1 or 1")
 
+    # fix for SemiParBIVProbit package
+    dims <- set_dims(family, tau = tau)
+
     ## adjust length for input vectors; stop if not matching
     family <- c(family)
     tau <- c(tau)
@@ -127,7 +130,7 @@ BiCopTau2Par <- function(family, tau, check.taus = TRUE) {
                   numeric(1))
 
     ## return result
-    out
+    array(out, dim = dims)
 }
 
 calcPar <- function(family, tau) {

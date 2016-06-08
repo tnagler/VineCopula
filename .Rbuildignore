@@ -7,3 +7,4 @@
 ^README\.Rmd$
 ^notes$
 tests/other
+revdep

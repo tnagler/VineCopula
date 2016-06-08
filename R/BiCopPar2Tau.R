@@ -251,6 +251,8 @@
 #'
 #' @export BiCopPar2Tau
 BiCopPar2Tau <- function(family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
+    # fix for SemiParBIVProbit package
+    dims <- set_dims(family, par, par2)
     # set arbitrary par2 for t-copula
     if (class(family) != "BiCop")
         par2[family == 2] <- par2[family == 2] + 4
@@ -267,7 +269,7 @@ BiCopPar2Tau <- function(family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
                   numeric(1))
 
     ## return result
-    out
+    array(out, dim = dims)
 }
 
 calcTau <- function(family, par, par2) {
