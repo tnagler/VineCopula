@@ -83,7 +83,6 @@
 #' \code{\link{BiCop}}
 #'
 #' @examples
-#'
 #' ## simulate from a bivariate Clayton copula
 #' set.seed(123)
 #' cop <- BiCop(family = 3, par = 3.4)
@@ -100,7 +99,6 @@
 #' ## and evaluate its CDF
 #' BiCopCDF(u1, u2, cop)
 #'
-#' @export BiCopCDF
 BiCopCDF <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),

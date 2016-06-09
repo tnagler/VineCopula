@@ -61,7 +61,7 @@ void difflPDF_rho_tCopula_vec(double* u, double* v, int* n, double* par, double*
 {
     int nn = 1;
     double* ipars = (double *) malloc(2*sizeof(double));
-    
+
     for (int i = 0; i < (*n); ++i) {
         ipars[0] = par[i];
         ipars[1] = par2[i];
@@ -82,7 +82,7 @@ void difflPDF_nu_tCopula_new(double* u, double* v, int* n, double* param, int* c
 	double rho = param[0];
 	double nu = param[1];
 
-	
+
 
 	t1=digamma((nu+1.0)/2.0);
 	t2=digamma(nu/2.0);
@@ -107,7 +107,7 @@ void difflPDF_nu_tCopula_new(double* u, double* v, int* n, double* param, int* c
 		t12=0.5*log((nu+x1*x1)*(nu+x2*x2));
 		t13=0.5*log(M);
 
-		out[j]=(t6 + t9 + t12 - t10*t11/M - t13);	
+		out[j]=(t6 + t9 + t12 - t10*t11/M - t13);
 	}
 
 }
@@ -117,12 +117,13 @@ void difflPDF_nu_tCopula_new_vec(double* u, double* v, int* n, double* par, doub
 {
     int nn = 1;
     double* ipars = (double *) malloc(2*sizeof(double));
-    
+
     for (int i = 0; i < (*n); ++i) {
         ipars[0] = par[i];
         ipars[1] = par2[i];
-        difflPDF_nu_tCopula_new(&u[i], &v[i], &nn, ipars, copula, &out[i]);
+        difflPDF_nu_tCopula_new(&u[i], &v[i], &nn, ipars, &copula[i], &out[i]);
     };
+    free(ipars);
 }
 
 
@@ -143,9 +144,9 @@ void diff2lPDF_rho_tCopula(double* u, double* v, int* n, double* param, int* cop
 	{
 		t1 = qt(u[j],nu,1,0);
 		t2 = qt(v[j],nu,1,0);
-		
+
 		M = ( nu*t4 + t1*t1 + t2*t2 - 2.0*rho*t1*t2 );
-		
+
 		t5 = (nu+2.0)*nu/M;
 		t6 = 2.0*(nu+2.0)*pow(nu*rho+t1*t2,2.0)/M/M;
 
@@ -167,7 +168,7 @@ void diff2lPDF_nu_tCopula_new(double* u, double* v, int* n, double* param, int* 
 	double rho = param[0];
 	double nu = param[1];
 
-	
+
 	t1=(nu+1.0)/2.0;
 	t2=nu/2.0;
 	t3=1.0/(nu*nu);
@@ -176,7 +177,7 @@ void diff2lPDF_nu_tCopula_new(double* u, double* v, int* n, double* param, int* 
 	t6=(1.0-rho*rho);
 	t9=0.5*trigamma(t2);
 	t10=-t5+t9-t3-t4;
-	
+
 
 	for(j=0;j<*n;j++)
 	{
@@ -209,7 +210,7 @@ void diff2lPDF_nu_tCopula_new(double* u, double* v, int* n, double* param, int* 
 		t22=t14*t14/t15/t15;
 
 		M_nu_nu=2.0*out1*out1 + 2.0*x1*out3 + 2.0*out2*out2 + 2.0*x2*out4 - 4.0*rho*out1*out2 - 2.0*rho*(x2*out3 + x1*out4);
-		
+
 		diffPDF_nu_tCopula_new(&u[j], &v[j], &k, param, copula, &diff_nu);
 
 		out[j]=( t10+0.5*(t13+t16) + t1*(t18-t21+t20-t22) + 0.5*t13 + 0.5*t16 - M_nu/M - (nu/2.0+1.0)*(M_nu_nu/M-M_nu*M_nu/M/M ));
@@ -230,12 +231,12 @@ void diff2lPDF_rho_nu_tCopula_new(double* u, double* v, int* n, double* param, i
 	double rho = param[0];
 	double nu = param[1];
 
-	
+
 	t4=1.0-rho*rho;
 	t3=rho/t4;
 	t5=nu+2.0;
 
-	
+
 
 	for(j=0;j<*n;j++)
 	{
@@ -251,7 +252,7 @@ void diff2lPDF_rho_nu_tCopula_new(double* u, double* v, int* n, double* param, i
 		M_nu=t4+2.0*x1*out1+2.0*x2*out2-2.0*rho*t8;
 		t9=-t3+t5/M*(rho+t8+0.5*M_nu*M_rho/M)-0.5*M_rho/M;
 
-		out[j]=t9;	
+		out[j]=t9;
 	}
 
 }
@@ -265,12 +266,10 @@ void diff2lPDF_rho_nu_tCopula_new(double* u, double* v, int* n, double* param, i
 
 void difflPDF_mod(double* u, double* v, int* n, double* param, int* copula, double* out)
 {
-  double* negv;
-  double* negu;
-  double* nparam;
-  negv = (double *) malloc(*n*sizeof(double));
-  negu = (double *) malloc(*n*sizeof(double));
-  nparam = (double *) malloc(2*sizeof(double));
+  double* negv = (double *) malloc(*n*sizeof(double));
+  double* negu = (double *) malloc(*n*sizeof(double));
+  double* nparam = (double *) malloc(2*sizeof(double));
+
   int ncopula;
   nparam[0]= -param[0];
   nparam[1]= -param[1];
@@ -294,14 +293,14 @@ void difflPDF_mod(double* u, double* v, int* n, double* param, int* copula, doub
   else if(((*copula==13) | (*copula==14) | (*copula==16) | (*copula==17) | (*copula==18) | (*copula==19) | (*copula==20)))	// 180? rotated copulas
 	{
 		ncopula = (*copula)-10;
-		for (i = 0; i < *n; ++i) 
+		for (i = 0; i < *n; ++i)
 		{
 			negv[i] = 1 - v[i];
 			negu[i] = 1 - u[i];
 		}
 		difflPDF(negu, negv, n, param, &ncopula, out);
 	}
-  else 
+  else
 	{
 		difflPDF(u, v, n, param, copula, out);
 	}
@@ -346,7 +345,7 @@ void difflPDF(double* u, double* v, int* n, double* param, int* copula, double* 
 		}
 		else if(*copula==1)
 		{
-			t1 = qnorm(u[j],0.0,1.0,1,0); 
+			t1 = qnorm(u[j],0.0,1.0,1,0);
 			t2 = qnorm(v[j],0.0,1.0,1,0);
 			t3 = theta*theta;
 			t4 = 1.0-t3;
@@ -489,14 +488,14 @@ void diff2lPDF_mod(double* u, double* v, int* n, double* param, int* copula, dou
   else if(((*copula==13) | (*copula==14) | (*copula==16) | (*copula==17) | (*copula==18) | (*copula==19) | (*copula==20)))	// 180? rotated copulas
 	{
 		ncopula = (*copula)-10;
-		for (i = 0; i < *n; ++i) 
+		for (i = 0; i < *n; ++i)
 		{
 			negv[i] = 1 - v[i];
 			negu[i] = 1 - u[i];
 		}
 		diff2lPDF(negu, negv, n, param, &ncopula, out);
 	}
-  else 
+  else
 	{
 		diff2lPDF(u, v, n, param, copula, out);
 	}
@@ -526,7 +525,7 @@ void diff2lPDF(double* u, double* v, int* n, double* param, int* copula, double*
 		}
 		else if(*copula==1)
 		{
-			t5 = qnorm(u[j],0.0,1.0,1,0); 
+			t5 = qnorm(u[j],0.0,1.0,1,0);
 			t6 = qnorm(v[j],0.0,1.0,1,0);
 			t1 = theta*theta;
 			t3 = t5*t5;

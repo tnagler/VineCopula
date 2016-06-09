@@ -100,6 +100,7 @@ BiCopDeriv <- function(u1, u2, family, par, par2 = 0, deriv = "par", log = FALSE
 
     ## call C routines for specified 'deriv' case
     n <- args$n
+
     if (length(par) == 1) {
         ## call for single parameters
         if (log == TRUE) {
@@ -110,7 +111,7 @@ BiCopDeriv <- function(u1, u2, family, par, par2 = 0, deriv = "par", log = FALSE
                               as.double(u2),
                               as.integer(n),
                               as.double(c(par, par2)),
-                              as.integer(2),
+                              as.integer(family),
                               as.double(rep(0, n)),
                               PACKAGE = "VineCopula")[[6]]
                 } else {
@@ -205,7 +206,7 @@ BiCopDeriv <- function(u1, u2, family, par, par2 = 0, deriv = "par", log = FALSE
                           as.integer(n),
                           as.double(par),
                           as.double(par2),
-                          as.integer(2),
+                          as.integer(family),
                           as.double(rep(0, n)),
                           PACKAGE = "VineCopula")[[7]]
             }

@@ -184,7 +184,7 @@ match_spec_lengths <- function(args) {
     args$par2 <- c(args$par2)
 
         # if one vector is size n, expand all vectors to size n
-    if (any(c(length(args$family), length(args$par), length(args$par2)) != n)) {
+    if (any(c(length(args$family), length(args$par), length(args$par2)) == n)) {
         if (length(args$family) == 1)
             args$family <- rep(args$family, n)
         if (length(args$par) == 1)
