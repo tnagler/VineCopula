@@ -1,3 +1,10 @@
+VineCopula 2.0.1 (June 9, 2016)
+----------------------------------------------------------------
+BUG FIXES
+
+  * fixed small memory leak (reported by Prof. Ripley, thanks!).
+
+
 VineCopula 2.0.0 (June 8, 2016)
 ----------------------------------------------------------------
 
