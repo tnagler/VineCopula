@@ -269,7 +269,9 @@ BiCopPar2Tau <- function(family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
                   numeric(1))
 
     ## return result
-    array(out, dim = dims)
+    if (length(dims) > 1)
+        out <- array(out, dim = dims)
+    out
 }
 
 calcTau <- function(family, par, par2) {

@@ -130,7 +130,9 @@ BiCopTau2Par <- function(family, tau, check.taus = TRUE) {
                   numeric(1))
 
     ## return result
-    array(out, dim = dims)
+    if (length(dims) > 1)
+        out <- array(out, dim = dims)
+    out
 }
 
 calcPar <- function(family, tau) {
