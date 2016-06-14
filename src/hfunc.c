@@ -187,7 +187,7 @@ void  Hfunc1(int* family,int* n,double* u,double* v,double* theta,double* nu,dou
         }else{
             ntheta=1/(1+*theta);
             for (int i = 0; i < *n; ++i) {negv[i]=1 - v[i];}
-            Hfunc (&nfamily, n, u, negv, &ntheta, &nnu, out);
+            Hfunc(&nfamily, n, u, negv, &ntheta, &nnu, out);
         }
     }else{
 
@@ -195,7 +195,7 @@ void  Hfunc1(int* family,int* n,double* u,double* v,double* theta,double* nu,dou
         {
             nfamily=(*family)-20;
             for (int i = 0; i < *n; ++i) {negv[i]=1 - v[i];}
-            Hfunc (&nfamily, n, u, negv, &ntheta, &nnu, out);
+            Hfunc(&nfamily, n, u, negv, &ntheta, &nnu, out);
         }
         else if(((*family==33) | (*family==34) | (*family==36) | (*family==37) | (*family==38) | (*family==39) | (*family==40) | (*family==71) ))
         {
@@ -753,13 +753,23 @@ void qcondgum(double* q, double* u, double* de, double* out)
     a=pow(2.*pow(z1,*de),1./(*de));
     mxdif=1; iter=0;
     dif=.1;  // needed in case first step leads to NaN
-    while(mxdif>1.e-6 && iter<20)
-    { g=a+de1*log(a)+con;
+    while ((mxdif > 1.e-6) && (iter < 20))
+    {
+        g=a+de1*log(a)+con;
         gp=1.+de1/a;
-        if(isnan(g) || isnan(gp) || isnan(g/gp) ) { dif/=-2.; }  // added for de>50
-        else dif=g/gp;
+        if (isnan(g) || isnan(gp) || isnan(g/gp) ) {
+          // added for de>50
+          dif/=-2.;
+        } else {
+          dif=g/gp;
+        }
         a-=dif; iter++;
-        while(a<=z1) { dif/=2.; a+=dif; }
+        int it = 0;
+        while ((a <= z1) && (it < 20)) {
+          dif /= 2.;
+          a += dif;
+          ++it;
+        }
         mxdif=fabs(dif);
     }
     z2=pow(pow(a,*de)-pow(z1,*de),1./(*de));
@@ -830,51 +840,84 @@ void qcondjoe(double* q, double* u, double* de, double* out)
 void HNumInv(int* family, double* u, double* v, double* theta, double* nu, double* out)
 {
 
-    int br=0, in=1;
-    double ans=0.0, tol=1e-12, x0=UMIN, x1=UMAX, fl, fh, val;
-    Hfunc1(family,&in,&x0,v,theta,nu,&fl); fl -= *u;
-    Hfunc1(family,&in,&x1,v,theta,nu,&fh); fh -= *u;
-    if(fabs(fl)<=tol) { ans=x0; br=1; }
-    if(fabs(fh)<=tol) { ans=x1; br=1; }
+    int br = 0, in = 1, it = 0;
+    double ans = 0.0, tol = 1e-12, x0 = UMIN, x1 = UMAX, fl, fh, val;
+    Hfunc1(family,&in,&x0,v,theta,nu,&fl);
+    fl -= *u;
+    Hfunc1(family,&in,&x1,v,theta,nu,&fh);
+    fh -= *u;
+    if (fabs(fl) <= tol) {
+        ans = x0;
+        br = 1;
+    }
+    if (fabs(fh) <= tol) {
+        ans = x1;
+        br = 1;
+    }
 
-    while(!br){
-
-        ans = (x0+x1)/2.0;
+    while (!br){
+        ans = (x0 + x1) / 2.0;
         Hfunc1(family,&in,&ans,v,theta,nu,&val);
         val -= *u;
+
         //stop if values become too close (avoid infinite loop)
-        if(fabs(val)<=tol) br=1;
-        if(fabs(x0-x1)<=tol) br=1;
+        if (fabs(val) <= tol) br = 1;
+        if (fabs(x0-x1) <= tol) br = 1;
 
-        if(val > 0.0) {x1 = ans; fh = val;}
-        else {x0 = ans; fl = val;}
+        if (val > 0.0) {
+            x1 = ans;
+            fh = val;
+        } else {
+            x0 = ans;
+            fl = val;
+        }
 
+        //stop if too many iterations are required (avoid infinite loop)
+        ++it;
+        if (it > 50) br = 1;
     }
+
     *out = ans;
 }
 
 void HNumInv2(int* family, double* v, double* u, double* theta, double* nu, double* out)
 {
 
-    int br=0, in=1;
-    double ans=0.0, tol=1e-12, x0=UMIN, x1=UMAX, fl, fh, val;
-    Hfunc2(family, &in, &x0, u, theta, nu, &fl); fl -= *v;
-    Hfunc2(family, &in, &x1, u, theta, nu, &fh); fh -= *v;
-    if(fabs(fl)<=tol) { ans=x0; br=1; }
-    if(fabs(fh)<=tol) { ans=x1; br=1; }
+    int br = 0, in = 1, it = 0;
+    double ans = 0.0, tol = 1e-12, x0 = UMIN, x1 = UMAX, fl, fh, val;
+    Hfunc2(family, &in, &x0, u, theta, nu, &fl);
+    fl -= *v;
+    Hfunc2(family, &in, &x1, u, theta, nu, &fh);
+    fh -= *v;
+    if (fabs(fl) <= tol) {
+        ans = x0;
+        br = 1;
+    }
+    if (fabs(fh) <= tol) {
+        ans = x1;
+        br = 1;
+    }
 
-    while(!br){
-
-        ans = (x0+x1)/2.0;
+    while (!br){
+        ans = (x0 + x1) / 2.0;
         Hfunc2(family, &in, &ans, u, theta, nu, &val);
         val -= *v;
+
         //stop if values become too close (avoid infinite loop)
-        if(fabs(val)<=tol) br=1;
-        if(fabs(x0-x1)<=tol) br=1;
+        if (fabs(val) <= tol) br = 1;
+        if (fabs(x0-x1) <= tol) br = 1;
 
-        if(val > 0.0) {x1 = ans; fh = val;}
-        else {x0 = ans; fl = val;}
+        if (val > 0.0) {
+            x1 = ans;
+            fh = val;
+        } else {
+            x0 = ans;
+            fl = val;
+        }
 
+        //stop if too many iterations are required (avoid infinite loop)
+        ++it;
+        if (it > 50) br = 1;
     }
     *out = ans;
 }
