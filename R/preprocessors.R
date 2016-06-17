@@ -183,7 +183,7 @@ match_spec_lengths <- function(args) {
     args$par <- c(args$par)
     args$par2 <- c(args$par2)
 
-        # if one vector is size n, expand all vectors to size n
+    # if one vector is size n, expand all vectors to size n
     if (any(c(length(args$family), length(args$par), length(args$par2)) == n)) {
         if (length(args$family) == 1)
             args$family <- rep(args$family, n)
@@ -209,6 +209,43 @@ match_spec_lengths <- function(args) {
 
     args
 }
+
+expand_lengths <- function(args) {
+    n <- ifelse(!is.null(args$u1),
+                length(args$u1),
+                max(length(args$u1,
+                           length(args$family),
+                           length(args$par),
+                           length(args$par2))))
+    args$family <- c(args$family)
+    args$par <- c(args$par)
+    args$par2 <- c(args$par2)
+
+    # if one vector is size n, expand all vectors to size n
+    if (length(args$family) == 1)
+        args$family <- rep(args$family, n)
+    if (length(args$par) == 1)
+        args$par <- rep(args$par, n)
+    if (length(args$par2) == 1)
+        args$par2 <- rep(args$par2, n)
+
+    # check if input size was ok
+    if (!(length(args$family) %in% c(1, n)))
+        stop("\n In ", args$call[1], ": ",
+             "'family' has to be a single number or a size n vector",
+             call. = FALSE)
+    if (!(length(args$par) %in% c(1, n)))
+        stop("\n In ", args$call[1], ": ",
+             "'par' has to be a single number or a size n vector",
+             call. = FALSE)
+    if (!(length(args$par2) %in% c(1, n)))
+        stop("\n In ", args$call[1], ": ",
+             "'par2' has to be a single number or a size n vector",
+             call. = FALSE)
+
+    args
+}
+
 
 ## extract family and parameters if BiCop object is provided
 extract_from_BiCop <- function(args) {

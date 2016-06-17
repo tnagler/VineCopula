@@ -106,7 +106,7 @@ BiCopCDF <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRU
                     fix_nas,
                     check_if_01,
                     extract_from_BiCop,
-                    match_spec_lengths,
+                    expand_lengths,
                     check_fam_par)
     list2env(args, environment())
 
