@@ -1,6 +1,7 @@
 #' @method contour RVineMatrix
 #' @rdname plot.RVineMatrix
-contour.RVineMatrix <- function(x, tree = "ALL", xylim = NULL, cex.nums = 1, ...) {
+contour.RVineMatrix <- function(x, tree = "ALL", xylim = NULL, cex.nums = 1,
+                                data = NULL, ...) {
 
     ## check input
     d <- nrow(x$Matrix)
@@ -11,8 +12,11 @@ contour.RVineMatrix <- function(x, tree = "ALL", xylim = NULL, cex.nums = 1, ...
         stop("Only contour plots allowed. Don't use the type argument!")
 
     ## set up for plotting windows (restore settings on exit)
-    usr <- par(mfrow = c(n.tree, d - min(tree)), mar = rep(0, 4))  # dimensions of contour matrix
+    usr <- par(mfrow = c(n.tree, d - min(tree)), mar = rep(0, 4))
     on.exit(par(usr))
+
+    ## calculate pseudo-observations (if necessary)
+    psobs <- if (!is.null(data)) vine_psobs(data, x) else NULL
 
     ## default style --------------------------------------------------
     # headings: create blue color scale
@@ -24,7 +28,7 @@ contour.RVineMatrix <- function(x, tree = "ALL", xylim = NULL, cex.nums = 1, ...
     if (!is.null(list(...)$margins)) {
         margins <- list(...)$margins
         if (!(margins %in% c("norm", "unif", "exp", "flexp")))
-            contour(BiCop(0), margins =c(0, 10))
+            contour(BiCop(0), margins = c(0, 10))
     } else {
         margins <- "norm"
     }
@@ -55,11 +59,17 @@ contour.RVineMatrix <- function(x, tree = "ALL", xylim = NULL, cex.nums = 1, ...
             for (i in tree) {
                 for (j in 1:(d - min(tree))) {
                     if (d - i >= j) {
+                        if (is.null(psobs)) {
+                            pcfit <- BiCop(family = x$family[d - i + 1, j],
+                                           par    = x$par[d - i + 1, j],
+                                           par2   = x$par2[d - i + 1, j],
+                                           check.pars = FALSE)
+                        } else {
+                            pcfit <- kdecopula::kdecop(psobs[[i]][[j]])
+                        }
+
                         # set up list of contour arguments
-                        args <- list(x = BiCop(family = x$family[d-i+1,j],
-                                               par    = x$par[d-i+1,j],
-                                               par2   = x$par2[d-i+1,j],
-                                               check.pars = FALSE),
+                        args <- list(x = pcfit,
                                      drawlabels = FALSE,
                                      xlab = "",
                                      ylab = "",
@@ -151,3 +161,67 @@ contour.RVineMatrix <- function(x, tree = "ALL", xylim = NULL, cex.nums = 1, ...
         message(paste(msg.space, msg.tree))
     }
 }
+
+vine_psobs <- function (uev, object) {
+    uev <- as.matrix(uev)
+    if (ncol(uev) == 1)
+        uev <- matrix(uev, 1, nrow(uev))
+    if (any(uev > 1) || any(uev < 0))
+        stop("Data has be in the interval [0,1].")
+    n <- ncol(uev)
+    N <- nrow(uev)
+    if (ncol(uev) != ncol(object$Matrix))
+        stop("Dimensions of 'data' and 'object' do not match.")
+    if (!is(object,"RVineMatrix"))
+        stop("'object' has to be an RVineMatrix object")
+
+    o <- diag(object$Matrix)
+    oldobject <- object
+    if (any(o != length(o):1)) {
+        object <- normalizeRVineMatrix(object)
+        uev <- matrix(uev[, o[length(o):1]], N, n)
+    }
+
+    ## initialize objects
+    CondDistr <- neededCondDistr(object$Matrix)
+    val <- array(1, dim = c(n, n, N))
+    out <- lapply(1:(n - 1), list)
+    V <- list()
+    V$direct <- array(NA, dim = c(n, n, N))
+    V$indirect <- array(NA, dim = c(n, n, N))
+    V$direct[n, , ] <- t(uev[, n:1])
+
+    for (i in (n - 1):1) {
+        for (k in n:(i + 1)) {
+            ## extract data for current tree
+            m <- object$MaxMat[k, i]
+            zr1 <- V$direct[k, i, ]
+            if (m == object$Matrix[k, i]) {
+                zr2 <- V$direct[k, (n - m + 1), ]
+            } else {
+                zr2 <- V$indirect[k, (n - m + 1), ]
+            }
+
+            ## store data
+            out[[n - k + 1]][[i]] <- cbind(zr2, zr1)
+
+            ## calculate pseudo-observations for next tree
+            if (CondDistr$direct[k - 1, i])
+                V$direct[k - 1, i, ] <- BiCopHfunc1(zr2, zr1,
+                                                    object$family[k, i],
+                                                    object$par[k, i],
+                                                    object$par2[k, i],
+                                                    check.pars = FALSE)
+            if (CondDistr$indirect[k - 1, i])
+                V$indirect[k - 1, i, ] <- BiCopHfunc2(zr2, zr1,
+                                                      object$family[k, i],
+                                                      object$par[k, i],
+                                                      object$par2[k, i],
+                                                      check.pars = FALSE)
+        }
+    }
+
+    ## return list of pseudo-observations
+    out
+}
+

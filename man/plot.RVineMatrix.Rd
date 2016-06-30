@@ -6,7 +6,7 @@
 \title{Plotting \code{RVineMatrix} objects.}
 \usage{
 \method{contour}{RVineMatrix}(x, tree = "ALL", xylim = NULL, cex.nums = 1,
-  ...)
+  data = NULL, ...)
 
 \method{plot}{RVineMatrix}(x, tree = "ALL", type = 0, edge.labels = NULL,
   legend.pos = "bottomleft", interactive = FALSE, ...)
@@ -21,6 +21,8 @@ plotted.}
 for the contours}
 
 \item{cex.nums}{numeric; expansion factor for font of the numbers.}
+
+\item{data}{a data matrix for creating kernel density contours of each pair.}
 
 \item{type}{integer; specifies how to make use of variable names: \cr
 \code{0} = variable names are ignored, \cr \code{1} = variable names are
