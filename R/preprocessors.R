@@ -320,8 +320,9 @@ prep_familyset <- function(args) {
         args$familyset <- setdiff(allfams, -args$familyset)
     }
     if (!all(abs(args$familyset) %in% allfams))
-        stop("Copula family not implemented.")
-
+        stop("\n In ", args$call[1], ": ",
+             "Copula family not implemented.",
+             call. = FALSE)
     args
 }
 
@@ -438,7 +439,7 @@ check_est_pars <- function(args) {
     }
 
     if (!is.null(args$familyset)) {
-        if (!(all(args$familyset %in% allfams)))
+        if (!(all(abs(args$familyset) %in% allfams)))
             stop("\n In ", args$call[1], ": ",
                  "Copula family not implemented.",
                  call. = FALSE)
