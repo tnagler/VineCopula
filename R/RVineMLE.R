@@ -512,7 +512,7 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
         out$RVM$se2[posParams2] <- out1$se[(nParams + 1):(nParams + nParams2)]
     }
 
-    like <- RVineLogLik(data, out$RVM)
+    like <- RVineLogLik(data[, o[length(o):1]], out$RVM)
     out$RVM$logLik <- like$loglik
     out$RVM$pair.logLik <- like$V$value
     npar <- sum(out$RVM$family %in% allfams[onepar], na.rm = TRUE) +
