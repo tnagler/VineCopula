@@ -497,7 +497,8 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
 
     newpar <- newpar2 <- matrix(0, d, d)
     newpar[posParams]  <- out1$par[1:nParams]
-    newpar2[posParams] <- out1$par[(nParams + 1):(nParams + nParams2)]
+    if (nParams2 > 0)
+        newpar2[posParams] <- out1$par[(nParams + 1):(nParams + nParams2)]
     out$RVM <- RVineMatrix(Matrix = oldRVM$Matrix,
                            family = oldRVM$family,
                            par = newpar,
