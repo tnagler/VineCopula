@@ -71,7 +71,7 @@ setGeneric("fitCopula", fitCopula)
 ####################### generic wrapper functions to the VineCopula package ##
 
 # density from BiCopPDF
-linkVineCop.PDF <- function(u, copula, log = FALSE) {
+linkVineCop.PDF <- function(u, copula, log = FALSE, ...) {
     param <- copula@parameters
 
     if (length(param) == 1)

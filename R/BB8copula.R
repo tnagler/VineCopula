@@ -307,31 +307,3 @@ setMethod("rCopula", signature("numeric","r270BB8Copula"), linkVineCop.r)
 
 setMethod("tau",signature("r270BB8Copula"),linkVineCop.tau)
 setMethod("tailIndex",signature("r270BB8Copula"),linkVineCop.tailIndex)
-
-### set union
-
-setClassUnion("twoParamBiCop",c("BB1Copula","BB6Copula","BB7Copula","BB8Copula",
-                                "surBB1Copula","surBB6Copula","surBB7Copula","surBB8Copula",
-                                "r90BB1Copula","r90BB6Copula","r90BB7Copula","r90BB8Copula",
-                                "r270BB1Copula","r270BB6Copula","r270BB7Copula","r270BB8Copula"))
-
-fitCopula.twoParamBiCop <- function(copula, data, method = "mpl",
-                                    estimate.variance = FALSE) {
-  stopifnot(method=="mpl")
-  fit <- BiCopEst(data[,1], data[,2], copula@family, "mle",
-                  se=estimate.variance)
-
-  if(!estimate.variance) {
-    fit$se <- NA
-    fit$se2 <- NA
-  }
-
-  copFit <- copulaFromFamilyIndex(copula@family, fit$par, fit$par2)
-  new("fitCopula", estimate = c(fit$par, fit$par2), var.est = cbind(fit$se, fit$se2),
-      method = "maximum pseudo-likelihood via BiCopEst",
-      loglik = sum(dCopula(data, copFit, log=T)),
-      fitting.stats=list(convergence = as.integer(NA)), nsample = nrow(data),
-      copula=copFit)
-}
-
-setMethod("fitCopula", signature("twoParamBiCop"), fitCopula.twoParamBiCop)
