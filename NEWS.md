@@ -1,3 +1,24 @@
+VineCopula 2.0.4 (August 4, 2016)
+----------------------------------------------------------------
+
+NEW FEATURES
+
+  * Option for kernel contours in `contour.RVineMAtrix`.
+
+
+BUG FIXES
+
+  * Return scalar instead of 1-dim array in tau <-> par conversion.
+  
+  * Fix vectorized call of `BiCopCDF`.
+  
+  * Negative selection of families is now working properly.
+  
+  * Correct logLik calculation in output of `RVineMLE`.
+  
+  * Dependence measures are updated in output of `RVineCor2pcor`.
+
+
 VineCopula 2.0.1 (June 9, 2016)
 ----------------------------------------------------------------
 
@@ -13,13 +34,14 @@ MAINTAINER
 
  * changed from Tobias Erhardt to Thomas Nagler (thomas.nagler@tum.de).
 
+
 DEPENDS
 
   * igraph has been removed from `Imports`.
   
   * network has been added to `Imports`.
   
-
+  
 NEW FEATURES
 
   * All functions in the package can now handle NAs in the data. A warning
