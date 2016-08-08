@@ -1,4 +1,4 @@
-VineCopula 2.0.4 (August 4, 2016)
+VineCopula 2.0.4 (August 8, 2016)
 ----------------------------------------------------------------
 
 NEW FEATURES
@@ -17,6 +17,8 @@ BUG FIXES
   * Correct logLik calculation in output of `RVineMLE`.
   
   * Dependence measures are updated in output of `RVineCor2pcor`.
+  
+  * Fix bug in annotation of edges with Kendall's when using `plot.RVineMatrix`.
 
 
 VineCopula 2.0.1 (June 9, 2016)
