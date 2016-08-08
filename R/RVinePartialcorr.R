@@ -114,9 +114,9 @@ the correlation matrix has the same ordering of variables as the RVM.")
 
     ## return updated RVM object
     RVineMatrix(Matrix = oldRVM$Matrix,
-                famil = oldRVM$family,
-                par = pc,
-                par2 = oldRVM$par2)
+                family = oldRVM$family,
+                par    = pc,
+                par2   = oldRVM$par2)
 }
 
 
