@@ -155,7 +155,7 @@ BiCopGofTest <- function(u1, u2, family, par = 0, par2 = 0, method = "white", ma
         stop("The goodness-of-fit test based on Kendall's process is not ", "
              implemented for the t-copula.")
     if (family %in% c(7, 8, 9, 10, 17, 18, 19, 20, 27, 28, 29, 30, 37, 38, 39, 40) &&
-            method == "white")
+        method == "white")
         stop("The goodness-of-fit test based on White's information matrix ",
              "equality is not implemented for the BB copulas.")
 
@@ -782,21 +782,22 @@ hesseTcopula <- function(u1, u2, theta, nu){
 #
 
 OPGtcopula <- function(u1, u2, family, theta, nu){
+    grad <- numeric(2)
     # gradient
     grad[1] <- mean(BiCopDeriv(u1,
-                          u2,
-                          family = family,
-                          par = theta,
-                          par2 = nu,
-                          deriv = "par",
-                          log = TRUE))
+                               u2,
+                               family = family,
+                               par = theta,
+                               par2 = nu,
+                               deriv = "par",
+                               log = TRUE))
     grad[2] <- mean(BiCopDeriv(u1,
-                          u2,
-                          family = family,
-                          par = theta,
-                          par2 = nu,
-                          deriv = "par2",
-                          log = TRUE))
+                               u2,
+                               family = family,
+                               par = theta,
+                               par2 = nu,
+                               deriv = "par2",
+                               log = TRUE))
 
     ## outer product of gradient
     C <- grad %*% t(grad)

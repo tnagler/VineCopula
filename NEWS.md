@@ -1,3 +1,12 @@
+VineCopula 2.0.5 
+----------------------------------------------------------------
+
+BUG FIXES
+
+  * Fixed error in `BiCopGofTest` for the Student t copula.
+
+
+
 VineCopula 2.0.4 (August 8, 2016)
 ----------------------------------------------------------------
 
