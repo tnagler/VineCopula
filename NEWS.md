@@ -3,7 +3,10 @@ VineCopula 2.0.5
 
 BUG FIXES
 
-  * Fixed error in `BiCopGofTest` for the Student t copula.
+  * Fixed errors in `BiCopGofTest` for the Student t copula and `par2` close to
+    2 and for most other families for `tau` close to 0.
+  
+  * Fixed non-converging MLE for rotated Tawns on 32 bit infrastructures.
 
 
 
