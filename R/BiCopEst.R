@@ -586,6 +586,8 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
             #  to the empirical one
             delta <- min(abs(tau) + 0.1, 0.999)
             theta1 <- 1 + 6 * abs(tau)
+            if (family %in% negfams)
+                theta1 <- - theta1
         }
 
         ## maximum likelihood optimization
