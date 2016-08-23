@@ -168,7 +168,7 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
     oldRVM <- RVM
     RVM <- normalizeRVineMatrix(RVM)
     if (is.null(colnames(data)))
-         colnames(data) <- paste0("V", 1:ncol(data))
+        colnames(data) <- paste0("V", 1:ncol(data))
     cnms <- colnames(data)
     data <- data[, o[length(o):1]]
 
@@ -199,9 +199,7 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
     startpar <- double(nParams + nParams2)
     Copula.Types <- RVM$family[posParams]
     startpar[1:nParams] <- start[posParams]
-    if (nParams2 > 0) {
-        startpar[(nParams + 1):(nParams + nParams2)] <- start2[posParams2]
-    }
+    startpar[nParams + seq_len(nParams2)] <- start2[posParams2]
 
     ## lower and upper bounds
     lb <- double(nParams + nParams2)
@@ -344,10 +342,8 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
         matrixParams2 <- start2
 
         matrixParams[posParams] <- parm[1:nParams]
+        matrixParams2[posParams2] <- parm[nParams + seq_len(nParams2)]
 
-        if (nParams2 > 0) {
-            matrixParams2[posParams2] <- parm[(nParams + 1):(nParams + nParams2)]
-        }
 
         ll <- RVineLogLik(data, RVM, par = matrixParams, par2 = matrixParams2)
 
@@ -373,7 +369,7 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
 
         matrixParams[posParams] <- parm[1:nParams]
         if (nParams2 > 0) {
-            matrixParams2[posParams2] <- parm[(nParams + 1):(nParams + nParams2)]
+            matrixParams2[posParams2] <- parm[nParams + seq_len(nParams2)]
         }
 
         grad <- RVineGrad(data = data,
@@ -497,8 +493,7 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
     }
     newpar <- newpar2 <- matrix(0, d, d)
     newpar[posParams]  <- out1$par[1:nParams]
-    if (nParams2 > 0)
-        newpar2[posParams] <- out1$par[(nParams + 1):(nParams + nParams2)]
+    newpar2[posParams2] <- out1$par[nParams + seq_len(nParams2)]
     # create RVineMatrix object
     out$RVM <- RVineMatrix(Matrix = oldRVM$Matrix,
                            family = oldRVM$family,
@@ -510,7 +505,7 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
         out$RVM$se <- matrix(0, d, d)
         out$RVM$se2 <- matrix(0, d, d)
         out$RVM$se[posParams] <- out1$se[1:nParams]
-        out$RVM$se2[posParams2] <- out1$se[(nParams + 1):(nParams + nParams2)]
+        out$RVM$se2[posParams2] <- out1$se[nParams + seq_len(nParams2)]
     }
     # add summary statistics
     like <- RVineLogLik(data[, cnms], out$RVM)

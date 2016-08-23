@@ -7,6 +7,9 @@ BUG FIXES
     2 and for most other families for `tau` close to 0.
   
   * Fixed non-converging MLE for rotated Tawns on 32 bit infrastructures.
+  
+  * Fixed storage positions of `par2` in output matrix of `RVineMLE` (reported
+    by Robin Evans, thanks!).
 
 
 
