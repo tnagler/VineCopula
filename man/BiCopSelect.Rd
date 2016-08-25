@@ -6,7 +6,7 @@
 \usage{
 BiCopSelect(u1, u2, familyset = NA, selectioncrit = "AIC",
   indeptest = FALSE, level = 0.05, weights = NA, rotations = TRUE,
-  se = TRUE)
+  se = FALSE)
 }
 \arguments{
 \item{u1, u2}{Data vectors of equal length with values in [0,1].}
@@ -78,7 +78,7 @@ be rejected.}
 \code{familyset} are included (or substracted).}
 
 \item{se}{Logical; whether standard error(s) of parameter estimates is/are
-estimated (default: \code{se = TRUE}).}
+estimated (default: \code{se = FALSE}).}
 }
 \value{
 An object of class \code{\link{BiCop}}, augmented with the following

@@ -18,8 +18,8 @@ also provided.
 \tabular{ll}{
 Package: \tab VineCopula\cr
 Type: \tab Package\cr
-Version: \tab 2.0.1 \cr
-Date: \tab 2016-06-09\cr
+Version: \tab 2.0.5 \cr
+Date: \tab 2016-08-22\cr
 License: \tab GPL (>=2)\cr
 Depends: \tab R (\eqn{\geq 2.11.0}{>= 2.11.0})\cr
 Imports: \tab graphics, grDevices,

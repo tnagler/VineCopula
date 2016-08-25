@@ -4,7 +4,7 @@
 \alias{BiCopEst}
 \title{Parameter Estimation for Bivariate Copula Data}
 \usage{
-BiCopEst(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
+BiCopEst(u1, u2, family, method = "mle", se = FALSE, max.df = 20,
   max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6), BB8 = c(6, 1)),
   weights = NA)
 }
@@ -60,7 +60,7 @@ one parameter bivariate copula families can be used (\code{family =
 1,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}).}
 
 \item{se}{Logical; whether standard error(s) of parameter estimates is/are
-estimated (default: \code{se = TRUE}).}
+estimated (default: \code{se = FALSE}).}
 
 \item{max.df}{Numeric; upper bound for the estimation of the degrees of
 freedom parameter of the t-copula (default: \code{max.df = 30}).}

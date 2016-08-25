@@ -478,7 +478,7 @@ check_est_pars <- function(args) {
                  "se has to be a logical variable (TRUE or FALSE).",
                  call. = FALSE)
     } else {
-        args$se = TRUE
+        args$se <- FALSE
     }
 
     args$weights <- ifelse(is.null(args$weights), NA, args$weights)

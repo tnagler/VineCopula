@@ -29,6 +29,8 @@
 #' @param level numeric; significance level of the independence test (default:
 #' \code{level = 0.05}).
 #' @param trunclevel integer; level of truncation.
+#' @param se Logical; whether standard errors are estimated (default: \code{se
+#' = FALSE}).
 #' @param rotations logical; if \code{TRUE}, all rotations of the families in
 #' \code{familyset} are included.
 #' @param cores integer; if \code{cores > 1}, estimation will be parallized
@@ -117,7 +119,7 @@
 #' contour(RVM1)  # contour plots of all pair-copulas
 #'
 RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", indeptest = FALSE,
-                           level = 0.05, trunclevel = NA, rotations = TRUE, cores = 1) {
+                           level = 0.05, trunclevel = NA, se = FALSE, rotations = TRUE, cores = 1) {
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),
                     check_data,
@@ -229,7 +231,7 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
                                                          level,
                                                          weights = NA,
                                                          rotations,
-                                                         se = TRUE))
+                                                         se = se))
                     warn <- NULL
                 }
 

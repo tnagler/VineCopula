@@ -7,7 +7,7 @@
 RVineStructureSelect(data, familyset = NA, type = 0,
   selectioncrit = "AIC", indeptest = FALSE, level = 0.05,
   trunclevel = NA, progress = FALSE, weights = NA, treecrit = "tau",
-  rotations = TRUE, cores = 1)
+  se = FALSE, rotations = TRUE, cores = 1)
 }
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}
@@ -50,6 +50,9 @@ printed (default: \code{progress = FALSE}).}
 
 \item{treecrit}{edge weight for Dissman's structure selection algorithm, see
 \emph{Details}.}
+
+\item{se}{Logical; whether standard errors are estimated (default: \code{se
+= FALSE}).}
 
 \item{rotations}{If \code{TRUE}, all rotations of the families in
 \code{familyset} are included.}

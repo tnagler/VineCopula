@@ -86,7 +86,7 @@
 #' @param rotations If \code{TRUE}, all rotations of the families in
 #' \code{familyset} are included (or substracted).
 #' @param se Logical; whether standard error(s) of parameter estimates is/are
-#' estimated (default: \code{se = TRUE}).
+#' estimated (default: \code{se = FALSE}).
 #'
 #' @return An object of class \code{\link{BiCop}}, augmented with the following
 #' entries:
@@ -160,7 +160,7 @@
 #'
 BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                         indeptest = FALSE, level = 0.05, weights = NA,
-                        rotations = TRUE, se = TRUE) {
+                        rotations = TRUE, se = FALSE) {
     if (!(selectioncrit %in% c("AIC", "BIC", "logLik")))
         stop("Selection criterion not implemented.")
     ## preprocessing of arguments
@@ -214,7 +214,6 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                 npars <- 0
             AICs[i] <- -2 * lls[i] + 2 * npars
             BICs[i] <- -2 * lls[i] + log(length(u1)) * npars
-
         }
 
         ## select the best fitting model
