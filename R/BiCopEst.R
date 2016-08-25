@@ -77,7 +77,7 @@
 #' one parameter bivariate copula families can be used (\code{family =
 #' 1,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}).
 #' @param se Logical; whether standard error(s) of parameter estimates is/are
-#' estimated (default: \code{se = TRUE}).
+#' estimated (default: \code{se = FALSE}).
 #' @param max.df Numeric; upper bound for the estimation of the degrees of
 #' freedom parameter of the t-copula (default: \code{max.df = 30}).
 #' @param max.BB List; upper bounds for the estimation of the two parameters
@@ -155,7 +155,7 @@
 #' BiCopEst(u2, v2, family = 14, method = "mle")
 #'
 #'
-BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
+BiCopEst <- function(u1, u2, family, method = "mle", se = FALSE, max.df = 30,
                      max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6), BB8 = c(6, 1)),
                      weights = NA) {
     ## preprocessing of arguments
@@ -256,15 +256,7 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
         if (family == 2) {
             ## t
             theta1 <- sin(tau * pi/2)
-            delta1 <- min(10, (max.df + 2)/2)  # Take the middle between 2 and max.df
-            delta <- MLE_intern(cbind(u1, u2),
-                                c(theta1, delta1),
-                                family = family,
-                                se = FALSE,
-                                max.df,
-                                max.BB,
-                                cor.fixed = TRUE,
-                                weights)$par[2]
+            delta1 <- 8
         } else if (family == 7 || family == 17) {
             ## BB1
             if (tau < 0) {
@@ -537,20 +529,11 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
         if (family == 2) {
             ## t
             theta1 <- sin(tau * pi/2)
-            delta1 <- min(10, (max.df + 2)/2)  # Take the middle between 2 and max.df
-            delta <- MLE_intern(cbind(u1, u2),
-                                c(theta1, delta1),
-                                family = family,
-                                se = FALSE,
-                                max.df,
-                                max.BB,
-                                cor.fixed = TRUE,
-                                weights)$par[2]
+            delta1 <- 8
         } else if (family == 7 || family == 17) {
             ## BB1
             delta <- 1.5
             theta1 <- 0.5
-
         } else if (family == 27 || family == 37) {
             ## BB1
             delta <- -1.5
@@ -559,7 +542,6 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
             ## BB6
             delta <- 1.5
             theta1 <- 1.5
-
         } else if (family == 28 || family == 38) {
             ## BB6
             delta <- -1.5
