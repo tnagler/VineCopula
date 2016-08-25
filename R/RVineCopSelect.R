@@ -272,7 +272,8 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
             Types[k, i]   <- res.k[[i]]$cfit$family
             Params[k, i]  <- res.k[[i]]$cfit$par
             Params2[k, i] <- res.k[[i]]$cfit$par2
-            Ses[k, i]     <- res.k[[i]]$cfit$se
+            tmpse         <- res.k[[i]]$cfit$se
+            Ses[k, i]     <- ifelse(is.null(tmpse), NA, tmpse)
             tmpse2        <- res.k[[i]]$cfit$se2
             Se2s[k, i]    <- ifelse(is.null(tmpse2), NA, tmpse2)
             emptaus[k, i] <- res.k[[i]]$cfit$emptau
@@ -295,8 +296,10 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
                         par = Params,
                         par2 = Params2,
                         names = varnames)
-    .RVM$se <- Ses
-    .RVM$se2 <- Se2s
+    if (se == TRUE) {
+        .RVM$se <- Ses
+        .RVM$se2 <- Se2s
+    }
     .RVM$nobs <- N
     revo <- sapply(1:d, function(i) which(o[length(o):1] == i))
     like <- suppressWarnings(RVineLogLik(data[, revo], .RVM))
