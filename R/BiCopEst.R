@@ -997,52 +997,18 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
 
         ## ensure that starting parameters are withing bounds
         start.parm[1] <- min(max(start.parm[1], low), up)
-
-        pscale <- ifelse(family == 1, 0.001, 1)
-
+        optimout <- optimize(f = t_LL,
+                             maximum = TRUE,
+                             interval = c(low, up))
+        optimout$par <- c(optimout$maximum, 0)
+        optimout$value <- optimout$objective
         if (se == TRUE) {
-            if (is.null(weights)) {
-                optimout <- try(expr = optim(par = start.parm[1],
-                                             fn = t_LL,
-                                             gr = gr_LL,
-                                             method = "L-BFGS-B",
-                                             control = list(fnscale = -1,
-                                                            maxit = 500,
-                                                            parscale = pscale),
-                                             lower = low,
-                                             upper = up,
-                                             hessian = TRUE),
-                                silent = TRUE)
-                if (class(optimout) == "try-error") {
-                    optimout <- optim(par = start.parm[1],
-                                      fn = t_LL,
-                                      gr = NULL,
-                                      method = "L-BFGS-B",
-                                      control = list(fnscale = -1,
-                                                     maxit = 500,
-                                                     parscale = pscale),
-                                      lower = low,
-                                      upper = up,
-                                      hessian = TRUE)
-                }
-            } else {
-                optimout <- optim(par = start.parm[1],
-                                  fn = t_LL,
-                                  gr = NULL,
-                                  method = "L-BFGS-B",
-                                  control = list(fnscale = -1,
-                                                 maxit = 500,
-                                                 parscale = pscale),
-                                  lower = low,
-                                  upper = up,
-                                  hessian = TRUE)
-            }
-        } else {
-            optimout <- optimize(f = t_LL, interval = c(low, up), maximum = TRUE)
-            optimout$par <- optimout$maximum
-            optimout$value <- optimout$objective
+            d2 <- BiCopDeriv2(data[, 1], data[, 1],
+                              family,
+                              optimout$par[1],
+                              check.pars = FALSE)
+            optimout$hessian <- sum(-d2)
         }
-        optimout$par <- c(optimout$par, 0)
 
     }
 
@@ -1087,7 +1053,6 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
         } else {
             out$par[1] <- optimout$par[1]
         }
-
     }
 
     out$value <- optimout$value
