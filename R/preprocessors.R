@@ -54,7 +54,7 @@ fix_nas <- function(args) {
             args$msg <- paste0(" In ",
                                args$call[1],
                                ": ",
-                               num.na, " of the evaluation points",,
+                               num.na, " of the evaluation points",
                                " (", freq.na, "%) contain",
                                ifelse(num.na == 1, "s", ""), " NAs.",
                                args$na.txt)
