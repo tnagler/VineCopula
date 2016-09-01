@@ -90,7 +90,7 @@
 #' \code{par2} evaluated at \code{u1} given \code{u2}, i.e.,
 #' \eqn{h_2(u_1|u_2;\boldsymbol{\theta})}{h_2(u_1|u_2; \theta)}.}
 #' \code{BiCopHfunc1} is a faster version that only calculates \code{hfunc1};
-#' \code{BiCopHfunc1} only calculates \code{hfunc2}.
+#' \code{BiCopHfunc2} only calculates \code{hfunc2}.
 #'
 #' @author Ulf Schepsmeier
 #'
