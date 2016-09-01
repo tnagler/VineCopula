@@ -134,7 +134,7 @@ setMethod("ddvCopula", signature("matrix","BB1Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","BB1Copula"), linkVineCop.r)
 
 setMethod("tau",signature("BB1Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("BB1Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("BB1Copula"), linkVineCop.tailIndex)
 
 #########################
 ## BB1 survival copula ##
@@ -188,7 +188,7 @@ setMethod("ddvCopula", signature("matrix","surBB1Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","surBB1Copula"), linkVineCop.r)
 
 setMethod("tau",signature("surBB1Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("surBB1Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("surBB1Copula"),linkVineCop.tailIndex)
 
 #######################
 ## BB1 copula 90 deg ##
@@ -255,7 +255,7 @@ setMethod("ddvCopula", signature("matrix","r90BB1Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","r90BB1Copula"), linkVineCop.r)
 
 setMethod("tau",signature("r90BB1Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("r90BB1Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("r90BB1Copula"),linkVineCop.tailIndex)
 
 ########################
 ## BB1 copula 270 deg ##
@@ -309,4 +309,4 @@ setMethod("ddvCopula", signature("matrix","r270BB1Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","r270BB1Copula"), linkVineCop.r)
 
 setMethod("tau",signature("r270BB1Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("r270BB1Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("r270BB1Copula"),linkVineCop.tailIndex)

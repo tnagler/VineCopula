@@ -147,7 +147,7 @@ setMethod("iTau", signature("joeBiCopula"),
           })
 
 setMethod("tau",signature("joeBiCopula"),linkVineCop.tau)
-setMethod("tailIndex",signature("joeBiCopula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("joeBiCopula"),linkVineCop.tailIndex)
 
 
 #########################
@@ -211,7 +211,7 @@ setMethod("iTau", signature("surJoeBiCopula"),
 
 setMethod("tau",signature("surJoeBiCopula"),linkVineCop.tau)
 
-setMethod("tailIndex",signature("surJoeBiCopula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("surJoeBiCopula"),linkVineCop.tailIndex)
 
 ###################
 ## Joe copula 90 ##
@@ -289,7 +289,7 @@ setMethod("iTau", signature("r90JoeBiCopula"),
 
 setMethod("tau",signature("r90JoeBiCopula"),linkVineCop.tau)
 
-setMethod("tailIndex",signature("r90JoeBiCopula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("r90JoeBiCopula"),linkVineCop.tailIndex)
 
 ####################
 ## Joe copula 270 ##
@@ -352,4 +352,4 @@ setMethod("iTau", signature("r270JoeBiCopula"),
 
 setMethod("tau",signature("r270JoeBiCopula"),linkVineCop.tau)
 
-setMethod("tailIndex",signature("r270JoeBiCopula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("r270JoeBiCopula"),linkVineCop.tailIndex)

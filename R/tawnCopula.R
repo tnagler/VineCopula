@@ -129,7 +129,7 @@ setMethod("ddvCopula", signature("matrix","tawnT1Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","tawnT1Copula"), linkVineCop.r)
 
 setMethod("tau",signature("tawnT1Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("tawnT1Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("tawnT1Copula"),linkVineCop.tailIndex)
 
 # Pickand's A
 # c-code: Tawn2(double* t, int* n, double* par, double* par2, double* par3, double* out)
@@ -192,7 +192,7 @@ setMethod("ddvCopula", signature("matrix","surTawnT1Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","surTawnT1Copula"), linkVineCop.r)
 
 setMethod("tau",signature("surTawnT1Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("surTawnT1Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("surTawnT1Copula"),linkVineCop.tailIndex)
 
 # Pickand's A
 # c-code: Tawn2(double* t, int* n, double* par, double* par2, double* par3, double* out)
@@ -260,7 +260,7 @@ setMethod("ddvCopula", signature("matrix","r90TawnT1Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","r90TawnT1Copula"), linkVineCop.r)
 
 setMethod("tau",signature("r90TawnT1Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("r90TawnT1Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("r90TawnT1Copula"),linkVineCop.tailIndex)
 
 ########################################
 ## Tawn type 1 270 deg. rotate copula ##
@@ -315,7 +315,7 @@ setMethod("ddvCopula", signature("matrix","r270TawnT1Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","r270TawnT1Copula"), linkVineCop.r)
 
 setMethod("tau",signature("r270TawnT1Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("r270TawnT1Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("r270TawnT1Copula"),linkVineCop.tailIndex)
 
 
 
@@ -439,7 +439,7 @@ setMethod("ddvCopula", signature("matrix","tawnT2Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","tawnT2Copula"), linkVineCop.r)
 
 setMethod("tau",signature("tawnT2Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("tawnT2Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("tawnT2Copula"),linkVineCop.tailIndex)
 
 # Pickand's A
 # c-code: Tawn2(double* t, int* n, double* par, double* par2, double* par3, double* out)
@@ -503,7 +503,7 @@ setMethod("ddvCopula", signature("matrix","surTawnT2Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","surTawnT2Copula"), linkVineCop.r)
 
 setMethod("tau",signature("surTawnT2Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("surTawnT2Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("surTawnT2Copula"),linkVineCop.tailIndex)
 
 # Pickand's A
 # c-code: Tawn2(double* t, int* n, double* par, double* par2, double* par3, double* out)
@@ -571,7 +571,7 @@ setMethod("ddvCopula", signature("matrix","r90TawnT2Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","r90TawnT2Copula"), linkVineCop.r)
 
 setMethod("tau",signature("r90TawnT2Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("r90TawnT2Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("r90TawnT2Copula"),linkVineCop.tailIndex)
 
 ########################################
 ## Tawn type 2 270 deg. rotate copula ##
@@ -626,7 +626,7 @@ setMethod("ddvCopula", signature("matrix","r270TawnT2Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","r270TawnT2Copula"), linkVineCop.r)
 
 setMethod("tau",signature("r270TawnT2Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("r270TawnT2Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("r270TawnT2Copula"),linkVineCop.tailIndex)
 
 ### set union
 

@@ -137,7 +137,7 @@ setMethod("iTau", signature("surClaytonCopula"),
           })
 
 setMethod("tau",signature("surClaytonCopula"),linkVineCop.tau)
-setMethod("tailIndex",signature("surClaytonCopula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("surClaytonCopula"),linkVineCop.tailIndex)
 
 #######################
 ## Clayton copula 90 ##
@@ -212,7 +212,7 @@ setMethod("iTau", signature("r90ClaytonCopula"),
           })
 
 setMethod("tau",signature("r90ClaytonCopula"),linkVineCop.tau)
-setMethod("tailIndex",signature("r90ClaytonCopula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("r90ClaytonCopula"),linkVineCop.tailIndex)
 
 ########################
 ## Clayton copula 270 ##
@@ -273,7 +273,7 @@ setMethod("iTau", signature("r270ClaytonCopula"),
 
 setMethod("tau",signature("r270ClaytonCopula"),linkVineCop.tau)
 
-setMethod("tailIndex",signature("r270ClaytonCopula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("r270ClaytonCopula"),linkVineCop.tailIndex)
 
 
 
@@ -415,7 +415,7 @@ setMethod("iTau", signature("surGumbelCopula"),
 
 setMethod("tau",signature("surGumbelCopula"),linkVineCop.tau)
 
-setMethod("tailIndex",signature("surGumbelCopula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("surGumbelCopula"),linkVineCop.tailIndex)
 
 #######################
 ## Gumbel copula 90 ##
@@ -491,7 +491,7 @@ setMethod("iTau", signature("r90GumbelCopula"),
 
 setMethod("tau",signature("r90GumbelCopula"),linkVineCop.tau)
 
-setMethod("tailIndex",signature("r90GumbelCopula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("r90GumbelCopula"),linkVineCop.tailIndex)
 
 ########################
 ## Gumbel copula 270 ##
@@ -552,4 +552,4 @@ setMethod("iTau", signature("r270GumbelCopula"),
 
 setMethod("tau",signature("r270GumbelCopula"),linkVineCop.tau)
 
-setMethod("tailIndex",signature("r270GumbelCopula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("r270GumbelCopula"),linkVineCop.tailIndex)
