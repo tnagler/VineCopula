@@ -112,8 +112,11 @@ the correlation matrix has the same ordering of variables as the RVM.")
     # re-rotate towards VineCopula notation
     pc <- pp[d:1, d:1]
 
-    oldRVM$par <- pc
-    return(oldRVM)
+    ## return updated RVM object
+    RVineMatrix(Matrix = oldRVM$Matrix,
+                family = oldRVM$family,
+                par    = pc,
+                par2   = oldRVM$par2)
 }
 
 

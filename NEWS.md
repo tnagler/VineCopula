@@ -1,3 +1,41 @@
+VineCopula 2.0.5 
+----------------------------------------------------------------
+
+BUG FIXES
+
+  * Fixed errors in `BiCopGofTest` for the Student t copula and `par2` close to
+    2 and for most other families for `tau` close to 0.
+  
+  * Fixed non-converging MLE for rotated Tawns on 32 bit infrastructures.
+  
+  * Fixed storage positions of `par2` in output matrix of `RVineMLE` (reported
+    by Robin Evans, thanks!).
+
+
+
+VineCopula 2.0.4 (August 8, 2016)
+----------------------------------------------------------------
+
+NEW FEATURES
+
+  * Option for kernel contours in `contour.RVineMAtrix`.
+
+
+BUG FIXES
+
+  * Return scalar instead of 1-dim array in tau <-> par conversion.
+  
+  * Fix vectorized call of `BiCopCDF`.
+  
+  * Negative selection of families is now working properly.
+  
+  * Correct logLik calculation in output of `RVineMLE`.
+  
+  * Dependence measures are updated in output of `RVineCor2pcor`.
+  
+  * Fix bug in annotation of edges with Kendall's when using `plot.RVineMatrix`.
+
+
 VineCopula 2.0.1 (June 9, 2016)
 ----------------------------------------------------------------
 
@@ -13,13 +51,14 @@ MAINTAINER
 
  * changed from Tobias Erhardt to Thomas Nagler (thomas.nagler@tum.de).
 
+
 DEPENDS
 
   * igraph has been removed from `Imports`.
   
   * network has been added to `Imports`.
   
-
+  
 NEW FEATURES
 
   * All functions in the package can now handle NAs in the data. A warning

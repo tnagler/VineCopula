@@ -36,6 +36,8 @@
 #' @param weights numeric; weights for each observation (opitional).
 #' @param treecrit edge weight for Dissman's structure selection algorithm, see
 #' \emph{Details}.
+#' @param se Logical; whether standard errors are estimated (default: \code{se
+#' = FALSE}).
 #' @param rotations If \code{TRUE}, all rotations of the families in
 #' \code{familyset} are included.
 #' @param cores integer; if \code{cores > 1}, estimation will be parallized
@@ -155,7 +157,7 @@
 #'
 RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit = "AIC", indeptest = FALSE,
                                  level = 0.05, trunclevel = NA, progress = FALSE,  weights = NA,
-                                 treecrit = "tau", rotations = TRUE, cores = 1) {
+                                 treecrit = "tau", se = FALSE, rotations = TRUE, cores = 1) {
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),
                     check_data,
@@ -213,6 +215,7 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
                                      selectioncrit,
                                      indeptest,
                                      level,
+                                     se = se,
                                      weights = weights,
                                      cores = cores)
     # store results
@@ -241,6 +244,7 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
                                     selectioncrit,
                                     indeptest,
                                     level,
+                                    se = se,
                                     progress,
                                     weights = weights,
                                     cores = cores)
@@ -475,7 +479,7 @@ fasttau <- function(x, y, weights = NA) {
 ## fit pair-copulas for the first vine tree
 fit.FirstTreeCopulas <- function(MST, data.univ, type, copulaSelectionBy,
                                  testForIndependence, testForIndependence.level,
-                                 weights = NA, cores = 1) {
+                                 se, weights = NA, cores = 1) {
 
     ## initialize estimation results with empty list
     d <- nrow(MST$E$nums)
@@ -522,6 +526,7 @@ fit.FirstTreeCopulas <- function(MST, data.univ, type, copulaSelectionBy,
                      copulaSelectionBy,
                      testForIndependence,
                      testForIndependence.level,
+                     se,
                      weights)
     } else {
         pc.fits <- lapply(X = pc.data,
@@ -530,6 +535,7 @@ fit.FirstTreeCopulas <- function(MST, data.univ, type, copulaSelectionBy,
                           copulaSelectionBy,
                           testForIndependence,
                           testForIndependence.level,
+                          se,
                           weights)
     }
 
@@ -554,7 +560,7 @@ fit.FirstTreeCopulas <- function(MST, data.univ, type, copulaSelectionBy,
 ## fit pair-copulas for vine trees 2,...
 fit.TreeCopulas <- function(MST, oldVineGraph, type, copulaSelectionBy,
                             testForIndependence, testForIndependence.level,
-                            progress, weights = NA, cores = 1) {
+                            se = se, progress, weights = NA, cores = 1) {
 
     ## initialize estimation results with empty list
     d <- nrow(MST$E$nums)
@@ -626,6 +632,7 @@ fit.TreeCopulas <- function(MST, oldVineGraph, type, copulaSelectionBy,
                      copulaSelectionBy,
                      testForIndependence,
                      testForIndependence.level,
+                     se,
                      weights)
     } else {
         pc.fits <- lapply(X = pc.data,
@@ -634,6 +641,7 @@ fit.TreeCopulas <- function(MST, oldVineGraph, type, copulaSelectionBy,
                           copulaSelectionBy,
                           testForIndependence,
                           testForIndependence.level,
+                          se,
                           weights)
     }
 
@@ -785,7 +793,7 @@ pcSelect <- function(parameterForACopula, type, ...) {
 
 ## bivariate copula selection
 fit.ACopula <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
-                        indeptest = FALSE, level = 0.05, weights = NA) {
+                        indeptest = FALSE, level = 0.05, se = FALSE, weights = NA) {
 
     ## select family and estimate parameter(s) for the pair copula
     complete.i <- which(!is.na(u1 + u2))
@@ -810,7 +818,8 @@ fit.ACopula <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                                             indeptest,
                                             level,
                                             weights = weights,
-                                            rotations = FALSE))
+                                            rotations = FALSE,
+                                            se = se))
         out$warn <- NULL
     }
 
@@ -886,7 +895,8 @@ as.RVM2 <- function(RVine, data, callexp) {
         Param[(k + 1), k]   <- crspParams[[n - k]][[1]][1]
         Params2[(k + 1), k] <- crspParams[[n - k]][[1]][2]
         Type[(k + 1), k]    <- crspTypes[[n - k]][[1]]
-        Ses[(k + 1), k]     <- crspfits[[n - k]][[1]]$se
+        tmpse               <- crspfits[[n - k]][[1]]$se
+        Ses[(k + 1), k]     <- ifelse(is.null(tmpse), NA, tmpse)
         tmpse2              <- crspfits[[n - k]][[1]]$se2
         Se2s[(k + 1), k]    <- ifelse(is.null(tmpse2), NA, tmpse2)
         emptaus[(k + 1), k] <- crspfits[[n - k]][[1]]$emptau
@@ -923,7 +933,8 @@ as.RVM2 <- function(RVine, data, callexp) {
                 }
                 Param[i, k]   <- crspParams[[n - i + 1]][[j]][1]
                 Params2[i, k] <- crspParams[[n - i + 1]][[j]][2]
-                Ses[i, k]     <- crspfits[[n - i + 1]][[j]]$se
+                tmpse         <- crspfits[[n - i + 1]][[j]]$se
+                Ses[i, k]     <- ifelse(is.null(tmpse), NA, tmpse)
                 tmpse2        <- crspfits[[n - i + 1]][[j]]$se2
                 Se2s[i, k]    <- ifelse(is.null(tmpse2), NA, tmpse2)
                 emptaus[i, k] <- crspfits[[n - i + 1]][[j]]$emptau
@@ -945,8 +956,10 @@ as.RVM2 <- function(RVine, data, callexp) {
     RVM$call <- callexp
 
     ## add information about pair-copulas
-    RVM$se <- Ses
-    RVM$se2 <- Se2s
+    if (!all(is.na(Ses[lower.tri(Ses)]))) {
+        RVM$se <- Ses
+        RVM$se2 <- Se2s
+    }
     RVM$nobs <- crspfits[[1]][[1]]$nobs
     like <- suppressWarnings(RVineLogLik(data, RVM))
     RVM$logLik <- like$loglik

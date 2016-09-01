@@ -8,3 +8,4 @@
 ^notes$
 tests/other
 revdep
+^revdep$

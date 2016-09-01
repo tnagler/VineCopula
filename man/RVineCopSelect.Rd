@@ -5,8 +5,8 @@
 \title{Sequential Pair-Copula Selection and Estimation for R-Vine Copula Models}
 \usage{
 RVineCopSelect(data, familyset = NA, Matrix, selectioncrit = "AIC",
-  indeptest = FALSE, level = 0.05, trunclevel = NA, rotations = TRUE,
-  cores = 1)
+  indeptest = FALSE, level = 0.05, trunclevel = NA, se = FALSE,
+  rotations = TRUE, cores = 1)
 }
 \arguments{
 \item{data}{N x d data matrix (with uniform margins).}
@@ -37,6 +37,9 @@ hypothesis of independence cannot be rejected.}
 \code{level = 0.05}).}
 
 \item{trunclevel}{integer; level of truncation.}
+
+\item{se}{Logical; whether standard errors are estimated (default: \code{se
+= FALSE}).}
 
 \item{rotations}{logical; if \code{TRUE}, all rotations of the families in
 \code{familyset} are included.}

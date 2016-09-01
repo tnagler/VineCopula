@@ -54,7 +54,7 @@ fix_nas <- function(args) {
             args$msg <- paste0(" In ",
                                args$call[1],
                                ": ",
-                               num.na, " of the evaluation points",,
+                               num.na, " of the evaluation points",
                                " (", freq.na, "%) contain",
                                ifelse(num.na == 1, "s", ""), " NAs.",
                                args$na.txt)
@@ -213,10 +213,10 @@ match_spec_lengths <- function(args) {
 expand_lengths <- function(args) {
     n <- ifelse(!is.null(args$u1),
                 length(args$u1),
-                max(length(args$u1,
-                           length(args$family),
-                           length(args$par),
-                           length(args$par2))))
+                max(length(args$u1),
+                    length(args$family),
+                    length(args$par),
+                    length(args$par2)))
     args$family <- c(args$family)
     args$par <- c(args$par)
     args$par2 <- c(args$par2)
@@ -478,7 +478,7 @@ check_est_pars <- function(args) {
                  "se has to be a logical variable (TRUE or FALSE).",
                  call. = FALSE)
     } else {
-        args$se = TRUE
+        args$se <- FALSE
     }
 
     args$weights <- ifelse(is.null(args$weights), NA, args$weights)

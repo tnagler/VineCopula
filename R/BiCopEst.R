@@ -77,7 +77,7 @@
 #' one parameter bivariate copula families can be used (\code{family =
 #' 1,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}).
 #' @param se Logical; whether standard error(s) of parameter estimates is/are
-#' estimated (default: \code{se = TRUE}).
+#' estimated (default: \code{se = FALSE}).
 #' @param max.df Numeric; upper bound for the estimation of the degrees of
 #' freedom parameter of the t-copula (default: \code{max.df = 30}).
 #' @param max.BB List; upper bounds for the estimation of the two parameters
@@ -155,7 +155,7 @@
 #' BiCopEst(u2, v2, family = 14, method = "mle")
 #'
 #'
-BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
+BiCopEst <- function(u1, u2, family, method = "mle", se = FALSE, max.df = 30,
                      max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6), BB8 = c(6, 1)),
                      weights = NA) {
     ## preprocessing of arguments
@@ -256,15 +256,7 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 30,
         if (family == 2) {
             ## t
             theta1 <- sin(tau * pi/2)
-            delta1 <- min(10, (max.df + 2)/2)  # Take the middle between 2 and max.df
-            delta <- MLE_intern(cbind(u1, u2),
-                                c(theta1, delta1),
-                                family = family,
-                                se = FALSE,
-                                max.df,
-                                max.BB,
-                                cor.fixed = TRUE,
-                                weights)$par[2]
+            delta <- 8
         } else if (family == 7 || family == 17) {
             ## BB1
             if (tau < 0) {
@@ -537,20 +529,11 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
         if (family == 2) {
             ## t
             theta1 <- sin(tau * pi/2)
-            delta1 <- min(10, (max.df + 2)/2)  # Take the middle between 2 and max.df
-            delta <- MLE_intern(cbind(u1, u2),
-                                c(theta1, delta1),
-                                family = family,
-                                se = FALSE,
-                                max.df,
-                                max.BB,
-                                cor.fixed = TRUE,
-                                weights)$par[2]
+            delta <- 8
         } else if (family == 7 || family == 17) {
             ## BB1
             delta <- 1.5
             theta1 <- 0.5
-
         } else if (family == 27 || family == 37) {
             ## BB1
             delta <- -1.5
@@ -559,7 +542,6 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
             ## BB6
             delta <- 1.5
             theta1 <- 1.5
-
         } else if (family == 28 || family == 38) {
             ## BB6
             delta <- -1.5
@@ -586,6 +568,8 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
             #  to the empirical one
             delta <- min(abs(tau) + 0.1, 0.999)
             theta1 <- 1 + 6 * abs(tau)
+            if (family %in% negfams)
+                theta1 <- - theta1
         }
 
         ## maximum likelihood optimization
@@ -1013,52 +997,18 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
 
         ## ensure that starting parameters are withing bounds
         start.parm[1] <- min(max(start.parm[1], low), up)
-
-        pscale <- ifelse(family == 1, 0.001, 1)
-
+        optimout <- optimize(f = t_LL,
+                             maximum = TRUE,
+                             interval = c(low, up))
+        optimout$par <- c(optimout$maximum, 0)
+        optimout$value <- optimout$objective
         if (se == TRUE) {
-            if (is.null(weights)) {
-                optimout <- try(expr = optim(par = start.parm[1],
-                                             fn = t_LL,
-                                             gr = gr_LL,
-                                             method = "L-BFGS-B",
-                                             control = list(fnscale = -1,
-                                                            maxit = 500,
-                                                            parscale = pscale),
-                                             lower = low,
-                                             upper = up,
-                                             hessian = TRUE),
-                                silent = TRUE)
-                if (class(optimout) == "try-error") {
-                    optimout <- optim(par = start.parm[1],
-                                      fn = t_LL,
-                                      gr = NULL,
-                                      method = "L-BFGS-B",
-                                      control = list(fnscale = -1,
-                                                     maxit = 500,
-                                                     parscale = pscale),
-                                      lower = low,
-                                      upper = up,
-                                      hessian = TRUE)
-                }
-            } else {
-                optimout <- optim(par = start.parm[1],
-                                  fn = t_LL,
-                                  gr = NULL,
-                                  method = "L-BFGS-B",
-                                  control = list(fnscale = -1,
-                                                 maxit = 500,
-                                                 parscale = pscale),
-                                  lower = low,
-                                  upper = up,
-                                  hessian = TRUE)
-            }
-        } else {
-            optimout <- optimize(f = t_LL, interval = c(low, up), maximum = TRUE)
-            optimout$par <- optimout$maximum
-            optimout$value <- optimout$objective
+            d2 <- BiCopDeriv2(data[, 1], data[, 1],
+                              family,
+                              optimout$par[1],
+                              check.pars = FALSE)
+            optimout$hessian <- sum(-d2)
         }
-        optimout$par <- c(optimout$par, 0)
 
     }
 
@@ -1103,7 +1053,6 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
         } else {
             out$par[1] <- optimout$par[1]
         }
-
     }
 
     out$value <- optimout$value
