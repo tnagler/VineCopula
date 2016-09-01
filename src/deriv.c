@@ -1,9 +1,9 @@
 /*
-** deriv.c - C code of the package CDRVine  
-** 
+** deriv.c - C code of the package CDRVine
+**
 ** by Ulf Schepsmeier
-** 
-** 
+**
+**
 **
 */
 
@@ -27,7 +27,7 @@
 //
 // Input:
 // u,v			copula arguments (data vectors)
-// n			length of u,v 
+// n			length of u,v
 // param		parameter vector (par,par2)
 // copula		copula family
 //
@@ -94,14 +94,14 @@ if((*copula)==43)		// special copula; all rotations of Clayton are combined in o
   else if(((*copula==13) | (*copula==14) | (*copula==16) | (*copula==17) | (*copula==18) | (*copula==19) | (*copula==20)))	// 180 rotated copulas
 	{
 		ncopula = (*copula)-10;
-		for (i = 0; i < *n; ++i) 
+		for (i = 0; i < *n; ++i)
 		{
 			negv[i] = 1 - v[i];
 			negu[i] = 1 - u[i];
 		}
 		diffPDF(negu, negv, n, param, &ncopula, out);
 	}
-  else 
+  else
 	{
 		diffPDF(u, v, n, param, copula, out);		// eigentliche Ableitungsfunktion
 	}
@@ -134,7 +134,7 @@ void diffPDF_mod_vec(double* u, double* v, int* n, double* par, double* par2, in
 //
 // Input:
 // u,v			copula arguments (data vectors)
-// n			length of u,v 
+// n			length of u,v
 // param		parameter vector (par,par2)
 // copula		copula family (1,3,4,5,6)
 //
@@ -158,6 +158,14 @@ void diffPDF(double* u, double* v, int* n, double* param, int* copula, double* o
 	double theta = param[0];
 	//double delta = param[1];
 
+	for(int i=0;i<*n;i++)
+	{
+	    if(u[i]<UMIN) u[i]=UMIN;
+	    else if(u[i]>UMAX) u[i]=UMAX;
+	    if(v[i]<UMIN) v[i]=UMIN;
+	    else if(v[i]>UMAX) v[i]=UMAX;
+	}
+
 	for(j=0;j<*n;j++)
 	{
 		if(*copula==0)	// independence copulas
@@ -166,7 +174,7 @@ void diffPDF(double* u, double* v, int* n, double* param, int* copula, double* o
 		}
 		else if(*copula==1)		// gauss, formula see reference
 		{
-			t1 = qnorm(u[j],0.0,1.0,1,0); 
+			t1 = qnorm(u[j],0.0,1.0,1,0);
 			t2 = qnorm(v[j],0.0,1.0,1,0);
 			t4 = t1*t1;
 			t5 = t2*t2;
@@ -180,7 +188,7 @@ void diffPDF(double* u, double* v, int* n, double* param, int* copula, double* o
 			out[j] = (-2.0*(theta*t3-t1*t2)*t9-t15/(t8*t8)*theta)*t22/t24+t22/t24/t8*theta;
 		}
 		// t-copula is separate; very complicated
-		else if(*copula==3)	// the archimedean copula derivatives are derived by Maple 
+		else if(*copula==3)	// the archimedean copula derivatives are derived by Maple
 		{
 			t1 = u[j]*v[j];
 			t2 = -theta-1.0;
@@ -287,7 +295,7 @@ void diffPDF(double* u, double* v, int* n, double* param, int* copula, double* o
 // First derivative of the bivariate copula density with respect to u (first argument)
 // Input:
 // u,v			copula arguments (data vectors)
-// n			length of u,v 
+// n			length of u,v
 // param		parameter vector (par,par2)
 // copula		copula family
 //
@@ -349,7 +357,7 @@ if((*copula)==43)
   else if(((*copula==13) | (*copula==14) | (*copula==16) | (*copula==17) | (*copula==18) | (*copula==19) | (*copula==20)))	// 180? rotated copulas
 	{
 		ncopula = (*copula)-10;
-		for (i = 0; i < *n; ++i) 
+		for (i = 0; i < *n; ++i)
 		{
 			negv[i] = 1 - v[i];
 			negu[i] = 1 - u[i];
@@ -357,7 +365,7 @@ if((*copula)==43)
 		diffPDF_u(negu, negv, n, param, &ncopula, out);
 		for(i=0;i<*n;i++){out[i]=-out[i];}
 	}
-  else 
+  else
 	{
 		diffPDF_u(u, v, n, param, copula, out);
 	}
@@ -371,7 +379,7 @@ if((*copula)==43)
 void diffPDF_u_mod_vec(double* u, double* v, int* n, double* par, double* par2, int* copula, double* out) {
     int nn = 1;
     double* ipars = (double *) malloc(2*sizeof(double));
-    
+
     for (int i = 0; i < (*n); ++i) {
         ipars[0] = par[i];
         ipars[1] = par2[i];
@@ -387,7 +395,7 @@ void diffPDF_u_mod_vec(double* u, double* v, int* n, double* par, double* par2, 
 // First derivative of the bivariate copula density with respect to u (first argument)
 // Input:
 // u,v			copula arguments (data vectors)
-// n			length of u,v 
+// n			length of u,v
 // param		parameter vector (par,par2)
 // copula		copula family (1,2,3,4,5,6)
 //
@@ -405,6 +413,14 @@ void diffPDF_u(double* u, double* v, int* n, double* param, int* copula, double*
 	double theta = param[0];
 	//double delta = param[1];
 
+	for(int i=0;i<*n;i++)
+	{
+	    if(u[i]<UMIN) u[i]=UMIN;
+	    else if(u[i]>UMAX) u[i]=UMAX;
+	    if(v[i]<UMIN) v[i]=UMIN;
+	    else if(v[i]>UMAX) v[i]=UMAX;
+	}
+
 	for(j=0;j<*n;j++)
 	{
 		if(*copula==0)
@@ -413,7 +429,7 @@ void diffPDF_u(double* u, double* v, int* n, double* param, int* copula, double*
 		}
 		else if(*copula==1)
 		{
-			t1 = qnorm(u[j],0.0,1.0,1,0); 
+			t1 = qnorm(u[j],0.0,1.0,1,0);
 			t2 = qnorm(v[j],0.0,1.0,1,0);
 			t3 = theta*theta;
 			t4 = 1.0-t3;
@@ -519,7 +535,7 @@ void diffPDF_u(double* u, double* v, int* n, double* param, int* copula, double*
 // First derivative of the bivariate copula density with respect to v (second argument)
 // Input:
 // u,v			copula arguments (data vectors)
-// n			length of u,v 
+// n			length of u,v
 // param		parameter vector (par,par2)
 // copula		copula family (1,2,3,4,5,6)
 //
@@ -581,7 +597,7 @@ if((*copula)==43)
   else if(((*copula==13) | (*copula==14) | (*copula==16) | (*copula==17) | (*copula==18) | (*copula==19) | (*copula==20)))	// 180? rotated copulas
 	{
 		ncopula = (*copula)-10;
-		for (i = 0; i < *n; ++i) 
+		for (i = 0; i < *n; ++i)
 		{
 			negv[i] = 1 - v[i];
 			negu[i] = 1 - u[i];
@@ -589,7 +605,7 @@ if((*copula)==43)
 		diffPDF_u(negv, negu, n, param, &ncopula, out);
 		for(i=0;i<*n;i++){out[i]=-out[i];}
 	}
-  else 
+  else
 	{
 		diffPDF_u(v, u, n, param, copula, out);
 	}
@@ -603,7 +619,7 @@ if((*copula)==43)
 void diffPDF_v_mod_vec(double* u, double* v, int* n, double* par, double* par2, int* copula, double* out) {
     int nn = 1;
     double* ipars = (double *) malloc(2*sizeof(double));
-    
+
     for (int i = 0; i < (*n); ++i) {
         ipars[0] = par[i];
         ipars[1] = par2[i];

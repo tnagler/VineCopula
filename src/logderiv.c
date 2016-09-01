@@ -7,6 +7,10 @@
 #include "include/incompleteBeta.h"
 #include "include/logderiv.h"
 
+#define UMAX  1-1e-10
+#define UMIN  1e-10
+
+
 //////////////////////////////////
 // we calculated the derivatives of the copula density in deriv.c and deriv2.c
 // Further, the derivatives of the Student's t-copula were derived in separate files due to their complexity
@@ -40,6 +44,14 @@ void difflPDF_rho_tCopula(double* u, double* v, int* n, double* param, int* copu
 
 	double rho = param[0];
 	double nu = param[1];
+
+	for(int i=0;i<*n;i++)
+	{
+	    if(u[i]<UMIN) u[i]=UMIN;
+	    else if(u[i]>UMAX) u[i]=UMAX;
+	    if(v[i]<UMIN) v[i]=UMIN;
+	    else if(v[i]>UMAX) v[i]=UMAX;
+	}
 
 	for(j=0;j<*n;j++)
 	{
@@ -82,7 +94,13 @@ void difflPDF_nu_tCopula_new(double* u, double* v, int* n, double* param, int* c
 	double rho = param[0];
 	double nu = param[1];
 
-
+	for(int i=0;i<*n;i++)
+	{
+	    if(u[i]<UMIN) u[i]=UMIN;
+	    else if(u[i]>UMAX) u[i]=UMAX;
+	    if(v[i]<UMIN) v[i]=UMIN;
+	    else if(v[i]>UMAX) v[i]=UMAX;
+	}
 
 	t1=digamma((nu+1.0)/2.0);
 	t2=digamma(nu/2.0);
@@ -137,6 +155,14 @@ void diff2lPDF_rho_tCopula(double* u, double* v, int* n, double* param, int* cop
 	double rho = param[0];
 	double nu = param[1];
 
+	for(int i=0;i<*n;i++)
+	{
+	    if(u[i]<UMIN) u[i]=UMIN;
+	    else if(u[i]>UMAX) u[i]=UMAX;
+	    if(v[i]<UMIN) v[i]=UMIN;
+	    else if(v[i]>UMAX) v[i]=UMAX;
+	}
+
 	t4 = 1.0-rho*rho;
 	t3 = -(nu+1.0)*(1.0+rho*rho)/t4/t4;
 
@@ -167,6 +193,14 @@ void diff2lPDF_nu_tCopula_new(double* u, double* v, int* n, double* param, int* 
 
 	double rho = param[0];
 	double nu = param[1];
+
+	for(int i=0;i<*n;i++)
+	{
+	    if(u[i]<UMIN) u[i]=UMIN;
+	    else if(u[i]>UMAX) u[i]=UMAX;
+	    if(v[i]<UMIN) v[i]=UMIN;
+	    else if(v[i]>UMAX) v[i]=UMAX;
+	}
 
 
 	t1=(nu+1.0)/2.0;
@@ -230,6 +264,14 @@ void diff2lPDF_rho_nu_tCopula_new(double* u, double* v, int* n, double* param, i
 
 	double rho = param[0];
 	double nu = param[1];
+
+	for(int i=0;i<*n;i++)
+	{
+	    if(u[i]<UMIN) u[i]=UMIN;
+	    else if(u[i]>UMAX) u[i]=UMAX;
+	    if(v[i]<UMIN) v[i]=UMIN;
+	    else if(v[i]>UMAX) v[i]=UMAX;
+	}
 
 
 	t4=1.0-rho*rho;
@@ -336,6 +378,14 @@ void difflPDF(double* u, double* v, int* n, double* param, int* copula, double* 
 	t4=0;
 
 	double theta = param[0];
+
+	for(int i=0;i<*n;i++)
+	{
+	    if(u[i]<UMIN) u[i]=UMIN;
+	    else if(u[i]>UMAX) u[i]=UMAX;
+	    if(v[i]<UMIN) v[i]=UMIN;
+	    else if(v[i]>UMAX) v[i]=UMAX;
+	}
 
 	for(j=0;j<*n;j++)
 	{
@@ -473,6 +523,7 @@ void diff2lPDF_mod(double* u, double* v, int* n, double* param, int* copula, dou
   nparam[1]=-param[1];
 
 
+
   if(((*copula==23) | (*copula==24) | (*copula==26) | (*copula==27) | (*copula==28) | (*copula==29) | (*copula==30)))	// 90? rotated copulas
     {
 	  ncopula = (*copula)-20;
@@ -516,6 +567,14 @@ void diff2lPDF(double* u, double* v, int* n, double* param, int* copula, double*
 	double t108, t109, t112, t116, t117, t132, t133, t136, t138, t139, t153, t154, t165;
 
 	double theta = param[0];
+
+	for(int i=0;i<*n;i++)
+	{
+	    if(u[i]<UMIN) u[i]=UMIN;
+	    else if(u[i]>UMAX) u[i]=UMAX;
+	    if(v[i]<UMIN) v[i]=UMIN;
+	    else if(v[i]>UMAX) v[i]=UMAX;
+	}
 
 	for(j=0;j<*n;j++)
 	{

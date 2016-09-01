@@ -1,8 +1,8 @@
 /*
-** tcopuladeriv.c - C code of the package CDRVine  
-** 
+** tcopuladeriv.c - C code of the package CDRVine
+**
 ** by Ulf Schepsmeier
-** 
+**
 ** derivatives of the t-copula (density and h-function)
 **
 */
@@ -13,6 +13,8 @@
 #include "include/deriv.h"
 #include "include/tcopuladeriv.h"
 
+#define UMAX  1-1e-10
+#define UMIN  1e-10
 
 ///////////////////////////////////
 // Ableitungen f?r die t-copula
@@ -27,6 +29,14 @@ void diffPDF_rho_tCopula(double* u, double* v, int* n, double* param, int* copul
 
 	double rho = param[0];
 	double nu = param[1];
+
+	for(int i=0;i<*n;i++)
+	{
+	    if(u[i]<UMIN) u[i]=UMIN;
+	    else if(u[i]>UMAX) u[i]=UMAX;
+	    if(v[i]<UMIN) v[i]=UMIN;
+	    else if(v[i]>UMAX) v[i]=UMAX;
+	}
 
 	for(j=0;j<*n;j++)
 	{
@@ -50,7 +60,7 @@ void diffPDF_rho_tCopula_vec(double* u, double* v, int* n, double* par, double* 
 {
     int nn = 1;
     double* ipars = (double *) malloc(2*sizeof(double));
-    
+
     for (int i = 0; i < (*n); ++i) {
         ipars[0] = par[i];
         ipars[1] = par2[i];
@@ -69,7 +79,7 @@ void diffPDF_nu_tCopula(double* u, double* v, int* n, double* param, int* copula
 	int j, k=1;
 	nu1=param[1]-ep;
 	nu2=param[1]+ep;
-	
+
 	for(j=0;j<*n;j++)
 	{
 		copLik_mod(copula, &k, &u[j], &v[j], &param[0], &nu1, &out1[j]);
@@ -91,7 +101,7 @@ void diffPDF_u_tCopula(double* u, double* v, int* n, double* param, int* copula,
 	out1 = (double*) Calloc(*n,double);
 	out2 = (double*) Calloc(*n,double);
 	int j, k=1;
-	
+
 	for(j=0;j<*n;j++)
 	{
 		u1=u[j]-ep;
@@ -117,6 +127,14 @@ void diff2PDF_rho_tCopula(double* u, double* v, int* n, double* param, int* copu
 	double rho = param[0];
 	double nu = param[1];
 
+	for(int i=0;i<*n;i++)
+	{
+	    if(u[i]<UMIN) u[i]=UMIN;
+	    else if(u[i]>UMAX) u[i]=UMAX;
+	    if(v[i]<UMIN) v[i]=UMIN;
+	    else if(v[i]>UMAX) v[i]=UMAX;
+	}
+
 	for(j=0;j<*n;j++)
 	{
 		LL(copula, &k, &u[j], &v[j], &rho, &nu, &c);
@@ -126,7 +144,7 @@ void diff2PDF_rho_tCopula(double* u, double* v, int* n, double* param, int* copu
 		t2 = qt(v[j],nu,1,0);
 		t4 = 1.0-rho*rho;
 		M = ( nu*t4 + t1*t1 + t2*t2 - 2.0*rho*t1*t2 );
-		
+
 		t3 = -(nu+1.0)*(1.0+rho*rho)/t4/t4;
 		t5 = (nu+2.0)*nu/M;
 		t6 = 2.0*(nu+2.0)*pow(nu*rho+t1*t2,2.0)/M/M;
@@ -146,7 +164,15 @@ void diff2PDF_nu_tCopula(double* u, double* v, int* n, double* param, int* copul
 	out2 = (double*) Calloc(*n,double);
 	out3 = (double*) Calloc(*n,double);
 	int j, k=1;
-	
+
+	for(int i=0;i<*n;i++)
+	{
+	    if(u[i]<UMIN) u[i]=UMIN;
+	    else if(u[i]>UMAX) u[i]=UMAX;
+	    if(v[i]<UMIN) v[i]=UMIN;
+	    else if(v[i]>UMAX) v[i]=UMAX;
+	}
+
 	for(j=0;j<*n;j++)
 	{
 		copLik_mod(copula, &k, &u[j], &v[j], &param[0], &nu1, &out1[j]);
@@ -171,7 +197,7 @@ void diff2PDF_u_tCopula(double* u, double* v, int* n, double* param, int* copula
 	out2 = (double*) Calloc(*n,double);
 	out3 = (double*) Calloc(*n,double);
 	int j, k=1;
-	
+
 	for(j=0;j<*n;j++)
 	{
 		u1=u[j]-ep;
@@ -194,7 +220,8 @@ void diff2PDF_rho_u_tCopula(double* u, double* v, int* n, double* param, int* co
 	out1 = (double*) Calloc(*n,double);
 	out2 = (double*) Calloc(*n,double);
 	int j, k=1;
-	
+
+
 	for(j=0;j<*n;j++)
 	{
 		u1=u[j]-ep;
@@ -215,7 +242,7 @@ void diff2PDF_u_v_tCopula(double* u, double* v, int* n, double* param, int* copu
 	out1 = (double*) Calloc(*n,double);
 	out2 = (double*) Calloc(*n,double);
 	int j, k=1;
-	
+
 	for(j=0;j<*n;j++)
 	{
 		u1=v[j]-ep;
@@ -237,7 +264,7 @@ void diff2PDF_nu_u_tCopula(double* u, double* v, int* n, double* param, int* cop
 	out1 = (double*) Calloc(*n,double);
 	out2 = (double*) Calloc(*n,double);
 	int j, k=1;
-	
+
 	for(j=0;j<*n;j++)
 	{
 		u1=u[j]-ep;
@@ -263,7 +290,7 @@ void diff2PDF_rho_nu_tCopula(double* u, double* v, int* n, double* param, int* c
 	param2[0]=param[0];
 	param1[1]=param[1]-ep;
 	param2[1]=param[1]+ep;
-	
+
 	for(j=0;j<*n;j++)
 	{
 		diffPDF_rho_tCopula(&u[j], &v[j], &k, param1, copula, &out1[j]);
@@ -313,7 +340,7 @@ void diffhfunc_nu_tCopula(double* u, double* v, int* n, double* param, int* copu
 	int j, k=1;
 	nu1=param[1]-ep;
 	nu2=param[1]+ep;
-	
+
 	for(j=0;j<*n;j++)
 	{
 		Hfunc1(copula, &k, &u[j], &v[j], &param[0], &nu1, &out1[j]);
@@ -333,7 +360,7 @@ void diffhfunc_v_tCopula(double* u, double* v, int* n, double* param, int* copul
 	out1 = (double*) Calloc(*n,double);
 	out2 = (double*) Calloc(*n,double);
 	int j, k=1;
-	
+
 	for(j=0;j<*n;j++)
 	{
 		v1=v[j]-ep;
@@ -361,7 +388,7 @@ void diff2hfunc_rho_tCopula(double* u, double* v, int* n, double* param, int* co
 	param1[1]=param[1];
 	param2[0]=rho2;
 	param2[1]=param[1];
-	
+
 	for(j=0;j<*n;j++)
 	{
 		diffhfunc_rho_tCopula(&u[j], &v[j], &k, param1, copula, &out1[j]);
@@ -383,7 +410,7 @@ void diff2hfunc_nu_tCopula(double* u, double* v, int* n, double* param, int* cop
 	out3 = (double*) Calloc(*n,double);
 	nu1=param[1]-ep;
 	nu2=param[1]+ep;
-	
+
 	for(j=0;j<*n;j++)
 	{
 		Hfunc1(copula, &k, &u[j], &v[j], &param[0], &nu1, &out1[j]);
@@ -404,7 +431,7 @@ void diff2hfunc_v_tCopula(double* u, double* v, int* n, double* param, int* copu
 	out2 = (double*) Calloc(*n,double);
 	out3 = (double*) Calloc(*n,double);
 	int j, k=1;
-	
+
 	for(j=0;j<*n;j++)
 	{
 		v1=v[j]-ep;
@@ -427,7 +454,7 @@ void diff2hfunc_rho_v_tCopula(double* u, double* v, int* n, double* param, int* 
 	out1 = (double*) Calloc(*n,double);
 	out2 = (double*) Calloc(*n,double);
 	int j, k=1;
-	
+
 	for(j=0;j<*n;j++)
 	{
 		v1=v[j]-ep;
@@ -449,7 +476,7 @@ void diff2hfunc_nu_v_tCopula(double* u, double* v, int* n, double* param, int* c
 	out1 = (double*) Calloc(*n,double);
 	out2 = (double*) Calloc(*n,double);
 	int j, k=1;
-	
+
 	for(j=0;j<*n;j++)
 	{
 		v1=v[j]-ep;
@@ -474,7 +501,7 @@ void diff2hfunc_rho_nu_tCopula(double* u, double* v, int* n, double* param, int*
 	param2[0]=param[0];
 	param1[1]=param[1]-ep;
 	param2[1]=param[1]+ep;
-	
+
 	for(j=0;j<*n;j++)
 	{
 		diffhfunc_rho_tCopula(&u[j], &v[j], &k, param1, copula, &out1[j]);
