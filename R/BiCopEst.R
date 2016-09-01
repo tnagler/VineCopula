@@ -256,7 +256,7 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = FALSE, max.df = 30,
         if (family == 2) {
             ## t
             theta1 <- sin(tau * pi/2)
-            delta1 <- 8
+            delta <- 8
         } else if (family == 7 || family == 17) {
             ## BB1
             if (tau < 0) {
@@ -529,7 +529,7 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
         if (family == 2) {
             ## t
             theta1 <- sin(tau * pi/2)
-            delta1 <- 8
+            delta <- 8
         } else if (family == 7 || family == 17) {
             ## BB1
             delta <- 1.5
