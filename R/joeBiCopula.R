@@ -50,13 +50,13 @@ NULL
 validJoeBiCopula = function(object) {
   if (object@dimension != 2)
     return("Only Joe copulas of dimension 2 are supported.")
-  param <- object@parameters
-  upper <- object@param.upbnd
-  lower <- object@param.lowbnd
-  if (length(param) != length(upper))
-    return("Parameter and upper bound have non-equal length")
-  if (length(param) != length(lower))
-    return("Parameter and lower bound have non-equal length")
+    p.n <- length(object@parameters)
+    if (p.n != length(object@param.upbnd))
+        return("Parameter and upper bound have non-equal length.")
+    if (p.n != length(object@param.lowbnd))
+        return("Parameter and lower bound have non-equal length.")
+    if (p.n != length(object@param.names))
+        return("Parameter and parameter names have non-equal length.")
   else return (TRUE)
 }
 
@@ -79,7 +79,7 @@ setClass("joeBiCopula",
 #'
 #' @aliases joeBiCopula surJoeBiCopula r90JoeBiCopula r270JoeBiCopula
 #' @param param The parameter \code{param} defines the copula through
-#' \code{theta} and \code{delta}.
+#' \code{theta}.
 #' @return One of the respective Joe copula classes
 #' (\code{\linkS4class{joeBiCopula}}, \code{\linkS4class{surJoeBiCopula}},
 #' \code{\linkS4class{r90JoeBiCopula}}, \code{\linkS4class{r270JoeBiCopula}}).
@@ -164,7 +164,7 @@ setClass("surJoeBiCopula",
 surJoeBiCopula <- function (param=2) {
   if (any(is.na(param) | param >= Inf | param <= 1 ))
     stop("Parameter is outside of the allowed interval (1,Inf).")
-  new("surJoeBiCopula", dimension = as.integer(2), parameters = param, param.names = c("theta", "delta"),
+  new("surJoeBiCopula", dimension = as.integer(2), parameters = param, param.names = c("theta"),
       param.lowbnd = 1, param.upbnd = Inf, family=16,
       fullname = "Survival Joe copula family. Number 16 in VineCopula.")
 }
@@ -220,13 +220,16 @@ setMethod("lambda",signature("surJoeBiCopula"),linkVineCop.tailIndex)
 validRotJoeBiCopula = function(object) {
   if (object@dimension != 2)
     return("Only Joe copulas of dimension 2 are supported.")
-  param <- object@parameters
-  upper <- object@param.upbnd
-  lower <- object@param.lowbnd
-  if (length(param) != length(upper))
-    return("Parameter and upper bound have non-equal length")
-  if (length(param) != length(lower))
-    return("Parameter and lower bound have non-equal length")
+    param <- object@parameters
+    p.n <- length(param)
+    upper <- object@param.upbnd
+    lower <- object@param.lowbnd
+    if (p.n != length(upper))
+        return("Parameter and upper bound have non-equal length.")
+    if (p.n != length(lower))
+        return("Parameter and lower bound have non-equal length.")
+    if (p.n != length(object@param.names))
+        return("Parameter and parameter names have non-equal length.")
   if (any(is.na(param) | param >= upper | param <= lower))
     return("Parameter value out of bound.")
   else return (TRUE)
@@ -242,7 +245,7 @@ setClass("r90JoeBiCopula",
 r90JoeBiCopula <- function (param=-2) {
   if (any(is.na(param) | param >= -1 | param <= -Inf ))
     stop("Parameter is outside of the allowed interval (-Inf,-1).")
-  new("r90JoeBiCopula", dimension = as.integer(2), parameters = param, param.names = c("theta", "delta"),
+  new("r90JoeBiCopula", dimension = as.integer(2), parameters = param, param.names = c("theta"),
       param.lowbnd = -Inf, param.upbnd = -1, family=26,
       fullname = "90 deg rotated Joe copula family. Number 26 in VineCopula.")
 }
@@ -305,7 +308,7 @@ setClass("r270JoeBiCopula",
 r270JoeBiCopula <- function (param=-2) {
   if (any(is.na(param) | param >= -1 | param <= -Inf ))
     stop("Parameter is outside of the allowed interval (-Inf,-1).")
-  new("r270JoeBiCopula", dimension = as.integer(2), parameters = param, param.names = c("theta", "delta"),
+  new("r270JoeBiCopula", dimension = as.integer(2), parameters = param, param.names = c("theta"),
       param.lowbnd = -Inf, param.upbnd = -1, family=36,
       fullname = "270 deg rotated Joe copula family. Number 36 in VineCopula.")
 }

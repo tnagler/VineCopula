@@ -40,13 +40,13 @@ NULL
 validTawnCopula = function(object) {
   if (object@dimension != 2)
     return("Only Tawn copulas of dimension 2 are supported.")
-  param <- object@parameters
-  upper <- object@param.upbnd
-  lower <- object@param.lowbnd
-  if (length(param) != length(upper))
-    return("Parameter and upper bound have non-equal length")
-  if (length(param) != length(lower))
-    return("Parameter and lower bound have non-equal length")
+    p.n <- length(object@parameters)
+    if (p.n != length(object@param.upbnd))
+        return("Parameter and upper bound have non-equal .")
+    if (p.n != length(object@param.lowbnd))
+        return("Parameter and lower bound have non-equal .")
+    if (p.n != length(object@param.names))
+        return("Parameter and parameter names have non-equal .")
   else return (TRUE)
 }
 
@@ -649,11 +649,27 @@ fitCopula.twoParamBiCop <- function(copula, data, method = "mpl",
     }
 
     copFit <- copulaFromFamilyIndex(copula@family, fit$par, fit$par2)
-    new("fitCopula", estimate = c(fit$par, fit$par2), var.est = cbind(fit$se, fit$se2),
-        method = "maximum pseudo-likelihood via BiCopEst",
+
+    # treat new copula pre-release
+    if ("call" %in% names(getSlots(getClassDef("fitCopula"))))
+        return(new("fitCopula",
+                   copula=copFit,
+                   estimate = c(fit$par, fit$par2),
+                   var.est = cbind(fit$se, fit$se2),
+                   loglik = sum(dCopula(data, copFit, log=T)),
+                   nsample = nrow(data),
+                   method = "maximum pseudo-likelihood via BiCopEst",
+                   call = match.call(),
+                   fitting.stats=list(convergence = as.integer(NA))))
+
+    new("fitCopula",
+        copula=copFit,
+        estimate = c(fit$par, fit$par2),
+        var.est = cbind(fit$se, fit$se2),
         loglik = sum(dCopula(data, copFit, log=T)),
-        fitting.stats=list(convergence = as.integer(NA)), nsample = nrow(data),
-        copula=copFit)
+        nsample = nrow(data),
+        method = "maximum pseudo-likelihood via BiCopEst",
+        fitting.stats=list(convergence = as.integer(NA)))
 }
 
 setMethod("fitCopula", signature("twoParamBiCop"), fitCopula.twoParamBiCop)

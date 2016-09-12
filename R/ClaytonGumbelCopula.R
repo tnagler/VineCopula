@@ -48,13 +48,16 @@ NULL
 validClaytonCopula = function(object) {
   if (object@dimension != 2)
     return("Only Clayton copulas of dimension 2 are supported.")
-  param <- object@parameters
-  upper <- object@param.upbnd
-  lower <- object@param.lowbnd
-  if (length(param) != length(upper))
-    return("Parameter and upper bound have non-equal length")
-  if (length(param) != length(lower))
-    return("Parameter and lower bound have non-equal length")
+    param <- object@parameters
+    p.n <- length(param)
+    upper <- object@param.upbnd
+    lower <- object@param.lowbnd
+    if (p.n != length(upper))
+        return("Parameter and upper bound have non-equal length.")
+    if (p.n != length(lower))
+        return("Parameter and lower bound have non-equal length.")
+    if (p.n != length(object@param.names))
+        return("Parameter and parameter names have non-equal length.")
   if (any(is.na(param) | param >= upper | param <= lower ))
     return("Parameter value out of bound.")
   else return (TRUE)
@@ -146,13 +149,16 @@ setMethod("lambda",signature("surClaytonCopula"),linkVineCop.tailIndex)
 validRotClaytonCopula = function(object) {
   if (object@dimension != 2)
     return("Only Clayton copulas of dimension 2 are supported.")
-  param <- object@parameters
-  upper <- object@param.upbnd
-  lower <- object@param.lowbnd
-  if (length(param) != length(upper))
-    return("Parameter and upper bound have non-equal length")
-  if (length(param) != length(lower))
-    return("Parameter and lower bound have non-equal length")
+    param <- object@parameters
+    p.n <- length(param)
+    upper <- object@param.upbnd
+    lower <- object@param.lowbnd
+    if (p.n != length(upper))
+        return("Parameter and upper bound have non-equal length.")
+    if (p.n != length(lower))
+        return("Parameter and lower bound have non-equal length.")
+    if (p.n != length(object@param.names))
+        return("Parameter and parameter names have non-equal length.")
   if (any(is.na(param) | param >= upper | param <= lower))
     return("Parameter value out of bound")
   else return (TRUE)
@@ -166,7 +172,7 @@ setClass("r90ClaytonCopula",
 
 # constructor
 r90ClaytonCopula <- function (param=-1) {
-  new("r90ClaytonCopula", dimension = as.integer(2), parameters = param, param.names = c("theta", "delta"),
+  new("r90ClaytonCopula", dimension = as.integer(2), parameters = param, param.names = "theta",
       param.lowbnd = -Inf, param.upbnd = 0, family=23,
       fullname = "90 deg rotated Clayton copula family. Number 23 in VineCopula.")
 }
@@ -226,7 +232,7 @@ setClass("r270ClaytonCopula",
 
 # constructor
 r270ClaytonCopula <- function (param=-1) {
-  new("r270ClaytonCopula", dimension = as.integer(2), parameters = param, param.names = c("theta", "delta"),
+  new("r270ClaytonCopula", dimension = as.integer(2), parameters = param, param.names = "theta",
       param.lowbnd = -Inf, param.upbnd = 0, family=33,
       fullname = "270 deg rotated Clayton copula family. Number 33 in VineCopula.")
 }
@@ -321,13 +327,16 @@ NULL
 validGumbelCopula = function(object) {
   if (object@dimension != 2)
     return("Only Gumbel copulas of dimension 2 are supported.")
-  param <- object@parameters
-  upper <- object@param.upbnd
-  lower <- object@param.lowbnd
-  if (length(param) != length(upper))
-    return("Parameter and upper bound have non-equal length")
-  if (length(param) != length(lower))
-    return("Parameter and lower bound have non-equal length")
+    param <- object@parameters
+    p.n <- length(param)
+    upper <- object@param.upbnd
+    lower <- object@param.lowbnd
+    if (p.n != length(upper))
+        return("Parameter and upper bound have non-equal length.")
+    if (p.n != length(lower))
+        return("Parameter and lower bound have non-equal length.")
+    if (p.n != length(object@param.names))
+        return("Parameter and parameter names have non-equal length.")
   if (any(is.na(param) | param >= upper | param < lower ))
     return("Parameter value out of bound.")
   else return (TRUE)
@@ -424,13 +433,16 @@ setMethod("lambda",signature("surGumbelCopula"),linkVineCop.tailIndex)
 validRotGumbelCopula = function(object) {
   if (object@dimension != 2)
     return("Only Gumbel copulas of dimension 2 are supported.")
-  param <- object@parameters
-  upper <- object@param.upbnd
-  lower <- object@param.lowbnd
-  if (length(param) != length(upper))
-    return("Parameter and upper bound have non-equal length")
-  if (length(param) != length(lower))
-    return("Parameter and lower bound have non-equal length")
+    param <- object@parameters
+    p.n <- length(param)
+    upper <- object@param.upbnd
+    lower <- object@param.lowbnd
+    if (p.n != length(upper))
+        return("Parameter and upper bound have non-equal length.")
+    if (p.n != length(lower))
+        return("Parameter and lower bound have non-equal length.")
+    if (p.n != length(object@param.names))
+        return("Parameter and parameter names have non-equal length.")
   if (any(is.na(param) | param > upper | param <= lower))
     return("Parameter value out of bound")
   else return (TRUE)
@@ -444,7 +456,7 @@ setClass("r90GumbelCopula",
 
 # constructor
 r90GumbelCopula <- function (param=-1) {
-  new("r90GumbelCopula", dimension = as.integer(2), parameters = param, param.names = c("theta", "delta"),
+  new("r90GumbelCopula", dimension = as.integer(2), parameters = param, param.names = "theta",
       param.lowbnd = -Inf, param.upbnd = -1, family=24,
       fullname = "90 deg rotated Gumbel copula family. Number 24 in VineCopula.")
 }
@@ -505,7 +517,7 @@ setClass("r270GumbelCopula",
 
 # constructor
 r270GumbelCopula <- function (param=-1) {
-  new("r270GumbelCopula", dimension = as.integer(2), parameters = param, param.names = c("theta", "delta"),
+  new("r270GumbelCopula", dimension = as.integer(2), parameters = param, param.names = "theta",
       param.lowbnd = -Inf, param.upbnd = -1, family=34,
       fullname = "270 deg rotated Gumbel copula family. Number 34 in VineCopula.")
 }

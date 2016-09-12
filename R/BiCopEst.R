@@ -1138,7 +1138,7 @@ fasttau <- function(x, y, weights = NA) {
         if (m == 0 || n == 0)
             stop("both 'x' and 'y' must be non-empty")
         if (m != n)
-            stop("'x' and 'y' must have the same length")
+            stop("'x' and 'y' must have the same length.")
         out <- .C("ktau",
                   x = as.double(x),
                   y = as.double(y),

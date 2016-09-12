@@ -11,7 +11,7 @@ joeBiCopula(param = 2)
 }
 \arguments{
 \item{param}{The parameter \code{param} defines the copula through
-\code{theta} and \code{delta}.}
+\code{theta}.}
 }
 \value{
 One of the respective Joe copula classes

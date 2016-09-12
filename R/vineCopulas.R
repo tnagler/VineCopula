@@ -20,7 +20,6 @@
 #' @examples
 #'
 #' showClass("vineCopula")
-#'
 NULL
 
 
@@ -30,8 +29,15 @@ validVineCopula = function(object) {
     return("Number of dimension too small (>2).")
   if(length(object@copulas)!=(dim*(dim-1)/2))
     return("Number of provided copulas does not match given dimension.")
-  if(!any(unlist(lapply(object@copulas,function(x) is(x,"copula")))))
-    return("Not all provided copulas in your list are indeed copulas.")
+  if(!any(unlist(lapply(object@copulas, function(x) is(x,"copula")))))
+    return("Not all provided copulas are indeed copulas.")
+  p.n <- length(object@parameters)
+  if (p.n != length(object@param.upbnd))
+      return("Parameter and upper bound have non-equal length.")
+  if (p.n != length(object@param.lowbnd))
+      return("Parameter and lower bound have non-equal length.")
+  if (p.n != length(object@param.names))
+      return("Parameter and parameter names have non-equal length.")
   return (TRUE)
 }
 
@@ -55,8 +61,8 @@ setClass("vineCopula",
 #'
 #' @param RVM An object of class \code{RVineMatrix} generated from
 #' \code{\link{RVineMatrix}} in the package \code{\link{VineCopula-package}} or
-#' an integer (e.g. \code{4L}) defining the dimension (an independent C-vine of
-#' this dimension will be constructed).
+#' an integer (e.g. \code{4L}) defining the dimension (an independent Gaussian
+#' C-vine of this dimension will be constructed).
 #' @param type A predefined type if only the dimension is provided and ignored
 #' otherwise, the default is a canonical vine
 #' @return An instance of the \code{\linkS4class{vineCopula}} class.
@@ -80,9 +86,9 @@ vineCopula <- function (RVM, type="CVine") { # RVM <- 4L
   if (is.integer(RVM)) {# assuming a dimension
     stopifnot(type %in% c("CVine","DVine"))
     if (type=="CVine")
-      RVM <- C2RVine(1:RVM,rep(0,RVM*(RVM-1)/2),rep(0,RVM*(RVM-1)/2))
+      RVM <- C2RVine(1:RVM,rep(1,RVM*(RVM-1)/2),rep(0,RVM*(RVM-1)/2))
     if (type=="DVine")
-      RVM <- D2RVine(1:RVM,rep(0,RVM*(RVM-1)/2),rep(0,RVM*(RVM-1)/2))
+      RVM <- D2RVine(1:RVM,rep(1,RVM*(RVM-1)/2),rep(0,RVM*(RVM-1)/2))
   }
 
   stopifnot(class(RVM)=="RVineMatrix")
@@ -94,9 +100,12 @@ vineCopula <- function (RVM, type="CVine") { # RVM <- 4L
                                  }))
 
   new("vineCopula", copulas=copulas, dimension = as.integer(nrow(RVM$Matrix)),
-      RVM=RVM, parameters = numeric(),
-      param.names = character(), param.lowbnd = numeric(),
-      param.upbnd = numeric(), fullname = paste("RVine copula family."))
+      RVM=RVM,
+      parameters = unlist(sapply(copulas, function(x) x@parameters)),
+      param.names = unlist(sapply(copulas, function(x) x@param.names)),
+      param.lowbnd = unlist(sapply(copulas, function(x) x@param.lowbnd)),
+      param.upbnd = unlist(sapply(copulas, function(x) x@param.upbnd)),
+      fullname = paste("RVine copula family."))
 }
 
 showVineCopula <- function(object) {
@@ -144,7 +153,7 @@ setMethod("rCopula", signature("numeric","vineCopula"), rRVine)
 
 # fitting using RVine
 fitVineCop <- function(copula, data,
-                       method=list(StructureSelect=FALSE, indeptest=FALSE)) {
+                       method=list(StructureSelect=FALSE, indeptest=FALSE), ...) {
   stopifnot(copula@dimension==ncol(data))
   if("familyset" %in% names(method))
     familyset <- method[["familyset"]]
@@ -163,11 +172,26 @@ fitVineCop <- function(copula, data,
     vineCop <- vineCopula(RVineCopSelect(data, familyset, copula@RVM$Matrix, indeptest=indept))
   }
 
-  return(new("fitCopula", estimate = vineCop@parameters, var.est = matrix(NA),
-             method = paste(names(method), method, sep="=", collapse=", "),
-             loglik = RVineLogLik(data, vineCop@RVM)$loglik,
-             fitting.stats=list(convergence = as.integer(NA)),
-             nsample = nrow(data), copula=vineCop))
+  # treat new copula pre-release
+  if ("call" %in% names(getSlots(getClassDef("fitCopula"))))
+      return(new("fitCopula",
+                 copula=vineCop,
+                 estimate = vineCop@parameters,
+                 var.est = matrix(NA),
+                 loglik = RVineLogLik(data, vineCop@RVM)$loglik,
+                 nsample = nrow(data),
+                 method = paste(names(method), method, sep="=", collapse=", "),
+                 call = match.call(),
+                 fitting.stats=list(convergence = as.integer(NA))))
+
+  new("fitCopula",
+      copula=vineCop,
+      estimate = vineCop@parameters,
+      var.est = matrix(NA),
+      loglik = RVineLogLik(data, vineCop@RVM)$loglik,
+      nsample = nrow(data),
+      method = paste(names(method), method, sep="=", collapse=", "),
+      fitting.stats=list(convergence = as.integer(NA)))
 }
 
 setMethod("fitCopula", signature=signature("vineCopula"), fitVineCop)

@@ -17,7 +17,6 @@ functions go back to the package \code{\link{VineCopula-package}}
 \examples{
 
 showClass("vineCopula")
-
 }
 \author{
 Benedikt Graeler

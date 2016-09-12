@@ -43,14 +43,15 @@ NULL
 validBB1Copula = function(object) {
   if (object@dimension != 2)
     return("Only BB1 copulas of dimension 2 are supported.")
-  param <- object@parameters
-  upper <- object@param.upbnd
-  lower <- object@param.lowbnd
-  if (length(param) != length(upper))
-    return("Parameter and upper bound have non-equal length")
-  if (length(param) != length(lower))
-    return("Parameter and lower bound have non-equal length")
-  else return (TRUE)
+  p.n <- length(object@parameters)
+  if (p.n != length(object@param.upbnd))
+    return("Parameter and upper bound have non-equal length.")
+  if (p.n != length(object@param.lowbnd))
+    return("Parameter and lower bound have non-equal length.")
+  if (p.n != length(object@param.names))
+    return("Parameter and parameter names have non-equal length.")
+  else
+    return (TRUE)
 }
 
 setClass("BB1Copula",
@@ -197,13 +198,13 @@ setMethod("lambda",signature("surBB1Copula"),linkVineCop.tailIndex)
 validRotBB1Copula = function(object) {
   if (object@dimension != 2)
     return("Only BB1 copulas of dimension 2 are supported.")
-  param <- object@parameters
-  upper <- object@param.upbnd
-  lower <- object@param.lowbnd
-  if (length(param) != length(upper))
-    return("Parameter and upper bound have non-equal length")
-  if (length(param) != length(lower))
-    return("Parameter and lower bound have non-equal length")
+    p.n <- length(object@parameters)
+    if (p.n != length(object@param.upbnd))
+        return("Parameter and upper bound have non-equal length.")
+    if (p.n != length(object@param.lowbnd))
+        return("Parameter and lower bound have non-equal length.")
+    if (p.n != length(object@param.names))
+        return("Parameter and parameter names have non-equal length.")
   else return (TRUE)
 }
 
