@@ -1,12 +1,20 @@
-VineCopula 2.0.5 
+VineCopula 2.0.5 (September 25, 2016)
 ----------------------------------------------------------------
+
+DEPENDS
+
+  * Require higher version of the copula package (>= 0.999-15).
+
 
 BUG FIXES
 
+  * Use `se = FALSE` as default throughout the package for faster estimation.
+
   * Fixed errors in `BiCopGofTest` for the Student t copula and `par2` close to
-    2 and for most other families for `tau` close to 0.
+    2 and for most other families for `tau` close to 0 (reported by Thong Huy 
+    Nguyen, thanks!).
   
-  * Fixed non-converging MLE for rotated Tawns on 32 bit infrastructures.
+  * Fix sign in starting parameters for Tawn MLE.
   
   * Fixed storage positions of `par2` in output matrix of `RVineMLE` (reported
     by Robin Evans, thanks!).

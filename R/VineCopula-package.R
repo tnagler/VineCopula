@@ -13,11 +13,11 @@
 #' Package: \tab VineCopula\cr
 #' Type: \tab Package\cr
 #' Version: \tab 2.0.5 \cr
-#' Date: \tab 2016-08-22\cr
+#' Date: \tab 2016-09-25\cr
 #' License: \tab GPL (>=2)\cr
 #' Depends: \tab R (\eqn{\geq 2.11.0}{>= 2.11.0})\cr
 #' Imports: \tab graphics, grDevices,
-#' stats, utils, MASS, mvtnorm, network, methods, copula (>= 0.999-10),
+#' stats, utils, MASS, mvtnorm, network, methods, copula (>= 0.999-15),
 #' kdecopula (>= 0.6.0), ADGofTest, lattice, doParallel, parallel, foreach \cr
 #' Suggests: \tab CDVine, TSP, shiny\cr
 #' LazyLoad: \tab yes }

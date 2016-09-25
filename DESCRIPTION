@@ -2,7 +2,7 @@ Package: VineCopula
 Type: Package
 Title: Statistical Inference of Vine Copulas
 Version: 2.0.5
-Date: 2016-08-22
+Date: 2016-09-25
 Description: Provides tools for the statistical analysis of vine copula models.
     The package includes tools for parameter estimation, model selection,
     simulation, goodness-of-fit tests, and visualization. Tools for estimation,
