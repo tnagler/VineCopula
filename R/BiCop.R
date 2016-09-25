@@ -195,7 +195,6 @@ summary.BiCop <- function(object, ...) {
             cat("  (SE = ", as.character(round(object$se2, 2)), ")", sep = "")
     }
     cat("\n")
-    cat("\n")
 
     ## show dependence measures
     #     object$rho <- BiCopPar2Rho(object)
