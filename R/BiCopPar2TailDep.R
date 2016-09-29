@@ -181,7 +181,7 @@ calcTD <- function(family, par, par2) {
         upper <- 0
     } else if (family == 17) {
         lower <- 2 - 2^(1/par2)
-        upper <- 2^(-1/par * par2)
+        upper <- 2^(-1/(par * par2))
     } else if (family == 18) {
         lower <- 2 - 2^(1/(par * par2))
         upper <- 0

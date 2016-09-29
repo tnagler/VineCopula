@@ -1,3 +1,12 @@
+VineCopula 2.0.6 
+----------------------------------------------------------------
+
+BUG FIXES
+
+  * Fixed bug in upper tail dependence coefficient for survival BB1 (reported
+    by Viviana Fernandez, thanks!).
+
+
 VineCopula 2.0.5 (September 25, 2016)
 ----------------------------------------------------------------
 
