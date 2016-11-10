@@ -58,7 +58,10 @@ printed (default: \code{progress = FALSE}).}
 \code{familyset} are included.}
 
 \item{cores}{integer; if \code{cores > 1}, estimation will be parallized
-within each tree (using \code{\link[foreach]{foreach}}).}
+within each tree (using \code{\link[foreach]{foreach}}). Note that
+parallelization causes substantial overhead and may be slower than
+single-threaded computation when dimension, sample size, or familyset are
+small.}
 }
 \value{
 An \code{\link{RVineMatrix}} object with the selected structure

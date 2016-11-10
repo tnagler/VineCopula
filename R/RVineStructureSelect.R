@@ -41,7 +41,10 @@
 #' @param rotations If \code{TRUE}, all rotations of the families in
 #' \code{familyset} are included.
 #' @param cores integer; if \code{cores > 1}, estimation will be parallized
-#' within each tree (using \code{\link[foreach]{foreach}}).
+#' within each tree (using \code{\link[foreach]{foreach}}). Note that
+#' parallelization causes substantial overhead and may be slower than
+#' single-threaded computation when dimension, sample size, or familyset are
+#' small.
 #'
 #' @return An \code{\link{RVineMatrix}} object with the selected structure
 #' (\code{RVM$Matrix}) and families (\code{RVM$family}) as well as sequentially
