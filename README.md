@@ -44,7 +44,7 @@ You can install:
 -   the stable release on CRAN:
 
     ``` r
-    install.pacakges("VineCopula")
+    install.packages("VineCopula")
     ```
 
 -   the latest development version:
