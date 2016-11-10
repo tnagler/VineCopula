@@ -105,7 +105,7 @@ RVineSim <- function(N, RVM, U = NULL) {
               PACKAGE = "VineCopula")[[9]]
 
     ## store results, bring back to initial order and return
-    out <- matrix(tmp, ncol = n, byrow = FALSE)
+    out <- matrix(tmp, ncol = n, byrow = TRUE)
     if (!is.null(RVM$names)) {
         colnames(out) <- RVM$names
     }
