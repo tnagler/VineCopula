@@ -173,18 +173,31 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
     n <- nrow(data)
 
     ## sanity checks
-    if (type == 0)
-        type <- "RVine" else if (type == 1)
-            type <- "CVine"
-    if (d < 3)
-        stop("Dimension has to be at least 3.")
+    if (d < 2)
+        stop("Dimension has to be at least 2.")
+    if (d == 2) {
+        return(RVineCopSelect(data,
+                              familyset = familyset,
+                              Matrix = matrix(c(2, 1, 0, 1), 2, 2),
+                              selectioncrit = selectioncrit,
+                              indeptest = indeptest,
+                              level = level,
+                              trunclevel = trunclevel,
+                              se = se,
+                              rotations = rotations,
+                              cores = cores))
+    }
     if (!(selectioncrit %in% c("AIC", "BIC", "logLik")))
         stop("Selection criterion not implemented.")
     if (level < 0 & level > 1)
         stop("Significance level has to be between 0 and 1.")
-    treecrit <- set_treecrit(treecrit, familyset)
 
-    ## set trunclevel if not provided
+    ## set defaults
+    if (type == 0)
+        type <- "RVine"
+    if (type == 1)
+        type <- "CVine"
+    treecrit <- set_treecrit(treecrit, familyset)
     if (is.na(trunclevel))
         trunclevel <- d
     if (trunclevel == 0)
