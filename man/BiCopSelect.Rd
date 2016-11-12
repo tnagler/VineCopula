@@ -6,7 +6,7 @@
 \usage{
 BiCopSelect(u1, u2, familyset = NA, selectioncrit = "AIC",
   indeptest = FALSE, level = 0.05, weights = NA, rotations = TRUE,
-  se = FALSE)
+  se = FALSE, presel = TRUE)
 }
 \arguments{
 \item{u1, u2}{Data vectors of equal length with values in [0,1].}
@@ -79,6 +79,10 @@ be rejected.}
 
 \item{se}{Logical; whether standard error(s) of parameter estimates is/are
 estimated (default: \code{se = FALSE}).}
+
+\item{presel}{Logical; whether to exclude families before fitting based on
+symmetry properties of the data. Makes the selection about 30% faster
+(on average), but may yield slightly worse results in few special cases.}
 }
 \value{
 An object of class \code{\link{BiCop}}, augmented with the following
