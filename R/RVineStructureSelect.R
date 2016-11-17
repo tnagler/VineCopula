@@ -40,11 +40,13 @@
 #' = FALSE}).
 #' @param rotations If \code{TRUE}, all rotations of the families in
 #' \code{familyset} are included.
+#' @param mle Character indicating the estimation method: either maximum
+#' likelihood estimation (method = "mle"; default) or inversion of Kendall's
+#' tau (method = "itau").
+#' For method = "itau" only one parameter bivariate copula families can be used
+#' (family = 1,3,4,5,6,13,14,16,23,24,26,33,34 or 36).
 #' @param cores integer; if \code{cores > 1}, estimation will be parallized
-#' within each tree (using \code{\link[foreach]{foreach}}). Note that
-#' parallelization causes substantial overhead and may be slower than
-#' single-threaded computation when dimension, sample size, or familyset are
-#' small.
+#' within each tree (using \code{\link[foreach]{foreach}}).
 #'
 #' @return An \code{\link{RVineMatrix}} object with the selected structure
 #' (\code{RVM$Matrix}) and families (\code{RVM$family}) as well as sequentially
@@ -160,44 +162,32 @@
 #'
 RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit = "AIC", indeptest = FALSE,
                                  level = 0.05, trunclevel = NA, progress = FALSE,  weights = NA,
-                                 treecrit = "tau", se = FALSE, rotations = TRUE, cores = 1) {
+                                 treecrit = "tau", se = FALSE, rotations = TRUE, method = "mle", cores = 1) {
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),
                     check_data,
                     check_nobs,
                     check_if_01,
-                    prep_familyset)
+                    prep_familyset,
+                    check_twoparams)
     list2env(args, environment())
 
     d <- ncol(data)
     n <- nrow(data)
 
     ## sanity checks
-    if (d < 2)
-        stop("Dimension has to be at least 2.")
-    if (d == 2) {
-        return(RVineCopSelect(data,
-                              familyset = familyset,
-                              Matrix = matrix(c(2, 1, 0, 1), 2, 2),
-                              selectioncrit = selectioncrit,
-                              indeptest = indeptest,
-                              level = level,
-                              trunclevel = trunclevel,
-                              se = se,
-                              rotations = rotations,
-                              cores = cores))
-    }
+    if (type == 0)
+        type <- "RVine" else if (type == 1)
+            type <- "CVine"
+    if (d < 3)
+        stop("Dimension has to be at least 3.")
     if (!(selectioncrit %in% c("AIC", "BIC", "logLik")))
         stop("Selection criterion not implemented.")
     if (level < 0 & level > 1)
         stop("Significance level has to be between 0 and 1.")
-
-    ## set defaults
-    if (type == 0)
-        type <- "RVine"
-    if (type == 1)
-        type <- "CVine"
     treecrit <- set_treecrit(treecrit, familyset)
+
+    ## set trunclevel if not provided
     if (is.na(trunclevel))
         trunclevel <- d
     if (trunclevel == 0)
@@ -233,6 +223,7 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
                                      level,
                                      se = se,
                                      weights = weights,
+                                     method = method,
                                      cores = cores)
     # store results
     if (!is.null(VineTree$warn))
@@ -263,6 +254,7 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
                                     se = se,
                                     progress,
                                     weights = weights,
+                                    method = method,
                                     cores = cores)
         # store results
         if (!is.null(VineTree$warn))
@@ -493,7 +485,7 @@ fasttau <- function(x, y, weights = NA) {
 ## fit pair-copulas for the first vine tree
 fit.FirstTreeCopulas <- function(MST, data.univ, type, copulaSelectionBy,
                                  testForIndependence, testForIndependence.level,
-                                 se, weights = NA, cores = 1) {
+                                 se, weights = NA, method = "mle", cores = 1) {
 
     ## initialize estimation results with empty list
     d <- nrow(MST$E$nums)
@@ -541,7 +533,8 @@ fit.FirstTreeCopulas <- function(MST, data.univ, type, copulaSelectionBy,
                      testForIndependence,
                      testForIndependence.level,
                      se,
-                     weights)
+                     weights,
+                     method)
     } else {
         pc.fits <- lapply(X = pc.data,
                           FUN = pcSelect,
@@ -550,7 +543,8 @@ fit.FirstTreeCopulas <- function(MST, data.univ, type, copulaSelectionBy,
                           testForIndependence,
                           testForIndependence.level,
                           se,
-                          weights)
+                          weights,
+                          method)
     }
 
     ## store estimated model and pseudo-obversations for next tree
@@ -574,12 +568,12 @@ fit.FirstTreeCopulas <- function(MST, data.univ, type, copulaSelectionBy,
 ## fit pair-copulas for vine trees 2,...
 fit.TreeCopulas <- function(MST, oldVineGraph, type, copulaSelectionBy,
                             testForIndependence, testForIndependence.level,
-                            se = se, progress, weights = NA, cores = 1) {
+                            se = se, progress, weights = NA, method = "mle",
+                            cores = 1) {
 
     ## initialize estimation results with empty list
     d <- nrow(MST$E$nums)
     pc.data <- lapply(1:d, function(i) NULL)
-
 
     ## prepare for estimation
     for (i in 1:d) {
@@ -647,7 +641,8 @@ fit.TreeCopulas <- function(MST, oldVineGraph, type, copulaSelectionBy,
                      testForIndependence,
                      testForIndependence.level,
                      se,
-                     weights)
+                     weights,
+                     method)
     } else {
         pc.fits <- lapply(X = pc.data,
                           FUN = pcSelect,
@@ -656,11 +651,11 @@ fit.TreeCopulas <- function(MST, oldVineGraph, type, copulaSelectionBy,
                           testForIndependence,
                           testForIndependence.level,
                           se,
-                          weights)
+                          weights,
+                          method)
     }
 
     ## store estimated model and pseudo-obversations for next tree
-
     for (i in 1:d) {
         MST$E$Copula.param[[i]] <- c(pc.fits[[i]]$par,
                                      pc.fits[[i]]$par2)
@@ -717,7 +712,7 @@ buildNextGraph <- function(oldVineGraph, treecrit, weights = NA, parallel) {
 }
 
 ## function for obtaining edge information
-getEdgeInfo <- function(i, g, oldVineGraph, treecrit, weights) {
+getEdgeInfo <- function(i, g, oldVineGraph, treecrit, weights, quick = FALSE) {
 
     ## get edge
     con <- g$E$nums[i, ]
@@ -807,12 +802,13 @@ pcSelect <- function(parameterForACopula, type, ...) {
 
 ## bivariate copula selection
 fit.ACopula <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
-                        indeptest = FALSE, level = 0.05, se = FALSE, weights = NA) {
+                        indeptest = FALSE, level = 0.05, se = FALSE,
+                        weights = NA, method = "mle") {
 
     ## select family and estimate parameter(s) for the pair copula
     complete.i <- which(!is.na(u1 + u2))
 
-    if (length(complete.i) < 10) {
+    if (length(complete.i) < 10 || (length(familyset) == 1 && familyset == 0)) {
         out <- BiCop(0)
         ## add more information about the fit
         out$se  <- NA
@@ -823,8 +819,11 @@ fit.ACopula <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         out$BIC    <- 0
         out$emptau <- NA
         out$p.value.indeptest <- NA
-        out$warn <- paste("Insufficient data for at least one pair.",
-                          "Independence has been selected automatically.")
+
+        if (length(complete.i) < 10) {
+            out$warn <- paste("Insufficient data for at least one pair.",
+                              "Independence has been selected automatically.")
+        }
     } else {
         out <- suppressWarnings(BiCopSelect(u1[complete.i], u2[complete.i],
                                             familyset,
@@ -833,7 +832,8 @@ fit.ACopula <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                                             level,
                                             weights = weights,
                                             rotations = FALSE,
-                                            se = se))
+                                            se = se,
+                                            method = method))
         out$warn <- NULL
     }
 
@@ -852,8 +852,13 @@ fit.ACopula <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
     }
 
     ## store pseudo-observations for estimation in next tree
-    out$CondOn.1 <- suppressWarnings(BiCopHfunc1(u2, u1, out, check.pars = FALSE))
-    out$CondOn.2 <- suppressWarnings(BiCopHfunc2(u2, u1, out, check.pars = FALSE))
+    if (length(familyset) == 1 && familyset == 0) {
+        out$CondOn.1 <- u1
+        out$CondOn.2 <- u2
+    } else {
+        out$CondOn.1 <- suppressWarnings(BiCopHfunc1(u2, u1, out, check.pars = FALSE))
+        out$CondOn.2 <- suppressWarnings(BiCopHfunc2(u2, u1, out, check.pars = FALSE))
+    }
 
     ## return results
     out

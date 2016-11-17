@@ -33,6 +33,11 @@
 #' = FALSE}).
 #' @param rotations logical; if \code{TRUE}, all rotations of the families in
 #' \code{familyset} are included.
+#' @param mle Character indicating the estimation method: either maximum
+#' likelihood estimation (method = "mle"; default) or inversion of Kendall's
+#' tau (method = "itau").
+#' For method = "itau" only one parameter bivariate copula families can be used
+#' (family = 1,3,4,5,6,13,14,16,23,24,26,33,34 or 36).
 #' @param cores integer; if \code{cores > 1}, estimation will be parallized
 #' within each tree (using \code{\link[foreach]{foreach}}).
 #'
@@ -119,13 +124,14 @@
 #' contour(RVM1)  # contour plots of all pair-copulas
 #'
 RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", indeptest = FALSE,
-                           level = 0.05, trunclevel = NA, se = FALSE, rotations = TRUE, cores = 1) {
+                           level = 0.05, trunclevel = NA, se = FALSE, rotations = TRUE, method = "mle", cores = 1) {
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),
                     check_data,
                     check_nobs,
                     check_if_01,
                     prep_familyset,
+                    check_twoparams,
                     check_matrix)
     list2env(args, environment())
     if (any(is.na(data)))
@@ -231,7 +237,8 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
                                                          level,
                                                          weights = NA,
                                                          rotations,
-                                                         se = se))
+                                                         se = se,
+                                                         method = method))
                     warn <- NULL
                 }
 

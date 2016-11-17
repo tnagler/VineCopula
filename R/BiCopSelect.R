@@ -87,9 +87,11 @@
 #' \code{familyset} are included (or substracted).
 #' @param se Logical; whether standard error(s) of parameter estimates is/are
 #' estimated (default: \code{se = FALSE}).
-#' @param presel Logical; whether to exclude families before fitting based on
-#' symmetry properties of the data. Makes the selection about 30% faster
-#' (on average), but may yield slightly worse results in few special cases.
+#' @param mle Character indicating the estimation method: either maximum
+#' likelihood estimation (method = "mle"; default) or inversion of Kendall's
+#' tau (method = "itau").
+#' For method = "itau" only one parameter bivariate copula families can be used
+#' (family = 1,3,4,5,6,13,14,16,23,24,26,33,34 or 36).
 #'
 #' @return An object of class \code{\link{BiCop}}, augmented with the following
 #' entries:
@@ -163,18 +165,17 @@
 #'
 BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                         indeptest = FALSE, level = 0.05, weights = NA,
-                        rotations = TRUE, se = FALSE, presel = TRUE) {
+                        rotations = TRUE, se = FALSE, method = "mle") {
     if (!(selectioncrit %in% c("AIC", "BIC", "logLik")))
         stop("Selection criterion not implemented.")
     ## preprocessing of arguments
-    if (presel)
-        todo_fams <- todo_fams_presel
     args <- preproc(c(as.list(environment()), call = match.call()),
                     check_u,
                     remove_nas,
                     check_nobs,
                     check_if_01,
                     prep_familyset,
+                    check_twoparams,
                     check_est_pars,
                     check_fam_tau,
                     todo_fams,
@@ -196,6 +197,7 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         for (i in seq_along(familyset)) {
             optiout[[i]] <- BiCopEst.intern(u1, u2,
                                             family = familyset[i],
+                                            method = method,
                                             se = se,
                                             weights = weights,
                                             as.BiCop = FALSE)

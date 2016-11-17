@@ -532,6 +532,22 @@ check_est_pars <- function(args) {
     args
 }
 
+check_twoparams <- function(args) {
+    if (!is.null(args$familyset)) {
+        if ((args$method == "itau") &&
+            (!all(args$familyset %in% c(0, allfams[onepar])))) {
+            warning(" In ", args$call[1], ": ",
+                    "Two parameter copulas cannot be handled by the quick estimation",
+                    " routine. They are automatically removed from the familyset.",
+                    call. = FALSE)
+            args$familyset <- args$familyset[args$familyset %in%
+                                                 c(0, allfams[onepar])]
+        }
+    }
+
+    args
+}
+
 check_data <- function(args) {
     if (is.symbol(args$data))
         stop("\n In ", args$call[1], ": ",
