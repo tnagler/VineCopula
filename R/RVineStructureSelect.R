@@ -436,8 +436,6 @@ findMaxTree <- function(g, mode = "RVine") {
         E <- g$E$nums
         in.tree <- apply(matrix(edges, ncol = 2), 1,
                          function(x) which((x[1] == E[, 1]) & (x[2] == E[, 2])))
-        if (is.list(in.tree))
-            do.call()
         MST <- g
         g$E$todel <- rep(TRUE, nrow(E))
         if (any(g$E$todel)) {
