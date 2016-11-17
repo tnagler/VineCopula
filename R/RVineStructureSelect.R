@@ -712,7 +712,7 @@ buildNextGraph <- function(oldVineGraph, treecrit, weights = NA, parallel) {
 }
 
 ## function for obtaining edge information
-getEdgeInfo <- function(i, g, oldVineGraph, treecrit, weights, quick = FALSE) {
+getEdgeInfo <- function(i, g, oldVineGraph, treecrit, weights) {
 
     ## get edge
     con <- g$E$nums[i, ]
