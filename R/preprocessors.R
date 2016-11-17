@@ -359,7 +359,7 @@ todo_fams <- function(args) {
     args
 }
 
-todo_fams2 <- function(args) {
+todo_fams_presel <- function(args) {
     # shrink familyset based on Kendall's tau and asymmetry index
     if (args$emp_tau > 0) {
         # calculate asymetry indices
@@ -398,7 +398,10 @@ todo_fams2 <- function(args) {
     }
 
     # restrict to familie
-    args$familyset <- todo[which(todo %in% args$familyset)]
+    tmpfams <- todo[which(todo %in% args$familyset)]
+    # check if any family is feasible; if not, keep all
+    if (length(tmpfams) > 1)
+        args$familyset <- tmpfams
     args
 }
 

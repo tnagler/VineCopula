@@ -168,7 +168,7 @@ BiCopSelect <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         stop("Selection criterion not implemented.")
     ## preprocessing of arguments
     if (presel)
-        todo_fams <- todo_fams2
+        todo_fams <- todo_fams_presel
     args <- preproc(c(as.list(environment()), call = match.call()),
                     check_u,
                     remove_nas,
