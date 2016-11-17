@@ -45,7 +45,10 @@ hypothesis of independence cannot be rejected.}
 \code{familyset} are included.}
 
 \item{cores}{integer; if \code{cores > 1}, estimation will be parallized
-within each tree (using \code{\link[foreach]{foreach}}).}
+within each tree (using \code{\link[foreach]{foreach}}). Note that
+parallelization causes substantial overhead and may be slower than
+single-threaded computation when dimension, sample size, or familyset are
+small.}
 
 \item{mle}{Character indicating the estimation method: either maximum
 likelihood estimation (method = "mle"; default) or inversion of Kendall's

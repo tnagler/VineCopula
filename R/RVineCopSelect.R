@@ -39,7 +39,10 @@
 #' For method = "itau" only one parameter bivariate copula families can be used
 #' (family = 1,3,4,5,6,13,14,16,23,24,26,33,34 or 36).
 #' @param cores integer; if \code{cores > 1}, estimation will be parallized
-#' within each tree (using \code{\link[foreach]{foreach}}).
+#' within each tree (using \code{\link[foreach]{foreach}}). Note that
+#' parallelization causes substantial overhead and may be slower than
+#' single-threaded computation when dimension, sample size, or familyset are
+#' small.
 #'
 #' @return An \code{\link{RVineMatrix}} object with the selected families
 #' (\code{RVM$family}) as well as sequentially
