@@ -55,7 +55,7 @@ one parameter families and the Student t copula can be used (\code{family =
 within each tree (using \code{\link[foreach]{foreach}}). Note that
 parallelization causes substantial overhead and may be slower than
 single-threaded computation when dimension, sample size, or familyset are
-small.}
+small or \code{method = "itau"}.}
 }
 \value{
 An \code{\link{RVineMatrix}} object with the selected families

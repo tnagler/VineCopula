@@ -39,7 +39,9 @@ details see \code{\link{BiCopEst}}).}
 \item{weights}{Numerical; weights for each observation (opitional).}
 
 \item{cores}{integer; if \code{cores > 1}, estimation will be parallized
-within each tree (using \code{\link[foreach]{foreach}}).}
+within each tree (using \code{\link[foreach]{foreach}}). However, the
+overhead caused by parallelization is likely to make the function run slower
+unless sample size is really large and \code{method = "itau"}.}
 }
 \value{
 An \code{\link{RVineMatrix}} object with the sequentially

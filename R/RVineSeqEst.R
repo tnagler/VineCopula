@@ -30,7 +30,9 @@
 #' (default: \code{progress = FALSE}).
 #' @param weights Numerical; weights for each observation (opitional).
 #' @param cores integer; if \code{cores > 1}, estimation will be parallized
-#' within each tree (using \code{\link[foreach]{foreach}}).
+#' within each tree (using \code{\link[foreach]{foreach}}). However, the
+#' overhead caused by parallelization is likely to make the function run slower
+#' unless sample size is really large and \code{method = "itau"}.
 #'
 #' @return An \code{\link{RVineMatrix}} object with the sequentially
 #' estimated parameters stored in \code{RVM$par} and \code{RVM$par2}. The object
