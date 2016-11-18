@@ -741,24 +741,16 @@ vinvstepb <- function(A, i, ichk0 = 0) {
 }
 
 
-# various checks for validity of a vine array A with dimension d>=4
-# return 1 for OK
-# return -3 for diagonal not 1:d
-# return -2 for not permutation of 1:j in column j
-# return -1 if cannot find proper binary array from array in natural order
-
-
-
 #' R-Vine Matrix Check
 #'
 #' The given matrix is tested to be a valid R-vine matrix.
 #'
 #'
-#' @param M A dxd vine matrix: only lower triangle is used; For the check, M is
-#' assumed to be in natural order, i.e. d:1 on diagonal. Further M[j+1,j]=d-j
-#' and M[j,j]=d-j
-#' @return \item{code}{ \code{1} for OK; \cr \code{-3} diagonal can not be put
-#' in order d:1; \cr \code{-2} for not permutation of j:d in column d-j; \cr
+#' @param M A dxd vine matrix.
+#' @return \item{code}{ \code{1} for OK; \cr
+#' \code{-4} matrix is neither lower nor upper triangular;\cr
+#' \code{-3} diagonal can not be put in order d:1;\cr
+#' \code{-2} for not permutation of j:d in column d-j; \cr
 #' \code{-1} if cannot find proper binary array from array in natural order.  }
 #' @note The matrix M do not have to be given in natural order or the diagonal
 #' in order d:1. The test checks if it can be done in order to be a valid
@@ -774,35 +766,39 @@ vinvstepb <- function(A, i, ichk0 = 0) {
 #' @examples
 #'
 #' A1 <- matrix(c(6, 0, 0, 0, 0, 0,
-#' 			         5, 5, 0, 0, 0, 0,
-#' 			         3, 4, 4, 0, 0, 0,
-#' 			         4, 3, 3, 3, 0, 0,
-#' 			         1, 1, 2, 2, 2, 0,
-#' 			         2, 2, 1, 1, 1, 1), 6, 6, byrow = TRUE)
+#'                5, 5, 0, 0, 0, 0,
+#'                3, 4, 4, 0, 0, 0,
+#'                4, 3, 3, 3, 0, 0,
+#'                1, 1, 2, 2, 2, 0,
+#'                2, 2, 1, 1, 1, 1), 6, 6, byrow = TRUE)
 #' b1 <- RVineMatrixCheck(A1)
 #' print(b1)
 #' # improper vine matrix, code=-1
 #' A2 <- matrix(c(6, 0, 0, 0, 0, 0,
-#' 			         5, 5, 0, 0, 0, 0,
-#' 			         4, 4, 4, 0, 0, 0,
-#' 			         1, 3, 3, 3, 0, 0,
-#' 			         3, 1, 2, 2, 2, 0,
-#' 			         2, 2, 1, 1, 1,1 ), 6, 6, byrow = TRUE)
+#'                5, 5, 0, 0, 0, 0,
+#'                4, 4, 4, 0, 0, 0,
+#'                1, 3, 3, 3, 0, 0,
+#'                3, 1, 2, 2, 2, 0,
+#'                2, 2, 1, 1, 1,1 ), 6, 6, byrow = TRUE)
 #' b2 <- RVineMatrixCheck(A2)
 #' print(b2)
 #' # improper vine matrix, code=-2
 #' A3 <- matrix(c(6, 0, 0, 0, 0, 0,
-#' 			         3, 5, 0, 0, 0, 0,
-#' 			         3, 4, 4, 0, 0, 0,
-#' 			         4, 3, 3, 3, 0, 0,
-#' 			         1, 1, 2, 2, 2, 0,
-#' 			         2, 2, 1, 1, 1, 1), 6, 6, byrow = TRUE)
+#'                3, 5, 0, 0, 0, 0,
+#'                3, 4, 4, 0, 0, 0,
+#'                4, 3, 3, 3, 0, 0,
+#'                1, 1, 2, 2, 2, 0,
+#'                2, 2, 1, 1, 1, 1), 6, 6, byrow = TRUE)
 #' b3 <- RVineMatrixCheck(A3)
 #' print(b3)
 #'
 #' @export RVineMatrixCheck
 RVineMatrixCheck <- function(M) {
-    A <- M
+    lmat <- M[lower.tri(M)]
+    umat <- M[upper.tri(M)]
+    if (!(all(lmat == 0) | all(umat == 0)))
+        return(-4)
+    A <- ToLowerTri(M)
     d <- nrow(A)
     if (d != ncol(A))
         return(-1)
