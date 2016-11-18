@@ -71,11 +71,12 @@
 #' \code{214} = rotated Tawn type 2 copula (180 degrees) \cr
 #' \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
 #' \code{234} = rotated Tawn type 2 copula (270 degrees) \cr
-#' @param method Character indicating the estimation method: either maximum
+#' @param method indicates the estimation method: either maximum
 #' likelihood estimation (\code{method = "mle"}; default) or inversion of
-#' Kendall's tau (\code{method = "itau"}).\cr For \code{method = "itau"} only
-#' one parameter bivariate copula families can be used (\code{family =
-#' 1,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}).
+#' Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
+#' one parameter families and the Student t copula can be used (\code{family =
+#' 1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
+#' \code{par2} is considered fixed with value 5.
 #' @param se Logical; whether standard error(s) of parameter estimates is/are
 #' estimated (default: \code{se = FALSE}).
 #' @param max.df Numeric; upper bound for the estimation of the degrees of
@@ -185,7 +186,7 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = FALSE, max.df = 30,
             u <- cbind(u1, u2)
             v <- matrix(0, n, p * (p - 1)/2)
 
-            if (family == 1)
+            if (family %in% 1:2)
                 tauder <- function(x) {
                     2/(pi * sqrt(1 - x^2))
                 } else if (family %in% c(3, 13, 23, 33)) {
@@ -228,7 +229,7 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = FALSE, max.df = 30,
 
             if (family == 0) {
                 D <- 0
-            } else if (family %in% c(1, 3, 4, 5, 6, 13, 14, 16, 41, 51)) {
+            } else if (family %in% c(1, 2, 3, 4, 5, 6, 13, 14, 16, 41, 51)) {
                 D <- 1/tauder(theta)
             } else if (family %in% c(23, 33, 24, 34, 26, 36, 61, 71)) {
                 D <- 1/tauder(-theta)
@@ -237,6 +238,11 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = FALSE, max.df = 30,
 
             se1 <- as.numeric(sqrt(16/n * var(v %*% D)))
         }  # end if (se == TRUE)
+        if (family == 2) {
+            theta <- c(theta, 5)
+            if (se)
+                se1 <- c(se1, NA)
+        }
     }  # end if (method == "itau")
 
     ## MLE ------------------------------------------
@@ -458,36 +464,37 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
             u <- cbind(u1, u2)
             v <- matrix(0, n, p * (p - 1)/2)
 
-            if (family == 1)
+            if (family %in% 1:2) {
                 tauder <- function(x) {
                     2/(pi * sqrt(1 - x^2))
-                } else if (family %in% c(3, 13, 23, 33)) {
-                    tauder <- function(x) 2 * (2 + x)^(-2)
-                } else if (family %in% c(4, 14, 24, 34)) {
-                    tauder <- function(x) x^(-2)
-                } else if (family == 5) {
-                    f <- function(x) x/(exp(x) - 1)
-                    tauder <- function(x) {
-                        lwr <- 0 + .Machine$double.eps^0.5
-                        intgrl <- integrate(f,
-                                            lower = lwr,
-                                            upper = x)$value
-                        4/x^2 - 8/x^3 * intgrl + 4/(x * (exp(x) - 1))
-                    }
-                } else if (family %in% c(6, 16, 26, 36)) {
-                    tauder <- function(x) {
-                        euler <- 0.577215664901533
-                        -((-2 + 2 * euler + 2 * log(2) + digamma(1/x) +
-                               digamma(1/2 * (2 + x)/x) + x)/(-2 + x)^2) +
-                            ((-trigamma(1/x)/x^2 + trigamma(1/2 * (2 + x)/x) *
-                                  (1/(2 + x) - (2 + x)/(2 * x^2)) + 1)/(-2 + x))
-                    }
-                } else if (family %in% c(41, 51, 61, 71)) {
-                    tauder <- function(x) {
-                        2 * sqrt(pi) * gamma(0.5 + x) *
-                            (digamma(1 + x) - digamma(0.5 + x))/gamma(1 + x)
-                    }
                 }
+            } else if (family %in% c(3, 13, 23, 33)) {
+                tauder <- function(x) 2 * (2 + x)^(-2)
+            } else if (family %in% c(4, 14, 24, 34)) {
+                tauder <- function(x) x^(-2)
+            } else if (family == 5) {
+                f <- function(x) x/(exp(x) - 1)
+                tauder <- function(x) {
+                    lwr <- 0 + .Machine$double.eps^0.5
+                    intgrl <- integrate(f,
+                                        lower = lwr,
+                                        upper = x)$value
+                    4/x^2 - 8/x^3 * intgrl + 4/(x * (exp(x) - 1))
+                }
+            } else if (family %in% c(6, 16, 26, 36)) {
+                tauder <- function(x) {
+                    euler <- 0.577215664901533
+                    -((-2 + 2 * euler + 2 * log(2) + digamma(1/x) +
+                           digamma(1/2 * (2 + x)/x) + x)/(-2 + x)^2) +
+                        ((-trigamma(1/x)/x^2 + trigamma(1/2 * (2 + x)/x) *
+                              (1/(2 + x) - (2 + x)/(2 * x^2)) + 1)/(-2 + x))
+                }
+            } else if (family %in% c(41, 51, 61, 71)) {
+                tauder <- function(x) {
+                    2 * sqrt(pi) * gamma(0.5 + x) *
+                        (digamma(1 + x) - digamma(0.5 + x))/gamma(1 + x)
+                }
+            }
 
             l <- 1
             for (j in 1:(p - 1)) {
@@ -501,7 +508,7 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
 
             if (family == 0) {
                 D <- 0
-            } else if (family %in% c(1, 3, 4, 5, 6, 13, 14, 16, 41, 51)) {
+            } else if (family %in% c(1, 2, 3, 4, 5, 6, 13, 14, 16, 41, 51)) {
                 D <- 1/tauder(theta)
             } else if (family %in% c(23, 33, 24, 34, 26, 36, 61, 71)) {
                 D <- 1/tauder(-theta)
@@ -510,6 +517,11 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
 
             se1 <- as.numeric(sqrt(16/n * var(v %*% D)))
         }  # end if (se == TRUE)
+        if (family == 2) {
+            theta <- c(theta, 5)
+            if (se)
+                se1 <- c(se1, NA)
+        }
     }  # end if (method == "itau")
 
     ## MLE ------------------------------------------

@@ -44,11 +44,12 @@ hypothesis of independence cannot be rejected.}
 \item{rotations}{logical; if \code{TRUE}, all rotations of the families in
 \code{familyset} are included.}
 
-\item{method}{Character indicating the estimation method: either maximum
-likelihood estimation (method = "mle"; default) or inversion of Kendall's
-tau (method = "itau").
-For method = "itau" only one parameter bivariate copula families can be used
-(family = 1,3,4,5,6,13,14,16,23,24,26,33,34 or 36).}
+\item{method}{indicates the estimation method: either maximum
+likelihood estimation (\code{method = "mle"}; default) or inversion of
+Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
+one parameter families and the Student t copula can be used (\code{family =
+1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
+\code{par2} is considered fixed with value 5.}
 
 \item{cores}{integer; if \code{cores > 1}, estimation will be parallized
 within each tree (using \code{\link[foreach]{foreach}}). Note that

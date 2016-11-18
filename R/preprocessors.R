@@ -497,7 +497,7 @@ check_est_pars <- function(args) {
                  "Estimation method has to be either 'mle' or 'itau'.",
                  call. = FALSE)
         if (!is.null(args$family)) {
-            if ((args$method == "itau") && (!(args$family %in% c(0, allfams[onepar])))) {
+            if ((args$method == "itau") && (!(args$family %in% c(0, 2, allfams[onepar])))) {
                 warning(" In ", args$call[1], ": ",
                         "For two parameter copulas the estimation method 'itau' cannot ",
                         "be used. The method is automatically set to 'mle'.",
@@ -506,7 +506,7 @@ check_est_pars <- function(args) {
             }
         }
         if (!is.null(args$familyset)) {
-            if ((args$method == "itau") && (!all(args$familyset %in% c(0, allfams[onepar])))) {
+            if ((args$method == "itau") && (!all(args$familyset %in% c(0, 2, allfams[onepar])))) {
                 warning(" In ", args$call[1], ": ",
                         "For two parameter copulas the estimation method 'itau' cannot ",
                         "be used. The method is automatically set to 'mle'.",
@@ -535,13 +535,14 @@ check_est_pars <- function(args) {
 check_twoparams <- function(args) {
     if (!is.null(args$familyset)) {
         if ((args$method == "itau") &&
-            (!all(args$familyset %in% c(0, allfams[onepar])))) {
+            (!all(args$familyset %in% c(0, 2, allfams[onepar])))) {
             warning(' In ', args$call[1], ': ',
-                    'Two parameter families cannot be handled by method "itau".',
+                    'Two parameter families (other than the t-copula) cannot',
+                    ' be handled by method "itau".',
                     ' They are automatically removed from the familyset.',
                     call. = FALSE)
             args$familyset <- args$familyset[args$familyset %in%
-                                                 c(0, allfams[onepar])]
+                                                 c(0, 2, allfams[onepar])]
         }
     }
 
