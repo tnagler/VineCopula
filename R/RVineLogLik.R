@@ -48,6 +48,9 @@
 #' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
 #' for family/parameter-consistency are ommited (should only be used with
 #' care).
+#' @param calculate.V logical; whether V matrices should be calculated. Default
+#' is \code{TRUE}, but requires a lot of memory when dimension is large.
+#' Use \code{FALSE} for a memory efficient version.
 #'
 #' @return \item{loglik}{The calculated log-likelihood value of the R-vine
 #' copula model.} \item{V}{The stored transformations (h-functions and
@@ -110,7 +113,8 @@
 #' ll$loglik
 #'
 RVineLogLik <- function(data, RVM, par = RVM$par, par2 = RVM$par2,
-                        separate = FALSE, verbose = TRUE, check.pars = TRUE) {
+                        separate = FALSE, verbose = TRUE, check.pars = TRUE,
+                        calculate.V = TRUE) {
     ## preprocessing of arguments
     RVM$par <- par
     RVM$par2 <- par2
@@ -136,23 +140,6 @@ RVineLogLik <- function(data, RVM, par = RVM$par, par2 = RVM$par2,
         data <- data[, o[length(o):1]]
     }
 
-    V <- list()
-    V$direct <- array(0, dim = c(n, n, N))
-    V$indirect <- array(0, dim = c(n, n, N))
-    if (is.vector(data)) {
-        V$direct[n, , ] <- data[n:1]
-    } else {
-        V$direct[n, , ] <- t(data[, n:1])
-    }
-
-
-    V$value <- array(0, c(n, n, N))
-
-    ll <- as.vector(V$value)
-    vv <- as.vector(V$direct)
-    vv2 <- as.vector(V$indirect)
-    calcup <- as.vector(matrix(1, dim(RVM), dim(RVM)))
-
     w1 <- as.vector(RVM$family)
     w1[is.na(w1)] <- 0
     th <- as.vector(par)
@@ -168,57 +155,100 @@ RVineLogLik <- function(data, RVM, par = RVM$par, par2 = RVM$par2,
     condirect[is.na(condirect)] <- 0
     conindirect[is.na(conindirect)] <- 0
 
-    out <- rep(0, N)
-    out <- .C("VineLogLikRvine",
-              as.integer(T),
-              as.integer(d),
-              as.integer(w1),
-              as.integer(maxmat),
-              as.integer(matri),
-              as.integer(condirect),
-              as.integer(conindirect),
-              as.double(th),
-              as.double(th2),
-              as.double(data),
-              as.double(out),
-              as.double(ll),
-              as.double(vv),
-              as.double(vv2),
-              as.integer(calcup),
-              as.integer(TRUE),
-              PACKAGE = 'VineCopula'
-    )
+    if (calculate.V) {
+        V <- list()
+        V$direct <- array(0, dim = c(n, n, N))
+        V$indirect <- array(0, dim = c(n, n, N))
+        if (is.vector(data)) {
+            V$direct[n, , ] <- data[n:1]
+        } else {
+            V$direct[n, , ] <- t(data[, n:1])
+        }
+        V$value <- array(0, c(n, n, N))
 
-    ll <- out[[12]]
-    loglik <- out[[11]]
-    loglik[loglik %in% c(NaN, -Inf, Inf)] <- -1e+10
+        ll <- as.vector(V$value)
+        vv <- as.vector(V$direct)
+        vv2 <- as.vector(V$indirect)
+        calcup <- as.vector(matrix(1, dim(RVM), dim(RVM)))
+
+        out <- rep(0, N)
+        out <- .C("VineLogLikRvine",
+                  as.integer(T),
+                  as.integer(d),
+                  as.integer(w1),
+                  as.integer(maxmat),
+                  as.integer(matri),
+                  as.integer(condirect),
+                  as.integer(conindirect),
+                  as.double(th),
+                  as.double(th2),
+                  as.double(data),
+                  as.double(out),
+                  as.double(ll),
+                  as.double(vv),
+                  as.double(vv2),
+                  as.integer(calcup),
+                  as.integer(TRUE),
+                  PACKAGE = 'VineCopula'
+        )
+
+        ll <- out[[12]]
+        loglik <- out[[11]]
+        loglik[loglik %in% c(NaN, -Inf, Inf)] <- -1e+10
         vv <- out[[13]]
-    vv2 <- out[[14]]
-    V$direct <- array(vv, dim = c(n, n, N))
-    V$indirect <- array(vv2, dim = c(n, n, N))
-    V$value <- array(ll, dim = c(n, n, N))
-    V <- suppressWarnings(lapply(V, reset_nas, args = args))
+        vv2 <- out[[14]]
+        V$direct <- array(vv, dim = c(n, n, N))
+        V$indirect <- array(vv2, dim = c(n, n, N))
+        V$value <- array(ll, dim = c(n, n, N))
+        V <- suppressWarnings(lapply(V, reset_nas, args = args))
 
-    if (separate) {
-        loglik <- reset_nas(loglik, args)
+        if (separate) {
+            loglik <- reset_nas(loglik, args)
+        } else {
+            if (!is.null(args$msg))
+                args$msg <- paste(args$msg, "Only complete observations are used.")
+            loglik <- sum(reset_nas(loglik, args), na.rm = TRUE)
+            V$value <- apply(V$value, 1:2, sum, na.rm = TRUE)
+        }
+        if (any(V$value %in% c(NaN, -Inf, Inf)) & verbose) {
+            print(V$value[V$value %in% c(NaN, -Inf, Inf)])
+            print(th)
+            print(th2)
+        }
+        V$value[V$value %in% c(NaN, -Inf, Inf)] <- -1e+10
+
+        return(list(loglik = loglik, V = V))
+
     } else {
-        if (!is.null(args$msg))
-            args$msg <- paste(args$msg, "Only complete observations are used.")
-        loglik <- sum(reset_nas(loglik, args), na.rm = TRUE)
-        V$value <- apply(V$value, 1:2, sum, na.rm = TRUE)
-    }
-    if (any(V$value %in% c(NaN, -Inf, Inf)) & verbose) {
-        print(V$value[V$value %in% c(NaN, -Inf, Inf)])
-        print(th)
-        print(th2)
-    }
-    V$value[V$value %in% c(NaN, -Inf, Inf)] <- -1e+10
+        # memory efficient version (not calculating V matrices)
+        out <- rep(0, N)
+        out <- .C("VineLogLikRvine2",
+                  as.integer(T),
+                  as.integer(d),
+                  as.integer(w1),
+                  as.integer(maxmat),
+                  as.integer(matri),
+                  as.integer(condirect),
+                  as.integer(conindirect),
+                  as.double(th),
+                  as.double(th2),
+                  as.double(data),
+                  as.double(out),
+                  PACKAGE = 'VineCopula'
+        )
 
-    return(list(loglik = loglik, V = V))
+        loglik <- out[[11]]
+        if (separate) {
+            loglik <- reset_nas(loglik, args)
+        } else {
+            if (!is.null(args$msg))
+                args$msg <- paste(args$msg, "Only complete observations are used.")
+            loglik <- sum(reset_nas(loglik, args), na.rm = TRUE)
+        }
+
+        return(list(loglik = loglik))
+    }
 }
-
-
-
 
 #' PDF of an R-Vine Copula Model
 #'
@@ -305,5 +335,5 @@ RVineLogLik <- function(data, RVM, par = RVM$par, par2 = RVM$par2,
 #' RVinePDF(c(0.1, 0.2, 0.3, 0.4, 0.5), RVM)
 #'
 RVinePDF <- function(newdata, RVM) {
-    exp(RVineLogLik(newdata, RVM, separate = TRUE)$loglik)
+    exp(RVineLogLik(newdata, RVM, separate = TRUE, calculate.V = FALSE)$loglik)
 }

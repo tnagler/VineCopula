@@ -5,7 +5,7 @@
 \title{Log-Likelihood of an R-Vine Copula Model}
 \usage{
 RVineLogLik(data, RVM, par = RVM$par, par2 = RVM$par2, separate = FALSE,
-  verbose = TRUE, check.pars = TRUE)
+  verbose = TRUE, check.pars = TRUE, calculate.V = TRUE)
 }
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}
@@ -28,6 +28,10 @@ plotted.}
 \item{check.pars}{logical; default is \code{TRUE}; if \code{FALSE}, checks
 for family/parameter-consistency are ommited (should only be used with
 care).}
+
+\item{calculate.V}{logical; whether V matrices should be calculated. Default
+is \code{TRUE}, but requires a lot of memory when dimension is large.
+Use \code{FALSE} for a memory efficient version.}
 }
 \value{
 \item{loglik}{The calculated log-likelihood value of the R-vine
