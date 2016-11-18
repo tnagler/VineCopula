@@ -84,8 +84,8 @@ RVineVuongTest <- function(data, RVM1, RVM2) {
     list2env(args, environment())
     N <- args$n
 
-    Model1.ll <- RVineLogLik(data, RVM1, separate = TRUE)$loglik
-    Model2.ll <- RVineLogLik(data, RVM2, separate = TRUE)$loglik
+    Model1.ll <- RVineLogLik(data, RVM1, separate = TRUE, calculate.V = FALSE)$loglik
+    Model2.ll <- RVineLogLik(data, RVM2, separate = TRUE, calculate.V = FALSE)$loglik
 
     anz.1 <- sum(RVM1$family >= 1, na.rm = TRUE) + sum(RVM1$family %in% c(2, 7, 8, 9, 10, 17, 18, 19, 20, 27, 28, 29, 30, 37, 38, 39, 40, 104, 114, 124, 134, 204, 214, 224, 234), na.rm = TRUE)
     anz.2 <- sum(RVM2$family >= 1, na.rm = TRUE) + sum(RVM2$family %in% c(2, 7, 8, 9, 10, 17, 18, 19, 20, 27, 28, 29, 30, 37, 38, 39, 40, 104, 114, 124, 134, 204, 214, 224, 234), na.rm = TRUE)

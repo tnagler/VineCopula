@@ -183,6 +183,7 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
     emptaus <- matrix(0, d, d)
     pvals   <- matrix(0, d, d)
     nobs    <- matrix(0, d, d)
+    logLiks <- matrix(0, d, d)
     V <- list()
     V$direct <- array(NA, dim = c(d, N))
     V$indirect <- array(NA, dim = c(d, N))
@@ -290,6 +291,7 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
             Se2s[k, i]    <- ifelse(is.null(tmpse2), NA, tmpse2)
             emptaus[k, i] <- res.k[[i]]$cfit$emptau
             pvals[k, i]   <- res.k[[i]]$cfit$p.value.indeptest
+            logLiks[k, i] <- res.k[[i]]$cfit$logLik
             if (!is.null(res.k[[i]]$warn))
                 warn <- res.k[[i]]$warn
             ## replace pseudo observations for estimation of next tree
@@ -314,9 +316,9 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
     }
     .RVM$nobs <- N
     revo <- sapply(1:d, function(i) which(o[length(o):1] == i))
-    like <- suppressWarnings(RVineLogLik(data[, revo], .RVM))
+    like <- suppressWarnings(RVineLogLik(data[, revo], .RVM, calculate.V = FALSE))
     .RVM$logLik <- like$loglik
-    .RVM$pair.logLik <- like$V$value
+    .RVM$pair.logLik <- logLiks
     npar <- sum(.RVM$family %in% allfams[onepar], na.rm = TRUE) +
         2 * sum(.RVM$family %in% allfams[twopar], na.rm = TRUE)
     npar_pair <- (.RVM$family %in% allfams[onepar]) +

@@ -921,6 +921,7 @@ as.RVM2 <- function(RVine, data, callexp) {
     Se2s    <- matrix(0, n, n)
     emptaus <- matrix(0, n, n)
     pvals   <- matrix(0, n, n)
+    logLiks <- matrix(0, n, n)
 
     ## store structure, families and parameters in matrices
     for (k in 1:(n - 1)) {
@@ -938,6 +939,7 @@ as.RVM2 <- function(RVine, data, callexp) {
         Se2s[(k + 1), k]    <- ifelse(is.null(tmpse2), NA, tmpse2)
         emptaus[(k + 1), k] <- crspfits[[n - k]][[1]]$emptau
         pvals[(k + 1), k]   <- crspfits[[n - k]][[1]]$p.value.indeptest
+        logLiks[(k + 1), k] <- crspfits[[n - k]][[1]]$logLik
 
         if (k == (n - 1)) {
             M[(k + 1), (k + 1)] <- nedSets[[n - k]][[1]][2]
@@ -976,6 +978,7 @@ as.RVM2 <- function(RVine, data, callexp) {
                 Se2s[i, k]    <- ifelse(is.null(tmpse2), NA, tmpse2)
                 emptaus[i, k] <- crspfits[[n - i + 1]][[j]]$emptau
                 pvals[i, k]   <- crspfits[[n - i + 1]][[j]]$p.value.indeptest
+                logLiks[i, k] <- crspfits[[n - i + 1]][[j]]$logLik
                 nedSets[[n - i + 1]][[j]]    <- NULL
                 crspParams[[n - i + 1]][[j]] <- NULL
                 crspTypes[[n - i + 1]][[j]]  <- NULL
@@ -998,9 +1001,9 @@ as.RVM2 <- function(RVine, data, callexp) {
         RVM$se2 <- Se2s
     }
     RVM$nobs <- crspfits[[1]][[1]]$nobs
-    like <- suppressWarnings(RVineLogLik(data, RVM))
+    like <- suppressWarnings(RVineLogLik(data, RVM, calculate.V = FALSE))
     RVM$logLik <- like$loglik
-    RVM$pair.logLik <- like$V$value
+    RVM$pair.logLik <- logLiks
     npar <- sum(RVM$family %in% allfams[onepar], na.rm = TRUE) +
         2 * sum(RVM$family %in% allfams[twopar], na.rm = TRUE)
     npar_pair <- (RVM$family %in% allfams[onepar]) +

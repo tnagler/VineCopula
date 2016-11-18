@@ -141,6 +141,7 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
     Params  <- matrix(0, d, d)
     Params2 <- matrix(0, d, d)
     emptaus <- matrix(0, d, d)
+    logLiks <- matrix(0, d, d)
     if (se)
         Se <- Se2 <- matrix(0, d, d)
     V <- list()
@@ -255,6 +256,7 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
             Params[k, i]  <- res.k[[i]]$cfit$par
             Params2[k, i] <- res.k[[i]]$cfit$par2
             emptaus[k, i] <- res.k[[i]]$cfit$emptau
+            logLiks[k, i] <- res.k[[i]]$cfit$logLik
             if (!is.null(res.k[[i]]$warn))
                 warn <- res.k[[i]]$warn
 
@@ -284,9 +286,9 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
     }
     .RVM$nobs <- N
     revo <- sapply(1:d, function(i) which(o[length(o):1] == i))
-    like <- suppressWarnings(RVineLogLik(data[, revo], .RVM))
+    like <- suppressWarnings(RVineLogLik(data[, revo], .RVM, calculate.V = FALSE))
     .RVM$logLik <- like$loglik
-    .RVM$pair.logLik <- like$V$value
+    .RVM$pair.logLik <- logLiks
     npar <- sum(.RVM$family %in% allfams[onepar], na.rm = TRUE) +
         2 * sum(.RVM$family %in% allfams[twopar], na.rm = TRUE)
     npar_pair <- (.RVM$family %in% allfams[onepar]) +
