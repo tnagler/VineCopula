@@ -6,7 +6,7 @@
 \usage{
 RVineCopSelect(data, familyset = NA, Matrix, selectioncrit = "AIC",
   indeptest = FALSE, level = 0.05, trunclevel = NA, se = FALSE,
-  rotations = TRUE, cores = 1)
+  rotations = TRUE, method = "mle", cores = 1)
 }
 \arguments{
 \item{data}{N x d data matrix (with uniform margins).}
@@ -45,7 +45,16 @@ hypothesis of independence cannot be rejected.}
 \code{familyset} are included.}
 
 \item{cores}{integer; if \code{cores > 1}, estimation will be parallized
-within each tree (using \code{\link[foreach]{foreach}}).}
+within each tree (using \code{\link[foreach]{foreach}}). Note that
+parallelization causes substantial overhead and may be slower than
+single-threaded computation when dimension, sample size, or familyset are
+small.}
+
+\item{mle}{Character indicating the estimation method: either maximum
+likelihood estimation (method = "mle"; default) or inversion of Kendall's
+tau (method = "itau").
+For method = "itau" only one parameter bivariate copula families can be used
+(family = 1,3,4,5,6,13,14,16,23,24,26,33,34 or 36).}
 }
 \value{
 An \code{\link{RVineMatrix}} object with the selected families

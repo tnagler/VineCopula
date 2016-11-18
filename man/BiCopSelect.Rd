@@ -6,7 +6,7 @@
 \usage{
 BiCopSelect(u1, u2, familyset = NA, selectioncrit = "AIC",
   indeptest = FALSE, level = 0.05, weights = NA, rotations = TRUE,
-  se = FALSE, presel = TRUE)
+  se = FALSE, presel = TRUE, method = "mle")
 }
 \arguments{
 \item{u1, u2}{Data vectors of equal length with values in [0,1].}
@@ -83,6 +83,12 @@ estimated (default: \code{se = FALSE}).}
 \item{presel}{Logical; whether to exclude families before fitting based on
 symmetry properties of the data. Makes the selection about 30% faster
 (on average), but may yield slightly worse results in few special cases.}
+
+\item{mle}{Character indicating the estimation method: either maximum
+likelihood estimation (method = "mle"; default) or inversion of Kendall's
+tau (method = "itau").
+For method = "itau" only one parameter bivariate copula families can be used
+(family = 1,3,4,5,6,13,14,16,23,24,26,33,34 or 36).}
 }
 \value{
 An object of class \code{\link{BiCop}}, augmented with the following
