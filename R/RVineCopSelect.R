@@ -33,7 +33,7 @@
 #' = FALSE}).
 #' @param rotations logical; if \code{TRUE}, all rotations of the families in
 #' \code{familyset} are included.
-#' @param mle Character indicating the estimation method: either maximum
+#' @param method Character indicating the estimation method: either maximum
 #' likelihood estimation (method = "mle"; default) or inversion of Kendall's
 #' tau (method = "itau").
 #' For method = "itau" only one parameter bivariate copula families can be used

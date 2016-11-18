@@ -90,7 +90,7 @@
 #' @param presel Logical; whether to exclude families before fitting based on
 #' symmetry properties of the data. Makes the selection about 30% faster
 #' (on average), but may yield slightly worse results in few special cases.
-#' @param mle Character indicating the estimation method: either maximum
+#' @param method Character indicating the estimation method: either maximum
 #' likelihood estimation (method = "mle"; default) or inversion of Kendall's
 #' tau (method = "itau").
 #' For method = "itau" only one parameter bivariate copula families can be used

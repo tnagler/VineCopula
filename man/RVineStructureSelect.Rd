@@ -57,17 +57,17 @@ printed (default: \code{progress = FALSE}).}
 \item{rotations}{If \code{TRUE}, all rotations of the families in
 \code{familyset} are included.}
 
+\item{method}{Character indicating the estimation method: either maximum
+likelihood estimation (method = "mle"; default) or inversion of Kendall's
+tau (method = "itau").
+For method = "itau" only one parameter bivariate copula families can be used
+(family = 1,3,4,5,6,13,14,16,23,24,26,33,34 or 36).}
+
 \item{cores}{integer; if \code{cores > 1}, estimation will be parallized
 within each tree (using \code{\link[foreach]{foreach}}). Note that
 parallelization causes substantial overhead and may be slower than
 single-threaded computation when dimension, sample size, or familyset are
 small.}
-
-\item{mle}{Character indicating the estimation method: either maximum
-likelihood estimation (method = "mle"; default) or inversion of Kendall's
-tau (method = "itau").
-For method = "itau" only one parameter bivariate copula families can be used
-(family = 1,3,4,5,6,13,14,16,23,24,26,33,34 or 36).}
 }
 \value{
 An \code{\link{RVineMatrix}} object with the selected structure
