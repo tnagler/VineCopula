@@ -628,7 +628,7 @@ varray2NO <- function(A, irev = FALSE, iprint = FALSE) {
     d2 <- d - 2
     d1 <- d - 1
     A1 <- matrix(0, d, d)
-    T <- vpartner(A)
+    TT <- vpartner(A)
     if (irev) {
         A1[d, d] <- A[d1, d]
     } else {
@@ -636,9 +636,9 @@ varray2NO <- function(A, irev = FALSE, iprint = FALSE) {
     }
     for (k in d:2) {
         x <- A1[k, k]
-        for (ell in 1:(k - 1)) A1[ell, k] <- which(T[x, ] == ell)
-        T[x, ] <- 0
-        T[, x] <- 0
+        for (ell in 1:(k - 1)) A1[ell, k] <- which(TT[x, ] == ell)
+        TT[x, ] <- 0
+        TT[, x] <- 0
         A1[k - 1, k - 1] <- A1[k - 1, k]
     }
     # A1 satisfies A[i,i]=A[i,i+1]
@@ -825,7 +825,9 @@ RVineMatrixCheck <- function(M) {
     # next convert to natural order for more checks
     if (d <= 3)
         return(1)
-    ANOobj <- varray2NO(A2)
+    ANOobj <- tryCatch(varray2NO(A2), error = function(e) NULL)
+    if (is.null(ANOobj))
+        return(-1)
     # print(ANOobj)
     b <- varray2bin(ANOobj$NO)  # if OK, a binary matrix is returned here
     if (is.matrix(b))
