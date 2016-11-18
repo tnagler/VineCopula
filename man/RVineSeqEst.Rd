@@ -14,13 +14,13 @@ RVineSeqEst(data, RVM, method = "mle", se = FALSE, max.df = 30,
 \item{RVM}{An \code{\link{RVineMatrix}} object including the structure, the
 pair-copula families and the pair-copula parameters (if they are known).}
 
-\item{method}{Character indicating the estimation method: either pairwise
-maximum likelihood estimation (\code{method = "mle"}; default) or inversion
-of Kendall's tau (\code{method = "itau"}; see \code{\link{BiCopEst}}.  For
-\code{method = "itau"} only one parameter pair-copula families can be used
-(\code{family = 1}, \code{3}, \code{4}, \code{5}, \code{6}, \code{13},
-\code{14}, \code{16}, \code{23}, \code{24}, \code{26}, \code{33}, \code{34}
-or \code{36}).}
+\item{method}{indicates the estimation method: either maximum
+likelihood estimation (\code{method = "mle"}; default) or inversion of
+Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
+one parameter families and the Student t copula can be used (\code{family =
+1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
+\code{par2} is found by a crude profile likelihood optimization over the
+interval (2, 10].}
 
 \item{se}{Logical; whether standard errors are estimated (default: \code{se
 = FALSE}).}

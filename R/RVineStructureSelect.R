@@ -45,7 +45,8 @@
 #' Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
 #' one parameter families and the Student t copula can be used (\code{family =
 #' 1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
-#' \code{par2} is considered fixed with value 5.
+#' \code{par2} is found by a crude profile likelihood optimization over the
+#' interval (2, 10].
 #' @param cores integer; if \code{cores > 1}, estimation will be parallized
 #' within each tree (using \code{\link[foreach]{foreach}}). Note that
 #' parallelization causes substantial overhead and may be slower than

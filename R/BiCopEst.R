@@ -76,7 +76,8 @@
 #' Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
 #' one parameter families and the Student t copula can be used (\code{family =
 #' 1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
-#' \code{par2} is considered fixed with value 5.
+#' \code{par2} is found by a crude profile likelihood optimization over the
+#' interval (2, 10].
 #' @param se Logical; whether standard error(s) of parameter estimates is/are
 #' estimated (default: \code{se = FALSE}).
 #' @param max.df Numeric; upper bound for the estimation of the degrees of
@@ -239,9 +240,17 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = FALSE, max.df = 30,
             se1 <- as.numeric(sqrt(16/n * var(v %*% D)))
         }  # end if (se == TRUE)
         if (family == 2) {
-            theta <- c(theta, 5)
+            opt <- MLE_intern(cbind(u1, u2),
+                              c(theta, 6),
+                              family = family,
+                              se,
+                              max.df,
+                              max.BB,
+                              weights,
+                              cor.fixed = TRUE)
+            theta <- c(theta, opt$par[2])
             if (se)
-                se1 <- c(se1, NA)
+                se1 <- c(se1, opt$se)
         }
     }  # end if (method == "itau")
 
@@ -518,9 +527,17 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
             se1 <- as.numeric(sqrt(16/n * var(v %*% D)))
         }  # end if (se == TRUE)
         if (family == 2) {
-            theta <- c(theta, 5)
+            opt <- MLE_intern(cbind(u1, u2),
+                              c(theta, 6),
+                              family = family,
+                              se,
+                              max.df,
+                              max.BB,
+                              weights,
+                              cor.fixed = TRUE)
+            theta <- c(theta, opt$par[2])
             if (se)
-                se1 <- c(se1, NA)
+                se1 <- c(se1, opt$se)
         }
     }  # end if (method == "itau")
 
@@ -904,28 +921,28 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
                                       fn = t_LL,
                                       gr = gr_LL,
                                       method = "L-BFGS-B",
-                                      control = list(fnscale = -1, maxit = 500),
+                                      control = list(fnscale = -1, maxit = 10),
                                       hessian = TRUE,
                                       lower = 2.0001,
-                                      upper = max.df)
+                                      upper = 10)
                 } else {
                     optimout <- optim(par = start.parm[2],
                                       fn = t_LL,
                                       method = "L-BFGS-B",
-                                      control = list(fnscale = -1, maxit = 500),
+                                      control = list(fnscale = -1, maxit = 10),
                                       hessian = TRUE,
                                       lower = 2.0001,
-                                      upper = max.df)
+                                      upper = 10)
                 }
             } else {
                 optimout <- optimize(f = t_LL,
                                      maximum = TRUE,
-                                     interval = c(2.0001, max.df))
+                                     interval = c(2.0001, 10),
+                                     tol = 1)
                 optimout$par <- optimout$maximum
                 optimout$value <- optimout$objective
             }
             optimout$par <- c(0, optimout$par)
-
         }
 
     } else {
