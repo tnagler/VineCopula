@@ -221,7 +221,8 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
                     familyset <- 0
 
                 na.ind <- which(is.na(zr1 + zr2))
-                if (length(na.ind) >= length(zr1) - 10) {
+                if (length(na.ind) >= length(zr1) - 10 ||
+                    (length(familyset) == 1 && familyset == 0)) {
                     cfit <- BiCop(0)
                     ## add more information about the fit
                     cfit$se  <- NA
@@ -232,8 +233,10 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
                     cfit$BIC    <- 0
                     cfit$emptau <- NA
                     cfit$p.value.indeptest <- NA
-                    warn <- paste("Insufficient data for at least one pair.",
-                                  "Independence has been selected automatically.")
+                    if (length(na.ind) >= length(zr1) - 10) {
+                        warn <- paste("Insufficient data for at least one pair.",
+                                      "Independence has been selected automatically.")
+                    }
                 } else {
                     cfit <- suppressWarnings(BiCopSelect(zr2,
                                                          zr1,
@@ -250,16 +253,28 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
 
                 ## transform data to pseudo-oberstavions in next tree
                 direct <- indirect <- NULL
-                if (CondDistr$direct[k - 1, i])
-                    direct <- suppressWarnings(BiCopHfunc1(zr2,
-                                                           zr1,
-                                                           cfit,
-                                                           check.pars = FALSE))
-                if (CondDistr$indirect[k - 1, i])
-                    indirect <- suppressWarnings(BiCopHfunc2(zr2,
-                                                             zr1,
-                                                             cfit,
-                                                             check.pars = FALSE))
+                if (CondDistr$direct[k - 1, i]) {
+                    if (length(familyset) == 1 && familyset == 0) {
+                        direct <- zr1
+                    } else {
+                        direct <- suppressWarnings(BiCopHfunc1(zr2,
+                                                               zr1,
+                                                               cfit,
+                                                               check.pars = FALSE))
+                    }
+                }
+
+
+                if (CondDistr$indirect[k - 1, i]) {
+                    if (length(familyset) == 1 && familyset == 0) {
+                        indirect <- zr2
+                    } else {
+                        indirect <- suppressWarnings(BiCopHfunc2(zr2,
+                                                                 zr1,
+                                                                 cfit,
+                                                                 check.pars = FALSE))
+                    }
+                }
 
                 ## return results
                 list(direct = direct,
