@@ -234,15 +234,16 @@ normalizeRVineMatrix <- function(RVM) {
                        check.pars = FALSE))
 }
 
-reorderRVineMatrix <- function(Matrix) {
-    oldOrder <- diag(Matrix)
+reorderRVineMatrix <- function(Matrix, oldOrder = NULL) {
 
+    if (length(oldOrder) == 0) {
+        oldOrder <- diag(Matrix)
+    }
     O <- apply(t(1:nrow(Matrix)), 2, "==", Matrix)
 
     for (i in 1:nrow(Matrix)) {
         Matrix[O[, oldOrder[i]]] <- nrow(Matrix) - i + 1
     }
-
     return(Matrix)
 }
 
