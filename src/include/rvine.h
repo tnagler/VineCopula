@@ -60,4 +60,13 @@ void VineLogLikRvine(int* T, int* d, int* family, int* maxmat, int* matrix, int*
 void VineLikRvine(int* T, int* d, int* family, int* maxmat, int* matrix, int* condirect, int* conindirect, double* par, double* par2, double* data,
 		double* out, double* ll, double* vv, double* vv2, int* calcupdate, int* seperate);
 
+//////////////////////////////////////////////////////////////
+// Function to construct the R-vine matrix from the binary matrix
+// Input:
+// b        the binary matrix
+// Output:
+// out      an Rvine matrix
+/////////////////////////////////////////////////////////////
+void getRVM(int* b, int* d, int* RVM);
+
 #endif

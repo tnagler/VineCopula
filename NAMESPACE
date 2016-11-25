@@ -11,7 +11,7 @@ importFrom("graphics", "abline", "box", "hist", "legend", "lines",
 importFrom("stats", "cor", "dexp", "dgamma", "dnorm", "dt",
            "integrate", "ks.test", "optim", "optimize", "pbinom",
            "pchisq", "pexp", "pgamma", "pnorm", "pt", "qexp", "qgamma",
-           "qnorm", "qt", "runif", "uniroot", "var", "complete.cases")
+           "qnorm", "qt", "runif", "uniroot", "var", "complete.cases", "rbinom")
 importFrom("utils", "combn", "getFromNamespace", "modifyList", "data")
 
 importFrom("ADGofTest", "ad.test")
@@ -62,6 +62,7 @@ export(RVineAIC)
 export(RVineBIC)
 export(RVineMatrix)
 export(RVineMatrixCheck)
+export(RVineMatrixSample)
 export(RVineSim)
 export(RVineSeqEst)
 export(RVineCopSelect)
@@ -74,6 +75,7 @@ export(RVinePar2Tau)
 export(RVineGrad)
 export(RVineHessian)
 export(RVineStdError)
+
 
 export(C2RVine)
 export(D2RVine)
