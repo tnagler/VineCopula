@@ -11,7 +11,7 @@ importFrom("graphics", "abline", "box", "hist", "legend", "lines",
 importFrom("stats", "cor", "dexp", "dgamma", "dnorm", "dt",
            "integrate", "ks.test", "optim", "optimize", "pbinom",
            "pchisq", "pexp", "pgamma", "pnorm", "pt", "qexp", "qgamma",
-           "qnorm", "qt", "runif", "uniroot", "var", "complete.cases")
+           "qnorm", "qt", "runif", "uniroot", "var", "complete.cases", "rbinom")
 importFrom("utils", "combn", "getFromNamespace", "modifyList", "data")
 
 importFrom("ADGofTest", "ad.test")

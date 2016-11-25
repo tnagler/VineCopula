@@ -29,31 +29,40 @@
 #'
 #' @export RVineMatrixSample
 RVineMatrixSample <- function(d, size = 5, naturalOrder = TRUE) {
-    stopifnot(d > 3)
+    stopifnot(d > 1)
 
     ## Sample the required binary vectors
-    sampleBvect <- lapply(4:d, function(j) sampleBinaryVector(j, size, TRUE))
-    sampleRVM <- vector("list", size)
+    if (d > 3) {
+        sampleBvect <- lapply(4:d, function(j)
+            sampleBinaryVector(j, size, TRUE))
+        sampleRVM <- vector("list", size)
+    }
 
     ## Initialize RVM
     initRVM <- diag(1:d)
     delta <- col(initRVM) - row(initRVM)
     initRVM[delta == 1] <- 1:(d-1)
-    initRVM[1,3] <- 1
+    if (d > 2) {
+        initRVM[1,3] <- 1
+    }
 
-    ## Part of the RVM that needs to be sampled
+    ## Part of the RVM that needs to be sampled (for d > 3)
     selUpper <- delta > 1
 
+    ## The output
+    sampleRVM <- vector("list", size)
     for (k in 1:size) {
 
         ## Use the initRVM
         RVM <- initRVM
 
-        ## Get the required binary sample
-        b <- lapply(4:d, function(j) sampleBvect[[j-3]][k,])
+        if (d > 3) {
+            ## Get the required binary sample
+            b <- lapply(4:d, function(j) sampleBvect[[j-3]][k,])
 
-        ## Call the C code
-        RVM[selUpper] <- getRVineMatrix(b)
+            ## Call the C code
+            RVM[selUpper] <- getRVineMatrix(b)
+        }
 
         ## Permute nodes if required
         if (naturalOrder == FALSE) {
