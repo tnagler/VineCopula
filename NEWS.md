@@ -18,6 +18,11 @@ NEW FEATURES
     that demands less memory. For `RVineLogLik`, the option `calculate.V` has
     to be set to `TRUE`.
     
+  * New function `RVineMatrixSample` that randomly generates valid R-vine 
+    matrices using the algorithm of Joe et al. (2011). Thanks to Thibault
+    Vatter for contributing this function!
+    
+    
 BUG FIXES
 
   * Fixed bug in upper tail dependence coefficient for survival BB1 (reported
