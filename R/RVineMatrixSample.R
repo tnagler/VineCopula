@@ -69,7 +69,7 @@ RVineMatrixSample <- function(d, size = 1, naturalOrder = FALSE) {
             RVM <- reorderRVineMatrix(RVM, sample.int(d,d))
         }
 
-        sampleRVM[[k]] <- RVM
+        sampleRVM[[k]] <- ToLowerTri(RVM)
     }
     return(sampleRVM)
 }
