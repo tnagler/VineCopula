@@ -28,7 +28,7 @@
 #' sapply(RVM, RVineMatrixCheck)
 #'
 #' @export RVineMatrixSample
-RVineMatrixSample <- function(d, size = 5, naturalOrder = FALSE) {
+RVineMatrixSample <- function(d, size = 1, naturalOrder = FALSE) {
     stopifnot(d > 1)
 
     ## Sample the required binary vectors
