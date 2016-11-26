@@ -56,9 +56,9 @@ contour.RVineMatrix <- function(x, tree = "ALL", xylim = NULL, cex.nums = 1,
     while ("try-error" %in% class(e)) {
         e <- try({
             maxnums <- get_num(1, tree = max(tree), RVM = x)
-            for (i in tree) {
+            for (i in rev(tree)) {
                 for (j in 1:(d - min(tree))) {
-                    if (d - i >= j) {
+                    if (j <= d - i) {
                         if (is.null(psobs)) {
                             pcfit <- BiCop(family = x$family[d - i + 1, j],
                                            par    = x$par[d - i + 1, j],
