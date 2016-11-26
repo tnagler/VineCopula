@@ -5,7 +5,7 @@
 #' @param d Dimension of the R-Vine matrices.
 #' @param size Number of matrices to sample.
 #' @param naturalOrder Should the matrices be in the natural order
-#' (default: \code{naturalOrder = TRUE}).
+#' (default: \code{naturalOrder = FALSE}).
 #' @return A list of length \code{size} with each element containing one
 #' R-Vine matrix.
 #' @author Thibault Vatter
@@ -28,7 +28,7 @@
 #' sapply(RVM, RVineMatrixCheck)
 #'
 #' @export RVineMatrixSample
-RVineMatrixSample <- function(d, size = 5, naturalOrder = TRUE) {
+RVineMatrixSample <- function(d, size = 5, naturalOrder = FALSE) {
     stopifnot(d > 1)
 
     ## Sample the required binary vectors
