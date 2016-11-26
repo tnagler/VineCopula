@@ -32,6 +32,10 @@ BUG FIXES
   
   * `RVineMatrixCheck` returns the new error code `-4` when the matrix is 
     neither lower nor upper triangular (threw an actual error before).
+    
+  * `contour.RVineMatrix` now arranges the contour matrix conforming with the
+    family and parameter matrices.
+    
 
 
 VineCopula 2.0.5 (September 25, 2016)
