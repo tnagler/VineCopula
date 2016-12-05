@@ -4,7 +4,7 @@ VineCopula 2.0.7 (under development)
 NEW FEATURES
 
   * All estimation functions now have a `method` argument. The default is 
-    `method = "mle"` and corresponds to the old behaviro. The other option, 
+    `method = "mle"` and corresponds to the old behavior. The other option, 
     `method = "itau"`, estimates the parameters by inversion of Kendall's. It is
     much faster than `method = "mle"`, but is only available for one-parameter 
     families and the t-copula. Big thanks to Thibault Vatter who did most of the
