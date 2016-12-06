@@ -4,7 +4,7 @@
 \alias{RVineMatrixSample}
 \title{R-Vine Matrix Sample}
 \usage{
-RVineMatrixSample(d, size = 5, naturalOrder = TRUE)
+RVineMatrixSample(d, size = 5, naturalOrder = FALSE)
 }
 \arguments{
 \item{d}{Dimension of the R-Vine matrices.}
@@ -12,7 +12,7 @@ RVineMatrixSample(d, size = 5, naturalOrder = TRUE)
 \item{size}{Number of matrices to sample.}
 
 \item{naturalOrder}{Should the matrices be in the natural order
-(default: \code{naturalOrder = TRUE}).}
+(default: \code{naturalOrder = FALSE}).}
 }
 \value{
 A list of length \code{size} with each element containing one
@@ -31,7 +31,7 @@ size <- 5
 RVM <- RVineMatrixSample(d, size)
 sapply(RVM, RVineMatrixCheck)
 
-# Sample with permutations in the order
+# Sample without natural order
 RVM <- RVineMatrixSample(d, size, naturalOrder = TRUE)
 sapply(RVM, RVineMatrixCheck)
 

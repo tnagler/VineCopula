@@ -20,7 +20,8 @@ Authors@R: c(
     person("Claudia", "Czado",, role = c("ctb", "ths")),
     person("Mathias", "Hofmann",, role = "ctb"),
     person("Matthias", "Killiches",, role = "ctb"),
-    person("Harry", "Joe",, role = "ctb")
+    person("Harry", "Joe",, role = "ctb"),
+    person("Thibault", "Vatter",, role = "ctb")
     )
 Depends:
     R (>= 2.11.0)
