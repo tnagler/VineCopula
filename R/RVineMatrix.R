@@ -205,13 +205,43 @@ RVineMatrix <- function(Matrix,
     # create list of BiCop ojbects
     objlst <- apply(cbind(family[sel], par[sel], par2[sel]),
                     1,
-                    function(x) BiCop(x[1], x[2], x[3], check.pars = FALSE))
+                    function(x) {
+                        if(x[1] == 0) {
+                            return(NA)
+                        } else {
+                            return(BiCop(x[1], x[2], x[3], check.pars = FALSE))
+                        }
+                    })
     # construct dependence measure matrices
     taus <- utds <- ltds <- bets <- matrix(0, nrow(Matrix), ncol(Matrix))
-    taus[sel] <- sapply(objlst, function(x) x$tau)
-    utds[sel] <- sapply(objlst, function(x) x$taildep$upper)
-    ltds[sel] <- sapply(objlst, function(x) x$taildep$lower)
-    bets[sel] <- sapply(objlst, function(x) x$beta)
+    taus[sel] <- sapply(objlst, function(x) {
+        if (is.na(x)) {
+            return(0)
+        } else {
+            return(x$tau)
+        }
+    })
+    utds[sel] <- sapply(objlst, function(x) {
+        if (is.na(x)) {
+            return(0)
+        } else {
+            return(x$taildep$upper)
+        }
+    })
+    ltds[sel] <- sapply(objlst, function(x) {
+        if (is.na(x)) {
+            return(0)
+        } else {
+            return(x$taildep$lower)
+        }
+    })
+    bets[sel] <- sapply(objlst, function(x) {
+        if (is.na(x)) {
+            return(0)
+        } else {
+            return(x$beta)
+        }
+    })
     RVM$tau <- taus
     RVM$taildep$upper <- utds
     RVM$taildep$lower <- ltds
