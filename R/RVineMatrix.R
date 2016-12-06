@@ -215,28 +215,28 @@ RVineMatrix <- function(Matrix,
     # construct dependence measure matrices
     taus <- utds <- ltds <- bets <- matrix(0, nrow(Matrix), ncol(Matrix))
     taus[sel] <- sapply(objlst, function(x) {
-        if (is.na(x)) {
+        if (class(x) == "BiCop") {
             return(0)
         } else {
             return(x$tau)
         }
     })
     utds[sel] <- sapply(objlst, function(x) {
-        if (is.na(x)) {
+        if (class(x) == "BiCop") {
             return(0)
         } else {
             return(x$taildep$upper)
         }
     })
     ltds[sel] <- sapply(objlst, function(x) {
-        if (is.na(x)) {
+        if (class(x) == "BiCop") {
             return(0)
         } else {
             return(x$taildep$lower)
         }
     })
     bets[sel] <- sapply(objlst, function(x) {
-        if (is.na(x)) {
+        if (class(x) == "BiCop") {
             return(0)
         } else {
             return(x$beta)
