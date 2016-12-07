@@ -2,11 +2,11 @@
 #define BICOP_HPP
 
 extern "C" {
-    #include "hfunc.h"
+#include "hfunc.h"
 }
 
 extern "C" {
-    #include "likelihood.h"
+#include "likelihood.h"
 }
 
 class BiCop
@@ -30,8 +30,21 @@ public:
         _par2 = par2;
         _npars = calculateNPars(family);
     }
-    // TODO: calculate number of parameters
-    int calculateNPars(const int &family) {return -999;}
+    // calculate number of parameters
+    int calculateNPars(const int &family) {
+        // indepence copula has no parameters
+        if (family == 0)
+            return(0);
+        // check if it is a one-parameter family
+        int onepars[] = {1, 3, 4, 5, 6, 13, 14, 16, 23, 24, 26, 33, 34, 36};
+        bool isOnePar = false;
+        for (int k = 0; k < sizeof(onepars) / sizeof(onepars[0]); k++) {
+            if (family == onepars[k])
+                return(1);
+        }
+        // if not, it must be a two-parameter family
+        return(2);
+    }
 
     // getters and setters --------------------------------
 

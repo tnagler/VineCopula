@@ -5,6 +5,7 @@ call_BiCops <- function(fun_name, family, par, par2) {
        family = as.integer(family),
        par = as.double(par),
        par2 = as.double(par2),
+       npars = as.integer(0),
        PACKAGE = "VineCopula")
 }
 
@@ -13,6 +14,34 @@ test_that("default constructor works", {
     expect_equal(obj$family, 0)
     expect_equal(obj$par, 0)
     expect_equal(obj$par2, 0)
+})
+
+test_that("number of parameters are calculated correctly", {
+    objs <- list(
+        BiCop(0, 0),
+        BiCop(1, 0.5),
+        BiCop(2, -0.5, 4),
+        BiCop(33, -0.5),
+        BiCop(24, -2),
+        BiCop(5, 0.5),
+        BiCop(16, 2),
+        BiCop(7, 0.5, 2),
+        BiCop(18, 0.5, 2),
+        BiCop(28, -2, -2),
+        BiCop(39, -2, -2),
+        BiCop(10, 2, 0.5),
+        BiCop(114, 2, 0.4),
+        BiCop(224, -2, 0.4)
+    )
+    lapply(
+        objs,
+        function(x) {
+            expect_equal(
+                call_BiCops("test_BiCop", x$family, x$par, x$par2)$npars,
+                x$npars
+            )
+        }
+    )
 })
 
 test_that("parametrized constructor works", {
@@ -28,6 +57,7 @@ test_that("setter works", {
     expect_equal(obj$par, 0.3)
     expect_equal(obj$par2, 7.0)
 })
+
 
 library(VineCopula)
 n <- 10
