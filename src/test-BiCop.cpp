@@ -35,8 +35,16 @@ extern "C" {
 }
 extern "C" {
     void test_bicop_pdf(double* u1, double* u2, double* out, int* n,
-                           int* family, double* par, double* par2) {
+                        int* family, double* par, double* par2) {
         BiCop obj(*family, *par, *par2);
         obj.PDF(u1, u2, out, n);
+    }
+}
+
+extern "C" {
+    void test_bicop_loglik(double* u1, double* u2, double* out, int* n,
+                           int* family, double* par, double* par2) {
+        BiCop obj(*family, *par, *par2);
+        obj.logLik(u1, u2, out, n);
     }
 }

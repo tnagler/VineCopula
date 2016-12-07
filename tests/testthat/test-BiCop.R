@@ -55,23 +55,19 @@ par2 <- 0
 test_that("hfunc1 works", {
     obj <- call_bicop_funcs("test_bicop_hfunc1", u1, u2, n, family, par, par2)
     expect_equal(obj$out, BiCopHfunc1(u1, u2, family, par))
-    expect_length(obj$u1, n)
-    expect_length(obj$u2, n)
-    expect_length(obj$out, n)
 })
 
 test_that("hfunc2 works", {
     obj <- call_bicop_funcs("test_bicop_hfunc2", u1, u2, n, family, par, par2)
     expect_equal(obj$out, BiCopHfunc2(u1, u2, family, par))
-    expect_length(obj$u1, n)
-    expect_length(obj$u2, n)
-    expect_length(obj$out, n)
 })
 
 test_that("PDF works", {
     obj <- call_bicop_funcs("test_bicop_pdf", u1, u2, n, family, par, par2)
     expect_equal(obj$out, BiCopPDF(u1, u2, family, par))
-    expect_length(obj$u1, n)
-    expect_length(obj$u2, n)
-    expect_length(obj$out, n)
+})
+
+test_that("logLik works", {
+    obj <- call_bicop_funcs("test_bicop_loglik", u1, u2, n, family, par, par2)
+    expect_equal(obj$out[1], sum(log(BiCopPDF(u1, u2, family, par))))
 })

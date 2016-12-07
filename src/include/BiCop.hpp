@@ -57,11 +57,13 @@ public:
         Hfunc2(&_family, n, u1, u2, &_par, &_par2, out);
     };
 
-    // PDF
+    // PDF and log likelihood
     void PDF(double* u1, double* u2, double* out, int* n) {
         PDF_seperate(&_family, n, u1, u2, &_par, &_par2, out);
     };
-
+    void logLik(double* u1, double* u2, double* out, int* n) {
+        LL_mod2(&_family, n, u1, u2, &_par, &_par2, out);
+    };
 
 private:
     int _family;     // copula family
