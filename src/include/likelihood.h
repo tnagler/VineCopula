@@ -16,6 +16,8 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
 void copLik_mod(int* family, int* n, double* u, double* v, double* theta, double* nu, double* coplik);
 void LL_mod_seperate(int* family, int* n, double* u, double* v, double* theta, double* nu, double* loglik);
 void LL_mod_seperate_vec(int* family, int* n, double* u, double* v, double* theta, double* nu, double* loglik);
+void PDF_seperate(int* family, int* n, double* u, double* v, double* theta, double* nu, double* loglik);
+void PDF_seperate_vec(int* family, int* n, double* u, double* v, double* theta, double* nu, double* loglik);
 void dbb1(double* u, double* v, int* n, double* param, double* out);
 void dbb6(double* u, double* v, int* n, double* param, double* out);
 void dbb7(double* u, double* v, int* n, double* param, double* out);
