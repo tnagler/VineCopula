@@ -8,7 +8,8 @@ extern "C" {
 class BiCop
 {
 public:
-    // constructors ----------------
+    // constructors --------------------------------
+
     // default constructor (independence copula)
     BiCop()
     {
@@ -28,13 +29,13 @@ public:
     // TODO: calculate number of parameters
     int calculateNPars(const int &family) {return -999;}
 
-    // getters ----------------
+    // getters and setters --------------------------------
+
     int getFamily() const {return _family;}
     double getPar() const {return _par;}
     double getPar2() const {return _par2;}
-    double getNPars() const {return _npars;}\
+    double getNPars() const {return _npars;}
 
-    // setters ----------------
     void setFamily(const int &family) {
         _family = family;
         _npars = calculateNPars(family);
@@ -42,13 +43,13 @@ public:
     void setPar(const double &par) {_par = par;}
     void setPar2(const double &par2) {_par2 = par2;}
 
-    // Family-specific functions ----------------
+    // Family-specific functions --------------------------------
+
+    // hfunctions: the conditioning variable is put second
     void hFunc1(double* u1, double* u2, double* out, int* n) {
-        // the conditioning variable is put second
         Hfunc1(&_family, n, u2, u1, &_par, &_par2, out);
     };
     void hFunc2(double* u1, double* u2, double* out, int* n) {
-        // the conditioning variable is put second
         Hfunc2(&_family, n, u1, u2, &_par, &_par2, out);
     };
 
