@@ -45,25 +45,32 @@ library(VineCopula)
 n <- 10
 u1 <- runif(n)
 u2 <- runif(n)
+
+## check that asymmetries are handled correctly by using a family with
+## asymmetric tails and negative dependence
+family <- 23
+par <- -1
+par2 <- 0
+
 test_that("hfunc1 works", {
-    obj <- call_bicop_funcs("test_bicop_hfunc1", u1, u2, n, 3, 1, 0)
-    expect_equal(obj$out, BiCopHfunc1(u1, u2, 3, 1))
+    obj <- call_bicop_funcs("test_bicop_hfunc1", u1, u2, n, family, par, par2)
+    expect_equal(obj$out, BiCopHfunc1(u1, u2, family, par))
     expect_length(obj$u1, n)
     expect_length(obj$u2, n)
     expect_length(obj$out, n)
 })
 
 test_that("hfunc2 works", {
-    obj <- call_bicop_funcs("test_bicop_hfunc2", u1, u2, n, 3, 1, 0)
-    expect_equal(obj$out, BiCopHfunc2(u1, u2, 3, 1))
+    obj <- call_bicop_funcs("test_bicop_hfunc2", u1, u2, n, family, par, par2)
+    expect_equal(obj$out, BiCopHfunc2(u1, u2, family, par))
     expect_length(obj$u1, n)
     expect_length(obj$u2, n)
     expect_length(obj$out, n)
 })
 
 test_that("PDF works", {
-    obj <- call_bicop_funcs("test_bicop_pdf", u1, u2, n, 3, 1, 0)
-    expect_equal(obj$out, BiCopPDF(u1, u2, 3, 1))
+    obj <- call_bicop_funcs("test_bicop_pdf", u1, u2, n, family, par, par2)
+    expect_equal(obj$out, BiCopPDF(u1, u2, family, par))
     expect_length(obj$u1, n)
     expect_length(obj$u2, n)
     expect_length(obj$out, n)
