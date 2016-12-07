@@ -60,15 +60,17 @@ test_that("setter works", {
 
 
 library(VineCopula)
-n <- 10
-u1 <- runif(n)
-u2 <- runif(n)
-
 ## check that asymmetries are handled correctly by using a family with
 ## asymmetric tails and negative dependence
 family <- 23
-par <- -1
-par2 <- 0
+n <- 10
+u <- BiCopSim(n, 23, -1)
+u1 <- u[, 1]
+u2 <- u[, 2]
+fit <- BiCopEst(u[, 1], u[, 2], 23)
+par <- fit$par
+par2 <- fit$par2
+
 call_BiCop_funcs <- function(fun_name, u1, u2, n, family, par, par2) {
     .C(fun_name,
        u1 = as.double(u1),
@@ -100,3 +102,14 @@ test_that("logLik works", {
     obj <- call_BiCop_funcs("test_BiCop_logLik", u1, u2, n, family, par, par2)
     expect_equal(obj$out[1], sum(log(BiCopPDF(u1, u2, family, par))))
 })
+
+test_that("AIC works", {
+    obj <- call_BiCop_funcs("test_BiCop_AIC", u1, u2, n, family, par, par2)
+    expect_equal(obj$out[1], fit$AIC)
+})
+
+test_that("BIC works", {
+    obj <- call_BiCop_funcs("test_BiCop_BIC", u1, u2, n, family, par, par2)
+    expect_equal(obj$out[1], fit$BIC)
+})
+

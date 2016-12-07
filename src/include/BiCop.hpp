@@ -1,6 +1,8 @@
 #ifndef BICOP_HPP
 #define BICOP_HPP
 
+#include <math.h>
+
 extern "C" {
 #include "hfunc.h"
 }
@@ -70,12 +72,22 @@ public:
         Hfunc2(&_family, n, u1, u2, &_par, &_par2, out);
     };
 
-    // PDF and log likelihood
+    // PDF
     void PDF(double* u1, double* u2, double* out, int* n) {
         PDF_seperate(&_family, n, u1, u2, &_par, &_par2, out);
     };
+
+    // fit statistics
     void logLik(double* u1, double* u2, double* out, int* n) {
         LL_mod2(&_family, n, u1, u2, &_par, &_par2, out);
+    };
+    void AIC(double* u1, double* u2, double* out, int* n) {
+        LL_mod2(&_family, n, u1, u2, &_par, &_par2, out);
+        *out = -2 * (*out) + 2 * _npars;
+    };
+    void BIC(double* u1, double* u2, double* out, int* n) {
+        LL_mod2(&_family, n, u1, u2, &_par, &_par2, out);
+        *out = -2 * (*out) + log(*n) * _npars;
     };
 
 private:

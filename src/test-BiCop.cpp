@@ -49,3 +49,19 @@ extern "C" {
         obj.logLik(u1, u2, out, n);
     }
 }
+
+extern "C" {
+    void test_BiCop_AIC(double* u1, double* u2, double* out, int* n,
+                        int* family, double* par, double* par2) {
+        BiCop obj(*family, *par, *par2);
+        obj.AIC(u1, u2, out, n);
+    }
+}
+
+extern "C" {
+    void test_BiCop_BIC(double* u1, double* u2, double* out, int* n,
+                        int* family, double* par, double* par2) {
+        BiCop obj(*family, *par, *par2);
+        obj.BIC(u1, u2, out, n);
+    }
+}
