@@ -44,10 +44,12 @@ public:
 
     // Family-specific functions ----------------
     void hFunc1(double* u1, double* u2, double* out, int* n) {
-        Hfunc1(&_family, n, u1, u2, &_par, &_par2, out);
+        // the conditioning variable is put second
+        Hfunc1(&_family, n, u2, u1, &_par, &_par2, out);
     };
     void hFunc2(double* u1, double* u2, double* out, int* n) {
-        Hfunc2(&_family, n, u2, u1, &_par, &_par2, out);
+        // the conditioning variable is put second
+        Hfunc2(&_family, n, u1, u2, &_par, &_par2, out);
     };
 
 private:

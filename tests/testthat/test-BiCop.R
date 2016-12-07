@@ -29,21 +29,27 @@ test_that("setter works", {
     expect_equal(obj$par2, 7.0)
 })
 
-call_bicop_funcs <- function(fun_name, u1, u2, n) {
+call_bicop_funcs <- function(fun_name, u1, u2, n, family, par, par2) {
     .C(fun_name,
        u1 = as.double(u1),
        u2 = as.double(u2),
        out = as.double(rep(0, n)),
        n = as.integer(n),
+       family = as.integer(family),
+       par = as.double(par),
+       par2 = as.double(par2),
        PACKAGE = "VineCopula")
 }
 
 test_that("hfunc1 works", {
-    obj <- call_bicop_funcs("test_bicop_hfunc1", runif(5), runif(5), 5)
-    expect_equal(obj$u1, obj$out)
-    expect_length(obj$u1, 5)
-    expect_length(obj$u2, 5)
-    expect_length(obj$out, 5)
+    n <- 10
+    u1 <- runif(n)
+    u2 <- runif(n)
+    obj <- call_bicop_funcs("test_bicop_hfunc1", u1, u2, n, 3, 1, 0)
+    expect_equal(obj$out, BiCopHfunc1(u1, u2, 3, 1))
+    expect_length(obj$u1, n)
+    expect_length(obj$u2, n)
+    expect_length(obj$out, n)
 })
 
 
@@ -53,8 +59,8 @@ test_that("hfunc2 works", {
     n <- 10
     u1 <- runif(n)
     u2 <- runif(n)
-    obj <- call_bicop_funcs("test_bicop_hfunc2", u1, u2, n)
-    expect_equal(obj$out, BiCopHfunc2(u2, u1, 1, 0.5))
+    obj <- call_bicop_funcs("test_bicop_hfunc2", u1, u2, n, 3, 1, 0)
+    expect_equal(obj$out, BiCopHfunc2(u1, u2, 3, 1))
     expect_length(obj$u1, n)
     expect_length(obj$u2, n)
     expect_length(obj$out, n)

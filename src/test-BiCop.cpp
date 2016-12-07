@@ -20,14 +20,16 @@ extern "C" {
     }
 }
 extern "C" {
-    void test_bicop_hfunc1(double* u1, double* u2, double* out, int* n) {
-        BiCop obj(1, 0.5, 0.0);
+    void test_bicop_hfunc1(double* u1, double* u2, double* out, int* n,
+                           int* family, double* par, double* par2) {
+        BiCop obj(*family, *par, *par2);
         obj.hFunc1(u1, u2, out, n);
     }
 }
 extern "C" {
-    void test_bicop_hfunc2(double* u1, double* u2, double* out, int* n) {
-        BiCop obj(1, 0.5, 0.0);
+    void test_bicop_hfunc2(double* u1, double* u2, double* out, int* n,
+                           int* family, double* par, double* par2) {
+        BiCop obj(*family, *par, *par2);
         obj.hFunc2(u1, u2, out, n);
     }
 }
