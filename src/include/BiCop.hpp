@@ -21,14 +21,14 @@ public:
     // construct with family and parameters
     BiCop(const int &family, const double &par, const double &par2);
     // calculate number of parameters
-    int calculateNPars(const int &family) ;
+    int calculateNpars(const int &family) ;
 
     // getters and setters --------------------------------
 
     int getFamily() const;
     double getPar() const;
     double getPar2() const;
-    double getNPars() const;
+    double getNpars() const;
     void setPar(const double &par);
     void setFamily(const int &family);
     void setPar2(const double &par2);

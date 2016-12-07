@@ -15,10 +15,10 @@ BiCop::BiCop(const int &family, const double &par, const double &par2) {
     _family = family;
     _par = par;
     _par2 = par2;
-    _npars = calculateNPars(family);
+    _npars = calculateNpars(family);
 }
 // calculate number of parameters
-int BiCop::calculateNPars(const int &family) {
+int BiCop::calculateNpars(const int &family) {
     // indepence copula has no parameters
     if (family == 0)
         return(0);
@@ -38,11 +38,11 @@ int BiCop::calculateNPars(const int &family) {
 int BiCop::getFamily() const {return _family;}
 double BiCop::getPar() const {return _par;}
 double BiCop::getPar2() const {return _par2;}
-double BiCop::getNPars() const {return _npars;}
+double BiCop::getNpars() const {return _npars;}
 
 void BiCop::setFamily(const int &family) {
     _family = family;
-    _npars = calculateNPars(family);
+    _npars = calculateNpars(family);
 }
 void BiCop::setPar(const double &par) {_par = par;}
 void BiCop::setPar2(const double &par2) {_par2 = par2;}

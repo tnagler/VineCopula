@@ -9,7 +9,7 @@ extern "C" {
         *family = obj.getFamily();
         *par = obj.getPar();
         *par2 = obj.getPar2();
-        *npars = obj.getNPars();
+        *npars = obj.getNpars();
     }
 }
 extern "C" {
