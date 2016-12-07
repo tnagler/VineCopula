@@ -2,7 +2,11 @@
 #define BICOP_HPP
 
 extern "C" {
-#include "hfunc.h"
+    #include "hfunc.h"
+}
+
+extern "C" {
+    #include "likelihood.h"
 }
 
 class BiCop
@@ -52,6 +56,12 @@ public:
     void hFunc2(double* u1, double* u2, double* out, int* n) {
         Hfunc2(&_family, n, u1, u2, &_par, &_par2, out);
     };
+
+    // PDF
+    void PDF(double* u1, double* u2, double* out, int* n) {
+        PDF_seperate(&_family, n, u2, u1, &_par, &_par2, out);
+    };
+
 
 private:
     int _family;     // copula family

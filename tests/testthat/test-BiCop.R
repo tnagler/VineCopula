@@ -41,10 +41,11 @@ call_bicop_funcs <- function(fun_name, u1, u2, n, family, par, par2) {
        PACKAGE = "VineCopula")
 }
 
+library(VineCopula)
+n <- 10
+u1 <- runif(n)
+u2 <- runif(n)
 test_that("hfunc1 works", {
-    n <- 10
-    u1 <- runif(n)
-    u2 <- runif(n)
     obj <- call_bicop_funcs("test_bicop_hfunc1", u1, u2, n, 3, 1, 0)
     expect_equal(obj$out, BiCopHfunc1(u1, u2, 3, 1))
     expect_length(obj$u1, n)
@@ -52,15 +53,17 @@ test_that("hfunc1 works", {
     expect_length(obj$out, n)
 })
 
-
-library(VineCopula)
-
 test_that("hfunc2 works", {
-    n <- 10
-    u1 <- runif(n)
-    u2 <- runif(n)
     obj <- call_bicop_funcs("test_bicop_hfunc2", u1, u2, n, 3, 1, 0)
     expect_equal(obj$out, BiCopHfunc2(u1, u2, 3, 1))
+    expect_length(obj$u1, n)
+    expect_length(obj$u2, n)
+    expect_length(obj$out, n)
+})
+
+test_that("PDF works", {
+    obj <- call_bicop_funcs("test_bicop_pdf", u1, u2, n, 3, 1, 0)
+    expect_equal(obj$out, BiCopPDF(u1, u2, 3, 1))
     expect_length(obj$u1, n)
     expect_length(obj$u2, n)
     expect_length(obj$out, n)
