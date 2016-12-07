@@ -4,7 +4,7 @@
 \alias{RVineMatrixSample}
 \title{R-Vine Matrix Sample}
 \usage{
-RVineMatrixSample(d, size = 5, naturalOrder = FALSE)
+RVineMatrixSample(d, size = 1, naturalOrder = FALSE)
 }
 \arguments{
 \item{d}{Dimension of the R-Vine matrices.}
