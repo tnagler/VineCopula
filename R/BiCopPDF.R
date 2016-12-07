@@ -108,7 +108,7 @@ BiCopPDF <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRU
     n <- args$n
     if (length(par) == 1) {
         # unvectorized call
-        coplik <- .C("LL_mod_seperate",
+        coplik <- .C("PDF_seperate",
                      as.integer(family),
                      as.integer(n),
                      as.double(u1),
@@ -119,7 +119,7 @@ BiCopPDF <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRU
                      PACKAGE = "VineCopula")[[7]]
     } else {
         # vectorized call
-        coplik <- .C("LL_mod_seperate_vec",
+        coplik <- .C("PDF_seperate_vec",
                      as.integer(family),
                      as.integer(n),
                      as.double(u1),
@@ -131,7 +131,7 @@ BiCopPDF <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRU
     }
 
     # reset NAs
-    out <- reset_nas(exp(coplik), args)
+    out <- reset_nas(coplik, args)
     # return result
     out
 }
