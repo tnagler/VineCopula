@@ -75,6 +75,7 @@ export(RVinePar2Tau)
 export(RVineGrad)
 export(RVineHessian)
 export(RVineStdError)
+export(RVineStructureSelectC)
 
 
 export(C2RVine)
