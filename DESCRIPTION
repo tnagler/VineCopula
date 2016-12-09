@@ -40,6 +40,10 @@ Imports:
     doParallel,
     parallel,
     foreach
+LinkingTo: 
+    Rcpp, 
+    RcppEigen,
+    BH
 Suggests:
     CDVine,
     TSP,
