@@ -93,7 +93,7 @@ RVineStructureSelectC <- function(data, familyset = 0:6, trunclevel = Inf) {
     d <- ncol(data)  # number of variables
     n <- nrow(data)  # number of observations
 
-    # Initialize object for results
+    # Initialize object for final results.
     RVine <- vector("list", d - 1)
     names(RVine) <- paste0("tree_", 1:(d - 1))
     # List of 3
@@ -101,11 +101,12 @@ RVineStructureSelectC <- function(data, familyset = 0:6, trunclevel = Inf) {
     # $ tree_2: NULL
     # $ tree_3: NULL
 
-    ## Estimation in first tree ----------------------------
+    ## Estimation in the first tree ----------------------------
 
     # We start with a full graph, i.e. a graph with
     #   * node set V={1, ..., d},
     #   * edge set E containing all possible edges on V.
+    #   * each edge is assigned a weight: the absolute value of Kendall's tau.
     g <- initializeFirstGraphC(data)
     # List of 2
     # $ V:List of 3
@@ -125,6 +126,10 @@ RVineStructureSelectC <- function(data, familyset = 0:6, trunclevel = Inf) {
     # ..$ conditioningSet: NULL
 
     # Find the maximum spanning tree and remove all other edges from g.
+    # Note: The algorithm 'findMaxTreeC' actually finds a minimum spanning tree.
+    # That's why all edge weights are multiplied with -1 before running it (see
+    # 'set_weightsC' called from 'adjacencyMatrixC' at the beginniung of
+    # 'findMaxTreeC').
     g <- findMaxTreeC(g)
     # List of 2
     # $ V:List of 3
@@ -173,16 +178,19 @@ RVineStructureSelectC <- function(data, familyset = 0:6, trunclevel = Inf) {
     # .. ..$ : num [1:250] 0.837 0.747 0.476 0.372 0.423 ...
 
     ## Estimation in higher trees --------------------------
+
+    # Loop over remaining trees.
     for (t in 2:(d - 1)) {
-        # If we arrive at the truncation level, all copulas will be set to the
-        # independence copula from here on.
-        if (trunclevel == t - 1)
+        # If we have exceeded the truncation level, all copulas will be set to
+        # the independence copula from here on. The simplest way to do this is
+        # to reduce the familyset to the independence copula only.
+        if (t > trunclevel)
             familyset <- 0
 
-        # The edges of the previous become the nodes of the next tree. The new
-        # graph contains all possible edges on this node set - except those
-        # prohibited by the proximity condition ("edges corresponding to two
-        # connected nodes in tree_i share a common node in tree_(i-1)")
+        # The edge set of tree_t becomes the node set of the tree_(t+1).
+        # The new graph contains all possible edges on this node set - except
+        # those prohibited by the proximity condition ("edges corresponding to
+        # two connected nodes in tree_i share a common node in tree_(i-1)").
         g <- buildNextGraphC(RVine[[t - 1]])
 
         # Find the maximum spanning tree and remove all other edges from g.
@@ -218,17 +226,17 @@ initializeFirstGraphC <- function(data) {
     # Compute the Kendall's tau for each pair of variables.
     edge.ws <- numeric(nrow(all.pairs))  # empty vector of length d choose 2.
     for (i in 1:nrow(all.pairs)) {
-        e1 <- all.pairs[i, 1]  # index of first variable of edge i
-        e2 <- all.pairs[i, 2]  # index of second variable of edge i
+        e1 <- all.pairs[i, 1]  # index of first node contained in edge i
+        e2 <- all.pairs[i, 2]  # index of second node contained in edge i
         edge.ws[i] <- fasttauC(data[, e1], data[, e2])
     }
 
-    # We now store the information in a proximity matrix W. The matrix W is
-    # an upper triangular dxd matrix with ones on the diagonal. The (i, j) entry
+    # We now store the information in an adjancency matrix W. The matrix W is
+    # a symmetric dxd matrix where the (i, j) entry
     # of W contains the weight of the edge (i, j) connecting nodes i and j.
     W <- diag(d)                 # dxd identity matrix
     W[lower.tri(W)] <- edge.ws   # fill lower triangle with weights
-    W <- t(W)                    # transpose to make it upper triangular
+    W <- W + t(W)                # add transpose to make it symmetric
 
     # Convert the proximity matrix into a graph object.
     graph <- graphFromWeightMatrixC(W)
@@ -238,18 +246,19 @@ initializeFirstGraphC <- function(data) {
 
 ## Initialize graph for next vine tree (possible edges)
 buildNextGraphC <- function(oldVineGraph) {
-    d <- nrow(oldVineGraph$E$nums)  # number of nodes in the next tree
+    d <- nrow(oldVineGraph$E$nums)  # number of nodes in the next graph
 
     # We start with a full graph on d variables.
     g <- makeFullGraphC(d)
     # We also store the conditioned and conditioning sets from the edges
     # in the previous tree. That's important to stay aware of the
     # interconnection between subsequent trees.
+    # (Remember: Each node in Tree k has been an edge in Tree k-1.)
     g$V$conditionedSet <- oldVineGraph$E$conditionedSet
     g$V$conditioningSet <- oldVineGraph$E$conditioningSet
 
     # Calculate necessary info for each edge. This includes the weight
-    # (Kendall's) tau and whether the edge is allowed by the proximity
+    # (Kendall's tau) and whether the edge is allowed by the proximity
     # condition (if allowed, todel = FALSE).
     for (i in 1:nrow(g$E$nums)) {
         edgeInfo <- getEdgeInfoC(i, g, oldVineGraph)
@@ -267,7 +276,8 @@ buildNextGraphC <- function(oldVineGraph) {
 
 ## This is Prim's algorithm for computing the minimum spanning tree based
 ## on the adjacency matrix. One can find several implementations in C or C++
-## online.
+## online. If we write our own implementation, I can make the code below read
+## more like C++.
 findMaxTreeC <- function(g) {
     # Construct adjency matrix from the graph object g.
     A <- adjacencyMatrixC(g)
@@ -302,7 +312,7 @@ findMaxTreeC <- function(g) {
             A[i, t] <- A[t, i] <- Inf
     }
 
-    # reorder edges for backwads compatibility with igraph output
+    # reorder edges for backwards compatibility with igraph output
     edges <- t(apply(edges, 1, function(x) sort(x)))
     edges <- edges[order(edges[, 2], edges[, 1]), ]
 
@@ -329,12 +339,12 @@ fit.FirstTreeCopulasC <- function(g, data, familyset) {
         a <- g$E$nums[i, ]
 
         # Extract data belonging to the nodes that are connected by edge i.
-        zr1 <- data[, a[1]]
-        zr2 <- data[, a[2]]
+        u1 <- data[, a[1]]
+        u2 <- data[, a[2]]
 
         # Fit the copula for edge i. Note the reversed order of the arguments
-        # zr1 and zr2.
-        pc.fit <- fit.ACopulaC(zr2, zr1, familyset)
+        # u1 and u2.
+        pc.fit <- fit.ACopulaC(u2, u1, familyset)
 
         # Store the fitted copula.
         g$E$fits[[i]] <- pc.fit
@@ -349,12 +359,11 @@ fit.FirstTreeCopulasC <- function(g, data, familyset) {
 }
 
 ## Fit pair-copulas for vine trees 2, ..., d-1
-## Note that there is a lot of overlap with the functino getEdgeInfoC. It is
-## very likely that this can be further reduced.
+# Note that there is a lot of overlap with the functino getEdgeInfoC. We do the
+# work twice to keep the memory demand low.
 fit.TreeCopulasC <- function(g, oldVineGraph, familyset) {
-    # Loop through all edges.
     d <- nrow(g$E$nums)  # number of edges
-
+    # Loop through all edges.
     for (i in 1:d) {
         # Get ith edge.
         con <- g$E$nums[i, ]
@@ -377,19 +386,19 @@ fit.TreeCopulasC <- function(g, oldVineGraph, familyset) {
         # Extract the appropriate conditional data from the edge of the previous
         # tree.
         if (temp[1, 1] == same) {
-            zr1 <- oldVineGraph$E$Copula.CondData.2[[con[1]]]
+            u1 <- oldVineGraph$E$Copula.CondData.2[[con[1]]]
         } else {
-            zr1 <- oldVineGraph$E$Copula.CondData.1[[con[1]]]
+            u1 <- oldVineGraph$E$Copula.CondData.1[[con[1]]]
         }
         if (temp[2, 1] == same) {
-            zr2 <- oldVineGraph$E$Copula.CondData.2[[con[2]]]
+            u2 <- oldVineGraph$E$Copula.CondData.2[[con[2]]]
         } else {
-            zr2 <- oldVineGraph$E$Copula.CondData.1[[con[2]]]
+            u2 <- oldVineGraph$E$Copula.CondData.1[[con[2]]]
         }
 
         # Fit the copula for edge i. Note the reversed order of the arguments
-        # zr1 and zr2.
-        pc.fit <- fit.ACopulaC(zr2, zr1, familyset)
+        # u1 and u2.
+        pc.fit <- fit.ACopulaC(u2, u1, familyset)
 
         # Store the fitted copula.
         g$E$fits[[i]] <- pc.fit
@@ -435,19 +444,19 @@ getEdgeInfoC <- function(i, g, oldVineGraph) {
         # Extract the appropriate conditional data from the edge of the previous
         # tree.
         if (temp[1, 1] == same) {
-            zr1 <- oldVineGraph$E$Copula.CondData.2[[con[1]]]
+            u1 <- oldVineGraph$E$Copula.CondData.2[[con[1]]]
         } else {
-            zr1 <- oldVineGraph$E$Copula.CondData.1[[con[1]]]
+            u1 <- oldVineGraph$E$Copula.CondData.1[[con[1]]]
         }
         if (temp[2, 1] == same) {
-            zr2 <- oldVineGraph$E$Copula.CondData.2[[con[2]]]
+            u2 <- oldVineGraph$E$Copula.CondData.2[[con[2]]]
         } else {
-            zr2 <- oldVineGraph$E$Copula.CondData.1[[con[2]]]
+            u2 <- oldVineGraph$E$Copula.CondData.1[[con[2]]]
         }
 
         # Calculate Kendall's tau between the conditional data corresponding to
         # edge i.
-        w <- fasttau(zr1, zr2)
+        w <- fasttau(u1, u2)
 
         # Infer conditioned set and conditioning set of edge i:
         #   * The conditioning set consists of all variables that appear in both
@@ -484,19 +493,32 @@ fit.ACopulaC <- function(u1, u2, familyset) {
 
 ## Functions for handling the tree structure -------------------------
 graphFromWeightMatrixC <- function(W) {
-    d <- ncol(W)
-    # construct set of all possible edges
+    d <- ncol(W)  # number of nodes in the tree
+    # Construct set of all possible edges.
     E <- cbind(do.call(c, sapply(1:(d-1), function(i) seq.int(i))),
                do.call(c, sapply(1:(d-1), function(i) rep(i+1, i))))
-    # set weights
+    #       [,1] [,2]
+    # [1,]    1    2
+    # [2,]    1    3
+    # [3,]    1    4
+    # [4,]    1    5
+    # [5,]    2    3
+    # [6,]    2    4
+    # [7,]    2    5
+    # [8,]    3    4
+    # [9,]    3    5
+    # [10,]   4    5
+
+    # Extract weights.
     w <- W[upper.tri(W)]
 
-    ## return results
     return(list(V = list(d = d,
                          conditionedSet = NULL,
                          conditioningSet = NULL),
                 E = list(nums = E,
                          weights = w,
+                         # conditionedSet is a list where the ith entry contains
+                         # the ith row of E
                          conditionedSet = lapply(1:nrow(E), function(i) E[i, ]),
                          conditioningSet = NULL)))
 }
@@ -524,49 +546,47 @@ makeFullGraphC <- function(d) {
                          conditioningSet = NULL),
                 E = list(nums = E,
                          weights = NULL,
-                         conditionedSet = NULL,
-                         conditioningSet = NULL)))
+                         conditionedSet = list(),
+                         conditioningSet = list())))
 }
 
 adjacencyMatrixC <- function(g) {
-    ## create matrix of all combinations
-    d <- g$V$d
-    # v.all contains all possible edges; they should be ordered like this:
+    d <- g$V$d  # number of nodes in graph g
+
+    # all.pairs contains all possible edges.
+    all.pairs <- t(combn(1:d, 2))
+    # They should be ordered like this:
     #       [,1] [,2]
-    # [1,]     1    2
-    # [2,]     1    3
-    # [3,]     2    3
-    # [4,]     1    4
-    # [5,]     2    4
-    # [6,]     3    4
-    # [7,]     1    5
-    # [8,]     2    5
-    # [9,]     3    5
-    # [10,]    4    5
-    # this output should be preserved, but probably another way than below
-    v.all <- cbind(do.call(c, lapply(1:(d-1), function(i) seq.int(i))),
-                   do.call(c, lapply(1:(d-1), function(i) rep(i+1, i))))
+    # [1,]    1    2
+    # [2,]    1    3
+    # [3,]    1    4
+    # [4,]    2    3
+    # [5,]    2    4
+    # [6,]    3    4
 
-    # weights are set to the negative absolute value of Kendall's tau;
-    # all edges in v.all that are not edges in E get weight Inf
-    vals <- apply(v.all, 1, set_weightC, E = g$E)
+    # Weights are set to minus the absolute value of Kendall's tau;
+    # all edges in v.all that are not edges in E get weight Inf.
+    edge.ws <- numeric(nrow(all.pairs))
+    for (i in 1:length(edge.ws)) {
+        edge.ws[i] <- set_weightC(all.pairs[i, ], E = g$E)
+    }
 
-    ## create symmetric matrix of weights
-    M <- matrix(0, d, d)
-    M[upper.tri(M)] <- vals
-    M <- M + t(M)
-    diag(M) <- Inf
+    # We now store the information in an adjancency matrix W. The matrix W is
+    # a symmetric dxd matrix where the (i, j) entry
+    # of W contains the weight of the edge (i, j) connecting nodes i and j.
+    W <- diag(d)                 # dxd identity matrix
+    W[lower.tri(W)] <- edge.ws   # fill lower triangle with weights
+    W <- W + t(W)                # add transpose to make it symmetric
 
-    ## return final matrix
-    return(M)
+    return(W)
 }
 
 set_weightC <- function(x, E) {
-    # check if x is actually and edge in E
+    # Check if x is actually and edge in E.
     is.edge <- (x[1] == E$nums[, 1]) & (x[2] == E$nums[, 2])
 
-    # put minus before weights so that *minimum* spanning tree algorithm can be applied
-    # return Inf if x is not a member of E
+    # Put minus before weights so that *minimum* spanning tree algorithm can be
+    # applied; return Inf if x is not a member of E
     if (!any(is.edge)) return(Inf) else return(-E$weights[which(is.edge)])
 }
 
