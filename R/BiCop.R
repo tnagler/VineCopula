@@ -124,11 +124,19 @@ BiCop <- function(family, par, par2 = 0, tau = NULL, check.pars = TRUE) {
     }
 
     # calculate dependence measures
-    tau <- BiCopPar2Tau(family, par, par2, check.pars = FALSE)
-    taildep <- BiCopPar2TailDep(family, par, par2, check.pars = FALSE)
-    beta <- NA  # beta does not work for t copula (cdf disabled)
-    if (family != 2)
-        beta <- BiCopPar2Beta(family, par, par2, check.pars = FALSE)
+    if (family == 0) {
+        tau <- 0
+        beta <- 0
+        taildep <- list()
+        taildep$upper <- 0
+        taildep$lower <- 0
+    } else {
+        tau <- BiCopPar2Tau(family, par, par2, check.pars = FALSE)
+        taildep <- BiCopPar2TailDep(family, par, par2, check.pars = FALSE)
+        beta <- NA  # beta does not work for t copula (cdf disabled)
+        if (family != 2)
+            beta <- BiCopPar2Beta(family, par, par2, check.pars = FALSE)
+    }
 
     ## get full family name and calculate number of parameters
     familyname <- BiCopName(family, short = FALSE)

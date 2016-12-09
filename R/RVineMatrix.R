@@ -202,46 +202,22 @@ RVineMatrix <- function(Matrix,
     }
 
     ## add dependence measures
+
     # create list of BiCop ojbects
-    objlst <- apply(cbind(family[sel], par[sel], par2[sel]),
-                    1,
-                    function(x) {
-                        if(x[1] == 0) {
-                            return(NA)
-                        } else {
-                            return(BiCop(x[1], x[2], x[3], check.pars = FALSE))
-                        }
-                    })
+    objlst <- apply(cbind(family[sel], par[sel], par2[sel]), 1, function(x)
+        ifelse(x[1] == 0, NA, BiCop(x[1], x[2], x[3], check.pars = FALSE)))
+
     # construct dependence measure matrices
     taus <- utds <- ltds <- bets <- matrix(0, nrow(Matrix), ncol(Matrix))
-    taus[sel] <- sapply(objlst, function(x) {
-        if (class(x) != "BiCop") {
-            return(0)
-        } else {
-            return(x$tau)
-        }
-    })
-    utds[sel] <- sapply(objlst, function(x) {
-        if (class(x) != "BiCop") {
-            return(0)
-        } else {
-            return(x$taildep$upper)
-        }
-    })
-    ltds[sel] <- sapply(objlst, function(x) {
-        if (class(x) != "BiCop") {
-            return(0)
-        } else {
-            return(x$taildep$lower)
-        }
-    })
-    bets[sel] <- sapply(objlst, function(x) {
-        if (class(x) != "BiCop") {
-            return(0)
-        } else {
-            return(x$beta)
-        }
-    })
+    taus[sel] <- vapply(objlst, function(x)
+        ifelse(inherits(x, "BiCop"), x$tau, 0), numeric(1))
+    utds[sel] <- vapply(objlst, function(x)
+        ifelse(inherits(x, "BiCop"), x$taildep$upper, 0), numeric(1))
+    ltds[sel] <- vapply(objlst, function(x)
+        ifelse(inherits(x, "BiCop"), x$taildep$lower, 0), numeric(1))
+    bets[sel] <- vapply(objlst, function(x)
+        ifelse(inherits(x, "BiCop"), x$beta, 0), numeric(1))
+
     RVM$tau <- taus
     RVM$taildep$upper <- utds
     RVM$taildep$lower <- ltds
