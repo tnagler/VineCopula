@@ -24,7 +24,6 @@ int BiCop::calculateNpars(const int &family) {
         return(0);
     // check if it is a one-parameter family
     int onepars[] = {1, 3, 4, 5, 6, 13, 14, 16, 23, 24, 26, 33, 34, 36};
-    bool isOnePar = false;
     for (int k = 0; k < sizeof(onepars) / sizeof(onepars[0]); k++) {
         if (family == onepars[k])
             return(1);
@@ -74,3 +73,4 @@ void BiCop::BIC(double* u1, double* u2, double* out, int* n) {
     LL_mod2(&_family, n, u1, u2, &_par, &_par2, out);
     *out = -2 * (*out) + log(*n) * _npars;
 };
+
