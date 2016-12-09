@@ -62,6 +62,7 @@ test_that("setter works", {
 library(VineCopula)
 ## check that asymmetries are handled correctly by using a family with
 ## asymmetric tails and negative dependence
+set.seed(5)
 family <- 23
 n <- 10
 u <- BiCopSim(n, 23, -1)
