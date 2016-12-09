@@ -973,14 +973,6 @@ class LbfgsbSolver : public ISolver<TProblem, 1> {
     // conv. crit.
     this->m_current.reset();
     this->m_status = Status::Continue;
-std::cerr << "x.rows(): " << x.rows() << std::endl;
-std::cerr << "x.cols(): " << x.cols() << std::endl;
-std::cerr << "g.rows(): " << g.rows() << std::endl;
-std::cerr << "g.cols(): " << g.cols() << std::endl;
-std::cerr << problem.lowerBound().rows() << std::endl;
-std::cerr << problem.lowerBound().cols() << std::endl;
-std::cerr << problem.upperBound().rows() << std::endl;
-std::cerr << problem.upperBound().cols() << std::endl;
     while (
       problem.callback(this->m_current, x) 
       && (((x - g).cwiseMax(problem.lowerBound()).cwiseMin(problem.upperBound()) - x).template lpNorm<Eigen::Infinity>() >= 1e-4) 
