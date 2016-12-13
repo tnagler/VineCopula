@@ -260,8 +260,9 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
         if (trunclevel == tree - 1)
             familyset <- 0
         # find optimal tree
-        g <- buildNextGraph(VineTree, weights, treecrit = treecrit, cores > 1)
-        MST <- findMaxTree(g, mode = type)
+        g <- buildNextGraph(VineTree, weights, treecrit = treecrit, cores > 1,
+                            truncated = trunclevel < tree)
+        MST <- findMaxTree(g, mode = type, truncated = trunclevel < tree)
         # estimate pair-copulas
         VineTree <- fit.TreeCopulas(MST,
                                     VineTree,
@@ -404,74 +405,114 @@ initializeFirstGraph <- function(data, treecrit, weights) {
     graphFromWeightMatrix(W)
 }
 
-findMaxTree <- function(g, mode = "RVine") {
-    ## construct adjency matrix
-    A <- adjacencyMatrix(g)
-    d <- ncol(A)
+findMaxTree <- function(g, mode = "RVine", truncated = FALSE) {
 
-    if (mode == "RVine") {
-        ## initialize
-        tree <- NULL
-        edges <- matrix(NA, d - 1, 2)
-        w <- numeric(d - 1)
-        i <- 1
-
-        ## construct minimum spanning tree
-        for (k in 1:(d - 1)) {
-            # add selected edge to tree
-            tree <- c(tree, i)
-
-            # find edge with minimal weight
-            m <- apply(as.matrix(A[, tree]), 2, min)
-            a <- apply(as.matrix(A[, tree]), 2,
-                       function(x) order(rank(x)))[1, ]
-            b <- order(rank(m))[1]
-            j <- tree[b]
-            i <- a[b]
-
-            # store edge and weight
-            edges[k, ] <- c(j, i)
-            w[k] <- A[i, j]
-
-            ## adjust adjecency matrix to prevent loops
-            for (t in tree)
-                A[i, t] <- A[t, i] <- Inf
-        }
-
-        ## reorder edges for backwads compatibility with igraph output
-        edges <- t(apply(edges, 1, function(x) sort(x)))
-        edges <- edges[order(edges[, 2], edges[, 1]), ]
-
-        ## delete unused edges from graph
-        E <- g$E$nums
-        in.tree <- apply(matrix(edges, ncol = 2), 1,
-                         function(x) which((x[1] == E[, 1]) & (x[2] == E[, 2])))
-        MST <- g
-        g$E$todel <- rep(TRUE, nrow(E))
-        if (any(g$E$todel)) {
-            g$E$todel[in.tree] <- FALSE
-            MST <- deleteEdges(g)
-        }
-    } else if (mode  == "CVine") {
-        ## set root as vertex with minimal sum of weights
+    if (truncated == FALSE) {
+        ## construct adjency matrix
         A <- adjacencyMatrix(g)
-        diag(A) <- 0
-        sumtaus <- rowSums(A)
-        root <- which.min(sumtaus)
+        d <- ncol(A)
 
-        ## delete unused edges
-        g$E$todel <- !((g$E$nums[, 2] == root) | (g$E$nums[, 1] == root))
-        MST <- g
-        if (any(g$E$todel ))
-            MST <- deleteEdges(g)
+        if (mode == "RVine") {
+            ## initialize
+            tree <- NULL
+            edges <- matrix(NA, d - 1, 2)
+            w <- numeric(d - 1)
+            i <- 1
+
+            ## construct minimum spanning tree
+            for (k in 1:(d - 1)) {
+                # add selected edge to tree
+                tree <- c(tree, i)
+
+                # find edge with minimal weight
+                m <- apply(as.matrix(A[, tree]), 2, min)
+                a <- apply(as.matrix(A[, tree]), 2,
+                           function(x) order(rank(x)))[1, ]
+                b <- order(rank(m))[1]
+                j <- tree[b]
+                i <- a[b]
+
+                # store edge and weight
+                edges[k, ] <- c(j, i)
+                w[k] <- A[i, j]
+
+                ## adjust adjecency matrix to prevent loops
+                for (t in tree)
+                    A[i, t] <- A[t, i] <- Inf
+            }
+
+            ## reorder edges for backwads compatibility with igraph output
+            edges <- t(apply(edges, 1, function(x) sort(x)))
+            edges <- edges[order(edges[, 2], edges[, 1]), ]
+
+            ## delete unused edges from graph
+            E <- g$E$nums
+            in.tree <- apply(matrix(edges, ncol = 2), 1,
+                             function(x) which((x[1] == E[, 1]) & (x[2] == E[, 2])))
+            MST <- g
+            g$E$todel <- rep(TRUE, nrow(E))
+            if (any(g$E$todel)) {
+                g$E$todel[in.tree] <- FALSE
+                MST <- deleteEdges(g)
+            }
+        } else if (mode  == "CVine") {
+            ## set root as vertex with minimal sum of weights
+            A <- adjacencyMatrix(g)
+            diag(A) <- 0
+            sumtaus <- rowSums(A)
+            root <- which.min(sumtaus)
+
+            ## delete unused edges
+            g$E$todel <- !((g$E$nums[, 2] == root) | (g$E$nums[, 1] == root))
+            MST <- g
+            if (any(g$E$todel ))
+                MST <- deleteEdges(g)
+        } else {
+            stop("vine not implemented")
+        }
     } else {
-        stop("vine not implemented")
+        MST <- g
+
+        # get edge list
+        edgesList <- g$E$nums
+        uid <- sort(unique(as.vector(g$E$nums)))
+        luid <- length(uid)
+
+        if (luid > 2) {
+            # transform to adjacency list
+            adjacencyList <- lapply(uid, function(u)
+                c(edgesList[edgesList[,1] == u,2],
+                  edgesList[edgesList[,2] == u,1]))
+
+            # find a tree by traversing the graph
+            dfsorder <- dfs(adjacencyList, 1)
+            newEdgesList <- t(apply(dfsorder$E, 1, sort))
+
+            ## delete unused edges
+            MST$E$todel <- !duplicated(rbind(newEdgesList,
+                                             edgesList))[-seq(1,luid-1)]
+        }
+
+        if (any(MST$E$todel))
+            MST <- deleteEdges(MST)
+
     }
 
     ## return result
     MST
 }
 
+# depth first search to build a tree without finding the MST
+dfs <- function(adjacencyList, v, e = NULL, dfsorder = list()) {
+    dfsorder$V <- c(dfsorder$V, v)
+    dfsorder$E <- rbind(dfsorder$E, e)
+    for (u in adjacencyList[[v]]) {
+        if (!is.element(u, dfsorder$V)) {
+            dfsorder <- dfs(adjacencyList, u, c(u,v), dfsorder)
+        }
+    }
+    return(dfsorder)
+}
 
 # not required any longer? Use TauMatrix instead
 fasttau <- function(x, y, weights = NA) {
@@ -690,7 +731,8 @@ fit.TreeCopulas <- function(MST, oldVineGraph, type, copulaSelectionBy,
 }
 
 ## initialize graph for next vine tree (possible edges)
-buildNextGraph <- function(oldVineGraph, treecrit, weights = NA, parallel) {
+buildNextGraph <- function(oldVineGraph, treecrit, weights = NA, parallel,
+                           truncated = FALSE) {
 
     d <- nrow(oldVineGraph$E$nums)
 
@@ -708,14 +750,16 @@ buildNextGraph <- function(oldVineGraph, treecrit, weights = NA, parallel) {
                         g = g,
                         oldVineGraph = oldVineGraph,
                         treecrit = treecrit,
-                        weights = weights)
+                        weights = weights,
+                        truncated = truncated)
     } else {
         out <- lapply(1:nrow(g$E$nums),
                       getEdgeInfo,
                       g = g,
                       oldVineGraph = oldVineGraph,
                       treecrit = treecrit,
-                      weights = weights)
+                      weights = weights,
+                      truncated = truncated)
     }
 
     ## annotate graph (same order as in old version of this function)
@@ -730,11 +774,13 @@ buildNextGraph <- function(oldVineGraph, treecrit, weights = NA, parallel) {
 }
 
 ## function for obtaining edge information
-getEdgeInfo <- function(i, g, oldVineGraph, treecrit, weights) {
+getEdgeInfo <- function(i, g, oldVineGraph, treecrit, weights,
+                        truncated = FALSE) {
 
     ## get edge
     con <- g$E$nums[i, ]
     temp <- oldVineGraph$E$nums[con, ]
+
 
     ## check for proximity condition
     ok <- FALSE
@@ -754,33 +800,6 @@ getEdgeInfo <- function(i, g, oldVineGraph, treecrit, weights) {
 
     # info if proximity condition is fulfilled ...
     if (ok) {
-        ## get data
-        if (temp[1, 1] == same) {
-            zr1 <- oldVineGraph$E$Copula.CondData.2[con[1]]
-        } else {
-            zr1 <- oldVineGraph$E$Copula.CondData.1[con[1]]
-        }
-        if (temp[2, 1] == same) {
-            zr2 <- oldVineGraph$E$Copula.CondData.2[con[2]]
-        } else {
-            zr2 <- oldVineGraph$E$Copula.CondData.1[con[2]]
-        }
-        if (is.list(zr1)) {
-            zr1a <- as.vector(zr1[[1]])
-            zr2a <- as.vector(zr2[[1]])
-        } else {
-            zr1a <- zr1
-            zr2a <- zr2
-        }
-
-        ## calculate Kendall's tau
-        keine_nas <- !(is.na(zr1a) | is.na(zr2a))
-        w <- treecrit(zr1a[keine_nas], zr2a[keine_nas], weights)
-
-        ## get names
-        name.node1 <- strsplit(g$V$names[con[1]], split = " *[,;] *")[[1]]
-        name.node2 <- strsplit(g$V$names[con[2]], split = " *[,;] *")[[1]]
-
         ## infer conditioned set and conditioning set
         l1 <- c(g$V$conditionedSet[[con[1]]],
                 g$V$conditioningSet[[con[1]]])
@@ -789,16 +808,47 @@ getEdgeInfo <- function(i, g, oldVineGraph, treecrit, weights) {
         nedSet <- c(setdiff(l1, l2), setdiff(l2, l1))
         ningSet <- intersect(l1, l2)
 
-        ## set edge name
-        nmdiff <- c(setdiff(name.node1, name.node2),
-                    setdiff(name.node2, name.node1))
-        nmsect <- intersect(name.node1, name.node2)
-        name <- paste(paste(nmdiff, collapse = ","),
-                      paste(nmsect, collapse = ","),
-                      sep = " ; ")
-
         ## mark as ok
         todel <- FALSE
+
+        if (truncated == FALSE) {
+            ## get data
+            if (temp[1, 1] == same) {
+                zr1 <- oldVineGraph$E$Copula.CondData.2[con[1]]
+            } else {
+                zr1 <- oldVineGraph$E$Copula.CondData.1[con[1]]
+            }
+            if (temp[2, 1] == same) {
+                zr2 <- oldVineGraph$E$Copula.CondData.2[con[2]]
+            } else {
+                zr2 <- oldVineGraph$E$Copula.CondData.1[con[2]]
+            }
+            if (is.list(zr1)) {
+                zr1a <- as.vector(zr1[[1]])
+                zr2a <- as.vector(zr2[[1]])
+            } else {
+                zr1a <- zr1
+                zr2a <- zr2
+            }
+
+            ## calculate Kendall's tau
+            keine_nas <- !(is.na(zr1a) | is.na(zr2a))
+            w <- treecrit(zr1a[keine_nas], zr2a[keine_nas], weights)
+
+            ## get names
+            name.node1 <- strsplit(g$V$names[con[1]], split = " *[,;] *")[[1]]
+            name.node2 <- strsplit(g$V$names[con[2]], split = " *[,;] *")[[1]]
+
+            ## set edge name
+            nmdiff <- c(setdiff(name.node1, name.node2),
+                        setdiff(name.node2, name.node1))
+            nmsect <- intersect(name.node1, name.node2)
+            name <- paste(paste(nmdiff, collapse = ","),
+                          paste(nmsect, collapse = ","),
+                          sep = " ; ")
+        } else {
+            w <- 1
+        }
     }
 
     ## return edge information
@@ -1006,13 +1056,13 @@ as.RVM2 <- function(RVine, data, callexp) {
     RVM$pair.logLik <- logLiks
     npar <- sum(RVM$family %in% allfams[onepar], na.rm = TRUE) +
         2 * sum(RVM$family %in% allfams[twopar], na.rm = TRUE)
-    npar_pair <- (RVM$family %in% allfams[onepar]) +
-        2 * (RVM$family %in% allfams[twopar])
+    npar_pair <- matrix((RVM$family %in% allfams[onepar]) +
+        2 * (RVM$family %in% allfams[twopar]), nrow = n, ncol = n)
     N <- nrow(data)
     RVM$AIC <- -2 * like$loglik + 2 * npar
-    RVM$pair.AIC <- -2 * like$V$value + 2 * npar_pair
+    RVM$pair.AIC <- -2 * logLiks + 2 * npar_pair
     RVM$BIC <- -2 * like$loglik + log(N) * npar
-    RVM$pair.BIC <- -2 * like$V$value + log(N) * npar_pair
+    RVM$pair.BIC <- -2 * logLiks + log(N) * npar_pair
     RVM$emptau <- emptaus
 
     ## return final object
