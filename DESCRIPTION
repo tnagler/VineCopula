@@ -24,7 +24,7 @@ Authors@R: c(
     person("Thibault", "Vatter",, role = "ctb")
     )
 Depends:
-    R (>= 2.11.0)
+    R (>= 3.1.0)
 Imports:
     graphics,
     grDevices,
