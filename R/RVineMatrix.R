@@ -205,7 +205,7 @@ RVineMatrix <- function(Matrix,
 
     # create list of BiCop ojbects
     objlst <- apply(cbind(family[sel], par[sel], par2[sel]), 1, function(x)
-        ifelse(x[1] == 0, NA, BiCop(x[1], x[2], x[3], check.pars = FALSE)))
+        if (x[1] == 0) NA else BiCop(x[1], x[2], x[3], check.pars = FALSE))
 
     # construct dependence measure matrices
     taus <- utds <- ltds <- bets <- matrix(0, nrow(Matrix), ncol(Matrix))
