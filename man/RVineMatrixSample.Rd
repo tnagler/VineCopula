@@ -2,7 +2,7 @@
 % Please edit documentation in R/RVineMatrixSample.R
 \name{RVineMatrixSample}
 \alias{RVineMatrixSample}
-\title{R-Vine Matrix Sample}
+\title{Randomv sampling of R-Vine matices}
 \usage{
 RVineMatrixSample(d, size = 1, naturalOrder = FALSE)
 }
@@ -19,10 +19,14 @@ A list of length \code{size} with each element containing one
 R-Vine matrix.
 }
 \description{
-Sample R-Vine matrices.
+Sample R-Vine matrices based on the algorithm of Joe et al. (2011).
+}
+\note{
+For some reason, our implementaion of Joe et al.'s algorithm always
+returns a star in the first tree. To fix this, we sample a vine matrix of
+dimension d + 1 and remove the first tree afterwards
 }
 \examples{
-
 # Matrix and sample sizes
 d <- 10
 size <- 5
