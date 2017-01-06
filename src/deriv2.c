@@ -7,12 +7,12 @@
 **
 */
 
-#include "include/vine.h"
-#include "include/likelihood.h"
-#include "include/deriv.h"
-#include "include/deriv2.h"
-#include "include/tcopuladeriv.h"
-#include "include/tcopuladeriv_new.h"
+#include "vine.h"
+#include "likelihood.h"
+#include "deriv.h"
+#include "deriv2.h"
+#include "tcopuladeriv.h"
+#include "tcopuladeriv_new.h"
 
 #define UMAX  1-1e-10
 

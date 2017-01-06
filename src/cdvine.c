@@ -12,11 +12,11 @@
 
 
 // Include all the head files
-#include "include/vine.h"			// general one
-#include "include/memoryhandling.h"	// for creating two and three dimensional arrays
-#include "include/likelihood.h"		// formally main functionality; log-likelihood with help functions; bivariate densities
-#include "include/cdvine.h"			// Header file for this C-file
-#include "include/hfunc.h"			// h-functions, i.e. conditional densities; also inverse h-functions
+#include "vine.h"			// general one
+#include "memoryhandling.h"	// for creating two and three dimensional arrays
+#include "likelihood.h"		// formally main functionality; log-likelihood with help functions; bivariate densities
+#include "cdvine.h"			// Header file for this C-file
+#include "hfunc.h"			// h-functions, i.e. conditional densities; also inverse h-functions
 
 #define UMAX  1-1e-10
 

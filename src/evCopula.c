@@ -1,5 +1,5 @@
-#include "include/vine.h"
-#include "include/evCopula.h"
+#include "vine.h"
+#include "evCopula.h"
 #include <math.h>
 
 #define UMAX  1-1e-10

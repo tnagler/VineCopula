@@ -1,11 +1,11 @@
-#include "include/vine.h"
-#include "include/likelihood.h"
-#include "include/hfunc.h"
-#include "include/deriv.h"
-#include "include/tcopuladeriv.h"
-#include "include/tcopuladeriv_new.h"
-#include "include/incompleteBeta.h"
-#include "include/logderiv.h"
+#include "vine.h"
+#include "likelihood.h"
+#include "hfunc.h"
+#include "deriv.h"
+#include "tcopuladeriv.h"
+#include "tcopuladeriv_new.h"
+#include "incompleteBeta.h"
+#include "logderiv.h"
 
 #define UMAX  1-1e-10
 #define UMIN  1e-10

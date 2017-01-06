@@ -3,9 +3,9 @@
  **
  */
 
-#include "include/vine.h"
-#include "include/memoryhandling.h"
-#include "include/rvine.h"
+#include "vine.h"
+#include "memoryhandling.h"
+#include "rvine.h"
 
 
 int largest(int *array, int size)
