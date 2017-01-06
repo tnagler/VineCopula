@@ -4,11 +4,11 @@
 // by Ulf Schepsmeier (2012)					//
 //////////////////////////////////////////////////
 
-#include "include/vine.h"
-#include "include/memoryhandling.h"
-#include "include/likelihood.h"
-#include "include/pit.h"
-#include "include/hfunc.h"
+#include "vine.h"
+#include "memoryhandling.h"
+#include "likelihood.h"
+#include "pit.h"
+#include "hfunc.h"
 
 #define UMAX  1-1e-10
 

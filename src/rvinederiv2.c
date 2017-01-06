@@ -1,13 +1,13 @@
-#include "include/vine.h"
-#include "include/memoryhandling.h"
-#include "include/likelihood.h"
-#include "include/deriv.h"
-#include "include/deriv2.h"
-#include "include/tcopuladeriv.h"
-#include "include/tcopuladeriv_new.h"
-#include "include/rvine.h"
-#include "include/rvinederiv.h"
-#include "include/rvinederiv2.h"
+#include "vine.h"
+#include "memoryhandling.h"
+#include "likelihood.h"
+#include "deriv.h"
+#include "deriv2.h"
+#include "tcopuladeriv.h"
+#include "tcopuladeriv_new.h"
+#include "rvine.h"
+#include "rvinederiv.h"
+#include "rvinederiv2.h"
 
 
 #define UMAX  1-1e-10

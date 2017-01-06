@@ -10,11 +10,11 @@
  **
  */
 
-#include "include/vine.h"
-#include "include/memoryhandling.h"
-#include "include/likelihood.h"
-#include "include/rvine.h"
-#include "include/hfunc.h"
+#include "vine.h"
+#include "memoryhandling.h"
+#include "likelihood.h"
+#include "rvine.h"
+#include "hfunc.h"
 
 
 
