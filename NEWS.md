@@ -1,7 +1,23 @@
+VineCopula 2.1.1 (January 10, 2016)
+----------------------------------------------------------------
+
+IMPORTS
+
+  * Package now requires `copula (>= 0.999-16)`. The new version of copula
+    requires VineCopula to be re-installed, because the old `fitCopula()` 
+    method doesn't work any longer, but was re-exported by VineCopula.
+    
+NEW FEATURES
+
+  * Package developers can use the VineCopula C-functionality by linking against
+    VineCopula through the `LinkingTo` field.
+  
+
+
 VineCopula 2.1.0 (December 23, 2016)
 ----------------------------------------------------------------
 
-DEPENDS
+# DEPENDS
 
   * Now depends explicitly on `R (>= 3.1.0)`. So far, this dependence was
     implicit trhough our dependence on the copula package.
