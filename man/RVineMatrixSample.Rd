@@ -31,11 +31,11 @@ dimension d + 1 and remove the first tree afterwards
 d <- 10
 size <- 5
 
-# Sample in the natural order
+# Sample R-vine matrices
 RVM <- RVineMatrixSample(d, size)
 sapply(RVM, RVineMatrixCheck)
 
-# Sample without natural order
+# Sample R-vine matrices in the natural order
 RVM <- RVineMatrixSample(d, size, naturalOrder = TRUE)
 sapply(RVM, RVineMatrixCheck)
 

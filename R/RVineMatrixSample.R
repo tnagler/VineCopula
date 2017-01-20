@@ -26,11 +26,11 @@
 #' d <- 10
 #' size <- 5
 #'
-#' # Sample in the natural order
+#' # Sample R-vine matrices
 #' RVM <- RVineMatrixSample(d, size)
 #' sapply(RVM, RVineMatrixCheck)
 #'
-#' # Sample without natural order
+#' # Sample R-vine matrices in the natural order
 #' RVM <- RVineMatrixSample(d, size, naturalOrder = TRUE)
 #' sapply(RVM, RVineMatrixCheck)
 #'
@@ -40,7 +40,7 @@ RVineMatrixSample <- function(d, size = 1, naturalOrder = FALSE) {
     ## for some reason, Joe et al.'s algorithm returns a star in the first tree.
     ## to fix this, we sample a vine matrix of dimension d + 1 and remove the
     ## first tree later
-    d + 1
+    d <- d + 1
 
     ## Sample the required binary vectors
     if (d > 3) {
@@ -77,7 +77,7 @@ RVineMatrixSample <- function(d, size = 1, naturalOrder = FALSE) {
         sampleRVM[[k]] <- ToLowerTri(RVM)
     }
 
-    ## now reduce to d-dimnesional matrices again
+    ## now reduce to d-dimensional matrices again
     d <- d - 1
     reducedSample <- lapply(sampleRVM, function(x) x[-(d + 1), -(d + 1)])
     reducedSample <- lapply(reducedSample, function(x) {
@@ -88,7 +88,15 @@ RVineMatrixSample <- function(d, size = 1, naturalOrder = FALSE) {
         x
     })
     ## reorder
-    lapply(reducedSample, function(x) reorderRVineMatrix(x, sample.int(d, d)))
+    if (naturalOrder == FALSE)
+    {
+        reducedSample <- lapply(reducedSample, function(x)
+            reorderRVineMatrix(x, sample.int(d, d)))
+    } else {
+        reducedSample <- lapply(reducedSample, function(x)
+            reorderRVineMatrix(x))
+    }
+    return(reducedSample)
 }
 
 getRVineMatrix <- function(b) {
