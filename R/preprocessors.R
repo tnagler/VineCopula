@@ -364,9 +364,11 @@ todo_fams_presel <- function(args) {
     if (args$emp_tau > 0) {
         # calculate asymetry indices
         x <- qnorm(cbind(args$u1, args$u2))
-        c11 <- cor(x[(x[, 1] > 0) & (x[, 2] > 0), ])[1, 2]
-        c00 <- cor(x[(x[, 1] < 0) & (x[, 2] < 0), ])[1, 2]
-        if (any(is.na(c(c11, c00)))) {
+        e <- try({
+            c11 <- cor(x[(x[, 1] > 0) & (x[, 2] > 0), ])[1, 2]
+            c00 <- cor(x[(x[, 1] < 0) & (x[, 2] < 0), ])[1, 2]
+        })
+        if (any(is.na(c(c11, c00))) | inherits(e, "try-error")) {
             todo <- c(0, posfams)
         } else {
             if (c11 - c00 > 0.3) {
@@ -384,9 +386,11 @@ todo_fams_presel <- function(args) {
     } else if (args$emp_tau < 0) {
         # calculate asymetry indices
         x <- qnorm(cbind(args$u1, args$u2))
-        c10 <- cor(x[(x[, 1] > 0) & (x[, 2] < 0), ])[1, 2]
-        c01 <- cor(x[(x[, 1] < 0) & (x[, 2] > 0), ])[1, 2]
-        if (any(is.na(c(c10, c01)))) {
+        e <- try({
+            c10 <- cor(x[(x[, 1] > 0) & (x[, 2] < 0), ])[1, 2]
+            c01 <- cor(x[(x[, 1] < 0) & (x[, 2] > 0), ])[1, 2]
+        })
+        if (any(is.na(c(c10, c01))) | inherits(e, "try-error")) {
             todo <- c(0, posfams)
         } else {
             if (c10 - c01 < -0.3) {
