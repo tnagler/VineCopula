@@ -1,3 +1,14 @@
+VineCopula 2.1.2 (in progress)
+----------------------------------------------------------------
+
+BUG FIXES
+
+  * Safer `BiCopSelect` with `presel = TRUE` and insufficient data.
+  
+  * Fixed `RVineMatrix` (output dimension was `d-1` and `naturalOrder = TRUE`
+    wasn't working, thanks @tvatter).
+
+
 VineCopula 2.1.1 (January 11, 2016)
 ----------------------------------------------------------------
 
