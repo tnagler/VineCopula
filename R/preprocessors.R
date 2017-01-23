@@ -367,8 +367,10 @@ todo_fams_presel <- function(args) {
         e <- try({
             c11 <- cor(x[(x[, 1] > 0) & (x[, 2] > 0), ])[1, 2]
             c00 <- cor(x[(x[, 1] < 0) & (x[, 2] < 0), ])[1, 2]
-        })
-        if (any(is.na(c(c11, c00))) | inherits(e, "try-error")) {
+        }, silent = TRUE)
+        if (inherits(e, "try-error")) {
+            todo <- c(0, posfams)
+        } else if (any(is.na(c(c11, c00)))) {
             todo <- c(0, posfams)
         } else {
             if (c11 - c00 > 0.3) {
@@ -389,9 +391,11 @@ todo_fams_presel <- function(args) {
         e <- try({
             c10 <- cor(x[(x[, 1] > 0) & (x[, 2] < 0), ])[1, 2]
             c01 <- cor(x[(x[, 1] < 0) & (x[, 2] > 0), ])[1, 2]
-        })
-        if (any(is.na(c(c10, c01))) | inherits(e, "try-error")) {
-            todo <- c(0, posfams)
+        }, silent = TRUE)
+        if (inherits(e, "try-error")) {
+            todo <- c(0, negfams)
+        } else if (any(is.na(c(c10, c01)))) {
+            todo <- c(0, negfams)
         } else {
             if (c10 - c01 < -0.3) {
                 todo <- c(0, 2, fams10)
