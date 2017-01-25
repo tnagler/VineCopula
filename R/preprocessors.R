@@ -311,6 +311,17 @@ check_nobs <- function(args) {
 prep_familyset <- function(args) {
     if (is.na(args$familyset[1]))
         args$familyset <- allfams
+    if (!all(abs(args$familyset) %in% allfams)) {
+        wrong_fam <- args$familyset[-which(args$familyset %in% allfams)]
+        if (length(wrong_fam) == 1) {
+            msg <- paste("Copula family", wrong_fam)
+        } else {
+            msg <- paste("Copula families", paste0(wrong_fam, collapse = ", "))
+        }
+        stop("\n In ", args$call[1], ": ", msg, " not implemented.",
+             call. = FALSE)
+    }
+
     if (args$rotations)
         args$familyset <- with_rotations(args$familyset)
     if (length(unique(sign(args$familyset[args$familyset != 0]))) > 1) {
@@ -319,10 +330,6 @@ prep_familyset <- function(args) {
              call. = FALSE)
         args$familyset <- setdiff(allfams, -args$familyset)
     }
-    if (!all(abs(args$familyset) %in% allfams))
-        stop("\n In ", args$call[1], ": ",
-             "Copula family not implemented.",
-             call. = FALSE)
     args
 }
 
