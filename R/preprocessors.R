@@ -550,7 +550,8 @@ check_est_pars <- function(args) {
         args$se <- FALSE
     }
 
-    args$weights <- ifelse(is.null(args$weights), NA, args$weights)
+    if (is.null(args$weights))
+        args$weights <- NA
 
     args
 }
