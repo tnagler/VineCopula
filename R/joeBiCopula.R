@@ -164,7 +164,7 @@ setClass("surJoeBiCopula",
 surJoeBiCopula <- function (param=2) {
   if (any(is.na(param) | param >= Inf | param <= 1 ))
     stop("Parameter is outside of the allowed interval (1,Inf).")
-  new("surJoeBiCopula", dimension = as.integer(2), parameters = param, param.names = c("theta", "delta"),
+  new("surJoeBiCopula", dimension = as.integer(2), parameters = param, param.names = "theta",
       param.lowbnd = 1, param.upbnd = Inf, family=16,
       fullname = "Survival Joe copula family. Number 16 in VineCopula.")
 }
@@ -242,7 +242,7 @@ setClass("r90JoeBiCopula",
 r90JoeBiCopula <- function (param=-2) {
   if (any(is.na(param) | param >= -1 | param <= -Inf ))
     stop("Parameter is outside of the allowed interval (-Inf,-1).")
-  new("r90JoeBiCopula", dimension = as.integer(2), parameters = param, param.names = c("theta", "delta"),
+  new("r90JoeBiCopula", dimension = as.integer(2), parameters = param, param.names = "theta",
       param.lowbnd = -Inf, param.upbnd = -1, family=26,
       fullname = "90 deg rotated Joe copula family. Number 26 in VineCopula.")
 }
@@ -305,7 +305,7 @@ setClass("r270JoeBiCopula",
 r270JoeBiCopula <- function (param=-2) {
   if (any(is.na(param) | param >= -1 | param <= -Inf ))
     stop("Parameter is outside of the allowed interval (-Inf,-1).")
-  new("r270JoeBiCopula", dimension = as.integer(2), parameters = param, param.names = c("theta", "delta"),
+  new("r270JoeBiCopula", dimension = as.integer(2), parameters = param, param.names = "theta",
       param.lowbnd = -Inf, param.upbnd = -1, family=36,
       fullname = "270 deg rotated Joe copula family. Number 36 in VineCopula.")
 }
