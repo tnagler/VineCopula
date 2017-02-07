@@ -89,7 +89,6 @@
 #' pairs(data[sel],
 #'       lower.panel = lp, upper.panel = up, diag.panel = dp, gap = 0.5)
 #'
-#' @export pairs.copuladata
 pairs.copuladata <- function(x,
                              labels = names(x),
                              ...,

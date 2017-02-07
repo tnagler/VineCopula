@@ -34,7 +34,6 @@
 #' RVM <- RVineMatrixSample(d, size, naturalOrder = TRUE)
 #' sapply(RVM, RVineMatrixCheck)
 #'
-#' @export RVineMatrixSample
 RVineMatrixSample <- function(d, size = 1, naturalOrder = FALSE) {
     stopifnot(d > 1)
     ## for some reason, Joe et al.'s algorithm returns a star in the first tree.

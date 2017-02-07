@@ -287,7 +287,6 @@ reorderRVineMatrix <- function(Matrix, oldOrder = NULL) {
 #' # normalise the RVine
 #' RVineMatrixNormalize(RVM)
 #'
-#' @export RVineMatrixNormalize
 RVineMatrixNormalize <- function(RVM) {
     stopifnot(is(RVM, "RVineMatrix"))
 
@@ -799,7 +798,6 @@ vinvstepb <- function(A, i, ichk0 = 0) {
 #' b3 <- RVineMatrixCheck(A3)
 #' print(b3)
 #'
-#' @export RVineMatrixCheck
 RVineMatrixCheck <- function(M) {
     lmat <- M[lower.tri(M)]
     umat <- M[upper.tri(M)]

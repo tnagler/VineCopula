@@ -123,9 +123,6 @@ dat <- BiCopSim(500, 2, 0.7, 5)
 BiCopVuongClarke(dat[,1], dat[,2], familyset = 1:6)
 
 }
-\author{
-Ulf Schepsmeier, Eike Brechmann, Natalia Belgorodski
-}
 \references{
 Belgorodski, N. (2010) Selecting pair-copula families for
 regular vines with application to the multivariate analysis of European
@@ -142,4 +139,6 @@ hypotheses. Econometrica 57 (2), 307-333.
 \code{\link{BiCopGofTest}}, \code{\link{RVineVuongTest}},
 \code{\link{RVineClarkeTest}}, \code{\link{BiCopSelect}}
 }
-
+\author{
+Ulf Schepsmeier, Eike Brechmann, Natalia Belgorodski
+}

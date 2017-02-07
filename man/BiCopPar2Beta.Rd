@@ -95,13 +95,12 @@ BiCopPar2Beta(family = 3, par = 2)
 BiCopPar2Beta(family = c(3,4,6), par = 2:4)
 
 }
-\author{
-Ulf Schepsmeier
-}
 \references{
 Blomqvist, N. (1950).  On a measure of dependence between two
 random variables. The Annals of Mathematical Statistics, 21(4), 593-600.
 
 Nelsen, R. (2006). An introduction to copulas.  Springer
 }
-
+\author{
+Ulf Schepsmeier
+}

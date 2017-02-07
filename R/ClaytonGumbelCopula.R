@@ -89,7 +89,6 @@ setClass("surClaytonCopula",
 #' persp(r90ClaytonCopula(-1.5), dCopula, zlim = c(0,10))
 #' persp(r270ClaytonCopula(-1.5), dCopula, zlim = c(0,10))
 #'
-#' @export surClaytonCopula
 surClaytonCopula <- function (param=1) {
   new("surClaytonCopula", dimension = as.integer(2), parameters = param, param.names = c("theta"),
       param.lowbnd = 0, param.upbnd = Inf, family=13,
@@ -366,7 +365,6 @@ setClass("surGumbelCopula",
 #' persp(r90GumbelCopula(-1.5), dCopula, zlim = c(0,10))
 #' persp(r270GumbelCopula(-1.5), dCopula, zlim = c(0,10))
 #'
-#' @export surGumbelCopula
 surGumbelCopula <- function (param=1) {
   new("surGumbelCopula", dimension = as.integer(2), parameters = param, param.names = c("theta"),
       param.lowbnd = 1, param.upbnd = Inf, family=14,

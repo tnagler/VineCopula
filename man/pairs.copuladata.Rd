@@ -14,6 +14,9 @@
 
 \item{labels}{variable names/labels.}
 
+\item{\dots}{other graphical parameters (see \code{\link[graphics]{par}}) or
+options passed to \code{\link{BiCopKDE}}.}
+
 \item{lower.panel}{panel function to be used on the lower diagonal panels
 (if not supplied, a default function is used)}
 
@@ -44,9 +47,6 @@ terrain.colors(30)}.}
 \code{"norm"} for the transformed density with standard normal margins,
 \code{"exp"} with standard exponential margins, and  \code{"flexp"} with
 flipped exponential margins.}
-
-\item{\dots}{other graphical parameters (see \code{\link[graphics]{par}}) or
-options passed to \code{\link{BiCopKDE}}.}
 }
 \description{
 This function provides pair plots for copula data. Using default setting it
@@ -111,11 +111,10 @@ pairs(data[sel],
       lower.panel = lp, upper.panel = up, diag.panel = dp, gap = 0.5)
 
 }
-\author{
-Tobias Erhardt
-}
 \seealso{
 \code{\link[graphics]{pairs}}, \code{\link{as.copuladata}},
 \code{\link{BiCopKDE}}
 }
-
+\author{
+Tobias Erhardt
+}

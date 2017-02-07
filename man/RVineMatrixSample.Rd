@@ -40,9 +40,6 @@ RVM <- RVineMatrixSample(d, size, naturalOrder = TRUE)
 sapply(RVM, RVineMatrixCheck)
 
 }
-\author{
-Thibault Vatter
-}
 \references{
 Joe H, Cooke RM and Kurowicka D (2011). Regular vines:
 generation algorithm and number of equivalence classes. In Dependence
@@ -51,4 +48,6 @@ Modeling: Vine Copula Handbook, pp 219--231. World Scientific, Singapore.
 \seealso{
 \code{\link{RVineMatrix}}, \code{\link{RVineMatrixCheck}}
 }
-
+\author{
+Thibault Vatter
+}

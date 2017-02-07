@@ -52,9 +52,6 @@ plot(pit[,1], pit[,2])	# i.i.d. data
 cor(pit, method = "kendall")
 
 }
-\author{
-Ulf Schepsmeier
-}
 \references{
 Rosenblatt, M. (1952).  Remarks on a Multivariate
 Transformation. The Annals of Mathematical Statistics 23 (3), 470-472.
@@ -66,4 +63,6 @@ vine copula models with fixed margins. Journal of Multivariate Analysis 138,
 \seealso{
 \code{\link{RVineGofTest}}
 }
-
+\author{
+Ulf Schepsmeier
+}

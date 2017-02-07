@@ -97,7 +97,6 @@ setClass("joeBiCopula",
 #' persp(r90JoeBiCopula(-1.5), dCopula, zlim = c(0,10))
 #' persp(r270JoeBiCopula(-1.5), dCopula, zlim = c(0,10))
 #'
-#' @export joeBiCopula
 joeBiCopula <- function (param=2) {
   if (any(is.na(param) | param >= Inf | param <= 1 ))
     stop("Parameter is outside of the allowed interval (1,Inf).")

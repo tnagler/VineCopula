@@ -114,9 +114,6 @@ summary(RVineSeqEst(simdata, RVM, method = "itau", se = TRUE))
 summary(RVineSeqEst(simdata, RVM, method = "mle", se = TRUE))
 
 }
-\author{
-Ulf Schepsmeier, Jeffrey Dissmann, Thomas Nagler
-}
 \seealso{
 \code{\link{RVineMatrix}},
 \code{\link{BiCop}},
@@ -125,4 +122,6 @@ Ulf Schepsmeier, Jeffrey Dissmann, Thomas Nagler
 \code{\link{contour.RVineMatrix}},
 \code{\link[foreach]{foreach}}
 }
-
+\author{
+Ulf Schepsmeier, Jeffrey Dissmann, Thomas Nagler
+}

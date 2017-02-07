@@ -57,9 +57,6 @@ b3 <- RVineMatrixCheck(A3)
 print(b3)
 
 }
-\author{
-Harry Joe
-}
 \references{
 Joe H, Cooke RM and Kurowicka D (2011). Regular vines:
 generation algorithm and number of equivalence classes. In Dependence
@@ -68,4 +65,6 @@ Modeling: Vine Copula Handbook, pp 219--231. World Scientific, Singapore.
 \seealso{
 \code{\link{RVineMatrix}}
 }
-
+\author{
+Harry Joe
+}

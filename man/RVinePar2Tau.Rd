@@ -60,10 +60,9 @@ RVM <- RVineMatrix(Matrix = Matrix, family = family,
 tau <- RVinePar2Tau(RVM)
 
 }
-\author{
-Jeffrey Dissmann
-}
 \seealso{
 \code{\link{RVineMatrix}}, \code{\link{BiCopPar2Tau}}
 }
-
+\author{
+Jeffrey Dissmann
+}

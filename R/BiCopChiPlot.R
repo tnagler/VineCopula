@@ -270,7 +270,6 @@ BiCopChiPlot <- function(u1, u2, PLOT = TRUE, mode = "NULL", ...) {
 #' BiCopKPlot(dat2[,1], dat2[,2], main = "Clayton copula")
 #' par(op)
 #'
-#' @export BiCopKPlot
 BiCopKPlot <- function(u1, u2, PLOT = TRUE, ...) {
     stopifnot(is.logical(PLOT))
 

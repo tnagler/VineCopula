@@ -92,7 +92,6 @@
 #' ## and evaluate its PDF
 #' round(BiCopPDF(u1, u2, fit), 3)
 #'
-#' @export BiCopPDF
 BiCopPDF <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),

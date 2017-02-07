@@ -134,9 +134,6 @@ plot(RVM1)  # tree structure
 contour(RVM1)  # contour plots of all pair-copulas
 
 }
-\author{
-Eike Brechmann, Thomas Nagler
-}
 \references{
 Brechmann, E. C., C. Czado, and K. Aas (2012). Truncated regular
 vines in high dimensions with applications to financial data. Canadian
@@ -154,4 +151,6 @@ returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 \code{\link{contour.RVineMatrix}},
 \code{\link[foreach]{foreach}}
 }
-
+\author{
+Eike Brechmann, Thomas Nagler
+}

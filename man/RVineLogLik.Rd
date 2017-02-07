@@ -122,9 +122,6 @@ ll <- RVineLogLik(simdata, RVM, separate = TRUE)
 ll$loglik
 
 }
-\author{
-Ulf Schepsmeier, Jeffrey Dissmann, Jakob Stoeber
-}
 \references{
 Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 (2013). Selecting and estimating regular vine copulae and application to
@@ -134,4 +131,6 @@ financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 \code{\link{BiCopHfunc}}, \code{\link{RVineMatrix}},
 \code{\link{RVineMLE}}, \code{\link{RVineAIC}}, \code{\link{RVineBIC}}
 }
-
+\author{
+Ulf Schepsmeier, Jeffrey Dissmann, Jakob Stoeber
+}

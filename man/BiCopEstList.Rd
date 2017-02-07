@@ -99,9 +99,6 @@ data(daxreturns)
 comp <- BiCopEstList(daxreturns[, 1], daxreturns[, 4])
 
 }
-\author{
-Thomas Nagler
-}
 \references{
 Akaike, H. (1973). Information theory and an extension of the
 maximum likelihood principle. In B. N. Petrov and F. Csaki (Eds.),
@@ -115,4 +112,6 @@ Statistics 6 (2), 461-464.
 \code{\link{BiCop}},
 \code{\link{BiCopEst}}
 }
-
+\author{
+Thomas Nagler
+}

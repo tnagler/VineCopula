@@ -116,7 +116,6 @@
 #' all.equal(0.2, BiCopHfunc1(0.1, BiCopHinv1(0.1, 0.2, cop), cop))
 #' all.equal(0.1, BiCopHfunc2(BiCopHinv2(0.1, 0.2, cop), 0.2, cop))
 #'
-#' @export BiCopHinv
 BiCopHinv <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),

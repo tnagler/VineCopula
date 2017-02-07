@@ -128,9 +128,6 @@ mle <- RVineMLE(simdata, RVM, grad = TRUE, trace = 0)
 round(mle$RVM$par - RVM$par, 2)
 
 }
-\author{
-Ulf Schepsmeier, Jeffrey Dissmann
-}
 \references{
 Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 (2013). Selecting and estimating regular vine copulae and application to
@@ -147,4 +144,6 @@ vine copula models. Computational Statistics, 1-29
 \code{\link{RVineGrad}},
 \code{\link{RVineHessian}}
 }
-
+\author{
+Ulf Schepsmeier, Jeffrey Dissmann
+}

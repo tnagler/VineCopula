@@ -75,9 +75,6 @@ out2 <- RVineHessian(simdata,RVM)
 RVineStdError(out2$hessian, RVM)
 
 }
-\author{
-Ulf Schepsmeier, Jakob Stoeber
-}
 \references{
 Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 (2013). Selecting and estimating regular vine copulae and application to
@@ -104,4 +101,6 @@ vine copula models. Computational Statistics, 28 (6), 2679-2707
 \code{\link{RVineHessian}},
 \code{\link{RVineGrad}}
 }
-
+\author{
+Ulf Schepsmeier, Jakob Stoeber
+}

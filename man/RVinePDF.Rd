@@ -84,9 +84,6 @@ RVM <- RVineMatrix(Matrix = Matrix, family = family,
 RVinePDF(c(0.1, 0.2, 0.3, 0.4, 0.5), RVM)
 
 }
-\author{
-Thomas Nagler
-}
 \references{
 Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 (2013). Selecting and estimating regular vine copulae and application to
@@ -96,4 +93,6 @@ financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 \code{\link{BiCopHfunc}}, \code{\link{RVineMatrix}},
 \code{\link{RVineMLE}}, \code{\link{RVineAIC}}, \code{\link{RVineBIC}}
 }
-
+\author{
+Thomas Nagler
+}

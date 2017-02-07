@@ -81,4 +81,3 @@ data(daxreturns)
 \author{
 Matthias Killiches, Thomas Nagler
 }
-

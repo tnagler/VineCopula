@@ -71,7 +71,6 @@
 #' vuong$p.value.Schwarz
 #' }
 #'
-#' @export RVineVuongTest
 RVineVuongTest <- function(data, RVM1, RVM2) {
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),

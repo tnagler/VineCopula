@@ -2,9 +2,9 @@
 % Please edit documentation in R/BB6copula.R
 \name{BB6Copula}
 \alias{BB6Copula}
-\alias{r270BB6Copula}
-\alias{r90BB6Copula}
 \alias{surBB6Copula}
+\alias{r90BB6Copula}
+\alias{r270BB6Copula}
 \title{Constructor of the BB6 Family and Rotated Versions thereof}
 \usage{
 BB6Copula(param = c(1, 1))
@@ -33,9 +33,6 @@ persp(r90BB6Copula(c(-1,-1.5)), dCopula, zlim = c(0,10))
 persp(r270BB6Copula(c(-1,-1.5)), dCopula, zlim = c(0,10))
 
 }
-\author{
-Benedikt Graeler
-}
 \references{
 Joe, H., (1997). Multivariate Models and Dependence Concepts.
 Monogra. Stat. Appl. Probab. 73, London: Chapman and Hall.
@@ -45,4 +42,6 @@ See also \code{\link{BB6Copula}}, \code{\link{BB7Copula}},
 \code{\link{BB8Copula}} and \code{\link{joeCopula}} for further wrapper
 functions to the \code{\link{VineCopula-package}}.
 }
-
+\author{
+Benedikt Graeler
+}

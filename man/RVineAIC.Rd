@@ -3,6 +3,7 @@
 \name{RVineAIC}
 \alias{RVineAIC}
 \alias{RVineBIC}
+\alias{RVineBIC}
 \title{AIC and BIC of an R-Vine Copula Model}
 \usage{
 RVineAIC(data, RVM, par = RVM$par, par2 = RVM$par2)
@@ -87,9 +88,6 @@ RVineAIC(simdata, RVM)
 RVineBIC(simdata, RVM)
 
 }
-\author{
-Eike Brechmann
-}
 \references{
 Akaike, H. (1973). Information theory and an extension of the
 maximum likelihood principle. In B. N. Petrov and F. Csaki (Eds.),
@@ -103,4 +101,6 @@ Statistics 6 (2), 461-464.
 \code{\link{RVineLogLik}}, \code{\link{RVineVuongTest}},
 \code{\link{RVineClarkeTest}}
 }
-
+\author{
+Eike Brechmann
+}

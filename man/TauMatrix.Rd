@@ -27,9 +27,6 @@ Data <- as.matrix(daxreturns)
 TauMatrix(Data)
 
 }
-\author{
-Ulf Schepsmeier
-}
 \references{
 Knight, W. R. (1966). A computer method for calculating
 Kendall's tau with ungrouped data. Journal of the American Statistical
@@ -39,4 +36,6 @@ Association 61 (314), 436-439.
 \code{\link{BiCopTau2Par}}, \code{\link{BiCopPar2Tau}},
 \code{\link{BiCopEst}}
 }
-
+\author{
+Ulf Schepsmeier
+}

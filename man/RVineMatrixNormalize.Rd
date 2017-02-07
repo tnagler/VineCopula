@@ -40,4 +40,3 @@ RVineMatrixNormalize(RVM)
 
 }
 \keyword{vine}
-

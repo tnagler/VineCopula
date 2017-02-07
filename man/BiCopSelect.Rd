@@ -165,9 +165,6 @@ cop3 <- BiCopSelect(daxreturns[, 1], daxreturns[, 4], familyset = 0:10)
 summary(cop3)
 
 }
-\author{
-Eike Brechmann, Jeffrey Dissmann, Thomas Nagler
-}
 \references{
 Akaike, H. (1973). Information theory and an extension of the
 maximum likelihood principle. In B. N. Petrov and F. Csaki (Eds.),
@@ -192,4 +189,6 @@ Statistics 6 (2), 461-464.
 \code{\link{RVineCopSelect}},
 \code{\link{BiCopIndTest}},
 }
-
+\author{
+Eike Brechmann, Jeffrey Dissmann, Thomas Nagler
+}

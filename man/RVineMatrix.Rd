@@ -156,9 +156,6 @@ contour(RVM)  # contour plots of all pair-copulas
 plot(RVineSim(500, RVM))
 
 }
-\author{
-Jeffrey Dissmann, Thomas Nagler
-}
 \references{
 Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 (2013). Selecting and estimating regular vine copulae and application to
@@ -173,4 +170,6 @@ financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 \code{\link{C2RVine}},
 \code{\link{D2RVine}}
 }
-
+\author{
+Jeffrey Dissmann, Thomas Nagler
+}

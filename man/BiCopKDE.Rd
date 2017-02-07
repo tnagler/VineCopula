@@ -65,4 +65,3 @@ pairs(data[c(4, 5, 14, 15)])}
 \author{
 Thomas Nagler
 }
-

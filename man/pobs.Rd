@@ -61,4 +61,3 @@ fit <- RVineStructureSelect(udat, familyset = c(1, 2))
 \author{
 Marius Hofert
 }
-

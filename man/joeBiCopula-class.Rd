@@ -2,28 +2,28 @@
 % Please edit documentation in R/joeBiCopula.R
 \docType{class}
 \name{joeBiCopula-class}
-\alias{dduCopula,matrix,joeBiCopula-method}
-\alias{dduCopula,matrix,r270JoeBiCopula-method}
-\alias{dduCopula,matrix,r90JoeBiCopula-method}
-\alias{dduCopula,matrix,surJoeBiCopula-method}
-\alias{dduCopula,numeric,joeBiCopula-method}
-\alias{dduCopula,numeric,r270JoeBiCopula-method}
-\alias{dduCopula,numeric,r90JoeBiCopula-method}
-\alias{dduCopula,numeric,surJoeBiCopula-method}
-\alias{ddvCopula,matrix,joeBiCopula-method}
-\alias{ddvCopula,matrix,r270JoeBiCopula-method}
-\alias{ddvCopula,matrix,r90JoeBiCopula-method}
-\alias{ddvCopula,matrix,surJoeBiCopula-method}
-\alias{ddvCopula,numeric,joeBiCopula-method}
-\alias{ddvCopula,numeric,r270JoeBiCopula-method}
-\alias{ddvCopula,numeric,r90JoeBiCopula-method}
-\alias{ddvCopula,numeric,surJoeBiCopula-method}
-\alias{getKendallDistr,joeBiCopula-method}
 \alias{joeBiCopula-class}
+\alias{dduCopula,numeric,joeBiCopula-method}
+\alias{ddvCopula,numeric,joeBiCopula-method}
+\alias{dduCopula,matrix,joeBiCopula-method}
+\alias{ddvCopula,matrix,joeBiCopula-method}
+\alias{getKendallDistr,joeBiCopula-method}
 \alias{kendallDistribution,joeBiCopula-method}
-\alias{r270JoeBiCopula-class}
-\alias{r90JoeBiCopula-class}
 \alias{surJoeBiCopula-class}
+\alias{dduCopula,numeric,surJoeBiCopula-method}
+\alias{ddvCopula,numeric,surJoeBiCopula-method}
+\alias{dduCopula,matrix,surJoeBiCopula-method}
+\alias{ddvCopula,matrix,surJoeBiCopula-method}
+\alias{r90JoeBiCopula-class}
+\alias{dduCopula,numeric,r90JoeBiCopula-method}
+\alias{ddvCopula,numeric,r90JoeBiCopula-method}
+\alias{dduCopula,matrix,r90JoeBiCopula-method}
+\alias{ddvCopula,matrix,r90JoeBiCopula-method}
+\alias{r270JoeBiCopula-class}
+\alias{dduCopula,numeric,r270JoeBiCopula-method}
+\alias{ddvCopula,numeric,r270JoeBiCopula-method}
+\alias{dduCopula,matrix,r270JoeBiCopula-method}
+\alias{ddvCopula,matrix,r270JoeBiCopula-method}
 \title{Classes \code{"joeBiCopula"}, \code{"surJoeBiCopula"},
 \code{"r90JoeBiCopula"} and \code{"r270JoeBiCopula"}}
 \description{
@@ -40,13 +40,11 @@ form \code{new("joeBiCopula", ...)}, \code{new("surJoeBiCopula", ...)},
 by the functions \code{\link{joeBiCopula}}, \code{\link{surJoeBiCopula}},
 \code{\link{r90JoeBiCopula}} and \code{\link{r270JoeBiCopula}}.
 }
+
 \examples{
 
 showClass("surJoeBiCopula")
 
-}
-\author{
-Benedikt Graeler
 }
 \references{
 Joe, H., (1997). Multivariate Models and Dependence Concepts.
@@ -58,5 +56,7 @@ See also \code{\linkS4class{BB1Copula}},
 \code{\linkS4class{BB8Copula}} for further wrapper classes to the
 \code{\link{VineCopula-package}}.
 }
+\author{
+Benedikt Graeler
+}
 \keyword{classes}
-

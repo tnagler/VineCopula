@@ -174,9 +174,6 @@ DVM <- D2RVine(order, family = rep(0,d*(d-1)/2), par = rep(0, d*(d-1)/2))
 RVineCopSelect(daxreturns, c(1:6), DVM$Matrix)}
 
 }
-\author{
-Jeffrey Dissmann, Eike Brechmann, Ulf Schepsmeier, Thomas Nagler
-}
 \references{
 Brechmann, E. C., C. Czado, and K. Aas (2012). Truncated regular
 vines in high dimensions with applications to financial data. Canadian
@@ -194,4 +191,6 @@ returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 \code{\link{contour.RVineMatrix}},
 \code{\link[foreach]{foreach}}
 }
-
+\author{
+Jeffrey Dissmann, Eike Brechmann, Ulf Schepsmeier, Thomas Nagler
+}

@@ -47,9 +47,6 @@ dat <- BiCopSim(500, cop)
 BiCopIndTest(dat[, 1], dat[, 2])
 
 }
-\author{
-Jeffrey Dissmann
-}
 \references{
 Genest, C. and A. C. Favre (2007). Everything you always wanted
 to know about copula modeling but were afraid to ask. Journal of Hydrologic
@@ -60,4 +57,6 @@ Engineering, 12 (4), 347-368.
 \code{\link{BiCopTau2Par}}, \code{\link{BiCopSelect}},\cr
 \code{\link{RVineCopSelect}}, \code{\link{RVineStructureSelect}}
 }
-
+\author{
+Jeffrey Dissmann
+}

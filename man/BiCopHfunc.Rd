@@ -4,6 +4,8 @@
 \alias{BiCopHfunc}
 \alias{BiCopHfunc1}
 \alias{BiCopHfunc2}
+\alias{BiCopHfunc1}
+\alias{BiCopHfunc2}
 \title{Conditional Distribution Function of a Bivariate Copula}
 \usage{
 BiCopHfunc(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE)
@@ -125,9 +127,6 @@ all.equal(h$hfunc1, h1)
 all.equal(h$hfunc2, h2)
 
 }
-\author{
-Ulf Schepsmeier
-}
 \references{
 Aas, K., C. Czado, A. Frigessi, and H. Bakken (2009).
 Pair-copula constructions of multiple dependence. Insurance: Mathematics and
@@ -137,4 +136,6 @@ Economics 44 (2), 182-198.
 \code{\link{BiCopHinv}}, \code{\link{BiCopPDF}}, \code{\link{BiCopCDF}},
 \code{\link{RVineLogLik}}, \code{\link{RVineSeqEst}}, \code{\link{BiCop}}
 }
-
+\author{
+Ulf Schepsmeier
+}

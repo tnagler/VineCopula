@@ -108,11 +108,10 @@ sim2 <- BiCopCondSim(500, cond.val = 0.1, cond.var = 2, obj)
 hist(sim2)  # not uniform!
 
 }
-\author{
-Thomas Nagler
-}
 \seealso{
 \code{\link{BiCopCDF}}, \code{\link{BiCopPDF}},
 \code{\link{RVineSim}}
 }
-
+\author{
+Thomas Nagler
+}

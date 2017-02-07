@@ -3,28 +3,28 @@
 \docType{class}
 \name{BB8Copula-class}
 \alias{BB8Copula-class}
-\alias{dduCopula,matrix,BB8Copula-method}
-\alias{dduCopula,matrix,r270BB8Copula-method}
-\alias{dduCopula,matrix,r90BB8Copula-method}
-\alias{dduCopula,matrix,surBB8Copula-method}
 \alias{dduCopula,numeric,BB8Copula-method}
-\alias{dduCopula,numeric,r270BB8Copula-method}
-\alias{dduCopula,numeric,r90BB8Copula-method}
-\alias{dduCopula,numeric,surBB8Copula-method}
-\alias{ddvCopula,matrix,BB8Copula-method}
-\alias{ddvCopula,matrix,r270BB8Copula-method}
-\alias{ddvCopula,matrix,r90BB8Copula-method}
-\alias{ddvCopula,matrix,surBB8Copula-method}
 \alias{ddvCopula,numeric,BB8Copula-method}
-\alias{ddvCopula,numeric,r270BB8Copula-method}
-\alias{ddvCopula,numeric,r90BB8Copula-method}
-\alias{ddvCopula,numeric,surBB8Copula-method}
-\alias{fitCopula,twoParamBiCop-method}
+\alias{dduCopula,matrix,BB8Copula-method}
+\alias{ddvCopula,matrix,BB8Copula-method}
 \alias{getKendallDistr,BB8Copula-method}
 \alias{kendallDistribution,BB8Copula-method}
-\alias{r270BB8Copula-class}
-\alias{r90BB8Copula-class}
 \alias{surBB8Copula-class}
+\alias{dduCopula,numeric,surBB8Copula-method}
+\alias{ddvCopula,numeric,surBB8Copula-method}
+\alias{dduCopula,matrix,surBB8Copula-method}
+\alias{ddvCopula,matrix,surBB8Copula-method}
+\alias{r90BB8Copula-class}
+\alias{dduCopula,numeric,r90BB8Copula-method}
+\alias{ddvCopula,numeric,r90BB8Copula-method}
+\alias{dduCopula,matrix,r90BB8Copula-method}
+\alias{ddvCopula,matrix,r90BB8Copula-method}
+\alias{r270BB8Copula-class}
+\alias{dduCopula,numeric,r270BB8Copula-method}
+\alias{ddvCopula,numeric,r270BB8Copula-method}
+\alias{dduCopula,matrix,r270BB8Copula-method}
+\alias{ddvCopula,matrix,r270BB8Copula-method}
+\alias{fitCopula,twoParamBiCop-method}
 \title{Classes \code{"BB8Copula"}, \code{"surBB8Copula"}, \code{"r90BB8Copula"} and
 \code{"r270BB8Copula"}}
 \description{
@@ -39,13 +39,11 @@ form \code{new("BB8Copula", ...)}, \code{new("surBB8Copula", ...)},
 the functions \code{\link{BB8Copula}}, \code{\link{surBB8Copula}},
 \code{\link{r90BB8Copula}} and \code{\link{r270BB8Copula}}.
 }
+
 \examples{
 
 showClass("BB8Copula")
 
-}
-\author{
-Benedikt Graeler
 }
 \references{
 Joe, H., (1997). Multivariate Models and Dependence Concepts.
@@ -57,5 +55,7 @@ See also \code{\linkS4class{BB1Copula}},
 \code{\linkS4class{joeCopula}} for further wrapper classes to the
 \code{\link{VineCopula-package}}.
 }
+\author{
+Benedikt Graeler
+}
 \keyword{classes}
-

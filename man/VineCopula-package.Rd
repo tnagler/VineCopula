@@ -2,8 +2,8 @@
 % Please edit documentation in R/VineCopula-package.R
 \docType{package}
 \name{VineCopula-package}
-\alias{VineCopula}
 \alias{VineCopula-package}
+\alias{VineCopula}
 \title{Statistical Inference of Vine Copulas}
 \description{
 Vine copulas are a flexible class of dependence models consisting of
@@ -34,10 +34,7 @@ package \code{CDVine} by U. Schepsmeier and E. C. Brechmann (see Brechmann
 and Schepsmeier (2013)). It includes all functions implemented in CDVine for
 the bivariate case (BiCop-functions).
 }
-\author{
-Ulf Schepsmeier, Jakob Stoeber, Eike Christian Brechmann, Benedikt
-Graeler, Thomas Nagler, Tobias Erhardt
-}
+
 \references{
 Aas, K., C. Czado, A. Frigessi, and H. Bakken (2009).
 Pair-copula constructions of multiple dependence. Insurance: Mathematics and
@@ -112,4 +109,7 @@ vine copula models. Computational Statistics, 28 (6), 2679-2707 \cr
 White, H. (1982) Maximum likelihood estimation of misspecified models,
 Econometrica, 50, 1-26.
 }
-
+\author{
+Ulf Schepsmeier, Jakob Stoeber, Eike Christian Brechmann, Benedikt
+Graeler, Thomas Nagler, Tobias Erhardt
+}
