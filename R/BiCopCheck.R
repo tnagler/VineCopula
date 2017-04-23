@@ -250,6 +250,39 @@ checkPars <- function(x, cl) {
     }
 }
 
+
+## check for family/parameter consistency
+adjustPars <- function(family, par, par2) {
+    if ((family %in% c(3, 13, 23, 33)) && (abs(par) > 100)) {
+        par <- sign(par) * 100
+    } else if ((family %in% c(4, 14, 24, 34)) && (abs(par) > 100)) {
+        par <- sign(par) * 100
+    } else if ((family == 5) && (abs(par) > 100)) {
+        par <- sign(par) * 100
+    } else if ((family %in% c(6, 16, 26, 36)) && (abs(par) > 50)) {
+        par <- sign(par) * 50
+    } else if (family %in% c(7, 17, 27, 37)) {
+        if (abs(par) > 7)
+            par <- sign(par) * 7
+        if (abs(par2) > 7)
+            par2 <- sign(par) * 7
+    } else if (family %in% c(8, 18, 28, 38)) {
+        if (abs(par) > 6)
+            par <- sign(par) * 6
+        if (abs(par2) > 8)
+            par2 <- sign(par) * 8
+    } else if (family %in% c(9, 19, 29, 39)) {
+        if (abs(par) > 6)
+            par <- sign(par) * 6
+        if (abs(par2) > 75)
+            par2 <- sign(par) * 75
+    } else if (family %in% c(10, 20, 30, 40)) {
+        if (abs(par) > 8)
+            par <- sign(par) * 8
+    }
+    c(par, par2)
+}
+
 BiCopCheckTaus <- function(family, tau) {
     cl <- match.call()[1]
     ## check for family/tau consistency
