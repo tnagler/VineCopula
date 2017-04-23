@@ -58,7 +58,7 @@
 #' RVM  <- RVineMatrix(strucmat, fammat, parmat, par2mat)
 #'
 #' # plot trees
-#' plot(RVM)
+#' \dontrun{plot(RVM)}
 #'
 #' # show contour plots
 #' contour(RVM)

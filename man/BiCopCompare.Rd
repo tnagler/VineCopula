@@ -75,7 +75,7 @@ margins are available.
 data(daxreturns)
 
 # find a suitable copula family for the first two stocks
-\donttest{fit <- BiCopCompare(daxreturns[, 1], daxreturns[, 2])}
+\dontrun{fit <- BiCopCompare(daxreturns[, 1], daxreturns[, 2])}
 
 }
 \author{

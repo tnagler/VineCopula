@@ -1,12 +1,24 @@
 VineCopula 2.1.2 (in progress)
 ----------------------------------------------------------------
 
+NEW FEATURES
+
+  * Online API documentation on https://tnagler.github.io/VineCopula/.
+  
+  * Faster `BiCopCDF()`.
+
 BUG FIXES
 
-  * Safer `BiCopSelect` with `presel = TRUE` and insufficient data.
+  * Fixed bug in preprocessing of `weights` argument.
+
+  * More informative error message when family is unknown.
+
+  * Safer `BiCopSelect()` with `presel = TRUE` and insufficient data.
   
-  * Fixed `RVineMatrix` (output dimension was `d-1` and `naturalOrder = TRUE`
+  * Fixed `RVineMatrix()` (output dimension was `d-1` and `naturalOrder = TRUE`
     wasn't working, thanks @tvatter).
+    
+  * Safer `BiCopEst()` for `method = "itau"`.
 
 
 VineCopula 2.1.1 (January 11, 2016)

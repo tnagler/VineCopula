@@ -129,7 +129,7 @@ str(RVM1)
 summary(RVM1)
 
 ## inspect the fitted model using plots
-plot(RVM1)  # tree structure
+\dontrun{plot(RVM1)  # tree structure}
 
 contour(RVM1)  # contour plots of all pair-copulas
 

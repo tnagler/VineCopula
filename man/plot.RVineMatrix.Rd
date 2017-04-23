@@ -68,7 +68,7 @@ par2mat  <- matrix(c(0,   0, 0, 0, 0, 0, 0, 0, 0), 3, 3)
 RVM  <- RVineMatrix(strucmat, fammat, parmat, par2mat)
 
 # plot trees
-plot(RVM)
+\dontrun{plot(RVM)}
 
 # show contour plots
 contour(RVM)

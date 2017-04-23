@@ -157,7 +157,7 @@ str(RVM)
 summary(RVM)
 
 ## inspect the fitted model using plots
-\donttest{plot(RVM)  # tree structure}
+\dontrun{plot(RVM)  # tree structure}
 contour(RVM)  # contour plots of all pair-copulas
 
 \donttest{## estimate a C-vine copula model with only Clayton, Gumbel and Frank copulas
