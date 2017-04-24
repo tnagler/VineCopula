@@ -1,4 +1,4 @@
-VineCopula 2.1.2 (in progress)
+VineCopula 2.1.2
 ----------------------------------------------------------------
 
 NEW FEATURES
