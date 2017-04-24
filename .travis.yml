@@ -1,3 +1,5 @@
+dist: trusty
+
 language: R
 r:
   - oldrel
@@ -14,7 +16,14 @@ apt_packages:
   - libgsl0ldbl
   - libcurl4-openssl-dev
   - libxml2-dev
+  - r-cran-vinecopula
+  - r-cran-cdvine
+  - r-cran-shiny
+  - r-cran-tsp
 
+before_install:
+  - sudo add-apt-repository ppa:marutter/c2d4u -y
+  - sudo apt-get update -q
 
 repos:
   CRAN: http://cran.rstudio.com
