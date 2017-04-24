@@ -16,7 +16,8 @@ apt_packages:
   - libgsl0ldbl
   - libcurl4-openssl-dev
   - libxml2-dev
-  - r-cran-vinecopula
+  - r-cran-foreach
+  - r-cran-copula
   - r-cran-cdvine
   - r-cran-shiny
   - r-cran-tsp
