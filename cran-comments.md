@@ -1,6 +1,6 @@
 ## Test environments
 * ubuntu 14.04 (release, devel, oldrel) 
-* win-builder (devel)
+* Windows Server 2012 R2 x64 (release)
 
 ## R CMD check results
 There were no ERROR or WARNINGs. 

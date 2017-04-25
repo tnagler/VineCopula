@@ -10,3 +10,4 @@ tests/other
 revdep
 ^revdep$
 ^docs$
+^-*\.directory^

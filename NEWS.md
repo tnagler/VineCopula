@@ -1,4 +1,4 @@
-VineCopula 2.1.2
+VineCopula 2.1.2 (April 24, 2017)
 ----------------------------------------------------------------
 
 NEW FEATURES
@@ -21,7 +21,7 @@ BUG FIXES
   * Safer `BiCopEst()` for `method = "itau"`.
 
 
-VineCopula 2.1.1 (January 11, 2016)
+VineCopula 2.1.1 (January 11, 2017)
 ----------------------------------------------------------------
 
 IMPORTS
