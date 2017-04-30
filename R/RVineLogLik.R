@@ -334,6 +334,6 @@ RVineLogLik <- function(data, RVM, par = RVM$par, par2 = RVM$par2,
 #' # compute the density at (0.1, 0.2, 0.3, 0.4, 0.5)
 #' RVinePDF(c(0.1, 0.2, 0.3, 0.4, 0.5), RVM)
 #'
-RVinePDF <- function(newdata, RVM) {
-    exp(RVineLogLik(newdata, RVM, separate = TRUE, calculate.V = FALSE)$loglik)
+RVinePDF <- function(newdata, RVM, verbose = TRUE) {
+    exp(RVineLogLik(newdata, RVM, separate = TRUE, calculate.V = FALSE, verbose = verbose)$loglik)
 }
