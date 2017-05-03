@@ -287,6 +287,8 @@ RVineLogLik <- function(data, RVM, par = RVM$par, par2 = RVM$par2,
 #' be evaluated.
 #' @param RVM An \code{\link{RVineMatrix}} object including the structure and
 #' the pair-copula families and parameters.
+#' @param verbose In case something goes wrong, additional output will be
+#' plotted.
 #'
 #' @author Thomas Nagler
 #'
