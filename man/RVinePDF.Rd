@@ -4,7 +4,7 @@
 \alias{RVinePDF}
 \title{PDF of an R-Vine Copula Model}
 \usage{
-RVinePDF(newdata, RVM)
+RVinePDF(newdata, RVM, verbose = TRUE)
 }
 \arguments{
 \item{newdata}{An N x d data matrix that specifies where the density shall
@@ -12,6 +12,9 @@ be evaluated.}
 
 \item{RVM}{An \code{\link{RVineMatrix}} object including the structure and
 the pair-copula families and parameters.}
+
+\item{verbose}{In case something goes wrong, additional output will be
+plotted.}
 }
 \description{
 This function calculates the probability density function of a d-dimensional
