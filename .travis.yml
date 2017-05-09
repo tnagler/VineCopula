@@ -10,7 +10,6 @@ warnings_are_errors: false
 sudo: required
 
 apt_packages:
-  - gsl-bin
   - libgsl0-dbg
   - libgsl0-dev
   - libgsl0ldbl
