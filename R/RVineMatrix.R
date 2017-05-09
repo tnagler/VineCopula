@@ -544,6 +544,11 @@ is.CVine <- function(Matrix) {
         Matrix <- Matrix$Matrix
     Matrix <- reorderRVineMatrix(Matrix)
     d <- nrow(Matrix)
+
+    # a vine in less then 4 dimensions is always a C-vine
+    if (d < 4)
+        return(TRUE)
+
     # check conditioning sets of each tree (same number has to enter at all
     # edges)
     all.trees.star <- TRUE
