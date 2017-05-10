@@ -2,7 +2,6 @@ dist: trusty
 
 language: R
 r:
-  - oldrel
   - release
   - devel
 
