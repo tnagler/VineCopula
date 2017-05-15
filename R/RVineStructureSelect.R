@@ -304,7 +304,8 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
 set_treecrit <- function(treecrit, famset) {
     ## check if function is appropriate or type is implemented
     if (is.function(treecrit)) {
-        if (!all(names(formals(treecrit)) == c("u1", "u2", "weights")))
+        if (!all(is.element(c("u1", "u2", "weights"),
+                            names(formals(treecrit)))))
             stop("treecrit must be of the form 'function(u1, u2, weights)'")
         if (!is.numeric(treecrit(runif(10), runif(10), rep(1, 10))))
             stop("treecrit does not return a numeric value")
