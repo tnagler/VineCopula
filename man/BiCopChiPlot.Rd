@@ -100,9 +100,6 @@ BiCopChiPlot(dat[,1], dat[,2], mode = "upper", xlim = c(-1,1),
 par(op)
 
 }
-\author{
-Natalia Belgorodski, Ulf Schepsmeier
-}
 \references{
 Abberger, K. (2004). A simple graphical method to explore
 tail-dependence in stock-return pairs. Discussion Paper, University of
@@ -116,4 +113,6 @@ Engineering, 12 (4), 347-368.
 \code{\link{BiCopMetaContour}}, \code{\link{BiCopKPlot}},
 \code{\link{BiCopLambda}}
 }
-
+\author{
+Natalia Belgorodski, Ulf Schepsmeier
+}

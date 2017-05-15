@@ -107,9 +107,6 @@ par(op)
 
 
 }
-\author{
-Ulf Schepsmeier
-}
 \references{
 Genest, C. and L.-P. Rivest (1993). Statistical inference
 procedures for bivariate Archimedean copulas. Journal of the American
@@ -124,4 +121,6 @@ thesis, Technische Universitaet Muenchen.\cr
 \code{\link{BiCopMetaContour}}, \code{\link{BiCopKPlot}},
 \code{\link{BiCopChiPlot}}, \code{\link{BiCop}}
 }
-
+\author{
+Ulf Schepsmeier
+}

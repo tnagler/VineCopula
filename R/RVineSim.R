@@ -53,7 +53,6 @@
 #' set.seed(123)
 #' simdata <- RVineSim(300, RVM)
 #'
-#' @export RVineSim
 RVineSim <- function(N, RVM, U = NULL) {
 
     ## sanity checks

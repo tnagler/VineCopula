@@ -79,10 +79,9 @@ out2 <- RVineLogLik(simdata, RVM)
 out2$loglik
 }
 }
-\author{
-Ulf Schepsmeier, Eike Brechmann
-}
 \seealso{
 \code{\link{RVineMatrix}}, \code{\link{D2RVine}}
 }
-
+\author{
+Ulf Schepsmeier, Eike Brechmann
+}

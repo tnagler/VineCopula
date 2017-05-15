@@ -103,11 +103,10 @@ summary(fit)
 round(BiCopPDF(u1, u2, fit), 3)
 
 }
-\author{
-Eike Brechmann
-}
 \seealso{
 \code{\link{BiCopCDF}}, \code{\link{BiCopHfunc}},
 \code{\link{BiCopSim}}, \code{\link{BiCop}}
 }
-
+\author{
+Eike Brechmann
+}

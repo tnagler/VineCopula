@@ -157,7 +157,7 @@ str(RVM)
 summary(RVM)
 
 ## inspect the fitted model using plots
-\donttest{plot(RVM)  # tree structure}
+\dontrun{plot(RVM)  # tree structure}
 contour(RVM)  # contour plots of all pair-copulas
 
 \donttest{## estimate a C-vine copula model with only Clayton, Gumbel and Frank copulas
@@ -173,9 +173,6 @@ order <- cut_tour(sol, "cut")
 DVM <- D2RVine(order, family = rep(0,d*(d-1)/2), par = rep(0, d*(d-1)/2))
 RVineCopSelect(daxreturns, c(1:6), DVM$Matrix)}
 
-}
-\author{
-Jeffrey Dissmann, Eike Brechmann, Ulf Schepsmeier, Thomas Nagler
 }
 \references{
 Brechmann, E. C., C. Czado, and K. Aas (2012). Truncated regular
@@ -194,4 +191,6 @@ returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 \code{\link{contour.RVineMatrix}},
 \code{\link[foreach]{foreach}}
 }
-
+\author{
+Jeffrey Dissmann, Eike Brechmann, Ulf Schepsmeier, Thomas Nagler
+}

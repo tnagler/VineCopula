@@ -86,7 +86,6 @@ setClass("tawnT1Copula",
 #' persp(r90TawnT1Copula(), dCopula, zlim = c(0,10))
 #' persp(r270TawnT1Copula(), dCopula, zlim = c(0,10))
 #'
-#' @export tawnT1Copula
 tawnT1Copula <- function (param=c(2,0.5)) {
   if (any(is.na(param) | param < c(1,0) | param[1] == Inf | param[2] > 1))
     stop(paste("Parameter values out of bounds: param1: [1,Inf), param2: [0,1]."))
@@ -396,7 +395,6 @@ setClass("tawnT2Copula",
 #' persp(r90TawnT2Copula(), dCopula, zlim = c(0,10))
 #' persp(r270TawnT2Copula(), dCopula, zlim = c(0,10))
 #'
-#' @export tawnT2Copula
 tawnT2Copula <- function (param=c(2,0.5)) {
   if (any(is.na(param) | param < c(1,0) | param[1] == Inf | param[2] > 1))
     stop(paste("Parameter values out of bounds: param1: [1,Inf), param2: [0,1]."))

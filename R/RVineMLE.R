@@ -122,7 +122,6 @@
 #' # compare parameters
 #' round(mle$RVM$par - RVM$par, 2)
 #'
-#' @export RVineMLE
 RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200, max.df = 30,
                      max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6),  BB8 = c(6, 1)),
                      grad = FALSE, hessian = FALSE, se = FALSE, ...) {

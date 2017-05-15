@@ -133,9 +133,6 @@ BiCopGofTest(u1, u2, family = 3, method = "kendall", B=50)
 \donttest{BiCopGofTest(u1, u2, family = 5, method = "kendall", B=50)}
 
 }
-\author{
-Ulf Schepsmeier, Wanling Huang, Jiying Luo, Eike Brechmann
-}
 \references{
 Huang, W. and A. Prokhorov (2014). A goodness-of-fit test for copulas.
 Econometric Reviews, 33 (7), 751-771.
@@ -158,4 +155,6 @@ Econometrica, 50, 1-26.
 \code{\link{BiCopDeriv2}}, \code{\link{BiCopDeriv}},
 \code{\link{BiCopIndTest}}, \code{\link{BiCopVuongClarke}}
 }
-
+\author{
+Ulf Schepsmeier, Wanling Huang, Jiying Luo, Eike Brechmann
+}

@@ -61,10 +61,9 @@ RVM <- RVineMatrix(Matrix = Matrix, family = family,
 BlomBeta <- RVinePar2Beta(RVM)
 
 }
-\author{
-Ulf Schepsmeier
-}
 \seealso{
 \code{\link{RVineMatrix}}, \code{\link{BiCopPar2Beta}}
 }
-
+\author{
+Ulf Schepsmeier
+}

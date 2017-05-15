@@ -92,7 +92,6 @@ setClass("BB6Copula",
 #' persp(r90BB6Copula(c(-1,-1.5)), dCopula, zlim = c(0,10))
 #' persp(r270BB6Copula(c(-1,-1.5)), dCopula, zlim = c(0,10))
 #'
-#' @export BB6Copula
 BB6Copula <- function (param=c(1,1)) {
   if (any(is.na(param) | param >= c(Inf, Inf) | param < c(1,1)))
     stop("Parameter value(s) out of bound(s): theta: [1,Inf), delta: [1,Inf).")

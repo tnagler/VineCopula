@@ -3,6 +3,7 @@
 \name{contour.RVineMatrix}
 \alias{contour.RVineMatrix}
 \alias{plot.RVineMatrix}
+\alias{contour.RVineMatrix}
 \title{Plotting \code{RVineMatrix} objects.}
 \usage{
 \method{contour}{RVineMatrix}(x, tree = "ALL", xylim = NULL, cex.nums = 1,
@@ -24,6 +25,10 @@ for the contours}
 
 \item{data}{a data matrix for creating kernel density contours of each pair.}
 
+\item{\dots}{Arguments passed to
+\code{\link[network:plot.network]{plot.network}} or
+\code{\link[VineCopula:plot.BiCop]{plot.BiCop}} respectively.}
+
 \item{type}{integer; specifies how to make use of variable names: \cr
 \code{0} = variable names are ignored, \cr \code{1} = variable names are
 used to annotate vertices, \cr \code{2} = uses numbers in plot and adds a
@@ -41,10 +46,6 @@ parameters \cr \code{"family-tau"} = pair-copula family and Kendall's tau.}
 
 \item{interactive}{logical; if TRUE, the user is asked to adjust the
 positioning of vertices with his mouse.}
-
-\item{\dots}{Arguments passed to
-\code{\link[network:plot.network]{plot.network}} or
-\code{\link[VineCopula:plot.BiCop]{plot.BiCop}} respectively.}
 }
 \description{
 There are two plotting generics for \code{RVineMatrix} objects.
@@ -67,14 +68,11 @@ par2mat  <- matrix(c(0,   0, 0, 0, 0, 0, 0, 0, 0), 3, 3)
 RVM  <- RVineMatrix(strucmat, fammat, parmat, par2mat)
 
 # plot trees
-plot(RVM)
+\dontrun{plot(RVM)}
 
 # show contour plots
 contour(RVM)
 
-}
-\author{
-Thomas Nagler, Nicole Barthel
 }
 \seealso{
 \code{\link[VineCopula:RVineMatrix]{RVineMatrix}},
@@ -83,5 +81,7 @@ Thomas Nagler, Nicole Barthel
 \code{\link[VineCopula:BiCopName]{BiCopName}},
 \code{\link[graphics:legend]{legend}}
 }
+\author{
+Thomas Nagler, Nicole Barthel
+}
 \keyword{plot}
-

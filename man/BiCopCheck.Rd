@@ -74,4 +74,3 @@ BiCopCheck(3, 1)  # works
 \author{
 Thomas Nagler
 }
-

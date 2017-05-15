@@ -99,9 +99,6 @@ BiCopTau2Par(family = 71, tau = -c(0.4,0.5,0.6))
 }
 
 }
-\author{
-Jakob Stoeber, Eike Brechmann, Tobias Erhardt
-}
 \references{
 Joe, H. (1997). Multivariate Models and Dependence Concepts.
 Chapman and Hall, London.
@@ -113,4 +110,6 @@ of mixed C-vines with application to exchange rates. Statistical Modelling,
 \seealso{
 \code{\link{BiCopPar2Tau}}
 }
-
+\author{
+Jakob Stoeber, Eike Brechmann, Tobias Erhardt
+}

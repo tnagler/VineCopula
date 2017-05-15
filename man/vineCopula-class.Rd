@@ -2,8 +2,8 @@
 % Please edit documentation in R/vineCopulas.R
 \docType{class}
 \name{vineCopula-class}
-\alias{fitCopula,vineCopula-method}
 \alias{vineCopula-class}
+\alias{fitCopula,vineCopula-method}
 \title{Class \code{"vineCopula"}}
 \description{
 A class representing vine copulas in a object oriented implementations. Many
@@ -14,13 +14,11 @@ functions go back to the package \code{\link{VineCopula-package}}
 \code{new("vineCopula", ...)} or through the function
 \code{\link{vineCopula}}.
 }
+
 \examples{
 
 showClass("vineCopula")
 
-}
-\author{
-Benedikt Graeler
 }
 \references{
 Aas, K., C. Czado, A. Frigessi, and H. Bakken (2009).
@@ -31,5 +29,7 @@ Economics 44 (2), 182-198.
 \code{\link{RVineMatrix}} from package
 \code{\link{VineCopula-package}}
 }
+\author{
+Benedikt Graeler
+}
 \keyword{classes}
-

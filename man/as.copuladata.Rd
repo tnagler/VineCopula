@@ -3,8 +3,8 @@
 \name{as.copuladata}
 \alias{as.copuladata}
 \alias{as.copuladata.data.frame}
-\alias{as.copuladata.list}
 \alias{as.copuladata.matrix}
+\alias{as.copuladata.list}
 \title{Copula Data Objects}
 \usage{
 as.copuladata(data)
@@ -33,10 +33,9 @@ names(data) <- names(daxreturns)
 class(as.copuladata(data))
 
 }
-\author{
-Tobias Erhardt
-}
 \seealso{
 \code{\link{pobs}}, \code{\link{pairs.copuladata}}
 }
-
+\author{
+Tobias Erhardt
+}

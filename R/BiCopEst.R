@@ -177,6 +177,7 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = FALSE, max.df = 30,
 
     ## inversion of kendall's tau -----------------------------
     if (method == "itau") {
+        theta <- adjustPars(family, theta, 0)[1]
 
         ## standard errors for method itau
         se1 <- 0
@@ -463,6 +464,7 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
 
     ## inversion of kendall's tau -----------------------------
     if (method == "itau") {
+        theta <- adjustPars(family, theta, 0)[1]
 
         ## standard errors for method itau
         se1 <- 0

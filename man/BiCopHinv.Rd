@@ -4,6 +4,8 @@
 \alias{BiCopHinv}
 \alias{BiCopHinv1}
 \alias{BiCopHinv2}
+\alias{BiCopHinv1}
+\alias{BiCopHinv2}
 \title{Inverse Conditional Distribution Function of a Bivariate Copula}
 \usage{
 BiCopHinv(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE)
@@ -128,9 +130,6 @@ all.equal(0.2, BiCopHfunc1(0.1, BiCopHinv1(0.1, 0.2, cop), cop))
 all.equal(0.1, BiCopHfunc2(BiCopHinv2(0.1, 0.2, cop), 0.2, cop))
 
 }
-\author{
-Ulf Schepsmeier, Thomas Nagler
-}
 \references{
 Aas, K., C. Czado, A. Frigessi, and H. Bakken (2009).
 Pair-copula constructions of multiple dependence. Insurance: Mathematics and
@@ -140,4 +139,6 @@ Economics 44 (2), 182-198.
 \code{\link{BiCopHfunc}}, \code{\link{BiCopPDF}}, \code{\link{BiCopCDF}},
 \code{\link{RVineLogLik}}, \code{\link{RVineSeqEst}}, \code{\link{BiCop}}
 }
-
+\author{
+Ulf Schepsmeier, Thomas Nagler
+}

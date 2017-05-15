@@ -165,9 +165,6 @@ BiCopEst(u2, v2, family = 14, method = "mle")
 
 
 }
-\author{
-Ulf Schepsmeier, Eike Brechmann, Jakob Stoeber, Carlos Almeida
-}
 \references{
 Joe, H. (1997). Multivariate Models and Dependence Concepts.
 Chapman and Hall, London.
@@ -179,4 +176,6 @@ Chapman and Hall, London.
 \code{\link{RVineSeqEst}},
 \code{\link{BiCopSelect}},
 }
-
+\author{
+Ulf Schepsmeier, Eike Brechmann, Jakob Stoeber, Carlos Almeida
+}

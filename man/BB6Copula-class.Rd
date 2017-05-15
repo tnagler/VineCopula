@@ -3,27 +3,27 @@
 \docType{class}
 \name{BB6Copula-class}
 \alias{BB6Copula-class}
-\alias{dduCopula,matrix,BB6Copula-method}
-\alias{dduCopula,matrix,r270BB6Copula-method}
-\alias{dduCopula,matrix,r90BB6Copula-method}
-\alias{dduCopula,matrix,surBB6Copula-method}
 \alias{dduCopula,numeric,BB6Copula-method}
-\alias{dduCopula,numeric,r270BB6Copula-method}
-\alias{dduCopula,numeric,r90BB6Copula-method}
-\alias{dduCopula,numeric,surBB6Copula-method}
-\alias{ddvCopula,matrix,BB6Copula-method}
-\alias{ddvCopula,matrix,r270BB6Copula-method}
-\alias{ddvCopula,matrix,r90BB6Copula-method}
-\alias{ddvCopula,matrix,surBB6Copula-method}
 \alias{ddvCopula,numeric,BB6Copula-method}
-\alias{ddvCopula,numeric,r270BB6Copula-method}
-\alias{ddvCopula,numeric,r90BB6Copula-method}
-\alias{ddvCopula,numeric,surBB6Copula-method}
+\alias{dduCopula,matrix,BB6Copula-method}
+\alias{ddvCopula,matrix,BB6Copula-method}
 \alias{getKendallDistr,BB6Copula-method}
 \alias{kendallDistribution,BB6Copula-method}
-\alias{r270BB6Copula-class}
-\alias{r90BB6Copula-class}
 \alias{surBB6Copula-class}
+\alias{dduCopula,numeric,surBB6Copula-method}
+\alias{ddvCopula,numeric,surBB6Copula-method}
+\alias{dduCopula,matrix,surBB6Copula-method}
+\alias{ddvCopula,matrix,surBB6Copula-method}
+\alias{r90BB6Copula-class}
+\alias{dduCopula,numeric,r90BB6Copula-method}
+\alias{ddvCopula,numeric,r90BB6Copula-method}
+\alias{dduCopula,matrix,r90BB6Copula-method}
+\alias{ddvCopula,matrix,r90BB6Copula-method}
+\alias{r270BB6Copula-class}
+\alias{dduCopula,numeric,r270BB6Copula-method}
+\alias{ddvCopula,numeric,r270BB6Copula-method}
+\alias{dduCopula,matrix,r270BB6Copula-method}
+\alias{ddvCopula,matrix,r270BB6Copula-method}
 \title{Classes \code{"BB6Copula"}, \code{"surBB6Copula"}, \code{"r90BB6Copula"} and
 \code{"r270BB6Copula"}}
 \description{
@@ -38,13 +38,11 @@ form \code{new("BB6Copula", ...)}, \code{new("surBB6Copula", ...)},
 the functions \code{\link{BB6Copula}}, \code{\link{surBB6Copula}},
 \code{\link{r90BB6Copula}} and \code{\link{r270BB6Copula}}.
 }
+
 \examples{
 
 showClass("BB6Copula")
 
-}
-\author{
-Benedikt Graeler
 }
 \references{
 Joe, H., (1997). Multivariate Models and Dependence Concepts.
@@ -56,5 +54,7 @@ See also \code{\linkS4class{BB1Copula}},
 \code{\linkS4class{joeCopula}} for further wrapper classes to the
 \code{\link{VineCopula-package}}.
 }
+\author{
+Benedikt Graeler
+}
 \keyword{classes}
-

@@ -135,9 +135,6 @@ BiCopPar2TailDep(2, c(0.6, 0.7, 0.8), 4)
 BiCopPar2TailDep(c(3, 4, 6), 2)
 
 }
-\author{
-Eike Brechmann
-}
 \references{
 Joe, H. (1997). Multivariate Models and Dependence Concepts.
 Chapman and Hall, London.
@@ -145,4 +142,6 @@ Chapman and Hall, London.
 \seealso{
 \code{\link{BiCopPar2Tau}}
 }
-
+\author{
+Eike Brechmann
+}

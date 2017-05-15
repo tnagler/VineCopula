@@ -149,7 +149,7 @@
 #' summary(RVM)
 #'
 #' ## inspect the model using plots
-#' \donttest{plot(RVM)  # tree structure}
+#' \dontrun{plot(RVM)  # tree structure}
 #' contour(RVM)  # contour plots of all pair-copulas
 #'
 #' ## simulate from the vine copula model
@@ -287,7 +287,6 @@ reorderRVineMatrix <- function(Matrix, oldOrder = NULL) {
 #' # normalise the RVine
 #' RVineMatrixNormalize(RVM)
 #'
-#' @export RVineMatrixNormalize
 RVineMatrixNormalize <- function(RVM) {
     stopifnot(is(RVM, "RVineMatrix"))
 
@@ -530,26 +529,34 @@ draw_lines <- function(len) {
     do.call(paste0, as.list(rep("-", len)))
 }
 
+## A D-vine has a path in the first tree (and thus in all trees)
 is.DVine <- function(Matrix) {
     if (inherits(Matrix, "RVineMatrix"))
         Matrix <- Matrix$Matrix
     Matrix <- reorderRVineMatrix(Matrix)
-    ## A D-vine has a path in the first tree (and thus in all trees)
     d <- nrow(Matrix)
     length(unique(Matrix[d, ])) == d - 1
 }
 
+## A C-vine has a star in each tree
 is.CVine <- function(Matrix) {
     if (inherits(Matrix, "RVineMatrix"))
         Matrix <- Matrix$Matrix
     Matrix <- reorderRVineMatrix(Matrix)
-    ## A C-vine has a star in each tree
     d <- nrow(Matrix)
-    all.trees.star <- (length(unique(Matrix[d, ])) == 1)
+
+    # a vine in less then 4 dimensions is always a C-vine
+    if (d < 4)
+        return(TRUE)
+
+    # check conditioning sets of each tree (same number has to enter at all
+    # edges)
+    all.trees.star <- TRUE
     for (tree in 2:(d - 2)) {
-        ## the zero now appears in all trees
-        all.trees.star <- all.trees.star & (length(unique(Matrix[tree, ])) == 2)
+        all.trees.star <- all.trees.star &
+            (length(unique(Matrix[d - tree + 2, 1:(d - tree)])) == 1)
     }
+
     all.trees.star
 }
 
@@ -799,7 +806,6 @@ vinvstepb <- function(A, i, ichk0 = 0) {
 #' b3 <- RVineMatrixCheck(A3)
 #' print(b3)
 #'
-#' @export RVineMatrixCheck
 RVineMatrixCheck <- function(M) {
     lmat <- M[lower.tri(M)]
     umat <- M[upper.tri(M)]

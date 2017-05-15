@@ -41,7 +41,6 @@
 #' # perform the asymptotic independence test
 #' BiCopIndTest(dat[, 1], dat[, 2])
 #'
-#' @export BiCopIndTest
 BiCopIndTest <- function(u1, u2) {
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),

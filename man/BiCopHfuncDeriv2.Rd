@@ -98,9 +98,6 @@ cop <- BiCopEst(u1, u2, family = 2)
 BiCopHfuncDeriv2(u1, u2, cop, deriv = "u2")
 
 }
-\author{
-Ulf Schepsmeier, Jakob Stoeber
-}
 \references{
 Schepsmeier, U. and J. Stoeber (2014). Derivatives and Fisher
 information of bivariate copulas. Statistical Papers, 55 (2), 525-542. \cr
@@ -111,4 +108,6 @@ information of bivariate copulas. Statistical Papers, 55 (2), 525-542. \cr
 \code{\link{BiCopDeriv}}, \code{\link{BiCopDeriv2}},
 \code{\link{BiCopHfuncDeriv}}, \code{\link{BiCop}}
 }
-
+\author{
+Ulf Schepsmeier, Jakob Stoeber
+}

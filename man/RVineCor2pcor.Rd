@@ -3,6 +3,7 @@
 \name{RVineCor2pcor}
 \alias{RVineCor2pcor}
 \alias{RVinePcor2cor}
+\alias{RVinePcor2cor}
 \title{(Partial) Correlations for R-Vine Copula Models}
 \usage{
 RVineCor2pcor(RVM, corMat)
@@ -62,4 +63,3 @@ all.equal(RVM$par, RVineCor2pcor(RVM, newcor)$par)
 \keyword{correlation}
 \keyword{partial}
 \keyword{vine}
-

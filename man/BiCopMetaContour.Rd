@@ -158,11 +158,10 @@ BiCopKDE(dat[, 1], dat[, 2],
          margins = "exp")
 
 }
-\author{
-Ulf Schepsmeier, Alexander Bauer
-}
 \seealso{
 \code{\link{BiCopChiPlot}}, \code{\link{BiCopKPlot}},
 \code{\link{BiCopLambda}}
 }
-
+\author{
+Ulf Schepsmeier, Alexander Bauer
+}

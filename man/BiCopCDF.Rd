@@ -108,13 +108,12 @@ summary(cop)
 BiCopCDF(u1, u2, cop)
 
 }
-\author{
-Eike Brechmann
-}
 \seealso{
 \code{\link{BiCopPDF}},
 \code{\link{BiCopHfunc}},
 \code{\link{BiCopSim}},
 \code{\link{BiCop}}
 }
-
+\author{
+Eike Brechmann
+}

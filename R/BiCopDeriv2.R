@@ -87,8 +87,6 @@
 #' ## and evaluate its second derivative w.r.t. the second argument u2
 #' BiCopDeriv2(u1, u2, cop, deriv = "u2")
 #'
-#'
-#' @export BiCopDeriv2
 BiCopDeriv2 <- function(u1, u2, family, par, par2 = 0, deriv = "par", obj = NULL, check.pars = TRUE) {
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),

@@ -38,10 +38,9 @@ positioning of vertices with his mouse.}
 Function is deprecated since \code{VineCopula 2.0}. Use
 \code{\link[VineCopula:plot.RVineMatrix]{plot.RVineMatrix}} instead.
 }
-\author{
-Thomas Nagler
-}
 \seealso{
 \code{\link[VineCopula:plot.RVineMatrix]{plot.RVineMatrix}}
 }
-
+\author{
+Thomas Nagler
+}
