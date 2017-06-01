@@ -61,9 +61,6 @@ set.seed(123)
 simdata <- RVineSim(300, RVM)
 
 }
-\author{
-Jeffrey Dissmann
-}
 \references{
 Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 (2013). Selecting and estimating regular vine copulae and application to
@@ -72,4 +69,6 @@ financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 \seealso{
 \code{\link{RVineMatrix}}, \code{\link{BiCopSim}}
 }
-
+\author{
+Jeffrey Dissmann
+}

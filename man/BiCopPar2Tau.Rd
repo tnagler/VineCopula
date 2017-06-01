@@ -255,9 +255,6 @@ BiCopPar2Tau(family = 234, par = theta, par2 = delta)
 }
 
 }
-\author{
-Ulf Schepsmeier, Tobias Erhardt
-}
 \references{
 Joe, H. (1997). Multivariate Models and Dependence Concepts.
 Chapman and Hall, London.
@@ -269,4 +266,6 @@ of mixed C-vines with application to exchange rates. Statistical Modelling,
 \seealso{
 \code{\link{BiCopTau2Par}}, \code{\link{BiCop}}
 }
-
+\author{
+Ulf Schepsmeier, Tobias Erhardt
+}

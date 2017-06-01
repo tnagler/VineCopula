@@ -53,11 +53,13 @@ BiCopEst(u1, u2, family, method = "mle", se = FALSE, max.df = 30,
 \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
 \code{234} = rotated Tawn type 2 copula (270 degrees) \cr}
 
-\item{method}{Character indicating the estimation method: either maximum
+\item{method}{indicates the estimation method: either maximum
 likelihood estimation (\code{method = "mle"}; default) or inversion of
-Kendall's tau (\code{method = "itau"}).\cr For \code{method = "itau"} only
-one parameter bivariate copula families can be used (\code{family =
-1,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}).}
+Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
+one parameter families and the Student t copula can be used (\code{family =
+1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
+\code{par2} is found by a crude profile likelihood optimization over the
+interval (2, 10].}
 
 \item{se}{Logical; whether standard error(s) of parameter estimates is/are
 estimated (default: \code{se = FALSE}).}
@@ -163,9 +165,6 @@ BiCopEst(u2, v2, family = 14, method = "mle")
 
 
 }
-\author{
-Ulf Schepsmeier, Eike Brechmann, Jakob Stoeber, Carlos Almeida
-}
 \references{
 Joe, H. (1997). Multivariate Models and Dependence Concepts.
 Chapman and Hall, London.
@@ -177,4 +176,6 @@ Chapman and Hall, London.
 \code{\link{RVineSeqEst}},
 \code{\link{BiCopSelect}},
 }
-
+\author{
+Ulf Schepsmeier, Eike Brechmann, Jakob Stoeber, Carlos Almeida
+}

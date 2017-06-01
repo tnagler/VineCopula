@@ -92,7 +92,6 @@ setClass("BB1Copula",
 #' persp(r90BB1Copula(c(-1,-1.5)), dCopula, zlim = c(0,10))
 #' persp(r270BB1Copula(c(-1,-1.5)), dCopula, zlim = c(0,10))
 #'
-#' @export BB1Copula
 BB1Copula <- function (param=c(1,1)) {
   if (any(is.na(param) | param >= c(Inf,Inf) | param[1] <= 0 | param[2] < 1))
     stop(paste("Parameter values out of bounds: theta: (0,Inf), delta: [1,Inf)."))

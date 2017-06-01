@@ -84,10 +84,9 @@ BiCopName(1:10)    # as character expression
 BiCopName(c("Clayton","t","J"))    # as number
 
 }
-\author{
-Ulf Schepsmeier
-}
 \seealso{
 \code{\link{RVineTreePlot}}
 }
-
+\author{
+Ulf Schepsmeier
+}

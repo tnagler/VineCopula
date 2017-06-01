@@ -33,8 +33,18 @@
 #' = FALSE}).
 #' @param rotations logical; if \code{TRUE}, all rotations of the families in
 #' \code{familyset} are included.
+#' @param method indicates the estimation method: either maximum
+#' likelihood estimation (\code{method = "mle"}; default) or inversion of
+#' Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
+#' one parameter families and the Student t copula can be used (\code{family =
+#' 1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
+#' \code{par2} is found by a crude profile likelihood optimization over the
+#' interval (2, 10].
 #' @param cores integer; if \code{cores > 1}, estimation will be parallized
-#' within each tree (using \code{\link[foreach]{foreach}}).
+#' within each tree (using \code{\link[foreach]{foreach}}). Note that
+#' parallelization causes substantial overhead and may be slower than
+#' single-threaded computation when dimension, sample size, or familyset are
+#' small or \code{method = "itau"}.
 #'
 #' @return An \code{\link{RVineMatrix}} object with the selected families
 #' (\code{RVM$family}) as well as sequentially
@@ -114,18 +124,19 @@
 #' summary(RVM1)
 #'
 #' ## inspect the fitted model using plots
-#' plot(RVM1)  # tree structure
+#' \dontrun{plot(RVM1)  # tree structure}
 #'
 #' contour(RVM1)  # contour plots of all pair-copulas
 #'
 RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", indeptest = FALSE,
-                           level = 0.05, trunclevel = NA, se = FALSE, rotations = TRUE, cores = 1) {
+                           level = 0.05, trunclevel = NA, se = FALSE, rotations = TRUE, method = "mle", cores = 1) {
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),
                     check_data,
                     check_nobs,
                     check_if_01,
                     prep_familyset,
+                    check_twoparams,
                     check_matrix)
     list2env(args, environment())
     if (any(is.na(data)))
@@ -172,6 +183,7 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
     emptaus <- matrix(0, d, d)
     pvals   <- matrix(0, d, d)
     nobs    <- matrix(0, d, d)
+    logLiks <- matrix(0, d, d)
     V <- list()
     V$direct <- array(NA, dim = c(d, N))
     V$indirect <- array(NA, dim = c(d, N))
@@ -209,7 +221,8 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
                     familyset <- 0
 
                 na.ind <- which(is.na(zr1 + zr2))
-                if (length(na.ind) >= length(zr1) - 10) {
+                if (length(na.ind) >= length(zr1) - 10 ||
+                    (length(familyset) == 1 && familyset == 0)) {
                     cfit <- BiCop(0)
                     ## add more information about the fit
                     cfit$se  <- NA
@@ -220,8 +233,10 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
                     cfit$BIC    <- 0
                     cfit$emptau <- NA
                     cfit$p.value.indeptest <- NA
-                    warn <- paste("Insufficient data for at least one pair.",
-                                  "Independence has been selected automatically.")
+                    if (length(na.ind) >= length(zr1) - 10) {
+                        warn <- paste("Insufficient data for at least one pair.",
+                                      "Independence has been selected automatically.")
+                    }
                 } else {
                     cfit <- suppressWarnings(BiCopSelect(zr2,
                                                          zr1,
@@ -231,22 +246,35 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
                                                          level,
                                                          weights = NA,
                                                          rotations,
-                                                         se = se))
+                                                         se = se,
+                                                         method = method))
                     warn <- NULL
                 }
 
                 ## transform data to pseudo-oberstavions in next tree
                 direct <- indirect <- NULL
-                if (CondDistr$direct[k - 1, i])
-                    direct <- suppressWarnings(BiCopHfunc1(zr2,
-                                                           zr1,
-                                                           cfit,
-                                                           check.pars = FALSE))
-                if (CondDistr$indirect[k - 1, i])
-                    indirect <- suppressWarnings(BiCopHfunc2(zr2,
-                                                             zr1,
-                                                             cfit,
-                                                             check.pars = FALSE))
+                if (CondDistr$direct[k - 1, i]) {
+                    if (length(familyset) == 1 && familyset == 0) {
+                        direct <- zr1
+                    } else {
+                        direct <- suppressWarnings(BiCopHfunc1(zr2,
+                                                               zr1,
+                                                               cfit,
+                                                               check.pars = FALSE))
+                    }
+                }
+
+
+                if (CondDistr$indirect[k - 1, i]) {
+                    if (length(familyset) == 1 && familyset == 0) {
+                        indirect <- zr2
+                    } else {
+                        indirect <- suppressWarnings(BiCopHfunc2(zr2,
+                                                                 zr1,
+                                                                 cfit,
+                                                                 check.pars = FALSE))
+                    }
+                }
 
                 ## return results
                 list(direct = direct,
@@ -278,6 +306,7 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
             Se2s[k, i]    <- ifelse(is.null(tmpse2), NA, tmpse2)
             emptaus[k, i] <- res.k[[i]]$cfit$emptau
             pvals[k, i]   <- res.k[[i]]$cfit$p.value.indeptest
+            logLiks[k, i] <- res.k[[i]]$cfit$logLik
             if (!is.null(res.k[[i]]$warn))
                 warn <- res.k[[i]]$warn
             ## replace pseudo observations for estimation of next tree
@@ -302,9 +331,9 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
     }
     .RVM$nobs <- N
     revo <- sapply(1:d, function(i) which(o[length(o):1] == i))
-    like <- suppressWarnings(RVineLogLik(data[, revo], .RVM))
+    like <- suppressWarnings(RVineLogLik(data[, revo], .RVM, calculate.V = FALSE))
     .RVM$logLik <- like$loglik
-    .RVM$pair.logLik <- like$V$value
+    .RVM$pair.logLik <- logLiks
     npar <- sum(.RVM$family %in% allfams[onepar], na.rm = TRUE) +
         2 * sum(.RVM$family %in% allfams[twopar], na.rm = TRUE)
     npar_pair <- (.RVM$family %in% allfams[onepar]) +

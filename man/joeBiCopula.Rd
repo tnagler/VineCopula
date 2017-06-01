@@ -2,9 +2,9 @@
 % Please edit documentation in R/joeBiCopula.R
 \name{joeBiCopula}
 \alias{joeBiCopula}
-\alias{r270JoeBiCopula}
-\alias{r90JoeBiCopula}
 \alias{surJoeBiCopula}
+\alias{r90JoeBiCopula}
+\alias{r270JoeBiCopula}
 \title{Constructor of the Joe Family and Rotated Versions thereof}
 \usage{
 joeBiCopula(param = 2)
@@ -33,9 +33,6 @@ persp(r90JoeBiCopula(-1.5), dCopula, zlim = c(0,10))
 persp(r270JoeBiCopula(-1.5), dCopula, zlim = c(0,10))
 
 }
-\author{
-Benedikt Graeler
-}
 \references{
 Joe, H., (1997). Multivariate Models and Dependence Concepts.
 Monogra. Stat. Appl. Probab. 73, London: Chapman and Hall.
@@ -45,4 +42,6 @@ See also \code{\link{BB1Copula}}, \code{\link{BB6Copula}},
 \code{\link{BB7Copula}} and \code{\link{BB8Copula}} for further wrapper
 functions to the \code{\link{VineCopula-package}}.
 }
-
+\author{
+Benedikt Graeler
+}

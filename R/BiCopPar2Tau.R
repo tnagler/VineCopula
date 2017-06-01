@@ -249,7 +249,6 @@
 #' BiCopPar2Tau(family = 234, par = theta, par2 = delta)
 #' }
 #'
-#' @export BiCopPar2Tau
 BiCopPar2Tau <- function(family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
     # fix for SemiParBIVProbit package
     dims <- set_dims(family, par, par2)

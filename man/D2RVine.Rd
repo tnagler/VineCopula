@@ -79,10 +79,9 @@ out2 <- RVineLogLik(simdata, RVM)
 out2$loglik
 }
 }
-\author{
-Ulf Schepsmeier
-}
 \seealso{
 \code{\link{RVineMatrix}}, \code{\link{C2RVine}}
 }
-
+\author{
+Ulf Schepsmeier
+}

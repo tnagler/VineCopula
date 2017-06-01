@@ -149,15 +149,12 @@ str(RVM)
 summary(RVM)
 
 ## inspect the model using plots
-\donttest{plot(RVM)  # tree structure}
+\dontrun{plot(RVM)  # tree structure}
 contour(RVM)  # contour plots of all pair-copulas
 
 ## simulate from the vine copula model
 plot(RVineSim(500, RVM))
 
-}
-\author{
-Jeffrey Dissmann, Thomas Nagler
 }
 \references{
 Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
@@ -173,4 +170,6 @@ financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 \code{\link{C2RVine}},
 \code{\link{D2RVine}}
 }
-
+\author{
+Jeffrey Dissmann, Thomas Nagler
+}

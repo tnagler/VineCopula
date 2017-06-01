@@ -75,9 +75,6 @@ vuong$p.value.Schwarz
 }
 
 }
-\author{
-Jeffrey Dissmann, Eike Brechmann
-}
 \references{
 Vuong, Q. H. (1989). Ratio tests for model selection and
 non-nested hypotheses. Econometrica 57 (2), 307-333.
@@ -86,4 +83,6 @@ non-nested hypotheses. Econometrica 57 (2), 307-333.
 \code{\link{RVineClarkeTest}}, \code{\link{RVineAIC}},
 \code{\link{RVineBIC}}
 }
-
+\author{
+Jeffrey Dissmann, Eike Brechmann
+}

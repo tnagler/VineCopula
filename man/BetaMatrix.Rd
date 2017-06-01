@@ -24,9 +24,6 @@ data <- as.matrix(daxreturns)
 BetaMatrix(data)
 
 }
-\author{
-Ulf Schepsmeier
-}
 \references{
 Blomqvist, N. (1950).  On a measure of dependence between two
 random variables. The Annals of Mathematical Statistics, 21(4), 593-600.
@@ -37,4 +34,6 @@ Nelsen, R. (2006). An introduction to copulas.  Springer
 \code{\link{TauMatrix}}, \code{\link{BiCopPar2Beta}},
 \code{\link{RVinePar2Beta}}
 }
-
+\author{
+Ulf Schepsmeier
+}

@@ -1,11 +1,11 @@
-#include "include/vine.h"
-#include "include/memoryhandling.h"
-#include "include/likelihood.h"
-#include "include/deriv.h"
-#include "include/tcopuladeriv.h"
-#include "include/tcopuladeriv_new.h"
-#include "include/rvinederiv.h"
-#include "include/rvinederiv2.h"
+#include "vine.h"
+#include "memoryhandling.h"
+#include "likelihood.h"
+#include "deriv.h"
+#include "tcopuladeriv.h"
+#include "tcopuladeriv_new.h"
+#include "rvinederiv.h"
+#include "rvinederiv2.h"
 
 
 // Code from Jakob Stoeber and Ulf Schepsmeier for R-vine log-likelihood derivative calculation

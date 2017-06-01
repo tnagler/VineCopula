@@ -10,11 +10,11 @@
  **
  */
 
-#include "include/vine.h"
-#include "include/memoryhandling.h"
-#include "include/tools.h"
-#include "include/likelihood.h"
-#include "include/evCopula.h"
+#include "vine.h"
+#include "memoryhandling.h"
+#include "tools.h"
+#include "likelihood.h"
+#include "evCopula.h"
 #include <math.h>
 
 #define UMAX  1-1e-10
@@ -1343,11 +1343,8 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
 
 
 
-/////////////////////////////////////////////////////////////
-// log likelihood einzeln (f?r Jakobs EM algo)
-//
-/////////////////////////////////////////////////////////////
 
+//// log likelihood for each observation --------
 // unvectorized version
 void LL_mod_seperate(int* family, int* n, double* u, double* v, double* theta, double* nu, double* loglik)
 {
@@ -1363,5 +1360,26 @@ void LL_mod_seperate_vec(int* family, int* n, double* u, double* v, double* thet
     int nn=1;
     for(int i=0; i<(*n); i++){
         LL_mod2(&family[i],&nn,&u[i],&v[i],&theta[i],&nu[i],&loglik[i]);
+    };
+}
+
+//// density for each observation --------
+// unvectorized version
+void PDF_seperate(int* family, int* n, double* u, double* v, double* theta, double* nu, double* loglik)
+{
+    int kk=1;
+    for(int i=0; i<(*n); i++){
+        LL_mod2(family,&kk,&u[i],&v[i],theta,nu,&loglik[i]);
+        loglik[i] = exp(loglik[i]);
+    };
+}
+
+// vectorized version
+void PDF_seperate_vec(int* family, int* n, double* u, double* v, double* theta, double* nu, double* loglik)
+{
+    int nn=1;
+    for(int i=0; i<(*n); i++){
+        LL_mod2(&family[i],&nn,&u[i],&v[i],&theta[i],&nu[i],&loglik[i]);
+        loglik[i] = exp(loglik[i]);
     };
 }

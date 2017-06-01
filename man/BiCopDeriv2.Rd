@@ -100,10 +100,6 @@ cop <- BiCopEst(u1, u2, family = 2)
 ## and evaluate its second derivative w.r.t. the second argument u2
 BiCopDeriv2(u1, u2, cop, deriv = "u2")
 
-
-}
-\author{
-Ulf Schepsmeier, Jakob Stoeber
 }
 \references{
 Schepsmeier, U. and J. Stoeber (2014). Derivatives and Fisher
@@ -114,4 +110,6 @@ information of bivariate copulas. Statistical Papers, 55 (2), 525-542. \cr
 \code{\link{RVineGrad}}, \code{\link{RVineHessian}},
 \code{\link{BiCopDeriv}}, \code{\link{BiCopHfuncDeriv}}, \code{\link{BiCop}}
 }
-
+\author{
+Ulf Schepsmeier, Jakob Stoeber
+}

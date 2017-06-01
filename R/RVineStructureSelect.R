@@ -40,8 +40,18 @@
 #' = FALSE}).
 #' @param rotations If \code{TRUE}, all rotations of the families in
 #' \code{familyset} are included.
+#' @param method indicates the estimation method: either maximum
+#' likelihood estimation (\code{method = "mle"}; default) or inversion of
+#' Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
+#' one parameter families and the Student t copula can be used (\code{family =
+#' 1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
+#' \code{par2} is found by a crude profile likelihood optimization over the
+#' interval (2, 10].
 #' @param cores integer; if \code{cores > 1}, estimation will be parallized
-#' within each tree (using \code{\link[foreach]{foreach}}).
+#' within each tree (using \code{\link[foreach]{foreach}}). Note that
+#' parallelization causes substantial overhead and may be slower than
+#' single-threaded computation when dimension, sample size, or familyset are
+#' small or \code{method = "itau"}.
 #'
 #' @return An \code{\link{RVineMatrix}} object with the selected structure
 #' (\code{RVM$Matrix}) and families (\code{RVM$family}) as well as sequentially
@@ -139,7 +149,7 @@
 #' summary(RVM)
 #'
 #' ## inspect the fitted model using plots
-#' \donttest{plot(RVM)  # tree structure}
+#' \dontrun{plot(RVM)  # tree structure}
 #' contour(RVM)  # contour plots of all pair-copulas
 #'
 #' \donttest{## estimate a C-vine copula model with only Clayton, Gumbel and Frank copulas
@@ -157,31 +167,45 @@
 #'
 RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit = "AIC", indeptest = FALSE,
                                  level = 0.05, trunclevel = NA, progress = FALSE,  weights = NA,
-                                 treecrit = "tau", se = FALSE, rotations = TRUE, cores = 1) {
+                                 treecrit = "tau", se = FALSE, rotations = TRUE, method = "mle", cores = 1) {
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),
                     check_data,
                     check_nobs,
                     check_if_01,
-                    prep_familyset)
+                    prep_familyset,
+                    check_twoparams)
     list2env(args, environment())
 
     d <- ncol(data)
     n <- nrow(data)
 
     ## sanity checks
-    if (type == 0)
-        type <- "RVine" else if (type == 1)
-            type <- "CVine"
-    if (d < 3)
-        stop("Dimension has to be at least 3.")
+    if (d < 2)
+        stop("Dimension has to be at least 2.")
+    if (d == 2) {
+        return(RVineCopSelect(data,
+                              familyset = familyset,
+                              Matrix = matrix(c(2, 1, 0, 1), 2, 2),
+                              selectioncrit = selectioncrit,
+                              indeptest = indeptest,
+                              level = level,
+                              trunclevel = trunclevel,
+                              se = se,
+                              rotations = rotations,
+                              cores = cores))
+    }
     if (!(selectioncrit %in% c("AIC", "BIC", "logLik")))
         stop("Selection criterion not implemented.")
     if (level < 0 & level > 1)
         stop("Significance level has to be between 0 and 1.")
-    treecrit <- set_treecrit(treecrit, familyset)
 
-    ## set trunclevel if not provided
+    ## set defaults
+    if (type == 0)
+        type <- "RVine"
+    if (type == 1)
+        type <- "CVine"
+    treecrit <- set_treecrit(treecrit, familyset)
     if (is.na(trunclevel))
         trunclevel <- d
     if (trunclevel == 0)
@@ -217,6 +241,7 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
                                      level,
                                      se = se,
                                      weights = weights,
+                                     method = method,
                                      cores = cores)
     # store results
     if (!is.null(VineTree$warn))
@@ -235,8 +260,9 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
         if (trunclevel == tree - 1)
             familyset <- 0
         # find optimal tree
-        g <- buildNextGraph(VineTree, weights, treecrit = treecrit, cores > 1)
-        MST <- findMaxTree(g, mode = type)
+        g <- buildNextGraph(VineTree, weights, treecrit = treecrit, cores > 1,
+                            truncated = trunclevel < tree)
+        MST <- findMaxTree(g, mode = type, truncated = trunclevel < tree)
         # estimate pair-copulas
         VineTree <- fit.TreeCopulas(MST,
                                     VineTree,
@@ -247,6 +273,7 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
                                     se = se,
                                     progress,
                                     weights = weights,
+                                    method = method,
                                     cores = cores)
         # store results
         if (!is.null(VineTree$warn))
@@ -277,10 +304,12 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
 set_treecrit <- function(treecrit, famset) {
     ## check if function is appropriate or type is implemented
     if (is.function(treecrit)) {
-        if (!all(names(formals(treecrit)) == c("u1", "u2", "weights")))
+        w <- try(treecrit(u1 = runif(10), u2 = runif(10), weights = rep(1, 10)),
+                 silent = TRUE)
+        if (!any(class(w) == "error"))
             stop("treecrit must be of the form 'function(u1, u2, weights)'")
-        if (!is.numeric(treecrit(runif(10), runif(10), rep(1, 10))))
-            stop("treecrit does not return a numeric value")
+        if (!is.numeric(w) || length(w) > 1)
+            stop("treecrit does not return a numeric scalar")
     } else if (all(treecrit == "tau")) {
         treecrit <- function(u1, u2, weights) {
             complete.i <- which(!is.na(u1 + u2))
@@ -378,76 +407,114 @@ initializeFirstGraph <- function(data, treecrit, weights) {
     graphFromWeightMatrix(W)
 }
 
-findMaxTree <- function(g, mode = "RVine") {
-    ## construct adjency matrix
-    A <- adjacencyMatrix(g)
-    d <- ncol(A)
+findMaxTree <- function(g, mode = "RVine", truncated = FALSE) {
 
-    if (mode == "RVine") {
-        ## initialize
-        tree <- NULL
-        edges <- matrix(NA, d - 1, 2)
-        w <- numeric(d - 1)
-        i <- 1
-
-        ## construct minimum spanning tree
-        for (k in 1:(d - 1)) {
-            # add selected edge to tree
-            tree <- c(tree, i)
-
-            # find edge with minimal weight
-            m <- apply(as.matrix(A[, tree]), 2, min)
-            a <- apply(as.matrix(A[, tree]), 2,
-                       function(x) order(rank(x)))[1, ]
-            b <- order(rank(m))[1]
-            j <- tree[b]
-            i <- a[b]
-
-            # store edge and weight
-            edges[k, ] <- c(j, i)
-            w[k] <- A[i, j]
-
-            ## adjust adjecency matrix to prevent loops
-            for (t in tree)
-                A[i, t] <- A[t, i] <- Inf
-        }
-
-        ## reorder edges for backwads compatibility with igraph output
-        edges <- t(apply(edges, 1, function(x) sort(x)))
-        edges <- edges[order(edges[, 2], edges[, 1]), ]
-
-        ## delete unused edges from graph
-        E <- g$E$nums
-        in.tree <- apply(matrix(edges, ncol = 2), 1,
-                         function(x) which((x[1] == E[, 1]) & (x[2] == E[, 2])))
-        if (is.list(in.tree))
-            do.call()
-        MST <- g
-        g$E$todel <- rep(TRUE, nrow(E))
-        if (any(g$E$todel)) {
-            g$E$todel[in.tree] <- FALSE
-            MST <- deleteEdges(g)
-        }
-    } else if (mode  == "CVine") {
-        ## set root as vertex with minimal sum of weights
+    if (truncated == FALSE) {
+        ## construct adjency matrix
         A <- adjacencyMatrix(g)
-        diag(A) <- 0
-        sumtaus <- rowSums(A)
-        root <- which.min(sumtaus)
+        d <- ncol(A)
 
-        ## delete unused edges
-        g$E$todel <- !((g$E$nums[, 2] == root) | (g$E$nums[, 1] == root))
-        MST <- g
-        if (any(g$E$todel ))
-            MST <- deleteEdges(g)
+        if (mode == "RVine") {
+            ## initialize
+            tree <- NULL
+            edges <- matrix(NA, d - 1, 2)
+            w <- numeric(d - 1)
+            i <- 1
+
+            ## construct minimum spanning tree
+            for (k in 1:(d - 1)) {
+                # add selected edge to tree
+                tree <- c(tree, i)
+
+                # find edge with minimal weight
+                m <- apply(as.matrix(A[, tree]), 2, min)
+                a <- apply(as.matrix(A[, tree]), 2,
+                           function(x) order(rank(x)))[1, ]
+                b <- order(rank(m))[1]
+                j <- tree[b]
+                i <- a[b]
+
+                # store edge and weight
+                edges[k, ] <- c(j, i)
+                w[k] <- A[i, j]
+
+                ## adjust adjecency matrix to prevent loops
+                for (t in tree)
+                    A[i, t] <- A[t, i] <- Inf
+            }
+
+            ## reorder edges for backwads compatibility with igraph output
+            edges <- t(apply(edges, 1, function(x) sort(x)))
+            edges <- edges[order(edges[, 2], edges[, 1]), ]
+
+            ## delete unused edges from graph
+            E <- g$E$nums
+            in.tree <- apply(matrix(edges, ncol = 2), 1,
+                             function(x) which((x[1] == E[, 1]) & (x[2] == E[, 2])))
+            MST <- g
+            g$E$todel <- rep(TRUE, nrow(E))
+            if (any(g$E$todel)) {
+                g$E$todel[in.tree] <- FALSE
+                MST <- deleteEdges(g)
+            }
+        } else if (mode  == "CVine") {
+            ## set root as vertex with minimal sum of weights
+            A <- adjacencyMatrix(g)
+            diag(A) <- 0
+            sumtaus <- rowSums(A)
+            root <- which.min(sumtaus)
+
+            ## delete unused edges
+            g$E$todel <- !((g$E$nums[, 2] == root) | (g$E$nums[, 1] == root))
+            MST <- g
+            if (any(g$E$todel ))
+                MST <- deleteEdges(g)
+        } else {
+            stop("vine not implemented")
+        }
     } else {
-        stop("vine not implemented")
+        MST <- g
+
+        # get edge list
+        edgesList <- g$E$nums
+        uid <- sort(unique(as.vector(g$E$nums)))
+        luid <- length(uid)
+
+        if (luid > 2) {
+            # transform to adjacency list
+            adjacencyList <- lapply(uid, function(u)
+                c(edgesList[edgesList[,1] == u,2],
+                  edgesList[edgesList[,2] == u,1]))
+
+            # find a tree by traversing the graph
+            dfsorder <- dfs(adjacencyList, 1)
+            newEdgesList <- t(apply(dfsorder$E, 1, sort))
+
+            ## delete unused edges
+            MST$E$todel <- !duplicated(rbind(newEdgesList,
+                                             edgesList))[-seq(1,luid-1)]
+        }
+
+        if (any(MST$E$todel))
+            MST <- deleteEdges(MST)
+
     }
 
     ## return result
     MST
 }
 
+# depth first search to build a tree without finding the MST
+dfs <- function(adjacencyList, v, e = NULL, dfsorder = list()) {
+    dfsorder$V <- c(dfsorder$V, v)
+    dfsorder$E <- rbind(dfsorder$E, e)
+    for (u in adjacencyList[[v]]) {
+        if (!is.element(u, dfsorder$V)) {
+            dfsorder <- dfs(adjacencyList, u, c(u,v), dfsorder)
+        }
+    }
+    return(dfsorder)
+}
 
 # not required any longer? Use TauMatrix instead
 fasttau <- function(x, y, weights = NA) {
@@ -479,7 +546,7 @@ fasttau <- function(x, y, weights = NA) {
 ## fit pair-copulas for the first vine tree
 fit.FirstTreeCopulas <- function(MST, data.univ, type, copulaSelectionBy,
                                  testForIndependence, testForIndependence.level,
-                                 se, weights = NA, cores = 1) {
+                                 se, weights = NA, method = "mle", cores = 1) {
 
     ## initialize estimation results with empty list
     d <- nrow(MST$E$nums)
@@ -527,7 +594,8 @@ fit.FirstTreeCopulas <- function(MST, data.univ, type, copulaSelectionBy,
                      testForIndependence,
                      testForIndependence.level,
                      se,
-                     weights)
+                     weights,
+                     method)
     } else {
         pc.fits <- lapply(X = pc.data,
                           FUN = pcSelect,
@@ -536,7 +604,8 @@ fit.FirstTreeCopulas <- function(MST, data.univ, type, copulaSelectionBy,
                           testForIndependence,
                           testForIndependence.level,
                           se,
-                          weights)
+                          weights,
+                          method)
     }
 
     ## store estimated model and pseudo-obversations for next tree
@@ -560,12 +629,12 @@ fit.FirstTreeCopulas <- function(MST, data.univ, type, copulaSelectionBy,
 ## fit pair-copulas for vine trees 2,...
 fit.TreeCopulas <- function(MST, oldVineGraph, type, copulaSelectionBy,
                             testForIndependence, testForIndependence.level,
-                            se = se, progress, weights = NA, cores = 1) {
+                            se = se, progress, weights = NA, method = "mle",
+                            cores = 1) {
 
     ## initialize estimation results with empty list
     d <- nrow(MST$E$nums)
     pc.data <- lapply(1:d, function(i) NULL)
-
 
     ## prepare for estimation
     for (i in 1:d) {
@@ -633,7 +702,8 @@ fit.TreeCopulas <- function(MST, oldVineGraph, type, copulaSelectionBy,
                      testForIndependence,
                      testForIndependence.level,
                      se,
-                     weights)
+                     weights,
+                     method)
     } else {
         pc.fits <- lapply(X = pc.data,
                           FUN = pcSelect,
@@ -642,11 +712,11 @@ fit.TreeCopulas <- function(MST, oldVineGraph, type, copulaSelectionBy,
                           testForIndependence,
                           testForIndependence.level,
                           se,
-                          weights)
+                          weights,
+                          method)
     }
 
     ## store estimated model and pseudo-obversations for next tree
-
     for (i in 1:d) {
         MST$E$Copula.param[[i]] <- c(pc.fits[[i]]$par,
                                      pc.fits[[i]]$par2)
@@ -663,7 +733,8 @@ fit.TreeCopulas <- function(MST, oldVineGraph, type, copulaSelectionBy,
 }
 
 ## initialize graph for next vine tree (possible edges)
-buildNextGraph <- function(oldVineGraph, treecrit, weights = NA, parallel) {
+buildNextGraph <- function(oldVineGraph, treecrit, weights = NA, parallel,
+                           truncated = FALSE) {
 
     d <- nrow(oldVineGraph$E$nums)
 
@@ -681,14 +752,16 @@ buildNextGraph <- function(oldVineGraph, treecrit, weights = NA, parallel) {
                         g = g,
                         oldVineGraph = oldVineGraph,
                         treecrit = treecrit,
-                        weights = weights)
+                        weights = weights,
+                        truncated = truncated)
     } else {
         out <- lapply(1:nrow(g$E$nums),
                       getEdgeInfo,
                       g = g,
                       oldVineGraph = oldVineGraph,
                       treecrit = treecrit,
-                      weights = weights)
+                      weights = weights,
+                      truncated = truncated)
     }
 
     ## annotate graph (same order as in old version of this function)
@@ -703,11 +776,13 @@ buildNextGraph <- function(oldVineGraph, treecrit, weights = NA, parallel) {
 }
 
 ## function for obtaining edge information
-getEdgeInfo <- function(i, g, oldVineGraph, treecrit, weights) {
+getEdgeInfo <- function(i, g, oldVineGraph, treecrit, weights,
+                        truncated = FALSE) {
 
     ## get edge
     con <- g$E$nums[i, ]
     temp <- oldVineGraph$E$nums[con, ]
+
 
     ## check for proximity condition
     ok <- FALSE
@@ -727,33 +802,6 @@ getEdgeInfo <- function(i, g, oldVineGraph, treecrit, weights) {
 
     # info if proximity condition is fulfilled ...
     if (ok) {
-        ## get data
-        if (temp[1, 1] == same) {
-            zr1 <- oldVineGraph$E$Copula.CondData.2[con[1]]
-        } else {
-            zr1 <- oldVineGraph$E$Copula.CondData.1[con[1]]
-        }
-        if (temp[2, 1] == same) {
-            zr2 <- oldVineGraph$E$Copula.CondData.2[con[2]]
-        } else {
-            zr2 <- oldVineGraph$E$Copula.CondData.1[con[2]]
-        }
-        if (is.list(zr1)) {
-            zr1a <- as.vector(zr1[[1]])
-            zr2a <- as.vector(zr2[[1]])
-        } else {
-            zr1a <- zr1
-            zr2a <- zr2
-        }
-
-        ## calculate Kendall's tau
-        keine_nas <- !(is.na(zr1a) | is.na(zr2a))
-        w <- treecrit(zr1a[keine_nas], zr2a[keine_nas], weights)
-
-        ## get names
-        name.node1 <- strsplit(g$V$names[con[1]], split = " *[,;] *")[[1]]
-        name.node2 <- strsplit(g$V$names[con[2]], split = " *[,;] *")[[1]]
-
         ## infer conditioned set and conditioning set
         l1 <- c(g$V$conditionedSet[[con[1]]],
                 g$V$conditioningSet[[con[1]]])
@@ -762,16 +810,47 @@ getEdgeInfo <- function(i, g, oldVineGraph, treecrit, weights) {
         nedSet <- c(setdiff(l1, l2), setdiff(l2, l1))
         ningSet <- intersect(l1, l2)
 
-        ## set edge name
-        nmdiff <- c(setdiff(name.node1, name.node2),
-                    setdiff(name.node2, name.node1))
-        nmsect <- intersect(name.node1, name.node2)
-        name <- paste(paste(nmdiff, collapse = ","),
-                      paste(nmsect, collapse = ","),
-                      sep = " ; ")
-
         ## mark as ok
         todel <- FALSE
+
+        if (truncated == FALSE) {
+            ## get data
+            if (temp[1, 1] == same) {
+                zr1 <- oldVineGraph$E$Copula.CondData.2[con[1]]
+            } else {
+                zr1 <- oldVineGraph$E$Copula.CondData.1[con[1]]
+            }
+            if (temp[2, 1] == same) {
+                zr2 <- oldVineGraph$E$Copula.CondData.2[con[2]]
+            } else {
+                zr2 <- oldVineGraph$E$Copula.CondData.1[con[2]]
+            }
+            if (is.list(zr1)) {
+                zr1a <- as.vector(zr1[[1]])
+                zr2a <- as.vector(zr2[[1]])
+            } else {
+                zr1a <- zr1
+                zr2a <- zr2
+            }
+
+            ## calculate Kendall's tau
+            keine_nas <- !(is.na(zr1a) | is.na(zr2a))
+            w <- treecrit(zr1a[keine_nas], zr2a[keine_nas], weights)
+
+            ## get names
+            name.node1 <- strsplit(g$V$names[con[1]], split = " *[,;] *")[[1]]
+            name.node2 <- strsplit(g$V$names[con[2]], split = " *[,;] *")[[1]]
+
+            ## set edge name
+            nmdiff <- c(setdiff(name.node1, name.node2),
+                        setdiff(name.node2, name.node1))
+            nmsect <- intersect(name.node1, name.node2)
+            name <- paste(paste(nmdiff, collapse = ","),
+                          paste(nmsect, collapse = ","),
+                          sep = " ; ")
+        } else {
+            w <- 1
+        }
     }
 
     ## return edge information
@@ -793,12 +872,13 @@ pcSelect <- function(parameterForACopula, type, ...) {
 
 ## bivariate copula selection
 fit.ACopula <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
-                        indeptest = FALSE, level = 0.05, se = FALSE, weights = NA) {
+                        indeptest = FALSE, level = 0.05, se = FALSE,
+                        weights = NA, method = "mle") {
 
     ## select family and estimate parameter(s) for the pair copula
     complete.i <- which(!is.na(u1 + u2))
 
-    if (length(complete.i) < 10) {
+    if (length(complete.i) < 10 || (length(familyset) == 1 && familyset == 0)) {
         out <- BiCop(0)
         ## add more information about the fit
         out$se  <- NA
@@ -809,8 +889,11 @@ fit.ACopula <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         out$BIC    <- 0
         out$emptau <- NA
         out$p.value.indeptest <- NA
-        out$warn <- paste("Insufficient data for at least one pair.",
-                          "Independence has been selected automatically.")
+
+        if (length(complete.i) < 10) {
+            out$warn <- paste("Insufficient data for at least one pair.",
+                              "Independence has been selected automatically.")
+        }
     } else {
         out <- suppressWarnings(BiCopSelect(u1[complete.i], u2[complete.i],
                                             familyset,
@@ -819,7 +902,8 @@ fit.ACopula <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
                                             level,
                                             weights = weights,
                                             rotations = FALSE,
-                                            se = se))
+                                            se = se,
+                                            method = method))
         out$warn <- NULL
     }
 
@@ -838,8 +922,13 @@ fit.ACopula <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
     }
 
     ## store pseudo-observations for estimation in next tree
-    out$CondOn.1 <- suppressWarnings(BiCopHfunc1(u2, u1, out, check.pars = FALSE))
-    out$CondOn.2 <- suppressWarnings(BiCopHfunc2(u2, u1, out, check.pars = FALSE))
+    if (length(familyset) == 1 && familyset == 0) {
+        out$CondOn.1 <- u1
+        out$CondOn.2 <- u2
+    } else {
+        out$CondOn.1 <- suppressWarnings(BiCopHfunc1(u2, u1, out, check.pars = FALSE))
+        out$CondOn.2 <- suppressWarnings(BiCopHfunc2(u2, u1, out, check.pars = FALSE))
+    }
 
     ## return results
     out
@@ -884,6 +973,7 @@ as.RVM2 <- function(RVine, data, callexp) {
     Se2s    <- matrix(0, n, n)
     emptaus <- matrix(0, n, n)
     pvals   <- matrix(0, n, n)
+    logLiks <- matrix(0, n, n)
 
     ## store structure, families and parameters in matrices
     for (k in 1:(n - 1)) {
@@ -901,6 +991,7 @@ as.RVM2 <- function(RVine, data, callexp) {
         Se2s[(k + 1), k]    <- ifelse(is.null(tmpse2), NA, tmpse2)
         emptaus[(k + 1), k] <- crspfits[[n - k]][[1]]$emptau
         pvals[(k + 1), k]   <- crspfits[[n - k]][[1]]$p.value.indeptest
+        logLiks[(k + 1), k] <- crspfits[[n - k]][[1]]$logLik
 
         if (k == (n - 1)) {
             M[(k + 1), (k + 1)] <- nedSets[[n - k]][[1]][2]
@@ -939,6 +1030,7 @@ as.RVM2 <- function(RVine, data, callexp) {
                 Se2s[i, k]    <- ifelse(is.null(tmpse2), NA, tmpse2)
                 emptaus[i, k] <- crspfits[[n - i + 1]][[j]]$emptau
                 pvals[i, k]   <- crspfits[[n - i + 1]][[j]]$p.value.indeptest
+                logLiks[i, k] <- crspfits[[n - i + 1]][[j]]$logLik
                 nedSets[[n - i + 1]][[j]]    <- NULL
                 crspParams[[n - i + 1]][[j]] <- NULL
                 crspTypes[[n - i + 1]][[j]]  <- NULL
@@ -961,18 +1053,18 @@ as.RVM2 <- function(RVine, data, callexp) {
         RVM$se2 <- Se2s
     }
     RVM$nobs <- crspfits[[1]][[1]]$nobs
-    like <- suppressWarnings(RVineLogLik(data, RVM))
+    like <- suppressWarnings(RVineLogLik(data, RVM, calculate.V = FALSE))
     RVM$logLik <- like$loglik
-    RVM$pair.logLik <- like$V$value
+    RVM$pair.logLik <- logLiks
     npar <- sum(RVM$family %in% allfams[onepar], na.rm = TRUE) +
         2 * sum(RVM$family %in% allfams[twopar], na.rm = TRUE)
-    npar_pair <- (RVM$family %in% allfams[onepar]) +
-        2 * (RVM$family %in% allfams[twopar])
+    npar_pair <- matrix((RVM$family %in% allfams[onepar]) +
+        2 * (RVM$family %in% allfams[twopar]), nrow = n, ncol = n)
     N <- nrow(data)
     RVM$AIC <- -2 * like$loglik + 2 * npar
-    RVM$pair.AIC <- -2 * like$V$value + 2 * npar_pair
+    RVM$pair.AIC <- -2 * logLiks + 2 * npar_pair
     RVM$BIC <- -2 * like$loglik + log(N) * npar
-    RVM$pair.BIC <- -2 * like$V$value + log(N) * npar_pair
+    RVM$pair.BIC <- -2 * logLiks + log(N) * npar_pair
     RVM$emptau <- emptaus
 
     ## return final object

@@ -11,13 +11,13 @@
 #' @param data An N x d data matrix (with uniform margins).
 #' @param RVM An \code{\link{RVineMatrix}} object including the structure, the
 #' pair-copula families and the pair-copula parameters (if they are known).
-#' @param method Character indicating the estimation method: either pairwise
-#' maximum likelihood estimation (\code{method = "mle"}; default) or inversion
-#' of Kendall's tau (\code{method = "itau"}; see \code{\link{BiCopEst}}.  For
-#' \code{method = "itau"} only one parameter pair-copula families can be used
-#' (\code{family = 1}, \code{3}, \code{4}, \code{5}, \code{6}, \code{13},
-#' \code{14}, \code{16}, \code{23}, \code{24}, \code{26}, \code{33}, \code{34}
-#' or \code{36}).
+#' @param method indicates the estimation method: either maximum
+#' likelihood estimation (\code{method = "mle"}; default) or inversion of
+#' Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
+#' one parameter families and the Student t copula can be used (\code{family =
+#' 1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
+#' \code{par2} is found by a crude profile likelihood optimization over the
+#' interval (2, 10].
 #' @param se Logical; whether standard errors are estimated (default: \code{se
 #' = FALSE}).
 #' @param max.df Numeric; upper bound for the estimation of the degrees of
@@ -30,7 +30,9 @@
 #' (default: \code{progress = FALSE}).
 #' @param weights Numerical; weights for each observation (opitional).
 #' @param cores integer; if \code{cores > 1}, estimation will be parallized
-#' within each tree (using \code{\link[foreach]{foreach}}).
+#' within each tree (using \code{\link[foreach]{foreach}}). However, the
+#' overhead caused by parallelization is likely to make the function run slower
+#' unless sample size is really large and \code{method = "itau"}.
 #'
 #' @return An \code{\link{RVineMatrix}} object with the sequentially
 #' estimated parameters stored in \code{RVM$par} and \code{RVM$par2}. The object
@@ -139,6 +141,7 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
     Params  <- matrix(0, d, d)
     Params2 <- matrix(0, d, d)
     emptaus <- matrix(0, d, d)
+    logLiks <- matrix(0, d, d)
     if (se)
         Se <- Se2 <- matrix(0, d, d)
     V <- list()
@@ -253,6 +256,7 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
             Params[k, i]  <- res.k[[i]]$cfit$par
             Params2[k, i] <- res.k[[i]]$cfit$par2
             emptaus[k, i] <- res.k[[i]]$cfit$emptau
+            logLiks[k, i] <- res.k[[i]]$cfit$logLik
             if (!is.null(res.k[[i]]$warn))
                 warn <- res.k[[i]]$warn
 
@@ -282,9 +286,9 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
     }
     .RVM$nobs <- N
     revo <- sapply(1:d, function(i) which(o[length(o):1] == i))
-    like <- suppressWarnings(RVineLogLik(data[, revo], .RVM))
+    like <- suppressWarnings(RVineLogLik(data[, revo], .RVM, calculate.V = FALSE))
     .RVM$logLik <- like$loglik
-    .RVM$pair.logLik <- like$V$value
+    .RVM$pair.logLik <- logLiks
     npar <- sum(.RVM$family %in% allfams[onepar], na.rm = TRUE) +
         2 * sum(.RVM$family %in% allfams[twopar], na.rm = TRUE)
     npar_pair <- (.RVM$family %in% allfams[onepar]) +

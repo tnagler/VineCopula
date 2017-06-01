@@ -32,14 +32,13 @@ library(lattice)
 cloud(V1 ~ V2 + V3, as.data.frame(rCopula(500, vine)))
 
 }
-\author{
-Benedikt Graeler
-}
 \references{
 Aas, K., C. Czado, A. Frigessi, and H. Bakken (2009).
 Pair-copula constructions of multiple dependence Insurance: Mathematics and
 Economics 44 (2), 182-198.
 }
+\author{
+Benedikt Graeler
+}
 \keyword{distribution}
 \keyword{mulitvariate}
-

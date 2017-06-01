@@ -6,7 +6,7 @@
 \usage{
 RVineCopSelect(data, familyset = NA, Matrix, selectioncrit = "AIC",
   indeptest = FALSE, level = 0.05, trunclevel = NA, se = FALSE,
-  rotations = TRUE, cores = 1)
+  rotations = TRUE, method = "mle", cores = 1)
 }
 \arguments{
 \item{data}{N x d data matrix (with uniform margins).}
@@ -44,8 +44,19 @@ hypothesis of independence cannot be rejected.}
 \item{rotations}{logical; if \code{TRUE}, all rotations of the families in
 \code{familyset} are included.}
 
+\item{method}{indicates the estimation method: either maximum
+likelihood estimation (\code{method = "mle"}; default) or inversion of
+Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
+one parameter families and the Student t copula can be used (\code{family =
+1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
+\code{par2} is found by a crude profile likelihood optimization over the
+interval (2, 10].}
+
 \item{cores}{integer; if \code{cores > 1}, estimation will be parallized
-within each tree (using \code{\link[foreach]{foreach}}).}
+within each tree (using \code{\link[foreach]{foreach}}). Note that
+parallelization causes substantial overhead and may be slower than
+single-threaded computation when dimension, sample size, or familyset are
+small or \code{method = "itau"}.}
 }
 \value{
 An \code{\link{RVineMatrix}} object with the selected families
@@ -118,13 +129,10 @@ str(RVM1)
 summary(RVM1)
 
 ## inspect the fitted model using plots
-plot(RVM1)  # tree structure
+\dontrun{plot(RVM1)  # tree structure}
 
 contour(RVM1)  # contour plots of all pair-copulas
 
-}
-\author{
-Eike Brechmann, Thomas Nagler
 }
 \references{
 Brechmann, E. C., C. Czado, and K. Aas (2012). Truncated regular
@@ -143,4 +151,6 @@ returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 \code{\link{contour.RVineMatrix}},
 \code{\link[foreach]{foreach}}
 }
-
+\author{
+Eike Brechmann, Thomas Nagler
+}

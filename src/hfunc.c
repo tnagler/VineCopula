@@ -10,9 +10,9 @@
  **
  */
 
-#include "include/vine.h"
-#include "include/hfunc.h"
-#include "include/evCopula.h"
+#include "vine.h"
+#include "hfunc.h"
+#include "evCopula.h"
 
 #define UMAX  1-1e-10
 

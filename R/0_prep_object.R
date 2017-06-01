@@ -19,7 +19,6 @@
 #' # rotated Tawn T2 copula with parameters
 #' copulaFromFamilyIndex(224, -2, 0.5)
 #'
-#' @export copulaFromFamilyIndex
 copulaFromFamilyIndex <- function(family, par, par2 = 0) {
     constr <- switch(paste("fam", family, sep = ""),
                      fam0 = function(par) indepCopula(),

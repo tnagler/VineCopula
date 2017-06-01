@@ -1,12 +1,109 @@
-VineCopula 2.0.5 
+VineCopula 2.1.2 (April 24, 2017)
 ----------------------------------------------------------------
+
+NEW FEATURES
+
+  * Online API documentation on https://tnagler.github.io/VineCopula/.
+  
+  * Faster `BiCopCDF()`.
 
 BUG FIXES
 
-  * Fixed errors in `BiCopGofTest` for the Student t copula and `par2` close to
-    2 and for most other families for `tau` close to 0.
+  * Fixed bug in preprocessing of `weights` argument.
+
+  * More informative error message when family is unknown.
+
+  * Safer `BiCopSelect()` with `presel = TRUE` and insufficient data.
   
-  * Fixed non-converging MLE for rotated Tawns on 32 bit infrastructures.
+  * Fixed `RVineMatrix()` (output dimension was `d-1` and `naturalOrder = TRUE`
+    wasn't working, thanks @tvatter).
+    
+  * Safer `BiCopEst()` for `method = "itau"`.
+
+
+VineCopula 2.1.1 (January 11, 2017)
+----------------------------------------------------------------
+
+IMPORTS
+
+  * Package now requires `copula (>= 0.999-16)`. The new version of copula
+    requires VineCopula to be re-installed, because the old `fitCopula()` 
+    method doesn't work any longer, but was re-exported by VineCopula.
+    
+NEW FEATURES
+
+  * Package developers can use the VineCopula C-functionality by linking against
+    VineCopula through the `LinkingTo` field.
+  
+
+
+VineCopula 2.1.0 (December 23, 2016)
+----------------------------------------------------------------
+
+# DEPENDS
+
+  * Now depends explicitly on `R (>= 3.1.0)`. So far, this dependence was
+    implicit trhough our dependence on the copula package.
+
+
+NEW FEATURES
+
+  * All estimation functions now have a `method` argument. The default is 
+    `method = "mle"` and corresponds to the old behavior. The other option, 
+    `method = "itau"`, estimates the parameters by inversion of Kendall's. It is
+    much faster than `method = "mle"`, but is only available for one-parameter 
+    families and the t-copula. Big thanks to Thibault Vatter who did most of the
+    work (PR #25).
+    
+  * New function `RVineMatrixSample` that randomly generates valid R-vine 
+    matrices using the algorithm of Joe et al. (2011). Contributed by 
+    Thibault Vatter (PR #27).
+
+  * Faster versions of `RVineMatrix` and `RVineCopSelect`, and 
+   `RVineStructureSelect` by avoiding unnecessary computations (thanks to 
+    Thibault Vatter, PRs #29 and #31).
+    
+  * All `-Select` functions now have a `presel` argument. If `TRUE` (default) 
+    the familyset is reduced to families that have asymmetry charactistics that
+    conform with the observed data.
+    
+  * `RVineSim`, `RVineLogLik`, and `RVinePDF` have been implemented in a way
+    that demands less memory. For `RVineLogLik`, the option `calculate.V` has
+    to be set to `TRUE`.
+    
+    
+BUG FIXES
+
+  * Fixed bug in upper tail dependence coefficient for survival BB1 (reported
+    by Viviana Fernandez, thanks!).
+    
+  * `RVineStructureSelect` now works in dimension two as well.
+  
+  * `RVineMatrixCheck` returns the new error code `-4` when the matrix is 
+    neither lower nor upper triangular (threw an actual error before).
+    
+  * `contour.RVineMatrix` now arranges the contour matrix conforming with the
+    family and parameter matrices.
+    
+
+
+VineCopula 2.0.5 (September 25, 2016)
+----------------------------------------------------------------
+
+DEPENDS
+
+  * Require higher version of the copula package (>= 0.999-15).
+
+
+BUG FIXES
+
+  * Use `se = FALSE` as default throughout the package for faster estimation.
+
+  * Fixed errors in `BiCopGofTest` for the Student t copula and `par2` close to
+    2 and for most other families for `tau` close to 0 (reported by Thong Huy 
+    Nguyen, thanks!).
+  
+  * Fix sign in starting parameters for Tawn MLE.
   
   * Fixed storage positions of `par2` in output matrix of `RVineMLE` (reported
     by Robin Evans, thanks!).

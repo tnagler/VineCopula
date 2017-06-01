@@ -2,21 +2,21 @@
 % Please edit documentation in R/ClaytonGumbelCopula.R
 \docType{class}
 \name{surGumbelCopula-class}
-\alias{dduCopula,matrix,r270GumbelCopula-method}
-\alias{dduCopula,matrix,r90GumbelCopula-method}
-\alias{dduCopula,matrix,surGumbelCopula-method}
-\alias{dduCopula,numeric,r270GumbelCopula-method}
-\alias{dduCopula,numeric,r90GumbelCopula-method}
-\alias{dduCopula,numeric,surGumbelCopula-method}
-\alias{ddvCopula,matrix,r270GumbelCopula-method}
-\alias{ddvCopula,matrix,r90GumbelCopula-method}
-\alias{ddvCopula,matrix,surGumbelCopula-method}
-\alias{ddvCopula,numeric,r270GumbelCopula-method}
-\alias{ddvCopula,numeric,r90GumbelCopula-method}
-\alias{ddvCopula,numeric,surGumbelCopula-method}
-\alias{r270GumbelCopula-class}
-\alias{r90GumbelCopula-class}
 \alias{surGumbelCopula-class}
+\alias{dduCopula,matrix,surGumbelCopula-method}
+\alias{dduCopula,numeric,surGumbelCopula-method}
+\alias{ddvCopula,matrix,surGumbelCopula-method}
+\alias{ddvCopula,numeric,surGumbelCopula-method}
+\alias{r90GumbelCopula-class}
+\alias{dduCopula,matrix,r90GumbelCopula-method}
+\alias{dduCopula,numeric,r90GumbelCopula-method}
+\alias{ddvCopula,matrix,r90GumbelCopula-method}
+\alias{ddvCopula,numeric,r90GumbelCopula-method}
+\alias{r270GumbelCopula-class}
+\alias{dduCopula,matrix,r270GumbelCopula-method}
+\alias{dduCopula,numeric,r270GumbelCopula-method}
+\alias{ddvCopula,matrix,r270GumbelCopula-method}
+\alias{ddvCopula,numeric,r270GumbelCopula-method}
 \title{Classes \code{"surGumbelCopula"}, \code{"r90GumbelCopula"} and
 \code{"r270GumbelCopula"}}
 \description{
@@ -30,6 +30,7 @@ A class representing rotated versions of the Gumbel copula family (survival,
 \code{\link{surGumbelCopula}}, \code{\link{r90GumbelCopula}} and
 \code{\link{r270GumbelCopula}} respectively.
 }
+
 \examples{
 
 library(copula)
@@ -39,11 +40,10 @@ persp(r90GumbelCopula(-1.5),dCopula,zlim=c(0,10))
 persp(r270GumbelCopula(-1.5),dCopula,zlim=c(0,10))
 
 }
-\author{
-Benedikt Graeler
-}
 \seealso{
 \code{\link{VineCopula-package}}
 }
+\author{
+Benedikt Graeler
+}
 \keyword{classes}
-

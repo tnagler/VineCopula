@@ -72,8 +72,6 @@
 #' clarke$p.value
 #' clarke$p.value.Schwarz
 #'
-#'
-#' @export RVineClarkeTest
 RVineClarkeTest <- function(data, RVM1, RVM2) {
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),
@@ -86,8 +84,8 @@ RVineClarkeTest <- function(data, RVM1, RVM2) {
     list2env(args, environment())
     N <- args$n
 
-    Model1.ll <- RVineLogLik(data, RVM1, separate = TRUE)$loglik
-    Model2.ll <- RVineLogLik(data, RVM2, separate = TRUE)$loglik
+    Model1.ll <- RVineLogLik(data, RVM1, separate = TRUE, calculate.V = FALSE)$loglik
+    Model2.ll <- RVineLogLik(data, RVM2, separate = TRUE, calculate.V = FALSE)$loglik
     anz.1 <- sum(RVM1$family >= 1, na.rm = TRUE) + sum(RVM1$family %in% allfams[twopar])
     anz.2 <- sum(RVM2$family >= 1, na.rm = TRUE) + sum(RVM2$family %in% allfams[twopar])
 

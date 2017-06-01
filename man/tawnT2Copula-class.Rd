@@ -2,26 +2,26 @@
 % Please edit documentation in R/tawnCopula.R
 \docType{class}
 \name{tawnT2Copula-class}
-\alias{dduCopula,matrix,r270TawnT2Copula-method}
-\alias{dduCopula,matrix,r90TawnT2Copula-method}
-\alias{dduCopula,matrix,surTawnT2Copula-method}
-\alias{dduCopula,matrix,tawnT2Copula-method}
-\alias{dduCopula,numeric,r270TawnT2Copula-method}
-\alias{dduCopula,numeric,r90TawnT2Copula-method}
-\alias{dduCopula,numeric,surTawnT2Copula-method}
-\alias{dduCopula,numeric,tawnT2Copula-method}
-\alias{ddvCopula,matrix,r270TawnT2Copula-method}
-\alias{ddvCopula,matrix,r90TawnT2Copula-method}
-\alias{ddvCopula,matrix,surTawnT2Copula-method}
-\alias{ddvCopula,matrix,tawnT2Copula-method}
-\alias{ddvCopula,numeric,r270TawnT2Copula-method}
-\alias{ddvCopula,numeric,r90TawnT2Copula-method}
-\alias{ddvCopula,numeric,surTawnT2Copula-method}
-\alias{ddvCopula,numeric,tawnT2Copula-method}
-\alias{r270TawnT2Copula-class}
-\alias{r90TawnT2Copula-class}
-\alias{surTawnT2Copula-class}
 \alias{tawnT2Copula-class}
+\alias{dduCopula,matrix,tawnT2Copula-method}
+\alias{dduCopula,numeric,tawnT2Copula-method}
+\alias{ddvCopula,matrix,tawnT2Copula-method}
+\alias{ddvCopula,numeric,tawnT2Copula-method}
+\alias{surTawnT2Copula-class}
+\alias{dduCopula,matrix,surTawnT2Copula-method}
+\alias{dduCopula,numeric,surTawnT2Copula-method}
+\alias{ddvCopula,matrix,surTawnT2Copula-method}
+\alias{ddvCopula,numeric,surTawnT2Copula-method}
+\alias{r90TawnT2Copula-class}
+\alias{dduCopula,matrix,r90TawnT2Copula-method}
+\alias{dduCopula,numeric,r90TawnT2Copula-method}
+\alias{ddvCopula,matrix,r90TawnT2Copula-method}
+\alias{ddvCopula,numeric,r90TawnT2Copula-method}
+\alias{r270TawnT2Copula-class}
+\alias{dduCopula,matrix,r270TawnT2Copula-method}
+\alias{dduCopula,numeric,r270TawnT2Copula-method}
+\alias{ddvCopula,matrix,r270TawnT2Copula-method}
+\alias{ddvCopula,numeric,r270TawnT2Copula-method}
 \title{Class \code{"tawnT2Copula"}}
 \description{
 S4-class representation of the Tawn Copula family of type 2 and rotated
@@ -34,17 +34,17 @@ versions there of.
 \code{\link{r90TawnT2Copula}} and \code{\link{r270TawnT2Copula}}
 respectively.
 }
+
 \examples{
 
 showClass("tawnT2Copula")
 
 }
-\author{
-Benedikt Graeler
-}
 \seealso{
 \code{\linkS4class{tawnT1Copula}} and the package
 \code{\link{VineCopula-package}} for implementation details.
 }
+\author{
+Benedikt Graeler
+}
 \keyword{classes}
-

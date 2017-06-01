@@ -80,10 +80,6 @@ clarke$statistic.Schwarz
 clarke$p.value
 clarke$p.value.Schwarz
 
-
-}
-\author{
-Jeffrey Dissmann, Eike Brechmann
 }
 \references{
 Clarke, K. A. (2007). A Simple Distribution-Free Test for
@@ -93,4 +89,6 @@ Nonnested Model Selection. Political Analysis, 15, 347-363.
 \code{\link{RVineVuongTest}}, \code{\link{RVineAIC}},
 \code{\link{RVineBIC}}
 }
-
+\author{
+Jeffrey Dissmann, Eike Brechmann
+}

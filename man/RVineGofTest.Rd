@@ -214,9 +214,6 @@ RVineGofTest(daxreturns[,1:5], RVM, method = "ECP2",
 }
 
 }
-\author{
-Ulf Schepsmeier
-}
 \references{
 Berg, D. and H. Bakken (2007) A copula goodness-of-fit apprach
 based on the conditional probability integral transformation.
@@ -244,4 +241,6 @@ Econometrica, 50, 1-26.
 \seealso{
 \code{\link{BiCopGofTest}}, \code{\link{RVinePIT}}
 }
-
+\author{
+Ulf Schepsmeier
+}

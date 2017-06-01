@@ -149,7 +149,7 @@
 #' summary(RVM)
 #'
 #' ## inspect the model using plots
-#' \donttest{plot(RVM)  # tree structure}
+#' \dontrun{plot(RVM)  # tree structure}
 #' contour(RVM)  # contour plots of all pair-copulas
 #'
 #' ## simulate from the vine copula model
@@ -202,16 +202,22 @@ RVineMatrix <- function(Matrix,
     }
 
     ## add dependence measures
+
     # create list of BiCop ojbects
-    objlst <- apply(cbind(family[sel], par[sel], par2[sel]),
-                    1,
-                    function(x) BiCop(x[1], x[2], x[3], check.pars = FALSE))
+    objlst <- apply(cbind(family[sel], par[sel], par2[sel]), 1, function(x)
+        if (x[1] == 0) NA else BiCop(x[1], x[2], x[3], check.pars = FALSE))
+
     # construct dependence measure matrices
     taus <- utds <- ltds <- bets <- matrix(0, nrow(Matrix), ncol(Matrix))
-    taus[sel] <- sapply(objlst, function(x) x$tau)
-    utds[sel] <- sapply(objlst, function(x) x$taildep$upper)
-    ltds[sel] <- sapply(objlst, function(x) x$taildep$lower)
-    bets[sel] <- sapply(objlst, function(x) x$beta)
+    taus[sel] <- vapply(objlst, function(x)
+        ifelse(inherits(x, "BiCop"), x$tau, 0), numeric(1))
+    utds[sel] <- vapply(objlst, function(x)
+        ifelse(inherits(x, "BiCop"), x$taildep$upper, 0), numeric(1))
+    ltds[sel] <- vapply(objlst, function(x)
+        ifelse(inherits(x, "BiCop"), x$taildep$lower, 0), numeric(1))
+    bets[sel] <- vapply(objlst, function(x)
+        ifelse(inherits(x, "BiCop"), x$beta, 0), numeric(1))
+
     RVM$tau <- taus
     RVM$taildep$upper <- utds
     RVM$taildep$lower <- ltds
@@ -234,15 +240,16 @@ normalizeRVineMatrix <- function(RVM) {
                        check.pars = FALSE))
 }
 
-reorderRVineMatrix <- function(Matrix) {
-    oldOrder <- diag(Matrix)
+reorderRVineMatrix <- function(Matrix, oldOrder = NULL) {
 
+    if (length(oldOrder) == 0) {
+        oldOrder <- diag(Matrix)
+    }
     O <- apply(t(1:nrow(Matrix)), 2, "==", Matrix)
 
     for (i in 1:nrow(Matrix)) {
         Matrix[O[, oldOrder[i]]] <- nrow(Matrix) - i + 1
     }
-
     return(Matrix)
 }
 
@@ -280,7 +287,6 @@ reorderRVineMatrix <- function(Matrix) {
 #' # normalise the RVine
 #' RVineMatrixNormalize(RVM)
 #'
-#' @export RVineMatrixNormalize
 RVineMatrixNormalize <- function(RVM) {
     stopifnot(is(RVM, "RVineMatrix"))
 
@@ -523,26 +529,34 @@ draw_lines <- function(len) {
     do.call(paste0, as.list(rep("-", len)))
 }
 
+## A D-vine has a path in the first tree (and thus in all trees)
 is.DVine <- function(Matrix) {
     if (inherits(Matrix, "RVineMatrix"))
         Matrix <- Matrix$Matrix
     Matrix <- reorderRVineMatrix(Matrix)
-    ## A D-vine has a path in the first tree (and thus in all trees)
     d <- nrow(Matrix)
     length(unique(Matrix[d, ])) == d - 1
 }
 
+## A C-vine has a star in each tree
 is.CVine <- function(Matrix) {
     if (inherits(Matrix, "RVineMatrix"))
         Matrix <- Matrix$Matrix
     Matrix <- reorderRVineMatrix(Matrix)
-    ## A C-vine has a star in each tree
     d <- nrow(Matrix)
-    all.trees.star <- (length(unique(Matrix[d, ])) == 1)
+
+    # a vine in less then 4 dimensions is always a C-vine
+    if (d < 4)
+        return(TRUE)
+
+    # check conditioning sets of each tree (same number has to enter at all
+    # edges)
+    all.trees.star <- TRUE
     for (tree in 2:(d - 2)) {
-        ## the zero now appears in all trees
-        all.trees.star <- all.trees.star & (length(unique(Matrix[tree, ])) == 2)
+        all.trees.star <- all.trees.star &
+            (length(unique(Matrix[d - tree + 2, 1:(d - tree)])) == 1)
     }
+
     all.trees.star
 }
 
@@ -628,7 +642,7 @@ varray2NO <- function(A, irev = FALSE, iprint = FALSE) {
     d2 <- d - 2
     d1 <- d - 1
     A1 <- matrix(0, d, d)
-    T <- vpartner(A)
+    TT <- vpartner(A)
     if (irev) {
         A1[d, d] <- A[d1, d]
     } else {
@@ -636,9 +650,9 @@ varray2NO <- function(A, irev = FALSE, iprint = FALSE) {
     }
     for (k in d:2) {
         x <- A1[k, k]
-        for (ell in 1:(k - 1)) A1[ell, k] <- which(T[x, ] == ell)
-        T[x, ] <- 0
-        T[, x] <- 0
+        for (ell in 1:(k - 1)) A1[ell, k] <- which(TT[x, ] == ell)
+        TT[x, ] <- 0
+        TT[, x] <- 0
         A1[k - 1, k - 1] <- A1[k - 1, k]
     }
     # A1 satisfies A[i,i]=A[i,i+1]
@@ -741,24 +755,16 @@ vinvstepb <- function(A, i, ichk0 = 0) {
 }
 
 
-# various checks for validity of a vine array A with dimension d>=4
-# return 1 for OK
-# return -3 for diagonal not 1:d
-# return -2 for not permutation of 1:j in column j
-# return -1 if cannot find proper binary array from array in natural order
-
-
-
 #' R-Vine Matrix Check
 #'
 #' The given matrix is tested to be a valid R-vine matrix.
 #'
 #'
-#' @param M A dxd vine matrix: only lower triangle is used; For the check, M is
-#' assumed to be in natural order, i.e. d:1 on diagonal. Further M[j+1,j]=d-j
-#' and M[j,j]=d-j
-#' @return \item{code}{ \code{1} for OK; \cr \code{-3} diagonal can not be put
-#' in order d:1; \cr \code{-2} for not permutation of j:d in column d-j; \cr
+#' @param M A dxd vine matrix.
+#' @return \item{code}{ \code{1} for OK; \cr
+#' \code{-4} matrix is neither lower nor upper triangular;\cr
+#' \code{-3} diagonal can not be put in order d:1;\cr
+#' \code{-2} for not permutation of j:d in column d-j; \cr
 #' \code{-1} if cannot find proper binary array from array in natural order.  }
 #' @note The matrix M do not have to be given in natural order or the diagonal
 #' in order d:1. The test checks if it can be done in order to be a valid
@@ -774,35 +780,38 @@ vinvstepb <- function(A, i, ichk0 = 0) {
 #' @examples
 #'
 #' A1 <- matrix(c(6, 0, 0, 0, 0, 0,
-#' 			         5, 5, 0, 0, 0, 0,
-#' 			         3, 4, 4, 0, 0, 0,
-#' 			         4, 3, 3, 3, 0, 0,
-#' 			         1, 1, 2, 2, 2, 0,
-#' 			         2, 2, 1, 1, 1, 1), 6, 6, byrow = TRUE)
+#'                5, 5, 0, 0, 0, 0,
+#'                3, 4, 4, 0, 0, 0,
+#'                4, 3, 3, 3, 0, 0,
+#'                1, 1, 2, 2, 2, 0,
+#'                2, 2, 1, 1, 1, 1), 6, 6, byrow = TRUE)
 #' b1 <- RVineMatrixCheck(A1)
 #' print(b1)
 #' # improper vine matrix, code=-1
 #' A2 <- matrix(c(6, 0, 0, 0, 0, 0,
-#' 			         5, 5, 0, 0, 0, 0,
-#' 			         4, 4, 4, 0, 0, 0,
-#' 			         1, 3, 3, 3, 0, 0,
-#' 			         3, 1, 2, 2, 2, 0,
-#' 			         2, 2, 1, 1, 1,1 ), 6, 6, byrow = TRUE)
+#'                5, 5, 0, 0, 0, 0,
+#'                4, 4, 4, 0, 0, 0,
+#'                1, 3, 3, 3, 0, 0,
+#'                3, 1, 2, 2, 2, 0,
+#'                2, 2, 1, 1, 1,1 ), 6, 6, byrow = TRUE)
 #' b2 <- RVineMatrixCheck(A2)
 #' print(b2)
 #' # improper vine matrix, code=-2
 #' A3 <- matrix(c(6, 0, 0, 0, 0, 0,
-#' 			         3, 5, 0, 0, 0, 0,
-#' 			         3, 4, 4, 0, 0, 0,
-#' 			         4, 3, 3, 3, 0, 0,
-#' 			         1, 1, 2, 2, 2, 0,
-#' 			         2, 2, 1, 1, 1, 1), 6, 6, byrow = TRUE)
+#'                3, 5, 0, 0, 0, 0,
+#'                3, 4, 4, 0, 0, 0,
+#'                4, 3, 3, 3, 0, 0,
+#'                1, 1, 2, 2, 2, 0,
+#'                2, 2, 1, 1, 1, 1), 6, 6, byrow = TRUE)
 #' b3 <- RVineMatrixCheck(A3)
 #' print(b3)
 #'
-#' @export RVineMatrixCheck
 RVineMatrixCheck <- function(M) {
-    A <- M
+    lmat <- M[lower.tri(M)]
+    umat <- M[upper.tri(M)]
+    if (!(all(lmat == 0) | all(umat == 0)))
+        return(-4)
+    A <- ToLowerTri(M)
     d <- nrow(A)
     if (d != ncol(A))
         return(-1)
@@ -825,7 +834,9 @@ RVineMatrixCheck <- function(M) {
     # next convert to natural order for more checks
     if (d <= 3)
         return(1)
-    ANOobj <- varray2NO(A2)
+    ANOobj <- tryCatch(varray2NO(A2), error = function(e) NULL)
+    if (is.null(ANOobj))
+        return(-1)
     # print(ANOobj)
     b <- varray2bin(ANOobj$NO)  # if OK, a binary matrix is returned here
     if (is.matrix(b))

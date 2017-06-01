@@ -81,7 +81,6 @@ setClass("vineCopula",
 #'
 #' cloud(V1 ~ V2 + V3, as.data.frame(rCopula(500, vine)))
 #'
-#' @export vineCopula
 vineCopula <- function (RVM, type="CVine") { # RVM <- 4L
   if (is.integer(RVM)) {# assuming a dimension
     stopifnot(type %in% c("CVine","DVine"))

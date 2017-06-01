@@ -311,6 +311,17 @@ check_nobs <- function(args) {
 prep_familyset <- function(args) {
     if (is.na(args$familyset[1]))
         args$familyset <- allfams
+    if (!all(abs(args$familyset) %in% allfams)) {
+        wrong_fam <- args$familyset[-which(args$familyset %in% allfams)]
+        if (length(wrong_fam) == 1) {
+            msg <- paste("Copula family", wrong_fam)
+        } else {
+            msg <- paste("Copula families", paste0(wrong_fam, collapse = ", "))
+        }
+        stop("\n In ", args$call[1], ": ", msg, " not implemented.",
+             call. = FALSE)
+    }
+
     if (args$rotations)
         args$familyset <- with_rotations(args$familyset)
     if (length(unique(sign(args$familyset[args$familyset != 0]))) > 1) {
@@ -319,10 +330,6 @@ prep_familyset <- function(args) {
              call. = FALSE)
         args$familyset <- setdiff(allfams, -args$familyset)
     }
-    if (!all(abs(args$familyset) %in% allfams))
-        stop("\n In ", args$call[1], ": ",
-             "Copula family not implemented.",
-             call. = FALSE)
     args
 }
 
@@ -356,6 +363,68 @@ todo_fams <- function(args) {
         todo <- allfams
     }
     args$familyset <- todo[which(todo %in% args$familyset)]
+    args
+}
+
+todo_fams_presel <- function(args) {
+    # shrink familyset based on Kendall's tau and asymmetry index
+    if (args$emp_tau > 0) {
+        # calculate asymetry indices
+        x <- qnorm(cbind(args$u1, args$u2))
+        e <- try({
+            c11 <- cor(x[(x[, 1] > 0) & (x[, 2] > 0), ])[1, 2]
+            c00 <- cor(x[(x[, 1] < 0) & (x[, 2] < 0), ])[1, 2]
+        }, silent = TRUE)
+        if (inherits(e, "try-error")) {
+            todo <- c(0, posfams)
+        } else if (any(is.na(c(c11, c00)))) {
+            todo <- c(0, posfams)
+        } else {
+            if (c11 - c00 > 0.3) {
+                todo <- c(0, 2, fams11)
+            } else if (c11 - c00 > 0.05) {
+                todo <- c(0, 1, 2, 5, 20, fams11)
+            } else if (c11 - c00 < -0.3) {
+                todo <- c(0, 2, fams00)
+            } else if (c11 - c00 < -0.05) {
+                todo <- c(0, 1, 2, 5, 10, fams00)
+            } else {
+                todo <- c(0, posfams)
+            }
+        }
+    } else if (args$emp_tau < 0) {
+        # calculate asymetry indices
+        x <- qnorm(cbind(args$u1, args$u2))
+        e <- try({
+            c10 <- cor(x[(x[, 1] > 0) & (x[, 2] < 0), ])[1, 2]
+            c01 <- cor(x[(x[, 1] < 0) & (x[, 2] > 0), ])[1, 2]
+        }, silent = TRUE)
+        if (inherits(e, "try-error")) {
+            todo <- c(0, negfams)
+        } else if (any(is.na(c(c10, c01)))) {
+            todo <- c(0, negfams)
+        } else {
+            if (c10 - c01 < -0.3) {
+                todo <- c(0, 2, fams10)
+            } else if (c10 - c01 < -0.05) {
+                todo <- c(0, 1, 2, 5, 30, fams10)
+            } else if (c10 - c01 > 0.3) {
+                todo <- c(0, 2, fams01)
+            } else if (c10 - c01 > 0.05) {
+                todo <- c(0, 1, 2, 5, 40, fams01)
+            } else {
+                todo <- c(0, negfams)
+            }
+        }
+    } else {
+        todo <- allfams
+    }
+
+    # restrict to familie
+    tmpfams <- todo[which(todo %in% args$familyset)]
+    # check if any family is feasible; if not, keep all
+    if (length(tmpfams) > 1)
+        args$familyset <- tmpfams
     args
 }
 
@@ -451,7 +520,7 @@ check_est_pars <- function(args) {
                  "Estimation method has to be either 'mle' or 'itau'.",
                  call. = FALSE)
         if (!is.null(args$family)) {
-            if ((args$method == "itau") && (!(args$family %in% c(0, allfams[onepar])))) {
+            if ((args$method == "itau") && (!(args$family %in% c(0, 2, allfams[onepar])))) {
                 warning(" In ", args$call[1], ": ",
                         "For two parameter copulas the estimation method 'itau' cannot ",
                         "be used. The method is automatically set to 'mle'.",
@@ -460,7 +529,7 @@ check_est_pars <- function(args) {
             }
         }
         if (!is.null(args$familyset)) {
-            if ((args$method == "itau") && (!all(args$familyset %in% c(0, allfams[onepar])))) {
+            if ((args$method == "itau") && (!all(args$familyset %in% c(0, 2, allfams[onepar])))) {
                 warning(" In ", args$call[1], ": ",
                         "For two parameter copulas the estimation method 'itau' cannot ",
                         "be used. The method is automatically set to 'mle'.",
@@ -481,7 +550,25 @@ check_est_pars <- function(args) {
         args$se <- FALSE
     }
 
-    args$weights <- ifelse(is.null(args$weights), NA, args$weights)
+    if (is.null(args$weights))
+        args$weights <- NA
+
+    args
+}
+
+check_twoparams <- function(args) {
+    if (!is.null(args$familyset)) {
+        if ((args$method == "itau") &&
+            (!all(args$familyset %in% c(0, 2, allfams[onepar])))) {
+            warning(' In ', args$call[1], ': ',
+                    'Two parameter families (other than the t-copula) cannot',
+                    ' be handled by method "itau".',
+                    ' They are automatically removed from the familyset.',
+                    call. = FALSE)
+            args$familyset <- args$familyset[args$familyset %in%
+                                                 c(0, 2, allfams[onepar])]
+        }
+    }
 
     args
 }

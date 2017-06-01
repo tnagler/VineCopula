@@ -89,11 +89,10 @@ obj <- BiCop(family = 2, par = -0.7, par2 = 4)
 simdata2 <- BiCopSim(100, obj)
 
 }
-\author{
-Ulf Schepsmeier
-}
 \seealso{
 \code{\link{BiCop}},
 \code{\link{RVineSim}}
 }
-
+\author{
+Ulf Schepsmeier
+}

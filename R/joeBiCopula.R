@@ -97,7 +97,6 @@ setClass("joeBiCopula",
 #' persp(r90JoeBiCopula(-1.5), dCopula, zlim = c(0,10))
 #' persp(r270JoeBiCopula(-1.5), dCopula, zlim = c(0,10))
 #'
-#' @export joeBiCopula
 joeBiCopula <- function (param=2) {
   if (any(is.na(param) | param >= Inf | param <= 1 ))
     stop("Parameter is outside of the allowed interval (1,Inf).")
@@ -164,7 +163,11 @@ setClass("surJoeBiCopula",
 surJoeBiCopula <- function (param=2) {
   if (any(is.na(param) | param >= Inf | param <= 1 ))
     stop("Parameter is outside of the allowed interval (1,Inf).")
+<<<<<<< HEAD
   new("surJoeBiCopula", dimension = as.integer(2), parameters = param, param.names = c("theta"),
+=======
+  new("surJoeBiCopula", dimension = as.integer(2), parameters = param, param.names = "theta",
+>>>>>>> d3e54a941d865a75db06107820e8fae3bfc43307
       param.lowbnd = 1, param.upbnd = Inf, family=16,
       fullname = "Survival Joe copula family. Number 16 in VineCopula.")
 }
@@ -245,7 +248,11 @@ setClass("r90JoeBiCopula",
 r90JoeBiCopula <- function (param=-2) {
   if (any(is.na(param) | param >= -1 | param <= -Inf ))
     stop("Parameter is outside of the allowed interval (-Inf,-1).")
+<<<<<<< HEAD
   new("r90JoeBiCopula", dimension = as.integer(2), parameters = param, param.names = c("theta"),
+=======
+  new("r90JoeBiCopula", dimension = as.integer(2), parameters = param, param.names = "theta",
+>>>>>>> d3e54a941d865a75db06107820e8fae3bfc43307
       param.lowbnd = -Inf, param.upbnd = -1, family=26,
       fullname = "90 deg rotated Joe copula family. Number 26 in VineCopula.")
 }
@@ -308,7 +315,11 @@ setClass("r270JoeBiCopula",
 r270JoeBiCopula <- function (param=-2) {
   if (any(is.na(param) | param >= -1 | param <= -Inf ))
     stop("Parameter is outside of the allowed interval (-Inf,-1).")
+<<<<<<< HEAD
   new("r270JoeBiCopula", dimension = as.integer(2), parameters = param, param.names = c("theta"),
+=======
+  new("r270JoeBiCopula", dimension = as.integer(2), parameters = param, param.names = "theta",
+>>>>>>> d3e54a941d865a75db06107820e8fae3bfc43307
       param.lowbnd = -Inf, param.upbnd = -1, family=36,
       fullname = "270 deg rotated Joe copula family. Number 36 in VineCopula.")
 }

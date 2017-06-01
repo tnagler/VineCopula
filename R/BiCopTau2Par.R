@@ -98,7 +98,6 @@
 #' BiCopTau2Par(family = 71, tau = -c(0.4,0.5,0.6))
 #' }
 #'
-#' @export BiCopTau2Par
 BiCopTau2Par <- function(family, tau, check.taus = TRUE) {
     ## sanity check
     if (any(family %in% setdiff(allfams[twopar], 2)))

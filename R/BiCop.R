@@ -124,11 +124,19 @@ BiCop <- function(family, par, par2 = 0, tau = NULL, check.pars = TRUE) {
     }
 
     # calculate dependence measures
-    tau <- BiCopPar2Tau(family, par, par2, check.pars = FALSE)
-    taildep <- BiCopPar2TailDep(family, par, par2, check.pars = FALSE)
-    beta <- NA  # beta does not work for t copula (cdf disabled)
-    if (family != 2)
-        beta <- BiCopPar2Beta(family, par, par2, check.pars = FALSE)
+    if (family == 0) {
+        tau <- 0
+        beta <- 0
+        taildep <- list()
+        taildep$upper <- 0
+        taildep$lower <- 0
+    } else {
+        tau <- BiCopPar2Tau(family, par, par2, check.pars = FALSE)
+        taildep <- BiCopPar2TailDep(family, par, par2, check.pars = FALSE)
+        beta <- NA  # beta does not work for t copula (cdf disabled)
+        if (family != 2)
+            beta <- BiCopPar2Beta(family, par, par2, check.pars = FALSE)
+    }
 
     ## get full family name and calculate number of parameters
     familyname <- BiCopName(family, short = FALSE)
@@ -158,6 +166,14 @@ onepar <- setdiff(which(allfams %% 10 %in% c(1, 3, 4, 5, 6)), tawns)
 twopar <- seq_along(allfams)[-c(1, onepar)]
 negfams <- c(1, 2, 5, 23, 24, 26:30, 33, 34, 36:40, 124, 134, 224, 234)
 posfams <- c(1:10, 13, 14, 16:20, 104, 114, 204, 214)
+# families with more dependence near (u, v) = (1, 1)
+fams11 <- c(13, 4, 6, 7, 17, 8, 9, 19, 10, 104, 204)
+# families with more dependence near (u, v) = (0, 0)
+fams00 <- c(3, 14, 16, 7, 17, 18, 9, 19, 20, 114, 214)
+# families with more dependence near (u, v) = (1, 0)
+fams10 <- c(23, 34, 36, 27, 37, 38, 29, 39, 40, 134, 234)
+# families with more dependence near (u, v) = (0, 1)
+fams01 <- c(33, 24, 26, 27, 37, 28, 29, 39, 30, 124, 224)
 
 print.BiCop <- function(x, ...) {
     cat("Bivariate copula: ")
@@ -194,7 +210,6 @@ summary.BiCop <- function(object, ...) {
         if (!is.null(object$se))
             cat("  (SE = ", as.character(round(object$se2, 2)), ")", sep = "")
     }
-    cat("\n")
     cat("\n")
 
     ## show dependence measures

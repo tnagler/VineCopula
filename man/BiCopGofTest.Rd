@@ -55,8 +55,8 @@ only for \code{method = "kendall"})\cr
 
 \item{method}{A string indicating the goodness-of-fit method:\cr
 \code{"white"} = goodness-of-fit test based on White's information matrix
-equality (default) \cr \code{"kendall"} = goodness-of-fit test based on
-Kendall's process}
+equality (default) \cr
+\code{"kendall"} = goodness-of-fit test based on Kendall's process}
 
 \item{max.df}{Numeric; upper bound for the estimation of the degrees of
 freedom parameter of the t-copula (default: \code{max.df = 30}).}
@@ -81,9 +81,10 @@ Kolmogorov-Smirnov test statistic.}
 }
 \description{
 This function performs a goodness-of-fit test for bivariate copulas, either
-based on White's information matrix equality (White 1982) as introduced by
-Huang and Prokhorov (2011) or based on Kendall's process. It computes the
-test statistics and p-values.
+based on White's information matrix equality (White, 1982) as introduced by
+Huang and Prokhorov (2011) or based on Kendall's process
+(Wang and Wells, 2000; Genest et al., 2006). It computes the test statistics
+and p-values.
 }
 \details{
 \code{method = "white"}:\cr This goodness-of fit test uses the information
@@ -106,7 +107,8 @@ and Prokhorov (2011). It involves two-dimensional integrals.\cr WARNING: For
 the t-copula the test may be instable. The results for the t-copula
 therefore have to be treated carefully.\cr \cr \code{method = "kendall"}:\cr
 This copula goodness-of-fit test is based on Kendall's process as
-investigated by Genest and Rivest (1993) and Wang and Wells (2000). For
+proposed by Wang and Wells (2000). For computation of p-values, the
+parametric bootstrap described by Genest et al. (2006) is used. For
 rotated copulas the input arguments are transformed and the goodness-of-fit
 procedure for the corresponding non-rotated copula is used.
 }
@@ -131,24 +133,20 @@ BiCopGofTest(u1, u2, family = 3, method = "kendall", B=50)
 \donttest{BiCopGofTest(u1, u2, family = 5, method = "kendall", B=50)}
 
 }
-\author{
-Ulf Schepsmeier, Wanling Huang, Jiying Luo, Eike Brechmann
-}
 \references{
-Genest, C. and L.-P. Rivest (1993). Statistical inference
-procedures for bivariate Archimedean copulas. Journal of the American
-Statistical Association, 88 (423), 1034-1043.
-
 Huang, W. and A. Prokhorov (2014). A goodness-of-fit test for copulas.
 Econometric Reviews, 33 (7), 751-771.
-
-Luo J. (2011). Stepwise estimation of D-vines with arbitrary specified
-copula pairs and EDA tools. Diploma thesis, Technische Universitaet
-Muenchen.\cr \url{http://mediatum.ub.tum.de/?id=1079291}.
 
 Wang, W. and M. T. Wells (2000). Model selection and semiparametric
 inference for bivariate failure-time data. Journal of the American
 Statistical Association, 95 (449), 62-72.
+
+Genest, C., Quessy, J. F., and Remillard, B. (2006). Goodness-of-fit
+Procedures for Copula Models Based on the Probability Integral Transformation.
+Scandinavian Journal of Statistics, 33(2), 337-366.
+Luo J. (2011). Stepwise estimation of D-vines with arbitrary specified
+copula pairs and EDA tools. Diploma thesis, Technische Universitaet
+Muenchen.\cr \url{http://mediatum.ub.tum.de/?id=1079291}.
 
 White, H. (1982) Maximum likelihood estimation of misspecified models,
 Econometrica, 50, 1-26.
@@ -157,4 +155,6 @@ Econometrica, 50, 1-26.
 \code{\link{BiCopDeriv2}}, \code{\link{BiCopDeriv}},
 \code{\link{BiCopIndTest}}, \code{\link{BiCopVuongClarke}}
 }
-
+\author{
+Ulf Schepsmeier, Wanling Huang, Jiying Luo, Eike Brechmann
+}

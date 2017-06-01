@@ -105,9 +105,6 @@ print(obj)  # brief overview of BiCop object
 summary(obj)  # comprehensive overview of BiCop object
 
 }
-\author{
-Thomas Nagler
-}
 \seealso{
 \code{\link{BiCopPDF}},
 \code{\link{BiCopHfunc}},
@@ -117,4 +114,6 @@ Thomas Nagler
 \code{\link{plot.BiCop}},
 \code{\link{contour.BiCop}}
 }
-
+\author{
+Thomas Nagler
+}

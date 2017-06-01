@@ -6,7 +6,7 @@
 \usage{
 BiCopSelect(u1, u2, familyset = NA, selectioncrit = "AIC",
   indeptest = FALSE, level = 0.05, weights = NA, rotations = TRUE,
-  se = FALSE)
+  se = FALSE, presel = TRUE, method = "mle")
 }
 \arguments{
 \item{u1, u2}{Data vectors of equal length with values in [0,1].}
@@ -79,6 +79,18 @@ be rejected.}
 
 \item{se}{Logical; whether standard error(s) of parameter estimates is/are
 estimated (default: \code{se = FALSE}).}
+
+\item{presel}{Logical; whether to exclude families before fitting based on
+symmetry properties of the data. Makes the selection about 30% faster
+(on average), but may yield slightly worse results in few special cases.}
+
+\item{method}{indicates the estimation method: either maximum
+likelihood estimation (\code{method = "mle"}; default) or inversion of
+Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
+one parameter families and the Student t copula can be used (\code{family =
+1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
+\code{par2} is found by a crude profile likelihood optimization over the
+interval (2, 10].}
 }
 \value{
 An object of class \code{\link{BiCop}}, augmented with the following
@@ -153,9 +165,6 @@ cop3 <- BiCopSelect(daxreturns[, 1], daxreturns[, 4], familyset = 0:10)
 summary(cop3)
 
 }
-\author{
-Eike Brechmann, Jeffrey Dissmann, Thomas Nagler
-}
 \references{
 Akaike, H. (1973). Information theory and an extension of the
 maximum likelihood principle. In B. N. Petrov and F. Csaki (Eds.),
@@ -180,4 +189,6 @@ Statistics 6 (2), 461-464.
 \code{\link{RVineCopSelect}},
 \code{\link{BiCopIndTest}},
 }
-
+\author{
+Eike Brechmann, Jeffrey Dissmann, Thomas Nagler
+}

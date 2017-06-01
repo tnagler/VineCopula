@@ -78,9 +78,6 @@ BiCopKPlot(dat2[,1], dat2[,2], main = "Clayton copula")
 par(op)
 
 }
-\author{
-Natalia Belgorodski, Ulf Schepsmeier
-}
 \references{
 Genest, C. and A. C. Favre (2007). Everything you always wanted
 to know about copula modeling but were afraid to ask. Journal of Hydrologic
@@ -90,4 +87,6 @@ Engineering, 12 (4), 347-368.
 \code{\link{BiCopMetaContour}}, \code{\link{BiCopChiPlot}},
 \code{\link{BiCopLambda}}, \code{\link{BiCopGofTest}}
 }
-
+\author{
+Natalia Belgorodski, Ulf Schepsmeier
+}

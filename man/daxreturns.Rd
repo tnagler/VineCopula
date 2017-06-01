@@ -27,4 +27,3 @@ TauMatrix(daxreturns)
 \seealso{
 \code{\link{RVineStructureSelect}}
 }
-

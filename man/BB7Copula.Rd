@@ -2,9 +2,9 @@
 % Please edit documentation in R/BB7copula.R
 \name{BB7Copula}
 \alias{BB7Copula}
-\alias{r270BB7Copula}
-\alias{r90BB7Copula}
 \alias{surBB7Copula}
+\alias{r90BB7Copula}
+\alias{r270BB7Copula}
 \title{Constructor of the BB7 Family and Rotated Versions thereof}
 \usage{
 BB7Copula(param = c(1, 1))
@@ -33,9 +33,6 @@ persp(r90BB7Copula(c(-1,-1.5)), dCopula, zlim = c(0,10))
 persp(r270BB7Copula(c(-1,-1.5)), dCopula, zlim = c(0,10))
 
 }
-\author{
-Benedikt Graeler
-}
 \references{
 Joe, H., (1997). Multivariate Models and Dependence Concepts.
 Monogra. Stat. Appl. Probab. 73, London: Chapman and Hall.
@@ -45,4 +42,6 @@ See also \code{\link{BB6Copula}}, \code{\link{BB7Copula}},
 \code{\link{BB8Copula}} and \code{\link{joeCopula}} for further wrapper
 functions to the \code{\link{VineCopula-package}}.
 }
-
+\author{
+Benedikt Graeler
+}
