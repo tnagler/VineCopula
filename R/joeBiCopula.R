@@ -108,9 +108,9 @@ joeBiCopula <- function (param=2) {
 ## density ##
 setMethod("dCopula", signature("numeric","joeBiCopula"),
           function(u, copula, log, ...) {
-            linkVineCop.PDF(matrix(u,ncol=copula@dimension),copula, log)
+            linkVineCop.PDF(matrix(u,ncol=copula@dimension), copula, log, ...)
           })
-setMethod("dCopula", signature("matrix","joeBiCopula"), function(u, copula, log, ...) linkVineCop.PDF(u, copula, log))
+setMethod("dCopula", signature("matrix","joeBiCopula"), function(u, copula, log, ...) linkVineCop.PDF(u, copula, log, ...))
 
 ## jcdf ##
 setMethod("pCopula", signature("numeric","joeBiCopula"),

@@ -102,15 +102,15 @@ BB7Copula <- function (param=c(1,1)) {
 
 ## density ##
 setMethod("dCopula", signature("numeric","BB7Copula"),
-          function(u, copula, log) {
-            linkVineCop.PDF(matrix(u,ncol=copula@dimension),copula, log)
+          function(u, copula, log, ...) {
+            linkVineCop.PDF(matrix(u,ncol=copula@dimension), copula, log, ...)
           })
-setMethod("dCopula", signature("matrix","BB7Copula"), function(u, copula, log) linkVineCop.PDF(u, copula, log))
+setMethod("dCopula", signature("matrix","BB7Copula"), function(u, copula, log, ...) linkVineCop.PDF(u, copula, log, ...))
 
 ## jcdf ##
 setMethod("pCopula", signature("numeric","BB7Copula"),
           function(u, copula, ...) {
-            linkVineCop.CDF(matrix(u,ncol=copula@dimension),copula)
+            linkVineCop.CDF(matrix(u,ncol=copula@dimension), copula)
           })
 setMethod("pCopula", signature("matrix","BB7Copula"), linkVineCop.CDF)
 
@@ -118,23 +118,22 @@ setMethod("pCopula", signature("matrix","BB7Copula"), linkVineCop.CDF)
 # ddu
 setMethod("dduCopula", signature("numeric","BB7Copula"),
           function(u, copula, ...) {
-            linkVineCop.ddu(matrix(u,ncol=copula@dimension),copula)
+            linkVineCop.ddu(matrix(u,ncol=copula@dimension), copula)
           })
 setMethod("dduCopula", signature("matrix","BB7Copula"), linkVineCop.ddu)
 
 # ddv
 setMethod("ddvCopula", signature("numeric","BB7Copula"),
           function(u, copula, ...) {
-            linkVineCop.ddv(matrix(u,ncol=copula@dimension),copula)
+            linkVineCop.ddv(matrix(u,ncol=copula@dimension), copula)
           })
 setMethod("ddvCopula", signature("matrix","BB7Copula"), linkVineCop.ddv)
 
 ## random number generator
 setMethod("rCopula", signature("numeric","BB7Copula"), linkVineCop.r)
 
-setMethod("tau",signature("BB7Copula"),linkVineCop.tau)
-setMethod("lambda",signature("BB7Copula"),linkVineCop.tailIndex)
-
+setMethod("tau",signature("BB7Copula"), linkVineCop.tau)
+setMethod("lambda",signature("BB7Copula"), linkVineCop.tailIndex)
 
 #########################
 ## BB7 survival copula ##

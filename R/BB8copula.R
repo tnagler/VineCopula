@@ -105,15 +105,15 @@ BB8Copula <- function (param=c(1,1)) {
 
 ## density ##
 setMethod("dCopula", signature("numeric","BB8Copula"),
-          function(u, copula, log) {
-            linkVineCop.PDF(matrix(u,ncol=copula@dimension),copula, log)
+          function(u, copula, log, ...) {
+            linkVineCop.PDF(matrix(u,ncol=copula@dimension), copula, log, ...)
           })
-setMethod("dCopula", signature("matrix","BB8Copula"), function(u, copula, log) linkVineCop.PDF(u, copula, log))
+setMethod("dCopula", signature("matrix","BB8Copula"), function(u, copula, log, ...) linkVineCop.PDF(u, copula, log, ...))
 
 ## jcdf ##
 setMethod("pCopula", signature("numeric","BB8Copula"),
           function(u, copula, ...) {
-            linkVineCop.CDF(matrix(u,ncol=copula@dimension),copula)
+            linkVineCop.CDF(matrix(u,ncol=copula@dimension), copula)
           })
 setMethod("pCopula", signature("matrix","BB8Copula"), linkVineCop.CDF)
 
@@ -121,22 +121,22 @@ setMethod("pCopula", signature("matrix","BB8Copula"), linkVineCop.CDF)
 # ddu
 setMethod("dduCopula", signature("numeric","BB8Copula"),
           function(u, copula, ...) {
-            linkVineCop.ddu(matrix(u,ncol=copula@dimension),copula)
+            linkVineCop.ddu(matrix(u,ncol=copula@dimension), copula)
           })
 setMethod("dduCopula", signature("matrix","BB8Copula"), linkVineCop.ddu)
 
 # ddv
 setMethod("ddvCopula", signature("numeric","BB8Copula"),
           function(u, copula, ...) {
-            linkVineCop.ddv(matrix(u,ncol=copula@dimension),copula)
+            linkVineCop.ddv(matrix(u,ncol=copula@dimension), copula)
           })
 setMethod("ddvCopula", signature("matrix","BB8Copula"), linkVineCop.ddv)
 
 ## random number generator
-setMethod("rCopula", signature("numeric","BB8Copula"),linkVineCop.r)
+setMethod("rCopula", signature("numeric","BB8Copula"), linkVineCop.r)
 
-setMethod("tau",signature("BB8Copula"),linkVineCop.tau)
-setMethod("lambda",signature("BB8Copula"),linkVineCop.tailIndex)
+setMethod("tau",signature("BB8Copula"), linkVineCop.tau)
+setMethod("lambda",signature("BB8Copula"), linkVineCop.tailIndex)
 
 #########################
 ## BB8 survival copula ##

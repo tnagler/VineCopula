@@ -592,11 +592,11 @@ r270TawnT2Copula <- function (param=c(-2, 0.5)) {
 
 ## density ##
 setMethod("dCopula", signature("numeric","r270TawnT2Copula"),
-          function(u, copula, log) {
-            linkVineCop.PDF(matrix(u,ncol=copula@dimension),copula, log)
+          function(u, copula, log, ...) {
+            linkVineCop.PDF(matrix(u,ncol=copula@dimension),copula, log, ...)
           })
 setMethod("dCopula", signature("matrix","r270TawnT2Copula"),
-          function(u, copula, log) linkVineCop.PDF(u, copula, log))
+          function(u, copula, log, ...) linkVineCop.PDF(u, copula, log, ...))
 
 ## jcdf ##
 setMethod("pCopula", signature("numeric","r270TawnT2Copula"),
