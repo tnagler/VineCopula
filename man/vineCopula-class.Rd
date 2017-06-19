@@ -18,7 +18,6 @@ functions go back to the package \code{\link{VineCopula-package}}
 \examples{
 
 showClass("vineCopula")
-
 }
 \references{
 Aas, K., C. Czado, A. Frigessi, and H. Bakken (2009).
