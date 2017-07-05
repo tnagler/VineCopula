@@ -383,7 +383,7 @@ summary.RVineMatrix <- function(object, with.se = TRUE, ...) {
     utdmat  <- formatC(object$taildep$upper, 2, format = "f")
     ltdmat  <- formatC(object$taildep$lower, 2, format = "f")
     nammat  <- matrix("", d, d)
-    nummat  <- matrix("", d, d)
+    nummat  <- matrix(0, d, d)
     with.se <- with.se & !is.null(object$se)
     if (with.se) {
         semat  <- formatC(object$se, 2, format = "f")
@@ -394,7 +394,7 @@ summary.RVineMatrix <- function(object, with.se = TRUE, ...) {
     for (i in 2:d) {
         for (j in 1:(i - 1)) {
             fammat[i, j] <- BiCopName(object$family[i, j])
-            nummat[i, j] <- formatC(object$family[i, j], 3)
+            nummat[i, j] <- object$family[i, j]
             nammat[i, j] <- gsub(" ", "", get_num(j, d - i + 1, object))
             if (fammat[i, j] == "I") {
                 parmat[i, j] <- "-"
@@ -424,7 +424,8 @@ summary.RVineMatrix <- function(object, with.se = TRUE, ...) {
 
     ## maximal number of characters for each category
     ltree <- nchar("tree")
-    lfam  <- max(nchar("family"), max(sapply(fammat, nchar)))
+    lfam  <- nchar("family")
+    lfname <- max(nchar("cop"), max(sapply(fammat, nchar)))
     lpar  <- max(nchar("par"), max(sapply(parmat, nchar)))
     lpar2 <- max(nchar("par2"), max(sapply(par2mat, nchar)))
     ltau  <- max(nchar("tau"), max(sapply(taumat, nchar)))
@@ -435,19 +436,20 @@ summary.RVineMatrix <- function(object, with.se = TRUE, ...) {
 
     ## line with headings
     txt <- "tree "
+    # substract nchar(edge) - 1 (for space) = 3
     txt <- paste0(txt, draw_blanks(max(1, lnam - 3)), "edge ")
-    txt <- paste0(txt, "|  No.")
-    txt <- paste0(txt, draw_blanks(max(1, lfam - 5)), "family ")
+    txt <- paste0(txt, "| family ")
+    txt <- paste0(txt, draw_blanks(max(1, lfname - 2)), "cop ")
     txt <- paste0(txt, draw_blanks(max(1, lpar - 2)), "par ")
     txt <- paste0(txt, draw_blanks(max(1, lpar2 - 3)), "par2 |")
     txt <- paste0(txt, draw_blanks(max(1, ltau - 2)), "tau ")
-    txt <- paste0(txt, draw_blanks(max(1, lutd - 2)), "UTD ")
-    txt <- paste0(txt, draw_blanks(max(1, lltd - 2)), "LTD")
+    txt <- paste0(txt, draw_blanks(max(1, lutd - 2)), "utd ")
+    txt <- paste0(txt, draw_blanks(max(1, lltd - 2)), "ltd")
     cat(txt, "\n")
     linelen <- nchar(txt)
     cat(draw_lines(linelen), "\n")
 
-    for (tree in 1:(d-1)) {
+    for (tree in 1:(d - 1)) {
         for (edge in 1:(d - tree)) {
             ## print tree number
             if (edge == 1) {
@@ -463,9 +465,9 @@ summary.RVineMatrix <- function(object, with.se = TRUE, ...) {
 
             ## print copula family
             cat(" |")
-            cat(formatC(nummat[d + 1 - tree, edge], 3))
+            cat(formatC(nummat[d + 1 - tree, edge], lfam))
             tmpch <- fammat[d + 1 - tree, edge]
-            cat(draw_blanks(min(max(0, lfam - nchar(tmpch))) + 1), tmpch)
+            cat(draw_blanks(min(max(0, lfname - nchar(tmpch))) + 1), tmpch)
 
             ## print parameters
             tmpch <- parmat[d + 1 - tree, edge]
@@ -518,7 +520,20 @@ summary.RVineMatrix <- function(object, with.se = TRUE, ...) {
         }
         cat(txt)
     }
-    invisible(object)
+
+    sel <- upper.tri(nammat)
+    tab <- data.frame(
+        tree  = do.call(c, lapply(1:(d - 1), function(i) rep(i, d - i))),
+        edge  = rev(t(nammat)[sel]),
+        family = rev(t(object$family)[sel]),
+        cop = rev(t(fammat)[sel]),
+        par  = rev(t(object$par)[sel]),
+        par2 = rev(t(object$par2)[sel]),
+        tau = rev(t(object$tau)[sel]),
+        utd = rev(t(object$taildep$upper)[sel]),
+        ltd = rev(t(object$taildep$lower)[sel])
+    )
+    invisible(tab)
 }
 
 draw_blanks <- function(len) {
