@@ -304,10 +304,12 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
 set_treecrit <- function(treecrit, famset) {
     ## check if function is appropriate or type is implemented
     if (is.function(treecrit)) {
-        if (!all(names(formals(treecrit)) == c("u1", "u2", "weights")))
+        w <- try(treecrit(u1 = runif(10), u2 = runif(10), weights = rep(1, 10)),
+                 silent = TRUE)
+        if (!any(class(w) == "error"))
             stop("treecrit must be of the form 'function(u1, u2, weights)'")
-        if (!is.numeric(treecrit(runif(10), runif(10), rep(1, 10))))
-            stop("treecrit does not return a numeric value")
+        if (!is.numeric(w) || length(w) > 1)
+            stop("treecrit does not return a numeric scalar")
     } else if (all(treecrit == "tau")) {
         treecrit <- function(u1, u2, weights) {
             complete.i <- which(!is.na(u1 + u2))
@@ -522,7 +524,7 @@ fasttau <- function(x, y, weights = NA) {
         if (m == 0 || n == 0)
             stop("both 'x' and 'y' must be non-empty")
         if (m != n)
-            stop("'x' and 'y' must have the same length")
+            stop("'x' and 'y' must have the same length.")
         out <- .C("ktau",
                   x = as.double(x),
                   y = as.double(y),
