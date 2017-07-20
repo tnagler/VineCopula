@@ -206,35 +206,35 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
     for (i in 1:nParams) {
         if (Copula.Types[i] %in% c(1, 2)) {
             # Normal
-            lb[i] <- -0.98
-            ub[i] <- 0.98
+            lb[i] <- -0.99
+            ub[i] <- 0.99
         } else if (Copula.Types[i] %in% c(3, 13)) {
             # clayton
             lb[i] <- 1e-04
-            ub[i] <- Inf
+            ub[i] <- 100
         } else if (Copula.Types[i] %in% c(23, 33)) {
             # rotated clayton
-            lb[i] <- -Inf
+            lb[i] <- -100
             ub[i] <- -1e-04
         } else if (Copula.Types[i] %in% c(4, 14)) {
             # gumbel
             lb[i] <- 1.0001
-            ub[i] <- Inf
+            ub[i] <- 100
         } else if (Copula.Types[i] %in% c(24, 34)) {
             # rotated gumbel
-            lb[i] <- -Inf
+            lb[i] <- -100
             ub[i] <- -1.0001
         } else if (Copula.Types[i] == 5) {
             # frank
-            lb[i] <- -Inf
-            ub[i] <- Inf
+            lb[i] <- -100
+            ub[i] <- 100
         } else if (Copula.Types[i] %in% c(6, 16)) {
             # joe
             lb[i] <- 1.0001
-            ub[i] <- Inf
+            ub[i] <- 50
         } else if (Copula.Types[i] %in% c(26, 36)) {
             # rotated joe
-            lb[i] <- -Inf
+            lb[i] <- -50
             ub[i] <- -1.0001
         } else if (Copula.Types[i] %in% c(7, 17)) {
             # bb1
