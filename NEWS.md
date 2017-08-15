@@ -1,3 +1,27 @@
+VineCopula 2.1.3 (August 15, 2017)
+----------------------------------------------------------------
+
+NEW FEATURES
+
+  * `summary.RVineMatrix()` invisibly returns a `data.frame` containg most of
+    what is printed as output.
+    
+  * Less restrictive conditions on what is considered an appropriate `treecrit` 
+    function in `RVineStructureSelect()` (thanks to Thibault Vatter, #40).
+    
+  * New option `verbose` in `RVinePDF()` (thanks to @cag51, #36).
+
+BUG FIXES
+
+  * Fix parameter bounds in `RVineMLE()` corresponding to updated requirements 
+    in `BiCop`-functions.
+   
+  * Adapt to re-naming of `tailIndex` to `lambda` in the copula package (thanks
+    to Benedikt Graeler, #41, #42).
+    
+  * Fix bug in detecting C-vine copulas for `summary/print.RVineMatrix()` (#38).
+    
+
 VineCopula 2.1.2 (April 24, 2017)
 ----------------------------------------------------------------
 
