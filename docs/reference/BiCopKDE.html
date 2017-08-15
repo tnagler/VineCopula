@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -139,15 +146,15 @@ grid; default is 100 for <code>type = "contour"</code>, and 25 for <code>type =
     <pre class="examples"><div class='input'><span class='co'># simulate data from Joe copula</span>
 <span class='no'>cop</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCop.html'>BiCop</a></span>(<span class='fl'>3</span>, <span class='kw'>tau</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)
 <span class='no'>u</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span>(<span class='fl'>1000</span>, <span class='no'>cop</span>)
-<span class='fu'>contour</span>(<span class='no'>cop</span>)  <span class='co'># true contours</span></div><img src='BiCopKDE-2.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>contour</span>(<span class='no'>cop</span>)  <span class='co'># true contours</span></div><div class='img'><img src='BiCopKDE-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># kernel contours with standard normal margins</span>
-<span class='fu'>BiCopKDE</span>(<span class='no'>u</span>[, <span class='fl'>1</span>], <span class='no'>u</span>[, <span class='fl'>2</span>])</div><img src='BiCopKDE-4.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>BiCopKDE</span>(<span class='no'>u</span>[, <span class='fl'>1</span>], <span class='no'>u</span>[, <span class='fl'>2</span>], <span class='kw'>kde.pars</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>mult</span> <span class='kw'>=</span> <span class='fl'>0.5</span>))  <span class='co'># undersmooth</span></div><img src='BiCopKDE-6.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>BiCopKDE</span>(<span class='no'>u</span>[, <span class='fl'>1</span>], <span class='no'>u</span>[, <span class='fl'>2</span>], <span class='kw'>kde.pars</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>mult</span> <span class='kw'>=</span> <span class='fl'>2</span>))  <span class='co'># oversmooth</span></div><img src='BiCopKDE-8.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>BiCopKDE</span>(<span class='no'>u</span>[, <span class='fl'>1</span>], <span class='no'>u</span>[, <span class='fl'>2</span>])</div><div class='img'><img src='BiCopKDE-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>BiCopKDE</span>(<span class='no'>u</span>[, <span class='fl'>1</span>], <span class='no'>u</span>[, <span class='fl'>2</span>], <span class='kw'>kde.pars</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>mult</span> <span class='kw'>=</span> <span class='fl'>0.5</span>))  <span class='co'># undersmooth</span></div><div class='img'><img src='BiCopKDE-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>BiCopKDE</span>(<span class='no'>u</span>[, <span class='fl'>1</span>], <span class='no'>u</span>[, <span class='fl'>2</span>], <span class='kw'>kde.pars</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>mult</span> <span class='kw'>=</span> <span class='fl'>2</span>))  <span class='co'># oversmooth</span></div><div class='img'><img src='BiCopKDE-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># kernel density with uniform margins</span>
-<span class='fu'>BiCopKDE</span>(<span class='no'>u</span>[, <span class='fl'>1</span>], <span class='no'>u</span>[, <span class='fl'>2</span>], <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"surface"</span>, <span class='kw'>zlim</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>4</span>))</div><img src='BiCopKDE-10.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>plot</span>(<span class='no'>cop</span>, <span class='kw'>zlim</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>4</span>))  <span class='co'># true density</span></div><img src='BiCopKDE-12.png' alt='' width='540' height='400' /><div class='input'>
-<span class='co'># kernel contours are also used in pairs.copuladata</span>
-<span class='fu'>data</span>(<span class='no'>daxreturns</span>)
+<span class='fu'>BiCopKDE</span>(<span class='no'>u</span>[, <span class='fl'>1</span>], <span class='no'>u</span>[, <span class='fl'>2</span>], <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"surface"</span>, <span class='kw'>zlim</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>4</span>))</div><div class='img'><img src='BiCopKDE-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>cop</span>, <span class='kw'>zlim</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>4</span>))  <span class='co'># true density</span></div><div class='img'><img src='BiCopKDE-6.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+# kernel contours are also used in pairs.copuladata
+</div><div class='input'><span class='fu'>data</span>(<span class='no'>daxreturns</span>)
 <span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.copuladata.html'>as.copuladata</a></span>(<span class='no'>daxreturns</span>)
-<span class='fu'>pairs</span>(<span class='no'>data</span>[<span class='fu'>c</span>(<span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>14</span>, <span class='fl'>15</span>)])</div><img src='BiCopKDE-14.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>pairs</span>(<span class='no'>data</span>[<span class='fu'>c</span>(<span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>14</span>, <span class='fl'>15</span>)])</div><div class='img'><img src='BiCopKDE-7.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

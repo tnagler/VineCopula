@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -147,18 +154,18 @@ avoid problems with density evaluation at the boundaries. Note that
 #&gt;         U
 #&gt;     else 1 - U
 #&gt; }
-#&gt; &lt;bytecode: 0xe6635a8&gt;
+#&gt; &lt;bytecode: 0xe638650&gt;
 #&gt; &lt;environment: namespace:copula&gt;</div><div class='input'>
 <span class='co'>## simulate data from a multivariate normal distribution</span>
 <span class='fu'>library</span>(<span class='no'>mvtnorm</span>)
 <span class='fu'>set.seed</span>(<span class='fl'>123</span>)
 <span class='no'>Sigma</span> <span class='kw'>&lt;-</span> <span class='fu'>matrix</span>(<span class='fu'>c</span>(<span class='fl'>2</span>, <span class='fl'>1</span>, -<span class='fl'>0.2</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0.3</span>, -<span class='fl'>0.2</span>, <span class='fl'>0.3</span>, <span class='fl'>0.5</span>), <span class='fl'>3</span>, <span class='fl'>3</span>)
 <span class='no'>mu</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(-<span class='fl'>3</span>, <span class='fl'>2</span>, <span class='fl'>1</span>)
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'>rmvnorm</span>(<span class='fl'>500</span>, <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='no'>Sigma</span>)
-<span class='fu'>pairs</span>(<span class='no'>dat</span>)  <span class='co'># plot observations</span></div><img src='pobs-4.png' alt='' width='540' height='400' /><div class='input'>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/mvtnorm/topics/Mvnorm'>rmvnorm</a></span>(<span class='fl'>500</span>, <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='no'>Sigma</span>)
+<span class='fu'>pairs</span>(<span class='no'>dat</span>)  <span class='co'># plot observations</span></div><div class='img'><img src='pobs-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'>## compute pseudo-observations for copula inference</span>
 <span class='no'>udat</span> <span class='kw'>&lt;-</span> <span class='fu'>pobs</span>(<span class='no'>dat</span>)
-<span class='fu'>pairs</span>(<span class='no'>udat</span>)</div><img src='pobs-6.png' alt='' width='540' height='400' /><div class='input'><span class='co'># estimate vine copula model</span>
+<span class='fu'>pairs</span>(<span class='no'>udat</span>)</div><div class='img'><img src='pobs-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># estimate vine copula model</span>
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RVineStructureSelect.html'>RVineStructureSelect</a></span>(<span class='no'>udat</span>, <span class='kw'>familyset</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>2</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

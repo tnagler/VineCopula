@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -169,8 +176,8 @@ information about the bivariate copula. Its components are:</p>
 <dt>beta</dt><dd><p>Blomqvist's beta,</p></dd>
 <dt>taildep</dt><dd><p>lower and upper tail dependence coefficients,</p></dd>
 <dt>call</dt><dd><p>the call that created the object.</p></dd>
-Objects of this class are also returned by the BiCopEst and
-BiCopSelect functions. In this case, further information about
+Objects of this class are also returned by the <a href='BiCopEst.html'>BiCopEst</a> and
+<a href='BiCopSelect.html'>BiCopSelect</a> functions. In this case, further information about
 the fit is added.
 
     
@@ -187,7 +194,7 @@ to see all its contents, use <code>str(object)</code>.</p>
 <code><a href='BiCopEst.html'>BiCopEst</a></code>,
 <code><a href='BiCopSelect.html'>BiCopSelect</a></code>,
 <code><a href='plot.BiCop.html'>plot.BiCop</a></code>,
-<code><a href='plot.BiCop.html'>contour.BiCop</a></code></p>
+<code>contour.BiCop</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -225,7 +232,7 @@ to see all its contents, use <code>str(object)</code>.</p>
 #&gt; </div><div class='input'>
 <span class='co'>## a selection of functions that can be used with BiCop objects</span>
 <span class='no'>simdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span>(<span class='fl'>300</span>, <span class='no'>obj</span>)  <span class='co'># simulate data</span>
-<span class='fu'><a href='BiCopPDF.html'>BiCopPDF</a></span>(<span class='fl'>0.5</span>, <span class='fl'>0.5</span>, <span class='no'>obj</span>) <span class='co'># evaluate density in (0.5,0.5)</span></div><div class='output co'>#&gt; [1] 1.185466</div><div class='input'><span class='fu'>plot</span>(<span class='no'>obj</span>)  <span class='co'># surface plot of copula density</span></div><img src='BiCop-10.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>contour</span>(<span class='no'>obj</span>)  <span class='co'># contour plot with standard normal margins</span></div><img src='BiCop-12.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>print</span>(<span class='no'>obj</span>)  <span class='co'># brief overview of BiCop object</span></div><div class='output co'>#&gt; Bivariate copula: t (par = 0.4, par2 = 6, tau = 0.26) </div><div class='input'><span class='fu'>summary</span>(<span class='no'>obj</span>)  <span class='co'># comprehensive overview of BiCop object</span></div><div class='output co'>#&gt; Family
+<span class='fu'><a href='BiCopPDF.html'>BiCopPDF</a></span>(<span class='fl'>0.5</span>, <span class='fl'>0.5</span>, <span class='no'>obj</span>) <span class='co'># evaluate density in (0.5,0.5)</span></div><div class='output co'>#&gt; [1] 1.185466</div><div class='input'><span class='fu'>plot</span>(<span class='no'>obj</span>)  <span class='co'># surface plot of copula density</span></div><div class='img'><img src='BiCop-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>contour</span>(<span class='no'>obj</span>)  <span class='co'># contour plot with standard normal margins</span></div><div class='img'><img src='BiCop-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>print</span>(<span class='no'>obj</span>)  <span class='co'># brief overview of BiCop object</span></div><div class='output co'>#&gt; Bivariate copula: t (par = 0.4, par2 = 6, tau = 0.26) </div><div class='input'><span class='fu'>summary</span>(<span class='no'>obj</span>)  <span class='co'># comprehensive overview of BiCop object</span></div><div class='output co'>#&gt; Family
 #&gt; ------ 
 #&gt; No:    2
 #&gt; Name:  t

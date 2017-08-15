@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -119,7 +126,7 @@ rows in <code>u</code>.</p>
 <span class='fu'>library</span>(<span class='no'>copula</span>)
 
 <span class='no'>BB1Cop</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BB1Copula.html'>BB1Copula</a></span>()
-<span class='no'>BB1CopSmpl</span> <span class='kw'>&lt;-</span> <span class='fu'>rCopula</span>(<span class='fl'>100</span>, <span class='no'>BB1Cop</span>)
+<span class='no'>BB1CopSmpl</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/copula/topics/Copula'>rCopula</a></span>(<span class='fl'>100</span>, <span class='no'>BB1Cop</span>)
 
 <span class='co'># conditional probabilities of a Gaussian copula given u</span>
 <span class='no'>BB1GivenU</span> <span class='kw'>&lt;-</span> <span class='fu'>dduCopula</span>(<span class='no'>BB1CopSmpl</span>, <span class='no'>BB1Cop</span>)
@@ -127,7 +134,7 @@ rows in <code>u</code>.</p>
 <span class='co'># vs. conditional probabilities of a Gaussian copula given v</span>
 <span class='no'>BB1GivenV</span> <span class='kw'>&lt;-</span> <span class='fu'>ddvCopula</span>(<span class='no'>BB1CopSmpl</span>[,<span class='fu'>c</span>(<span class='fl'>2</span>,<span class='fl'>1</span>)], <span class='no'>BB1Cop</span>)
 
-<span class='fu'>plot</span>(<span class='no'>BB1GivenU</span>, <span class='no'>BB1GivenV</span>)</div><div class='input'><span class='fu'>abline</span>(<span class='fl'>0</span>,<span class='fl'>1</span>)</div><img src='ddCopula-3.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>BB1GivenU</span>, <span class='no'>BB1GivenV</span>)</div><div class='input'><span class='fu'>abline</span>(<span class='fl'>0</span>,<span class='fl'>1</span>)</div><div class='img'><img src='ddCopula-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

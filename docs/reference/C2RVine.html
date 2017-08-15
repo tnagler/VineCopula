@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -155,30 +162,15 @@ BB6, BB7, BB8, Tawn type 1 and type 2 copulas.</p></td>
 <span class='no'>par2</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>5</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>2</span>, <span class='fl'>0</span>)
 
 <span class='co'># transform to R-vine matrix notation</span>
-<span class='no'>RVM</span> <span class='kw'>&lt;-</span> <span class='fu'>C2RVine</span>(<span class='no'>order</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>)
-
-<span class='co'># load package CDVine for comparison</span>
-<span class='fu'>library</span>(<span class='no'>CDVine</span>)</div><div class='output co'>#&gt; <span class='message'>The CDVine package is no longer developed actively.</span>
-#&gt; <span class='message'>Please consider using the more general VineCopula package</span>
-#&gt; <span class='message'>(see https://CRAN.R-project.org/package=VineCopula),</span>
-#&gt; <span class='message'>which extends and improves the functionality of CDVine.</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘CDVine’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:VineCopula’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    BiCopCDF, BiCopChiPlot, BiCopEst, BiCopHfunc, BiCopIndTest,</span>
-#&gt; <span class='message'>    BiCopKPlot, BiCopLambda, BiCopMetaContour, BiCopName,</span>
-#&gt; <span class='message'>    BiCopPar2TailDep, BiCopPar2Tau, BiCopPDF, BiCopSelect, BiCopSim,</span>
-#&gt; <span class='message'>    BiCopTau2Par, BiCopVuongClarke</span></div><div class='input'>
+<span class='no'>RVM</span> <span class='kw'>&lt;-</span> <span class='fu'>C2RVine</span>(<span class='no'>order</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>)</div><div class='input'><span class='co'># load package CDVine for comparison</span>
+<span class='fu'>library</span>(<span class='no'>CDVine</span>)</div><div class='output co'>#&gt; <span class='error'>Error in library(CDVine): there is no package called ‘CDVine’</span></div><div class='input'>
 <span class='co'># simulate a sample of size 500 from a 4-dimensional D-vine</span>
 <span class='no'>type</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>  <span class='co'># C-vine</span>
-<span class='no'>simdata</span> <span class='kw'>&lt;-</span> <span class='fu'>CDVineSim</span>(<span class='fl'>500</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>, <span class='no'>type</span>)
-
+<span class='no'>simdata</span> <span class='kw'>&lt;-</span> <span class='fu'>CDVineSim</span>(<span class='fl'>500</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>, <span class='no'>type</span>)</div><div class='output co'>#&gt; <span class='error'>Error in CDVineSim(500, family, par, par2, type): could not find function "CDVineSim"</span></div><div class='input'>
 <span class='co'># determine log-likelihood</span>
-<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'>CDVineLogLik</span>(<span class='no'>simdata</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>, <span class='no'>type</span>)
-<span class='no'>out</span>$<span class='no'>loglik</span></div><div class='output co'>#&gt; [1] 970.071</div><div class='input'>
+<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'>CDVineLogLik</span>(<span class='no'>simdata</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>, <span class='no'>type</span>)</div><div class='output co'>#&gt; <span class='error'>Error in CDVineLogLik(simdata, family, par, par2, type): could not find function "CDVineLogLik"</span></div><div class='input'><span class='no'>out</span>$<span class='no'>loglik</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'out' not found</span></div><div class='input'>
 <span class='co'># check that log-likelihood stays the same</span>
-<span class='no'>out2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RVineLogLik.html'>RVineLogLik</a></span>(<span class='no'>simdata</span>, <span class='no'>RVM</span>)
-<span class='no'>out2</span>$<span class='no'>loglik</span></div><div class='output co'>#&gt; [1] 970.071</div><div class='input'>
-</div></pre>
+<span class='no'>out2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RVineLogLik.html'>RVineLogLik</a></span>(<span class='no'>simdata</span>, <span class='no'>RVM</span>)</div><div class='output co'>#&gt; <span class='error'>Error in as.list.environment(environment()): object 'simdata' not found</span></div><div class='input'><span class='no'>out2</span>$<span class='no'>loglik</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'out2' not found</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

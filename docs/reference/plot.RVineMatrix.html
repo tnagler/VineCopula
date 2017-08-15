@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -177,11 +184,11 @@ be <code>1.25/length(tree)*(d - min(tree))</code> times the plot width.</p>
 <span class='no'>par2mat</span>  <span class='kw'>&lt;-</span> <span class='fu'>matrix</span>(<span class='fu'>c</span>(<span class='fl'>0</span>,   <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='fl'>3</span>, <span class='fl'>3</span>)
 <span class='no'>RVM</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='RVineMatrix.html'>RVineMatrix</a></span>(<span class='no'>strucmat</span>, <span class='no'>fammat</span>, <span class='no'>parmat</span>, <span class='no'>par2mat</span>)
 
-<span class='co'># plot trees</span>
-<span class='co'>## Not run: plot(RVM)</span>
-
+<span class='co'># plot trees</span></div><span class='co'># NOT RUN {</span>
+<span class='fu'>plot</span>(<span class='no'>RVM</span>)
+<span class='co'># }</span><div class='input'>
 <span class='co'># show contour plots</span>
-<span class='fu'>contour</span>(<span class='no'>RVM</span>)</div><img src='contour.RVineMatrix-2.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>contour</span>(<span class='no'>RVM</span>)</div><div class='img'><img src='plot.RVineMatrix-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

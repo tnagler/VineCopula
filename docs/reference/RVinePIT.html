@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -145,10 +152,10 @@ vine copula models with fixed margins. Journal of Multivariate Analysis 138,
 
 <span class='fu'>par</span>(<span class='kw'>mfrow</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>2</span>))
 <span class='fu'>plot</span>(<span class='no'>daxreturns</span>[,<span class='fl'>1</span>], <span class='no'>daxreturns</span>[,<span class='fl'>2</span>])    <span class='co'># correlated data</span>
-<span class='fu'>plot</span>(<span class='no'>pit</span>[,<span class='fl'>1</span>], <span class='no'>pit</span>[,<span class='fl'>2</span>])  <span class='co'># i.i.d. data</span></div><img src='RVinePIT-2.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>pit</span>[,<span class='fl'>1</span>], <span class='no'>pit</span>[,<span class='fl'>2</span>])  <span class='co'># i.i.d. data</span></div><div class='img'><img src='RVinePIT-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='fu'>cor</span>(<span class='no'>pit</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kendall"</span>)</div><div class='output co'>#&gt;             [,1]         [,2]         [,3]
 #&gt; [1,] 1.000000000  0.010307462  0.002118217
-#&gt; [2,] 0.010307462  1.0000000001.0
+#&gt; [2,] 0.010307462  1.000000000 -0.002751145
 #&gt; [3,] 0.002118217 -0.002751145  1.000000000</div><div class='input'>
 </div></pre>
   </div>
