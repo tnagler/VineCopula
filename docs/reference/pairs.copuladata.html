@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -176,20 +183,18 @@ the points in the scatter plot (<code>upper.panel</code>)</p></li>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>data</span>(<span class='no'>daxreturns</span>)
-
-<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.copuladata.html'>as.copuladata</a></span>(<span class='no'>daxreturns</span>)
+<span class='fu'>data</span>(<span class='no'>daxreturns</span>)</div><div class='input'><span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.copuladata.html'>as.copuladata</a></span>(<span class='no'>daxreturns</span>)
 <span class='no'>sel</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='fl'>4</span>,<span class='fl'>5</span>,<span class='fl'>14</span>,<span class='fl'>15</span>)
 
 <span class='co'>## pairs plot with default settings</span>
-<span class='fu'>pairs</span>(<span class='no'>data</span>[<span class='no'>sel</span>])</div><img src='pairs.copuladata-2.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>pairs</span>(<span class='no'>data</span>[<span class='no'>sel</span>])</div><div class='img'><img src='pairs.copuladata-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'>## pairs plot with custom settings</span>
 <span class='no'>nlevels</span> <span class='kw'>&lt;-</span> <span class='fl'>20</span>
 <span class='fu'>pairs</span>(<span class='no'>data</span>[<span class='no'>sel</span>], <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
       <span class='kw'>diag.panel</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>label.pos</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
       <span class='kw'>cex.labels</span> <span class='kw'>=</span> <span class='fl'>2.5</span>, <span class='kw'>gap</span> <span class='kw'>=</span> <span class='fl'>1</span>,
       <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>, <span class='kw'>ccols</span> <span class='kw'>=</span> <span class='fu'>heat.colors</span>(<span class='no'>nlevels</span>),
-      <span class='kw'>margins</span> <span class='kw'>=</span> <span class='st'>"flexp"</span>)</div><img src='pairs.copuladata-4.png' alt='' width='540' height='400' /><div class='input'>
+      <span class='kw'>margins</span> <span class='kw'>=</span> <span class='st'>"flexp"</span>)</div><div class='img'><img src='pairs.copuladata-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'>## pairs plot with own panel functions</span>
 <span class='no'>up</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>) {
   <span class='co'># upper panel: empirical contour plot</span>
@@ -221,7 +226,7 @@ the points in the scatter plot (<code>upper.panel</code>)</p></li>
 
 <span class='no'>nlevels</span> <span class='kw'>&lt;-</span> <span class='fl'>20</span>
 <span class='fu'>pairs</span>(<span class='no'>data</span>[<span class='no'>sel</span>],
-      <span class='kw'>lower.panel</span> <span class='kw'>=</span> <span class='no'>lp</span>, <span class='kw'>upper.panel</span> <span class='kw'>=</span> <span class='no'>up</span>, <span class='kw'>diag.panel</span> <span class='kw'>=</span> <span class='no'>dp</span>, <span class='kw'>gap</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)</div><img src='pairs.copuladata-6.png' alt='' width='540' height='400' /><div class='input'>
+      <span class='kw'>lower.panel</span> <span class='kw'>=</span> <span class='no'>lp</span>, <span class='kw'>upper.panel</span> <span class='kw'>=</span> <span class='no'>up</span>, <span class='kw'>diag.panel</span> <span class='kw'>=</span> <span class='no'>dp</span>, <span class='kw'>gap</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)</div><div class='img'><img src='pairs.copuladata-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

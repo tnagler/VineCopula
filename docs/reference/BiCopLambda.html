@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -191,7 +198,7 @@ Statistical Association, 88 (423), 1034-1043.</p>
 <p>Schepsmeier, U. (2010). Maximum likelihood estimation of C-vine pair-copula
 constructions based on bivariate copulas from different families. Diploma
 thesis, Technische Universitaet Muenchen.
-<a href = 'http://mediatum.ub.tum.de/?id=1079296'>http://mediatum.ub.tum.de/?id=1079296</a>.</p>
+<a href='http://mediatum.ub.tum.de/?id=1079296'>http://mediatum.ub.tum.de/?id=1079296</a>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -200,8 +207,7 @@ thesis, Technische Universitaet Muenchen.
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># simulate from Clayton copula</span>
+    <pre class="examples"><div class='input'><span class='co'># simulate from Clayton copula</span>
 <span class='no'>cop</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCop.html'>BiCop</a></span>(<span class='fl'>3</span>, <span class='kw'>tau</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span>(<span class='fl'>1000</span>, <span class='no'>cop</span>)
 
@@ -209,7 +215,7 @@ thesis, Technische Universitaet Muenchen.
 <span class='no'>op</span> <span class='kw'>&lt;-</span> <span class='fu'>par</span>(<span class='kw'>mfrow</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>3</span>))
 <span class='fu'>BiCopLambda</span>(<span class='no'>dat</span>[, <span class='fl'>1</span>], <span class='no'>dat</span>[, <span class='fl'>2</span>])  <span class='co'># empirical lambda-function</span>
 <span class='fu'>BiCopLambda</span>(<span class='no'>cop</span>)        <span class='co'># theoretical lambda-function</span>
-<span class='fu'>BiCopLambda</span>(<span class='no'>dat</span>[, <span class='fl'>1</span>], <span class='no'>dat</span>[, <span class='fl'>2</span>], <span class='no'>cop</span>)    <span class='co'># both</span></div><img src='BiCopLambda-2.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>par</span>(<span class='no'>op</span>)</div></pre>
+<span class='fu'>BiCopLambda</span>(<span class='no'>dat</span>[, <span class='fl'>1</span>], <span class='no'>dat</span>[, <span class='fl'>2</span>], <span class='no'>cop</span>)    <span class='co'># both</span></div><div class='img'><img src='BiCopLambda-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>par</span>(<span class='no'>op</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -215,9 +222,7 @@ Economics 44 (2), 182-198.</p>
 
 <span class='co'># h-functions of the Gaussian copula</span>
 <span class='no'>cop</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCop.html'>BiCop</a></span>(<span class='kw'>family</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>par</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)
-<span class='no'>h</span> <span class='kw'>&lt;-</span> <span class='fu'>BiCopHfunc</span>(<span class='no'>daxreturns</span>[, <span class='fl'>2</span>], <span class='no'>daxreturns</span>[, <span class='fl'>1</span>], <span class='no'>cop</span>)
-
-<span class='co'># or using the fast versions</span>
+<span class='no'>h</span> <span class='kw'>&lt;-</span> <span class='fu'>BiCopHfunc</span>(<span class='no'>daxreturns</span>[, <span class='fl'>2</span>], <span class='no'>daxreturns</span>[, <span class='fl'>1</span>], <span class='no'>cop</span>)</div><div class='input'><span class='co'># or using the fast versions</span>
 <span class='no'>h1</span> <span class='kw'>&lt;-</span> <span class='fu'>BiCopHfunc1</span>(<span class='no'>daxreturns</span>[, <span class='fl'>2</span>], <span class='no'>daxreturns</span>[, <span class='fl'>1</span>], <span class='no'>cop</span>)
 <span class='no'>h2</span> <span class='kw'>&lt;-</span> <span class='fu'>BiCopHfunc2</span>(<span class='no'>daxreturns</span>[, <span class='fl'>2</span>], <span class='no'>daxreturns</span>[, <span class='fl'>1</span>], <span class='no'>cop</span>)
 <span class='fu'>all.equal</span>(<span class='no'>h</span>$<span class='no'>hfunc1</span>, <span class='no'>h1</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>all.equal</span>(<span class='no'>h</span>$<span class='no'>hfunc2</span>, <span class='no'>h2</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>

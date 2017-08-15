@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -123,27 +130,27 @@ for family/tau-consistency are ommited (should only be used with care).</p></td>
     <p>Parameter (vector) corresponding to the bivariate copula family and
 the value(s) of Kendall's tau (\(\tau\)).</p><table><tr><td> No.
 (<code>family</code>) </td>
-</tr><tr><td> Parameter (<code>par</code>) </td>
+<td> Parameter (<code>par</code>) </td>
 </tr><tr><td> <code>1, 2</code> </td>
-</tr><tr><td>
+<td>
 \(\sin(\tau \frac{\pi}{2})\) </td>
 </tr><tr><td> <code>3, 13</code> </td>
-</tr><tr><td>
+<td>
 \(2\frac{\tau}{1-\tau}\) </td>
 </tr><tr><td> <code>4, 14</code> </td>
-</tr><tr><td>
+<td>
 \(\frac{1}{1-\tau}\) </td>
 </tr><tr><td> <code>5</code> </td>
-</tr><tr><td> no closed form
+<td> no closed form
 expression (numerical inversion) </td>
 </tr><tr><td> <code>6, 16</code> </td>
-</tr><tr><td> no closed form
+<td> no closed form
 expression (numerical inversion) </td>
 </tr><tr><td> <code>23, 33</code> </td>
-</tr><tr><td>
+<td>
 \(2\frac{\tau}{1+\tau}\) </td>
 </tr><tr><td> <code>24, 34</code> </td>
-</tr><tr><td>
+<td>
 \(-\frac{1}{1+\tau}\) </td>
 </tr></table>
 
@@ -177,12 +184,11 @@ of mixed C-vines with application to exchange rates. Statistical Modelling,
 <span class='no'>thetaG</span> <span class='kw'>&lt;-</span> <span class='fu'>BiCopTau2Par</span>(<span class='kw'>family</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>tau</span> <span class='kw'>=</span> <span class='no'>vtau</span>)
 <span class='no'>thetaF</span> <span class='kw'>&lt;-</span> <span class='fu'>BiCopTau2Par</span>(<span class='kw'>family</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>tau</span> <span class='kw'>=</span> <span class='no'>vtau</span>)
 <span class='no'>thetaJ</span> <span class='kw'>&lt;-</span> <span class='fu'>BiCopTau2Par</span>(<span class='kw'>family</span> <span class='kw'>=</span> <span class='fl'>6</span>, <span class='kw'>tau</span> <span class='kw'>=</span> <span class='no'>vtau</span>)
-<span class='fu'>plot</span>(<span class='no'>thetaC</span> ~ <span class='no'>vtau</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='fu'>range</span>(<span class='no'>thetaF</span>))</div><div class='input'><span class='fu'>lines</span>(<span class='no'>thetaG</span> ~ <span class='no'>vtau</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='input'><span class='fu'>lines</span>(<span class='no'>thetaF</span> ~ <span class='no'>vtau</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='input'><span class='fu'>lines</span>(<span class='no'>thetaJ</span> ~ <span class='no'>vtau</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><img src='BiCopTau2Par-7.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>thetaC</span> ~ <span class='no'>vtau</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"l"</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='fu'>range</span>(<span class='no'>thetaF</span>))</div><div class='input'><span class='fu'>lines</span>(<span class='no'>thetaG</span> ~ <span class='no'>vtau</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fl'>2</span>)</div><div class='input'><span class='fu'>lines</span>(<span class='no'>thetaF</span> ~ <span class='no'>vtau</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='input'><span class='fu'>lines</span>(<span class='no'>thetaJ</span> ~ <span class='no'>vtau</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='img'><img src='BiCopTau2Par-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'>## Example 3: different copula families</span>
 <span class='no'>theta</span> <span class='kw'>&lt;-</span> <span class='fu'>BiCopTau2Par</span>(<span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>6</span>), <span class='kw'>tau</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.4</span>, <span class='fl'>0.5</span>, <span class='fl'>0.6</span>))
 <span class='fu'><a href='BiCopPar2Tau.html'>BiCopPar2Tau</a></span>(<span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>6</span>), <span class='kw'>par</span> <span class='kw'>=</span> <span class='no'>theta</span>)</div><div class='output co'>#&gt; [1] 0.4 0.5 0.6</div><div class='input'>
-
-
+</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

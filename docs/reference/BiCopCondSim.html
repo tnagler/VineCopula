@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -198,13 +205,13 @@ object <code>obj</code>, the alternative version</p><pre>BiCopCondSim(N, cond.va
 
 <span class='co'># simulate 500 observations of (U1, U2)</span>
 <span class='no'>sim</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span>(<span class='fl'>500</span>, <span class='no'>obj</span>)
-<span class='fu'>hist</span>(<span class='no'>sim</span>[, <span class='fl'>1</span>])  <span class='co'># data have uniform distribution</span></div><img src='BiCopCondSim-2.png' alt='' width='540' height='400' /><div class='input'><span class='fu'>hist</span>(<span class='no'>sim</span>[, <span class='fl'>2</span>])  <span class='co'># data have uniform distribution</span></div><img src='BiCopCondSim-4.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>hist</span>(<span class='no'>sim</span>[, <span class='fl'>1</span>])  <span class='co'># data have uniform distribution</span></div><div class='img'><img src='BiCopCondSim-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>hist</span>(<span class='no'>sim</span>[, <span class='fl'>2</span>])  <span class='co'># data have uniform distribution</span></div><div class='img'><img src='BiCopCondSim-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># simulate 500 observations of (U2 | U1 = 0.7)</span>
 <span class='no'>sim1</span> <span class='kw'>&lt;-</span> <span class='fu'>BiCopCondSim</span>(<span class='fl'>500</span>, <span class='kw'>cond.val</span> <span class='kw'>=</span> <span class='fl'>0.7</span>, <span class='kw'>cond.var</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>obj</span>)
-<span class='fu'>hist</span>(<span class='no'>sim1</span>)  <span class='co'># not uniform!</span></div><img src='BiCopCondSim-6.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>hist</span>(<span class='no'>sim1</span>)  <span class='co'># not uniform!</span></div><div class='img'><img src='BiCopCondSim-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># simulate 500 observations of (U1 | U2 = 0.1)</span>
 <span class='no'>sim2</span> <span class='kw'>&lt;-</span> <span class='fu'>BiCopCondSim</span>(<span class='fl'>500</span>, <span class='kw'>cond.val</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>cond.var</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>obj</span>)
-<span class='fu'>hist</span>(<span class='no'>sim2</span>)  <span class='co'># not uniform!</span></div><img src='BiCopCondSim-8.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>hist</span>(<span class='no'>sim2</span>)  <span class='co'># not uniform!</span></div><div class='img'><img src='BiCopCondSim-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

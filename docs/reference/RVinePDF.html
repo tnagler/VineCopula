@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -84,7 +91,7 @@
 R-vine copula.</p>
     
 
-    <pre class="usage"><span class='fu'>RVinePDF</span>(<span class='no'>newdata</span>, <span class='no'>RVM</span>)</pre>
+    <pre class="usage"><span class='fu'>RVinePDF</span>(<span class='no'>newdata</span>, <span class='no'>RVM</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -98,6 +105,11 @@ be evaluated.</p></td>
       <th>RVM</th>
       <td><p>An <code><a href='RVineMatrix.html'>RVineMatrix</a></code> object including the structure and
 the pair-copula families and parameters.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>In case something goes wrong, additional output will be
+plotted.</p></td>
     </tr>
     </table>
     
@@ -134,7 +146,7 @@ financial returns. Computational Statistics &amp; Data Analysis, 59 (1), 52-69.<
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='BiCopHfunc.html'>BiCopHfunc</a></code>, <code><a href='RVineMatrix.html'>RVineMatrix</a></code>,
-<code><a href='RVineMLE.html'>RVineMLE</a></code>, <code><a href='RVineAIC.html'>RVineAIC</a></code>, <code><a href='RVineAIC.html'>RVineBIC</a></code></p>
+<code><a href='RVineMLE.html'>RVineMLE</a></code>, <code><a href='RVineAIC.html'>RVineAIC</a></code>, <code>RVineBIC</code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

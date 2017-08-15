@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -81,7 +88,7 @@
 
     
     <p>Note: This function is deprecated and only available for backwards
-compatibility. See <code><a href='plot.BiCop.html'>contour.BiCop</a></code> for contour plots of
+compatibility. See <code>contour.BiCop</code> for contour plots of
 parametric copulas, and <code><a href='BiCopKDE.html'>BiCopKDE</a></code> for kernel estimates.</p>
     
 
@@ -253,23 +260,23 @@ grid points given by <code>x</code> and <code>y</code>.</p></dd>
     <pre class="examples"><div class='input'><span class='co'>## meta Clayton distribution  with Gaussian margins</span>
 <span class='no'>cop</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCop.html'>BiCop</a></span>(<span class='kw'>family</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>tau</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)
 <span class='fu'>BiCopMetaContour</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>cop</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Clayton - normal margins"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: This function is deprecated. See ?contour.BiCop for contour plots of parametric copulas</span>
-#&gt; <span class='warning'>  and ?BiCopKDE for kernel estimates.</span></div><img src='BiCopMetaContour-3.png' alt='' width='540' height='400' /><div class='input'><span class='co'># better:</span>
-<span class='fu'>contour</span>(<span class='no'>cop</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Clayton - normal margins"</span>)</div><img src='BiCopMetaContour-5.png' alt='' width='540' height='400' /><div class='input'>
+#&gt; <span class='warning'>  and ?BiCopKDE for kernel estimates.</span></div><div class='img'><img src='BiCopMetaContour-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># better:</span>
+<span class='fu'>contour</span>(<span class='no'>cop</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Clayton - normal margins"</span>)</div><div class='img'><img src='BiCopMetaContour-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'>## empirical contour plot with standard normal margins</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span>(<span class='fl'>1000</span>, <span class='no'>cop</span>)
 <span class='fu'>BiCopMetaContour</span>(<span class='no'>dat</span>[, <span class='fl'>1</span>], <span class='no'>dat</span>[, <span class='fl'>2</span>], <span class='kw'>bw</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"emp"</span>,
                  <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"empirical - normal margins"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: This function is deprecated. See ?contour.BiCop for contour plots of parametric copulas</span>
-#&gt; <span class='warning'>  and ?BiCopKDE for kernel estimates.</span></div><img src='BiCopMetaContour-8.png' alt='' width='540' height='400' /><div class='input'><span class='co'># better:</span>
+#&gt; <span class='warning'>  and ?BiCopKDE for kernel estimates.</span></div><div class='img'><img src='BiCopMetaContour-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># better:</span>
 <span class='fu'><a href='BiCopKDE.html'>BiCopKDE</a></span>(<span class='no'>dat</span>[, <span class='fl'>1</span>], <span class='no'>dat</span>[, <span class='fl'>2</span>],
-        <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"empirical - normal margins"</span>)</div><img src='BiCopMetaContour-10.png' alt='' width='540' height='400' /><div class='input'>
+        <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"empirical - normal margins"</span>)</div><div class='img'><img src='BiCopMetaContour-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'>## empirical contour plot with exponential margins</span>
 <span class='fu'>BiCopMetaContour</span>(<span class='no'>dat</span>[, <span class='fl'>1</span>], <span class='no'>dat</span>[, <span class='fl'>2</span>], <span class='kw'>bw</span> <span class='kw'>=</span> <span class='fl'>2</span>,
                  <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"empirical - exponential margins"</span>,
                  <span class='kw'>margins</span> <span class='kw'>=</span> <span class='st'>"exp"</span>, <span class='kw'>margins.par</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: This function is deprecated. See ?contour.BiCop for contour plots of parametric copulas</span>
-#&gt; <span class='warning'>  and ?BiCopKDE for kernel estimates.</span></div><img src='BiCopMetaContour-13.png' alt='' width='540' height='400' /><div class='input'><span class='co'># better:</span>
+#&gt; <span class='warning'>  and ?BiCopKDE for kernel estimates.</span></div><div class='img'><img src='BiCopMetaContour-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># better:</span>
 <span class='fu'><a href='BiCopKDE.html'>BiCopKDE</a></span>(<span class='no'>dat</span>[, <span class='fl'>1</span>], <span class='no'>dat</span>[, <span class='fl'>2</span>],
          <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"empirical - exponential margins"</span>,
-         <span class='kw'>margins</span> <span class='kw'>=</span> <span class='st'>"exp"</span>)</div><img src='BiCopMetaContour-15.png' alt='' width='540' height='400' /><div class='input'>
+         <span class='kw'>margins</span> <span class='kw'>=</span> <span class='st'>"exp"</span>)</div><div class='img'><img src='BiCopMetaContour-6.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

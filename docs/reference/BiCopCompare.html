@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,6 +52,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -162,8 +169,10 @@ user.</p>
     <pre class="examples"><div class='input'><span class='co'># load data</span>
 <span class='fu'>data</span>(<span class='no'>daxreturns</span>)
 
-<span class='co'># find a suitable copula family for the first two stocks</span>
-<span class='co'>## Not run: fit &amp;lt;- BiCopCompare(daxreturns[, 1], daxreturns[, 2])</span></div></pre>
+<span class='co'># find a suitable copula family for the first two stocks</span></div><span class='co'># NOT RUN {</span>
+<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'>BiCopCompare</span>(<span class='no'>daxreturns</span>[, <span class='fl'>1</span>], <span class='no'>daxreturns</span>[, <span class='fl'>2</span>])
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

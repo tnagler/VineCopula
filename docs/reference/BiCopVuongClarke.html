@@ -24,7 +24,8 @@ Copula Data — BiCopVuongClarke • VineCopula</title>
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -52,6 +53,12 @@ Copula Data — BiCopVuongClarke • VineCopula</title>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -209,7 +216,7 @@ Belgorodski (2010).</p>
     <p>Belgorodski, N. (2010) Selecting pair-copula families for
 regular vines with application to the multivariate analysis of European
 stock market indices Diploma thesis, Technische Universitaet Muenchen.
-<a href = 'http://mediatum.ub.tum.de/?id=1079284'>http://mediatum.ub.tum.de/?id=1079284</a>.</p>
+<a href='http://mediatum.ub.tum.de/?id=1079284'>http://mediatum.ub.tum.de/?id=1079284</a>.</p>
 <p>Clarke, K. A. (2007). A Simple Distribution-Free Test for Nonnested Model
 Selection. Political Analysis, 15, 347-363.</p>
 <p>Vuong, Q. H. (1989). Ratio tests for model selection and non-nested
@@ -222,11 +229,8 @@ hypotheses. Econometrica 57 (2), 307-333.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># simulate from a t-copula</span>
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span>(<span class='fl'>500</span>, <span class='fl'>2</span>, <span class='fl'>0.7</span>, <span class='fl'>5</span>)
-
-
+    <pre class="examples"><div class='input'><span class='co'># simulate from a t-copula</span>
+<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span>(<span class='fl'>500</span>, <span class='fl'>2</span>, <span class='fl'>0.7</span>, <span class='fl'>5</span>)</div><div class='input'>
 <span class='co'># apply the test for families 1-6</span>
 <span class='fu'>BiCopVuongClarke</span>(<span class='no'>dat</span>[,<span class='fl'>1</span>], <span class='no'>dat</span>[,<span class='fl'>2</span>], <span class='kw'>familyset</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>6</span>)</div><div class='output co'>#&gt;        1 2  3 4  5  6 13 14 16
 #&gt; Vuong  4 7 -4 5 -1 -4 -2  1 -6
