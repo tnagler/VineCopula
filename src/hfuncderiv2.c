@@ -7,11 +7,11 @@
 **
 */
 
-#include "vine.h"
-#include "deriv.h"
-#include "deriv2.h"
-#include "tcopuladeriv.h"
-#include "tcopuladeriv_new.h"
+#include "VineCopula/vine.h"
+#include "VineCopula/deriv.h"
+#include "VineCopula/deriv2.h"
+#include "VineCopula/tcopuladeriv.h"
+#include "VineCopula/tcopuladeriv_new.h"
 
 #define UMAX  1-1e-10
 

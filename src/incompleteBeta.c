@@ -10,8 +10,8 @@
 
 // The implementation follows directly their algorithm and is closely related to their published code
 
-#include "vine.h"
-#include "incompleteBeta.h"
+#include "VineCopula/vine.h"
+#include "VineCopula/incompleteBeta.h"
 
 
 void incompleBeta_an1_bn1_p(double* x, double p, double q, double* an, double* bn)

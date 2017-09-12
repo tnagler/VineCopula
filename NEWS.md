@@ -1,3 +1,11 @@
+VineCopula 2.1.4 (in progress)
+----------------------------------------------------------------
+
+  * All C-headers are now located in `inst/include/VineCopula` (#48).
+  
+  * Most C routines are registered as C-callable (#47).
+
+
 VineCopula 2.1.3 (August 15, 2017)
 ----------------------------------------------------------------
 
