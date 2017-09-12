@@ -1,9 +1,9 @@
-#include "vine.h"
-#include "memoryhandling.h"
-#include "gof.h"
-#include "rvinederiv2.h"
-#include "pit.h"
-#include "rvine.h"
+#include "VineCopula/vine.h"
+#include "VineCopula/memoryhandling.h"
+#include "VineCopula/gof.h"
+#include "VineCopula/rvinederiv2.h"
+#include "VineCopula/pit.h"
+#include "VineCopula/rvine.h"
 
 /////////////////////////////////////////////////////////////////////
 // Code form Daniel Berg, R-package copulaGOF

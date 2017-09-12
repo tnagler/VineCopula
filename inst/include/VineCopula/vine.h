@@ -31,7 +31,7 @@
 #include <setjmp.h>
 #include <Rdefines.h> 
 #include <Rmath.h>
-#include "vine.h"
+#include "VineCopula/vine.h"
 
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define MAX(a, b) ((a) > (b) ? (a) : (b))

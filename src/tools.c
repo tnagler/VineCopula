@@ -10,9 +10,9 @@
 **
 */
 
-#include "vine.h"
-#include "memoryhandling.h"
-#include "tools.h"
+#include "VineCopula/vine.h"
+#include "VineCopula/memoryhandling.h"
+#include "VineCopula/tools.h"
 
 //////////////////////////////////////////////////////////////////////////////
 // Print error text and return to R
