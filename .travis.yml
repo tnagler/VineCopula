@@ -14,11 +14,6 @@ apt_packages:
   - libgsl0ldbl
   - libcurl4-openssl-dev
   - libxml2-dev
-  - r-cran-foreach
-  - r-cran-copula
-  - r-cran-cdvine
-  - r-cran-shiny
-  - r-cran-tsp
 
 before_install:
   - sudo add-apt-repository ppa:marutter/c2d4u -y
