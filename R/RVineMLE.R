@@ -137,6 +137,11 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
                     na.txt = " Only complete observations are used.")
     list2env(args, environment())
 
+    if (all(RVM$family == 0)) {
+        warning("RVM contains only Independence copulas, RVineMLE does nothing")
+        return(RVM)
+    }
+
     ## sanity checks
     if (maxit <= 0)
         stop("'maxit' has to be greater than zero.")
