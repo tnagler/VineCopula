@@ -102,7 +102,7 @@ BiCopTau2Par <- function(family, tau, check.taus = TRUE) {
     ## sanity check
     if (any(family %in% setdiff(allfams[twopar], 2)))
         stop("For two parameter copulas (except t) Kendall's tau cannot be inverted.")
-    if (any(abs(tau) > 0.99999))
+    if (check.taus && any(abs(tau) > 0.99999))
         stop("some tau is too close to -1 or 1")
 
     # fix for SemiParBIVProbit package
@@ -165,6 +165,7 @@ calcPar <- function(family, tau) {
 }
 
 Frank.itau.JJ <- function(tau) {
+    if (abs(tau) > 0.99999) return(Inf)
     a <- 1
     if (tau < 0) {
         a <- -1
@@ -178,6 +179,7 @@ Frank.itau.JJ <- function(tau) {
 
 
 Joe.itau.JJ <- function(tau) {
+    if (abs(tau) > 0.99999) return(Inf)
     if (tau < 0) {
         return(1.000001)
     } else {
