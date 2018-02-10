@@ -123,7 +123,7 @@ BiCopDeriv2 <- function(u1, u2, family, par, par2 = 0, deriv = "par", obj = NULL
                           as.double(u1),
                           as.double(u2),
                           as.integer(n),
-                          as.double(par),
+                          as.double(c(par, par2)),
                           as.integer(family),
                           as.double(rep(0, n)),
                           PACKAGE = "VineCopula")[[6]]
