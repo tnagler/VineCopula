@@ -60,10 +60,6 @@ RVinePIT <- function(data, RVM) {
                     prep_RVMs)
     list2env(args, environment())
 
-    if (any(!(RVM$family %in% c(0, 1:6, 13, 14, 16, 23, 24, 26, 33, 34, 36,
-                                104, 114, 124, 134, 204, 214, 224, 234))))
-        stop("Copula family not implemented.")
-
     T <- dim(data)[1]
     d <- dim(data)[2]
     o <- diag(RVM$Matrix)
