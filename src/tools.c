@@ -1,12 +1,12 @@
 /*
-** tools.c - C code of the package CDRVine  
-** 
-** with contributions from Carlos Almeida, Aleksey Min, 
+** tools.c - C code of the package CDRVine
+**
+** with contributions from Carlos Almeida, Aleksey Min,
 ** Ulf Schepsmeier, Jakob Stoeber and Eike Brechmann
-** 
+**
 ** A first version was based on code
 ** from Daniel Berg <daniel at danielberg.no>
-** provided by personal communication. 
+** provided by personal communication.
 **
 */
 
@@ -35,7 +35,7 @@ void printError(char *text, char filename[200])
 // b1 - modulus of b
 // b2 - integer part of b
 //-------------------
-// We are after gamma(x1)/gamma(x2) and this computation will hopefully make it more numerically 
+// We are after gamma(x1)/gamma(x2) and this computation will hopefully make it more numerically
 // stable. gamma(x1)/gamma(x2) will sometimes be INF/INF.
 //////////////////////////////////////////////////////////////////////////////
 double StableGammaDivision(double x1, double x2)
@@ -109,10 +109,10 @@ void ktau(double *X, double *Y, int *N, double *tau, double *S, double *D, int *
 			{
 				Iflag = (I < Iend);
 				Jflag = (J < Jend);
-				if (Iflag & Jflag) 
+				if (Iflag & Jflag)
 				{
 				 	Xflag = ((X[I] > X[J]) | ((X[I] == X[J]) & (Y[I] > Y[J])));
-				} 
+				}
 				else
 				{
 					Xflag = FALSE;
@@ -131,24 +131,24 @@ void ktau(double *X, double *Y, int *N, double *tau, double *S, double *D, int *
 					J++;
 					L++;
 				};
-			} 
+			}
 			while(Iflag | Jflag);
-		} 
+		}
 		while(L < *N);
-		
+
 		// Swap lists
 		xptr=X; X=X2; X2=xptr;
 		yptr=Y; Y=Y2; Y2=yptr;
 		#ifdef OLD
 		for(i = 0; i < *N; i++)
-		{ 
+		{
 			Xtem = X[i]; Ytem = Y[i];
 			X[i] = X2[i]; Y[i] = Y2[i];
 			X2[i] = Xtem; Y2[i] = Ytem;
 		};
 		#endif
 		K *= 2;
-	} 
+	}
 	while (K < *N);
 
 	/* 1.2 Count pairs of tied X, T */
@@ -159,7 +159,11 @@ void ktau(double *X, double *Y, int *N, double *tau, double *S, double *D, int *
     {
 		j++;
 		if(Y[i] == Y[i-1])
-		m++;
+		    m++;
+		else if (m > 1) {
+		    *V += m * (m - 1) / 2;
+		    m = 1;
+		}
     }
     else if(j > 1)
     {
@@ -189,10 +193,10 @@ void ktau(double *X, double *Y, int *N, double *tau, double *S, double *D, int *
 			{
 				Iflag = (I < Iend);
 				Jflag = (J < Jend);
-				if (Iflag & Jflag) 
+				if (Iflag & Jflag)
 				{
 				 	Xflag = (Y[I] > Y[J]);
-				} 
+				}
 				else
 				{
 					Xflag = FALSE;
@@ -212,24 +216,24 @@ void ktau(double *X, double *Y, int *N, double *tau, double *S, double *D, int *
 					J++;
 					L++;
 				};
-			} 
+			}
 			while((Iflag | Jflag));
-		} 
+		}
 		while(L < *N);
-    
+
 		// Swap lists
 		xptr=X; X=X2; X2=xptr;
 		yptr=Y; Y=Y2; Y2=yptr;
 		#ifdef OLD
 		for(i = 0; i < *N; i++)
-		{ 
+		{
 			Xtem = X[i]; Ytem = Y[i];
 			X[i] = X2[i]; Y[i] = Y2[i];
 			X2[i] = Xtem; Y2[i] = Ytem;
 		};
 		#endif
 		K *= 2;
-	} 
+	}
 	while (K < *N);
 
 	/* 2.2 Count pairs of tied Y, U */
@@ -278,14 +282,14 @@ void ktau_matrix(double *data, int *d, int *N, double *out)
 	Y = (double*) Calloc(*N,double);
 
 	for(i=0;i<*d;i++)
-    { 
-		for (t=0;t<*N;t++ ) 
+    {
+		for (t=0;t<*N;t++ )
 		{
 			x[i][t] = data[k];
 			k++;
 		}
     }
-	
+
 	k=0;
 	for(i=0;i<((*d)-1);i++)
 	{
