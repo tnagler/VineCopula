@@ -1,4 +1,16 @@
-VineCopula 2.1.4 (in progress)
+VineCopula 2.1.5 (in progress)
+----------------------------------------------------------------
+
+NEW FEATURES
+
+  * no family restrictions for RVinePIT.
+
+BUG FIXES
+
+  * fix calculation of Kendall's tau when joint ties are present.
+
+
+VineCopula 2.1.4 (February 11, 2018)
 ----------------------------------------------------------------
 
 NEW FEATURES
@@ -10,6 +22,8 @@ NEW FEATURES
 BUG FIXES
 
   * `RVineMLE` can now safely called with only independence copulas (#49).
+
+  * Fixed fix (non-critical) memory-access bug.
 
 
 VineCopula 2.1.3 (August 15, 2017)
