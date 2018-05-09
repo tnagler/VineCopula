@@ -286,7 +286,7 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
     }
     .RVM$nobs <- N
     revo <- sapply(1:d, function(i) which(o[length(o):1] == i))
-    like <- suppressWarnings(RVineLogLik(data[, revo], .RVM, calculate.V = FALSE))
+    like <- suppressWarnings(RVineLogLik(data[, revo], .RVM, calculate.V = TRUE))
     .RVM$logLik <- like$loglik
     .RVM$pair.logLik <- logLiks
     npar <- sum(.RVM$family %in% allfams[onepar], na.rm = TRUE) +
