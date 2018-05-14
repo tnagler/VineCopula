@@ -261,7 +261,7 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = FALSE, max.df = 30,
         theta1 <- 0
         delta <- 0
 
-        if (!(family %in% c(2, 6, 7, 8, 9, 10,
+        if (!(family %in% c(2, 7, 8, 9, 10,
                             17, 18, 19, 20,
                             27, 28, 29, 30,
                             37, 38, 39, 40,
@@ -549,7 +549,7 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
         theta1 <- 0
         delta <- 0
 
-        if (!(family %in% c(2, 6, 7, 8, 9, 10,
+        if (!(family %in% c(2, 7, 8, 9, 10,
                             17, 18, 19, 20,
                             27, 28, 29, 30,
                             37, 38, 39, 40,
