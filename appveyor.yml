@@ -13,6 +13,8 @@ install:
 
 environment:
     R_VERSION: release
+    global:
+      WARNINGS_ARE_ERRORS: 1
 
 build_script:
   - travis-tool.sh install_deps
@@ -41,10 +43,6 @@ artifacts:
 
   - path: '\*_*.zip'
     name: Bits
-
-environment:
-  global:
-    WARNINGS_ARE_ERRORS: 1
 
   matrix:
 
