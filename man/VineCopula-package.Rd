@@ -4,8 +4,11 @@
 \name{VineCopula-package}
 \alias{VineCopula-package}
 \alias{VineCopula}
-\title{Statistical Inference of Vine Copulas}
+\title{\packageTitle{VineCopula}}
 \description{
+\packageDescription{VineCopula}
+}
+\details{
 Vine copulas are a flexible class of dependence models consisting of
 bivariate building blocks (see e.g., Aas et al., 2009). This package is
 primarily made for the statistical analysis of vine copula
@@ -13,20 +16,9 @@ models. The package includes tools for parameter estimation, model selection,
 simulation, goodness-of-fit tests, and visualization. Tools for estimation,
 selection and exploratory data analysis of bivariate copula models are
 also provided.
-}
-\details{
-\tabular{ll}{
-Package: \tab VineCopula\cr
-Type: \tab Package\cr
-Version: \tab 2.0.6 \cr
-Date: \tab 2016-09-29\cr
-License: \tab GPL (>=2)\cr
-Depends: \tab R (\eqn{\geq 2.11.0}{>= 2.11.0})\cr
-Imports: \tab graphics, grDevices,
-stats, utils, MASS, mvtnorm, network, methods, copula (>= 0.999-15),
-kdecopula (>= 0.6.0), ADGofTest, lattice, doParallel, parallel, foreach \cr
-Suggests: \tab CDVine, TSP, shiny\cr
-LazyLoad: \tab yes }
+
+The DESCRIPTION file:
+\packageDESCRIPTION{VineCopula}
 }
 \section{Remark}{
  The package \code{VineCopula} is a continuation of the
@@ -108,8 +100,4 @@ vine copula models. Computational Statistics, 28 (6), 2679-2707 \cr
 
 White, H. (1982) Maximum likelihood estimation of misspecified models,
 Econometrica, 50, 1-26.
-}
-\author{
-Ulf Schepsmeier, Jakob Stoeber, Eike Christian Brechmann, Benedikt
-Graeler, Thomas Nagler, Tobias Erhardt
 }
