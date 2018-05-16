@@ -18,13 +18,20 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Density of a Bivariate Copula — BiCopPDF" />
+
+<meta property="og:description" content="This function evaluates the probability density function (PDF) of a given
+parametric bivariate copula." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +39,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,12 +56,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">VineCopula</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">VineCopula</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.5</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -61,7 +74,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -73,6 +86,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -80,10 +94,12 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Density of a Bivariate Copula</h1>
+    <small>Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/BiCopPDF.R'><code>R/BiCopPDF.R</code></a></small>
+    <div class="hidden name"><code>BiCopPDF.Rd</code></div>
     </div>
 
     
@@ -93,7 +109,7 @@ parametric bivariate copula.</p>
 
     <pre class="usage"><span class='fu'>BiCopPDF</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>check.pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -103,47 +119,47 @@ parametric bivariate copula.</p>
     <tr>
       <th>family</th>
       <td><p>integer; single number or vector of size <code>length(u1)</code>;
-defines the bivariate copula family: 
-<code>0</code> = independence copula 
-<code>1</code> = Gaussian copula 
-<code>2</code> = Student t copula (t-copula) 
-<code>3</code> = Clayton copula 
-<code>4</code> = Gumbel copula 
-<code>5</code> = Frank copula 
-<code>6</code> = Joe copula 
-<code>7</code> = BB1 copula 
-<code>8</code> = BB6 copula 
-<code>9</code> = BB7 copula 
-<code>10</code> = BB8 copula 
-<code>13</code> = rotated Clayton copula (180 degrees; ``survival Clayton'') 
-<code>14</code> = rotated Gumbel copula (180 degrees; ``survival Gumbel'') 
-<code>16</code> = rotated Joe copula (180 degrees; ``survival Joe'') 
-<code>17</code> = rotated BB1 copula (180 degrees; ``survival BB1'')
-<code>18</code> = rotated BB6 copula (180 degrees; ``survival BB6'')
-<code>19</code> = rotated BB7 copula (180 degrees; ``survival BB7'')
-<code>20</code> = rotated BB8 copula (180 degrees; ``survival BB8'')
-<code>23</code> = rotated Clayton copula (90 degrees) 
-<code>24</code> = rotated Gumbel copula (90 degrees) 
-<code>26</code> = rotated Joe copula (90 degrees) 
-<code>27</code> = rotated BB1 copula (90 degrees) 
-<code>28</code> = rotated BB6 copula (90 degrees) 
-<code>29</code> = rotated BB7 copula (90 degrees) 
-<code>30</code> = rotated BB8 copula (90 degrees) 
-<code>33</code> = rotated Clayton copula (270 degrees) 
-<code>34</code> = rotated Gumbel copula (270 degrees) 
-<code>36</code> = rotated Joe copula (270 degrees) 
-<code>37</code> = rotated BB1 copula (270 degrees) 
-<code>38</code> = rotated BB6 copula (270 degrees) 
-<code>39</code> = rotated BB7 copula (270 degrees) 
-<code>40</code> = rotated BB8 copula (270 degrees) 
-<code>104</code> = Tawn type 1 copula 
-<code>114</code> = rotated Tawn type 1 copula (180 degrees) 
-<code>124</code> = rotated Tawn type 1 copula (90 degrees) 
-<code>134</code> = rotated Tawn type 1 copula (270 degrees) 
-<code>204</code> = Tawn type 2 copula 
-<code>214</code> = rotated Tawn type 2 copula (180 degrees) 
-<code>224</code> = rotated Tawn type 2 copula (90 degrees) 
-<code>234</code> = rotated Tawn type 2 copula (270 degrees)</p></td>
+defines the bivariate copula family: <br />
+<code>0</code> = independence copula <br />
+<code>1</code> = Gaussian copula <br />
+<code>2</code> = Student t copula (t-copula) <br />
+<code>3</code> = Clayton copula <br />
+<code>4</code> = Gumbel copula <br />
+<code>5</code> = Frank copula <br />
+<code>6</code> = Joe copula <br />
+<code>7</code> = BB1 copula <br />
+<code>8</code> = BB6 copula <br />
+<code>9</code> = BB7 copula <br />
+<code>10</code> = BB8 copula <br />
+<code>13</code> = rotated Clayton copula (180 degrees; ``survival Clayton'') <br />
+<code>14</code> = rotated Gumbel copula (180 degrees; ``survival Gumbel'') <br />
+<code>16</code> = rotated Joe copula (180 degrees; ``survival Joe'') <br />
+<code>17</code> = rotated BB1 copula (180 degrees; ``survival BB1'')<br />
+<code>18</code> = rotated BB6 copula (180 degrees; ``survival BB6'')<br />
+<code>19</code> = rotated BB7 copula (180 degrees; ``survival BB7'')<br />
+<code>20</code> = rotated BB8 copula (180 degrees; ``survival BB8'')<br />
+<code>23</code> = rotated Clayton copula (90 degrees) <br />
+<code>24</code> = rotated Gumbel copula (90 degrees) <br />
+<code>26</code> = rotated Joe copula (90 degrees) <br />
+<code>27</code> = rotated BB1 copula (90 degrees) <br />
+<code>28</code> = rotated BB6 copula (90 degrees) <br />
+<code>29</code> = rotated BB7 copula (90 degrees) <br />
+<code>30</code> = rotated BB8 copula (90 degrees) <br />
+<code>33</code> = rotated Clayton copula (270 degrees) <br />
+<code>34</code> = rotated Gumbel copula (270 degrees) <br />
+<code>36</code> = rotated Joe copula (270 degrees) <br />
+<code>37</code> = rotated BB1 copula (270 degrees) <br />
+<code>38</code> = rotated BB6 copula (270 degrees) <br />
+<code>39</code> = rotated BB7 copula (270 degrees) <br />
+<code>40</code> = rotated BB8 copula (270 degrees) <br />
+<code>104</code> = Tawn type 1 copula <br />
+<code>114</code> = rotated Tawn type 1 copula (180 degrees) <br />
+<code>124</code> = rotated Tawn type 1 copula (90 degrees) <br />
+<code>134</code> = rotated Tawn type 1 copula (270 degrees) <br />
+<code>204</code> = Tawn type 2 copula <br />
+<code>214</code> = rotated Tawn type 2 copula (180 degrees) <br />
+<code>224</code> = rotated Tawn type 2 copula (90 degrees) <br />
+<code>234</code> = rotated Tawn type 2 copula (270 degrees) <br /></p></td>
     </tr>
     <tr>
       <th>par</th>
@@ -182,12 +198,12 @@ care).</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If the family and parameter specification is stored in a <code><a href='BiCop.html'>BiCop</a></code>
-object <code>obj</code>, the alternative version</p><pre>BiCopPDF(u1, u2, obj)</pre><p>can be used.</p>
+object <code>obj</code>, the alternative version <br /></p><pre>BiCopPDF(u1, u2, obj)</pre><p>can be used.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='BiCopCDF.html'>BiCopCDF</a></code>, <code><a href='BiCopHfunc.html'>BiCopHfunc</a></code>,
-<code><a href='BiCopSim.html'>BiCopSim</a></code>, <code><a href='BiCop.html'>BiCop</a></code></p>
+    <div class='dont-index'><p><code><a href='BiCopCDF.html'>BiCopCDF</a></code>, <code><a href='BiCopHfunc.html'>BiCopHfunc</a></code>,
+<code><a href='BiCopSim.html'>BiCopSim</a></code>, <code><a href='BiCop.html'>BiCop</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -198,56 +214,53 @@ object <code>obj</code>, the alternative version</p><pre>BiCopPDF(u1, u2, obj)</
 <span class='co'>## evaluate the density of the bivariate t-copula</span>
 <span class='no'>u1</span> <span class='kw'>&lt;-</span> <span class='no'>simdata</span>[,<span class='fl'>1</span>]
 <span class='no'>u2</span> <span class='kw'>&lt;-</span> <span class='no'>simdata</span>[,<span class='fl'>2</span>]
-<span class='fu'>BiCopPDF</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='no'>cop</span>)</div><div class='output co'>#&gt;   [1]  2.1306456  4.1962716  9.1524595  0.8952852  1.4656171  1.2886303
-#&gt;   [7]  0.1538810  1.4331731  1.3010896  0.2505423  1.4469876  0.4073968
-#&gt;  [13]  0.7353143  1.4460763  9.1858944  1.8387049  1.6328029  1.1686813
-#&gt;  [19]  1.6916863  0.9085196  1.8593422  0.6583833  2.0996375  2.4533072
-#&gt;  [25]  2.3866976  8.4577953  1.2008736  0.1797626  1.0483543  2.0665501
-#&gt;  [31]  4.4485417  1.6137590  1.8568620  3.5485391  4.8100314  1.5457310
-#&gt;  [37]  2.1103129  1.6153957  2.1622530  1.1592634  1.5612059  0.5663747
-#&gt;  [43]  1.2653649  1.5913829  1.5946645  2.2793286  2.5445049  2.8946325
-#&gt;  [49]  0.2324600  0.7565870  1.5291350  1.0309052  1.0607904  0.5233480
-#&gt;  [55]  2.9304414  1.3802993  1.5835675  2.8899306  2.1266217  1.1420443
-#&gt;  [61]  1.2639900  1.0639686  2.5038283  1.7124491  1.0572096  1.8474986
-#&gt;  [67]  2.9176118  0.3158799  2.0321830  3.1898574  1.7025635  2.8849251
-#&gt;  [73]  1.2206931  0.3798045 23.3516742  2.6714202  0.6345198  0.6190335
-#&gt;  [79]  1.8902789  7.6958835  0.5790888  1.8217116  7.1691876  7.7269896
-#&gt;  [85]  1.0912906  2.7140931  1.5055683  1.2056177  5.5423714  1.5052213
-#&gt;  [91]  1.2178262  0.8869690  1.2487186  0.7491671  0.3550704  3.0378246
-#&gt;  [97]  1.2558922  1.7871041  0.4751990  1.7346539</div><div class='input'>
+<span class='fu'>BiCopPDF</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='no'>cop</span>)</div><div class='output co'>#&gt;   [1] 1.7476289 1.1253686 4.3948771 0.8726650 1.5970650 4.0665279 1.5506525
+#&gt;   [8] 3.2518440 0.3420938 0.9234262 1.3371767 0.1861758 1.2740615 1.5294965
+#&gt;  [15] 0.7933051 0.3425504 1.0041005 4.5411878 1.9548186 1.0939714 1.7351468
+#&gt;  [22] 1.4652813 0.6291736 1.7040858 1.6721897 2.8457657 1.9823741 1.3391780
+#&gt;  [29] 2.9373786 2.9111003 1.2189760 1.2631258 2.0330900 0.8448330 1.9772725
+#&gt;  [36] 1.4537177 0.2037127 1.2349811 1.6541503 0.7310370 1.9794678 1.3927695
+#&gt;  [43] 2.0050030 0.3565457 3.2173480 2.6788939 1.7049721 0.9617950 1.7285330
+#&gt;  [50] 1.5889394 1.6010289 0.6209664 0.9527241 1.8776343 0.9331976 4.3537199
+#&gt;  [57] 4.4719155 1.6133001 0.5482457 1.6166834 1.6775950 1.0495470 0.5241108
+#&gt;  [64] 0.4516549 2.6485938 0.7553097 1.1889348 1.4670809 0.9331701 6.9320818
+#&gt;  [71] 1.5214964 1.0149675 2.5753882 0.4790395 1.9758710 2.0281979 1.1984456
+#&gt;  [78] 1.7362999 1.3836301 1.1894062 1.5046916 1.6979178 1.6588089 1.8752542
+#&gt;  [85] 1.2693172 1.4344133 1.0769339 1.4666279 1.6416774 1.8108982 2.4709521
+#&gt;  [92] 1.7982885 1.6135021 1.8222352 0.4068980 1.3195279 4.0104640 3.1903099
+#&gt;  [99] 1.5967170 2.2580077</div><div class='input'>
 <span class='co'>## select a bivariate copula for the simulated data</span>
 <span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopSelect.html'>BiCopSelect</a></span>(<span class='no'>u1</span>, <span class='no'>u2</span>)
 <span class='fu'>summary</span>(<span class='no'>fit</span>)</div><div class='output co'>#&gt; Family
 #&gt; ------ 
-#&gt; No:    39
-#&gt; Name:  Rotated BB7 270 degrees
+#&gt; No:    5
+#&gt; Name:  Frank
 #&gt; 
 #&gt; Parameter(s)
 #&gt; ------------
-#&gt; par:  -1.98
-#&gt; par2: -1.04
+#&gt; par:  -6.64
+#&gt; 
 #&gt; Dependence measures
 #&gt; -------------------
-#&gt; Kendall's tau:    -0.5 (empirical = -0.53, p value &lt; 0.01)
+#&gt; Kendall's tau:    -0.55 (empirical = -0.52, p value &lt; 0.01)
 #&gt; Upper TD:         0 
 #&gt; Lower TD:         0 
 #&gt; 
 #&gt; Fit statistics
 #&gt; --------------
-#&gt; logLik:  44.29 
-#&gt; AIC:    -84.58 
-#&gt; BIC:    -79.37 
+#&gt; logLik:  35.54 
+#&gt; AIC:    -69.08 
+#&gt; BIC:    -66.47 
 #&gt; </div><div class='input'><span class='co'>## and evaluate its PDF</span>
-<span class='fu'>round</span>(<span class='fu'>BiCopPDF</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='no'>fit</span>), <span class='fl'>3</span>)</div><div class='output co'>#&gt;   [1]  2.043  4.298 10.238  0.996  1.430  1.295  0.118  1.388  1.151  0.234
-#&gt;  [11]  1.405  0.464  0.803  1.396 10.228  1.768  1.583  1.207  1.571  1.006
-#&gt;  [21]  1.867  0.583  1.926  2.485  2.241  9.409  1.222  0.145  1.115  2.039
-#&gt;  [31]  4.790  1.497  1.648  3.690  5.686  1.467  1.966  1.540  2.009  1.198
-#&gt;  [41]  1.487  0.607  1.278  1.486  1.502  2.285  2.240  2.948  0.256  0.721
-#&gt;  [51]  1.494  1.087  1.128  0.642  2.854  1.365  1.490  2.960  2.150  1.169
-#&gt;  [61]  1.294  1.134  2.566  1.584  1.097  1.771  2.840  0.347  1.992  3.506
-#&gt;  [71]  1.581  2.854  1.250  0.470 32.092  2.551  0.759  0.723  1.833  9.888
-#&gt;  [81]  0.663  1.808  9.442 10.559  1.117  2.745  1.439  1.168  2.297  1.443
-#&gt;  [91]  1.245  0.993  1.266  0.857  0.435  3.255  1.271  1.712  0.569  1.650</div><div class='input'>
+<span class='fu'>round</span>(<span class='fu'>BiCopPDF</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='no'>fit</span>), <span class='fl'>3</span>)</div><div class='output co'>#&gt;   [1] 1.832 1.090 4.311 0.719 1.792 3.616 1.658 3.277 0.163 1.108 1.486 0.125
+#&gt;  [13] 1.236 1.679 0.588 0.477 0.849 4.070 2.039 0.971 1.839 1.559 0.493 1.800
+#&gt;  [25] 1.788 3.064 2.168 1.330 2.795 2.779 1.294 1.220 2.113 0.712 2.070 1.487
+#&gt;  [37] 0.991 1.177 1.822 0.518 2.080 1.405 2.157 0.946 3.040 2.608 1.847 0.791
+#&gt;  [49] 1.986 1.788 1.734 0.536 0.837 2.115 0.759 3.578 4.262 1.718 0.410 1.793
+#&gt;  [61] 1.807 0.911 0.738 0.285 2.585 0.551 1.108 1.562 0.841 4.668 1.608 2.687
+#&gt;  [73] 2.549 0.272 2.062 2.108 1.120 1.898 1.393 1.108 1.625 1.856 1.833 1.963
+#&gt;  [85] 1.230 1.463 1.101 1.535 1.821 1.937 2.457 1.898 1.802 1.955 0.337 1.302
+#&gt;  [97] 4.257 3.082 1.734 2.298</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -277,11 +290,14 @@ Eike Brechmann
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

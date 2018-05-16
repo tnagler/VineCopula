@@ -18,13 +18,20 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Lambda-Function (Plot) for Bivariate Copula Data — BiCopLambda" />
+
+<meta property="og:description" content="This function plots/returns the lambda-function of given bivariate copula
+data." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +39,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,12 +56,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">VineCopula</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">VineCopula</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.5</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -61,7 +74,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -73,6 +86,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -80,10 +94,12 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Lambda-Function (Plot) for Bivariate Copula Data</h1>
+    <small>Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/BiCopLambda.R'><code>R/BiCopLambda.R</code></a></small>
+    <div class="hidden name"><code>BiCopLambda.Rd</code></div>
     </div>
 
     
@@ -94,7 +110,7 @@ data.</p>
     <pre class="usage"><span class='fu'>BiCopLambda</span>(<span class='kw'>u1</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>u2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"emp"</span>, <span class='kw'>par</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>PLOT</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -105,20 +121,20 @@ data.</p>
     <tr>
       <th>family</th>
       <td><p>An integer defining the bivariate copula family or indicating
-the empirical lambda-function: 
+the empirical lambda-function: <br />
 <code>"emp"</code> = empirical lambda-function
-(default) 
+(default) <br />
 <code>1</code> = Gaussian copula; the theoretical lambda-function is simulated
-(no closed formula available) 
+(no closed formula available) <br />
 <code>2</code> = Student-t copula; the theoretical lambda-function is simulated
-(no closed formula available) 
-<code>3</code> = Clayton copula 
-<code>4</code> = Gumbel copula 
-<code>5</code> = Frank copula 
-<code>6</code> = Joe copula 
-<code>7</code> = BB1 copula 
-<code>8</code> = BB6 copula 
-<code>9</code> = BB7 copula 
+(no closed formula available) <br />
+<code>3</code> = Clayton copula <br />
+<code>4</code> = Gumbel copula <br />
+<code>5</code> = Frank copula <br />
+<code>6</code> = Joe copula <br />
+<code>7</code> = BB1 copula <br />
+<code>8</code> = BB6 copula <br />
+<code>9</code> = BB7 copula <br />
 <code>10</code> = BB8
 copula</p></td>
     </tr>
@@ -135,7 +151,7 @@ copula</p></td>
     <tr>
       <th>PLOT</th>
       <td><p>Logical; whether the results are plotted. If <code>PLOT =
-FALSE</code>, the values  <code>empLambda</code> and/or <code>theoLambda</code> are
+FALSE</code>, the values <br /> <code>empLambda</code> and/or <code>theoLambda</code> are
 returned (see below; default: <code>PLOT = TRUE</code>).</p></td>
     </tr>
     <tr>
@@ -162,7 +178,7 @@ specification.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If the family and parameter specification is stored in a <code><a href='BiCop.html'>BiCop</a></code>
-object <code>obj</code>, the alternative versions</p><pre>BiCopLambda(obj, PLOT = TRUE, ...)</pre><p>and</p><pre>BiCopLambda((u1, u2, obj, PLOT = TRUE, ...)</pre><p>can be used.</p>
+object <code>obj</code>, the alternative versions <br /></p><pre>BiCopLambda(obj, PLOT = TRUE, ...)</pre><p>and</p><pre>BiCopLambda((u1, u2, obj, PLOT = TRUE, ...)</pre><p>can be used.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -197,13 +213,13 @@ procedures for bivariate Archimedean copulas. Journal of the American
 Statistical Association, 88 (423), 1034-1043.</p>
 <p>Schepsmeier, U. (2010). Maximum likelihood estimation of C-vine pair-copula
 constructions based on bivariate copulas from different families. Diploma
-thesis, Technische Universitaet Muenchen.
+thesis, Technische Universitaet Muenchen.<br />
 <a href='http://mediatum.ub.tum.de/?id=1079296'>http://mediatum.ub.tum.de/?id=1079296</a>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='BiCopMetaContour.html'>BiCopMetaContour</a></code>, <code><a href='BiCopKPlot.html'>BiCopKPlot</a></code>,
-<code><a href='BiCopChiPlot.html'>BiCopChiPlot</a></code>, <code><a href='BiCop.html'>BiCop</a></code></p>
+    <div class='dont-index'><p><code><a href='BiCopMetaContour.html'>BiCopMetaContour</a></code>, <code><a href='BiCopKPlot.html'>BiCopKPlot</a></code>,
+<code><a href='BiCopChiPlot.html'>BiCopChiPlot</a></code>, <code><a href='BiCop.html'>BiCop</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -215,7 +231,7 @@ thesis, Technische Universitaet Muenchen.
 <span class='no'>op</span> <span class='kw'>&lt;-</span> <span class='fu'>par</span>(<span class='kw'>mfrow</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>3</span>))
 <span class='fu'>BiCopLambda</span>(<span class='no'>dat</span>[, <span class='fl'>1</span>], <span class='no'>dat</span>[, <span class='fl'>2</span>])  <span class='co'># empirical lambda-function</span>
 <span class='fu'>BiCopLambda</span>(<span class='no'>cop</span>)        <span class='co'># theoretical lambda-function</span>
-<span class='fu'>BiCopLambda</span>(<span class='no'>dat</span>[, <span class='fl'>1</span>], <span class='no'>dat</span>[, <span class='fl'>2</span>], <span class='no'>cop</span>)    <span class='co'># both</span></div><div class='img'><img src='BiCopLambda-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>par</span>(<span class='no'>op</span>)</div></pre>
+<span class='fu'>BiCopLambda</span>(<span class='no'>dat</span>[, <span class='fl'>1</span>], <span class='no'>dat</span>[, <span class='fl'>2</span>], <span class='no'>cop</span>)    <span class='co'># both</span></div><div class='img'><img src='BiCopLambda-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>par</span>(<span class='no'>op</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -248,11 +264,14 @@ Ulf Schepsmeier
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
