@@ -18,13 +18,21 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Maximum Likelihood Estimation of an R-Vine Copula Model — RVineMLE" />
+
+<meta property="og:description" content="This function calculates the maxiumum likelihood estimate (MLE) of the
+R-vine copula model parameters using sequential estimates as initial values
+(if not provided)." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +40,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,12 +57,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">VineCopula</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">VineCopula</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.5</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -61,7 +75,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -73,6 +87,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -80,10 +95,12 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Maximum Likelihood Estimation of an R-Vine Copula Model</h1>
+    <small>Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/RVineMLE.R'><code>R/RVineMLE.R</code></a></small>
+    <div class="hidden name"><code>RVineMLE.Rd</code></div>
     </div>
 
     
@@ -96,7 +113,7 @@ R-vine copula model parameters using sequential estimates as initial values
   <span class='kw'>max.df</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>max.BB</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>BB1</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>5</span>, <span class='fl'>6</span>), <span class='kw'>BB6</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>6</span>, <span class='fl'>6</span>), <span class='kw'>BB7</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>5</span>, <span class='fl'>6</span>),
   <span class='kw'>BB8</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>6</span>, <span class='fl'>1</span>)), <span class='kw'>grad</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>hessian</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -112,7 +129,7 @@ the pair-copula families and parameters (if known).</p></td>
       <th>start</th>
       <td><p>Lower triangular d x d matrix with zero diagonal entries with
 starting values for the pair-copula parameters (optional; otherwise they are
-calculated via  <code><a href='RVineSeqEst.html'>RVineSeqEst</a></code>; default: <code>start =
+calculated via <br /> <code><a href='RVineSeqEst.html'>RVineSeqEst</a></code>; default: <code>start =
 RVM$par</code>).</p></td>
     </tr>
     <tr>
@@ -136,7 +153,7 @@ details see <code><a href='BiCopEst.html'>BiCopEst</a></code>).</p></td>
     <tr>
       <th>max.BB</th>
       <td><p>List; upper bounds for the estimation of the two parameters
-(in absolute values) of the BB1, BB6, BB7 and BB8 copulas  (default:
+(in absolute values) of the BB1, BB6, BB7 and BB8 copulas <br /> (default:
 <code>max.BB = list(BB1=c(5,6),BB6=c(6,6),BB7=c(5,6),BB8=c(6,1))</code>).</p></td>
     </tr>
     <tr>
@@ -163,7 +180,7 @@ FALSE</code>).</p></td>
       <td><p>Further arguments for <code>optim</code> (e.g. <code>factr</code> controls
 the convergence of the "L-BFGS-B" method, or <code>trace</code>, a non-negative
 integer, determines if tracing information on the progress of the
-optimization is produced.)  For more details see the documentation of
+optimization is produced.) <br /> For more details see the documentation of
 <code>optim</code>.</p></td>
     </tr>
     </table>
@@ -177,10 +194,10 @@ parameters stored in <code>RVM$par</code> and <code>RVM$par2</code>. Additional
 information about the fit is added (e.g., log-likelihood, AIC, BIC).</p></dd>
 <dt>value</dt><dd><p>Optimized log-likelihood value corresponding to the estimated
 pair-copula parameters.</p></dd> <dt>convergence</dt><dd><p>An integer code indicating
-either successful convergence (<code>convergence = 0</code>) or an error:
-<code>1</code> = the iteration limit <code>maxit</code> has been reached  <code>51</code> =
+either successful convergence (<code>convergence = 0</code>) or an error:<br />
+<code>1</code> = the iteration limit <code>maxit</code> has been reached <br /> <code>51</code> =
 a warning from the "L-BFGS-B" method; see component <code>message</code> for
-further details  <code>52</code> = an error from the "L-BFGS-B" method; see
+further details <br /> <code>52</code> = an error from the "L-BFGS-B" method; see
 component <code>message</code> for further details</p></dd> <dt>message</dt><dd><p>A character
 string giving any additional information returned by <code>optim</code>, or
 <code>NULL</code>.</p></dd> <dt>counts</dt><dd><p>A two-element integer vector giving the number
@@ -193,7 +210,7 @@ calculation is on the basis of finite differences (output of <code>optim</code>)
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p><code>RVineMLE</code> uses the L-BFGS-B method for optimization.  If the
+    <p><code>RVineMLE</code> uses the L-BFGS-B method for optimization. <br /> If the
 analytical gradient is used for maximization, computations may be up to 10
 times faster than using finite differences.</p>
     
@@ -208,11 +225,11 @@ vine copula models. Computational Statistics, 1-29
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='RVineSeqEst.html'>RVineSeqEst</a></code>,
+    <div class='dont-index'><p><code><a href='RVineSeqEst.html'>RVineSeqEst</a></code>,
 <code><a href='RVineStructureSelect.html'>RVineStructureSelect</a></code>,
 <code><a href='RVineMatrix.html'>RVineMatrix</a></code>,
 <code><a href='RVineGrad.html'>RVineGrad</a></code>,
-<code><a href='RVineHessian.html'>RVineHessian</a></code></p>
+<code><a href='RVineHessian.html'>RVineHessian</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -294,11 +311,14 @@ Ulf Schepsmeier, Jeffrey Dissmann
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

@@ -1,4 +1,4 @@
-VineCopula 2.1.5 (in progress)
+VineCopula 2.1.5 (May 16, 2018)
 ----------------------------------------------------------------
 
 NEW FEATURES
@@ -8,6 +8,10 @@ NEW FEATURES
 BUG FIXES
 
   * fix calculation of Kendall's tau when joint ties are present.
+  
+  * fix missing `pair.AIC/BIC` in `RVineSeqEst()`.
+  
+  * improved starting parameter for Joe copula MLE.
 
 
 VineCopula 2.1.4 (February 11, 2018)

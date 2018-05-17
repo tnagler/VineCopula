@@ -18,13 +18,22 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Sequential Specification of R- and C-Vine Copula Models — RVineStructureSelect" />
+
+<meta property="og:description" content="This function fits either an R- or a C-vine copula model to a d-dimensional
+copula data set. Tree structures are determined and appropriate pair-copula
+families are selected using BiCopSelect and estimated
+sequentially (forward selection of trees)." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +41,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,12 +58,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">VineCopula</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">VineCopula</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.5</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -61,7 +76,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -73,6 +88,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -80,10 +96,12 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Sequential Specification of R- and C-Vine Copula Models</h1>
+    <small>Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/RVineStructureSelect.R'><code>R/RVineStructureSelect.R</code></a></small>
+    <div class="hidden name"><code>RVineStructureSelect.Rd</code></div>
     </div>
 
     
@@ -98,7 +116,7 @@ sequentially (forward selection of trees).</p>
   <span class='kw'>trunclevel</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>treecrit</span> <span class='kw'>=</span> <span class='st'>"tau"</span>,
   <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rotations</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mle"</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -117,9 +135,9 @@ as in <code><a href='BiCop.html'>BiCop</a></code>.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>Type of the vine model to be specified:
-<code>0</code> or <code>"RVine"</code> = R-vine (default) 
-<code>1</code> or <code>"CVine"</code> = C-vine 
+      <td><p>Type of the vine model to be specified:<br />
+<code>0</code> or <code>"RVine"</code> = R-vine (default) <br />
+<code>1</code> or <code>"CVine"</code> = C-vine <br />
 C- and D-vine copula models with pre-specified order can be specified using
 <code>CDVineCopSelect</code> of the package CDVine. Similarly, R-vine copula
 models with pre-specified tree structure can be specified using
@@ -223,21 +241,21 @@ in particular on the proximity condition.</p>
 <p>Some commonly used edge weights are implemented:</p><table><tr><td>
 <code>"tau"</code> </td>
 <td> absolute value of empirical Kendall's tau. </td>
-</tr><tr><td>
+</tr><tr><td><br />
 <code>"rho"</code> </td>
 <td> absolute value of empirical Spearman's rho. </td>
-</tr><tr><td>
+</tr><tr><td><br />
 <code>"AIC"</code> </td>
 <td> Akaike information (multiplied by -1). </td>
-</tr><tr><td>
+</tr><tr><td><br />
 <code>"BIC"</code> </td>
 <td> Bayesian information criterion (multiplied by -1). </td>
-</tr><tr><td>
+</tr><tr><td><br />
 <code>"cAIC"</code></td>
 <td> corrected Akaike information criterion (multiplied by -1). </td>
 </tr></table><p>If the data contain NAs, the edge weights in <code>"tau"</code> and <code>"rho"</code> are
 multiplied by the square root of the proportion of complete observations. This
-penalizes pairs where less observations are used.</p>
+penalizes pairs where less observations are used. <br /></p>
 <p>The criteria <code>"AIC"</code>, <code>"BIC"</code>, and <code>"cAIC"</code> require estimation and
 model selection for all possible pairs. This is computationally expensive and
 much slower than <code>"tau"</code> or <code>"rho"</code>.
@@ -245,8 +263,8 @@ The user can also specify a custom function to calculate the edge weights.
 The function has to be of type <code>function(u1, u2, weights) ...</code> and must
 return a numeric value. The weigths argument must exist, but does not has to
 be used. For example, <code>"tau"</code> (withouth using weights) can be implemented
-as follows:
-<code>function(u1, u2, weights)</code> 
+as follows:<br />
+<code>function(u1, u2, weights)</code> <br />
     <code>abs(cor(u1, u2, method = "kendall", use = "complete.obs"))</code></p>
     <p>The root nodes of C-vine trees are determined similarly by identifying the
 node with strongest dependencies to all other nodes. That is we take the
@@ -272,12 +290,12 @@ returns. Computational Statistics &amp; Data Analysis, 59 (1), 52-69.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='RVineMatrix.html'>RVineMatrix</a></code>,
+    <div class='dont-index'><p><code><a href='RVineMatrix.html'>RVineMatrix</a></code>,
 <code><a href='BiCop.html'>BiCop</a></code>,
 <code><a href='RVineCopSelect.html'>RVineCopSelect</a></code>,
 <code><a href='plot.RVineMatrix.html'>plot.RVineMatrix</a></code>,
 <code>contour.RVineMatrix</code>,
-<code><a href='http://www.rdocumentation.org/packages/foreach/topics/foreach'>foreach</a></code></p>
+<code><a href='http://www.rdocumentation.org/packages/foreach/topics/foreach'>foreach</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -331,7 +349,7 @@ returns. Computational Statistics &amp; Data Analysis, 59 (1), 52-69.</p>
 ## inspect the fitted model using plots
 </div><span class='co'># NOT RUN {</span>
 <span class='fu'>plot</span>(<span class='no'>RVM</span>)  <span class='co'># tree structure</span>
-<span class='co'># }</span><div class='input'><span class='fu'>contour</span>(<span class='no'>RVM</span>)  <span class='co'># contour plots of all pair-copulas</span></div><div class='img'><img src='RVineStructureSelect-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='co'># }</span><div class='input'><span class='fu'>contour</span>(<span class='no'>RVM</span>)  <span class='co'># contour plots of all pair-copulas</span></div><div class='img'><img src='RVineStructureSelect-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div><div class='input'><span class='co'>## estimate a C-vine copula model with only Clayton, Gumbel and Frank copulas</span>
 <span class='no'>CVM</span> <span class='kw'>&lt;-</span> <span class='fu'>RVineStructureSelect</span>(<span class='no'>daxreturns</span>, <span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>4</span>,<span class='fl'>5</span>), <span class='st'>"CVine"</span>)</div><div class='input'>
 </div><div class='input'><span class='co'>## determine the order of the nodes in a D-vine using the package TSP</span>
@@ -391,11 +409,14 @@ Jeffrey Dissmann, Eike Brechmann, Ulf Schepsmeier, Thomas Nagler
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

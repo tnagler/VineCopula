@@ -18,13 +18,21 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Pairs Plot of Copula Data — pairs.copuladata" />
+
+<meta property="og:description" content="This function provides pair plots for copula data. Using default setting it
+plots bivariate contour plots on the lower panel, scatter plots and
+correlations on the upper panel and histograms on the diagonal panel." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -32,6 +40,8 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
 
 
   </head>
@@ -47,12 +57,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">VineCopula</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">VineCopula</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.5</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
@@ -61,7 +75,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -73,6 +87,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -80,10 +95,12 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Pairs Plot of Copula Data</h1>
+    <small>Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/pairs.R'><code>R/pairs.R</code></a></small>
+    <div class="hidden name"><code>pairs.copuladata.Rd</code></div>
     </div>
 
     
@@ -98,7 +115,7 @@ correlations on the upper panel and histograms on the diagonal panel.</p>
   <span class='kw'>diag.panel</span> <span class='kw'>=</span> <span class='no'>dp.copuladata</span>, <span class='kw'>label.pos</span> <span class='kw'>=</span> <span class='fl'>0.85</span>, <span class='kw'>cex.labels</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>gap</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kendall"</span>, <span class='kw'>ccols</span> <span class='kw'>=</span> <span class='fu'>terrain.colors</span>(<span class='fl'>11</span>), <span class='kw'>margins</span> <span class='kw'>=</span> <span class='st'>"norm"</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -157,7 +174,7 @@ terrain.colors(30)</code>.</p></td>
     </tr>
     <tr>
       <th>margins</th>
-      <td><p>character; margins for the contour plots. Options are:
+      <td><p>character; margins for the contour plots. Options are:<br />
 <code>"unif"</code> for the original copula density,
 <code>"norm"</code> for the transformed density with standard normal margins,
 <code>"exp"</code> with standard exponential margins, and  <code>"flexp"</code> with
@@ -167,18 +184,18 @@ flipped exponential margins.</p></td>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>If the default panel functions are used</p><ul>
+    <p>If the default panel functions are used <br /></p><ul>
 <li><p><code>col</code>
 changes only the colour of the points in the scatter plot
-(<code>upper.panel</code>)</p></li>
+(<code>upper.panel</code>) <br /></p></li>
 <li><p><code>cex</code> changes only the magnification of
 the points in the scatter plot (<code>upper.panel</code>)</p></li>
 </ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='http://www.rdocumentation.org/packages/graphics/topics/pairs'>pairs</a></code>, <code><a href='as.copuladata.html'>as.copuladata</a></code>,
-<code><a href='BiCopKDE.html'>BiCopKDE</a></code></p>
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/graphics/topics/pairs'>pairs</a></code>, <code><a href='as.copuladata.html'>as.copuladata</a></code>,
+<code><a href='BiCopKDE.html'>BiCopKDE</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -187,14 +204,14 @@ the points in the scatter plot (<code>upper.panel</code>)</p></li>
 <span class='no'>sel</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='fl'>4</span>,<span class='fl'>5</span>,<span class='fl'>14</span>,<span class='fl'>15</span>)
 
 <span class='co'>## pairs plot with default settings</span>
-<span class='fu'>pairs</span>(<span class='no'>data</span>[<span class='no'>sel</span>])</div><div class='img'><img src='pairs.copuladata-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>pairs</span>(<span class='no'>data</span>[<span class='no'>sel</span>])</div><div class='img'><img src='pairs.copuladata-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## pairs plot with custom settings</span>
 <span class='no'>nlevels</span> <span class='kw'>&lt;-</span> <span class='fl'>20</span>
 <span class='fu'>pairs</span>(<span class='no'>data</span>[<span class='no'>sel</span>], <span class='kw'>cex</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>pch</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
       <span class='kw'>diag.panel</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>label.pos</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
       <span class='kw'>cex.labels</span> <span class='kw'>=</span> <span class='fl'>2.5</span>, <span class='kw'>gap</span> <span class='kw'>=</span> <span class='fl'>1</span>,
       <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"pearson"</span>, <span class='kw'>ccols</span> <span class='kw'>=</span> <span class='fu'>heat.colors</span>(<span class='no'>nlevels</span>),
-      <span class='kw'>margins</span> <span class='kw'>=</span> <span class='st'>"flexp"</span>)</div><div class='img'><img src='pairs.copuladata-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+      <span class='kw'>margins</span> <span class='kw'>=</span> <span class='st'>"flexp"</span>)</div><div class='img'><img src='pairs.copuladata-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## pairs plot with own panel functions</span>
 <span class='no'>up</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>y</span>) {
   <span class='co'># upper panel: empirical contour plot</span>
@@ -226,7 +243,7 @@ the points in the scatter plot (<code>upper.panel</code>)</p></li>
 
 <span class='no'>nlevels</span> <span class='kw'>&lt;-</span> <span class='fl'>20</span>
 <span class='fu'>pairs</span>(<span class='no'>data</span>[<span class='no'>sel</span>],
-      <span class='kw'>lower.panel</span> <span class='kw'>=</span> <span class='no'>lp</span>, <span class='kw'>upper.panel</span> <span class='kw'>=</span> <span class='no'>up</span>, <span class='kw'>diag.panel</span> <span class='kw'>=</span> <span class='no'>dp</span>, <span class='kw'>gap</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)</div><div class='img'><img src='pairs.copuladata-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+      <span class='kw'>lower.panel</span> <span class='kw'>=</span> <span class='no'>lp</span>, <span class='kw'>upper.panel</span> <span class='kw'>=</span> <span class='no'>up</span>, <span class='kw'>diag.panel</span> <span class='kw'>=</span> <span class='no'>dp</span>, <span class='kw'>gap</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)</div><div class='img'><img src='pairs.copuladata-3.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -254,11 +271,14 @@ Tobias Erhardt
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
