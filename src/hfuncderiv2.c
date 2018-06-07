@@ -355,7 +355,7 @@ void diff2hfunc_v_mod(double* u, double* v, int* n, double* param, int* copula, 
             negu[i] = 1 - u[i];
         }
         diff2hfunc_v(negu, negv, n, param, &ncopula, out);
-        for (i = 0; i < *n; i++) {out[i]=1-out[i];};
+        for (i = 0; i < *n; i++) {out[i]=-out[i];};
     }
     else
     {
@@ -393,59 +393,33 @@ void diff2hfunc_v_mod2(double* v, double* u, int* n, double* param, int* copula,
     nparam[0]=-param[0];
     nparam[1]=-param[1];
 
-    if((*copula)==43)
+    if(((*copula==23) | (*copula==24) | (*copula==26) | (*copula==27) | (*copula==28) | (*copula==29) | (*copula==30)))	// 90? rotated copulas
     {
-        ncopula=3;
-        if(param[0] > 0){
-            nparam[0]=2*(param[0])/(1-param[0]);
-            diff2hfunc_v(v, u, n, nparam, &ncopula, out);
-        }else{
-            nparam[0]=-2*(param[0])/(1+param[0]);
-            for (i = 0; i < *n; ++i) {negv[i] = 1 - v[i];}
-            diff2hfunc_v(negv, u, n, nparam, &ncopula, out);
-            //for(i=0;i<*n;i++){out[i]=-out[i];}
-        }
-    }else if((*copula)==44)
+        ncopula = (*copula)-20;
+        for (i = 0; i < *n; ++i) {negv[i] = 1 - v[i];}
+        diff2hfunc_v(negv, u, n, nparam, &ncopula, out);
+    }
+    else if(((*copula==33) | (*copula==34) | (*copula==36) | (*copula==37) | (*copula==38) | (*copula==39) | (*copula==40)))	// 270? rotated copulas
     {
-        ncopula=4;
-        if(param[0] > 0){
-            nparam[0]=1/(1-param[0]);
-            diff2hfunc_v(v, u, n, nparam, &ncopula, out);
-        }else{
-            nparam[0]=1/(1+param[0]);
-            for (i = 0; i < *n; ++i) {negv[i] = 1 - v[i];}
-            diff2hfunc_v(negv, u, n, nparam, &ncopula, out);
-            //for(i=0;i<*n;i++){out[i]=-out[i];}
-        }
-    }else{
-        if(((*copula==23) | (*copula==24) | (*copula==26) | (*copula==27) | (*copula==28) | (*copula==29) | (*copula==30)))	// 90? rotated copulas
+        ncopula = (*copula)-30;
+        for (i = 0; i < *n; ++i) {negu[i] = 1 - u[i];}
+        diff2hfunc_v(v, negu, n, nparam, &ncopula, out);
+        for (i = 0; i < *n; i++) {out[i]=-out[i];};
+    }
+    else if(((*copula==13) | (*copula==14) | (*copula==16) | (*copula==17) | (*copula==18) | (*copula==19) | (*copula==20)))	// 180? rotated copulas
+    {
+        ncopula = (*copula)-10;
+        for (i = 0; i < *n; ++i)
         {
-            ncopula = (*copula)-20;
-            for (i = 0; i < *n; ++i) {negv[i] = 1 - v[i];}
-            diff2hfunc_v(negv, u, n, nparam, &ncopula, out);
+            negv[i] = 1 - v[i];
+            negu[i] = 1 - u[i];
         }
-        else if(((*copula==33) | (*copula==34) | (*copula==36) | (*copula==37) | (*copula==38) | (*copula==39) | (*copula==40)))	// 270? rotated copulas
-        {
-            ncopula = (*copula)-30;
-            for (i = 0; i < *n; ++i) {negu[i] = 1 - u[i];}
-            diff2hfunc_v(v, negu, n, nparam, &ncopula, out);
-            for (i = 0; i < *n; i++) {out[i]=-out[i];};
-        }
-        else if(((*copula==13) | (*copula==14) | (*copula==16) | (*copula==17) | (*copula==18) | (*copula==19) | (*copula==20)))	// 180? rotated copulas
-        {
-            ncopula = (*copula)-10;
-            for (i = 0; i < *n; ++i)
-            {
-                negv[i] = 1 - v[i];
-                negu[i] = 1 - u[i];
-            }
-            diff2hfunc_v(negv, negu, n, param, &ncopula, out);
-            for (i = 0; i < *n; i++) {out[i]=1-out[i];};
-        }
-        else
-        {
-            diff2hfunc_v(v, u, n, param, copula, out);
-        }
+        diff2hfunc_v(negv, negu, n, param, &ncopula, out);
+        for (i = 0; i < *n; i++) {out[i]=-out[i];};
+    }
+    else
+    {
+        diff2hfunc_v(v, u, n, param, copula, out);
     }
     free(negv);
     free(negu);
