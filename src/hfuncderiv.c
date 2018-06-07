@@ -47,8 +47,8 @@ void diffhfunc_mod(double* u, double* v, int* n, double* param, int* copula, dou
     {
         ncopula = (*copula)-30;
         for (i = 0; i < *n; ++i) {negv[i] = 1 - v[i];}
-        diffhfunc(negv, u, n, nparam, &ncopula, out);
-        for (i = 0; i < *n; i++) {out[i]=-out[i];};
+        diffhfunc(u, negv, n, nparam, &ncopula, out);
+        for (i = 0; i < *n; ++i) {out[i] = -out[i];}
     }
     else if(((*copula==13) | (*copula==14) | (*copula==16) | (*copula==17) | (*copula==18) | (*copula==19) | (*copula==20)))	// 180? rotated copulas
     {
