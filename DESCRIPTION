@@ -43,7 +43,9 @@ Imports:
 Suggests:
     CDVine,
     TSP,
-    shiny
+    shiny,
+    testthat,
+    numDeriv
 License: GPL (>= 2)
 LazyLoad: yes
 BugReports: https://github.com/tnagler/VineCopula/issues
