@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Sequential Specification of R- and C-Vine Copula Models — RVineStructureSelect" />
 
 <meta property="og:description" content="This function fits either an R- or a C-vine copula model to a d-dimensional
@@ -34,6 +37,7 @@ sequentially (forward selection of trees)." />
 <meta name="twitter:card" content="summary" />
 
 
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -41,8 +45,6 @@ sequentially (forward selection of trees)." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -60,7 +62,7 @@ sequentially (forward selection of trees)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.6</span>
       </span>
     </div>
 
@@ -100,16 +102,18 @@ sequentially (forward selection of trees)." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Sequential Specification of R- and C-Vine Copula Models</h1>
-    <small>Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/RVineStructureSelect.R'><code>R/RVineStructureSelect.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/RVineStructureSelect.R'><code>R/RVineStructureSelect.R</code></a></small>
     <div class="hidden name"><code>RVineStructureSelect.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function fits either an R- or a C-vine copula model to a d-dimensional
 copula data set. Tree structures are determined and appropriate pair-copula
 families are selected using <code><a href='BiCopSelect.html'>BiCopSelect</a></code> and estimated
 sequentially (forward selection of trees).</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>RVineStructureSelect</span>(<span class='no'>data</span>, <span class='kw'>familyset</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>selectioncrit</span> <span class='kw'>=</span> <span class='st'>"AIC"</span>, <span class='kw'>indeptest</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
@@ -238,22 +242,15 @@ where a spanning tree is a tree on all nodes. The
 setting of the first tree selection step is always a complete graph. For
 subsequent trees, the setting depends on the R-vine construction principles,
 in particular on the proximity condition.</p>
-<p>Some commonly used edge weights are implemented:</p><table><tr><td>
-<code>"tau"</code> </td>
-<td> absolute value of empirical Kendall's tau. </td>
-</tr><tr><td><br />
-<code>"rho"</code> </td>
-<td> absolute value of empirical Spearman's rho. </td>
-</tr><tr><td><br />
-<code>"AIC"</code> </td>
-<td> Akaike information (multiplied by -1). </td>
-</tr><tr><td><br />
-<code>"BIC"</code> </td>
-<td> Bayesian information criterion (multiplied by -1). </td>
-</tr><tr><td><br />
-<code>"cAIC"</code></td>
-<td> corrected Akaike information criterion (multiplied by -1). </td>
-</tr></table><p>If the data contain NAs, the edge weights in <code>"tau"</code> and <code>"rho"</code> are
+<p>Some commonly used edge weights are implemented:</p><table class='table'>
+<tr><td><code>"tau"</code></td><td>absolute value of empirical Kendall's tau.</td></tr>
+<tr><td><code>"rho"</code></td><td>absolute value of empirical Spearman's rho.</td></tr>
+<tr><td><code>"AIC"</code></td><td>Akaike information (multiplied by -1).</td></tr>
+<tr><td><code>"BIC"</code></td><td>Bayesian information criterion (multiplied by -1).</td></tr>
+<tr><td><code>"cAIC"</code></td><td>corrected Akaike information criterion (multiplied by -1).</td></tr>
+<tr><td></td><td><code>"tau"</code></td></tr>
+</table>
+<p>If the data contain NAs, the edge weights in <code>"tau"</code> and <code>"rho"</code> are
 multiplied by the square root of the proportion of complete observations. This
 penalizes pairs where less observations are used. <br /></p>
 <p>The criteria <code>"AIC"</code>, <code>"BIC"</code>, and <code>"cAIC"</code> require estimation and

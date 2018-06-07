@@ -25,11 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Parameter of a Bivariate Copula for a given Kendall's Tau Value — BiCopTau2Par" />
 
 <meta property="og:description" content="This function computes the parameter of a (one parameter) bivariate copula
 for a given value of Kendall's tau." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -39,8 +43,6 @@ for a given value of Kendall's tau." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -58,7 +60,7 @@ for a given value of Kendall's tau." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.6</span>
       </span>
     </div>
 
@@ -98,14 +100,16 @@ for a given value of Kendall's tau." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Parameter of a Bivariate Copula for a given Kendall's Tau Value</h1>
-    <small>Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/BiCopTau2Par.R'><code>R/BiCopTau2Par.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/BiCopTau2Par.R'><code>R/BiCopTau2Par.R</code></a></small>
     <div class="hidden name"><code>BiCopTau2Par.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function computes the parameter of a (one parameter) bivariate copula
 for a given value of Kendall's tau.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>BiCopTau2Par</span>(<span class='no'>family</span>, <span class='no'>tau</span>, <span class='kw'>check.taus</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
@@ -144,31 +148,22 @@ for family/tau-consistency are ommited (should only be used with care).</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Parameter (vector) corresponding to the bivariate copula family and
-the value(s) of Kendall's tau (\(\tau\)).</p><table><tr><td> No.
-(<code>family</code>) </td>
-<td> Parameter (<code>par</code>) </td>
-</tr><tr><td><br /> <code>1, 2</code> </td>
-<td>
-\(\sin(\tau \frac{\pi}{2})\) </td>
-</tr><tr><td><br /> <code>3, 13</code> </td>
-<td>
-\(2\frac{\tau}{1-\tau}\) </td>
-</tr><tr><td><br /> <code>4, 14</code> </td>
-<td>
-\(\frac{1}{1-\tau}\) </td>
-</tr><tr><td><br /> <code>5</code> </td>
-<td> no closed form
-expression (numerical inversion) </td>
-</tr><tr><td><br /> <code>6, 16</code> </td>
-<td> no closed form
-expression (numerical inversion) </td>
-</tr><tr><td><br /> <code>23, 33</code> </td>
-<td>
-\(2\frac{\tau}{1+\tau}\) </td>
-</tr><tr><td><br /> <code>24, 34</code> </td>
-<td>
-\(-\frac{1}{1+\tau}\) </td>
-</tr></table>
+the value(s) of Kendall's tau (\(\tau\)).</p><table class='table'>
+<tr><td>No.
+(<code>family</code>)</td><td>Parameter (<code>par</code>)</td></tr>
+<tr><td><code>1, 2</code></td><td>\(\sin(\tau \frac{\pi}{2})\)</td></tr>
+<tr><td><code>3, 13</code></td><td>\(2\frac{\tau}{1-\tau}\)</td></tr>
+<tr><td><code>4, 14</code></td><td>\(\frac{1}{1-\tau}\)</td></tr>
+<tr><td><code>5</code></td><td>no closed form
+expression (numerical inversion)</td></tr>
+<tr><td><code>6, 16</code></td><td>no closed form
+expression (numerical inversion)</td></tr>
+<tr><td><code>23, 33</code></td><td>\(2\frac{\tau}{1+\tau}\)</td></tr>
+<tr><td><code>24, 34</code></td><td>\(-\frac{1}{1+\tau}\)</td></tr>
+<tr><td><code>26, 36</code></td><td>no closed form
+expression (numerical inversion)</td></tr>
+</table>
+
 
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>

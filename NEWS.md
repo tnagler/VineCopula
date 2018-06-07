@@ -1,3 +1,11 @@
+VineCopula 2.1.6 (June 8, 2018)
+----------------------------------------------------------------
+
+BUG FIXES
+
+  * fix rotation handling in derivative calculations.
+
+
 VineCopula 2.1.5 (May 16, 2018)
 ----------------------------------------------------------------
 

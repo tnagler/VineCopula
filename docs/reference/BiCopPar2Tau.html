@@ -25,11 +25,15 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Kendall's Tau Value of a Bivariate Copula — BiCopPar2Tau" />
 
 <meta property="og:description" content="This function computes the theoretical Kendall's tau value of a bivariate
 copula for given parameter values." />
 <meta name="twitter:card" content="summary" />
+
 
 
 <!-- mathjax -->
@@ -39,8 +43,6 @@ copula for given parameter values." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -58,7 +60,7 @@ copula for given parameter values." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.6</span>
       </span>
     </div>
 
@@ -98,14 +100,16 @@ copula for given parameter values." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Kendall's Tau Value of a Bivariate Copula</h1>
-    <small>Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/BiCopPar2Tau.R'><code>R/BiCopPar2Tau.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/BiCopPar2Tau.R'><code>R/BiCopPar2Tau.R</code></a></small>
     <div class="hidden name"><code>BiCopPar2Tau.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function computes the theoretical Kendall's tau value of a bivariate
 copula for given parameter values.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>BiCopPar2Tau</span>(<span class='no'>family</span>, <span class='no'>par</span>, <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>check.pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
@@ -188,98 +192,46 @@ care).</p></td>
 
     <p>Theoretical value of Kendall's tau (vector) corresponding to the
 bivariate copula <code>family</code> and parameter vector \((\theta, \delta) =\)
-<code>(par, par2)</code>.</p><table><tr><td> No. (<code>family</code>) </td>
-<td> Kendall's tau (<code>tau</code>) </td>
-</tr><tr><td><br />
-<code>1, 2</code> </td>
-<td> \(\frac{2}{\pi}\arcsin(\theta)\) </td>
-</tr><tr><td><br />
-<code>3, 13</code> </td>
-<td> \(\frac{\theta}{\theta+2}\) </td>
-</tr><tr><td><br />
-<code>4, 14</code> </td>
-<td> \(1-\frac{1}{\theta}\) </td>
-</tr><tr><td><br />
-<code>5</code> </td>
-<td> \(1-\frac{4}{\theta}+4\frac{D_1(\theta)}{\theta}\) </td>
-</tr><tr><td><br />
-</td>
-<td> with \(D_1(\theta)=\int_0^\theta \frac{x/\theta}{\exp(x)-1}dx\) (Debye function) </td>
-</tr><tr><td><br />
-<code>6, 16</code> </td>
-<td> \(1+\frac{4}{\theta^2}\int_0^1
-x\log(x)(1-x)^{2(1-\theta)/\theta}dx\) </td>
-</tr><tr><td><br />
-<code>7, 17</code> </td>
-<td> \(1-\frac{2}{\delta(\theta+2)}\) </td>
-</tr><tr><td><br />
-<code>8, 18</code> </td>
-<td> \(1+4\int_0^1 -\log(-(1-t)^\theta+1)
-(1-t-(1-t)^{-\theta}+(1-t)^{-\theta}t)/(\delta\theta) dt\) </td>
-</tr><tr><td><br />
-<code>9, 19</code> </td>
-<td> \(1+4\int_0^1 ( (1-(1-t)^{\theta})^{-\delta} - 1)
-/( -\theta\delta(1-t)^{\theta-1}(1-(1-t)^{\theta})^{-\delta-1} ) dt\) </td>
-</tr><tr><td><br />
-<code>10, 20</code> </td>
-<td> \(1+4\int_0^1
--\log \left(((1-t\delta)^\theta-1)/((1-\delta)^\theta-1) \right) \) </td>
-</tr><tr><td><br />
-</td>
-<td> \(* (1-t\delta-(1-t\delta)^{-\theta}+(1-t\delta)^{-\theta}t\delta)/(\theta\delta) dt\) </td>
-</tr><tr><td><br />
-<code>23, 33</code> </td>
-<td> \(\frac{\theta}{2-\theta}\) </td>
-</tr><tr><td><br />
-<code>24, 34</code> </td>
-<td> \(-1-\frac{1}{\theta}\) </td>
-</tr><tr><td><br />
-<code>26, 36</code> </td>
-<td> \(-1-\frac{4}{\theta^2}\int_0^1
-x\log(x)(1-x)^{-2(1+\theta)/\theta}dx\) </td>
-</tr><tr><td><br />
-<code>27, 37</code> </td>
-<td> \(-1-\frac{2}{\delta(2-\theta)}\) </td>
-</tr><tr><td><br />
-<code>28, 38</code> </td>
-<td> \(-1-4\int_0^1 -\log(-(1-t)^{-\theta}+1)
-(1-t-(1-t)^{\theta}+(1-t)^{\theta}t)/(\delta\theta) dt\) </td>
-</tr><tr><td><br />
-<code>29, 39</code> </td>
-<td> \(-1-4\int_0^1 ( (1-(1-t)^{-\theta})^{\delta} - 1)
-/( -\theta\delta(1-t)^{-\theta-1}(1-(1-t)^{-\theta})^{\delta-1} ) dt\) </td>
-</tr><tr><td><br />
-<code>30, 40</code> </td>
-<td> \(-1-4\int_0^1 -\log
-\left( ((1+t\delta)^{-\theta}-1)/((1+\delta)^{-\theta}-1) \right)\) </td>
-</tr><tr><td><br />
-</td>
-<td> \(* (1+t\delta-(1+t\delta)^{\theta}-(1+t\delta)^{\theta}t\delta)/(\theta\delta) dt\) </td>
-</tr><tr><td><br />
-<code>104,114</code> </td>
-<td> \(\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt\) </td>
-</tr><tr><td><br />
-</td>
-<td> with \(A(t) = (1-\delta)t+[(\delta(1-t))^{\theta}+t^{\theta}]^{1/\theta}\) </td>
-</tr><tr><td><br />
-<code>204,214</code> </td>
-<td> \(\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt\)  </td>
-</tr><tr><td><br />
-</td>
-<td> with \(A(t) = (1-\delta)(1-t)+[(1-t)^{-\theta}+(\delta t)^{-\theta}]^{-1/\theta}\) </td>
-</tr><tr><td><br />
-<code>124,134</code> </td>
-<td> \(-\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt\) </td>
-</tr><tr><td><br />
-</td>
-<td> with \(A(t) = (1-\delta)t+[(\delta(1-t))^{-\theta}+t^{-\theta}]^{-1/\theta}\) </td>
-</tr><tr><td><br />
-<code>224,234</code> </td>
-<td> \(-\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt\) </td>
-</tr><tr><td><br />
-</td>
-<td> with \(A(t) = (1-\delta)(1-t)+[(1-t)^{-\theta}+(\delta t)^{-\theta}]^{-1/\theta}\) </td>
-</tr></table>
+<code>(par, par2)</code>.</p><table class='table'>
+<tr><td>No. (<code>family</code>)</td><td>Kendall's tau (<code>tau</code>)</td></tr>
+<tr><td><code>1, 2</code></td><td>\(\frac{2}{\pi}\arcsin(\theta)\)</td></tr>
+<tr><td><code>3, 13</code></td><td>\(\frac{\theta}{\theta+2}\)</td></tr>
+<tr><td><code>4, 14</code></td><td>\(1-\frac{1}{\theta}\)</td></tr>
+<tr><td><code>5</code></td><td>\(1-\frac{4}{\theta}+4\frac{D_1(\theta)}{\theta}\)</td></tr>
+<tr><td></td><td>with \(D_1(\theta)=\int_0^\theta \frac{x/\theta}{\exp(x)-1}dx\) (Debye function)</td></tr>
+<tr><td><code>6, 16</code></td><td>\(1+\frac{4}{\theta^2}\int_0^1
+x\log(x)(1-x)^{2(1-\theta)/\theta}dx\)</td></tr>
+<tr><td><code>7, 17</code></td><td>\(1-\frac{2}{\delta(\theta+2)}\)</td></tr>
+<tr><td><code>8, 18</code></td><td>\(1+4\int_0^1 -\log(-(1-t)^\theta+1)
+(1-t-(1-t)^{-\theta}+(1-t)^{-\theta}t)/(\delta\theta) dt\)</td></tr>
+<tr><td><code>9, 19</code></td><td>\(1+4\int_0^1 ( (1-(1-t)^{\theta})^{-\delta} - 1)
+/( -\theta\delta(1-t)^{\theta-1}(1-(1-t)^{\theta})^{-\delta-1} ) dt\)</td></tr>
+<tr><td><code>10, 20</code></td><td>\(1+4\int_0^1
+-\log \left(((1-t\delta)^\theta-1)/((1-\delta)^\theta-1) \right) \)</td></tr>
+<tr><td></td><td>\(* (1-t\delta-(1-t\delta)^{-\theta}+(1-t\delta)^{-\theta}t\delta)/(\theta\delta) dt\)</td></tr>
+<tr><td><code>23, 33</code></td><td>\(\frac{\theta}{2-\theta}\)</td></tr>
+<tr><td><code>24, 34</code></td><td>\(-1-\frac{1}{\theta}\)</td></tr>
+<tr><td><code>26, 36</code></td><td>\(-1-\frac{4}{\theta^2}\int_0^1
+x\log(x)(1-x)^{-2(1+\theta)/\theta}dx\)</td></tr>
+<tr><td><code>27, 37</code></td><td>\(-1-\frac{2}{\delta(2-\theta)}\)</td></tr>
+<tr><td><code>28, 38</code></td><td>\(-1-4\int_0^1 -\log(-(1-t)^{-\theta}+1)
+(1-t-(1-t)^{\theta}+(1-t)^{\theta}t)/(\delta\theta) dt\)</td></tr>
+<tr><td><code>29, 39</code></td><td>\(-1-4\int_0^1 ( (1-(1-t)^{-\theta})^{\delta} - 1)
+/( -\theta\delta(1-t)^{-\theta-1}(1-(1-t)^{-\theta})^{\delta-1} ) dt\)</td></tr>
+<tr><td><code>30, 40</code></td><td>\(-1-4\int_0^1 -\log
+\left( ((1+t\delta)^{-\theta}-1)/((1+\delta)^{-\theta}-1) \right)\)</td></tr>
+<tr><td></td><td>\(* (1+t\delta-(1+t\delta)^{\theta}-(1+t\delta)^{\theta}t\delta)/(\theta\delta) dt\)</td></tr>
+<tr><td><code>104,114</code></td><td>\(\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt\)</td></tr>
+<tr><td></td><td>with \(A(t) = (1-\delta)t+[(\delta(1-t))^{\theta}+t^{\theta}]^{1/\theta}\)</td></tr>
+<tr><td><code>204,214</code></td><td>\(\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt\)</td></tr>
+<tr><td></td><td>with \(A(t) = (1-\delta)(1-t)+[(1-t)^{-\theta}+(\delta t)^{-\theta}]^{-1/\theta}\)</td></tr>
+<tr><td><code>124,134</code></td><td>\(-\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt\)</td></tr>
+<tr><td></td><td>with \(A(t) = (1-\delta)t+[(\delta(1-t))^{-\theta}+t^{-\theta}]^{-1/\theta}\)</td></tr>
+<tr><td><code>224,234</code></td><td>\(-\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt\)</td></tr>
+<tr><td></td><td>with \(A(t) = (1-\delta)(1-t)+[(1-t)^{-\theta}+(\delta t)^{-\theta}]^{-1/\theta}\)</td></tr>
+<tr><td></td><td>No. (<code>family</code>)</td></tr>
+</table>
+
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>

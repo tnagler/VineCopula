@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="R-Vine Copula Model in Matrix Notation — RVineMatrix" />
 
 <meta property="og:description" content="This function creates an RVineMatrix object which encodes an
@@ -34,6 +37,7 @@ matrices for corresponding parameter values." />
 <meta name="twitter:card" content="summary" />
 
 
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -41,8 +45,6 @@ matrices for corresponding parameter values." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -60,7 +62,7 @@ matrices for corresponding parameter values." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.6</span>
       </span>
     </div>
 
@@ -100,16 +102,18 @@ matrices for corresponding parameter values." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>R-Vine Copula Model in Matrix Notation</h1>
-    <small>Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/RVineMatrix.R'><code>R/RVineMatrix.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/RVineMatrix.R'><code>R/RVineMatrix.R</code></a></small>
     <div class="hidden name"><code>RVineMatrix.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function creates an <code>RVineMatrix</code> object which encodes an
 R-vine copula model. It contains the matrix identifying the R-vine tree
 structure, the matrix identifying the copula families utilized and two
 matrices for corresponding parameter values.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>RVineMatrix</span>(<span class='no'>Matrix</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='fu'>array</span>(<span class='fl'>0</span>, <span class='kw'>dim</span> <span class='kw'>=</span> <span class='fu'>dim</span>(<span class='no'>Matrix</span>)), <span class='kw'>par</span> <span class='kw'>=</span> <span class='fu'>array</span>(<span class='fl'>NA</span>,
   <span class='kw'>dim</span> <span class='kw'>=</span> <span class='fu'>dim</span>(<span class='no'>Matrix</span>)), <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fu'>array</span>(<span class='fl'>NA</span>, <span class='kw'>dim</span> <span class='kw'>=</span> <span class='fu'>dim</span>(<span class='no'>Matrix</span>)), <span class='kw'>names</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,

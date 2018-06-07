@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Goodness-of-Fit Test for Bivariate Copulas — BiCopGofTest" />
 
 <meta property="og:description" content="This function performs a goodness-of-fit test for bivariate copulas, either
@@ -35,6 +38,7 @@ and p-values." />
 <meta name="twitter:card" content="summary" />
 
 
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -42,8 +46,6 @@ and p-values." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -61,7 +63,7 @@ and p-values." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.6</span>
       </span>
     </div>
 
@@ -101,10 +103,11 @@ and p-values." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Goodness-of-Fit Test for Bivariate Copulas</h1>
-    <small>Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/BiCopGofTest.R'><code>R/BiCopGofTest.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/BiCopGofTest.R'><code>R/BiCopGofTest.R</code></a></small>
     <div class="hidden name"><code>BiCopGofTest.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function performs a goodness-of-fit test for bivariate copulas, either
 based on White's information matrix equality (White, 1982) as introduced by
@@ -112,6 +115,7 @@ Huang and Prokhorov (2011) or based on Kendall's process
 (Wang and Wells, 2000; Genest et al., 2006). It computes the test statistics
 and p-values.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>BiCopGofTest</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='no'>family</span>, <span class='kw'>par</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"white"</span>,
   <span class='kw'>max.df</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
