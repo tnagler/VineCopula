@@ -92,7 +92,7 @@
 #' @param level Numerical; significance level of the tests (default:
 #' \code{level = 0.05}).
 #' @param rotations If \code{TRUE}, all rotations of the families in
-#' \code{familyset} are included (or substracted).
+#' \code{familyset} are included (or subtracted).
 #'
 #' @return A matrix with Vuong test scores in the first and Clarke test scores
 #' in the second row. Column names correspond to bivariate copula families (see

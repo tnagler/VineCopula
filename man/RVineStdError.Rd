@@ -25,7 +25,7 @@ copula model given the Hessian matrix.
 \note{
 The negative Hessian matrix should be positive semidefinite. Otherwise
 NAs will be returned in some entries and the non-NA entries may be wrong. If
-the negaive Hessian matrix is negative definite, then one could try a near
+the negative Hessian matrix is negative definite, then one could try a near
 positive matrix. The package \code{Matrix} provides a function called
 \code{nearPD} to estimate a matrix which is positive definite and close to
 the given matrix.

@@ -53,7 +53,7 @@
 #' (-1, 1). Can only be used with one-parameter families and the t copula.
 #' If \code{tau} is provided, \code{par} will be ignored.
 #' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
-#' for family/parameter-consistency are ommited (should only be used with
+#' for family/parameter-consistency are omitted (should only be used with
 #' care).
 #'
 #' @return An object of class \code{\link{BiCop}}. It is a list containing

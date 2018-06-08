@@ -54,7 +54,7 @@ and the second argument (only available for the t-copula) \cr}
 specification.}
 
 \item{check.pars}{logical; default is \code{TRUE}; if \code{FALSE}, checks
-for family/parameter-consistency are ommited (should only be used with
+for family/parameter-consistency are omitted (should only be used with
 care).}
 }
 \value{

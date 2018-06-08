@@ -21,7 +21,7 @@
 #' @param tau numeric; single number or vector of size \code{n}; Kendall's tau
 #' value (vector with elements in [-1,1]).
 #' @param check.taus logical; default is \code{TRUE}; if \code{FALSE}, checks
-#' for family/tau-consistency are ommited (should only be used with care).
+#' for family/tau-consistency are omitted (should only be used with care).
 #'
 #' @return Parameter (vector) corresponding to the bivariate copula family and
 #' the value(s) of Kendall's tau (\eqn{\tau}). \tabular{ll}{ No.

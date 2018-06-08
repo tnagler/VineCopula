@@ -1,6 +1,6 @@
 #' Maximum Likelihood Estimation of an R-Vine Copula Model
 #'
-#' This function calculates the maxiumum likelihood estimate (MLE) of the
+#' This function calculates the maximum likelihood estimate (MLE) of the
 #' R-vine copula model parameters using sequential estimates as initial values
 #' (if not provided).
 #'

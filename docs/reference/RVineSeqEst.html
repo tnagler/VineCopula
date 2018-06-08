@@ -163,11 +163,11 @@ details see <code><a href='BiCopEst.html'>BiCopEst</a></code>).</p></td>
     </tr>
     <tr>
       <th>weights</th>
-      <td><p>Numerical; weights for each observation (opitional).</p></td>
+      <td><p>Numerical; weights for each observation (optional).</p></td>
     </tr>
     <tr>
       <th>cores</th>
-      <td><p>integer; if <code>cores &gt; 1</code>, estimation will be parallized
+      <td><p>integer; if <code>cores &gt; 1</code>, estimation will be parallelized
 within each tree (using <code><a href='http://www.rdocumentation.org/packages/foreach/topics/foreach'>foreach</a></code>). However, the
 overhead caused by parallelization is likely to make the function run slower
 unless sample size is really large and <code>method = "itau"</code>.</p></td>

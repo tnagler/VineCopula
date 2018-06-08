@@ -49,7 +49,7 @@
 #' BB1, BB6, BB7, BB8, Tawn type 1 and type 2; default is \code{par2 = 0}).
 #' @param \dots used internally.
 #'
-#' @return A logical indicating wether the family can be used with the parameter
+#' @return A logical indicating whether the family can be used with the parameter
 #' specification.
 #'
 #' @author Thomas Nagler

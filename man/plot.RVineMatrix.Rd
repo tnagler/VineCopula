@@ -50,7 +50,7 @@ positioning of vertices with his mouse.}
 \description{
 There are two plotting generics for \code{RVineMatrix} objects.
 \code{plot.RVineMatrix} plots one or all trees of a given R-vine copula
-model. Edges can be labeld with information about the corresponding
+model. Edges can be labeled with information about the corresponding
 pair-copula. \code{contour.RVineMatrix} produces a matrix of contour plots
 (using \code{\link[VineCopula:plot.BiCop]{plot.BiCop}}).
 }

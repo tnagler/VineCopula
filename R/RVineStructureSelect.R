@@ -28,12 +28,12 @@
 #' (default: \code{indeptest = FALSE}; see \code{\link{BiCopIndTest}}).  The
 #' independence copula is chosen for a (conditional) pair if the null
 #' hypothesis of independence cannot be rejected.
-#' @param level numeri; significance level of the independence test
+#' @param level numeric; significance level of the independence test
 #' (default: \code{level = 0.05}).
 #' @param trunclevel integer; level of truncation.
 #' @param progress logical; whether the tree-wise specification progress is
 #' printed (default: \code{progress = FALSE}).
-#' @param weights numeric; weights for each observation (opitional).
+#' @param weights numeric; weights for each observation (optional).
 #' @param treecrit edge weight for Dissman's structure selection algorithm, see
 #' \emph{Details}.
 #' @param se Logical; whether standard errors are estimated (default: \code{se
@@ -47,10 +47,10 @@
 #' 1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
 #' \code{par2} is found by a crude profile likelihood optimization over the
 #' interval (2, 10].
-#' @param cores integer; if \code{cores > 1}, estimation will be parallized
+#' @param cores integer; if \code{cores > 1}, estimation will be parallelized
 #' within each tree (using \code{\link[foreach]{foreach}}). Note that
 #' parallelization causes substantial overhead and may be slower than
-#' single-threaded computation when dimension, sample size, or familyset are
+#' single-threaded computation when dimension, sample size, or family set are
 #' small or \code{method = "itau"}.
 #'
 #' @return An \code{\link{RVineMatrix}} object with the selected structure
@@ -72,9 +72,9 @@
 #'
 #' @details
 #' R-vine trees are selected using maximum spanning trees w.r.t. some edge
-#' weights. The most commonly used edge weigth is the absolute value of the
-#' empirical Kendall's tau, say \eqn{\hat{\tau}_{ij}}. Then, the following o
-#' ptimization problem is solved for each tree:
+#' weights. The most commonly used edge weight is the absolute value of the
+#' empirical Kendall's tau, say \eqn{\hat{\tau}_{ij}}. Then, the following
+#' optimization problem is solved for each tree:
 #' \deqn{\max \sum_{\mathrm{edges }\; e_{ij} \in \; \mathrm{ in \; spanning \; tree}} |\hat{\tau}_{ij}|, }{
 #' \max \sum_{edges e_{ij} in spanning tree} |\hat{\tau}_{ij}|, }
 #' where a spanning tree is a tree on all nodes. The
@@ -99,8 +99,8 @@
 #' much slower than \code{"tau"} or \code{"rho"}.
 #' The user can also specify a custom function to calculate the edge weights.
 #' The function has to be of type \code{function(u1, u2, weights) ...} and must
-#' return a numeric value. The weigths argument must exist, but does not has to
-#' be used. For example, \code{"tau"} (withouth using weights) can be implemented
+#' return a numeric value. The weights argument must exist, but does not has to
+#' be used. For example, \code{"tau"} (without using weights) can be implemented
 #' as follows:\cr
 #' \code{function(u1, u2, weights)} \cr
 #'     \code{abs(cor(u1, u2, method = "kendall", use = "complete.obs"))}
@@ -1153,4 +1153,3 @@ deleteEdges <- function(g) {
     ## return reduced graph
     list(V = g$V, E = E)
 }
-

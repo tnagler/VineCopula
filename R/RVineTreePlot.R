@@ -1,4 +1,4 @@
-#' Visualisation of R-Vine Tree Structure
+#' Visualization of R-Vine Tree Structure
 #'
 #' Function is deprecated since \code{VineCopula 2.0}. Use
 #' \code{\link[VineCopula:plot.RVineMatrix]{plot.RVineMatrix}} instead.

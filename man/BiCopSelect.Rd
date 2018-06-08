@@ -75,7 +75,7 @@ be rejected.}
 \item{weights}{Numerical; weights for each observation (optional).}
 
 \item{rotations}{If \code{TRUE}, all rotations of the families in
-\code{familyset} are included (or substracted).}
+\code{familyset} are included (or subtracted).}
 
 \item{se}{Logical; whether standard error(s) of parameter estimates is/are
 estimated (default: \code{se = FALSE}).}

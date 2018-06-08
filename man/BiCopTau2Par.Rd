@@ -26,7 +26,7 @@ cannot be used.}
 value (vector with elements in [-1,1]).}
 
 \item{check.taus}{logical; default is \code{TRUE}; if \code{FALSE}, checks
-for family/tau-consistency are ommited (should only be used with care).}
+for family/tau-consistency are omitted (should only be used with care).}
 }
 \value{
 Parameter (vector) corresponding to the bivariate copula family and

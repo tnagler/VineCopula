@@ -163,7 +163,7 @@ hypothesis of independence cannot be rejected.</p></td>
     </tr>
     <tr>
       <th>level</th>
-      <td><p>numeri; significance level of the independence test
+      <td><p>numeric; significance level of the independence test
 (default: <code>level = 0.05</code>).</p></td>
     </tr>
     <tr>
@@ -177,7 +177,7 @@ printed (default: <code>progress = FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>weights</th>
-      <td><p>numeric; weights for each observation (opitional).</p></td>
+      <td><p>numeric; weights for each observation (optional).</p></td>
     </tr>
     <tr>
       <th>treecrit</th>
@@ -206,10 +206,10 @@ interval (2, 10].</p></td>
     </tr>
     <tr>
       <th>cores</th>
-      <td><p>integer; if <code>cores &gt; 1</code>, estimation will be parallized
+      <td><p>integer; if <code>cores &gt; 1</code>, estimation will be parallelized
 within each tree (using <code><a href='http://www.rdocumentation.org/packages/foreach/topics/foreach'>foreach</a></code>). Note that
 parallelization causes substantial overhead and may be slower than
-single-threaded computation when dimension, sample size, or familyset are
+single-threaded computation when dimension, sample size, or family set are
 small or <code>method = "itau"</code>.</p></td>
     </tr>
     </table>
@@ -234,9 +234,9 @@ account for the sequential nature of the estimation,</p></dd>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>R-vine trees are selected using maximum spanning trees w.r.t. some edge
-weights. The most commonly used edge weigth is the absolute value of the
-empirical Kendall's tau, say \(\hat{\tau}_{ij}\). Then, the following o
-ptimization problem is solved for each tree:
+weights. The most commonly used edge weight is the absolute value of the
+empirical Kendall's tau, say \(\hat{\tau}_{ij}\). Then, the following
+optimization problem is solved for each tree:
 $$\max \sum_{\mathrm{edges }\; e_{ij} \in \; \mathrm{ in \; spanning \; tree}} |\hat{\tau}_{ij}|, $$
 where a spanning tree is a tree on all nodes. The
 setting of the first tree selection step is always a complete graph. For
@@ -258,8 +258,8 @@ model selection for all possible pairs. This is computationally expensive and
 much slower than <code>"tau"</code> or <code>"rho"</code>.
 The user can also specify a custom function to calculate the edge weights.
 The function has to be of type <code>function(u1, u2, weights) ...</code> and must
-return a numeric value. The weigths argument must exist, but does not has to
-be used. For example, <code>"tau"</code> (withouth using weights) can be implemented
+return a numeric value. The weights argument must exist, but does not has to
+be used. For example, <code>"tau"</code> (without using weights) can be implemented
 as follows:<br />
 <code>function(u1, u2, weights)</code> <br />
     <code>abs(cor(u1, u2, method = "kendall", use = "complete.obs"))</code></p>

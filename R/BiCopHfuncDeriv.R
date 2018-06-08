@@ -11,7 +11,7 @@
 #'
 #' @param u1,u2 numeric vectors of equal length with values in [0,1].
 #' @param family integer; single number or vector of size \code{length(u1)};
-#' defines the bivariate copula family: \\cr
+#' defines the bivariate copula family: \ \cr
 #' \code{0} = independence copula \cr
 #' \code{1} = Gaussian copula \cr
 #' \code{2} = Student t copula (t-copula) \cr
@@ -41,7 +41,7 @@
 #' @param obj \code{BiCop} object containing the family and parameter
 #' specification.
 #' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
-#' for family/parameter-consistency are ommited (should only be used with
+#' for family/parameter-consistency are omitted (should only be used with
 #' care).
 #' @return A numeric vector of the conditional bivariate copula derivative
 #' \itemize{

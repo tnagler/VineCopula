@@ -24,7 +24,7 @@
 #' @param method a character string indicating which correlation coefficients
 #' are computed. One of \code{"pearson"}, \code{"kendall"} (default), or
 #' \code{"spearman"}
-#' @param ccols colour to be used for the contour plots; default: \code{ccols =
+#' @param ccols color to be used for the contour plots; default: \code{ccols =
 #' terrain.colors(30)}.
 #' @param margins character; margins for the contour plots. Options are:\cr
 #' \code{"unif"} for the original copula density,
@@ -32,7 +32,7 @@
 #' \code{"exp"} with standard exponential margins, and  \code{"flexp"} with
 #' flipped exponential margins.
 #' @note If the default panel functions are used \cr \itemize{ \item \code{col}
-#' changes only the colour of the points in the scatter plot
+#' changes only the color of the points in the scatter plot
 #' (\code{upper.panel}) \cr \item \code{cex} changes only the magnification of
 #' the points in the scatter plot (\code{upper.panel}) }
 #' @author Tobias Erhardt

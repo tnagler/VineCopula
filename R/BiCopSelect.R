@@ -84,7 +84,7 @@
 #' \code{level = 0.05}).
 #' @param weights Numerical; weights for each observation (optional).
 #' @param rotations If \code{TRUE}, all rotations of the families in
-#' \code{familyset} are included (or substracted).
+#' \code{familyset} are included (or subtracted).
 #' @param se Logical; whether standard error(s) of parameter estimates is/are
 #' estimated (default: \code{se = FALSE}).
 #' @param presel Logical; whether to exclude families before fitting based on

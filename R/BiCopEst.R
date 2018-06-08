@@ -18,7 +18,7 @@
 #' starting values are available by inversion of Kendall's tau, starting values
 #' have to be provided given expert knowledge and the boundaries \code{max.df}
 #' and \code{max.BB} respectively. Note: The MLE is performed via numerical
-#' maximazation using the L_BFGS-B method. For the Gaussian, the t- and the
+#' maximization using the L_BFGS-B method. For the Gaussian, the t- and the
 #' one-parametric Archimedean copulas we can use the gradients, but for the BB
 #' copulas we have to use finite differences for the L_BFGS-B method.
 #'
@@ -85,7 +85,7 @@
 #' @param max.BB List; upper bounds for the estimation of the two parameters
 #' (in absolute values) of the BB1, BB6, BB7 and BB8 copulas \cr (default:
 #' \code{max.BB = list(BB1=c(5,6),BB6=c(6,6),BB7=c(5,6),BB8=c(6,1))}).
-#' @param weights Numerical; weights for each observation (opitional).
+#' @param weights Numerical; weights for each observation (optional).
 #'
 #' @return An object of class \code{\link{BiCop}}, augmented with the following
 #' entries:

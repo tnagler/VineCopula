@@ -66,7 +66,7 @@
 #' @param obj \code{BiCop} object containing the family and parameter
 #' specification.
 #' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
-#' for family/parameter-consistency are ommited (should only be used with
+#' for family/parameter-consistency are omitted (should only be used with
 #' care).
 #'
 #' @return A length \code{N} vector of simulated from conditional distributions
