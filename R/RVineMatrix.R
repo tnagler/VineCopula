@@ -550,7 +550,10 @@ is.DVine <- function(Matrix) {
         Matrix <- Matrix$Matrix
     Matrix <- reorderRVineMatrix(Matrix)
     d <- nrow(Matrix)
-    length(unique(Matrix[d, ])) == d - 1
+    nums <- c(diag(Matrix)[seq_len(d - 1)], Matrix[d, seq_len(d - 1)])
+    repcount <- table(table(nums))
+    # no node in more than two edges, only 2 nodes in one edge
+    (names(repcount) == 1:2) && (repcount[1] == 2)
 }
 
 ## A C-vine has a star in each tree
