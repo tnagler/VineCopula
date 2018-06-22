@@ -1034,7 +1034,7 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
         optimout$par <- c(optimout$maximum, 0)
         optimout$value <- optimout$objective
         if (se == TRUE) {
-            d2 <- BiCopDeriv2(data[, 1], data[, 1],
+            d2 <- BiCopDeriv2(data[, 1], data[, 2],
                               family,
                               optimout$par[1],
                               check.pars = FALSE)
