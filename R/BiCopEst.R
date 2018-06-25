@@ -1034,11 +1034,20 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
         optimout$par <- c(optimout$maximum, 0)
         optimout$value <- optimout$objective
         if (se == TRUE) {
+            d0 <- BiCopPDF(data[, 1], data[, 2],
+                           family,
+                           optimout$par[1],
+                           check.pars = FALSE)
+            d1 <- BiCopDeriv(data[, 1], data[, 2],
+                             family,
+                             optimout$par[1],
+                             check.pars = FALSE)
             d2 <- BiCopDeriv2(data[, 1], data[, 2],
                               family,
                               optimout$par[1],
                               check.pars = FALSE)
-            optimout$hessian <- sum(-d2)
+            ## quotient rule for second derivative of log density
+            optimout$hessian <- sum(-(d2 * d0 - d1^2) / d0^2)
         }
 
     }
