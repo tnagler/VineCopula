@@ -1165,7 +1165,7 @@ void Hinv(int* family, int* n, double* u, double* v, double* theta, double* nu, 
         }
         else if(*family==6) //joe - numerical inversion
         {
-            if(*theta<40)
+            if(*theta<30)
             {
                 qcondjoe(&u[j],&v[j],theta,&hinv[j]);
             }
