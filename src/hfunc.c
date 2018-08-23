@@ -821,8 +821,21 @@ void qcondjoe(double* q, double* u, double* de, double* out)
         if(isnan(pdf) || isnan(c21) ) { diff/=-2.; }  // added for de>=30
         else diff=(c21-*q)/pdf;
         v-=diff;
-        while(v<=0 || v>=1 || fabs(diff)>0.25 ) { diff/=2.; v+=diff; }
+        int iter2 = 0;
+        while ((v <= 0 || v >= 1 || fabs(diff) > 0.25) & (iter2 < 10)) {
+            ++iter2;
+            diff /= 2.;
+            v += diff;
+        }
     }
+
+    // make sure that boundaries are respected
+    if (v <= 0) {
+        v = 1e-10;
+    } else if (v >= 1) {
+        v = 1 - 1e-10;
+    }
+
     *out = v;
 }
 
