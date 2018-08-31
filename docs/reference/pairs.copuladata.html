@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -61,7 +63,7 @@ correlations on the upper panel and histograms on the diagonal panel." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.6</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.7</span>
       </span>
     </div>
 
@@ -116,8 +118,9 @@ correlations on the upper panel and histograms on the diagonal panel.</p>
     <pre class="usage"><span class='co'># S3 method for copuladata</span>
 <span class='fu'>pairs</span>(<span class='no'>x</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fu'>names</span>(<span class='no'>x</span>), <span class='no'>...</span>,
   <span class='kw'>lower.panel</span> <span class='kw'>=</span> <span class='no'>lp.copuladata</span>, <span class='kw'>upper.panel</span> <span class='kw'>=</span> <span class='no'>up.copuladata</span>,
-  <span class='kw'>diag.panel</span> <span class='kw'>=</span> <span class='no'>dp.copuladata</span>, <span class='kw'>label.pos</span> <span class='kw'>=</span> <span class='fl'>0.85</span>, <span class='kw'>cex.labels</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>gap</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kendall"</span>, <span class='kw'>ccols</span> <span class='kw'>=</span> <span class='fu'>terrain.colors</span>(<span class='fl'>11</span>), <span class='kw'>margins</span> <span class='kw'>=</span> <span class='st'>"norm"</span>)</pre>
+  <span class='kw'>diag.panel</span> <span class='kw'>=</span> <span class='no'>dp.copuladata</span>, <span class='kw'>label.pos</span> <span class='kw'>=</span> <span class='fl'>0.85</span>, <span class='kw'>cex.labels</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>gap</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kendall"</span>, <span class='kw'>ccols</span> <span class='kw'>=</span> <span class='fu'>terrain.colors</span>(<span class='fl'>11</span>),
+  <span class='kw'>margins</span> <span class='kw'>=</span> <span class='st'>"norm"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

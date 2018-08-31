@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -61,7 +63,7 @@ RVineMatrix object." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.6</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.7</span>
       </span>
     </div>
 
@@ -114,8 +116,8 @@ d-dimensional R-vine copula model as specified by the corresponding
     </div>
 
     <pre class="usage"><span class='fu'>RVineSeqEst</span>(<span class='no'>data</span>, <span class='no'>RVM</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mle"</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>max.df</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>max.BB</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>BB1</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>5</span>, <span class='fl'>6</span>), <span class='kw'>BB6</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>6</span>, <span class='fl'>6</span>), <span class='kw'>BB7</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>5</span>, <span class='fl'>6</span>), <span class='kw'>BB8</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>6</span>, <span class='fl'>1</span>)),
-  <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+  <span class='kw'>max.BB</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>BB1</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>5</span>, <span class='fl'>6</span>), <span class='kw'>BB6</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>6</span>, <span class='fl'>6</span>), <span class='kw'>BB7</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>5</span>, <span class='fl'>6</span>), <span class='kw'>BB8</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>6</span>,
+  <span class='fl'>1</span>)), <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -207,7 +209,7 @@ new copula parameters using <code><a href='BiCopEst.html'>BiCopEst</a></code>.</
 <code><a href='BiCop.html'>BiCop</a></code>,
 <code><a href='BiCopEst.html'>BiCopEst</a></code>,
 <code><a href='plot.RVineMatrix.html'>plot.RVineMatrix</a></code>,
-<code>contour.RVineMatrix</code>,
+<code><a href='plot.RVineMatrix.html'>contour.RVineMatrix</a></code>,
 <code><a href='http://www.rdocumentation.org/packages/foreach/topics/foreach'>foreach</a></code></p></div>
     
 
@@ -267,16 +269,16 @@ new copula parameters using <code><a href='BiCopEst.html'>BiCopEst</a></code>.</
 #&gt; ---
 #&gt; 1 &lt;-&gt; V1,   2 &lt;-&gt; V2,   3 &lt;-&gt; V3,   4 &lt;-&gt; V4,   5 &lt;-&gt; V5</div><div class='input'><span class='fu'>summary</span>(<span class='fu'>RVineSeqEst</span>(<span class='no'>simdata</span>, <span class='no'>RVM</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mle"</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</div><div class='output co'>#&gt; tree       edge | family  cop          par  par2 |  tau   utd   ltd 
 #&gt; ------------------------------------------------------------------- 
-#&gt;    1        4,5 |      4    G  4.01 (0.29)     - | 0.75  0.81     -
-#&gt;             1,2 |      1    N  0.90 (0.00)     - | 0.71     -     -
-#&gt;             1,3 |      1    N  0.46 (0.02)     - | 0.30     -     -
-#&gt;             1,4 |      3    C  5.02 (0.78)     - | 0.71     -  0.87
+#&gt;    1        4,5 |      4    G  4.01 (0.19)     - | 0.75  0.81     -
+#&gt;             1,2 |      1    N  0.90 (0.01)     - | 0.71     -     -
+#&gt;             1,3 |      1    N  0.46 (0.04)     - | 0.30     -     -
+#&gt;             1,4 |      3    C  5.02 (0.31)     - | 0.71     -  0.87
 #&gt;    2      1,5;4 |      4    G  1.48 (0.07)     - | 0.33  0.40     -
-#&gt;           4,2;1 |      4    G  1.59 (0.05)     - | 0.37  0.46     -
-#&gt;           4,3;1 |      4    G  1.87 (0.06)     - | 0.47  0.55     -
-#&gt;    3    3,5;1,4 |      3    C  0.97 (0.19)     - | 0.33     -  0.49
-#&gt;         3,2;4,1 |      3    C  1.24 (0.15)     - | 0.38     -  0.57
-#&gt;    4  2,5;3,1,4 |      1    N  0.18 (0.03)     - | 0.11     -     -
+#&gt;           4,2;1 |      4    G  1.59 (0.07)     - | 0.37  0.46     -
+#&gt;           4,3;1 |      4    G  1.87 (0.09)     - | 0.47  0.55     -
+#&gt;    3    3,5;1,4 |      3    C  0.97 (0.11)     - | 0.33     -  0.49
+#&gt;         3,2;4,1 |      3    C  1.24 (0.12)     - | 0.38     -  0.57
+#&gt;    4  2,5;3,1,4 |      1    N  0.18 (0.06)     - | 0.11     -     -
 #&gt; ---
 #&gt; type: R-vine    logLik: 1198.03    AIC: -2376.06    BIC: -2339.03    
 #&gt; ---

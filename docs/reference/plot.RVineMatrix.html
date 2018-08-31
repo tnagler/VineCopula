@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -63,7 +65,7 @@ pair-copula. contour.RVineMatrix produces a matrix of contour plots
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.6</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.7</span>
       </span>
     </div>
 
@@ -118,12 +120,13 @@ pair-copula. <code>contour.RVineMatrix</code> produces a matrix of contour plots
     </div>
 
     <pre class="usage"><span class='co'># S3 method for RVineMatrix</span>
-<span class='fu'>contour</span>(<span class='no'>x</span>, <span class='kw'>tree</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>, <span class='kw'>xylim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cex.nums</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>contour</span>(<span class='no'>x</span>, <span class='kw'>tree</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>, <span class='kw'>xylim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cex.nums</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for RVineMatrix</span>
-<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>tree</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>edge.labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>legend.pos</span> <span class='kw'>=</span> <span class='st'>"bottomleft"</span>, <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>tree</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+  <span class='kw'>edge.labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>legend.pos</span> <span class='kw'>=</span> <span class='st'>"bottomleft"</span>, <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -60,7 +62,7 @@ corresponding R-vine structure." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.6</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.7</span>
       </span>
     </div>
 
@@ -183,8 +185,16 @@ BB6, BB7, BB8, Tawn type 1 and type 2 copulas.</p></td>
 
 <span class='co'># transform to R-vine matrix notation</span>
 <span class='no'>RVM</span> <span class='kw'>&lt;-</span> <span class='fu'>C2RVine</span>(<span class='no'>order</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>)</div><div class='input'><span class='co'># load package CDVine for comparison</span>
-<span class='fu'>library</span>(<span class='no'>CDVine</span>)
-
+<span class='fu'>library</span>(<span class='no'>CDVine</span>)</div><div class='output co'>#&gt; <span class='message'>The CDVine package is no longer developed actively.</span>
+#&gt; <span class='message'>Please consider using the more general VineCopula package</span>
+#&gt; <span class='message'>(see https://CRAN.R-project.org/package=VineCopula),</span>
+#&gt; <span class='message'>which extends and improves the functionality of CDVine.</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘CDVine’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:VineCopula’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    BiCopCDF, BiCopChiPlot, BiCopEst, BiCopHfunc, BiCopIndTest,</span>
+#&gt; <span class='message'>    BiCopKPlot, BiCopLambda, BiCopMetaContour, BiCopName,</span>
+#&gt; <span class='message'>    BiCopPar2TailDep, BiCopPar2Tau, BiCopPDF, BiCopSelect, BiCopSim,</span>
+#&gt; <span class='message'>    BiCopTau2Par, BiCopVuongClarke</span></div><div class='input'>
 <span class='co'># simulate a sample of size 500 from a 4-dimensional D-vine</span>
 <span class='no'>type</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>  <span class='co'># C-vine</span>
 <span class='no'>simdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/CDVine/topics/CDVineSim'>CDVineSim</a></span>(<span class='fl'>500</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>, <span class='no'>type</span>)
