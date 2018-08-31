@@ -3,7 +3,6 @@
 \name{RVineAIC}
 \alias{RVineAIC}
 \alias{RVineBIC}
-\alias{RVineBIC}
 \title{AIC and BIC of an R-Vine Copula Model}
 \usage{
 RVineAIC(data, RVM, par = RVM$par, par2 = RVM$par2)

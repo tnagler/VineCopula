@@ -21,9 +21,11 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 
@@ -62,7 +64,7 @@ sequentially (forward selection of trees)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.6</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.7</span>
       </span>
     </div>
 
@@ -117,8 +119,9 @@ sequentially (forward selection of trees).</p>
 
     <pre class="usage"><span class='fu'>RVineStructureSelect</span>(<span class='no'>data</span>, <span class='kw'>familyset</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>selectioncrit</span> <span class='kw'>=</span> <span class='st'>"AIC"</span>, <span class='kw'>indeptest</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>trunclevel</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>treecrit</span> <span class='kw'>=</span> <span class='st'>"tau"</span>,
-  <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rotations</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mle"</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+  <span class='kw'>trunclevel</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>treecrit</span> <span class='kw'>=</span> <span class='st'>"tau"</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rotations</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mle"</span>,
+  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -291,7 +294,7 @@ returns. Computational Statistics &amp; Data Analysis, 59 (1), 52-69.</p>
 <code><a href='BiCop.html'>BiCop</a></code>,
 <code><a href='RVineCopSelect.html'>RVineCopSelect</a></code>,
 <code><a href='plot.RVineMatrix.html'>plot.RVineMatrix</a></code>,
-<code>contour.RVineMatrix</code>,
+<code><a href='plot.RVineMatrix.html'>contour.RVineMatrix</a></code>,
 <code><a href='http://www.rdocumentation.org/packages/foreach/topics/foreach'>foreach</a></code></p></div>
     
 

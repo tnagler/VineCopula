@@ -3,14 +3,14 @@
 \name{contour.RVineMatrix}
 \alias{contour.RVineMatrix}
 \alias{plot.RVineMatrix}
-\alias{contour.RVineMatrix}
 \title{Plotting \code{RVineMatrix} objects.}
 \usage{
-\method{contour}{RVineMatrix}(x, tree = "ALL", xylim = NULL, cex.nums = 1,
-  data = NULL, ...)
+\method{contour}{RVineMatrix}(x, tree = "ALL", xylim = NULL,
+  cex.nums = 1, data = NULL, ...)
 
-\method{plot}{RVineMatrix}(x, tree = "ALL", type = 0, edge.labels = NULL,
-  legend.pos = "bottomleft", interactive = FALSE, ...)
+\method{plot}{RVineMatrix}(x, tree = "ALL", type = 0,
+  edge.labels = NULL, legend.pos = "bottomleft", interactive = FALSE,
+  ...)
 }
 \arguments{
 \item{x}{\code{RVineMatrix} object.}

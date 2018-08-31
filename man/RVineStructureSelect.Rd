@@ -6,8 +6,9 @@
 \usage{
 RVineStructureSelect(data, familyset = NA, type = 0,
   selectioncrit = "AIC", indeptest = FALSE, level = 0.05,
-  trunclevel = NA, progress = FALSE, weights = NA, treecrit = "tau",
-  se = FALSE, rotations = TRUE, method = "mle", cores = 1)
+  trunclevel = NA, progress = FALSE, weights = NA,
+  treecrit = "tau", se = FALSE, rotations = TRUE, method = "mle",
+  cores = 1)
 }
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}

@@ -4,8 +4,8 @@
 \alias{BiCopLambda}
 \title{Lambda-Function (Plot) for Bivariate Copula Data}
 \usage{
-BiCopLambda(u1 = NULL, u2 = NULL, family = "emp", par = 0, par2 = 0,
-  PLOT = TRUE, obj = NULL, ...)
+BiCopLambda(u1 = NULL, u2 = NULL, family = "emp", par = 0,
+  par2 = 0, PLOT = TRUE, obj = NULL, ...)
 }
 \arguments{
 \item{u1, u2}{Data vectors of equal length with values in [0,1] (default:

@@ -5,8 +5,8 @@
 \title{Scoring Goodness-of-Fit Test based on Vuong And Clarke Tests for Bivariate
 Copula Data}
 \usage{
-BiCopVuongClarke(u1, u2, familyset = NA, correction = FALSE, level = 0.05,
-  rotations = TRUE)
+BiCopVuongClarke(u1, u2, familyset = NA, correction = FALSE,
+  level = 0.05, rotations = TRUE)
 }
 \arguments{
 \item{u1, u2}{Data vectors of equal length with values in [0,1].}

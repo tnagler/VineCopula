@@ -3,7 +3,6 @@
 \name{RVineCor2pcor}
 \alias{RVineCor2pcor}
 \alias{RVinePcor2cor}
-\alias{RVinePcor2cor}
 \title{(Partial) Correlations for R-Vine Copula Models}
 \usage{
 RVineCor2pcor(RVM, corMat)

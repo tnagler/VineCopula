@@ -11,7 +11,7 @@ CDVineCopulaConditional: 0 errors | 0 warnings | 0 notes
 copula                 : 0 errors | 0 warnings | 1 note 
 CopulaRegression       : 0 errors | 0 warnings | 2 notes
 gamCopula              : 0 errors | 0 warnings | 0 notes
-GJRM                   : 0 errors | 0 warnings | 1 note 
+GJRM                   : 0 errors | 0 warnings | 0 notes 
 gofCopula              : 0 errors | 0 warnings | 0 notes
 kdecopula              : 0 errors | 0 warnings | 0 notes
 kdevine                : 0 errors | 0 warnings | 0 notes
