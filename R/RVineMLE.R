@@ -310,7 +310,7 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
         } else if (Copula.Types[todo[i]] %in% c(10, 20)) {
             # bb8
             lb[nParams + i] <- 0.001
-            ub[nParams + i] <- max.BB$BB1[2]
+            ub[nParams + i] <- max.BB$BB8[2]
         } else if (Copula.Types[todo[i]] %in% c(27, 37)) {
             # rotated bb1
             lb[nParams + i] <- -max.BB$BB1[2]
@@ -322,7 +322,7 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
         } else if (Copula.Types[todo[i]] %in% c(29, 39)) {
             # rotated bb7
             lb[nParams + i] <- -max.BB$BB7[2]
-            ub[nParams + i] <- -1.001
+            ub[nParams + i] <- -0.001
         } else if (Copula.Types[todo[i]] %in% c(30, 40)) {
             # rotated bb8
             lb[nParams + i] <- -max.BB$BB8[2]
