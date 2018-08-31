@@ -5,8 +5,8 @@
 \title{Sequential Estimation of an R-Vine Copula Model}
 \usage{
 RVineSeqEst(data, RVM, method = "mle", se = FALSE, max.df = 30,
-  max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6), BB8 = c(6, 1)),
-  progress = FALSE, weights = NA, cores = 1)
+  max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6), BB8 = c(6,
+  1)), progress = FALSE, weights = NA, cores = 1)
 }
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}

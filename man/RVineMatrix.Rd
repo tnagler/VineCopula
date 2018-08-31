@@ -4,9 +4,9 @@
 \alias{RVineMatrix}
 \title{R-Vine Copula Model in Matrix Notation}
 \usage{
-RVineMatrix(Matrix, family = array(0, dim = dim(Matrix)), par = array(NA,
-  dim = dim(Matrix)), par2 = array(NA, dim = dim(Matrix)), names = NULL,
-  check.pars = TRUE)
+RVineMatrix(Matrix, family = array(0, dim = dim(Matrix)),
+  par = array(NA, dim = dim(Matrix)), par2 = array(NA, dim =
+  dim(Matrix)), names = NULL, check.pars = TRUE)
 }
 \arguments{
 \item{Matrix}{Lower (or upper) triangular d x d matrix that defines the

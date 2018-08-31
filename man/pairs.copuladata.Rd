@@ -6,8 +6,9 @@
 \usage{
 \method{pairs}{copuladata}(x, labels = names(x), ...,
   lower.panel = lp.copuladata, upper.panel = up.copuladata,
-  diag.panel = dp.copuladata, label.pos = 0.85, cex.labels = 1, gap = 0,
-  method = "kendall", ccols = terrain.colors(11), margins = "norm")
+  diag.panel = dp.copuladata, label.pos = 0.85, cex.labels = 1,
+  gap = 0, method = "kendall", ccols = terrain.colors(11),
+  margins = "norm")
 }
 \arguments{
 \item{x}{\code{copuladata} object.}

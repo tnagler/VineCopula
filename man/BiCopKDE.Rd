@@ -4,7 +4,8 @@
 \alias{BiCopKDE}
 \title{Kernel estimate of  a Bivariate Copula Density}
 \usage{
-BiCopKDE(u1, u2, type = "contour", margins, size, kde.pars = list(), ...)
+BiCopKDE(u1, u2, type = "contour", margins, size, kde.pars = list(),
+  ...)
 }
 \arguments{
 \item{u1, u2}{numeric vectors of equal length with values in [0,1].}

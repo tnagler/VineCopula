@@ -4,7 +4,8 @@
 \alias{BiCopPar2TailDep}
 \title{Tail Dependence Coefficients of a Bivariate Copula}
 \usage{
-BiCopPar2TailDep(family, par, par2 = 0, obj = NULL, check.pars = TRUE)
+BiCopPar2TailDep(family, par, par2 = 0, obj = NULL,
+  check.pars = TRUE)
 }
 \arguments{
 \item{family}{integer; single number or vector of size \code{n}; defines the
