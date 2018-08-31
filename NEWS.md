@@ -1,3 +1,18 @@
+VineCopula 2.1.7 (in progress)
+----------------------------------------------------------------
+
+BUG FIXES
+
+  * get rid of warning messages when checking whether structure is a D-vine.
+  
+  * fix standard errors for one-parameter families.
+  
+  * avoid infinite loop for Joe's inverse h-function with extreme parameter 
+    values.
+  
+  * fix parameters bounds for BB copulas in `RVineMLE()`.
+  
+
 VineCopula 2.1.6 (June 18, 2018)
 ----------------------------------------------------------------
 
