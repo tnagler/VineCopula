@@ -1,3 +1,11 @@
+VineCopula 2.1.7 (September 17, 2018)
+----------------------------------------------------------------
+
+BUG FIXES
+
+  * prevent heap-buffer overflows in `BiCopHfuncDeriv(2)` (non-critical).
+
+  
 VineCopula 2.1.7 (August 31, 2018)
 ----------------------------------------------------------------
 
