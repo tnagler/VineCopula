@@ -1,4 +1,4 @@
-VineCopula 2.1.7 (September 17, 2018)
+VineCopula 2.1.8 (September 17, 2018)
 ----------------------------------------------------------------
 
 BUG FIXES
