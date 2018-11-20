@@ -106,7 +106,7 @@
 </li>
 <li>
 <p>the latest development version:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"tnagler/VineCopula"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"tnagler/VineCopula"</span>)</code></pre></div>
 </li>
 </ul>
 <hr>
@@ -169,7 +169,7 @@
 <h3 class="hasAnchor">
 <a href="#bivariate-copula-families" class="anchor"></a>Bivariate copula families</h3>
 <p>In this package several bivariate copula families are included for bivariate and multivariate analysis using vine copulas. It provides functionality of elliptical (Gaussian and Student-t) as well as Archimedean (Clayton, Gumbel, Frank, Joe, BB1, BB6, BB7 and BB8) copulas to cover a large range of dependence patterns. For Archimedean copula families, rotated versions are included to cover negative dependence as well.</p>
-<p>The Tawn copula is an asymmetric extension of the Gumbel copula with three parameters. For simplicity, we implemented two versions of the Tawn copula with two parameters each. Each type has one of the asymmetry parameters fixed to 1, so that the corresponding copula density is either left- or right-skewed (in relation to the main diagonal). In the manual we will call these two new copulas “Tawn type 1” and “Tawn type 2”.</p>
+<p>The Tawn copula is a non-exchangable extension of the Gumbel copula with three parameters. For simplicity, we implemented two versions of the Tawn copula with two parameters each. Each type has one of the asymmetry parameters fixed to 1, so that the corresponding copula density is either left- or right-skewed (relative to the main diagonal). In the manual we will call these two new copulas “Tawn type 1” and “Tawn type 2”.</p>
 <p>The following table shows the parameter ranges of bivariate copula families with parameters <code>par</code> and <code>par2</code> and internal coding <code>family</code>:</p>
 <table class="table">
 <thead><tr class="header">

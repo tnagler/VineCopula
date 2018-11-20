@@ -171,12 +171,12 @@ functionality of elliptical (Gaussian and Student-t) as well as Archimedean
 range of dependence patterns. For Archimedean copula families,
 rotated versions are included to cover negative dependence as well.
 
-The Tawn copula is an asymmetric extension of the Gumbel copula with three 
+The Tawn copula is a non-exchangable extension of the Gumbel copula with three 
 parameters. For simplicity, we implemented two versions of the Tawn copula with
 two parameters each. Each type has one of the asymmetry parameters fixed to 1, 
-so that the corresponding copula density is either left- or right-skewed (in
-relation to the main diagonal). In the manual we will call these two new copulas 
-"Tawn type 1" and "Tawn type 2".
+so that the corresponding copula density is either left- or right-skewed 
+(relative to the main diagonal). In the manual we will call these two new 
+copulas "Tawn type 1" and "Tawn type 2".
 
 The following table shows the parameter ranges of bivariate copula families with 
 parameters `par` and `par2` and internal coding `family`:
