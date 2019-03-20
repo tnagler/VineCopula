@@ -99,20 +99,18 @@ RVineVuongTest <- function(data, RVM1, RVM2) {
         p.Schwarz <- 1
         p.Akaike <- 1
     } else {
-        w <- 1/N * sum((Model1.ll - Model2.ll)^2) + (1/N * sum(Model1.ll - Model2.ll))^2
-        w <- sqrt(w)
-
         LR <- sum(Model1.ll) - sum(Model2.ll)
-        LR.Schwarz <- LR - ((anz.1/2 * log(N) - anz.2/2 * log(N)))
+        LR.Schwarz <- LR - ((anz.1 / 2 * log(N) - anz.2 / 2 * log(N)))
         LR.Akaike <- LR - (anz.1 - anz.2)
 
-        V <- LR/(sqrt(N) * w)
-        V.Schwarz <- LR.Schwarz/(sqrt(N) * w)
-        V.Akaike <- LR.Akaike/(sqrt(N) * w)
+        w <- sd(Model1.ll - Model2.ll)
+        V <- LR / (sqrt(N) * w)
+        V.Schwarz <- LR.Schwarz / (sqrt(N) * w)
+        V.Akaike <- LR.Akaike / (sqrt(N) * w)
 
-        p <- 2 * min(pnorm(V), 1 - pnorm(V))
-        p.Schwarz <- 2 * min(pnorm(V.Schwarz), 1 - pnorm(V.Schwarz))
-        p.Akaike <- 2 * min(pnorm(V.Akaike), 1 - pnorm(V.Akaike))
+        p <- 2 * pnorm(-abs(V))
+        p.Schwarz <- 2 * pnorm(-abs(V.Schwarz))
+        p.Akaike <- 2 * pnorm(-abs(V.Akaike))
     }
 
     return(list(statistic = V,
