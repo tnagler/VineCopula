@@ -286,7 +286,9 @@ adjustPars <- function(family, par, par2) {
 BiCopCheckTaus <- function(family, tau) {
     cl <- match.call()[1]
     ## check for family/tau consistency
-    checkTaus<- function(x) {
+    checkTaus <- function(x) {
+        family <- x[1]
+        tau <- x[2]
         if (family %in% c(3, 13) && tau <= 0)
             stop("\n In ", cl, ": ",
                  "Clayton copula cannot be used for tau<=0.",

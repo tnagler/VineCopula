@@ -101,9 +101,9 @@ BiCopCondSim <- function(N, cond.val, cond.var, family, par, par2 = 0,
         cond.val <- rep(cond.val, N)
     if (length(cond.val) != N)
         stop("cond.val must be a numeric vector of length 1 or N")
-    if ((cond.val <= 0)  || (cond.val >= 1))
+    if (any(cond.val <= 0)  || any(cond.val >= 1))
         stop("cond.val must be in the interval (0, 1)")
-    if (!(cond.var %in% 1:2))
+    if (!all(cond.var %in% 1:2))
         stop("cond.var has to be either 1 or 2")
     if (missing(family))
         family <- NA

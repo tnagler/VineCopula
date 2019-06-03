@@ -10,7 +10,6 @@
 #' @return An object inherting \code{\linkS4class{copula}} corresponding to the
 #' specific family.
 #' @author Benedikt Graeler
-#' @keywords ~kwd1 ~kwd2
 #' @examples
 #'
 #' # normalCopula with parameter 0.5

@@ -22,13 +22,13 @@ The function \code{as.copuladata} coerces an object (\code{data.frame},
 
 data(daxreturns)
 
-data <- as(daxreturns, "matrix")
+data <- as.matrix(daxreturns)
 class(as.copuladata(data))
 
-data <- as(daxreturns, "data.frame")
+data <- as.data.frame(daxreturns)
 class(as.copuladata(data))
 
-data <- as(daxreturns, "list")
+data <- as.list(daxreturns)
 names(data) <- names(daxreturns)
 class(as.copuladata(data))
 
