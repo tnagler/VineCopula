@@ -419,11 +419,10 @@ todo_fams_presel <- function(args) {
     } else {
         todo <- allfams
     }
-
-    # restrict to familie
+    # restrict to families in familyset
     tmpfams <- todo[which(todo %in% args$familyset)]
     # check if any family is feasible; if not, keep all
-    if (length(tmpfams) > 1)
+    if (length(tmpfams) > 0)
         args$familyset <- tmpfams
     args
 }

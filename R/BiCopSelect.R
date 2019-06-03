@@ -88,7 +88,7 @@
 #' @param se Logical; whether standard error(s) of parameter estimates is/are
 #' estimated (default: \code{se = FALSE}).
 #' @param presel Logical; whether to exclude families before fitting based on
-#' symmetry properties of the data. Makes the selection about 30% faster
+#' symmetry properties of the data. Makes the selection about 30\% faster
 #' (on average), but may yield slightly worse results in few special cases.
 #' @param method indicates the estimation method: either maximum
 #' likelihood estimation (\code{method = "mle"}; default) or inversion of

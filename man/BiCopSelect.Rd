@@ -81,7 +81,7 @@ be rejected.}
 estimated (default: \code{se = FALSE}).}
 
 \item{presel}{Logical; whether to exclude families before fitting based on
-symmetry properties of the data. Makes the selection about 30% faster
+symmetry properties of the data. Makes the selection about 30\% faster
 (on average), but may yield slightly worse results in few special cases.}
 
 \item{method}{indicates the estimation method: either maximum
