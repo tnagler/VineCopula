@@ -36,10 +36,13 @@
 #' @param weights numeric; weights for each observation (optional).
 #' @param treecrit edge weight for Dissman's structure selection algorithm, see
 #' \emph{Details}.
-#' @param se Logical; whether standard errors are estimated (default: \code{se
-#' = FALSE}).
 #' @param rotations If \code{TRUE}, all rotations of the families in
 #' \code{familyset} are included.
+#' @param se Logical; whether standard errors are estimated (default: \code{se
+#' = FALSE}).
+#' @param presel Logical; whether to exclude families before fitting based on
+#' symmetry properties of the data. Makes the selection about 30\% faster
+#' (on average), but may yield slightly worse results in few special cases.
 #' @param method indicates the estimation method: either maximum
 #' likelihood estimation (\code{method = "mle"}; default) or inversion of
 #' Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
@@ -165,9 +168,13 @@
 #' DVM <- D2RVine(order, family = rep(0,d*(d-1)/2), par = rep(0, d*(d-1)/2))
 #' RVineCopSelect(daxreturns, c(1:6), DVM$Matrix)}
 #'
-RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit = "AIC", indeptest = FALSE,
-                                 level = 0.05, trunclevel = NA, progress = FALSE,  weights = NA,
-                                 treecrit = "tau", se = FALSE, rotations = TRUE, method = "mle", cores = 1) {
+RVineStructureSelect <- function(data, familyset = NA, type = 0,
+                                 selectioncrit = "AIC", indeptest = FALSE,
+                                 level = 0.05, trunclevel = NA,
+                                 progress = FALSE,  weights = NA,
+                                 treecrit = "tau", rotations = TRUE,
+                                 se = FALSE, presel = TRUE,
+                                 method = "mle", cores = 1) {
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),
                     check_data,
@@ -191,8 +198,11 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
                               indeptest = indeptest,
                               level = level,
                               trunclevel = trunclevel,
+                              weights = weights,
+                              rotations = FALSE, # because prep_familyset
                               se = se,
-                              rotations = rotations,
+                              presel = presel,
+                              method = method,
                               cores = cores))
     }
     if (!(selectioncrit %in% c("AIC", "BIC", "logLik")))
@@ -235,12 +245,13 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
     # estimate pair-copulas
     VineTree <- fit.FirstTreeCopulas(MST,
                                      data,
-                                     familyset,
-                                     selectioncrit,
-                                     indeptest,
-                                     level,
-                                     se = se,
+                                     familyset = familyset,
+                                     selectioncrit = selectioncrit,
+                                     indeptest = indeptest,
+                                     level = level,
                                      weights = weights,
+                                     se = se,
+                                     presel = presel,
                                      method = method,
                                      cores = cores)
     # store results
@@ -270,9 +281,10 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0, selectioncrit =
                                     selectioncrit,
                                     indeptest,
                                     level,
-                                    se = se,
                                     progress,
                                     weights = weights,
+                                    se = se,
+                                    presel = presel,
                                     method = method,
                                     cores = cores)
         # store results
@@ -544,9 +556,10 @@ fasttau <- function(x, y, weights = NA) {
 }
 
 ## fit pair-copulas for the first vine tree
-fit.FirstTreeCopulas <- function(MST, data.univ, type, copulaSelectionBy,
-                                 testForIndependence, testForIndependence.level,
-                                 se, weights = NA, method = "mle", cores = 1) {
+fit.FirstTreeCopulas <- function(MST, data.univ, familyset, selectioncrit,
+                                 indeptest, level,
+                                 weights = NA, se = FALSE,
+                                 presel = TRUE, method = "mle", cores = 1) {
 
     ## initialize estimation results with empty list
     d <- nrow(MST$E$nums)
@@ -589,22 +602,24 @@ fit.FirstTreeCopulas <- function(MST, data.univ, type, copulaSelectionBy,
                                        "fit.ACopula",
                                        "BiCopSelect")) %dopar%
             pcSelect(pc.data[[i]],
-                     type,
-                     copulaSelectionBy,
-                     testForIndependence,
-                     testForIndependence.level,
-                     se,
+                     familyset,
+                     selectioncrit,
+                     indeptest,
+                     level,
                      weights,
+                     se,
+                     presel,
                      method)
     } else {
         pc.fits <- lapply(X = pc.data,
                           FUN = pcSelect,
-                          type,
-                          copulaSelectionBy,
-                          testForIndependence,
-                          testForIndependence.level,
-                          se,
+                          familyset,
+                          selectioncrit,
+                          indeptest,
+                          level,
                           weights,
+                          se,
+                          presel,
                           method)
     }
 
@@ -627,10 +642,10 @@ fit.FirstTreeCopulas <- function(MST, data.univ, type, copulaSelectionBy,
 }
 
 ## fit pair-copulas for vine trees 2,...
-fit.TreeCopulas <- function(MST, oldVineGraph, type, copulaSelectionBy,
-                            testForIndependence, testForIndependence.level,
-                            se = se, progress, weights = NA, method = "mle",
-                            cores = 1) {
+fit.TreeCopulas <- function(MST, oldVineGraph, familyset, selectioncrit,
+                            indeptest, level,
+                            progress, weights = NA, se = FALSE, presel = TRUE,
+                            method = "mle", cores = 1) {
 
     ## initialize estimation results with empty list
     d <- nrow(MST$E$nums)
@@ -697,22 +712,24 @@ fit.TreeCopulas <- function(MST, oldVineGraph, type, copulaSelectionBy,
                            .export = c("pcSelect", "fit.ACopula"),
                            .packages = "VineCopula") %dopar%
             pcSelect(pc.data[[i]],
-                     type,
-                     copulaSelectionBy,
-                     testForIndependence,
-                     testForIndependence.level,
-                     se,
+                     familyset,
+                     selectioncrit,
+                     indeptest,
+                     level,
                      weights,
+                     se,
+                     presel,
                      method)
     } else {
         pc.fits <- lapply(X = pc.data,
                           FUN = pcSelect,
-                          type,
-                          copulaSelectionBy,
-                          testForIndependence,
-                          testForIndependence.level,
-                          se,
+                          familyset,
+                          selectioncrit,
+                          indeptest,
+                          level,
                           weights,
+                          se,
+                          presel,
                           method)
     }
 
@@ -862,18 +879,17 @@ getEdgeInfo <- function(i, g, oldVineGraph, treecrit, weights,
 }
 
 
-pcSelect <- function(parameterForACopula, type, ...) {
+pcSelect <- function(parameterForACopula, ...) {
     return(fit.ACopula(parameterForACopula$zr1,
                        parameterForACopula$zr2,
-                       type,
                        ...))
 }
 
 
 ## bivariate copula selection
 fit.ACopula <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
-                        indeptest = FALSE, level = 0.05, se = FALSE,
-                        weights = NA, method = "mle") {
+                        indeptest = FALSE, level = 0.05, weights = NA,
+                        se = FALSE, presel = TRUE, method = "mle") {
 
     ## select family and estimate parameter(s) for the pair copula
     complete.i <- which(!is.na(u1 + u2))
@@ -896,13 +912,14 @@ fit.ACopula <- function(u1, u2, familyset = NA, selectioncrit = "AIC",
         }
     } else {
         out <- suppressWarnings(BiCopSelect(u1[complete.i], u2[complete.i],
-                                            familyset,
-                                            selectioncrit,
-                                            indeptest,
-                                            level,
+                                            familyset = familyset,
+                                            selectioncrit = selectioncrit,
+                                            indeptest = indeptest,
+                                            level = level,
                                             weights = weights,
-                                            rotations = FALSE,
+                                            rotations = FALSE, # see prep_familyset
                                             se = se,
+                                            presel = presel,
                                             method = method))
         out$warn <- NULL
     }

@@ -29,10 +29,14 @@
 #' @param level numeric; significance level of the independence test (default:
 #' \code{level = 0.05}).
 #' @param trunclevel integer; level of truncation.
-#' @param se Logical; whether standard errors are estimated (default: \code{se
-#' = FALSE}).
+#' @param weights Numerical; weights for each observation (optional).
 #' @param rotations logical; if \code{TRUE}, all rotations of the families in
 #' \code{familyset} are included.
+#' @param se Logical; whether standard errors are estimated (default: \code{se
+#' = FALSE}).
+#' @param presel Logical; whether to exclude families before fitting based on
+#' symmetry properties of the data. Makes the selection about 30\% faster
+#' (on average), but may yield slightly worse results in few special cases.
 #' @param method indicates the estimation method: either maximum
 #' likelihood estimation (\code{method = "mle"}; default) or inversion of
 #' Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
@@ -128,8 +132,10 @@
 #'
 #' contour(RVM1)  # contour plots of all pair-copulas
 #'
-RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", indeptest = FALSE,
-                           level = 0.05, trunclevel = NA, se = FALSE, rotations = TRUE, method = "mle", cores = 1) {
+RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC",
+                           indeptest = FALSE, level = 0.05, trunclevel = NA,
+                           weights = NA, rotations = TRUE, se = FALSE,
+                           presel = TRUE, method = "mle", cores = 1) {
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),
                     check_data,
@@ -238,15 +244,16 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC", 
                                       "Independence has been selected automatically.")
                     }
                 } else {
-                    cfit <- suppressWarnings(BiCopSelect(zr2,
-                                                         zr1,
-                                                         familyset,
-                                                         selectioncrit,
-                                                         indeptest,
-                                                         level,
-                                                         weights = NA,
-                                                         rotations,
+                    cfit <- suppressWarnings(BiCopSelect(u1 = zr2,
+                                                         u2 = zr1,
+                                                         familyset = familyset,
+                                                         selectioncrit = selectioncrit,
+                                                         indeptest = indeptest,
+                                                         level = level,
+                                                         weights = weights,
+                                                         rotations = rotations,
                                                          se = se,
+                                                         presel = presel,
                                                          method = method))
                     warn <- NULL
                 }

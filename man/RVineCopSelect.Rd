@@ -5,8 +5,9 @@
 \title{Sequential Pair-Copula Selection and Estimation for R-Vine Copula Models}
 \usage{
 RVineCopSelect(data, familyset = NA, Matrix, selectioncrit = "AIC",
-  indeptest = FALSE, level = 0.05, trunclevel = NA, se = FALSE,
-  rotations = TRUE, method = "mle", cores = 1)
+  indeptest = FALSE, level = 0.05, trunclevel = NA, weights = NA,
+  rotations = TRUE, se = FALSE, presel = TRUE, method = "mle",
+  cores = 1)
 }
 \arguments{
 \item{data}{N x d data matrix (with uniform margins).}
@@ -38,11 +39,17 @@ hypothesis of independence cannot be rejected.}
 
 \item{trunclevel}{integer; level of truncation.}
 
-\item{se}{Logical; whether standard errors are estimated (default: \code{se
-= FALSE}).}
+\item{weights}{Numerical; weights for each observation (optional).}
 
 \item{rotations}{logical; if \code{TRUE}, all rotations of the families in
 \code{familyset} are included.}
+
+\item{se}{Logical; whether standard errors are estimated (default: \code{se
+= FALSE}).}
+
+\item{presel}{Logical; whether to exclude families before fitting based on
+symmetry properties of the data. Makes the selection about 30\% faster
+(on average), but may yield slightly worse results in few special cases.}
 
 \item{method}{indicates the estimation method: either maximum
 likelihood estimation (\code{method = "mle"}; default) or inversion of
