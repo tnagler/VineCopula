@@ -10,13 +10,13 @@
 **
 */
 
-#include "vine.h"
-#include "likelihood.h"
-#include "hfunc.h"
-#include "deriv.h"
-#include "tcopuladeriv.h"
-#include "tcopuladeriv_new.h"
-#include "incompleteBeta.h"
+#include "VineCopula/vine.h"
+#include "VineCopula/likelihood.h"
+#include "VineCopula/hfunc.h"
+#include "VineCopula/deriv.h"
+#include "VineCopula/tcopuladeriv.h"
+#include "VineCopula/tcopuladeriv_new.h"
+#include "VineCopula/incompleteBeta.h"
 
 #define UMAX  1-1e-10
 #define UMIN  1e-10

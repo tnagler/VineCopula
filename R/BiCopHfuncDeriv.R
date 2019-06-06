@@ -11,7 +11,7 @@
 #'
 #' @param u1,u2 numeric vectors of equal length with values in [0,1].
 #' @param family integer; single number or vector of size \code{length(u1)};
-#' defines the bivariate copula family: \\cr
+#' defines the bivariate copula family: \ \cr
 #' \code{0} = independence copula \cr
 #' \code{1} = Gaussian copula \cr
 #' \code{2} = Student t copula (t-copula) \cr
@@ -41,7 +41,7 @@
 #' @param obj \code{BiCop} object containing the family and parameter
 #' specification.
 #' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
-#' for family/parameter-consistency are ommited (should only be used with
+#' for family/parameter-consistency are omitted (should only be used with
 #' care).
 #' @return A numeric vector of the conditional bivariate copula derivative
 #' \itemize{
@@ -112,7 +112,7 @@ BiCopHfuncDeriv <- function(u1, u2, family, par, par2 = 0, deriv = "par", obj = 
                           as.double(u1),
                           as.double(u2),
                           as.integer(n),
-                          as.double(par),
+                          as.double(c(par, par2)),
                           as.integer(family),
                           as.double(rep(0, n)),
                           PACKAGE = "VineCopula")[[6]]

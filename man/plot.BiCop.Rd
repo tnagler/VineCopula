@@ -3,7 +3,6 @@
 \name{plot.BiCop}
 \alias{plot.BiCop}
 \alias{contour.BiCop}
-\alias{contour.BiCop}
 \title{Plotting tools for BiCop objects}
 \usage{
 \method{plot}{BiCop}(x, type = "surface", margins, size, ...)

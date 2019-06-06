@@ -10,8 +10,8 @@
 **
 */
 
-#include "vine.h"
-#include "memoryhandling.h"
+#include "VineCopula/vine.h"
+#include "VineCopula/memoryhandling.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Function that allocates space and creates a double matrix.

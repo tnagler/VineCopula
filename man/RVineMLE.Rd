@@ -5,8 +5,8 @@
 \title{Maximum Likelihood Estimation of an R-Vine Copula Model}
 \usage{
 RVineMLE(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
-  max.df = 30, max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6),
-  BB8 = c(6, 1)), grad = FALSE, hessian = FALSE, se = FALSE, ...)
+  max.df = 30, max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5,
+  6), BB8 = c(6, 1)), grad = FALSE, hessian = FALSE, se = FALSE, ...)
 }
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}
@@ -74,7 +74,7 @@ compute a finite-difference approximation to the gradient.}
 calculation is on the basis of finite differences (output of \code{optim}).}
 }
 \description{
-This function calculates the maxiumum likelihood estimate (MLE) of the
+This function calculates the maximum likelihood estimate (MLE) of the
 R-vine copula model parameters using sequential estimates as initial values
 (if not provided).
 }

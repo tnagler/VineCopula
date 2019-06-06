@@ -8,7 +8,7 @@
 #' t-copula is not allowed since the CDF of the t-copula is not implemented
 #' (see \code{\link{BiCopCDF}} and \code{\link{BiCopPar2Beta}}).
 #' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
-#' for family/parameter-consistency are ommited (should only be used with care).
+#' for family/parameter-consistency are omitted (should only be used with care).
 #'
 #' @return Matrix with the same structure as the family and parameter matrices
 #' of the \code{\link{RVineMatrix}} object \code{RVM} where the entries are

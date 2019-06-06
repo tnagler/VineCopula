@@ -6,8 +6,9 @@
 \usage{
 \method{pairs}{copuladata}(x, labels = names(x), ...,
   lower.panel = lp.copuladata, upper.panel = up.copuladata,
-  diag.panel = dp.copuladata, label.pos = 0.85, cex.labels = 1, gap = 0,
-  method = "kendall", ccols = terrain.colors(11), margins = "norm")
+  diag.panel = dp.copuladata, label.pos = 0.85, cex.labels = 1,
+  gap = 0, method = "kendall", ccols = terrain.colors(11),
+  margins = "norm")
 }
 \arguments{
 \item{x}{\code{copuladata} object.}
@@ -39,7 +40,7 @@ panel; default: \code{cex.labels = 1}.}
 are computed. One of \code{"pearson"}, \code{"kendall"} (default), or
 \code{"spearman"}}
 
-\item{ccols}{colour to be used for the contour plots; default: \code{ccols =
+\item{ccols}{color to be used for the contour plots; default: \code{ccols =
 terrain.colors(30)}.}
 
 \item{margins}{character; margins for the contour plots. Options are:\cr
@@ -55,7 +56,7 @@ correlations on the upper panel and histograms on the diagonal panel.
 }
 \note{
 If the default panel functions are used \cr \itemize{ \item \code{col}
-changes only the colour of the points in the scatter plot
+changes only the color of the points in the scatter plot
 (\code{upper.panel}) \cr \item \code{cex} changes only the magnification of
 the points in the scatter plot (\code{upper.panel}) }
 }

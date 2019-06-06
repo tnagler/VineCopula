@@ -18,11 +18,25 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Clarke Test Comparing Two R-Vine Copula Models — RVineClarkeTest" />
+
+<meta property="og:description" content="This function performs a Clarke test between two d-dimensional R-vine copula
+models as specified by their RVineMatrix objects." />
+<meta name="twitter:card" content="summary" />
+
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,15 +60,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">VineCopula</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">VineCopula</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.8</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -66,6 +90,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -73,20 +98,24 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Clarke Test Comparing Two R-Vine Copula Models</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/RVineClarkeTest.R'><code>R/RVineClarkeTest.R</code></a></small>
+    <div class="hidden name"><code>RVineClarkeTest.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function performs a Clarke test between two d-dimensional R-vine copula
 models as specified by their <code><a href='RVineMatrix.html'>RVineMatrix</a></code> objects.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>RVineClarkeTest</span>(<span class='no'>data</span>, <span class='no'>RVM1</span>, <span class='no'>RVM2</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -123,7 +152,7 @@ statistical indistinguishability of the two models is $$ $$$$H_0: P(m_i &gt; 0) 
 <p>Since under statistical equivalence of the two models the log likelihood
 ratios of the single observations are uniformly distributed around zero and
 in expectation \(50\%\) of the log likelihood ratios greater than zero,
-the tets statistic $$ $$$$\texttt{statistic} := B = \sum_{i=1}^N
+the test statistic $$ $$$$\texttt{statistic} := B = \sum_{i=1}^N
 \mathbf{1}_{(0,\infty)}(m_i), $$ where \(\mathbf{1}\) is the indicator function,
 is distributed Binomial with parameters \(N\) and \(p=0.5\), and
 critical values can easily be obtained. Model 1 is interpreted as
@@ -141,8 +170,8 @@ Nonnested Model Selection. Political Analysis, 15, 347-363.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='RVineVuongTest.html'>RVineVuongTest</a></code>, <code><a href='RVineAIC.html'>RVineAIC</a></code>,
-<code><a href='RVineAIC.html'>RVineBIC</a></code></p>
+    <div class='dont-index'><p><code><a href='RVineVuongTest.html'>RVineVuongTest</a></code>, <code><a href='RVineAIC.html'>RVineAIC</a></code>,
+<code><a href='RVineAIC.html'>RVineBIC</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -151,9 +180,7 @@ Nonnested Model Selection. Political Analysis, 15, 347-363.</p>
 <span class='co'># vine structure selection time-consuming (~ 20 sec)</span>
 
 <span class='co'># load data set</span>
-<span class='fu'>data</span>(<span class='no'>daxreturns</span>)
-
-
+<span class='fu'>data</span>(<span class='no'>daxreturns</span>)</div><div class='input'>
 <span class='co'># select the R-vine structure, families and parameters</span>
 <span class='no'>RVM</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RVineStructureSelect.html'>RVineStructureSelect</a></span>(<span class='no'>daxreturns</span>[,<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='fu'>c</span>(<span class='fl'>1</span>:<span class='fl'>6</span>))
 <span class='no'>RVM</span>$<span class='no'>Matrix</span></div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4] [,5]
@@ -161,38 +188,38 @@ Nonnested Model Selection. Political Analysis, 15, 347-363.</p>
 #&gt; [2,]    4    2    0    0    0
 #&gt; [3,]    5    4    1    0    0
 #&gt; [4,]    1    5    4    4    0
-#&gt; [5,]    2    1    5    5    5</div><div class='input'><span class='no'>RVM</span>$<span class='no'>par</span></div><div class='output co'>#&gt;           [,1]      [,2]     [,3]      [,4] [,5]
-#&gt; [1,] 0.0000000 0.0000000 0.000000 0.0000000    0
-#&gt; [2,] 0.4135538 0.0000000 0.000000 0.0000000    0
-#&gt; [3,] 0.5977471 1.0966835 0.000000 0.0000000    0
-#&gt; [4,] 0.1836995 1.9291781 1.816273 0.0000000    0
-#&gt; [5,] 0.6148730 0.5935097 1.691556 0.6845496    0</div><div class='input'><span class='no'>RVM</span>$<span class='no'>par2</span></div><div class='output co'>#&gt;           [,1]     [,2] [,3]     [,4] [,5]
-#&gt; [1,]  0.000000 0.000000    0 0.000000    0
-#&gt; [2,]  0.000000 0.000000    0 0.000000    0
-#&gt; [3,]  0.000000 0.000000    0 0.000000    0
-#&gt; [4,] 10.205563 0.000000    0 0.000000    0
-#&gt; [5,]  4.617594 4.613659    0 8.768403    0</div><div class='input'>
+#&gt; [5,]    2    1    5    5    5</div><div class='input'><span class='no'>RVM</span>$<span class='no'>par</span></div><div class='output co'>#&gt;           [,1]      [,2]      [,3]     [,4] [,5]
+#&gt; [1,] 0.0000000 0.0000000 0.0000000 0.000000    0
+#&gt; [2,] 1.3867611 0.0000000 0.0000000 0.000000    0
+#&gt; [3,] 0.5134108 1.2603825 0.0000000 0.000000    0
+#&gt; [4,] 1.1272837 1.2673360 0.6152415 0.000000    0
+#&gt; [5,] 0.6008314 0.6308222 5.3967411 4.952091    0</div><div class='input'><span class='no'>RVM</span>$<span class='no'>par2</span></div><div class='output co'>#&gt;          [,1]     [,2] [,3] [,4] [,5]
+#&gt; [1,] 0.000000 0.000000    0    0    0
+#&gt; [2,] 0.000000 0.000000    0    0    0
+#&gt; [3,] 0.000000 0.000000    0    0    0
+#&gt; [4,] 0.000000 0.000000    0    0    0
+#&gt; [5,] 2.304662 3.837796    0    0    0</div><div class='input'>
 <span class='co'># select the C-vine structure, families and parameters</span>
 <span class='no'>CVM</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RVineStructureSelect.html'>RVineStructureSelect</a></span>(<span class='no'>daxreturns</span>[,<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='fu'>c</span>(<span class='fl'>1</span>:<span class='fl'>6</span>), <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"CVine"</span>)
 <span class='no'>CVM</span>$<span class='no'>Matrix</span></div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4] [,5]
 #&gt; [1,]    3    0    0    0    0
-#&gt; [2,]    4    1    0    0    0
-#&gt; [3,]    1    4    2    0    0
-#&gt; [4,]    2    2    4    4    0
-#&gt; [5,]    5    5    5    5    5</div><div class='input'><span class='no'>CVM</span>$<span class='no'>par</span></div><div class='output co'>#&gt;           [,1]      [,2]      [,3]      [,4] [,5]
-#&gt; [1,] 0.0000000 0.0000000 0.0000000 0.0000000    0
-#&gt; [2,] 0.4586940 0.0000000 0.0000000 0.0000000    0
-#&gt; [3,] 0.8910001 1.3539491 0.0000000 0.0000000    0
-#&gt; [4,] 0.4917111 0.3813078 1.1795420 0.0000000    0
-#&gt; [5,] 0.4521147 1.6915563 0.5647324 0.6845496    0</div><div class='input'><span class='no'>CVM</span>$<span class='no'>par2</span></div><div class='output co'>#&gt;          [,1]     [,2]     [,3]     [,4] [,5]
-#&gt; [1,] 0.000000 0.000000 0.000000 0.000000    0
-#&gt; [2,] 0.000000 0.000000 0.000000 0.000000    0
-#&gt; [3,] 0.000000 0.000000 0.000000 0.000000    0
-#&gt; [4,] 8.000218 7.509862 0.000000 0.000000    0
-#&gt; [5,] 5.701888 0.000000 5.545456 8.768403    0</div><div class='input'>
+#&gt; [2,]    5    4    0    0    0
+#&gt; [3,]    4    5    2    0    0
+#&gt; [4,]    2    2    5    1    0
+#&gt; [5,]    1    1    1    5    5</div><div class='input'><span class='no'>CVM</span>$<span class='no'>par</span></div><div class='output co'>#&gt;           [,1]     [,2]      [,3]     [,4] [,5]
+#&gt; [1,] 0.0000000 0.000000 0.0000000 0.000000    0
+#&gt; [2,] 0.1976032 0.000000 0.0000000 0.000000    0
+#&gt; [3,] 1.7080532 2.104707 0.0000000 0.000000    0
+#&gt; [4,] 1.4325774 1.825752 1.2673360 0.000000    0
+#&gt; [5,] 0.5197838 1.703285 0.6308222 5.396741    0</div><div class='input'><span class='no'>CVM</span>$<span class='no'>par2</span></div><div class='output co'>#&gt;         [,1] [,2]     [,3] [,4] [,5]
+#&gt; [1,] 0.00000    0 0.000000    0    0
+#&gt; [2,] 0.00000    0 0.000000    0    0
+#&gt; [3,] 0.00000    0 0.000000    0    0
+#&gt; [4,] 0.00000    0 0.000000    0    0
+#&gt; [5,] 4.93838    0 3.837796    0    0</div><div class='input'>
 <span class='co'># compare the two models based on the data</span>
 <span class='no'>clarke</span> <span class='kw'>&lt;-</span> <span class='fu'>RVineClarkeTest</span>(<span class='no'>daxreturns</span>[,<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='no'>RVM</span>, <span class='no'>CVM</span>)
-<span class='no'>clarke</span>$<span class='no'>statistic</span></div><div class='output co'>#&gt; [1] 498</div><div class='input'><span class='no'>clarke</span>$<span class='no'>statistic.Schwarz</span></div><div class='output co'>#&gt; [1] 514</div><div class='input'><span class='no'>clarke</span>$<span class='no'>p.value</span></div><div class='output co'>#&gt; [1] 2.152686e-06</div><div class='input'><span class='no'>clarke</span>$<span class='no'>p.value.Schwarz</span></div><div class='output co'>#&gt; [1] 0.0001479391</div><div class='input'>
+<span class='no'>clarke</span>$<span class='no'>statistic</span></div><div class='output co'>#&gt; [1] 108</div><div class='input'><span class='no'>clarke</span>$<span class='no'>statistic.Schwarz</span></div><div class='output co'>#&gt; [1] 108</div><div class='input'><span class='no'>clarke</span>$<span class='no'>p.value</span></div><div class='output co'>#&gt; [1] 0.2888205</div><div class='input'><span class='no'>clarke</span>$<span class='no'>p.value.Schwarz</span></div><div class='output co'>#&gt; [1] 0.2888205</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -224,11 +251,14 @@ Jeffrey Dissmann, Eike Brechmann
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

@@ -33,5 +33,3 @@ copulaFromFamilyIndex(224, -2, 0.5)
 \author{
 Benedikt Graeler
 }
-\keyword{~kwd1}
-\keyword{~kwd2}

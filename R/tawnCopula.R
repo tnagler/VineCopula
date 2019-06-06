@@ -40,13 +40,13 @@ NULL
 validTawnCopula = function(object) {
   if (object@dimension != 2)
     return("Only Tawn copulas of dimension 2 are supported.")
-  param <- object@parameters
-  upper <- object@param.upbnd
-  lower <- object@param.lowbnd
-  if (length(param) != length(upper))
-    return("Parameter and upper bound have non-equal length")
-  if (length(param) != length(lower))
-    return("Parameter and lower bound have non-equal length")
+    p.n <- length(object@parameters)
+    if (p.n != length(object@param.upbnd))
+        return("Parameter and upper bound have non-equal .")
+    if (p.n != length(object@param.lowbnd))
+        return("Parameter and lower bound have non-equal .")
+    if (p.n != length(object@param.names))
+        return("Parameter and parameter names have non-equal .")
   else return (TRUE)
 }
 
@@ -128,7 +128,7 @@ setMethod("ddvCopula", signature("matrix","tawnT1Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","tawnT1Copula"), linkVineCop.r)
 
 setMethod("tau",signature("tawnT1Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("tawnT1Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("tawnT1Copula"),linkVineCop.tailIndex)
 
 # Pickand's A
 # c-code: Tawn2(double* t, int* n, double* par, double* par2, double* par3, double* out)
@@ -191,7 +191,7 @@ setMethod("ddvCopula", signature("matrix","surTawnT1Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","surTawnT1Copula"), linkVineCop.r)
 
 setMethod("tau",signature("surTawnT1Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("surTawnT1Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("surTawnT1Copula"),linkVineCop.tailIndex)
 
 # Pickand's A
 # c-code: Tawn2(double* t, int* n, double* par, double* par2, double* par3, double* out)
@@ -259,7 +259,7 @@ setMethod("ddvCopula", signature("matrix","r90TawnT1Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","r90TawnT1Copula"), linkVineCop.r)
 
 setMethod("tau",signature("r90TawnT1Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("r90TawnT1Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("r90TawnT1Copula"),linkVineCop.tailIndex)
 
 ########################################
 ## Tawn type 1 270 deg. rotate copula ##
@@ -314,7 +314,7 @@ setMethod("ddvCopula", signature("matrix","r270TawnT1Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","r270TawnT1Copula"), linkVineCop.r)
 
 setMethod("tau",signature("r270TawnT1Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("r270TawnT1Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("r270TawnT1Copula"),linkVineCop.tailIndex)
 
 
 
@@ -437,7 +437,7 @@ setMethod("ddvCopula", signature("matrix","tawnT2Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","tawnT2Copula"), linkVineCop.r)
 
 setMethod("tau",signature("tawnT2Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("tawnT2Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("tawnT2Copula"),linkVineCop.tailIndex)
 
 # Pickand's A
 # c-code: Tawn2(double* t, int* n, double* par, double* par2, double* par3, double* out)
@@ -501,7 +501,7 @@ setMethod("ddvCopula", signature("matrix","surTawnT2Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","surTawnT2Copula"), linkVineCop.r)
 
 setMethod("tau",signature("surTawnT2Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("surTawnT2Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("surTawnT2Copula"),linkVineCop.tailIndex)
 
 # Pickand's A
 # c-code: Tawn2(double* t, int* n, double* par, double* par2, double* par3, double* out)
@@ -569,7 +569,7 @@ setMethod("ddvCopula", signature("matrix","r90TawnT2Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","r90TawnT2Copula"), linkVineCop.r)
 
 setMethod("tau",signature("r90TawnT2Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("r90TawnT2Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("r90TawnT2Copula"),linkVineCop.tailIndex)
 
 ########################################
 ## Tawn type 2 270 deg. rotate copula ##
@@ -592,11 +592,11 @@ r270TawnT2Copula <- function (param=c(-2, 0.5)) {
 
 ## density ##
 setMethod("dCopula", signature("numeric","r270TawnT2Copula"),
-          function(u, copula, log) {
-            linkVineCop.PDF(matrix(u,ncol=copula@dimension),copula, log)
+          function(u, copula, log, ...) {
+            linkVineCop.PDF(matrix(u,ncol=copula@dimension),copula, log, ...)
           })
 setMethod("dCopula", signature("matrix","r270TawnT2Copula"),
-          function(u, copula, log) linkVineCop.PDF(u, copula, log))
+          function(u, copula, log, ...) linkVineCop.PDF(u, copula, log, ...))
 
 ## jcdf ##
 setMethod("pCopula", signature("numeric","r270TawnT2Copula"),
@@ -624,4 +624,51 @@ setMethod("ddvCopula", signature("matrix","r270TawnT2Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","r270TawnT2Copula"), linkVineCop.r)
 
 setMethod("tau",signature("r270TawnT2Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("r270TawnT2Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("r270TawnT2Copula"),linkVineCop.tailIndex)
+
+### set union
+
+setClassUnion("twoParamBiCop",c("BB1Copula","BB6Copula","BB7Copula","BB8Copula","joeBiCopula",
+                                "surClaytonCopula","surGumbelCopula","surJoeBiCopula","surBB1Copula","surBB6Copula","surBB7Copula","surBB8Copula",
+                                "r90ClaytonCopula","r90GumbelCopula","r90JoeBiCopula","r90BB1Copula","r90BB6Copula","r90BB7Copula","r90BB8Copula",
+                                "r270ClaytonCopula","r270GumbelCopula","r270JoeBiCopula","r270BB1Copula","r270BB6Copula","r270BB7Copula","r270BB8Copula",
+                                "tawnT1Copula", "surTawnT1Copula", "r90TawnT1Copula", "r270TawnT1Copula",
+                                "tawnT2Copula", "surTawnT2Copula", "r90TawnT2Copula", "r270TawnT2Copula"))
+
+fitCopula.twoParamBiCop <- function(copula, data, method = "mpl",
+                                    estimate.variance = FALSE) {
+    stopifnot(method=="mpl")
+    fit <- BiCopEst(data[,1], data[,2], copula@family, "mle",
+                    se=estimate.variance)
+
+    if(!estimate.variance) {
+        fit$se <- NA
+        fit$se2 <- NA
+    }
+
+    copFit <- copulaFromFamilyIndex(copula@family, fit$par, fit$par2)
+
+    # treat new copula pre-release
+    if ("call" %in% names(getSlots(getClassDef("fitCopula"))))
+        return(new("fitCopula",
+                   copula=copFit,
+                   estimate = c(fit$par, fit$par2),
+                   var.est = cbind(fit$se, fit$se2),
+                   loglik = sum(dCopula(data, copFit, log=T)),
+                   nsample = nrow(data),
+                   method = "maximum pseudo-likelihood via BiCopEst",
+                   call = match.call(),
+                   fitting.stats=list(convergence = as.integer(NA))))
+
+    new("fitCopula",
+        copula=copFit,
+        estimate = c(fit$par, fit$par2),
+        var.est = cbind(fit$se, fit$se2),
+        loglik = sum(dCopula(data, copFit, log=T)),
+        nsample = nrow(data),
+        method = "maximum pseudo-likelihood via BiCopEst",
+        fitting.stats=list(convergence = as.integer(NA)))
+}
+
+setMethod("fitCopula", signature("twoParamBiCop"), fitCopula.twoParamBiCop)
+

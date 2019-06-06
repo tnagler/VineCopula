@@ -18,11 +18,26 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Selection and Maximum Likelihood Estimation of Bivariate Copula Families — BiCopSelect" />
+
+<meta property="og:description" content="This function selects an appropriate bivariate copula family for given
+bivariate copula data using one of a range of methods. The corresponding
+parameter estimates are obtained by maximum likelihood estimation." />
+<meta name="twitter:card" content="summary" />
+
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,15 +61,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">VineCopula</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">VineCopula</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.8</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -66,6 +91,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -73,23 +99,27 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Selection and Maximum Likelihood Estimation of Bivariate Copula Families</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/BiCopSelect.R'><code>R/BiCopSelect.R</code></a></small>
+    <div class="hidden name"><code>BiCopSelect.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function selects an appropriate bivariate copula family for given
 bivariate copula data using one of a range of methods. The corresponding
 parameter estimates are obtained by maximum likelihood estimation.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>BiCopSelect</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='kw'>familyset</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>selectioncrit</span> <span class='kw'>=</span> <span class='st'>"AIC"</span>,
   <span class='kw'>indeptest</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>rotations</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>presel</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mle"</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -104,47 +134,47 @@ family that allows for positive and one that allows for negative dependence.
 If <code>familyset = NA</code> (default), selection among all possible families is
 performed. If a vector of negative numbers is provided, selection among all
 but <code>abs(familyset)</code> families is performed. Coding of bivariate copula
-families: 
-<code>0</code> = independence copula 
-<code>1</code> = Gaussian copula 
-<code>2</code> = Student t copula (t-copula) 
-<code>3</code> = Clayton copula 
-<code>4</code> = Gumbel copula 
-<code>5</code> = Frank copula 
-<code>6</code> = Joe copula 
-<code>7</code> = BB1 copula 
-<code>8</code> = BB6 copula 
-<code>9</code> = BB7 copula 
-<code>10</code> = BB8 copula 
-<code>13</code> = rotated Clayton copula (180 degrees; ``survival Clayton'') 
-<code>14</code> = rotated Gumbel copula (180 degrees; ``survival Gumbel'') 
-<code>16</code> = rotated Joe copula (180 degrees; ``survival Joe'') 
-<code>17</code> = rotated BB1 copula (180 degrees; ``survival BB1'')
-<code>18</code> = rotated BB6 copula (180 degrees; ``survival BB6'')
-<code>19</code> = rotated BB7 copula (180 degrees; ``survival BB7'')
-<code>20</code> = rotated BB8 copula (180 degrees; ``survival BB8'')
-<code>23</code> = rotated Clayton copula (90 degrees) 
-<code>24</code> = rotated Gumbel copula (90 degrees) 
-<code>26</code> = rotated Joe copula (90 degrees) 
-<code>27</code> = rotated BB1 copula (90 degrees) 
-<code>28</code> = rotated BB6 copula (90 degrees) 
-<code>29</code> = rotated BB7 copula (90 degrees) 
-<code>30</code> = rotated BB8 copula (90 degrees) 
-<code>33</code> = rotated Clayton copula (270 degrees) 
-<code>34</code> = rotated Gumbel copula (270 degrees) 
-<code>36</code> = rotated Joe copula (270 degrees) 
-<code>37</code> = rotated BB1 copula (270 degrees) 
-<code>38</code> = rotated BB6 copula (270 degrees) 
-<code>39</code> = rotated BB7 copula (270 degrees) 
-<code>40</code> = rotated BB8 copula (270 degrees) 
-<code>104</code> = Tawn type 1 copula 
-<code>114</code> = rotated Tawn type 1 copula (180 degrees) 
-<code>124</code> = rotated Tawn type 1 copula (90 degrees) 
-<code>134</code> = rotated Tawn type 1 copula (270 degrees) 
-<code>204</code> = Tawn type 2 copula 
-<code>214</code> = rotated Tawn type 2 copula (180 degrees) 
-<code>224</code> = rotated Tawn type 2 copula (90 degrees) 
-<code>234</code> = rotated Tawn type 2 copula (270 degrees)</p></td>
+families: <br />
+<code>0</code> = independence copula <br />
+<code>1</code> = Gaussian copula <br />
+<code>2</code> = Student t copula (t-copula) <br />
+<code>3</code> = Clayton copula <br />
+<code>4</code> = Gumbel copula <br />
+<code>5</code> = Frank copula <br />
+<code>6</code> = Joe copula <br />
+<code>7</code> = BB1 copula <br />
+<code>8</code> = BB6 copula <br />
+<code>9</code> = BB7 copula <br />
+<code>10</code> = BB8 copula <br />
+<code>13</code> = rotated Clayton copula (180 degrees; ``survival Clayton'') <br />
+<code>14</code> = rotated Gumbel copula (180 degrees; ``survival Gumbel'') <br />
+<code>16</code> = rotated Joe copula (180 degrees; ``survival Joe'') <br />
+<code>17</code> = rotated BB1 copula (180 degrees; ``survival BB1'')<br />
+<code>18</code> = rotated BB6 copula (180 degrees; ``survival BB6'')<br />
+<code>19</code> = rotated BB7 copula (180 degrees; ``survival BB7'')<br />
+<code>20</code> = rotated BB8 copula (180 degrees; ``survival BB8'')<br />
+<code>23</code> = rotated Clayton copula (90 degrees) <br />
+<code>24</code> = rotated Gumbel copula (90 degrees) <br />
+<code>26</code> = rotated Joe copula (90 degrees) <br />
+<code>27</code> = rotated BB1 copula (90 degrees) <br />
+<code>28</code> = rotated BB6 copula (90 degrees) <br />
+<code>29</code> = rotated BB7 copula (90 degrees) <br />
+<code>30</code> = rotated BB8 copula (90 degrees) <br />
+<code>33</code> = rotated Clayton copula (270 degrees) <br />
+<code>34</code> = rotated Gumbel copula (270 degrees) <br />
+<code>36</code> = rotated Joe copula (270 degrees) <br />
+<code>37</code> = rotated BB1 copula (270 degrees) <br />
+<code>38</code> = rotated BB6 copula (270 degrees) <br />
+<code>39</code> = rotated BB7 copula (270 degrees) <br />
+<code>40</code> = rotated BB8 copula (270 degrees) <br />
+<code>104</code> = Tawn type 1 copula <br />
+<code>114</code> = rotated Tawn type 1 copula (180 degrees) <br />
+<code>124</code> = rotated Tawn type 1 copula (90 degrees) <br />
+<code>134</code> = rotated Tawn type 1 copula (270 degrees) <br />
+<code>204</code> = Tawn type 2 copula <br />
+<code>214</code> = rotated Tawn type 2 copula (180 degrees) <br />
+<code>224</code> = rotated Tawn type 2 copula (90 degrees) <br />
+<code>234</code> = rotated Tawn type 2 copula (270 degrees) <br /></p></td>
     </tr>
     <tr>
       <th>selectioncrit</th>
@@ -172,7 +202,7 @@ be rejected.</p></td>
     <tr>
       <th>rotations</th>
       <td><p>If <code>TRUE</code>, all rotations of the families in
-<code>familyset</code> are included (or substracted).</p></td>
+<code>familyset</code> are included (or subtracted).</p></td>
     </tr>
     <tr>
       <th>se</th>
@@ -244,8 +274,8 @@ maximum likelihood principle. In B. N. Petrov and F. Csaki (Eds.),
 Proceedings of the Second International Symposium on Information Theory
 Budapest, Akademiai Kiado, pp. 267-281.</p>
 <p>Brechmann, E. C. (2010). Truncated and simplified regular vines and their
-applications. Diploma thesis, Technische Universitaet Muenchen.
-<a href = 'http://mediatum.ub.tum.de/?id=1079285'>http://mediatum.ub.tum.de/?id=1079285</a>.</p>
+applications. Diploma thesis, Technische Universitaet Muenchen.<br />
+<a href='http://mediatum.ub.tum.de/?id=1079285'>http://mediatum.ub.tum.de/?id=1079285</a>.</p>
 <p>Manner, H. (2007). Estimation and model selection of copulas with an
 application to exchange rates. METEOR research memorandum 07/056, Maastricht
 University.</p>
@@ -254,11 +284,11 @@ Statistics 6 (2), 461-464.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='BiCop.html'>BiCop</a></code>,
+    <div class='dont-index'><p><code><a href='BiCop.html'>BiCop</a></code>,
 <code><a href='BiCopEst.html'>BiCopEst</a></code>,
 <code><a href='RVineStructureSelect.html'>RVineStructureSelect</a></code>,
 <code><a href='RVineCopSelect.html'>RVineCopSelect</a></code>,
-<code><a href='BiCopIndTest.html'>BiCopIndTest</a></code>,</p>
+<code><a href='BiCopIndTest.html'>BiCopIndTest</a></code>,</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -269,43 +299,43 @@ Statistics 6 (2), 461-464.</p>
 <span class='co'># select the bivariate copula family and estimate the parameter(s)</span>
 <span class='no'>cop1</span> <span class='kw'>&lt;-</span> <span class='fu'>BiCopSelect</span>(<span class='no'>dat1</span>[, <span class='fl'>1</span>], <span class='no'>dat1</span>[, <span class='fl'>2</span>], <span class='kw'>familyset</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fl'>10</span>,
                     <span class='kw'>indeptest</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)
-<span class='no'>cop1</span>  <span class='co'># short overview</span></div><div class='output co'>#&gt; Bivariate copula: Gaussian (par = 0.74, tau = 0.53) </div><div class='input'><span class='fu'>summary</span>(<span class='no'>cop1</span>)  <span class='co'># comprehensive overview</span></div><div class='output co'>#&gt; Family
+<span class='no'>cop1</span>  <span class='co'># short overview</span></div><div class='output co'>#&gt; Bivariate copula: Gaussian (par = 0.68, tau = 0.47) </div><div class='input'><span class='fu'>summary</span>(<span class='no'>cop1</span>)  <span class='co'># comprehensive overview</span></div><div class='output co'>#&gt; Family
 #&gt; ------ 
 #&gt; No:    1
 #&gt; Name:  Gaussian
 #&gt; 
 #&gt; Parameter(s)
 #&gt; ------------
-#&gt; par:  0.74
+#&gt; par:  0.68
 #&gt; 
 #&gt; Dependence measures
 #&gt; -------------------
-#&gt; Kendall's tau:    0.53 (empirical = 0.53, p value &lt; 0.01)
+#&gt; Kendall's tau:    0.47 (empirical = 0.46, p value &lt; 0.01)
 #&gt; Upper TD:         0 
 #&gt; Lower TD:         0 
 #&gt; 
 #&gt; Fit statistics
 #&gt; --------------
-#&gt; logLik:  207.13 
-#&gt; AIC:    -412.27 
-#&gt; BIC:    -408.05 
+#&gt; logLik:  140.06 
+#&gt; AIC:    -278.11 
+#&gt; BIC:    -273.9 
 #&gt; </div><div class='input'><span class='fu'>str</span>(<span class='no'>cop1</span>)  <span class='co'># see all contents of the object</span></div><div class='output co'>#&gt; List of 15
 #&gt;  $ family           : num 1
-#&gt;  $ par              : num 0.737
+#&gt;  $ par              : num 0.675
 #&gt;  $ par2             : num 0
 #&gt;  $ npars            : num 1
 #&gt;  $ familyname       : chr "Gaussian"
-#&gt;  $ tau              : num 0.528
-#&gt;  $ beta             : num 0.528
+#&gt;  $ tau              : num 0.472
+#&gt;  $ beta             : num 0.472
 #&gt;  $ taildep          :List of 2
 #&gt;   ..$ lower: num 0
 #&gt;   ..$ upper: num 0
 #&gt;  $ call             : language BiCopSelect(u1 = dat1[, 1], u2 = dat1[, 2], familyset = 1:10, indeptest = FALSE,      level = 0.05)
 #&gt;  $ nobs             : int 500
-#&gt;  $ logLik           : num 207
-#&gt;  $ AIC              : num -412
-#&gt;  $ BIC              : num -408
-#&gt;  $ emptau           : num 0.533
+#&gt;  $ logLik           : num 140
+#&gt;  $ AIC              : num -278
+#&gt;  $ BIC              : num -274
+#&gt;  $ emptau           : num 0.461
 #&gt;  $ p.value.indeptest: num 0
 #&gt;  - attr(*, "class")= chr "BiCop"</div><div class='input'>
 <span class='co'>## Example 2: Gaussian copula with small dependence parameter</span>
@@ -317,24 +347,24 @@ Statistics 6 (2), 461-464.</p>
                     <span class='kw'>indeptest</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>0.05</span>)
 <span class='fu'>summary</span>(<span class='no'>cop2</span>)</div><div class='output co'>#&gt; Family
 #&gt; ------ 
-#&gt; No:    0
-#&gt; Name:  Independence
+#&gt; No:    5
+#&gt; Name:  Frank
 #&gt; 
 #&gt; Parameter(s)
 #&gt; ------------
-#&gt; par:  0
+#&gt; par:  -0.58
 #&gt; 
 #&gt; Dependence measures
 #&gt; -------------------
-#&gt; Kendall's tau:    0 (empirical = -0.06, p value = 0.06)
+#&gt; Kendall's tau:    -0.06 (empirical = -0.07, p value = 0.02)
 #&gt; Upper TD:         0 
 #&gt; Lower TD:         0 
 #&gt; 
 #&gt; Fit statistics
 #&gt; --------------
-#&gt; logLik:  0 
-#&gt; AIC:    0 
-#&gt; BIC:    0 
+#&gt; logLik:  2.51 
+#&gt; AIC:    -3.02 
+#&gt; BIC:    1.19 
 #&gt; </div><div class='input'>
 <span class='co'>## Example 3: empirical data</span>
 <span class='fu'>data</span>(<span class='no'>daxreturns</span>)
@@ -393,11 +423,14 @@ Eike Brechmann, Jeffrey Dissmann, Thomas Nagler
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

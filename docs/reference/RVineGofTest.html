@@ -18,11 +18,26 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Goodness-of-Fit Tests for R-Vine Copula Models — RVineGofTest" />
+
+<meta property="og:description" content="This function performs a goodness-of-fit test for R-vine copula models.
+There are 15 different goodness-of-fit tests implemented, described in
+Schepsmeier (2013)." />
+<meta name="twitter:card" content="summary" />
+
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,15 +61,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">VineCopula</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">VineCopula</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.8</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -66,6 +91,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -73,22 +99,26 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Goodness-of-Fit Tests for R-Vine Copula Models</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/RVineGofTest3.R'><code>R/RVineGofTest3.R</code></a></small>
+    <div class="hidden name"><code>RVineGofTest.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function performs a goodness-of-fit test for R-vine copula models.
 There are 15 different goodness-of-fit tests implemented, described in
 Schepsmeier (2013).</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>RVineGofTest</span>(<span class='no'>data</span>, <span class='no'>RVM</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"White"</span>, <span class='kw'>statistic</span> <span class='kw'>=</span> <span class='st'>"CvM"</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>200</span>,
   <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>2</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -98,66 +128,66 @@ Schepsmeier (2013).</p>
     <tr>
       <th>RVM</th>
       <td><p><code><a href='RVineMatrix.html'>RVineMatrix</a></code> objects of the R-vine model under the
-null hypothesis. 
+null hypothesis. <br />
 Only the following copula families are allowed in
 <code>RVM$family</code> due to restrictions in <code><a href='RVineGrad.html'>RVineGrad</a></code> and
-<code><a href='RVineHessian.html'>RVineHessian</a></code> 
-<code>0</code> = independence copula 
-<code>1</code> = Gaussian copula 
-<code>2</code> = Student t copula (t-copula)
-<code>3</code> = Clayton copula 
-<code>4</code> = Gumbel copula 
-<code>5</code> = Frank copula 
-<code>6</code> = Joe copula 
-<code>13</code> = rotated Clayton copula (180 degrees; ``survival Clayton'') 
-<code>14</code> = rotated Gumbel copula (180 degrees; ``survival Gumbel'') 
-<code>16</code> = rotated Joe copula (180 degrees; ``survival Joe'') 
-<code>23</code> = rotated Clayton copula (90 degrees) 
-<code>24</code> = rotated Gumbel copula (90 degrees) 
-<code>26</code> = rotated Joe copula (90 degrees) 
-<code>33</code> = rotated Clayton copula (270 degrees) 
-<code>34</code> = rotated Gumbel copula (270 degrees) 
-<code>36</code> = rotated Joe copula (270 degrees)</p></td>
+<code><a href='RVineHessian.html'>RVineHessian</a></code> <br />
+<code>0</code> = independence copula <br />
+<code>1</code> = Gaussian copula <br />
+<code>2</code> = Student t copula (t-copula)<br />
+<code>3</code> = Clayton copula <br />
+<code>4</code> = Gumbel copula <br />
+<code>5</code> = Frank copula <br />
+<code>6</code> = Joe copula <br />
+<code>13</code> = rotated Clayton copula (180 degrees; ``survival Clayton'') <br />
+<code>14</code> = rotated Gumbel copula (180 degrees; ``survival Gumbel'') <br />
+<code>16</code> = rotated Joe copula (180 degrees; ``survival Joe'') <br />
+<code>23</code> = rotated Clayton copula (90 degrees) <br />
+<code>24</code> = rotated Gumbel copula (90 degrees) <br />
+<code>26</code> = rotated Joe copula (90 degrees) <br />
+<code>33</code> = rotated Clayton copula (270 degrees) <br />
+<code>34</code> = rotated Gumbel copula (270 degrees) <br />
+<code>36</code> = rotated Joe copula (270 degrees) <br /></p></td>
     </tr>
     <tr>
       <th>method</th>
-      <td><p>A string indicating the goodness-of-fit method:
+      <td><p>A string indicating the goodness-of-fit method:<br />
 <code>"White"</code> = goodness-of-fit test based on White's information matrix
-equality (default) 
+equality (default) <br />
 <code>"IR"</code> = goodness-of-fit test based on the
-information ratio 
+information ratio <br />
 <code>"Breymann"</code> = goodness-of-fit test based on the
 probability integral transform (PIT) and the aggregation to univariate data
-by Breymann et al. (2003). 
+by Breymann et al. (2003). <br />
 <code>"Berg"</code> = goodness-of-fit test based on
 the probability integral transform (PIT) and the aggregation to univariate
-data by Berg and Bakken (2007). 
+data by Berg and Bakken (2007). <br />
 <code>"Berg2"</code> = second goodness-of-fit
 test based on the probability integral transform (PIT) and the aggregation
-to univariate data by Berg and Bakken (2007). 
+to univariate data by Berg and Bakken (2007). <br />
 <code>"ECP"</code> =
-goodness-of-fit test based on the empirical copula process (ECP) 
+goodness-of-fit test based on the empirical copula process (ECP) <br />
 <code>"ECP2"</code> = goodness-of-fit test based on the combination of probability
 integral transform (PIT) and empirical copula process (ECP) (Genest et al.
-2009)</p></td>
+2009) <br /></p></td>
     </tr>
     <tr>
       <th>statistic</th>
       <td><p>A string indicating the goodness-of-fit test statistic
-type: <code>"CvM"</code> = Cramer-von Mises test statistic (univariate for
+type:<br /> <code>"CvM"</code> = Cramer-von Mises test statistic (univariate for
 <code>"Breymann"</code>, <code>"Berg"</code> and <code>"Berg2"</code>, multivariate for
-<code>"ECP"</code> and <code>"ECP2"</code>)  <code>"KS"</code> = Kolmogorov-Smirnov test
+<code>"ECP"</code> and <code>"ECP2"</code>) <br /> <code>"KS"</code> = Kolmogorov-Smirnov test
 statistic (univariate for <code>"Breymann"</code>, <code>"Berg"</code> and
-<code>"Berg2"</code>, multivariate for <code>"ECP"</code> and <code>"ECP2"</code>) 
+<code>"Berg2"</code>, multivariate for <code>"ECP"</code> and <code>"ECP2"</code>) <br />
 <code>"AD"</code> = Anderson-Darling test statistic (only univariate for
 <code>"Breymann"</code>, <code>"Berg"</code> and <code>"Berg2"</code>)</p></td>
     </tr>
     <tr>
       <th>B</th>
       <td><p>an integer for the number of bootstrap steps (default <code>B =
-200</code>)
+200</code>)<br />
 For <code>B = 0</code> the asymptotic p-value is returned if available,
-otherwise only the test statistic is returned.
+otherwise only the test statistic is returned.<br />
 WARNING: If <code>B</code> is chosen too large, computations will take very long.</p></td>
     </tr>
     <tr>
@@ -186,7 +216,7 @@ the choice of <code>statistic</code></p></dd>
 <dt>p.value</dt><dd><p>p-value, either asymptotic
 for <code>B = 0</code> or bootstrapped for <code>B &gt; 0</code>.  A asymptotic p-value is
 only available for the Anderson-Darling test statistic if the R-package
-<code>ADGofTest</code> is loaded. 
+<code>ADGofTest</code> is loaded. <br />
 Furthermore, a asymptotic p-value can be
 calculated for the Kolmogorov-Smirnov test statistic. For the Cramer-von
 Mises no asymptotic p-value is available so far.</p></dd>
@@ -201,12 +231,12 @@ algorithm as suggested in Schepsmeier (2013) to get bootstrapped p-values.
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>method = "White"</code>: 
+    <p><code>method = "White"</code>: <br />
 This goodness-of fit test uses the information
 matrix equality of White (1982) and was original investigated by Huang and
-Prokhorov (2011) for copulas. 
+Prokhorov (2011) for copulas. <br />
 Schepsmeier (2012) enhanced their approach
-to the vine copula case. 
+to the vine copula case. <br />
 The main contribution is that under correct
 model specification the Fisher Information can be equivalently calculated as
 minus the expected Hessian matrix or as the expected outer product of the
@@ -219,23 +249,23 @@ $$ H_1: \boldsymbol{H}(\theta) +
 where
 \(\boldsymbol{H}(\theta)\) is the expected Hessian matrix and
 \(\boldsymbol{C}(\theta)\) is the expected outer product of the
-score function. 
+score function. <br />
 For the calculation of the test statistic we use the
 consistent maximum likelihood estimator \(\hat{\theta}\) and the sample
 counter parts of \(\boldsymbol{H}(\theta)\) and
-\(\boldsymbol{C}(\theta)\). 
+\(\boldsymbol{C}(\theta)\). <br />
 The correction of the
 Covariance-Matrix in the test statistic for the uncertainty in the margins
 is skipped. The implemented test assumes that there is no uncertainty in the
 margins. The correction can be found in Huang and Prokhorov (2011) for
 bivariate copulas and in Schepsmeier (2013) for vine copulas. It involves
-multi-dimensional integrals.
-    <code>method = "IR"</code>: 
+multi-dimensional integrals. <br /></p>
+<p><code>method = "IR"</code>: <br />
 As the White test the information matrix ratio
 test is based on the expected Hessian matrix
 \(\boldsymbol{H}(\theta)\)
 and the expected outer product of
-the score function \(\boldsymbol{C}(\theta)\). 
+the score function \(\boldsymbol{C}(\theta)\). <br />
 $$ H_0:-\boldsymbol{H}(\theta)^{-1}\boldsymbol{C}(\theta) = I_{p} $$
 against the alternative
 $$ H_1:
@@ -244,10 +274,10 @@ The test statistic can then be calculated as
 $$ IR_n:=tr(\Phi(\theta))/p $$ with
 \(\Phi(\theta)=-\boldsymbol{H}(\theta)^{-1}\boldsymbol{C}(\theta)\),
 \(p\) is the number of parameters, i.e. the length of \(\theta\), and
-\(tr(A)\) is the trace of the matrix \(A\) 
-For details see Schepsmeier (2013)
-    <code>method = "Breymann"</code>, <code>method = "Berg"</code> and <code>method =
-"Berg2"</code>: 
+\(tr(A)\) is the trace of the matrix \(A\) <br />
+For details see Schepsmeier (2013) <br /></p>
+<p><code>method = "Breymann"</code>, <code>method = "Berg"</code> and <code>method =
+"Berg2"</code>: <br />
 These tests are based on the multivariate probability integral
 transform (PIT) applied in <code><a href='RVinePIT.html'>RVinePIT</a></code>. The multivariate data
 \(y_{i}\) returned form the PIT are aggregated to univariate data by
@@ -258,10 +288,10 @@ In Breymann et al. (2003) the weight function is suggested as
 Berg and Bakken (2007) the weight function is either
 \(\Gamma(\cdot)=|\cdot-0.5|\) (<code>method="Berg"</code>) or
 \(\Gamma(\cdot)=(\cdot-0.5)^{\alpha},\alpha=2,4,6,...\)
-(<code>method="Berg2"</code>).  Furthermore, the <code>"Berg"</code> and
+(<code>method="Berg2"</code>). <br /> Furthermore, the <code>"Berg"</code> and
 <code>"Berg2"</code> test are based on the order statistics of the PIT returns.
- See Berg and Bakken (2007) or Schepsmeier (2013) for details.
-    <code>method = "ECP"</code> and <code>method = "ECP2"</code>: 
+<br /> See Berg and Bakken (2007) or Schepsmeier (2013) for details. <br /></p>
+<p><code>method = "ECP"</code> and <code>method = "ECP2"</code>: <br />
 Both tests are test
 for \(H_0: C \in C_0\) against \(H_1: C \notin C_0\) where C denotes the
 (vine) copula distribution function and \(C_0\) is a class of parametric
@@ -285,17 +315,17 @@ is considered. This approach is called ECP2. Again we refer to Schepsmeier
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Berg, D. and H. Bakken (2007) A copula goodness-of-fit apprach
+    <p>Berg, D. and H. Bakken (2007) A copula goodness-of-fit approach
 based on the conditional probability integral transformation.
-<a href = 'http://www.danielberg.no/publications/Btest.pdf'>http://www.danielberg.no/publications/Btest.pdf</a></p>
+<a href='http://www.danielberg.no/publications/Btest.pdf'>http://www.danielberg.no/publications/Btest.pdf</a></p>
 <p>Breymann, W., A. Dias and P. Embrechts (2003) Dependence structures for
-multivariate high-frequence data in finance. Quantitative Finance 3, 1-14</p>
+multivariate high-frequency data in finance. Quantitative Finance 3, 1-14</p>
 <p>Genest, C., B. Remillard, and D. Beaudoin (2009) Goodness-of-fit tests for
 copulas: a review and power study.  Insur. Math. Econ. 44, 199-213.</p>
 <p>Huang, w. and A. Prokhorov (2011). A goodness-of-fit test for copulas. to
 appear in Econometric Reviews</p>
 <p>Schepsmeier, U. (2013) A goodness-of-fit test for regular vine copula
-models.  Preprint <a href = 'http://arxiv.org/abs/1306.0818'>http://arxiv.org/abs/1306.0818</a></p>
+models.  Preprint <a href='http://arxiv.org/abs/1306.0818'>http://arxiv.org/abs/1306.0818</a></p>
 <p>Schepsmeier, U. (2015) Efficient information based goodness-of-fit tests for
 vine copula models with fixed margins. Journal of Multivariate Analysis 138,
 34-52.</p>
@@ -304,7 +334,7 @@ Econometrica, 50, 1-26.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='BiCopGofTest.html'>BiCopGofTest</a></code>, <code><a href='RVinePIT.html'>RVinePIT</a></code></p>
+    <div class='dont-index'><p><code><a href='BiCopGofTest.html'>BiCopGofTest</a></code>, <code><a href='RVinePIT.html'>RVinePIT</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -318,10 +348,10 @@ Econometrica, 50, 1-26.</p>
 
 <span class='co'># White test with asymptotic p-value</span>
 <span class='fu'>RVineGofTest</span>(<span class='no'>daxreturns</span>[,<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='no'>RVM</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; $White
-#&gt; [1] 120.4123
+#&gt; [1] 120.5853
 #&gt; 
 #&gt; $p.value
-#&gt; [1] 0.1443348
+#&gt; [1] 0.1418736
 #&gt; </div><div class='input'>
 <span class='co'># ECP2 test with Cramer-von-Mises test statistic and a bootstrap</span>
 <span class='co'># with 200 replications for the calculation of the p-value</span>
@@ -332,7 +362,6 @@ Econometrica, 50, 1-26.</p>
 #&gt; $p.value
 #&gt; [1] 0.69
 #&gt; </div><div class='input'>
-
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -364,11 +393,14 @@ Ulf Schepsmeier
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

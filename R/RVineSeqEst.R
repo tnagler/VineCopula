@@ -28,8 +28,8 @@
 #' \code{max.BB = list(BB1=c(5,6),BB6=c(6,6),BB7=c(5,6),BB8=c(6,1))}).
 #' @param progress Logical; whether the pairwise estimation progress is printed
 #' (default: \code{progress = FALSE}).
-#' @param weights Numerical; weights for each observation (opitional).
-#' @param cores integer; if \code{cores > 1}, estimation will be parallized
+#' @param weights Numerical; weights for each observation (optional).
+#' @param cores integer; if \code{cores > 1}, estimation will be parallelized
 #' within each tree (using \code{\link[foreach]{foreach}}). However, the
 #' overhead caused by parallelization is likely to make the function run slower
 #' unless sample size is really large and \code{method = "itau"}.
@@ -286,7 +286,7 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
     }
     .RVM$nobs <- N
     revo <- sapply(1:d, function(i) which(o[length(o):1] == i))
-    like <- suppressWarnings(RVineLogLik(data[, revo], .RVM, calculate.V = FALSE))
+    like <- suppressWarnings(RVineLogLik(data[, revo], .RVM, calculate.V = TRUE))
     .RVM$logLik <- like$loglik
     .RVM$pair.logLik <- logLiks
     npar <- sum(.RVM$family %in% allfams[onepar], na.rm = TRUE) +

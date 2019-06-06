@@ -3,14 +3,14 @@
 \name{contour.RVineMatrix}
 \alias{contour.RVineMatrix}
 \alias{plot.RVineMatrix}
-\alias{contour.RVineMatrix}
 \title{Plotting \code{RVineMatrix} objects.}
 \usage{
-\method{contour}{RVineMatrix}(x, tree = "ALL", xylim = NULL, cex.nums = 1,
-  data = NULL, ...)
+\method{contour}{RVineMatrix}(x, tree = "ALL", xylim = NULL,
+  cex.nums = 1, data = NULL, ...)
 
-\method{plot}{RVineMatrix}(x, tree = "ALL", type = 0, edge.labels = NULL,
-  legend.pos = "bottomleft", interactive = FALSE, ...)
+\method{plot}{RVineMatrix}(x, tree = "ALL", type = 0,
+  edge.labels = NULL, legend.pos = "bottomleft", interactive = FALSE,
+  ...)
 }
 \arguments{
 \item{x}{\code{RVineMatrix} object.}
@@ -50,7 +50,7 @@ positioning of vertices with his mouse.}
 \description{
 There are two plotting generics for \code{RVineMatrix} objects.
 \code{plot.RVineMatrix} plots one or all trees of a given R-vine copula
-model. Edges can be labeld with information about the corresponding
+model. Edges can be labeled with information about the corresponding
 pair-copula. \code{contour.RVineMatrix} produces a matrix of contour plots
 (using \code{\link[VineCopula:plot.BiCop]{plot.BiCop}}).
 }

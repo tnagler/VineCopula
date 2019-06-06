@@ -37,4 +37,5 @@ Temporary Items
 README.html
 *.dll
 revdep
+.RData
 .directory

@@ -2,7 +2,7 @@
 % Please edit documentation in R/RVineMatrixSample.R
 \name{RVineMatrixSample}
 \alias{RVineMatrixSample}
-\title{Randomv sampling of R-Vine matices}
+\title{Random sampling of R-Vine matrices}
 \usage{
 RVineMatrixSample(d, size = 1, naturalOrder = FALSE)
 }
@@ -22,7 +22,7 @@ R-Vine matrix.
 Sample R-Vine matrices based on the algorithm of Joe et al. (2011).
 }
 \note{
-For some reason, our implementaion of Joe et al.'s algorithm always
+For some reason, our implementation of Joe et al.'s algorithm always
 returns a star in the first tree. To fix this, we sample a vine matrix of
 dimension d + 1 and remove the first tree afterwards
 }

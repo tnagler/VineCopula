@@ -54,7 +54,7 @@
 #' \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
 #' \code{234} = rotated Tawn type 2 copula (270 degrees) \cr
 #' @param rotations If \code{TRUE}, all rotations of the families in
-#' \code{familyset} are included (or substracted).
+#' \code{familyset} are included (or subtracted).
 #'
 #' @return A \code{\link{BiCop}} object containing the model selected by the
 #' user.

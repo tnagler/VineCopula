@@ -4,15 +4,16 @@
 \alias{BiCopHfunc}
 \alias{BiCopHfunc1}
 \alias{BiCopHfunc2}
-\alias{BiCopHfunc1}
-\alias{BiCopHfunc2}
 \title{Conditional Distribution Function of a Bivariate Copula}
 \usage{
-BiCopHfunc(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE)
+BiCopHfunc(u1, u2, family, par, par2 = 0, obj = NULL,
+  check.pars = TRUE)
 
-BiCopHfunc1(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE)
+BiCopHfunc1(u1, u2, family, par, par2 = 0, obj = NULL,
+  check.pars = TRUE)
 
-BiCopHfunc2(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE)
+BiCopHfunc2(u1, u2, family, par, par2 = 0, obj = NULL,
+  check.pars = TRUE)
 }
 \arguments{
 \item{u1, u2}{numeric vectors of equal length with values in [0,1].}
@@ -72,7 +73,7 @@ should be an positive integer for the Students's t copula \code{family = 2}.}
 specification.}
 
 \item{check.pars}{logical; default is \code{TRUE}; if \code{FALSE}, checks
-for family/parameter-consistency are ommited (should only be used with
+for family/parameter-consistency are omitted (should only be used with
 care).}
 }
 \value{

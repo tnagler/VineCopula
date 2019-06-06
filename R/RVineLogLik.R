@@ -46,7 +46,7 @@
 #' @param verbose In case something goes wrong, additional output will be
 #' plotted.
 #' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
-#' for family/parameter-consistency are ommited (should only be used with
+#' for family/parameter-consistency are omitted (should only be used with
 #' care).
 #' @param calculate.V logical; whether V matrices should be calculated. Default
 #' is \code{TRUE}, but requires a lot of memory when dimension is large.

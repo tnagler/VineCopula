@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Visualisation of R-Vine Tree Structure — RVineTreePlot • VineCopula</title>
+<title>Visualization of R-Vine Tree Structure — RVineTreePlot • VineCopula</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -18,11 +18,25 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Visualization of R-Vine Tree Structure — RVineTreePlot" />
+
+<meta property="og:description" content="Function is deprecated since VineCopula 2.0. Use
+plot.RVineMatrix instead." />
+<meta name="twitter:card" content="summary" />
+
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,15 +60,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">VineCopula</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">VineCopula</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.8</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -66,6 +90,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -73,21 +98,25 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Visualisation of R-Vine Tree Structure</h1>
+    <h1>Visualization of R-Vine Tree Structure</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/RVineTreePlot.R'><code>R/RVineTreePlot.R</code></a></small>
+    <div class="hidden name"><code>RVineTreePlot.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Function is deprecated since <code>VineCopula 2.0</code>. Use
 <code><a href='plot.RVineMatrix.html'>plot.RVineMatrix</a></code> instead.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>RVineTreePlot</span>(<span class='no'>x</span>, <span class='kw'>tree</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>edge.labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>legend.pos</span> <span class='kw'>=</span> <span class='st'>"bottomleft"</span>, <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -101,19 +130,19 @@ plotted.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>integer; specifies how to make use of variable names: 
-<code>0</code> = variable names are ignored,  <code>1</code> = variable names are
-used to annotate vertices,  <code>2</code> = uses numbers in plot and adds a
+      <td><p>integer; specifies how to make use of variable names: <br />
+<code>0</code> = variable names are ignored, <br /> <code>1</code> = variable names are
+used to annotate vertices, <br /> <code>2</code> = uses numbers in plot and adds a
 legend for variable names.</p></td>
     </tr>
     <tr>
       <th>edge.labels</th>
       <td><p>character; either a vector of edge labels or one of the
-following:  <code>"family"</code> = pair-copula family abbreviation (see
-<code><a href='BiCopName.html'>BiCopName</a></code>),  <code>"par"</code> =
-pair-copula parameters,  <code>"tau"</code> = pair-copula Kendall's tau (by
-conversion of parameters)  <code>"family-par"</code> = pair-copula family and
-parameters  <code>"family-tau"</code> = pair-copula family and Kendall's tau.</p></td>
+following: <br /> <code>"family"</code> = pair-copula family abbreviation (see
+<code><a href='BiCopName.html'>BiCopName</a></code>), <br /> <code>"par"</code> =
+pair-copula parameters, <br /> <code>"tau"</code> = pair-copula Kendall's tau (by
+conversion of parameters) <br /> <code>"family-par"</code> = pair-copula family and
+parameters <br /> <code>"family-tau"</code> = pair-copula family and Kendall's tau.</p></td>
     </tr>
     <tr>
       <th>legend.pos</th>
@@ -134,7 +163,7 @@ positioning of vertices with his mouse.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='plot.RVineMatrix.html'>plot.RVineMatrix</a></code></p>
+    <div class='dont-index'><p><code><a href='plot.RVineMatrix.html'>plot.RVineMatrix</a></code></p></div>
     
 
   </div>
@@ -159,11 +188,14 @@ Thomas Nagler
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

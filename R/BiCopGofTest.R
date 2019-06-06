@@ -23,7 +23,7 @@
 #' uncertainty in the margins is skipped. The implemented tests assumes that
 #' where is no uncertainty in the margins. The correction can be found in Huang
 #' and Prokhorov (2011). It involves two-dimensional integrals.\cr WARNING: For
-#' the t-copula the test may be instable. The results for the t-copula
+#' the t-copula the test may be unstable. The results for the t-copula
 #' therefore have to be treated carefully.\cr \cr \code{method = "kendall"}:\cr
 #' This copula goodness-of-fit test is based on Kendall's process as
 #' proposed by Wang and Wells (2000). For computation of p-values, the
@@ -956,5 +956,3 @@ Consider an independence test first."))
 
     return(testStat)
 }
-
-

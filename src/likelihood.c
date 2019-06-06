@@ -10,11 +10,11 @@
  **
  */
 
-#include "vine.h"
-#include "memoryhandling.h"
-#include "tools.h"
-#include "likelihood.h"
-#include "evCopula.h"
+#include "VineCopula/vine.h"
+#include "VineCopula/memoryhandling.h"
+#include "VineCopula/tools.h"
+#include "VineCopula/likelihood.h"
+#include "VineCopula/evCopula.h"
 #include <math.h>
 
 #define UMAX  1-1e-10

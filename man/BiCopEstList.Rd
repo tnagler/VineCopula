@@ -4,7 +4,8 @@
 \alias{BiCopEstList}
 \title{List of Maximum Likelihood Estimates for Several Bivariate Copula Families}
 \usage{
-BiCopEstList(u1, u2, familyset = NA, weights = NA, rotations = TRUE, ...)
+BiCopEstList(u1, u2, familyset = NA, weights = NA, rotations = TRUE,
+  ...)
 }
 \arguments{
 \item{u1, u2}{Data vectors of equal length with values in [0,1].}
@@ -65,13 +66,13 @@ performed.  Coding of bivariate copula families: \cr
 \value{
 A list containing
 \item{models}{a list of \code{\link{BiCop}} objects corresponding to the
-familyset (only families corresponding to the sign of the empirical
+`familyset`` (only families corresponding to the sign of the empirical
 Kendall's tau are used),}
 \item{summary}{a data frame containing the log-likelihoods, AICs, and BICs
 of all the fitted models.}
 }
 \description{
-This function allows to compare bivariate copula models accross a number of
+This function allows to compare bivariate copula models across a number of
 families w.r.t. the fit statistics log-likelihood, AIC, and BIC. For each
 family, the parameters are estimated by maximum likelihood.
 }

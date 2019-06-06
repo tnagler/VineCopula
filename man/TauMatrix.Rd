@@ -9,7 +9,7 @@ TauMatrix(data, weights = NA)
 \arguments{
 \item{data}{An N x d data matrix.}
 
-\item{weights}{Numerical; weights for each observation (opitional).}
+\item{weights}{Numerical; weights for each observation (optional).}
 }
 \value{
 Matrix of the empirical Kendall's taus.

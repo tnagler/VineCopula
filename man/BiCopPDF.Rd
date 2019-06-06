@@ -4,7 +4,8 @@
 \alias{BiCopPDF}
 \title{Density of a Bivariate Copula}
 \usage{
-BiCopPDF(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE)
+BiCopPDF(u1, u2, family, par, par2 = 0, obj = NULL,
+  check.pars = TRUE)
 }
 \arguments{
 \item{u1, u2}{numeric vectors of equal length with values in [0,1].}
@@ -64,7 +65,7 @@ should be an positive integer for the Students's t copula \code{family = 2}.}
 specification.}
 
 \item{check.pars}{logical; default is \code{TRUE}; if \code{FALSE}, checks
-for family/parameter-consistency are ommited (should only be used with
+for family/parameter-consistency are omitted (should only be used with
 care).}
 }
 \value{

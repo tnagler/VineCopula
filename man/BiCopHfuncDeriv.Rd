@@ -4,14 +4,14 @@
 \alias{BiCopHfuncDeriv}
 \title{Derivatives of the h-Function of a Bivariate Copula}
 \usage{
-BiCopHfuncDeriv(u1, u2, family, par, par2 = 0, deriv = "par", obj = NULL,
-  check.pars = TRUE)
+BiCopHfuncDeriv(u1, u2, family, par, par2 = 0, deriv = "par",
+  obj = NULL, check.pars = TRUE)
 }
 \arguments{
 \item{u1, u2}{numeric vectors of equal length with values in [0,1].}
 
 \item{family}{integer; single number or vector of size \code{length(u1)};
-defines the bivariate copula family: \\cr
+defines the bivariate copula family: \ \cr
 \code{0} = independence copula \cr
 \code{1} = Gaussian copula \cr
 \code{2} = Student t copula (t-copula) \cr
@@ -46,7 +46,7 @@ positive integer for the Students's t copula \code{family = 2}.}
 specification.}
 
 \item{check.pars}{logical; default is \code{TRUE}; if \code{FALSE}, checks
-for family/parameter-consistency are ommited (should only be used with
+for family/parameter-consistency are omitted (should only be used with
 care).}
 }
 \value{

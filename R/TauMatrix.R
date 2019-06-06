@@ -10,7 +10,7 @@
 #'
 #'
 #' @param data An N x d data matrix.
-#' @param weights Numerical; weights for each observation (opitional).
+#' @param weights Numerical; weights for each observation (optional).
 #' @return Matrix of the empirical Kendall's taus.
 #' @author Ulf Schepsmeier
 #' @seealso \code{\link{BiCopTau2Par}}, \code{\link{BiCopPar2Tau}},

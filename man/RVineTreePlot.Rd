@@ -2,7 +2,7 @@
 % Please edit documentation in R/RVineTreePlot.R
 \name{RVineTreePlot}
 \alias{RVineTreePlot}
-\title{Visualisation of R-Vine Tree Structure}
+\title{Visualization of R-Vine Tree Structure}
 \usage{
 RVineTreePlot(x, tree = "ALL", type = 0, edge.labels = NULL,
   legend.pos = "bottomleft", interactive = FALSE, ...)

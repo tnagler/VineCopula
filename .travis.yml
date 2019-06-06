@@ -9,16 +9,9 @@ warnings_are_errors: false
 sudo: required
 
 apt_packages:
-  - libgsl0-dbg
-  - libgsl0-dev
-  - libgsl0ldbl
+  - libgsl-dev
   - libcurl4-openssl-dev
   - libxml2-dev
-  - r-cran-foreach
-  - r-cran-copula
-  - r-cran-cdvine
-  - r-cran-shiny
-  - r-cran-tsp
 
 before_install:
   - sudo add-apt-repository ppa:marutter/c2d4u -y

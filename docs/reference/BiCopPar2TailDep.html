@@ -18,11 +18,25 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Tail Dependence Coefficients of a Bivariate Copula — BiCopPar2TailDep" />
+
+<meta property="og:description" content="This function computes the theoretical tail dependence coefficients of a
+bivariate copula for given parameter values." />
+<meta name="twitter:card" content="summary" />
+
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,15 +60,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">VineCopula</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">VineCopula</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.8</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -66,6 +90,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -73,66 +98,71 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Tail Dependence Coefficients of a Bivariate Copula</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/BiCopPar2TailDep.R'><code>R/BiCopPar2TailDep.R</code></a></small>
+    <div class="hidden name"><code>BiCopPar2TailDep.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function computes the theoretical tail dependence coefficients of a
 bivariate copula for given parameter values.</p>
     
+    </div>
 
-    <pre class="usage"><span class='fu'>BiCopPar2TailDep</span>(<span class='no'>family</span>, <span class='no'>par</span>, <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>check.pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>BiCopPar2TailDep</span>(<span class='no'>family</span>, <span class='no'>par</span>, <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>check.pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>family</th>
       <td><p>integer; single number or vector of size <code>n</code>; defines the
-bivariate copula family: 
-<code>0</code> = independence copula 
-<code>1</code> = Gaussian copula 
-<code>2</code> = Student t copula (t-copula) 
-<code>3</code> = Clayton copula 
-<code>4</code> = Gumbel copula 
-<code>5</code> = Frank copula 
-<code>6</code> = Joe copula 
-<code>7</code> = BB1 copula 
-<code>8</code> = BB6 copula 
-<code>9</code> = BB7 copula 
-<code>10</code> = BB8 copula 
-<code>13</code> = rotated Clayton copula (180 degrees; ``survival Clayton'') 
-<code>14</code> = rotated Gumbel copula (180 degrees; ``survival Gumbel'') 
-<code>16</code> = rotated Joe copula (180 degrees; ``survival Joe'') 
-<code>17</code> = rotated BB1 copula (180 degrees; ``survival BB1'')
-<code>18</code> = rotated BB6 copula (180 degrees; ``survival BB6'')
-<code>19</code> = rotated BB7 copula (180 degrees; ``survival BB7'')
-<code>20</code> = rotated BB8 copula (180 degrees; ``survival BB8'')
-<code>23</code> = rotated Clayton copula (90 degrees) 
-<code>24</code> = rotated Gumbel copula (90 degrees) 
-<code>26</code> = rotated Joe copula (90 degrees) 
-<code>27</code> = rotated BB1 copula (90 degrees) 
-<code>28</code> = rotated BB6 copula (90 degrees) 
-<code>29</code> = rotated BB7 copula (90 degrees) 
-<code>30</code> = rotated BB8 copula (90 degrees) 
-<code>33</code> = rotated Clayton copula (270 degrees) 
-<code>34</code> = rotated Gumbel copula (270 degrees) 
-<code>36</code> = rotated Joe copula (270 degrees) 
-<code>37</code> = rotated BB1 copula (270 degrees) 
-<code>38</code> = rotated BB6 copula (270 degrees) 
-<code>39</code> = rotated BB7 copula (270 degrees) 
-<code>40</code> = rotated BB8 copula (270 degrees) 
-<code>104</code> = Tawn type 1 copula 
-<code>114</code> = rotated Tawn type 1 copula (180 degrees) 
-<code>124</code> = rotated Tawn type 1 copula (90 degrees) 
-<code>134</code> = rotated Tawn type 1 copula (270 degrees) 
-<code>204</code> = Tawn type 2 copula 
-<code>214</code> = rotated Tawn type 2 copula (180 degrees) 
-<code>224</code> = rotated Tawn type 2 copula (90 degrees) 
-<code>234</code> = rotated Tawn type 2 copula (270 degrees)</p></td>
+bivariate copula family: <br />
+<code>0</code> = independence copula <br />
+<code>1</code> = Gaussian copula <br />
+<code>2</code> = Student t copula (t-copula) <br />
+<code>3</code> = Clayton copula <br />
+<code>4</code> = Gumbel copula <br />
+<code>5</code> = Frank copula <br />
+<code>6</code> = Joe copula <br />
+<code>7</code> = BB1 copula <br />
+<code>8</code> = BB6 copula <br />
+<code>9</code> = BB7 copula <br />
+<code>10</code> = BB8 copula <br />
+<code>13</code> = rotated Clayton copula (180 degrees; ``survival Clayton'') <br />
+<code>14</code> = rotated Gumbel copula (180 degrees; ``survival Gumbel'') <br />
+<code>16</code> = rotated Joe copula (180 degrees; ``survival Joe'') <br />
+<code>17</code> = rotated BB1 copula (180 degrees; ``survival BB1'')<br />
+<code>18</code> = rotated BB6 copula (180 degrees; ``survival BB6'')<br />
+<code>19</code> = rotated BB7 copula (180 degrees; ``survival BB7'')<br />
+<code>20</code> = rotated BB8 copula (180 degrees; ``survival BB8'')<br />
+<code>23</code> = rotated Clayton copula (90 degrees) <br />
+<code>24</code> = rotated Gumbel copula (90 degrees) <br />
+<code>26</code> = rotated Joe copula (90 degrees) <br />
+<code>27</code> = rotated BB1 copula (90 degrees) <br />
+<code>28</code> = rotated BB6 copula (90 degrees) <br />
+<code>29</code> = rotated BB7 copula (90 degrees) <br />
+<code>30</code> = rotated BB8 copula (90 degrees) <br />
+<code>33</code> = rotated Clayton copula (270 degrees) <br />
+<code>34</code> = rotated Gumbel copula (270 degrees) <br />
+<code>36</code> = rotated Joe copula (270 degrees) <br />
+<code>37</code> = rotated BB1 copula (270 degrees) <br />
+<code>38</code> = rotated BB6 copula (270 degrees) <br />
+<code>39</code> = rotated BB7 copula (270 degrees) <br />
+<code>40</code> = rotated BB8 copula (270 degrees) <br />
+<code>104</code> = Tawn type 1 copula <br />
+<code>114</code> = rotated Tawn type 1 copula (180 degrees) <br />
+<code>124</code> = rotated Tawn type 1 copula (90 degrees) <br />
+<code>134</code> = rotated Tawn type 1 copula (270 degrees) <br />
+<code>204</code> = Tawn type 2 copula <br />
+<code>214</code> = rotated Tawn type 2 copula (180 degrees) <br />
+<code>224</code> = rotated Tawn type 2 copula (90 degrees) <br />
+<code>234</code> = rotated Tawn type 2 copula (270 degrees) <br /></p></td>
     </tr>
     <tr>
       <th>par</th>
@@ -153,7 +183,7 @@ specification.</p></td>
     <tr>
       <th>check.pars</th>
       <td><p>logical; default is <code>TRUE</code>; if <code>FALSE</code>, checks
-for family/parameter-consistency are ommited (should only be used with
+for family/parameter-consistency are omitted (should only be used with
 care).</p></td>
     </tr>
     </table>
@@ -173,43 +203,43 @@ and parameters (\theta for one parameter families and the first
 parameter of the t-copula with \nu degrees of freedom,
 \theta and \delta for the two parameter BB1, BB6, BB7 and BB8 copulas)
 are given in the following table.
-lll No.  Lower tail dependence  Upper tail dependence 
-<code>1</code>  -  - 
+lll No.  Lower tail dependence  Upper tail dependence <br />
+<code>1</code>  -  - <br />
 <code>2</code> 
 \(2t_{\nu+1}\left(-\sqrt{\nu+1}\sqrt{\frac{1-\theta}{1+\theta}}\right)\)
 
-\(2t_{\nu+1}\left(-\sqrt{\nu+1}\sqrt{\frac{1-\theta}{1+\theta}}\right)\) 
-<code>3</code>  \(2^{-1/\theta}\)  - 
-<code>4</code>  -  \(2-2^{1/\theta}\) 
-<code>5</code>  -  - 
-<code>6</code>  -  \(2-2^{1/\theta}\) 
-<code>7</code>  \(2^{-1/(\theta\delta)}\)  \(2-2^{1/\delta}\) 
-<code>8</code>  -  \(2-2^{1/(\theta\delta)}\) 
-<code>9</code>  \(2^{-1/\delta}\)  \(2-2^{1/\theta}\) 
-<code>10</code>  -  \(2-2^{1/\theta}\) if \(\delta=1\) otherwise 0 
-<code>13</code>  -  \(2^{-1/\theta}\) 
-<code>14</code>  \(2-2^{1/\theta}\)  - 
-<code>16</code>  \(2-2^{1/\theta}\)  - 
-<code>17</code>  \(2-2^{1/\delta}\)  \(2^{-1/(\theta\delta)}\) 
-<code>18</code>  \(2-2^{1/(\theta\delta)}\)  - 
-<code>19</code>  \(2-2^{1/\theta}\)  \(2^{-1/\delta}\) 
-<code>20</code>  \(2-2^{1/\theta}\) if \(\delta=1\) otherwise 0  - 
-<code>23, 33</code>  -  -  <code>24, 34</code>  -  - 
-<code>26, 36</code>  -  - 
-<code>27, 37</code>  -  - 
-<code>28, 38</code>  -  - 
-<code>29, 39</code>  -  - 
-<code>30, 40</code>  -  - 
-<code>104,204</code>  -  \(\delta+1-(\delta^{\theta}+1)^{1/\theta}\) 
-<code>114, 214</code>  \(1+\delta-(\delta^{\theta}+1)^{1/\theta}\)  - 
-<code>124, 224</code>  -  - 
-<code>134, 234</code>  -  -  
+\(2t_{\nu+1}\left(-\sqrt{\nu+1}\sqrt{\frac{1-\theta}{1+\theta}}\right)\) <br />
+<code>3</code>  \(2^{-1/\theta}\)  - <br />
+<code>4</code>  -  \(2-2^{1/\theta}\) <br />
+<code>5</code>  -  - <br />
+<code>6</code>  -  \(2-2^{1/\theta}\) <br />
+<code>7</code>  \(2^{-1/(\theta\delta)}\)  \(2-2^{1/\delta}\) <br />
+<code>8</code>  -  \(2-2^{1/(\theta\delta)}\) <br />
+<code>9</code>  \(2^{-1/\delta}\)  \(2-2^{1/\theta}\) <br />
+<code>10</code>  -  \(2-2^{1/\theta}\) if \(\delta=1\) otherwise 0 <br />
+<code>13</code>  -  \(2^{-1/\theta}\) <br />
+<code>14</code>  \(2-2^{1/\theta}\)  - <br />
+<code>16</code>  \(2-2^{1/\theta}\)  - <br />
+<code>17</code>  \(2-2^{1/\delta}\)  \(2^{-1/(\theta\delta)}\) <br />
+<code>18</code>  \(2-2^{1/(\theta\delta)}\)  - <br />
+<code>19</code>  \(2-2^{1/\theta}\)  \(2^{-1/\delta}\) <br />
+<code>20</code>  \(2-2^{1/\theta}\) if \(\delta=1\) otherwise 0  - <br />
+<code>23, 33</code>  -  - <br /> <code>24, 34</code>  -  - <br />
+<code>26, 36</code>  -  - <br />
+<code>27, 37</code>  -  - <br />
+<code>28, 38</code>  -  - <br />
+<code>29, 39</code>  -  - <br />
+<code>30, 40</code>  -  - <br />
+<code>104,204</code>  -  \(\delta+1-(\delta^{\theta}+1)^{1/\theta}\) <br />
+<code>114, 214</code>  \(1+\delta-(\delta^{\theta}+1)^{1/\theta}\)  - <br />
+<code>124, 224</code>  -  - <br />
+<code>134, 234</code>  -  - <br /> 
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If the family and parameter specification is stored in a <code>BiCop</code> object
-<code>obj</code>, the alternative version</p><pre>BiCopPar2TailDep(obj)</pre><p>can be used.</p>
+<code>obj</code>, the alternative version <br /></p><pre>BiCopPar2TailDep(obj)</pre><p>can be used.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -223,7 +253,7 @@ Chapman and Hall, London.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='BiCopPar2Tau.html'>BiCopPar2Tau</a></code></p>
+    <div class='dont-index'><p><code><a href='BiCopPar2Tau.html'>BiCopPar2Tau</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -286,11 +316,14 @@ Eike Brechmann
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

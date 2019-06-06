@@ -4,11 +4,11 @@
 // by Ulf Schepsmeier (2012)					//
 //////////////////////////////////////////////////
 
-#include "vine.h"
-#include "memoryhandling.h"
-#include "likelihood.h"
-#include "pit.h"
-#include "hfunc.h"
+#include "VineCopula/vine.h"
+#include "VineCopula/memoryhandling.h"
+#include "VineCopula/likelihood.h"
+#include "VineCopula/pit.h"
+#include "VineCopula/hfunc.h"
 
 #define UMAX  1-1e-10
 

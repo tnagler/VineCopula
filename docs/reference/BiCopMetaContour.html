@@ -18,11 +18,26 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Contour Plot of Bivariate Meta Distribution — BiCopMetaContour" />
+
+<meta property="og:description" content="Note: This function is deprecated and only available for backwards
+compatibility. See contour.BiCop for contour plots of
+parametric copulas, and BiCopKDE for kernel estimates." />
+<meta name="twitter:card" content="summary" />
+
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,15 +61,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">VineCopula</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">VineCopula</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.8</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -66,6 +91,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -73,24 +99,28 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Contour Plot of Bivariate Meta Distribution</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/BiCopMetaContour.R'><code>R/BiCopMetaContour.R</code></a></small>
+    <div class="hidden name"><code>BiCopMetaContour.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Note: This function is deprecated and only available for backwards
 compatibility. See <code><a href='plot.BiCop.html'>contour.BiCop</a></code> for contour plots of
 parametric copulas, and <code><a href='BiCopKDE.html'>BiCopKDE</a></code> for kernel estimates.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>BiCopMetaContour</span>(<span class='kw'>u1</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>u2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bw</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>100</span>,
   <span class='kw'>levels</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.01</span>, <span class='fl'>0.05</span>, <span class='fl'>0.1</span>, <span class='fl'>0.15</span>, <span class='fl'>0.2</span>), <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"emp"</span>, <span class='kw'>par</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>PLOT</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>margins</span> <span class='kw'>=</span> <span class='st'>"norm"</span>, <span class='kw'>margins.par</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>xylim</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -111,56 +141,56 @@ parametric copulas, and <code><a href='BiCopKDE.html'>BiCopKDE</a></code> for ke
       <td><p>Vector of contour levels. For Gaussian, Student-t or
 exponential margins the default value (<code>levels = c(0.01, 0.05, 0.1,
 0.15, 0.2)</code>) typically is a good choice. For uniform margins we
-recommend <code>levels = c(0.1, 0.3, 0.5, 0.7, 0.9, 1.1, 1.3, 1.5)</code>
-and for Gamma margins <code>levels = c(0.005, 0.01, 0.03, 0.05, 0.07,
+recommend<br /> <code>levels = c(0.1, 0.3, 0.5, 0.7, 0.9, 1.1, 1.3, 1.5)</code><br />
+and for Gamma margins<br /> <code>levels = c(0.005, 0.01, 0.03, 0.05, 0.07,
 0.09)</code>.</p></td>
     </tr>
     <tr>
       <th>family</th>
       <td><p>An integer defining the bivariate copula family or indicating
-an empirical contour plot: 
+an empirical contour plot: <br />
 <code>"emp"</code> = empirical contour plot
-(default; margins can be specified by <code>margins</code>) 
-<code>0</code> = independence copula 
-<code>1</code> = Gaussian copula 
-<code>2</code> = Student t copula (t-copula) 
-<code>3</code> = Clayton copula 
-<code>4</code> = Gumbel copula 
-<code>5</code> = Frank copula 
-<code>6</code> = Joe copula 
-<code>7</code> = BB1 copula 
-<code>8</code> = BB6 copula 
-<code>9</code> = BB7 copula 
-<code>10</code> = BB8 copula 
-<code>13</code> = rotated Clayton copula (180 degrees; ``survival Clayton'') 
-<code>14</code> = rotated Gumbel copula (180 degrees; ``survival Gumbel'') 
-<code>16</code> = rotated Joe copula (180 degrees; ``survival Joe'') 
-<code>17</code> = rotated BB1 copula (180 degrees; ``survival BB1'')
-<code>18</code> = rotated BB6 copula (180 degrees; ``survival BB6'')
-<code>19</code> = rotated BB7 copula (180 degrees; ``survival BB7'')
-<code>20</code> = rotated BB8 copula (180 degrees; ``survival BB8'')
-<code>23</code> = rotated Clayton copula (90 degrees) 
-<code>24</code> = rotated Gumbel copula (90 degrees) 
-<code>26</code> = rotated Joe copula (90 degrees) 
-<code>27</code> = rotated BB1 copula (90 degrees) 
-<code>28</code> = rotated BB6 copula (90 degrees) 
-<code>29</code> = rotated BB7 copula (90 degrees) 
-<code>30</code> = rotated BB8 copula (90 degrees) 
-<code>33</code> = rotated Clayton copula (270 degrees) 
-<code>34</code> = rotated Gumbel copula (270 degrees) 
-<code>36</code> = rotated Joe copula (270 degrees) 
-<code>37</code> = rotated BB1 copula (270 degrees) 
-<code>38</code> = rotated BB6 copula (270 degrees) 
-<code>39</code> = rotated BB7 copula (270 degrees) 
-<code>40</code> = rotated BB8 copula (270 degrees) 
-<code>104</code> = Tawn type 1 copula 
-<code>114</code> = rotated Tawn type 1 copula (180 degrees) 
-<code>124</code> = rotated Tawn type 1 copula (90 degrees) 
-<code>134</code> = rotated Tawn type 1 copula (270 degrees) 
-<code>204</code> = Tawn type 2 copula 
-<code>214</code> = rotated Tawn type 2 copula (180 degrees) 
-<code>224</code> = rotated Tawn type 2 copula (90 degrees) 
-<code>234</code> = rotated Tawn type 2 copula (270 degrees)</p></td>
+(default; margins can be specified by <code>margins</code>) <br />
+<code>0</code> = independence copula <br />
+<code>1</code> = Gaussian copula <br />
+<code>2</code> = Student t copula (t-copula) <br />
+<code>3</code> = Clayton copula <br />
+<code>4</code> = Gumbel copula <br />
+<code>5</code> = Frank copula <br />
+<code>6</code> = Joe copula <br />
+<code>7</code> = BB1 copula <br />
+<code>8</code> = BB6 copula <br />
+<code>9</code> = BB7 copula <br />
+<code>10</code> = BB8 copula <br />
+<code>13</code> = rotated Clayton copula (180 degrees; ``survival Clayton'') <br />
+<code>14</code> = rotated Gumbel copula (180 degrees; ``survival Gumbel'') <br />
+<code>16</code> = rotated Joe copula (180 degrees; ``survival Joe'') <br />
+<code>17</code> = rotated BB1 copula (180 degrees; ``survival BB1'')<br />
+<code>18</code> = rotated BB6 copula (180 degrees; ``survival BB6'')<br />
+<code>19</code> = rotated BB7 copula (180 degrees; ``survival BB7'')<br />
+<code>20</code> = rotated BB8 copula (180 degrees; ``survival BB8'')<br />
+<code>23</code> = rotated Clayton copula (90 degrees) <br />
+<code>24</code> = rotated Gumbel copula (90 degrees) <br />
+<code>26</code> = rotated Joe copula (90 degrees) <br />
+<code>27</code> = rotated BB1 copula (90 degrees) <br />
+<code>28</code> = rotated BB6 copula (90 degrees) <br />
+<code>29</code> = rotated BB7 copula (90 degrees) <br />
+<code>30</code> = rotated BB8 copula (90 degrees) <br />
+<code>33</code> = rotated Clayton copula (270 degrees) <br />
+<code>34</code> = rotated Gumbel copula (270 degrees) <br />
+<code>36</code> = rotated Joe copula (270 degrees) <br />
+<code>37</code> = rotated BB1 copula (270 degrees) <br />
+<code>38</code> = rotated BB6 copula (270 degrees) <br />
+<code>39</code> = rotated BB7 copula (270 degrees) <br />
+<code>40</code> = rotated BB8 copula (270 degrees) <br />
+<code>104</code> = Tawn type 1 copula <br />
+<code>114</code> = rotated Tawn type 1 copula (180 degrees) <br />
+<code>124</code> = rotated Tawn type 1 copula (90 degrees) <br />
+<code>134</code> = rotated Tawn type 1 copula (270 degrees) <br />
+<code>204</code> = Tawn type 2 copula <br />
+<code>214</code> = rotated Tawn type 2 copula (180 degrees) <br />
+<code>224</code> = rotated Tawn type 2 copula (90 degrees) <br />
+<code>234</code> = rotated Tawn type 2 copula (270 degrees) <br /></p></td>
     </tr>
     <tr>
       <th>par</th>
@@ -181,14 +211,14 @@ default: <code>PLOT = TRUE</code>).</p></td>
     <tr>
       <th>margins</th>
       <td><p>Character; margins for the bivariate copula contour plot.
-Possible margins are:
-<code>"norm"</code> = standard normal margins (default)
+Possible margins are:<br />
+<code>"norm"</code> = standard normal margins (default)<br />
 <code>"t"</code> = Student t margins with degrees of freedom as
-specified by <code>margins.par</code>
+specified by <code>margins.par</code><br />
 <code>"gamma"</code> = Gamma margins with shape and scale as
-specified by <code>margins.par</code>
+specified by <code>margins.par</code><br />
 <code>"exp"</code> = Exponential margins with rate as
-specified by <code>margins.par</code>
+specified by <code>margins.par</code><br />
 <code>"unif"</code> = uniform margins</p></td>
     </tr>
     <tr>
@@ -245,31 +275,31 @@ grid points given by <code>x</code> and <code>y</code>.</p></dd>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='BiCopChiPlot.html'>BiCopChiPlot</a></code>, <code><a href='BiCopKPlot.html'>BiCopKPlot</a></code>,
-<code><a href='BiCopLambda.html'>BiCopLambda</a></code></p>
+    <div class='dont-index'><p><code><a href='BiCopChiPlot.html'>BiCopChiPlot</a></code>, <code><a href='BiCopKPlot.html'>BiCopKPlot</a></code>,
+<code><a href='BiCopLambda.html'>BiCopLambda</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## meta Clayton distribution  with Gaussian margins</span>
 <span class='no'>cop</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCop.html'>BiCop</a></span>(<span class='kw'>family</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>tau</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)
 <span class='fu'>BiCopMetaContour</span>(<span class='kw'>obj</span> <span class='kw'>=</span> <span class='no'>cop</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Clayton - normal margins"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: This function is deprecated. See ?contour.BiCop for contour plots of parametric copulas</span>
-#&gt; <span class='warning'>  and ?BiCopKDE for kernel estimates.</span></div><img src='BiCopMetaContour-3.png' alt='' width='540' height='400' /><div class='input'><span class='co'># better:</span>
-<span class='fu'>contour</span>(<span class='no'>cop</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Clayton - normal margins"</span>)</div><img src='BiCopMetaContour-5.png' alt='' width='540' height='400' /><div class='input'>
+#&gt; <span class='warning'>  and ?BiCopKDE for kernel estimates.</span></div><div class='img'><img src='BiCopMetaContour-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># better:</span>
+<span class='fu'>contour</span>(<span class='no'>cop</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"Clayton - normal margins"</span>)</div><div class='img'><img src='BiCopMetaContour-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## empirical contour plot with standard normal margins</span>
 <span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span>(<span class='fl'>1000</span>, <span class='no'>cop</span>)
 <span class='fu'>BiCopMetaContour</span>(<span class='no'>dat</span>[, <span class='fl'>1</span>], <span class='no'>dat</span>[, <span class='fl'>2</span>], <span class='kw'>bw</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"emp"</span>,
                  <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"empirical - normal margins"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: This function is deprecated. See ?contour.BiCop for contour plots of parametric copulas</span>
-#&gt; <span class='warning'>  and ?BiCopKDE for kernel estimates.</span></div><img src='BiCopMetaContour-8.png' alt='' width='540' height='400' /><div class='input'><span class='co'># better:</span>
+#&gt; <span class='warning'>  and ?BiCopKDE for kernel estimates.</span></div><div class='img'><img src='BiCopMetaContour-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># better:</span>
 <span class='fu'><a href='BiCopKDE.html'>BiCopKDE</a></span>(<span class='no'>dat</span>[, <span class='fl'>1</span>], <span class='no'>dat</span>[, <span class='fl'>2</span>],
-        <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"empirical - normal margins"</span>)</div><img src='BiCopMetaContour-10.png' alt='' width='540' height='400' /><div class='input'>
+        <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"empirical - normal margins"</span>)</div><div class='img'><img src='BiCopMetaContour-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>## empirical contour plot with exponential margins</span>
 <span class='fu'>BiCopMetaContour</span>(<span class='no'>dat</span>[, <span class='fl'>1</span>], <span class='no'>dat</span>[, <span class='fl'>2</span>], <span class='kw'>bw</span> <span class='kw'>=</span> <span class='fl'>2</span>,
                  <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"empirical - exponential margins"</span>,
                  <span class='kw'>margins</span> <span class='kw'>=</span> <span class='st'>"exp"</span>, <span class='kw'>margins.par</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: This function is deprecated. See ?contour.BiCop for contour plots of parametric copulas</span>
-#&gt; <span class='warning'>  and ?BiCopKDE for kernel estimates.</span></div><img src='BiCopMetaContour-13.png' alt='' width='540' height='400' /><div class='input'><span class='co'># better:</span>
+#&gt; <span class='warning'>  and ?BiCopKDE for kernel estimates.</span></div><div class='img'><img src='BiCopMetaContour-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># better:</span>
 <span class='fu'><a href='BiCopKDE.html'>BiCopKDE</a></span>(<span class='no'>dat</span>[, <span class='fl'>1</span>], <span class='no'>dat</span>[, <span class='fl'>2</span>],
          <span class='kw'>main</span> <span class='kw'>=</span> <span class='st'>"empirical - exponential margins"</span>,
-         <span class='kw'>margins</span> <span class='kw'>=</span> <span class='st'>"exp"</span>)</div><img src='BiCopMetaContour-15.png' alt='' width='540' height='400' /><div class='input'>
+         <span class='kw'>margins</span> <span class='kw'>=</span> <span class='st'>"exp"</span>)</div><div class='img'><img src='BiCopMetaContour-6.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -299,11 +329,14 @@ Ulf Schepsmeier, Alexander Bauer
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

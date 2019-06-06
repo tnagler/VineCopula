@@ -3,7 +3,6 @@
 \name{RVineCor2pcor}
 \alias{RVineCor2pcor}
 \alias{RVinePcor2cor}
-\alias{RVinePcor2cor}
 \title{(Partial) Correlations for R-Vine Copula Models}
 \usage{
 RVineCor2pcor(RVM, corMat)
@@ -30,7 +29,7 @@ The behavior of \code{RVinePcor2ccor} differs from older versions (<=
 1.4). The RVM object is now normalized such that the order of the returned
 correlation matrix conforms with the correlation matrix of the data. If
 \code{RVM$names} are non-default, the initial ordering of the variables
-cannot be traced back and the matrix has to be interpreted as inidicated by
+cannot be traced back and the matrix has to be interpreted as indicated by
 the row- and column names.
 }
 \examples{

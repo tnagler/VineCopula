@@ -18,11 +18,28 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Statistical Inference of Vine Copulas — VineCopula-package" />
+
+<meta property="og:description" content="Provides tools for the statistical analysis of vine copula models.
+    The package includes tools for parameter estimation, model selection,
+    simulation, goodness-of-fit tests, and visualization. Tools for estimation,
+    selection and exploratory data analysis of bivariate copula models are also
+    provided." />
+<meta name="twitter:card" content="summary" />
+
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,15 +63,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">VineCopula</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">VineCopula</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.8</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -66,6 +93,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -73,13 +101,27 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Statistical Inference of Vine Copulas</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/VineCopula-package.R'><code>R/VineCopula-package.R</code></a></small>
+    <div class="hidden name"><code>VineCopula-package.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
+    <p>Provides tools for the statistical analysis of vine copula models.
+    The package includes tools for parameter estimation, model selection,
+    simulation, goodness-of-fit tests, and visualization. Tools for estimation,
+    selection and exploratory data analysis of bivariate copula models are also
+    provided.</p>
+    
+    </div>
+
+        
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
     <p>Vine copulas are a flexible class of dependence models consisting of
 bivariate building blocks (see e.g., Aas et al., 2009). This package is
 primarily made for the statistical analysis of vine copula
@@ -87,38 +129,8 @@ models. The package includes tools for parameter estimation, model selection,
 simulation, goodness-of-fit tests, and visualization. Tools for estimation,
 selection and exploratory data analysis of bivariate copula models are
 also provided.</p>
-    
-
-        
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <table><tr><td>
-Package: </td>
-</tr><tr><td> VineCopula</td>
-</tr><tr><td>
-Type: </td>
-</tr><tr><td> Package</td>
-</tr><tr><td>
-Version: </td>
-</tr><tr><td> 2.0.6 </td>
-</tr><tr><td>
-Date: </td>
-</tr><tr><td> 2016-09-29</td>
-</tr><tr><td>
-License: </td>
-</tr><tr><td> GPL (&gt;=2)</td>
-</tr><tr><td>
-Depends: </td>
-</tr><tr><td> R (\(\geq 2.11.0\))</td>
-</tr><tr><td>
-Imports: </td>
-</tr><tr><td> graphics, grDevices,
-stats, utils, MASS, mvtnorm, network, methods, copula (&gt;= 0.999-15),
-kdecopula (&gt;= 0.6.0), ADGofTest, lattice, doParallel, parallel, foreach </td>
-</tr><tr><td>
-Suggests: </td>
-</tr><tr><td> CDVine, TSP, shiny</td>
-</tr></table>
+<p>The DESCRIPTION file:
+This package was not yet installed at build time.<br /></p>
     
     <h2 class="hasAnchor" id="remark"><a class="anchor" href="#remark"></a>Remark</h2>
 
@@ -145,7 +157,7 @@ vine copulas: An analysis of the Euro Stoxx 50. Statistics &amp; Risk Modeling,
 30 (4), 307-342.</p>
 <p>Brechmann, E. C. and U. Schepsmeier (2013). Modeling Dependence with C- and
 D-Vine Copulas: The R Package CDVine. Journal of Statistical Software, 52
-(3), 1-27. <a href = 'http://www.jstatsoft.org/v52/i03/'>http://www.jstatsoft.org/v52/i03/</a>.</p>
+(3), 1-27. <a href='http://www.jstatsoft.org/v52/i03/'>http://www.jstatsoft.org/v52/i03/</a>.</p>
 <p>Czado, C., U. Schepsmeier, and A. Min (2012). Maximum likelihood estimation
 of mixed C-vines with application to exchange rates. Statistical Modelling,
 12(3), 229-255.</p>
@@ -154,7 +166,7 @@ Selecting and estimating regular vine copulae and application to financial
 returns. Computational Statistics &amp; Data Analysis, 59 (1), 52-69.</p>
 <p>Eschenburg, P. (2013). Properties of extreme-value copulas Diploma thesis,
 Technische Universitaet Muenchen
-<a href = 'http://mediatum.ub.tum.de/node?id=1145695'>http://mediatum.ub.tum.de/node?id=1145695</a></p>
+<a href='http://mediatum.ub.tum.de/node?id=1145695'>http://mediatum.ub.tum.de/node?id=1145695</a></p>
 <p>Joe, H. (1996). Families of m-variate distributions with given margins and
 m(m-1)/2 bivariate dependence parameters. In L. Rueschendorf, B. Schweizer,
 and M. D. Taylor (Eds.), Distributions with fixed marginals and related
@@ -170,16 +182,16 @@ Dimensional Dependence Modelling. Chichester: John Wiley.</p>
 Handbook. Singapore: World Scientific Publishing Co.</p>
 <p>Nelsen, R. (2006).  An introduction to copulas.  Springer</p>
 <p>Schepsmeier, U. and J. Stoeber (2014). Derivatives and Fisher information of
-bivariate copulas. Statistical Papers, 55 (2), 525-542. 
-<a href = 'http://link.springer.com/article/10.1007/s00362-013-0498-x'>http://link.springer.com/article/10.1007/s00362-013-0498-x</a>.</p>
+bivariate copulas. Statistical Papers, 55 (2), 525-542. <br />
+<a href='http://link.springer.com/article/10.1007/s00362-013-0498-x'>http://link.springer.com/article/10.1007/s00362-013-0498-x</a>.</p>
 <p>Schepsmeier, U. (2013) A goodness-of-fit test for regular vine copula
-models.  Preprint <a href = 'http://arxiv.org/abs/1306.0818'>http://arxiv.org/abs/1306.0818</a></p>
+models.  Preprint <a href='http://arxiv.org/abs/1306.0818'>http://arxiv.org/abs/1306.0818</a></p>
 <p>Schepsmeier, U. (2015) Efficient information based goodness-of-fit tests for
 vine copula models with fixed margins. Journal of Multivariate Analysis 138,
 34-52.</p>
 <p>Stoeber, J. and U. Schepsmeier (2013). Estimating standard errors in regular
-vine copula models. Computational Statistics, 28 (6), 2679-2707 
-<a href = 'http://link.springer.com/article/10.1007/s00180-013-0423-8#'>http://link.springer.com/article/10.1007/s00180-013-0423-8#</a>.</p>
+vine copula models. Computational Statistics, 28 (6), 2679-2707 <br />
+<a href='http://link.springer.com/article/10.1007/s00180-013-0423-8#'>http://link.springer.com/article/10.1007/s00180-013-0423-8#</a>.</p>
 <p>White, H. (1982) Maximum likelihood estimation of misspecified models,
 Econometrica, 50, 1-26.</p>
     
@@ -196,11 +208,6 @@ Econometrica, 50, 1-26.</p>
       <li><a href="#references">References</a></li>
           </ul>
 
-    <h2>Author</h2>
-    
-Ulf Schepsmeier, Jakob Stoeber, Eike Christian Brechmann, Benedikt
-Graeler, Thomas Nagler, Tobias Erhardt
-
   </div>
 </div>
 
@@ -210,11 +217,14 @@ Graeler, Thomas Nagler, Tobias Erhardt
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

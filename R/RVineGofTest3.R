@@ -183,12 +183,12 @@
 #'
 #' @seealso \code{\link{BiCopGofTest}}, \code{\link{RVinePIT}}
 #'
-#' @references Berg, D. and H. Bakken (2007) A copula goodness-of-fit apprach
+#' @references Berg, D. and H. Bakken (2007) A copula goodness-of-fit approach
 #' based on the conditional probability integral transformation.
 #' \url{http://www.danielberg.no/publications/Btest.pdf}
 #'
 #' Breymann, W., A. Dias and P. Embrechts (2003) Dependence structures for
-#' multivariate high-frequence data in finance. Quantitative Finance 3, 1-14
+#' multivariate high-frequency data in finance. Quantitative Finance 3, 1-14
 #'
 #' Genest, C., B. Remillard, and D. Beaudoin (2009) Goodness-of-fit tests for
 #' copulas: a review and power study.  Insur. Math. Econ. 44, 199-213.

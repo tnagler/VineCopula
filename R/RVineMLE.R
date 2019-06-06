@@ -1,6 +1,6 @@
 #' Maximum Likelihood Estimation of an R-Vine Copula Model
 #'
-#' This function calculates the maxiumum likelihood estimate (MLE) of the
+#' This function calculates the maximum likelihood estimate (MLE) of the
 #' R-vine copula model parameters using sequential estimates as initial values
 #' (if not provided).
 #'
@@ -137,6 +137,11 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
                     na.txt = " Only complete observations are used.")
     list2env(args, environment())
 
+    if (all(RVM$family == 0)) {
+        warning("RVM contains only Independence copulas, RVineMLE does nothing")
+        return(RVM)
+    }
+
     ## sanity checks
     if (maxit <= 0)
         stop("'maxit' has to be greater than zero.")
@@ -203,38 +208,38 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
     ## lower and upper bounds
     lb <- double(nParams + nParams2)
     ub <- double(nParams + nParams2)
-    for (i in 1:nParams) {
+    for (i in seq_len(nParams)) {
         if (Copula.Types[i] %in% c(1, 2)) {
             # Normal
-            lb[i] <- -0.98
-            ub[i] <- 0.98
+            lb[i] <- -0.99
+            ub[i] <- 0.99
         } else if (Copula.Types[i] %in% c(3, 13)) {
             # clayton
             lb[i] <- 1e-04
-            ub[i] <- Inf
+            ub[i] <- 100
         } else if (Copula.Types[i] %in% c(23, 33)) {
             # rotated clayton
-            lb[i] <- -Inf
+            lb[i] <- -100
             ub[i] <- -1e-04
         } else if (Copula.Types[i] %in% c(4, 14)) {
             # gumbel
             lb[i] <- 1.0001
-            ub[i] <- Inf
+            ub[i] <- 100
         } else if (Copula.Types[i] %in% c(24, 34)) {
             # rotated gumbel
-            lb[i] <- -Inf
+            lb[i] <- -100
             ub[i] <- -1.0001
         } else if (Copula.Types[i] == 5) {
             # frank
-            lb[i] <- -Inf
-            ub[i] <- Inf
+            lb[i] <- -100
+            ub[i] <- 100
         } else if (Copula.Types[i] %in% c(6, 16)) {
             # joe
             lb[i] <- 1.0001
-            ub[i] <- Inf
+            ub[i] <- 50
         } else if (Copula.Types[i] %in% c(26, 36)) {
             # rotated joe
-            lb[i] <- -Inf
+            lb[i] <- -50
             ub[i] <- -1.0001
         } else if (Copula.Types[i] %in% c(7, 17)) {
             # bb1
@@ -283,51 +288,49 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
         }
     }
 
-    if (nParams2 > 0) {
-        todo <- which(Copula.Types %in% c(2, 7:10, 17:20, 27:30, 37:40, 104, 114, 124, 134, 204, 214, 224, 234))
+    todo <- which(Copula.Types %in% c(2, 7:10, 17:20, 27:30, 37:40, 104, 114, 124, 134, 204, 214, 224, 234))
 
-        for (i in 1:nParams2) {
-            if (Copula.Types[todo[i]] == 2) {
-                # t
-                lb[nParams + i] <- 2.001
-                ub[nParams + i] <- max.df
-            } else if (Copula.Types[todo[i]] %in% c(7, 17)) {
-                # bb1
-                lb[nParams + i] <- 1.001
-                ub[nParams + i] <- max.BB$BB1[2]
-            } else if (Copula.Types[todo[i]] %in% c(8, 18)) {
-                # bb6
-                lb[nParams + i] <- 1.001
-                ub[nParams + i] <- max.BB$BB6[2]
-            } else if (Copula.Types[todo[i]] %in% c(9, 19)) {
-                # bb7
-                lb[nParams + i] <- 0.001
-                ub[nParams + i] <- max.BB$BB7[2]
-            } else if (Copula.Types[todo[i]] %in% c(10, 20)) {
-                # bb8
-                lb[nParams + i] <- 0.001
-                ub[nParams + i] <- max.BB$BB1[2]
-            } else if (Copula.Types[todo[i]] %in% c(27, 37)) {
-                # rotated bb1
-                lb[nParams + i] <- -max.BB$BB1[2]
-                ub[nParams + i] <- -1.001
-            } else if (Copula.Types[todo[i]] %in% c(28, 38)) {
-                # rotated bb6
-                lb[nParams + i] <- -max.BB$BB6[2]
-                ub[nParams + i] <- -1.001
-            } else if (Copula.Types[todo[i]] %in% c(29, 39)) {
-                # rotated bb7
-                lb[nParams + i] <- -max.BB$BB7[2]
-                ub[nParams + i] <- -1.001
-            } else if (Copula.Types[todo[i]] %in% c(30, 40)) {
-                # rotated bb8
-                lb[nParams + i] <- -max.BB$BB8[2]
-                ub[nParams + i] <- -0.001
-            } else if (Copula.Types[todo[i]] %in% c(104, 114, 124, 134, 204, 214, 224, 234)) {
-                # Tawn
-                lb[nParams + i] <- 0.001
-                ub[nParams + i] <- 0.99
-            }
+    for (i in seq_len(nParams2)) {
+        if (Copula.Types[todo[i]] == 2) {
+            # t
+            lb[nParams + i] <- 2.001
+            ub[nParams + i] <- max.df
+        } else if (Copula.Types[todo[i]] %in% c(7, 17)) {
+            # bb1
+            lb[nParams + i] <- 1.001
+            ub[nParams + i] <- max.BB$BB1[2]
+        } else if (Copula.Types[todo[i]] %in% c(8, 18)) {
+            # bb6
+            lb[nParams + i] <- 1.001
+            ub[nParams + i] <- max.BB$BB6[2]
+        } else if (Copula.Types[todo[i]] %in% c(9, 19)) {
+            # bb7
+            lb[nParams + i] <- 0.001
+            ub[nParams + i] <- max.BB$BB7[2]
+        } else if (Copula.Types[todo[i]] %in% c(10, 20)) {
+            # bb8
+            lb[nParams + i] <- 0.001
+            ub[nParams + i] <- max.BB$BB8[2]
+        } else if (Copula.Types[todo[i]] %in% c(27, 37)) {
+            # rotated bb1
+            lb[nParams + i] <- -max.BB$BB1[2]
+            ub[nParams + i] <- -1.001
+        } else if (Copula.Types[todo[i]] %in% c(28, 38)) {
+            # rotated bb6
+            lb[nParams + i] <- -max.BB$BB6[2]
+            ub[nParams + i] <- -1.001
+        } else if (Copula.Types[todo[i]] %in% c(29, 39)) {
+            # rotated bb7
+            lb[nParams + i] <- -max.BB$BB7[2]
+            ub[nParams + i] <- -0.001
+        } else if (Copula.Types[todo[i]] %in% c(30, 40)) {
+            # rotated bb8
+            lb[nParams + i] <- -max.BB$BB8[2]
+            ub[nParams + i] <- -0.001
+        } else if (Copula.Types[todo[i]] %in% c(104, 114, 124, 134, 204, 214, 224, 234)) {
+            # Tawn
+            lb[nParams + i] <- 0.001
+            ub[nParams + i] <- 0.99
         }
     }
 
@@ -359,7 +362,7 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
     }
 
     ## gradient
-    ableitung <- function(parm, data, posParams, posParams2, Copula.Types, start, start2, RVM, calcupdate) {
+    gradient <- function(parm, data, posParams, posParams2, Copula.Types, start, start2, RVM, calcupdate) {
         nParams <- sum(posParams, na.rm = TRUE)
         nParams2 <- sum(posParams2, na.rm = TRUE)
 
@@ -381,16 +384,14 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
 
     ## default values for parscale (see optim)
     pscale <- numeric()
-    for (i in 1:nParams) {
+    for (i in seq_len(nParams)) {
         pscale[i] <- ifelse(Copula.Types[i] %in% c(1, 2, 43, 44), 0.01, 1)
     }
     pscale2 <- numeric()
-    if (nParams2 > 0) {
-        for (i in 1:nParams2) {
-            pscale2[i] <- ifelse(Copula.Types[i] %in% c(104, 114, 124, 134, 204, 214, 224, 234), 0.05, 1)
-        }
-        pscale <- c(pscale, pscale2)
+    for (i in seq_len(nParams2)) {
+        pscale2[i] <- ifelse(Copula.Types[i] %in% c(104, 114, 124, 134, 204, 214, 224, 234), 0.05, 1)
     }
+    pscale <- c(pscale, pscale2)
 
     ## (default) values for control parameters of optim
     ctrl <- list(fnscale = -1,
@@ -406,7 +407,7 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
         if (hessian == TRUE || se == TRUE) {
             out1 <- optim(par = startpar,
                           fn = optim_LL,
-                          gr = ableitung,
+                          gr = gradient,
                           data = data,
                           posParams = posParams,
                           posParams2 = posParams2, Copula.Types = Copula.Types,
@@ -421,7 +422,7 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
         } else {
             out1 <- optim(par = startpar,
                           fn = optim_LL,
-                          gr = ableitung,
+                          gr = gradient,
                           data = data,
                           posParams = posParams,
                           posParams2 = posParams2,
@@ -482,7 +483,7 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
         out1$se <- sqrt((diag(solve(-out1$hessian))))
     # create parameter matrices
     kk <- 1
-    for (ll in 1:nParams) {
+    for (ll in seq_len(nParams)) {
         out1$par[ll] <- out1$par[ll]
         if (Copula.Types[ll] %in% c(2, 7:10, 17:20, 27:30, 37:40,
                                     104, 114, 124, 134, 204, 214, 224, 234)) {

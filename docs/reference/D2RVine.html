@@ -18,11 +18,25 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Transform D-Vine to R-Vine Structure — D2RVine" />
+
+<meta property="og:description" content="This function transforms a D-vine structure from the package CDVine to the
+corresponding R-vine structure." />
+<meta name="twitter:card" content="summary" />
+
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,15 +60,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">VineCopula</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">VineCopula</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.8</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -66,6 +90,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -73,20 +98,24 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Transform D-Vine to R-Vine Structure</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/D2RVine.R'><code>R/D2RVine.R</code></a></small>
+    <div class="hidden name"><code>D2RVine.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function transforms a D-vine structure from the package CDVine to the
 corresponding R-vine structure.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>D2RVine</span>(<span class='no'>order</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fl'>0</span>, <span class='fu'>length</span>(<span class='no'>family</span>)))</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -96,33 +125,33 @@ D-vine.</p></td>
     </tr>
     <tr>
       <th>family</th>
-      <td><p>A d*(d-1)/2 vector of pair-copula families with values
-<code>0</code> = independence copula  <code>1</code> = Gaussian copula  <code>2</code> =
-Student t copula (t-copula)  <code>3</code> = Clayton copula  <code>4</code> =
-Gumbel copula  <code>5</code> = Frank copula  <code>6</code> = Joe copula 
-<code>7</code> = BB1 copula  <code>8</code> = BB6 copula  <code>9</code> = BB7 copula
- <code>10</code> = BB8 copula  <code>13</code> = rotated Clayton copula (180
-degrees; ``survival Clayton'')  <code>14</code> = rotated Gumbel copula (180
-degrees; ``survival Gumbel'')  <code>16</code> = rotated Joe copula (180
-degrees; ``survival Joe'')  <code>17</code> = rotated BB1 copula (180 degrees;
-``survival BB1'') <code>18</code> = rotated BB6 copula (180 degrees; ``survival
-BB6'') <code>19</code> = rotated BB7 copula (180 degrees; ``survival BB7'')
-<code>20</code> = rotated BB8 copula (180 degrees; ``survival BB8'') <code>23</code>
-= rotated Clayton copula (90 degrees)  <code>24</code> = rotated Gumbel copula
-(90 degrees)  <code>26</code> = rotated Joe copula (90 degrees)  <code>27</code> =
-rotated BB1 copula (90 degrees)  <code>28</code> = rotated BB6 copula (90
-degrees)  <code>29</code> = rotated BB7 copula (90 degrees)  <code>30</code> =
-rotated BB8 copula (90 degrees)  <code>33</code> = rotated Clayton copula (270
-degrees)  <code>34</code> = rotated Gumbel copula (270 degrees)  <code>36</code> =
-rotated Joe copula (270 degrees)  <code>37</code> = rotated BB1 copula (270
-degrees)  <code>38</code> = rotated BB6 copula (270 degrees)  <code>39</code> =
-rotated BB7 copula (270 degrees)  <code>40</code> = rotated BB8 copula (270
-degrees)  <code>104</code> = Tawn type 1 copula  <code>114</code> = rotated Tawn
-type 1 copula (180 degrees)  <code>124</code> = rotated Tawn type 1 copula (90
-degrees)  <code>134</code> = rotated Tawn type 1 copula (270 degrees) 
-<code>204</code> = Tawn type 2 copula  <code>214</code> = rotated Tawn type 2 copula
-(180 degrees)  <code>224</code> = rotated Tawn type 2 copula (90 degrees) 
-<code>234</code> = rotated Tawn type 2 copula (270 degrees)</p></td>
+      <td><p>A d*(d-1)/2 vector of pair-copula families with values<br />
+<code>0</code> = independence copula <br /> <code>1</code> = Gaussian copula <br /> <code>2</code> =
+Student t copula (t-copula) <br /> <code>3</code> = Clayton copula <br /> <code>4</code> =
+Gumbel copula <br /> <code>5</code> = Frank copula <br /> <code>6</code> = Joe copula <br />
+<code>7</code> = BB1 copula <br /> <code>8</code> = BB6 copula <br /> <code>9</code> = BB7 copula
+<br /> <code>10</code> = BB8 copula <br /> <code>13</code> = rotated Clayton copula (180
+degrees; ``survival Clayton'') <br /> <code>14</code> = rotated Gumbel copula (180
+degrees; ``survival Gumbel'') <br /> <code>16</code> = rotated Joe copula (180
+degrees; ``survival Joe'') <br /> <code>17</code> = rotated BB1 copula (180 degrees;
+``survival BB1'')<br /> <code>18</code> = rotated BB6 copula (180 degrees; ``survival
+BB6'')<br /> <code>19</code> = rotated BB7 copula (180 degrees; ``survival BB7'')<br />
+<code>20</code> = rotated BB8 copula (180 degrees; ``survival BB8'')<br /> <code>23</code>
+= rotated Clayton copula (90 degrees) <br /> <code>24</code> = rotated Gumbel copula
+(90 degrees) <br /> <code>26</code> = rotated Joe copula (90 degrees) <br /> <code>27</code> =
+rotated BB1 copula (90 degrees) <br /> <code>28</code> = rotated BB6 copula (90
+degrees) <br /> <code>29</code> = rotated BB7 copula (90 degrees) <br /> <code>30</code> =
+rotated BB8 copula (90 degrees) <br /> <code>33</code> = rotated Clayton copula (270
+degrees) <br /> <code>34</code> = rotated Gumbel copula (270 degrees) <br /> <code>36</code> =
+rotated Joe copula (270 degrees) <br /> <code>37</code> = rotated BB1 copula (270
+degrees) <br /> <code>38</code> = rotated BB6 copula (270 degrees) <br /> <code>39</code> =
+rotated BB7 copula (270 degrees) <br /> <code>40</code> = rotated BB8 copula (270
+degrees) <br /> <code>104</code> = Tawn type 1 copula <br /> <code>114</code> = rotated Tawn
+type 1 copula (180 degrees) <br /> <code>124</code> = rotated Tawn type 1 copula (90
+degrees) <br /> <code>134</code> = rotated Tawn type 1 copula (270 degrees) <br />
+<code>204</code> = Tawn type 2 copula <br /> <code>214</code> = rotated Tawn type 2 copula
+(180 degrees) <br /> <code>224</code> = rotated Tawn type 2 copula (90 degrees) <br />
+<code>234</code> = rotated Tawn type 2 copula (270 degrees) <br /></p></td>
     </tr>
     <tr>
       <th>par</th>
@@ -131,7 +160,7 @@ degrees)  <code>134</code> = rotated Tawn type 1 copula (270 degrees)
     <tr>
       <th>par2</th>
       <td><p>A d*(d-1)/2 vector of second pair-copula parameters (optional;
-default: <code>par2 = rep(0,length(family))</code>), necessary for the t-, BB1,
+default:<br /> <code>par2 = rep(0,length(family))</code>), necessary for the t-, BB1,
 BB6, BB7, BB8, Tawn type 1 and type 2 copulas.</p></td>
     </tr>
     </table>
@@ -142,7 +171,7 @@ BB6, BB7, BB8, Tawn type 1 and type 2 copulas.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='RVineMatrix.html'>RVineMatrix</a></code>, <code><a href='C2RVine.html'>C2RVine</a></code></p>
+    <div class='dont-index'><p><code><a href='RVineMatrix.html'>RVineMatrix</a></code>, <code><a href='C2RVine.html'>C2RVine</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -155,22 +184,19 @@ BB6, BB7, BB8, Tawn type 1 and type 2 copulas.</p></td>
 <span class='no'>par2</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>5</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>2</span>, <span class='fl'>0</span>)
 
 <span class='co'># transform to R-vine matrix notation</span>
-<span class='no'>RVM</span> <span class='kw'>&lt;-</span> <span class='fu'>D2RVine</span>(<span class='no'>order</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>)
-
-<span class='co'># load package CDVine for comparison</span>
+<span class='no'>RVM</span> <span class='kw'>&lt;-</span> <span class='fu'>D2RVine</span>(<span class='no'>order</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>)</div><div class='input'><span class='co'># load package CDVine for comparison</span>
 <span class='fu'>library</span>(<span class='no'>CDVine</span>)
 
 <span class='co'># simulate a sample of size 500 from a 4-dimensional D-vine</span>
 <span class='no'>type</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span>  <span class='co'># D-vine</span>
-<span class='no'>simdata</span> <span class='kw'>&lt;-</span> <span class='fu'>CDVineSim</span>(<span class='fl'>500</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>, <span class='no'>type</span>)
+<span class='no'>simdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/CDVine/topics/CDVineSim'>CDVineSim</a></span>(<span class='fl'>500</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>, <span class='no'>type</span>)
 
 <span class='co'># determine log-likelihood</span>
-<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'>CDVineLogLik</span>(<span class='no'>simdata</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>, <span class='no'>type</span>)
-<span class='no'>out</span>$<span class='no'>loglik</span></div><div class='output co'>#&gt; [1] 961.684</div><div class='input'>
+<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://www.rdocumentation.org/packages/CDVine/topics/CDVineLogLik'>CDVineLogLik</a></span>(<span class='no'>simdata</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>, <span class='no'>type</span>)
+<span class='no'>out</span>$<span class='no'>loglik</span></div><div class='output co'>#&gt; [1] 976.5096</div><div class='input'>
 <span class='co'># check that log-likelihood stays the same</span>
 <span class='no'>out2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RVineLogLik.html'>RVineLogLik</a></span>(<span class='no'>simdata</span>, <span class='no'>RVM</span>)
-<span class='no'>out2</span>$<span class='no'>loglik</span></div><div class='output co'>#&gt; [1] 961.684</div><div class='input'>
-</div></pre>
+<span class='no'>out2</span>$<span class='no'>loglik</span></div><div class='output co'>#&gt; [1] 976.5096</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -197,11 +223,14 @@ Ulf Schepsmeier
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

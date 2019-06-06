@@ -18,7 +18,7 @@
 #' starting values are available by inversion of Kendall's tau, starting values
 #' have to be provided given expert knowledge and the boundaries \code{max.df}
 #' and \code{max.BB} respectively. Note: The MLE is performed via numerical
-#' maximazation using the L_BFGS-B method. For the Gaussian, the t- and the
+#' maximization using the L_BFGS-B method. For the Gaussian, the t- and the
 #' one-parametric Archimedean copulas we can use the gradients, but for the BB
 #' copulas we have to use finite differences for the L_BFGS-B method.
 #'
@@ -85,7 +85,7 @@
 #' @param max.BB List; upper bounds for the estimation of the two parameters
 #' (in absolute values) of the BB1, BB6, BB7 and BB8 copulas \cr (default:
 #' \code{max.BB = list(BB1=c(5,6),BB6=c(6,6),BB7=c(5,6),BB8=c(6,1))}).
-#' @param weights Numerical; weights for each observation (opitional).
+#' @param weights Numerical; weights for each observation (optional).
 #'
 #' @return An object of class \code{\link{BiCop}}, augmented with the following
 #' entries:
@@ -261,7 +261,7 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = FALSE, max.df = 30,
         theta1 <- 0
         delta <- 0
 
-        if (!(family %in% c(2, 6, 7, 8, 9, 10,
+        if (!(family %in% c(2, 7, 8, 9, 10,
                             17, 18, 19, 20,
                             27, 28, 29, 30,
                             37, 38, 39, 40,
@@ -549,7 +549,7 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
         theta1 <- 0
         delta <- 0
 
-        if (!(family %in% c(2, 6, 7, 8, 9, 10,
+        if (!(family %in% c(2, 7, 8, 9, 10,
                             17, 18, 19, 20,
                             27, 28, 29, 30,
                             37, 38, 39, 40,
@@ -1034,11 +1034,20 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
         optimout$par <- c(optimout$maximum, 0)
         optimout$value <- optimout$objective
         if (se == TRUE) {
-            d2 <- BiCopDeriv2(data[, 1], data[, 1],
+            d0 <- BiCopPDF(data[, 1], data[, 2],
+                           family,
+                           optimout$par[1],
+                           check.pars = FALSE)
+            d1 <- BiCopDeriv(data[, 1], data[, 2],
+                             family,
+                             optimout$par[1],
+                             check.pars = FALSE)
+            d2 <- BiCopDeriv2(data[, 1], data[, 2],
                               family,
                               optimout$par[1],
                               check.pars = FALSE)
-            optimout$hessian <- sum(-d2)
+            ## quotient rule for second derivative of log density
+            optimout$hessian <- sum(-(d2 * d0 - d1^2) / d0^2)
         }
 
     }
@@ -1169,7 +1178,7 @@ fasttau <- function(x, y, weights = NA) {
         if (m == 0 || n == 0)
             stop("both 'x' and 'y' must be non-empty")
         if (m != n)
-            stop("'x' and 'y' must have the same length")
+            stop("'x' and 'y' must have the same length.")
         out <- .C("ktau",
                   x = as.double(x),
                   y = as.double(y),

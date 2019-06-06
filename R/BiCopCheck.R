@@ -49,7 +49,7 @@
 #' BB1, BB6, BB7, BB8, Tawn type 1 and type 2; default is \code{par2 = 0}).
 #' @param \dots used internally.
 #'
-#' @return A logical indicating wether the family can be used with the parameter
+#' @return A logical indicating whether the family can be used with the parameter
 #' specification.
 #'
 #' @author Thomas Nagler
@@ -157,9 +157,9 @@ checkPars <- function(x, cl) {
             stop("\n In ", cl, ": ",
                  "The first parameter of the BB8 copula has to be in the interval [1,8].",
                  call. = FALSE)
-        if (par2 <= 0 || par2 > 1)
+        if (par2 < 1e-4 || par2 > 1)
             stop("\n In ", cl, ": ",
-                 "The second parameter of the BB8 copula has to be in the interval (0,1].",
+                 "The second parameter of the BB8 copula has to be in the interval [1e-4,1].",
                  call. = FALSE)
     } else if ((family == 23 || family == 33) && (par >= 0 || par < -100)) {
         stop("\n In ", cl, ": ",
@@ -205,9 +205,9 @@ checkPars <- function(x, cl) {
             stop("\n In ", cl, ": ",
                  "The first parameter of the rotated BB8 copula has to be in the interval [-8,-1].",
                  call. = FALSE)
-        if (par2 >= 0 || par2 < -1)
+        if (par2 > -1e-4 || par2 < -1)
             stop("\n In ", cl, ": ",
-                 "The second parameter of the rotated BB8 copula has to be in the interval [-1,0).",
+                 "The second parameter of the rotated BB8 copula has to be in the interval [-1,-1e-4].",
                  call. = FALSE)
     } else if ((family == 41 || family == 51) && par <= 0) {
         stop("\n In ", cl, ": ",
@@ -286,7 +286,9 @@ adjustPars <- function(family, par, par2) {
 BiCopCheckTaus <- function(family, tau) {
     cl <- match.call()[1]
     ## check for family/tau consistency
-    checkTaus<- function(x) {
+    checkTaus <- function(x) {
+        family <- x[1]
+        tau <- x[2]
         if (family %in% c(3, 13) && tau <= 0)
             stop("\n In ", cl, ": ",
                  "Clayton copula cannot be used for tau<=0.",

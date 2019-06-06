@@ -18,7 +18,7 @@
 #' Since under statistical equivalence of the two models the log likelihood
 #' ratios of the single observations are uniformly distributed around zero and
 #' in expectation \eqn{50\%} of the log likelihood ratios greater than zero,
-#' the tets statistic \deqn{ }{ statistic := B = \sum_{i=1}^N
+#' the test statistic \deqn{ }{ statistic := B = \sum_{i=1}^N
 #' 1_{(0,\infty)}(m_i), }\deqn{\texttt{statistic} := B = \sum_{i=1}^N
 #' \mathbf{1}_{(0,\infty)}(m_i), }{ statistic := B = \sum_{i=1}^N
 #' 1_{(0,\infty)}(m_i), } where \eqn{\mathbf{1}}{1} is the indicator function,

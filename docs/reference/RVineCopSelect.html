@@ -18,11 +18,26 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Sequential Pair-Copula Selection and Estimation for R-Vine Copula Models — RVineCopSelect" />
+
+<meta property="og:description" content="This function fits a R-vine copula model to a d-dimensional copula data set.
+Pair-copula families are selected using BiCopSelect and
+estimated sequentially." />
+<meta name="twitter:card" content="summary" />
+
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,15 +61,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">VineCopula</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">VineCopula</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.8</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -66,6 +91,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -73,23 +99,27 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Sequential Pair-Copula Selection and Estimation for R-Vine Copula Models</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/RVineCopSelect.R'><code>R/RVineCopSelect.R</code></a></small>
+    <div class="hidden name"><code>RVineCopSelect.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function fits a R-vine copula model to a d-dimensional copula data set.
 Pair-copula families are selected using <code><a href='BiCopSelect.html'>BiCopSelect</a></code> and
 estimated sequentially.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>RVineCopSelect</span>(<span class='no'>data</span>, <span class='kw'>familyset</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>Matrix</span>, <span class='kw'>selectioncrit</span> <span class='kw'>=</span> <span class='st'>"AIC"</span>,
   <span class='kw'>indeptest</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>trunclevel</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>se</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>rotations</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"mle"</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -157,10 +187,10 @@ interval (2, 10].</p></td>
     </tr>
     <tr>
       <th>cores</th>
-      <td><p>integer; if <code>cores &gt; 1</code>, estimation will be parallized
+      <td><p>integer; if <code>cores &gt; 1</code>, estimation will be parallelized
 within each tree (using <code><a href='http://www.rdocumentation.org/packages/foreach/topics/foreach'>foreach</a></code>). Note that
 parallelization causes substantial overhead and may be slower than
-single-threaded computation when dimension, sample size, or familyset are
+single-threaded computation when dimension, sample size, or family set are
 small or <code>method = "itau"</code>.</p></td>
     </tr>
     </table>
@@ -203,12 +233,12 @@ returns. Computational Statistics &amp; Data Analysis, 59 (1), 52-69.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='RVineMatrix.html'>RVineMatrix</a></code>,
+    <div class='dont-index'><p><code><a href='RVineMatrix.html'>RVineMatrix</a></code>,
 <code><a href='BiCop.html'>BiCop</a></code>,
 <code><a href='BiCopSelect.html'>BiCopSelect</a></code>,
 <code><a href='plot.RVineMatrix.html'>plot.RVineMatrix</a></code>,
 <code><a href='plot.RVineMatrix.html'>contour.RVineMatrix</a></code>,
-<code><a href='http://www.rdocumentation.org/packages/foreach/topics/foreach'>foreach</a></code></p>
+<code><a href='http://www.rdocumentation.org/packages/foreach/topics/foreach'>foreach</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -275,26 +305,27 @@ returns. Computational Statistics &amp; Data Analysis, 59 (1), 52-69.</p>
 #&gt;  $ pair.BIC         : num(0) 
 #&gt;  $ emptau           : num [1:5, 1:5] 0 0.129 0.318 0.336 0.751 ...
 #&gt;  $ p.value.indeptest: num [1:5, 1:5] 0.00 1.53e-05 0.00 0.00 0.00 ...
-#&gt;  - attr(*, "class")= chr "RVineMatrix"</div><div class='input'><span class='fu'>summary</span>(<span class='no'>RVM1</span>)</div><div class='output co'>#&gt; tree       edge |  No. family   par  par2 |  tau   UTD   LTD 
+#&gt;  - attr(*, "class")= chr "RVineMatrix"</div><div class='input'><span class='fu'>summary</span>(<span class='no'>RVM1</span>)</div><div class='output co'>#&gt; tree       edge | family  cop   par  par2 |  tau   utd   ltd 
 #&gt; ------------------------------------------------------------ 
-#&gt;    1        4,5 |   4       G  3.89  0.00 | 0.74  0.81     -
-#&gt;             1,2 |   1       N  0.90  0.00 | 0.72     -     -
-#&gt;             1,3 |   1       N  0.48  0.00 | 0.32     -     -
-#&gt;             1,4 |   3       C  4.83  0.00 | 0.71     -  0.87
-#&gt;    2      1,5;4 |   4       G  1.49  0.00 | 0.33  0.41     -
-#&gt;           4,2;1 |   4       G  1.60  0.00 | 0.37  0.46     -
-#&gt;           4,3;1 |   4       G  1.90  0.00 | 0.47  0.56     -
-#&gt;    3    3,5;1,4 |   3       C  0.91  0.00 | 0.31     -  0.47
-#&gt;         3,2;4,1 |   3       C  1.06  0.00 | 0.35     -  0.52
-#&gt;    4  2,5;3,1,4 |   1       N  0.21  0.00 | 0.14     -     -
+#&gt;    1        4,5 |      4    G  3.89  0.00 | 0.74  0.81     -
+#&gt;             1,2 |      1    N  0.90  0.00 | 0.72     -     -
+#&gt;             1,3 |      1    N  0.48  0.00 | 0.32     -     -
+#&gt;             1,4 |      3    C  4.83  0.00 | 0.71     -  0.87
+#&gt;    2      1,5;4 |      4    G  1.49  0.00 | 0.33  0.41     -
+#&gt;           4,2;1 |      4    G  1.60  0.00 | 0.37  0.46     -
+#&gt;           4,3;1 |      4    G  1.90  0.00 | 0.47  0.56     -
+#&gt;    3    3,5;1,4 |      3    C  0.91  0.00 | 0.31     -  0.47
+#&gt;         3,2;4,1 |      3    C  1.06  0.00 | 0.35     -  0.52
+#&gt;    4  2,5;3,1,4 |      1    N  0.21  0.00 | 0.14     -     -
 #&gt; ---
 #&gt; type: R-vine    logLik: 2035.9    AIC: -4051.8    BIC: -4009.66    
 #&gt; ---
 #&gt; 1 &lt;-&gt; V1,   2 &lt;-&gt; V2,   3 &lt;-&gt; V3,   4 &lt;-&gt; V4,   5 &lt;-&gt; V5</div><div class='input'>
-<span class='co'>## inspect the fitted model using plots</span>
-<span class='co'>## Not run: plot(RVM1)  # tree structure</span>
-
-<span class='fu'>contour</span>(<span class='no'>RVM1</span>)  <span class='co'># contour plots of all pair-copulas</span></div><img src='RVineCopSelect-6.png' alt='' width='540' height='400' /><div class='input'>
+## inspect the fitted model using plots
+</div><span class='co'># NOT RUN {</span>
+<span class='fu'>plot</span>(<span class='no'>RVM1</span>)  <span class='co'># tree structure</span>
+<span class='co'># }</span><div class='input'>
+<span class='fu'>contour</span>(<span class='no'>RVM1</span>)  <span class='co'># contour plots of all pair-copulas</span></div><div class='img'><img src='RVineCopSelect-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -328,11 +359,14 @@ Eike Brechmann, Thomas Nagler
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

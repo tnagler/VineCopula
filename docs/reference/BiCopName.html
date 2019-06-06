@@ -18,11 +18,25 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Bivariate Copula Family Names — BiCopName" />
+
+<meta property="og:description" content="This function transforms the bivariate copula family number into its
+character expression and vice versa." />
+<meta name="twitter:card" content="summary" />
+
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,15 +60,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">VineCopula</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">VineCopula</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.8</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -66,6 +90,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -73,192 +98,74 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Bivariate Copula Family Names</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/BiCopName.R'><code>R/BiCopName.R</code></a></small>
+    <div class="hidden name"><code>BiCopName.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function transforms the bivariate copula family number into its
 character expression and vice versa.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>BiCopName</span>(<span class='no'>family</span>, <span class='kw'>short</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>family</th>
       <td><p>Bivariate copula family, either its number or its character
-expression (see table below).</p><table><tr><td>
-No.        </td>
-<td> Short name         </td>
-</tr><tr><td> Long name </td>
-<td>
-<code>0</code>   </td>
-</tr><tr><td> <code>"I"</code>         </td>
-<td> <code>"Independence"</code> </td>
-</tr><tr><td>
-<code>1</code>   </td>
-<td> <code>"N"</code>         </td>
-</tr><tr><td> <code>"Gaussian"</code> </td>
-<td>
-<code>2</code>   </td>
-</tr><tr><td> <code>"t"</code>         </td>
-<td> <code>"t"</code> </td>
-</tr><tr><td>
-<code>3</code>   </td>
-<td> <code>"C"</code>         </td>
-</tr><tr><td> <code>"Clayton"</code> </td>
-<td>
-<code>4</code>   </td>
-</tr><tr><td> <code>"G"</code>         </td>
-<td> <code>"Gumbel"</code> </td>
-</tr><tr><td>
-<code>5</code>   </td>
-<td> <code>"F"</code>         </td>
-</tr><tr><td> <code>"Frank"</code> </td>
-<td>
-<code>6</code>   </td>
-</tr><tr><td> <code>"J"</code>         </td>
-<td> <code>"Joe"</code> </td>
-</tr><tr><td>
-<code>7</code>   </td>
-<td> <code>"BB1"</code>       </td>
-</tr><tr><td> <code>"BB1"</code> </td>
-<td>
-<code>8</code>   </td>
-</tr><tr><td> <code>"BB6"</code>       </td>
-<td> <code>"BB6"</code> </td>
-</tr><tr><td>
-<code>9</code>   </td>
-<td> <code>"BB7"</code>       </td>
-</tr><tr><td> <code>"BB7"</code> </td>
-<td>
-<code>10</code>  </td>
-</tr><tr><td> <code>"BB8"</code>       </td>
-<td> <code>"Frank-Joe"</code> </td>
-</tr><tr><td>
-<code>13</code>  </td>
-<td> <code>"SC"</code>        </td>
-</tr><tr><td> <code>"Survival Clayton"</code> </td>
-<td>
-<code>14</code>  </td>
-</tr><tr><td> <code>"SG"</code>        </td>
-<td> <code>"Survival Gumbel"</code> </td>
-</tr><tr><td>
-<code>16</code>  </td>
-<td> <code>"SJ"</code>        </td>
-</tr><tr><td> <code>"Survival Joe"</code> </td>
-<td>
-<code>17</code>  </td>
-</tr><tr><td> <code>"SBB1"</code>      </td>
-<td> <code>"Survival BB1"</code> </td>
-</tr><tr><td>
-<code>18</code>  </td>
-<td> <code>"SBB6"</code>      </td>
-</tr><tr><td> <code>"Survival BB6"</code> </td>
-<td>
-<code>19</code>  </td>
-</tr><tr><td> <code>"SBB7"</code>      </td>
-<td> <code>"Survival BB7"</code> </td>
-</tr><tr><td>
-<code>20</code>  </td>
-<td> <code>"SBB8"</code>      </td>
-</tr><tr><td> <code>"Survival BB8"</code> </td>
-<td>
-<code>23</code>  </td>
-</tr><tr><td> <code>"C90"</code>       </td>
-<td> <code>"Rotated Clayton 90 degrees"</code> </td>
-</tr><tr><td>
-<code>24</code>  </td>
-<td> <code>"G90"</code>       </td>
-</tr><tr><td> <code>"Rotated Gumbel 90 degrees"</code> </td>
-<td>
-<code>26</code>  </td>
-</tr><tr><td> <code>"J90"</code>       </td>
-<td> <code>"Rotated Joe 90 degrees"</code> </td>
-</tr><tr><td>
-<code>27</code>  </td>
-<td> <code>"BB1_90"</code>    </td>
-</tr><tr><td> <code>"Rotated BB1 90 degrees"</code> </td>
-<td>
-<code>28</code>  </td>
-</tr><tr><td> <code>"BB6_90"</code>    </td>
-<td> <code>"Rotated BB6 90 degrees"</code> </td>
-</tr><tr><td>
-<code>29</code>  </td>
-<td> <code>"BB7_90"</code>    </td>
-</tr><tr><td> <code>"Rotated BB7 90 degrees"</code> </td>
-<td>
-<code>30</code>  </td>
-</tr><tr><td> <code>"BB8_90"</code>    </td>
-<td> <code>"Rotated Frank-Joe 90 degrees"</code> </td>
-</tr><tr><td>
-<code>33</code>  </td>
-<td> <code>"C270"</code>      </td>
-</tr><tr><td> <code>"Rotated Clayton 270 degrees"</code> </td>
-<td>
-<code>34</code>  </td>
-</tr><tr><td> <code>"G270"</code>      </td>
-<td> <code>"Rotated Gumbel 270 degrees"</code> </td>
-</tr><tr><td>
-<code>36</code>  </td>
-<td> <code>"J270"</code>      </td>
-</tr><tr><td> <code>"Rotated Joe 270 degrees"</code> </td>
-<td>
-<code>37</code>  </td>
-</tr><tr><td> <code>"BB1_270"</code>   </td>
-<td> <code>"Rotated BB1 270 degrees"</code> </td>
-</tr><tr><td>
-<code>38</code>  </td>
-<td> <code>"BB6_270"</code>   </td>
-</tr><tr><td> <code>"Rotated BB6 270 degrees"</code> </td>
-<td>
-<code>39</code>  </td>
-</tr><tr><td> <code>"BB7_270"</code>   </td>
-<td> <code>"Rotated BB7 270 degrees"</code> </td>
-</tr><tr><td>
-<code>40</code>  </td>
-<td> <code>"BB8_270"</code>   </td>
-</tr><tr><td> <code>"Rotated Frank-Joe 270 degrees"</code> </td>
-<td>
-<code>104</code> </td>
-</tr><tr><td> <code>"Tawn"</code>      </td>
-<td> <code>"Tawn type 1"</code> </td>
-</tr><tr><td>
-<code>114</code> </td>
-<td> <code>"Tawn180"</code>   </td>
-</tr><tr><td> <code>"Rotated Tawn type 1 180 degrees"</code> </td>
-<td>
-<code>124</code> </td>
-</tr><tr><td> <code>"Tawn90"</code>    </td>
-<td> <code>"Rotated Tawn type 1 90 degrees"</code> </td>
-</tr><tr><td>
-<code>134</code> </td>
-<td> <code>"Tawn270"</code>   </td>
-</tr><tr><td> <code>"Rotated Tawn type 1 270 degrees"</code> </td>
-<td>
-<code>204</code> </td>
-</tr><tr><td> <code>"Tawn2"</code>     </td>
-<td> <code>"Tawn type 2"</code> </td>
-</tr><tr><td>
-<code>214</code> </td>
-<td> <code>"Tawn2_180"</code> </td>
-</tr><tr><td> <code>"Rotated Tawn type 2 180 degrees"</code> </td>
-<td>
-<code>224</code> </td>
-</tr><tr><td> <code>"Tawn2_90"</code>  </td>
-<td> <code>"Rotated Tawn type 2 90 degrees"</code> </td>
-</tr><tr><td>
-<code>234</code> </td>
-<td> <code>"Tawn2_270"</code> </td>
-</tr><tr><td> <code>"Rotated Tawn type 2 270 degrees"</code> </td>
-<td>
-No.        </td>
-</tr></table></td>
+expression (see table below).</p><table class='table'>
+<tr><td>No.</td><td>Short name</td><td>Long name</td></tr>
+<tr><td><code>0</code></td><td><code>"I"</code></td><td><code>"Independence"</code></td></tr>
+<tr><td><code>1</code></td><td><code>"N"</code></td><td><code>"Gaussian"</code></td></tr>
+<tr><td><code>2</code></td><td><code>"t"</code></td><td><code>"t"</code></td></tr>
+<tr><td><code>3</code></td><td><code>"C"</code></td><td><code>"Clayton"</code></td></tr>
+<tr><td><code>4</code></td><td><code>"G"</code></td><td><code>"Gumbel"</code></td></tr>
+<tr><td><code>5</code></td><td><code>"F"</code></td><td><code>"Frank"</code></td></tr>
+<tr><td><code>6</code></td><td><code>"J"</code></td><td><code>"Joe"</code></td></tr>
+<tr><td><code>7</code></td><td><code>"BB1"</code></td><td><code>"BB1"</code></td></tr>
+<tr><td><code>8</code></td><td><code>"BB6"</code></td><td><code>"BB6"</code></td></tr>
+<tr><td><code>9</code></td><td><code>"BB7"</code></td><td><code>"BB7"</code></td></tr>
+<tr><td><code>10</code></td><td><code>"BB8"</code></td><td><code>"Frank-Joe"</code></td></tr>
+<tr><td><code>13</code></td><td><code>"SC"</code></td><td><code>"Survival Clayton"</code></td></tr>
+<tr><td><code>14</code></td><td><code>"SG"</code></td><td><code>"Survival Gumbel"</code></td></tr>
+<tr><td><code>16</code></td><td><code>"SJ"</code></td><td><code>"Survival Joe"</code></td></tr>
+<tr><td><code>17</code></td><td><code>"SBB1"</code></td><td><code>"Survival BB1"</code></td></tr>
+<tr><td><code>18</code></td><td><code>"SBB6"</code></td><td><code>"Survival BB6"</code></td></tr>
+<tr><td><code>19</code></td><td><code>"SBB7"</code></td><td><code>"Survival BB7"</code></td></tr>
+<tr><td><code>20</code></td><td><code>"SBB8"</code></td><td><code>"Survival BB8"</code></td></tr>
+<tr><td><code>23</code></td><td><code>"C90"</code></td><td><code>"Rotated Clayton 90 degrees"</code></td></tr>
+<tr><td><code>24</code></td><td><code>"G90"</code></td><td><code>"Rotated Gumbel 90 degrees"</code></td></tr>
+<tr><td><code>26</code></td><td><code>"J90"</code></td><td><code>"Rotated Joe 90 degrees"</code></td></tr>
+<tr><td><code>27</code></td><td><code>"BB1_90"</code></td><td><code>"Rotated BB1 90 degrees"</code></td></tr>
+<tr><td><code>28</code></td><td><code>"BB6_90"</code></td><td><code>"Rotated BB6 90 degrees"</code></td></tr>
+<tr><td><code>29</code></td><td><code>"BB7_90"</code></td><td><code>"Rotated BB7 90 degrees"</code></td></tr>
+<tr><td><code>30</code></td><td><code>"BB8_90"</code></td><td><code>"Rotated Frank-Joe 90 degrees"</code></td></tr>
+<tr><td><code>33</code></td><td><code>"C270"</code></td><td><code>"Rotated Clayton 270 degrees"</code></td></tr>
+<tr><td><code>34</code></td><td><code>"G270"</code></td><td><code>"Rotated Gumbel 270 degrees"</code></td></tr>
+<tr><td><code>36</code></td><td><code>"J270"</code></td><td><code>"Rotated Joe 270 degrees"</code></td></tr>
+<tr><td><code>37</code></td><td><code>"BB1_270"</code></td><td><code>"Rotated BB1 270 degrees"</code></td></tr>
+<tr><td><code>38</code></td><td><code>"BB6_270"</code></td><td><code>"Rotated BB6 270 degrees"</code></td></tr>
+<tr><td><code>39</code></td><td><code>"BB7_270"</code></td><td><code>"Rotated BB7 270 degrees"</code></td></tr>
+<tr><td><code>40</code></td><td><code>"BB8_270"</code></td><td><code>"Rotated Frank-Joe 270 degrees"</code></td></tr>
+<tr><td><code>104</code></td><td><code>"Tawn"</code></td><td><code>"Tawn type 1"</code></td></tr>
+<tr><td><code>114</code></td><td><code>"Tawn180"</code></td><td><code>"Rotated Tawn type 1 180 degrees"</code></td></tr>
+<tr><td><code>124</code></td><td><code>"Tawn90"</code></td><td><code>"Rotated Tawn type 1 90 degrees"</code></td></tr>
+<tr><td><code>134</code></td><td><code>"Tawn270"</code></td><td><code>"Rotated Tawn type 1 270 degrees"</code></td></tr>
+<tr><td><code>204</code></td><td><code>"Tawn2"</code></td><td><code>"Tawn type 2"</code></td></tr>
+<tr><td><code>214</code></td><td><code>"Tawn2_180"</code></td><td><code>"Rotated Tawn type 2 180 degrees"</code></td></tr>
+<tr><td><code>224</code></td><td><code>"Tawn2_90"</code></td><td><code>"Rotated Tawn type 2 90 degrees"</code></td></tr>
+<tr><td><code>234</code></td><td><code>"Tawn2_270"</code></td><td><code>"Rotated Tawn type 2 270 degrees"</code></td></tr>
+<tr><td></td><td>No.</td><td>Short name</td></tr>
+</table>
+</td>
     </tr>
     <tr>
       <th>short</th>
@@ -274,7 +181,7 @@ character expression is returned, otherwise the long version.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='RVineTreePlot.html'>RVineTreePlot</a></code></p>
+    <div class='dont-index'><p><code><a href='RVineTreePlot.html'>RVineTreePlot</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -320,11 +227,14 @@ Ulf Schepsmeier
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

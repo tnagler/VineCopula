@@ -18,11 +18,25 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
+<meta property="og:title" content="Vuong Test Comparing Two R-Vine Copula Models — RVineVuongTest" />
+
+<meta property="og:description" content="This function performs a Vuong test between two d-dimensional R-vine copula
+models as specified by their RVineMatrix objects." />
+<meta name="twitter:card" content="summary" />
+
+
 
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -46,15 +60,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">VineCopula</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">VineCopula</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.8</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -66,6 +90,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -73,20 +98,24 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Vuong Test Comparing Two R-Vine Copula Models</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tnagler/VineCopula/blob/master/R/RVineVuongTest.R'><code>R/RVineVuongTest.R</code></a></small>
+    <div class="hidden name"><code>RVineVuongTest.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function performs a Vuong test between two d-dimensional R-vine copula
 models as specified by their <code><a href='RVineMatrix.html'>RVineMatrix</a></code> objects.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>RVineVuongTest</span>(<span class='no'>data</span>, <span class='no'>RVM1</span>, <span class='no'>RVM2</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -144,13 +173,12 @@ non-nested hypotheses. Econometrica 57 (2), 307-333.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='RVineClarkeTest.html'>RVineClarkeTest</a></code>, <code><a href='RVineAIC.html'>RVineAIC</a></code>,
-<code><a href='RVineAIC.html'>RVineBIC</a></code></p>
+    <div class='dont-index'><p><code><a href='RVineClarkeTest.html'>RVineClarkeTest</a></code>, <code><a href='RVineAIC.html'>RVineAIC</a></code>,
+<code><a href='RVineAIC.html'>RVineBIC</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># vine structure selection time-consuming (~ 20 sec)</span>
+    <pre class="examples"><div class='input'><span class='co'># vine structure selection time-consuming (~ 20 sec)</span>
 
 <span class='co'># load data set</span>
 <span class='fu'>data</span>(<span class='no'>daxreturns</span>)
@@ -164,7 +192,6 @@ non-nested hypotheses. Econometrica 57 (2), 307-333.</p>
 <span class='co'># compare the two models based on the data</span>
 <span class='no'>vuong</span> <span class='kw'>&lt;-</span> <span class='fu'>RVineVuongTest</span>(<span class='no'>daxreturns</span>[,<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='no'>RVM</span>, <span class='no'>CVM</span>)
 <span class='no'>vuong</span>$<span class='no'>statistic</span></div><div class='output co'>#&gt; [1] -0.2747161</div><div class='input'><span class='no'>vuong</span>$<span class='no'>statistic.Schwarz</span></div><div class='output co'>#&gt; [1] 0.07801086</div><div class='input'><span class='no'>vuong</span>$<span class='no'>p.value</span></div><div class='output co'>#&gt; [1] 0.7835344</div><div class='input'><span class='no'>vuong</span>$<span class='no'>p.value.Schwarz</span></div><div class='output co'>#&gt; [1] 0.9378194</div><div class='input'>
-
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -196,11 +223,14 @@ Jeffrey Dissmann, Eike Brechmann
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

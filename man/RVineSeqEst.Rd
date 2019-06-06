@@ -5,8 +5,8 @@
 \title{Sequential Estimation of an R-Vine Copula Model}
 \usage{
 RVineSeqEst(data, RVM, method = "mle", se = FALSE, max.df = 30,
-  max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6), BB8 = c(6, 1)),
-  progress = FALSE, weights = NA, cores = 1)
+  max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6), BB8 = c(6,
+  1)), progress = FALSE, weights = NA, cores = 1)
 }
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}
@@ -36,9 +36,9 @@ details see \code{\link{BiCopEst}}).}
 \item{progress}{Logical; whether the pairwise estimation progress is printed
 (default: \code{progress = FALSE}).}
 
-\item{weights}{Numerical; weights for each observation (opitional).}
+\item{weights}{Numerical; weights for each observation (optional).}
 
-\item{cores}{integer; if \code{cores > 1}, estimation will be parallized
+\item{cores}{integer; if \code{cores > 1}, estimation will be parallelized
 within each tree (using \code{\link[foreach]{foreach}}). However, the
 overhead caused by parallelization is likely to make the function run slower
 unless sample size is really large and \code{method = "itau"}.}

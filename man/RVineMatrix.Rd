@@ -4,9 +4,9 @@
 \alias{RVineMatrix}
 \title{R-Vine Copula Model in Matrix Notation}
 \usage{
-RVineMatrix(Matrix, family = array(0, dim = dim(Matrix)), par = array(NA,
-  dim = dim(Matrix)), par2 = array(NA, dim = dim(Matrix)), names = NULL,
-  check.pars = TRUE)
+RVineMatrix(Matrix, family = array(0, dim = dim(Matrix)),
+  par = array(NA, dim = dim(Matrix)), par2 = array(NA, dim =
+  dim(Matrix)), names = NULL, check.pars = TRUE)
 }
 \arguments{
 \item{Matrix}{Lower (or upper) triangular d x d matrix that defines the
@@ -72,7 +72,7 @@ parameters to each (conditional) pair defined by \code{Matrix} (default:
 NULL}.}
 
 \item{check.pars}{logical; default is \code{TRUE}; if \code{FALSE}, checks
-for family/parameter-consistency are ommited (should only be used with
+for family/parameter-consistency are omitted (should only be used with
 care).}
 }
 \value{
@@ -90,7 +90,7 @@ evaluating the density etc.,}
 \itemize{
 \item{\code{"C-vine": }}{all trees consist of a star,}
 \item{\code{"D-vine": }}{all trees consist of a path,}
-\item{\code{"R-vine": }}{all strucutres that are neither a C- nor D-vine,}
+\item{\code{"R-vine": }}{all structures that are neither a C- nor D-vine,}
 }}
 \item{tau}{Kendall's tau matrix,}
 \item{taildep}{matrices of lower and upper tail dependence coefficients,}

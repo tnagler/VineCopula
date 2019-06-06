@@ -7,7 +7,7 @@
 RVineMatrixCheck(M)
 }
 \arguments{
-\item{M}{A dxd vine matrix.}
+\item{M}{A \eqn{dxd} vine matrix.}
 }
 \value{
 \item{code}{ \code{1} for OK; \cr

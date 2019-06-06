@@ -57,7 +57,7 @@ BB1, BB6, BB7, BB8, Tawn type 1 and type 2; default is \code{par2 = 0}).}
 \item{\dots}{used internally.}
 }
 \value{
-A logical indicating wether the family can be used with the parameter
+A logical indicating whether the family can be used with the parameter
 specification.
 }
 \description{

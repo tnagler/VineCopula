@@ -8,7 +8,7 @@ importFrom("grDevices", "colorRampPalette", "rgb", "terrain.colors", "col2rgb", 
 importFrom("graphics", "abline", "box", "hist", "legend", "lines",
            "pairs", "par", "points", "strwidth", "text",
            "plot.new", "plot.window", "polygon", "strheight", "barplot")
-importFrom("stats", "cor", "dexp", "dgamma", "dnorm", "dt",
+importFrom("stats", "cor", "dexp", "dgamma", "dnorm", "dt", "sd",
            "integrate", "ks.test", "optim", "optimize", "pbinom",
            "pchisq", "pexp", "pgamma", "pnorm", "pt", "qexp", "qgamma",
            "qnorm", "qt", "runif", "uniroot", "var", "complete.cases", "rbinom")

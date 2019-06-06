@@ -43,13 +43,16 @@ NULL
 validBB8Copula = function(object) {
   if (object@dimension != 2)
     return("Only BB8 copulas of dimension 2 are supported.")
-  param <- object@parameters
-  upper <- object@param.upbnd
-  lower <- object@param.lowbnd
-  if (length(param) != length(upper))
-    return("Parameter and upper bound have non-equal length")
-  if (length(param) != length(lower))
-    return("Parameter and lower bound have non-equal length")
+    param <- object@parameters
+    p.n <- length(param)
+    upper <- object@param.upbnd
+    lower <- object@param.lowbnd
+    if (p.n != length(upper))
+        return("Parameter and upper bound have non-equal length.")
+    if (p.n != length(lower))
+        return("Parameter and lower bound have non-equal length.")
+    if (p.n != length(object@param.names))
+        return("Parameter and parameter names have non-equal length.")
   if (any(is.na(param)) | param[1] >= upper[1] | param[2] > upper[2] | param[1] < lower[1] | param[2] <= lower[2])
     return("Parameter value out of bound.")
   else return (TRUE)
@@ -102,15 +105,15 @@ BB8Copula <- function (param=c(1,1)) {
 
 ## density ##
 setMethod("dCopula", signature("numeric","BB8Copula"),
-          function(u, copula, log) {
-            linkVineCop.PDF(matrix(u,ncol=copula@dimension),copula, log)
+          function(u, copula, log, ...) {
+            linkVineCop.PDF(matrix(u,ncol=copula@dimension), copula, log, ...)
           })
-setMethod("dCopula", signature("matrix","BB8Copula"), function(u, copula, log) linkVineCop.PDF(u, copula, log))
+setMethod("dCopula", signature("matrix","BB8Copula"), function(u, copula, log, ...) linkVineCop.PDF(u, copula, log, ...))
 
 ## jcdf ##
 setMethod("pCopula", signature("numeric","BB8Copula"),
           function(u, copula, ...) {
-            linkVineCop.CDF(matrix(u,ncol=copula@dimension),copula)
+            linkVineCop.CDF(matrix(u,ncol=copula@dimension), copula)
           })
 setMethod("pCopula", signature("matrix","BB8Copula"), linkVineCop.CDF)
 
@@ -118,22 +121,22 @@ setMethod("pCopula", signature("matrix","BB8Copula"), linkVineCop.CDF)
 # ddu
 setMethod("dduCopula", signature("numeric","BB8Copula"),
           function(u, copula, ...) {
-            linkVineCop.ddu(matrix(u,ncol=copula@dimension),copula)
+            linkVineCop.ddu(matrix(u,ncol=copula@dimension), copula)
           })
 setMethod("dduCopula", signature("matrix","BB8Copula"), linkVineCop.ddu)
 
 # ddv
 setMethod("ddvCopula", signature("numeric","BB8Copula"),
           function(u, copula, ...) {
-            linkVineCop.ddv(matrix(u,ncol=copula@dimension),copula)
+            linkVineCop.ddv(matrix(u,ncol=copula@dimension), copula)
           })
 setMethod("ddvCopula", signature("matrix","BB8Copula"), linkVineCop.ddv)
 
 ## random number generator
-setMethod("rCopula", signature("numeric","BB8Copula"),linkVineCop.r)
+setMethod("rCopula", signature("numeric","BB8Copula"), linkVineCop.r)
 
-setMethod("tau",signature("BB8Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("BB8Copula"),linkVineCop.tailIndex)
+setMethod("tau",signature("BB8Copula"), linkVineCop.tau)
+setMethod("lambda",signature("BB8Copula"), linkVineCop.tailIndex)
 
 #########################
 ## BB8 survival copula ##
@@ -187,7 +190,7 @@ setMethod("ddvCopula", signature("matrix","surBB8Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","surBB8Copula"), linkVineCop.r)
 
 setMethod("tau",signature("surBB8Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("surBB8Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("surBB8Copula"),linkVineCop.tailIndex)
 
 #######################
 ## BB8 copula 90 deg ##
@@ -196,13 +199,18 @@ setMethod("tailIndex",signature("surBB8Copula"),linkVineCop.tailIndex)
 validRotBB8Copula = function(object) {
   if (object@dimension != 2)
     return("Only BB8 copulas of dimension 2 are supported.")
-  param <- object@parameters
-  upper <- object@param.upbnd
-  lower <- object@param.lowbnd
-  if (length(param) != length(upper))
-    return("Parameter and upper bound have non-equal length")
-  if (length(param) != length(lower))
-    return("Parameter and lower bound have non-equal length")
+    param <- object@parameters
+    p.n <- length(param)
+    upper <- object@param.upbnd
+    lower <- object@param.lowbnd
+    if (p.n != length(upper))
+        return("Parameter and upper bound have non-equal length.")
+    if (p.n != length(lower))
+        return("Parameter and lower bound have non-equal length.")
+    if (p.n != length(object@param.names))
+        return("Parameter and parameter names have non-equal length.")
+    if (any(is.na(param) | param >= upper | param < lower))
+        return("Parameter value out of bound.")
   else return (TRUE)
 }
 
@@ -254,7 +262,7 @@ setMethod("ddvCopula", signature("matrix","r90BB8Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","r90BB8Copula"), linkVineCop.r)
 
 setMethod("tau",signature("r90BB8Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("r90BB8Copula"),linkVineCop.tailIndex)
+setMethod("lambda",signature("r90BB8Copula"),linkVineCop.tailIndex)
 
 ###########################
 ## BB8 copula 270 degree ##
@@ -305,32 +313,4 @@ setMethod("ddvCopula", signature("matrix","r270BB8Copula"), linkVineCop.ddv)
 setMethod("rCopula", signature("numeric","r270BB8Copula"), linkVineCop.r)
 
 setMethod("tau",signature("r270BB8Copula"),linkVineCop.tau)
-setMethod("tailIndex",signature("r270BB8Copula"),linkVineCop.tailIndex)
-
-### set union
-
-setClassUnion("twoParamBiCop",c("BB1Copula","BB6Copula","BB7Copula","BB8Copula",
-                                "surBB1Copula","surBB6Copula","surBB7Copula","surBB8Copula",
-                                "r90BB1Copula","r90BB6Copula","r90BB7Copula","r90BB8Copula",
-                                "r270BB1Copula","r270BB6Copula","r270BB7Copula","r270BB8Copula"))
-
-fitCopula.twoParamBiCop <- function(copula, data, method = "mpl",
-                                    estimate.variance = FALSE) {
-  stopifnot(method=="mpl")
-  fit <- BiCopEst(data[,1], data[,2], copula@family, "mle",
-                  se=estimate.variance)
-
-  if(!estimate.variance) {
-    fit$se <- NA
-    fit$se2 <- NA
-  }
-
-  copFit <- copulaFromFamilyIndex(copula@family, fit$par, fit$par2)
-  new("fitCopula", estimate = c(fit$par, fit$par2), var.est = cbind(fit$se, fit$se2),
-      method = "maximum pseudo-likelihood via BiCopEst",
-      loglik = sum(dCopula(data, copFit, log=T)),
-      fitting.stats=list(convergence = as.integer(NA)), nsample = nrow(data),
-      copula=copFit)
-}
-
-setMethod("fitCopula", signature("twoParamBiCop"), fitCopula.twoParamBiCop)
+setMethod("lambda",signature("r270BB8Copula"),linkVineCop.tailIndex)

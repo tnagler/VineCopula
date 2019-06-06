@@ -10,7 +10,7 @@ RVinePar2Tau(RVM, check.pars = TRUE)
 \item{RVM}{An \code{\link{RVineMatrix}} object.}
 
 \item{check.pars}{logical; default is \code{TRUE}; if \code{FALSE}, checks
-for family/parameter-consistency are ommited (should only be used with care).}
+for family/parameter-consistency are omitted (should only be used with care).}
 }
 \value{
 Matrix with the same structure as the family and parameter matrices

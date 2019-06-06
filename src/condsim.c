@@ -10,10 +10,10 @@
 **
 */
 
-#include "vine.h"
-#include "memoryhandling.h"
-#include "condsim.h"
-#include "hfunc.h"
+#include "VineCopula/vine.h"
+#include "VineCopula/memoryhandling.h"
+#include "VineCopula/condsim.h"
+#include "VineCopula/hfunc.h"
 
 #define UMAX  1-1e-10
 

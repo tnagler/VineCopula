@@ -40,10 +40,10 @@
 #' 1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
 #' \code{par2} is found by a crude profile likelihood optimization over the
 #' interval (2, 10].
-#' @param cores integer; if \code{cores > 1}, estimation will be parallized
+#' @param cores integer; if \code{cores > 1}, estimation will be parallelized
 #' within each tree (using \code{\link[foreach]{foreach}}). Note that
 #' parallelization causes substantial overhead and may be slower than
-#' single-threaded computation when dimension, sample size, or familyset are
+#' single-threaded computation when dimension, sample size, or family set are
 #' small or \code{method = "itau"}.
 #'
 #' @return An \code{\link{RVineMatrix}} object with the selected families

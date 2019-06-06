@@ -1,3 +1,94 @@
+VineCopula 2.1.8 (September 17, 2018)
+----------------------------------------------------------------
+
+BUG FIXES
+
+  * prevent heap-buffer overflows in `BiCopHfuncDeriv(2)` (non-critical).
+
+  
+VineCopula 2.1.7 (August 31, 2018)
+----------------------------------------------------------------
+
+BUG FIXES
+
+  * get rid of warning messages when checking whether structure is a D-vine.
+  
+  * fix standard errors for one-parameter families.
+  
+  * avoid infinite loop for Joe's inverse h-function with extreme parameter 
+    values.
+  
+  * fix parameters bounds for BB copulas in `RVineMLE()`.
+  
+
+VineCopula 2.1.6 (June 18, 2018)
+----------------------------------------------------------------
+
+BUG FIXES
+
+  * fix rotation handling in derivative calculations.
+  
+  * fix check for whether a structure is a D-vine.
+  
+  * fixed typos in API documentation.
+
+
+VineCopula 2.1.5 (May 16, 2018)
+----------------------------------------------------------------
+
+NEW FEATURES
+
+  * no family restrictions for RVinePIT.
+
+BUG FIXES
+
+  * fix calculation of Kendall's tau when joint ties are present.
+  
+  * fix missing `pair.AIC/BIC` in `RVineSeqEst()`.
+  
+  * improved starting parameter for Joe copula MLE.
+
+
+VineCopula 2.1.4 (February 11, 2018)
+----------------------------------------------------------------
+
+NEW FEATURES
+
+  * All C-headers are now located in `inst/include/VineCopula` (#48).
+  
+  * Most C routines are registered as C-callable (#47).
+  
+BUG FIXES
+
+  * `RVineMLE` can now safely called with only independence copulas (#49).
+
+  * Fixed fix (non-critical) memory-access bug.
+
+
+VineCopula 2.1.3 (August 15, 2017)
+----------------------------------------------------------------
+
+NEW FEATURES
+
+  * `summary.RVineMatrix()` invisibly returns a `data.frame` containg most of
+    what is printed as output.
+    
+  * Less restrictive conditions on what is considered an appropriate `treecrit` 
+    function in `RVineStructureSelect()` (thanks to Thibault Vatter, #40).
+    
+  * New option `verbose` in `RVinePDF()` (thanks to @cag51, #36).
+
+BUG FIXES
+
+  * Fix parameter bounds in `RVineMLE()` corresponding to updated requirements 
+    in `BiCop`-functions.
+   
+  * Adapt to re-naming of `tailIndex` to `lambda` in the copula package (thanks
+    to Benedikt Graeler, #41, #42).
+    
+  * Fix bug in detecting C-vine copulas for `summary/print.RVineMatrix()` (#38).
+    
+
 VineCopula 2.1.2 (April 24, 2017)
 ----------------------------------------------------------------
 

@@ -10,7 +10,6 @@
 #' @return An object inherting \code{\linkS4class{copula}} corresponding to the
 #' specific family.
 #' @author Benedikt Graeler
-#' @keywords ~kwd1 ~kwd2
 #' @examples
 #'
 #' # normalCopula with parameter 0.5
@@ -64,13 +63,11 @@ copulaFromFamilyIndex <- function(family, par, par2 = 0) {
     constr(c(par, par2))
 }
 
-# generic fitting make fitCopula from copula generic
-setGeneric("fitCopula", fitCopula)
 
 ####################### generic wrapper functions to the VineCopula package ##
 
 # density from BiCopPDF
-linkVineCop.PDF <- function(u, copula, log = FALSE) {
+linkVineCop.PDF <- function(u, copula, log = FALSE, ...) {
     param <- copula@parameters
 
     if (length(param) == 1)
