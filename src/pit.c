@@ -22,7 +22,7 @@
 // n         sample size
 // d         dimension (>= 2)
 // type      vine type (1=Canonical vine, 2=D-vine)
-// family    copula family 
+// family    copula family
 // par       parameter values (at least d*(d-1)/2 parameters)
 ////////////////////////////////////////////////////////////////
 
@@ -32,24 +32,24 @@ void pit(int* T, int* d, int* family, int* type, double* par, double* nu, double
 {
 	int i, j, in=1, k, **fam, tt;
 	double **v, **theta, **z, **ny, **x;
-	
+
 	x = create_matrix(*d+1,*T);
 	v = create_matrix(*d+1,2*(*d)-1);
 	theta = create_matrix(*d+1,*d+1);
 	z = create_matrix(*d+1,*T);
 	ny = create_matrix(*d+1,*d+1);
 	fam = create_intmatrix(*d+1,*d+1);
-	
+
 	k = 0;
 	for(i=0;i<*d;i++)
-    { 
-		for (tt=0;tt<=*T-1;tt++ ) 
+    {
+		for (tt=0;tt<=*T-1;tt++ )
 		{
 			x[i][tt] = data[k];
 			k++;
 		}
     }
-	
+
 	//Initialize dependency parameters
 	k = 0;
 	for(i=0;i<*d-1;i++)
@@ -62,7 +62,7 @@ void pit(int* T, int* d, int* family, int* type, double* par, double* nu, double
 		  k++;
 		}
 	}
-	
+
 	// Transform
 	if(*type==1) //Canonical vine
 	{
@@ -96,7 +96,7 @@ void pit(int* T, int* d, int* family, int* type, double* par, double* nu, double
 				}
 				if(i==(*d-1))
 					break;
-				
+
 				v[i][0] = x[i][j];
 				Hfunc2(&fam[0][i-1],&in, &v[i-1][0],&v[i][0],&theta[0][i-1],&ny[0][i-1],&v[i][1]);
 				Hfunc1(&fam[0][i-1],&in, &v[i][0],&v[i-1][0],&theta[0][i-1],&ny[0][i-1],&v[i][2]);
@@ -112,7 +112,7 @@ void pit(int* T, int* d, int* family, int* type, double* par, double* nu, double
 			}
 		}
 	}
-	
+
 	//Write to output vector:
 	k = 0;
 	for(i=0;i<*d;i++)
@@ -123,7 +123,7 @@ void pit(int* T, int* d, int* family, int* type, double* par, double* nu, double
 		  k ++;
 		}
 	}
-	
+
 	//Free memory:
 	free_matrix(x,*d+1); free_matrix(v,*d+1); free_matrix(theta,*d+1); free_matrix(ny,*d+1); free_intmatrix(fam,*d+1); free_matrix(z,*d+1);
 }
@@ -146,17 +146,17 @@ void pit(int* T, int* d, int* family, int* type, double* par, double* nu, double
 
 // Reference: Schepsmeier (2015)
 
-// Ulf Schepsmeier, Efficient information based goodness-of-fit tests for vine copula models with fixed margins: A comprehensive review, 
+// Ulf Schepsmeier, Efficient information based goodness-of-fit tests for vine copula models with fixed margins: A comprehensive review,
 // Journal of Multivariate Analysis, Available online 14 January 2015, ISSN 0047-259X, http://dx.doi.org/10.1016/j.jmva.2015.01.001.
 // (http://www.sciencedirect.com/science/article/pii/S0047259X15000068)
 
 
-void RvinePIT(int* T, int* d, int* family, int* maxmat, int* matrix, int* condirect, int* conindirect, double* par, double* par2, double* data, 
+void RvinePIT(int* T, int* d, int* family, int* maxmat, int* matrix, int* condirect, int* conindirect, double* par, double* par2, double* data,
 		 double* out, double* vv, double* vv2, int* calcupdate)
 {
 	int i, j, k, t, m, **fam;
 	double **x, **theta, **nu, ***vdirect, ***vindirect, **z;
-	
+
 	//Allocate memory
 	x = create_matrix(*d,*T);
 	vdirect = create_3darray(*d,*d,*T);
@@ -165,18 +165,18 @@ void RvinePIT(int* T, int* d, int* family, int* maxmat, int* matrix, int* condir
 	nu=create_matrix(*d,*d);
 	fam=create_intmatrix(*d,*d);
 	z = create_matrix(*d,*T);
-	
+
 	//Initialize
 	k=0;
 	for(i=0;i<(*d);i++)
     {
-		for (t=0;t<*T;t++ ) 
+		for (t=0;t<*T;t++ )
 		{
 			x[i][t] = data[k];
             k++;
 	     }
 	}
-    
+
 	// From vector to array
 	k=0;
 	for(i=0;i<(*d);i++)
@@ -186,59 +186,59 @@ void RvinePIT(int* T, int* d, int* family, int* maxmat, int* matrix, int* condir
             theta[i][j]=par[(i+1)+(*d)*j-1] ;
             nu[i][j]=par2[(i+1)+(*d)*j-1]    ;
             fam[i][j]=family[(i+1)+(*d)*j-1] ;
-			for(t=0;t<*T;t++ ) 
+			for(t=0;t<*T;t++ )
 			{
 				vdirect[i][j][t]=vv[(i+1)+(*d)*j+(*d)*(*d)*t-1];
 				vindirect[i][j][t]=vv2[(i+1)+(*d)*j+(*d)*(*d)*t-1];
 			}
 		}
-	}       
-  
+	}
+
 	for(i=0;i<(*d);i++)
 	{
-		for(t=0;t<*T;t++ ) 
+		for(t=0;t<*T;t++ )
 		{
 			vdirect[*d-1][i][t]=x[*d-1-i][t];
 		}
 	}
-  
+
 	// First column is easy; it's the data
 	for(t=0;t<*T;t++)
 	{
 		z[0][t]=x[0][t];
 	}
-	
+
 	for(i=*d-2; i>-1; i--)
     {
 		for(k=*d-1;k>i;k--)
-        {   
+        {
 			if(calcupdate[(k+1)+(*d)*i-1]==1)
 			{
 				m=maxmat[(k+1)+(*d)*i-1];
-			  
+
 				if(m == matrix[(k+1)+(*d)*i-1])
-				{	
+				{
 					//if(condirect[k+(*d)*i-1]==1 || (i==0 && k==1)) // oder man ist im letzten Fall (i==0 && k==1), der nicht mehr in CondDist$direkt drin ist
 					{
 						Hfunc1(&fam[k][i],T,vdirect[k][i],vdirect[k][*d-m],&theta[k][i],&nu[k][i],vdirect[k-1][i]);
 					}
 					if(conindirect[k+(*d)*i-1]==1)
 					{
-						Hfunc2(&fam[k][i],T,vdirect[k][(*d-m)],vdirect[k][i],&theta[k][i],&nu[k][i],vindirect[k-1][i]); 
+						Hfunc2(&fam[k][i],T,vdirect[k][(*d-m)],vdirect[k][i],&theta[k][i],&nu[k][i],vindirect[k-1][i]);
 					}
 				}
 				else
-				{ 
+				{
 					//if(condirect[k+(*d)*i-1]==1 || (i==0 && k==1))
 					{
 						Hfunc1(&fam[k][i],T,vdirect[k][i],vindirect[k][(*d-m)],&theta[k][i],&nu[k][i],vdirect[k-1][i]);
 					}
 					if(conindirect[k+(*d)*i-1]==1)
 					{
-						Hfunc2(&fam[k][i],T,vindirect[k][(*d-m)],vdirect[k][i],&theta[k][i],&nu[k][i],vindirect[k-1][i]); 
+						Hfunc2(&fam[k][i],T,vindirect[k][(*d-m)],vdirect[k][i],&theta[k][i],&nu[k][i],vindirect[k-1][i]);
 					}
 				}
-				
+
 				//Rprintf("d-i: %d\t k-1: %d\t i: %d\n",*d-i, k-1, i);
 				//Rprintf("vindirect[k-1][i]: %f\t conindirect[k+(*d)*i-1]: %d \n", vindirect[k-1][i][1], conindirect[k+(*d)*i-1]);
 				for(t=0;t<*T;t++)
@@ -247,12 +247,12 @@ void RvinePIT(int* T, int* d, int* family, int* maxmat, int* matrix, int* condir
 				}
 
 			}
-			
+
 		}
 	}
-  
+
 	//Write to output vector:
-	
+
 	k = 0;
 	for(i=0;i<*d;i++)
 	{
@@ -262,26 +262,26 @@ void RvinePIT(int* T, int* d, int* family, int* maxmat, int* matrix, int* condir
 		  k ++;
 		}
 	}
-  
+
 	for(i=0;i<(*d);i++)
 	{
         for(j=0;j<(*d);j++)
-		{	
-			for(t=0;t<*T;t++ ) 
+		{
+			for(t=0;t<*T;t++ )
 			{
 				vv[(i+1)+(*d)*j+(*d)*(*d)*t-1]=vdirect[i][j][t];
 				vv2[(i+1)+(*d)*j+(*d)*(*d)*t-1]=vindirect[i][j][t];
 			}
 		}
 	}
-  
+
 	//Free memory:
-	free_matrix(x,*d); 
-	free_matrix(z,*d); 
-	free_3darray(vdirect,*d,*d); 
-	free_matrix(theta,*d); 
-	free_matrix(nu,*d); 
-	free_intmatrix(fam,*d); 
+	free_matrix(x,*d);
+	free_matrix(z,*d);
+	free_3darray(vdirect,*d,*d);
+	free_matrix(theta,*d);
+	free_matrix(nu,*d);
+	free_intmatrix(fam,*d);
 	free_3darray(vindirect,*d,*d);
 }
-	
+
