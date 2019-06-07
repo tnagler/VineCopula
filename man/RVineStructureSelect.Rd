@@ -7,8 +7,8 @@
 RVineStructureSelect(data, familyset = NA, type = 0,
   selectioncrit = "AIC", indeptest = FALSE, level = 0.05,
   trunclevel = NA, progress = FALSE, weights = NA,
-  treecrit = "tau", se = FALSE, rotations = TRUE, method = "mle",
-  cores = 1)
+  treecrit = "tau", rotations = TRUE, se = FALSE, presel = TRUE,
+  method = "mle", cores = 1)
 }
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}
@@ -52,11 +52,15 @@ printed (default: \code{progress = FALSE}).}
 \item{treecrit}{edge weight for Dissman's structure selection algorithm, see
 \emph{Details}.}
 
+\item{rotations}{If \code{TRUE}, all rotations of the families in
+\code{familyset} are included.}
+
 \item{se}{Logical; whether standard errors are estimated (default: \code{se
 = FALSE}).}
 
-\item{rotations}{If \code{TRUE}, all rotations of the families in
-\code{familyset} are included.}
+\item{presel}{Logical; whether to exclude families before fitting based on
+symmetry properties of the data. Makes the selection about 30\% faster
+(on average), but may yield slightly worse results in few special cases.}
 
 \item{method}{indicates the estimation method: either maximum
 likelihood estimation (\code{method = "mle"}; default) or inversion of
