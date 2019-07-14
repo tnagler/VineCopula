@@ -12,3 +12,4 @@ revdep
 ^revdep$
 ^docs$
 ^-*\.directory^
+^CRAN-RELEASE$
