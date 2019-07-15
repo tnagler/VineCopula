@@ -1,6 +1,3 @@
-Patch following a warning by Prof. Ripley regarding a (non-critical) heap-buffer
-overflow.
-
 ## Test environments
 * ubuntu 14.04 (release, devel) 
 * CRAN win-builder (devel, release)
