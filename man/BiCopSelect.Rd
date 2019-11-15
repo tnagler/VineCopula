@@ -4,9 +4,19 @@
 \alias{BiCopSelect}
 \title{Selection and Maximum Likelihood Estimation of Bivariate Copula Families}
 \usage{
-BiCopSelect(u1, u2, familyset = NA, selectioncrit = "AIC",
-  indeptest = FALSE, level = 0.05, weights = NA, rotations = TRUE,
-  se = FALSE, presel = TRUE, method = "mle")
+BiCopSelect(
+  u1,
+  u2,
+  familyset = NA,
+  selectioncrit = "AIC",
+  indeptest = FALSE,
+  level = 0.05,
+  weights = NA,
+  rotations = TRUE,
+  se = FALSE,
+  presel = TRUE,
+  method = "mle"
+)
 }
 \arguments{
 \item{u1, u2}{Data vectors of equal length with values in [0,1].}

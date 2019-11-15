@@ -52,6 +52,10 @@
 #'
 BiCopKDE <- function(u1, u2, type = "contour", margins, size,
                      kde.pars = list(), ...) {
+    if (!requireNamespace("kdecopula", quietly = TRUE)) {
+        stop("The 'kdecopula' package must be installed.")
+    }
+
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),
                     check_u,

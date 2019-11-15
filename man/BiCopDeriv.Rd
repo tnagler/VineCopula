@@ -4,8 +4,17 @@
 \alias{BiCopDeriv}
 \title{Derivatives of a Bivariate Copula Density}
 \usage{
-BiCopDeriv(u1, u2, family, par, par2 = 0, deriv = "par", log = FALSE,
-  obj = NULL, check.pars = TRUE)
+BiCopDeriv(
+  u1,
+  u2,
+  family,
+  par,
+  par2 = 0,
+  deriv = "par",
+  log = FALSE,
+  obj = NULL,
+  check.pars = TRUE
+)
 }
 \arguments{
 \item{u1, u2}{numeric vectors of equal length with values in [0,1].}

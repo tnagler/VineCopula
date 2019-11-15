@@ -4,8 +4,15 @@
 \alias{RVineTreePlot}
 \title{Visualization of R-Vine Tree Structure}
 \usage{
-RVineTreePlot(x, tree = "ALL", type = 0, edge.labels = NULL,
-  legend.pos = "bottomleft", interactive = FALSE, ...)
+RVineTreePlot(
+  x,
+  tree = "ALL",
+  type = 0,
+  edge.labels = NULL,
+  legend.pos = "bottomleft",
+  interactive = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{\code{RVineMatrix} object.}

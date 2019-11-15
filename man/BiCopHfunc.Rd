@@ -6,14 +6,11 @@
 \alias{BiCopHfunc2}
 \title{Conditional Distribution Function of a Bivariate Copula}
 \usage{
-BiCopHfunc(u1, u2, family, par, par2 = 0, obj = NULL,
-  check.pars = TRUE)
+BiCopHfunc(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE)
 
-BiCopHfunc1(u1, u2, family, par, par2 = 0, obj = NULL,
-  check.pars = TRUE)
+BiCopHfunc1(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE)
 
-BiCopHfunc2(u1, u2, family, par, par2 = 0, obj = NULL,
-  check.pars = TRUE)
+BiCopHfunc2(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE)
 }
 \arguments{
 \item{u1, u2}{numeric vectors of equal length with values in [0,1].}

@@ -4,9 +4,16 @@
 \alias{BiCopEst}
 \title{Parameter Estimation for Bivariate Copula Data}
 \usage{
-BiCopEst(u1, u2, family, method = "mle", se = FALSE, max.df = 30,
-  max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6), BB8 = c(6,
-  1)), weights = NA)
+BiCopEst(
+  u1,
+  u2,
+  family,
+  method = "mle",
+  se = FALSE,
+  max.df = 30,
+  max.BB = list(BB1 = c(5, 6), BB6 = c(6, 6), BB7 = c(5, 6), BB8 = c(6, 1)),
+  weights = NA
+)
 }
 \arguments{
 \item{u1, u2}{Data vectors of equal length with values in [0,1].}

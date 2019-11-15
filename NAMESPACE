@@ -1,14 +1,14 @@
 import(mvtnorm)
-import(copula)
 import(methods)
 import(lattice)
 import(network)
 
+importFrom("graphics", "contour", "plot")
 importFrom("grDevices", "colorRampPalette", "rgb", "terrain.colors", "col2rgb", "gray")
 importFrom("graphics", "abline", "box", "hist", "legend", "lines",
            "pairs", "par", "points", "strwidth", "text",
            "plot.new", "plot.window", "polygon", "strheight", "barplot")
-importFrom("stats", "cor", "dexp", "dgamma", "dnorm", "dt", "sd",
+importFrom("stats", "cor", "dexp", "dgamma", "dnorm", "dt", "sd", "approx",
            "integrate", "ks.test", "optim", "optimize", "pbinom",
            "pchisq", "pexp", "pgamma", "pnorm", "pt", "qexp", "qgamma",
            "qnorm", "qt", "runif", "uniroot", "var", "complete.cases", "rbinom")
@@ -92,10 +92,6 @@ export(BetaMatrix)
 
 export(as.copuladata)
 export(pairs.copuladata)
-
-# compatibility to copula
-export(fitCopula)
-export(dduCopula,ddvCopula)
 
 export(BB1Copula, surBB1Copula, r90BB1Copula, r270BB1Copula)
 export(BB6Copula, surBB6Copula, r90BB6Copula, r270BB6Copula)

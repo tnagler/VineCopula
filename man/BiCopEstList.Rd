@@ -4,8 +4,7 @@
 \alias{BiCopEstList}
 \title{List of Maximum Likelihood Estimates for Several Bivariate Copula Families}
 \usage{
-BiCopEstList(u1, u2, familyset = NA, weights = NA, rotations = TRUE,
-  ...)
+BiCopEstList(u1, u2, familyset = NA, weights = NA, rotations = TRUE, ...)
 }
 \arguments{
 \item{u1, u2}{Data vectors of equal length with values in [0,1].}
