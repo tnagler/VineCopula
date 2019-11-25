@@ -183,8 +183,8 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
     ## sequential estimation of start parameters if not provided
     if (all(start == 0)) {
         est_start <- RVineSeqEst(data, RVM, max.df = max.df, max.BB = max.BB)
-        start <- est_start$RVM$par
-        start2 <- est_start$RVM$par2
+        start <- est_start$par
+        start2 <- est_start$par2
     }
 
     ## Position of parameters in R-vine matrix
