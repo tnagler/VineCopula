@@ -282,3 +282,72 @@ adjustPars <- function(family, par, par2) {
     }
     c(par, par2)
 }
+
+BiCopCheckTaus <- function(family, tau) {
+    cl <- match.call()[1]
+    ## check for family/tau consistency
+    checkTaus <- function(x) {
+        family <- x[1]
+        tau <- x[2]
+        if (family %in% c(3, 13) && tau <= 0)
+            stop("\n In ", cl, ": ",
+                 "Clayton copula cannot be used for tau<=0.",
+                 call. = FALSE)
+        if (family %in% c(4, 14) && tau < 0)
+            stop("\n In ", cl, ": ",
+                 "Gumbel copula cannot be used for tau<0.",
+                 call. = FALSE)
+        if (family == 5 && tau == 0)
+            stop("\n In ", cl, ": ",
+                 "Frank copula cannot be used for tau=0",
+                 call. = FALSE)
+        if (family %in% c(6, 16) && tau < 0)
+            stop("\n In ", cl, ": ",
+                 "Joe copula cannot be used for tau<0.",
+                 call. = FALSE)
+        if (family %in% c(23, 33) && tau >= 0)
+            stop("\n In ", cl, ": ",
+                 "Rotated Clayton copula cannot be used for tau>=0.",
+                 call. = FALSE)
+        if (family %in% c(24, 34) && tau > 0)
+            stop("\n In ", cl, ": ",
+                 "Rotated Gumbel copula cannot be used for tau>0.",
+                 call. = FALSE)
+        if (family %in% c(26, 36) && tau > 0)
+            stop("\n In ", cl, ": ",
+                 "Rotated Joe copula cannot be used for tau>0.",
+                 call. = FALSE)
+    }
+    apply(cbind(family, tau), 1, checkTaus)
+
+    ## return TRUE if all checks pass
+    TRUE
+}
+
+adjustTaus <- function(family, tau) {
+    tau <- vapply(tau, function(tau) {
+        if (family %in% c(3, 13) && tau <= 0) {
+            tau <- BiCopPar2Tau(family, 1e-04)
+        }
+        if (family %in% c(4, 14) && tau < 0) {
+            tau <- BiCopPar2Tau(family, 1.0001)
+        }
+        if (family == 5 && tau == 0) {
+            tau <- BiCopPar2Tau(family, 1e-04)
+        }
+        if (family %in% c(6, 16) && tau < 0) {
+            tau <- BiCopPar2Tau(family, 1.0001)
+        }
+        if (family %in% c(23, 33) && tau >= 0) {
+            tau <- BiCopPar2Tau(family, -1e-04)
+        }
+        if (family %in% c(24, 34) && tau > 0) {
+            tau <- BiCopPar2Tau(family, -1.0001)
+        }
+        if (family %in% c(26, 36) && tau > 0) {
+            tau <- BiCopPar2Tau(family, -1.0001)
+        }
+        tau
+    }, numeric(1))
+    tau
+}
