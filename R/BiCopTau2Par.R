@@ -119,9 +119,8 @@ BiCopTau2Par <- function(family, tau, check.taus = TRUE) {
     if (!all(c(length(family), length(tau)) %in% c(1, n)))
         stop("Input lenghts don't match")
 
-    ## check for family/tau consistency
-    if (check.taus)
-        BiCopCheckTaus(family, tau)
+    ## adjust tau
+    tau <- vapply(tau, adjustTau, numeric(1))
 
     ## calculate the parameter
     out <- vapply(1:length(tau),
@@ -222,5 +221,30 @@ ipsA.tau2cpar <- function(tau, mxiter = 20, eps = 1e-06, dstart = 0, iprint = FA
     if (iter >= mxiter)
         cat("did not converge\n")
     de
+}
+
+adjustTau <- function(tau, family) {
+    if (family %in% c(3, 13) && tau <= 0) {
+        tau <- BiCopPar2Tau(family, 1e-04)
+    }
+    if (family %in% c(4, 14) && tau < 0) {
+        tau <- BiCopPar2Tau(family, 1.0001)
+    }
+    if (family == 5 && tau == 0) {
+        tau <- BiCopPar2Tau(family, 1e-04)
+    }
+    if (family %in% c(6, 16) && tau < 0) {
+        tau <- BiCopPar2Tau(family, 1.0001)
+    }
+    if (family %in% c(23, 33) && tau >= 0) {
+        tau <- BiCopPar2Tau(family, -1e-04)
+    }
+    if (family %in% c(24, 34) && tau > 0) {
+        tau <- BiCopPar2Tau(family, -1.0001)
+    }
+    if (family %in% c(26, 36) && tau > 0) {
+        tau <- BiCopPar2Tau(family, -1.0001)
+    }
+    tau
 }
 
