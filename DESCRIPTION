@@ -33,7 +33,6 @@ Imports:
     mvtnorm,
     network,
     methods,
-    kdecopula (>= 0.8.0),
     ADGofTest,
     lattice,
     parallel
@@ -43,7 +42,7 @@ Suggests:
     shiny,
     testthat,
     numDeriv,
-    copula
+    kdecopula (>= 0.8.0)
 License: GPL (>= 2)
 LazyLoad: yes
 BugReports: https://github.com/tnagler/VineCopula/issues
