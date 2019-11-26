@@ -323,3 +323,31 @@ BiCopCheckTaus <- function(family, tau) {
     ## return TRUE if all checks pass
     TRUE
 }
+
+adjustTaus <- function(family, tau) {
+    tau <- vapply(tau, function(tau) {
+        if (family %in% c(3, 13) && tau <= 0) {
+            tau <- BiCopPar2Tau(family, 1e-04)
+        }
+        if (family %in% c(4, 14) && tau < 0) {
+            tau <- BiCopPar2Tau(family, 1.0001)
+        }
+        if (family == 5 && tau == 0) {
+            tau <- BiCopPar2Tau(family, 1e-04)
+        }
+        if (family %in% c(6, 16) && tau < 0) {
+            tau <- BiCopPar2Tau(family, 1.0001)
+        }
+        if (family %in% c(23, 33) && tau >= 0) {
+            tau <- BiCopPar2Tau(family, -1e-04)
+        }
+        if (family %in% c(24, 34) && tau > 0) {
+            tau <- BiCopPar2Tau(family, -1.0001)
+        }
+        if (family %in% c(26, 36) && tau > 0) {
+            tau <- BiCopPar2Tau(family, -1.0001)
+        }
+        tau
+    }, numeric(1))
+    tau
+}
