@@ -46,7 +46,7 @@ generation algorithm and number of equivalence classes. In Dependence
 Modeling: Vine Copula Handbook, pp 219--231. World Scientific, Singapore.
 }
 \seealso{
-\code{\link{RVineMatrix}}, \code{\link{RVineMatrixCheck}}
+\code{\link[=RVineMatrix]{RVineMatrix()}}, \code{\link[=RVineMatrixCheck]{RVineMatrixCheck()}}
 }
 \author{
 Thibault Vatter

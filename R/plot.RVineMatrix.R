@@ -1,50 +1,50 @@
-#' Plotting \code{RVineMatrix} objects.
+#' Plotting `RVineMatrix` objects.
 #'
-#' There are two plotting generics for \code{RVineMatrix} objects.
-#' \code{plot.RVineMatrix} plots one or all trees of a given R-vine copula
+#' There are two plotting generics for `RVineMatrix` objects.
+#' `plot.RVineMatrix` plots one or all trees of a given R-vine copula
 #' model. Edges can be labeled with information about the corresponding
-#' pair-copula. \code{contour.RVineMatrix} produces a matrix of contour plots
-#' (using \code{\link[VineCopula:plot.BiCop]{plot.BiCop}}).
+#' pair-copula. `contour.RVineMatrix` produces a matrix of contour plots
+#' (using [VineCopula::plot.BiCop()]).
 #'
 #' If you want the contour boxes to be perfect squares, the plot height should
-#' be \code{1.25/length(tree)*(d - min(tree))} times the plot width.
+#' be `1.25/length(tree)*(d - min(tree))` times the plot width.
 #'
 #' @method plot RVineMatrix
 #'
 #' @aliases plot.RVineMatrix contour.RVineMatrix
 #'
-#' @param x \code{RVineMatrix} object.
-#' @param tree \code{"ALL"} or integer vector; specifies which trees are
+#' @param x `RVineMatrix` object.
+#' @param tree `"ALL"` or integer vector; specifies which trees are
 #' plotted.
 #' @param type integer; specifies how to make use of variable names: \cr
-#' \code{0} = variable names are ignored, \cr \code{1} = variable names are
-#' used to annotate vertices, \cr \code{2} = uses numbers in plot and adds a
+#' `0` = variable names are ignored, \cr `1` = variable names are
+#' used to annotate vertices, \cr `2` = uses numbers in plot and adds a
 #' legend for variable names.
 #' @param edge.labels character; either a vector of edge labels or one of the
-#' following: \cr \code{"family"} = pair-copula family abbreviation (see
-#' \code{\link[VineCopula:BiCopName]{BiCopName}}), \cr \code{"par"} =
-#' pair-copula parameters, \cr \code{"tau"} = pair-copula Kendall's tau (by
-#' conversion of parameters) \cr \code{"family-par"} = pair-copula family and
-#' parameters \cr \code{"family-tau"} = pair-copula family and Kendall's tau.
-#' @param legend.pos the \code{x} argument for
-#' \code{\link[graphics:legend]{legend}}.
+#' following: \cr `"family"` = pair-copula family abbreviation (see
+#' [VineCopula::BiCopName()]), \cr `"par"` =
+#' pair-copula parameters, \cr `"tau"` = pair-copula Kendall's tau (by
+#' conversion of parameters) \cr `"family-par"` = pair-copula family and
+#' parameters \cr `"family-tau"` = pair-copula family and Kendall's tau.
+#' @param legend.pos the `x` argument for
+#' [graphics::legend()].
 #' @param interactive logical; if TRUE, the user is asked to adjust the
 #' positioning of vertices with his mouse.
-#' @param xylim numeric vector of length 2; sets \code{xlim} and \code{ylim}
+#' @param xylim numeric vector of length 2; sets `xlim` and `ylim`
 #' for the contours
 #' @param cex.nums numeric; expansion factor for font of the numbers.
 #' @param data a data matrix for creating kernel density contours of each pair.
 #' @param \dots Arguments passed to
-#' \code{\link[network:plot.network]{plot.network}} or
-#' \code{\link[VineCopula:plot.BiCop]{plot.BiCop}} respectively.
+#' [network::plot.network()] or
+#' [VineCopula::plot.BiCop()] respectively.
 #'
 #' @author Thomas Nagler, Nicole Barthel
 #'
-#' @seealso \code{\link[VineCopula:RVineMatrix]{RVineMatrix}},
-#' \code{\link[network:plot.network]{plot.network}},
-#' \code{\link[VineCopula:plot.BiCop]{plot.BiCop}},
-#' \code{\link[VineCopula:BiCopName]{BiCopName}},
-#' \code{\link[graphics:legend]{legend}}
+#' @seealso [VineCopula::RVineMatrix()],
+#' [network::plot.network()],
+#' [VineCopula::plot.BiCop()],
+#' [VineCopula::BiCopName()],
+#' [graphics::legend()]
 #'
 #' @keywords plot
 #'
@@ -203,7 +203,7 @@ makeNetwork <- function(RVM, tree, use.names = FALSE) {
 
     ## create network
     colnames(I) <- rownames(I) <- node.lab
-    nw <- network(I, directed = FALSE)
+    nw <- network::network(I, directed = FALSE)
 
     ## return network and labels
     list(nw = nw, vlabs = node.lab)

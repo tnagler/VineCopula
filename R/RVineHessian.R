@@ -6,26 +6,26 @@
 #'
 #'
 #' @param data An N x d data matrix (with uniform margins).
-#' @param RVM An \code{\link{RVineMatrix}} object including the structure, the
+#' @param RVM An [RVineMatrix()] object including the structure, the
 #' pair-copula families, and the parameters. \cr
 #' Only the following copula
-#' families are allowed in \code{RVM$family} \cr
-#' \code{0} = independence copula \cr
-#' \code{1} = Gaussian copula \cr
-#' \code{2} = Student t copula (t-copula)\cr
-#' \code{3} = Clayton copula \cr
-#' \code{4} = Gumbel copula \cr
-#' \code{5} = Frank copula \cr
-#' \code{6} = Joe copula \cr
-#' \code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-#' \code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-#' \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
-#' \code{23} = rotated Clayton copula (90 degrees) \cr
-#' \code{24} = rotated Gumbel copula (90 degrees) \cr
-#' \code{26} = rotated Joe copula (90 degrees) \cr
-#' \code{33} = rotated Clayton copula (270 degrees) \cr
-#' \code{34} = rotated Gumbel copula (270 degrees) \cr
-#' \code{36} = rotated Joe copula (270 degrees) \cr
+#' families are allowed in `RVM$family` \cr
+#' `0` = independence copula \cr
+#' `1` = Gaussian copula \cr
+#' `2` = Student t copula (t-copula)\cr
+#' `3` = Clayton copula \cr
+#' `4` = Gumbel copula \cr
+#' `5` = Frank copula \cr
+#' `6` = Joe copula \cr
+#' `13` = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
+#' `14` = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+#' `16` = rotated Joe copula (180 degrees; ``survival Joe'') \cr
+#' `23` = rotated Clayton copula (90 degrees) \cr
+#' `24` = rotated Gumbel copula (90 degrees) \cr
+#' `26` = rotated Joe copula (90 degrees) \cr
+#' `33` = rotated Clayton copula (270 degrees) \cr
+#' `34` = rotated Gumbel copula (270 degrees) \cr
+#' `36` = rotated Joe copula (270 degrees) \cr
 #'
 #' @return \item{hessian}{The calculated Hessian matrix of the log-likelihood
 #' value of the R-vine copula model.}
@@ -39,13 +39,13 @@
 #' @author Ulf Schepsmeier, Jakob Stoeber
 #'
 #' @seealso
-#' \code{\link{BiCopDeriv}},
-#' \code{\link{BiCopDeriv2}},
-#' \code{\link{BiCopHfuncDeriv}},
-#' \code{\link{BiCopHfuncDeriv2}}, \cr
-#' \code{\link{RVineMatrix}},
-#' \code{\link{RVineMLE}},
-#' \code{\link{RVineGrad}}
+#' [BiCopDeriv()],
+#' [BiCopDeriv2()],
+#' [BiCopHfuncDeriv()],
+#' [BiCopHfuncDeriv2()], \cr
+#' [RVineMatrix()],
+#' [RVineMLE()],
+#' [RVineGrad()]
 #'
 #' @references Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 #' (2013). Selecting and estimating regular vine copulae and application to
@@ -54,14 +54,14 @@
 #' Schepsmeier, U. and J. Stoeber (2014)
 #' Derivatives and Fisher information of bivariate copulas.
 #' Statistical Papers, 55(2), 525-542.
-#' online first: \url{http://link.springer.com/article/10.1007/s00362-013-0498-x}.
+#' online first: <http://link.springer.com/article/10.1007/s00362-013-0498-x>.
 #'
 #' Web supplement: Derivatives and Fisher Information of bivariate copulas.
-#' \url{http://mediatum.ub.tum.de/node?id=1119201}
+#' <http://mediatum.ub.tum.de/node?id=1119201>
 #'
 #' Stoeber, J. and U. Schepsmeier (2013). Estimating standard errors in regular
 #' vine copula models. Computational Statistics, 28 (6), 2679-2707
-#' \url{http://link.springer.com/article/10.1007/s00180-013-0423-8#}.
+#' <http://link.springer.com/article/10.1007/s00180-013-0423-8#>.
 #'
 #' @examples
 #'

@@ -31,8 +31,8 @@ random variables. The Annals of Mathematical Statistics, 21(4), 593-600.
 Nelsen, R. (2006). An introduction to copulas.  Springer
 }
 \seealso{
-\code{\link{TauMatrix}}, \code{\link{BiCopPar2Beta}},
-\code{\link{RVinePar2Beta}}
+\code{\link[=TauMatrix]{TauMatrix()}}, \code{\link[=BiCopPar2Beta]{BiCopPar2Beta()}},
+\code{\link[=RVinePar2Beta]{RVinePar2Beta()}}
 }
 \author{
 Ulf Schepsmeier

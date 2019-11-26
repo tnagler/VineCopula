@@ -9,13 +9,13 @@
 #' @param d Dimension of the R-Vine matrices.
 #' @param size Number of matrices to sample.
 #' @param naturalOrder Should the matrices be in the natural order
-#' (default: \code{naturalOrder = FALSE}).
-#' @return A list of length \code{size} with each element containing one
+#' (default: `naturalOrder = FALSE`).
+#' @return A list of length `size` with each element containing one
 #' R-Vine matrix.
 #'
 #' @author Thibault Vatter
 #'
-#' @seealso \code{\link{RVineMatrix}}, \code{\link{RVineMatrixCheck}}
+#' @seealso [RVineMatrix()], [RVineMatrixCheck()]
 #'
 #' @references Joe H, Cooke RM and Kurowicka D (2011). Regular vines:
 #' generation algorithm and number of equivalence classes. In Dependence

@@ -27,26 +27,26 @@ legend for variable names.}
 
 \item{edge.labels}{character; either a vector of edge labels or one of the
 following: \cr \code{"family"} = pair-copula family abbreviation (see
-\code{\link[VineCopula:BiCopName]{BiCopName}}), \cr \code{"par"} =
+\code{\link[VineCopula:BiCopName]{VineCopula::BiCopName()}}), \cr \code{"par"} =
 pair-copula parameters, \cr \code{"tau"} = pair-copula Kendall's tau (by
 conversion of parameters) \cr \code{"family-par"} = pair-copula family and
 parameters \cr \code{"family-tau"} = pair-copula family and Kendall's tau.}
 
 \item{legend.pos}{the \code{x} argument for
-\code{\link[graphics:legend]{legend}}.}
+\code{\link[graphics:legend]{graphics::legend()}}.}
 
 \item{interactive}{logical; if TRUE, the user is asked to adjust the
 positioning of vertices with his mouse.}
 
 \item{\dots}{Arguments passed to
-\code{\link[network:plot.network]{plot.network}}.}
+\code{\link[network:plot.network]{network::plot.network()}}.}
 }
 \description{
-Function is deprecated since \code{VineCopula 2.0}. Use
-\code{\link[VineCopula:plot.RVineMatrix]{plot.RVineMatrix}} instead.
+Function is deprecated since \verb{VineCopula 2.0}. Use
+\code{\link[VineCopula:plot.RVineMatrix]{VineCopula::plot.RVineMatrix()}} instead.
 }
 \seealso{
-\code{\link[VineCopula:plot.RVineMatrix]{plot.RVineMatrix}}
+\code{\link[VineCopula:plot.RVineMatrix]{VineCopula::plot.RVineMatrix()}}
 }
 \author{
 Thomas Nagler

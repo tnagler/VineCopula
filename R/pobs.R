@@ -14,19 +14,19 @@
 #' \eqn{n/(n+1)}.  This asymptotically negligible scaling factor is used to
 #' force the variates to fall inside the open unit hypercube, for example, to
 #' avoid problems with density evaluation at the boundaries. Note that
-#' \code{pobs(, lower.tail=FALSE)} simply returns \code{1-pobs()}.
+#' `pobs(, lower.tail=FALSE)` simply returns `1-pobs()`.
 #'
 #' @name pobs
 #' @param x \eqn{n\times d}{n x d}-matrix of random variates to be converted to
 #' pseudo-observations.
-#' @param na.last,ties.method are passed to \code{\link{rank}}; see there.
-#' @param lower.tail \code{\link{logical}} which, if \code{FALSE}, returns the
+#' @param na.last,ties.method are passed to [rank()]; see there.
+#' @param lower.tail [logical()] which, if `FALSE`, returns the
 #' pseudo-observations when applying the empirical marginal survival functions.
-#' @return matrix of the same dimensions as \code{x} containing the
+#' @return matrix of the same dimensions as `x` containing the
 #' pseudo-observations.
 #'
 #' @note This function is borrowed from the
-#' \code{\link[copula:pobs]{copula}} package.
+#' [`copula()`][copula::pobs] package.
 #'
 #' @author Marius Hofert
 #' @examples

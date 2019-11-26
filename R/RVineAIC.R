@@ -19,19 +19,19 @@
 #' @aliases RVineAIC RVineBIC
 #'
 #' @param data An N x d data matrix (with uniform margins).
-#' @param RVM An \code{\link{RVineMatrix}} object including the structure and
+#' @param RVM An [RVineMatrix()] object including the structure and
 #' the pair-copula families and parameters.
 #' @param par A d x d matrix with the pair-copula parameters (optional;
-#' default: \code{par = RVM$par}).
+#' default: `par = RVM$par`).
 #' @param par2 A d x d matrix with the second parameters of pair-copula
-#' families with two parameters (optional; default: \code{par2 = RVM$par2}).
+#' families with two parameters (optional; default: `par2 = RVM$par2`).
 #' @return \item{AIC, BIC}{The computed AIC or BIC value, respectively.}
 #' \item{pair.AIC, pair.BIC}{A d x d matrix of individual contributions to the
-#' AIC or BIC value for each pair-copula, respectively. Note: \code{AIC =
-#' sum(pair.AIC)} and similarly \code{BIC = sum(pair.BIC)}.}
+#' AIC or BIC value for each pair-copula, respectively. Note: `AIC =
+#' sum(pair.AIC)` and similarly `BIC = sum(pair.BIC)`.}
 #' @author Eike Brechmann
-#' @seealso \code{\link{RVineLogLik}}, \code{\link{RVineVuongTest}},
-#' \code{\link{RVineClarkeTest}}
+#' @seealso [RVineLogLik()], [RVineVuongTest()],
+#' [RVineClarkeTest()]
 #' @references Akaike, H. (1973). Information theory and an extension of the
 #' maximum likelihood principle. In B. N. Petrov and F. Csaki (Eds.),
 #' Proceedings of the Second International Symposium on Information Theory

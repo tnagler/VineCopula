@@ -4,7 +4,7 @@
 #' There are 15 different goodness-of-fit tests implemented, described in
 #' Schepsmeier (2013).
 #'
-#' \code{method = "White"}: \cr
+#' `method = "White"`: \cr
 #' This goodness-of fit test uses the information
 #' matrix equality of White (1982) and was original investigated by Huang and
 #' Prokhorov (2011) for copulas. \cr
@@ -35,7 +35,7 @@
 #' bivariate copulas and in Schepsmeier (2013) for vine copulas. It involves
 #' multi-dimensional integrals. \cr
 #'
-#' \code{method = "IR"}: \cr
+#' `method = "IR"`: \cr
 #' As the White test the information matrix ratio
 #' test is based on the expected Hessian matrix
 #' \eqn{\boldsymbol{H}(\theta)}{H(\theta)}
@@ -54,23 +54,23 @@
 #' \eqn{tr(A)} is the trace of the matrix \eqn{A} \cr
 #' For details see Schepsmeier (2013) \cr
 #'
-#' \code{method = "Breymann"}, \code{method = "Berg"} and \code{method =
-#' "Berg2"}: \cr
+#' `method = "Breymann"`, `method = "Berg"` and `method =
+#' "Berg2"`: \cr
 #' These tests are based on the multivariate probability integral
-#' transform (PIT) applied in \code{\link{RVinePIT}}. The multivariate data
+#' transform (PIT) applied in [RVinePIT()]. The multivariate data
 #' \eqn{y_{i}} returned form the PIT are aggregated to univariate data by
 #' different aggregation functions \eqn{\Gamma(\cdot)} in the sum \deqn{
 #' s_t=\sum_{i=1}^d \Gamma(y_{it}), t=1,...,n }.
 #' In Breymann et al. (2003) the weight function is suggested as
 #' \eqn{\Gamma(\cdot)=\Phi^{-1}(\cdot)^2}{\Gamma(y)=\Phi^{-1}y^2}, while in
 #' Berg and Bakken (2007) the weight function is either
-#' \eqn{\Gamma(\cdot)=|\cdot-0.5|}{\Gamma(y)=|y-0.5|} (\code{method="Berg"}) or
+#' \eqn{\Gamma(\cdot)=|\cdot-0.5|}{\Gamma(y)=|y-0.5|} (`method="Berg"`) or
 #' \eqn{\Gamma(\cdot)=(\cdot-0.5)^{\alpha},\alpha=2,4,6,...}{\Gamma(y)=(y-0.5)^{\alpha},\alpha=2,4,6,...}
-#' (\code{method="Berg2"}). \cr Furthermore, the \code{"Berg"} and
-#' \code{"Berg2"} test are based on the order statistics of the PIT returns.
+#' (`method="Berg2"`). \cr Furthermore, the `"Berg"` and
+#' `"Berg2"` test are based on the order statistics of the PIT returns.
 #' \cr See Berg and Bakken (2007) or Schepsmeier (2013) for details. \cr
 #'
-#' \code{method = "ECP"} and \code{method = "ECP2"}: \cr
+#' `method = "ECP"` and `method = "ECP2"`: \cr
 #' Both tests are test
 #' for \eqn{H_0: C \in C_0} against \eqn{H_1: C \notin C_0} where C denotes the
 #' (vine) copula distribution function and \eqn{C_0} is a class of parametric
@@ -94,86 +94,86 @@
 #' (2013) for details.
 #'
 #' @param data An N x d data matrix (with uniform margins).
-#' @param RVM \code{\link{RVineMatrix}} objects of the R-vine model under the
+#' @param RVM [RVineMatrix()] objects of the R-vine model under the
 #' null hypothesis. \cr
 #' Only the following copula families are allowed in
-#' \code{RVM$family} due to restrictions in \code{\link{RVineGrad}} and
-#' \code{\link{RVineHessian}} \cr
-#' \code{0} = independence copula \cr
-#' \code{1} = Gaussian copula \cr
-#' \code{2} = Student t copula (t-copula)\cr
-#' \code{3} = Clayton copula \cr
-#' \code{4} = Gumbel copula \cr
-#' \code{5} = Frank copula \cr
-#' \code{6} = Joe copula \cr
-#' \code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-#' \code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-#' \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
-#' \code{23} = rotated Clayton copula (90 degrees) \cr
-#' \code{24} = rotated Gumbel copula (90 degrees) \cr
-#' \code{26} = rotated Joe copula (90 degrees) \cr
-#' \code{33} = rotated Clayton copula (270 degrees) \cr
-#' \code{34} = rotated Gumbel copula (270 degrees) \cr
-#' \code{36} = rotated Joe copula (270 degrees) \cr
+#' `RVM$family` due to restrictions in [RVineGrad()] and
+#' [RVineHessian()] \cr
+#' `0` = independence copula \cr
+#' `1` = Gaussian copula \cr
+#' `2` = Student t copula (t-copula)\cr
+#' `3` = Clayton copula \cr
+#' `4` = Gumbel copula \cr
+#' `5` = Frank copula \cr
+#' `6` = Joe copula \cr
+#' `13` = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
+#' `14` = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+#' `16` = rotated Joe copula (180 degrees; ``survival Joe'') \cr
+#' `23` = rotated Clayton copula (90 degrees) \cr
+#' `24` = rotated Gumbel copula (90 degrees) \cr
+#' `26` = rotated Joe copula (90 degrees) \cr
+#' `33` = rotated Clayton copula (270 degrees) \cr
+#' `34` = rotated Gumbel copula (270 degrees) \cr
+#' `36` = rotated Joe copula (270 degrees) \cr
 #' @param method A string indicating the goodness-of-fit method:\cr
-#' \code{"White"} = goodness-of-fit test based on White's information matrix
+#' `"White"` = goodness-of-fit test based on White's information matrix
 #' equality (default) \cr
-#' \code{"IR"} = goodness-of-fit test based on the
+#' `"IR"` = goodness-of-fit test based on the
 #' information ratio \cr
-#' \code{"Breymann"} = goodness-of-fit test based on the
+#' `"Breymann"` = goodness-of-fit test based on the
 #' probability integral transform (PIT) and the aggregation to univariate data
 #' by Breymann et al. (2003). \cr
-#' \code{"Berg"} = goodness-of-fit test based on
+#' `"Berg"` = goodness-of-fit test based on
 #' the probability integral transform (PIT) and the aggregation to univariate
 #' data by Berg and Bakken (2007). \cr
-#' \code{"Berg2"} = second goodness-of-fit
+#' `"Berg2"` = second goodness-of-fit
 #' test based on the probability integral transform (PIT) and the aggregation
 #' to univariate data by Berg and Bakken (2007). \cr
-#' \code{"ECP"} =
+#' `"ECP"` =
 #' goodness-of-fit test based on the empirical copula process (ECP) \cr
-#' \code{"ECP2"} = goodness-of-fit test based on the combination of probability
+#' `"ECP2"` = goodness-of-fit test based on the combination of probability
 #' integral transform (PIT) and empirical copula process (ECP) (Genest et al.
 #' 2009) \cr
 #' @param statistic A string indicating the goodness-of-fit test statistic
-#' type:\cr \code{"CvM"} = Cramer-von Mises test statistic (univariate for
-#' \code{"Breymann"}, \code{"Berg"} and \code{"Berg2"}, multivariate for
-#' \code{"ECP"} and \code{"ECP2"}) \cr \code{"KS"} = Kolmogorov-Smirnov test
-#' statistic (univariate for \code{"Breymann"}, \code{"Berg"} and
-#' \code{"Berg2"}, multivariate for \code{"ECP"} and \code{"ECP2"}) \cr
-#' \code{"AD"} = Anderson-Darling test statistic (only univariate for
-#' \code{"Breymann"}, \code{"Berg"} and \code{"Berg2"})
-#' @param B an integer for the number of bootstrap steps (default \code{B =
-#' 200})\cr
-#' For \code{B = 0} the asymptotic p-value is returned if available,
+#' type:\cr `"CvM"` = Cramer-von Mises test statistic (univariate for
+#' `"Breymann"`, `"Berg"` and `"Berg2"`, multivariate for
+#' `"ECP"` and `"ECP2"`) \cr `"KS"` = Kolmogorov-Smirnov test
+#' statistic (univariate for `"Breymann"`, `"Berg"` and
+#' `"Berg2"`, multivariate for `"ECP"` and `"ECP2"`) \cr
+#' `"AD"` = Anderson-Darling test statistic (only univariate for
+#' `"Breymann"`, `"Berg"` and `"Berg2"`)
+#' @param B an integer for the number of bootstrap steps (default `B =
+#' 200`)\cr
+#' For `B = 0` the asymptotic p-value is returned if available,
 #' otherwise only the test statistic is returned.\cr
-#' WARNING: If \code{B} is chosen too large, computations will take very long.
-#' @param alpha an integer of the set \code{2,4,6,...} for the \code{"Berg2"}
-#' goodness-of-fit test (default \code{alpha = 2})
+#' WARNING: If `B` is chosen too large, computations will take very long.
+#' @param alpha an integer of the set `2,4,6,...` for the `"Berg2"`
+#' goodness-of-fit test (default `alpha = 2`)
 #'
-#' @return For \code{method = "White"}:
+#' @return For `method = "White"`:
 #' \item{White}{test statistic}
-#' \item{p.value}{p-value, either asymptotic for \code{B = 0} or bootstrapped
-#' for \code{B > 0}}
-#' For \code{method = "IR"}:
+#' \item{p.value}{p-value, either asymptotic for `B = 0` or bootstrapped
+#' for `B > 0`}
+#' For `method = "IR"`:
 #' \item{IR}{test statistic (raw version as stated above)}
 #' \item{p.value}{So far no p-value is returned nigher a asymptotic nor a
 #' bootstrapped one. How to calculated a bootstrapped p-value is explained in
 #' Schepsmeier (2013). Be aware, that the test statistics than have to be adjusted
 #' with the empirical variance.}
-#' For \code{method = "Breymann"}, \code{method = "Berg"}
-#' and \code{method = "Berg2"}:
+#' For `method = "Breymann"`, `method = "Berg"`
+#' and `method = "Berg2"`:
 #' \item{CvM, KS, AD}{test statistic according to
-#' the choice of \code{statistic}}
+#' the choice of `statistic`}
 #' \item{p.value}{p-value, either asymptotic
-#' for \code{B = 0} or bootstrapped for \code{B > 0}.  A asymptotic p-value is
+#' for `B = 0` or bootstrapped for `B > 0`.  A asymptotic p-value is
 #' only available for the Anderson-Darling test statistic if the R-package
-#' \code{ADGofTest} is loaded. \cr
+#' `ADGofTest` is loaded. \cr
 #' Furthermore, a asymptotic p-value can be
 #' calculated for the Kolmogorov-Smirnov test statistic. For the Cramer-von
 #' Mises no asymptotic p-value is available so far.}
-#' For \code{method = "ECP"} and \code{method = "ECP2"}:
+#' For `method = "ECP"` and `method = "ECP2"`:
 #' \item{CvM, KS}{test statistic according to the
-#' choice of \code{statistic}}
+#' choice of `statistic`}
 #' \item{p.value}{bootstrapped p-value} \cr
 #' Warning: The code for all the p-values are not yet approved since some of them are
 #' moved from R-code to C-code. If you need p-values the best way is to write your own
@@ -181,11 +181,11 @@
 #'
 #' @author Ulf Schepsmeier
 #'
-#' @seealso \code{\link{BiCopGofTest}}, \code{\link{RVinePIT}}
+#' @seealso [BiCopGofTest()], [RVinePIT()]
 #'
 #' @references Berg, D. and H. Bakken (2007) A copula goodness-of-fit approach
 #' based on the conditional probability integral transformation.
-#' \url{http://www.danielberg.no/publications/Btest.pdf}
+#' <http://www.danielberg.no/publications/Btest.pdf>
 #'
 #' Breymann, W., A. Dias and P. Embrechts (2003) Dependence structures for
 #' multivariate high-frequency data in finance. Quantitative Finance 3, 1-14
@@ -197,7 +197,7 @@
 #' appear in Econometric Reviews
 #'
 #' Schepsmeier, U. (2013) A goodness-of-fit test for regular vine copula
-#' models.  Preprint \url{http://arxiv.org/abs/1306.0818}
+#' models.  Preprint <http://arxiv.org/abs/1306.0818>
 #'
 #' Schepsmeier, U. (2015) Efficient information based goodness-of-fit tests for
 #' vine copula models with fixed margins. Journal of Multivariate Analysis 138,

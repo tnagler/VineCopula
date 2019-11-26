@@ -20,35 +20,32 @@ bivariate copula family: \cr
 \code{8} = BB6 copula \cr
 \code{9} = BB7 copula \cr
 \code{10} = BB8 copula \cr
-\code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-\code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-\code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
-\code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
-\code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
-\code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
+\code{13} = rotated Clayton copula (180 degrees; \verb{survival Clayton'') \\cr `14` = rotated Gumbel copula (180 degrees; }survival Gumbel'') \cr
+\code{16} = rotated Joe copula (180 degrees; \verb{survival Joe'') \\cr `17` = rotated BB1 copula (180 degrees; }survival BB1'')\cr
+\code{18} = rotated BB6 copula (180 degrees; \verb{survival BB6'')\\cr `19` = rotated BB7 copula (180 degrees; }survival BB7'')\cr
 \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
 \code{23} = rotated Clayton copula (90 degrees) \cr
-\code{24} = rotated Gumbel copula (90 degrees) \cr
-\code{26} = rotated Joe copula (90 degrees) \cr
-\code{27} = rotated BB1 copula (90 degrees) \cr
-\code{28} = rotated BB6 copula (90 degrees) \cr
-\code{29} = rotated BB7 copula (90 degrees) \cr
-\code{30} = rotated BB8 copula (90 degrees) \cr
-\code{33} = rotated Clayton copula (270 degrees) \cr
-\code{34} = rotated Gumbel copula (270 degrees) \cr
-\code{36} = rotated Joe copula (270 degrees) \cr
-\code{37} = rotated BB1 copula (270 degrees) \cr
-\code{38} = rotated BB6 copula (270 degrees) \cr
-\code{39} = rotated BB7 copula (270 degrees) \cr
-\code{40} = rotated BB8 copula (270 degrees) \cr
-\code{104} = Tawn type 1 copula \cr
-\code{114} = rotated Tawn type 1 copula (180 degrees) \cr
-\code{124} = rotated Tawn type 1 copula (90 degrees) \cr
-\code{134} = rotated Tawn type 1 copula (270 degrees) \cr
-\code{204} = Tawn type 2 copula \cr
-\code{214} = rotated Tawn type 2 copula (180 degrees) \cr
-\code{224} = rotated Tawn type 2 copula (90 degrees) \cr
-\code{234} = rotated Tawn type 2 copula (270 degrees) \cr}
+`24` = rotated Gumbel copula (90 degrees) \cr
+`26` = rotated Joe copula (90 degrees) \cr
+`27` = rotated BB1 copula (90 degrees) \cr
+`28` = rotated BB6 copula (90 degrees) \cr
+`29` = rotated BB7 copula (90 degrees) \cr
+`30` = rotated BB8 copula (90 degrees) \cr
+`33` = rotated Clayton copula (270 degrees) \cr
+`34` = rotated Gumbel copula (270 degrees) \cr
+`36` = rotated Joe copula (270 degrees) \cr
+`37` = rotated BB1 copula (270 degrees) \cr
+`38` = rotated BB6 copula (270 degrees) \cr
+`39` = rotated BB7 copula (270 degrees) \cr
+`40` = rotated BB8 copula (270 degrees) \cr
+`104` = Tawn type 1 copula \cr
+`114` = rotated Tawn type 1 copula (180 degrees) \cr
+`124` = rotated Tawn type 1 copula (90 degrees) \cr
+`134` = rotated Tawn type 1 copula (270 degrees) \cr
+`204` = Tawn type 2 copula \cr
+`214` = rotated Tawn type 2 copula (180 degrees) \cr
+`224` = rotated Tawn type 2 copula (90 degrees) \cr
+`234` = rotated Tawn type 2 copula (270 degrees) \cr}
 
 \item{par}{numeric; single number or vector of size \code{n}; copula parameter.}
 
@@ -99,16 +96,16 @@ are given in the following table.
 \code{18} \tab \eqn{2-2^{1/(\theta\delta)}} \tab - \cr
 \code{19} \tab \eqn{2-2^{1/\theta}} \tab \eqn{2^{-1/\delta}} \cr
 \code{20} \tab \eqn{2-2^{1/\theta}} if \eqn{\delta=1} otherwise 0 \tab - \cr
-\code{23, 33} \tab - \tab - \cr \code{24, 34} \tab - \tab - \cr
-\code{26, 36} \tab - \tab - \cr
-\code{27, 37} \tab - \tab - \cr
-\code{28, 38} \tab - \tab - \cr
-\code{29, 39} \tab - \tab - \cr
-\code{30, 40} \tab - \tab - \cr
-\code{104,204} \tab - \tab \eqn{\delta+1-(\delta^{\theta}+1)^{1/\theta}} \cr
-\code{114, 214} \tab \eqn{1+\delta-(\delta^{\theta}+1)^{1/\theta}} \tab - \cr
-\code{124, 224} \tab - \tab - \cr
-\code{134, 234} \tab - \tab - \cr }
+\verb{23, 33} \tab - \tab - \cr \verb{24, 34} \tab - \tab - \cr
+\verb{26, 36} \tab - \tab - \cr
+\verb{27, 37} \tab - \tab - \cr
+\verb{28, 38} \tab - \tab - \cr
+\verb{29, 39} \tab - \tab - \cr
+\verb{30, 40} \tab - \tab - \cr
+\verb{104,204} \tab - \tab \eqn{\delta+1-(\delta^{\theta}+1)^{1/\theta}} \cr
+\verb{114, 214} \tab \eqn{1+\delta-(\delta^{\theta}+1)^{1/\theta}} \tab - \cr
+\verb{124, 224} \tab - \tab - \cr
+\verb{134, 234} \tab - \tab - \cr }
 }
 \description{
 This function computes the theoretical tail dependence coefficients of a
@@ -140,7 +137,7 @@ Joe, H. (1997). Multivariate Models and Dependence Concepts.
 Chapman and Hall, London.
 }
 \seealso{
-\code{\link{BiCopPar2Tau}}
+\code{\link[=BiCopPar2Tau]{BiCopPar2Tau()}}
 }
 \author{
 Eike Brechmann

@@ -16,7 +16,7 @@ RVineGrad(
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}
 
-\item{RVM}{An \code{\link{RVineMatrix}} object including the structure and
+\item{RVM}{An \code{\link[=RVineMatrix]{RVineMatrix()}} object including the structure and
 the pair-copula families and parameters. \cr
 Only the following copula
 families are allowed in \code{RVM$family} \cr
@@ -27,15 +27,14 @@ families are allowed in \code{RVM$family} \cr
 \code{4} = Gumbel copula \cr
 \code{5} = Frank copula \cr
 \code{6} = Joe copula \cr
-\code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-\code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+\code{13} = rotated Clayton copula (180 degrees; \verb{survival Clayton'') \\cr `14` = rotated Gumbel copula (180 degrees; }survival Gumbel'') \cr
 \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
 \code{23} = rotated Clayton copula (90 degrees) \cr
-\code{24} = rotated Gumbel copula (90 degrees) \cr
-\code{26} = rotated Joe copula (90 degrees) \cr
-\code{33} = rotated Clayton copula (270 degrees) \cr
-\code{34} = rotated Gumbel copula (270 degrees) \cr
-\code{36} = rotated Joe copula (270 degrees) \cr}
+`24` = rotated Gumbel copula (90 degrees) \cr
+`26` = rotated Joe copula (90 degrees) \cr
+`33` = rotated Clayton copula (270 degrees) \cr
+`34` = rotated Gumbel copula (270 degrees) \cr
+`36` = rotated Joe copula (270 degrees) \cr}
 
 \item{par}{A d x d matrix with the pair-copula parameters (optional;
 default: \code{par = RVM$par}).}
@@ -44,8 +43,7 @@ default: \code{par = RVM$par}).}
 families with two parameters (optional; default: \code{par2 = RVM$par2}).}
 
 \item{start.V}{Transformations (h-functions and log-likelihoods of each
-pair-copula) of previous calculations (see output; default: \code{start.V =
-NA}).}
+pair-copula) of previous calculations (see output; default: \code{start.V = NA}).}
 
 \item{posParams}{A d x d matrix indicating which copula has to be considered
 in the gradient (default: \code{posParams = (RVM$family > 0)}).}
@@ -136,13 +134,13 @@ vine copula models. Computational Statistics, 28 (6), 2679-2707
 \url{http://link.springer.com/article/10.1007/s00180-013-0423-8#}.
 }
 \seealso{
-\code{\link{BiCopDeriv}},
-\code{\link{BiCopDeriv2}},
-\code{\link{BiCopHfuncDeriv}},
-\code{\link{BiCopHfuncDeriv2}}, \cr
-\code{\link{RVineMatrix}},
-\code{\link{RVineMLE}},
-\code{\link{RVineHessian}}
+\code{\link[=BiCopDeriv]{BiCopDeriv()}},
+\code{\link[=BiCopDeriv2]{BiCopDeriv2()}},
+\code{\link[=BiCopHfuncDeriv]{BiCopHfuncDeriv()}},
+\code{\link[=BiCopHfuncDeriv2]{BiCopHfuncDeriv2()}}, \cr
+\code{\link[=RVineMatrix]{RVineMatrix()}},
+\code{\link[=RVineMLE]{RVineMLE()}},
+\code{\link[=RVineHessian]{RVineHessian()}}
 }
 \author{
 Ulf Schepsmeier, Jakob Stoeber

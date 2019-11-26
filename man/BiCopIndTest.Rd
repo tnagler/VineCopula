@@ -7,7 +7,7 @@
 BiCopIndTest(u1, u2)
 }
 \arguments{
-\item{u1, u2}{Data vectors of equal length with values in [0,1].}
+\item{u1, u2}{Data vectors of equal length with values in \eqn{[0,1]}.}
 }
 \value{
 \item{statistic}{Test statistic of the independence test.}
@@ -53,9 +53,9 @@ to know about copula modeling but were afraid to ask. Journal of Hydrologic
 Engineering, 12 (4), 347-368.
 }
 \seealso{
-\code{\link{BiCopGofTest}}, \code{\link{BiCopPar2Tau}},
-\code{\link{BiCopTau2Par}}, \code{\link{BiCopSelect}},\cr
-\code{\link{RVineCopSelect}}, \code{\link{RVineStructureSelect}}
+\code{\link[=BiCopGofTest]{BiCopGofTest()}}, \code{\link[=BiCopPar2Tau]{BiCopPar2Tau()}},
+\code{\link[=BiCopTau2Par]{BiCopTau2Par()}}, \code{\link[=BiCopSelect]{BiCopSelect()}},\cr
+\code{\link[=RVineCopSelect]{RVineCopSelect()}}, \code{\link[=RVineStructureSelect]{RVineStructureSelect()}}
 }
 \author{
 Jeffrey Dissmann

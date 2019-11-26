@@ -1,7 +1,7 @@
 #' Vuong Test Comparing Two R-Vine Copula Models
 #'
 #' This function performs a Vuong test between two d-dimensional R-vine copula
-#' models as specified by their \code{\link{RVineMatrix}} objects.
+#' models as specified by their [RVineMatrix()] objects.
 #'
 #' The likelihood-ratio based test proposed by Vuong (1989) can be used for
 #' comparing non-nested models. For this let \eqn{c_1} and \eqn{c_2} be two
@@ -34,7 +34,7 @@
 #' the AIC and the BIC, respectively.
 #'
 #' @param data An N x d data matrix (with uniform margins).
-#' @param RVM1,RVM2 \code{\link{RVineMatrix}} objects of models 1 and 2.
+#' @param RVM1,RVM2 [RVineMatrix()] objects of models 1 and 2.
 #'
 #' @return \item{statistic, statistic.Akaike, statistic.Schwarz}{Test
 #' statistics without correction, with Akaike correction and with Schwarz
@@ -44,8 +44,8 @@
 #'
 #' @author Jeffrey Dissmann, Eike Brechmann
 #'
-#' @seealso \code{\link{RVineClarkeTest}}, \code{\link{RVineAIC}},
-#' \code{\link{RVineBIC}}
+#' @seealso [RVineClarkeTest()], [RVineAIC()],
+#' [RVineBIC()]
 #'
 #' @references Vuong, Q. H. (1989). Ratio tests for model selection and
 #' non-nested hypotheses. Econometrica 57 (2), 307-333.

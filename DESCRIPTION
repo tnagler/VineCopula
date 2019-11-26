@@ -49,3 +49,4 @@ BugReports: https://github.com/tnagler/VineCopula/issues
 URL: https://github.com/tnagler/VineCopula
 RoxygenNote: 7.0.0
 Encoding: UTF-8
+Roxygen: list(markdown = TRUE)

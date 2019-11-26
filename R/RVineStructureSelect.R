@@ -2,7 +2,7 @@
 #'
 #' This function fits either an R- or a C-vine copula model to a d-dimensional
 #' copula data set. Tree structures are determined and appropriate pair-copula
-#' families are selected using \code{\link{BiCopSelect}} and estimated
+#' families are selected using [BiCopSelect()] and estimated
 #' sequentially (forward selection of trees).
 #'
 #' @param data An N x d data matrix (with uniform margins).
@@ -10,55 +10,55 @@
 #' The vector has to include at least one
 #' pair-copula family that allows for positive and one that allows for negative
 #' dependence. Not listed copula families might be included to better handle
-#' limit cases.  If \code{familyset = NA} (default), selection among all
+#' limit cases.  If `familyset = NA` (default), selection among all
 #' possible families is performed.  Coding of pair-copula families is the same
-#' as in \code{\link{BiCop}}.
+#' as in [BiCop()].
 #' @param type Type of the vine model to be specified:\cr
-#' \code{0} or \code{"RVine"} = R-vine (default) \cr
-#' \code{1} or \code{"CVine"} = C-vine \cr
+#' `0` or `"RVine"` = R-vine (default) \cr
+#' `1` or `"CVine"` = C-vine \cr
 #' C- and D-vine copula models with pre-specified order can be specified using
-#' \code{CDVineCopSelect} of the package CDVine. Similarly, R-vine copula
+#' `CDVineCopSelect` of the package CDVine. Similarly, R-vine copula
 #' models with pre-specified tree structure can be specified using
-#' \code{\link{RVineCopSelect}}.
+#' [RVineCopSelect()].
 #' @param selectioncrit Character indicating the criterion for pair-copula
-#' selection. Possible choices:\code{selectioncrit = "AIC"} (default),
-#' \code{"BIC"}, or \code{"logLik"} (see \code{\link{BiCopSelect}}).
+#' selection. Possible choices:`selectioncrit = "AIC"` (default),
+#' `"BIC"`, or `"logLik"` (see [BiCopSelect()]).
 #' @param indeptest logical; whether a hypothesis test for the independence of
-#' \code{u1} and \code{u2} is performed before bivariate copula selection
-#' (default: \code{indeptest = FALSE}; see \code{\link{BiCopIndTest}}).  The
+#' `u1` and `u2` is performed before bivariate copula selection
+#' (default: `indeptest = FALSE`; see [BiCopIndTest()]).  The
 #' independence copula is chosen for a (conditional) pair if the null
 #' hypothesis of independence cannot be rejected.
 #' @param level numeric; significance level of the independence test
-#' (default: \code{level = 0.05}).
+#' (default: `level = 0.05`).
 #' @param trunclevel integer; level of truncation.
 #' @param progress logical; whether the tree-wise specification progress is
-#' printed (default: \code{progress = FALSE}).
+#' printed (default: `progress = FALSE`).
 #' @param weights numeric; weights for each observation (optional).
 #' @param treecrit edge weight for Dissman's structure selection algorithm, see
-#' \emph{Details}.
-#' @param rotations If \code{TRUE}, all rotations of the families in
-#' \code{familyset} are included.
-#' @param se Logical; whether standard errors are estimated (default: \code{se
-#' = FALSE}).
+#' *Details*.
+#' @param rotations If `TRUE`, all rotations of the families in
+#' `familyset` are included.
+#' @param se Logical; whether standard errors are estimated (default: `se
+#' = FALSE`).
 #' @param presel Logical; whether to exclude families before fitting based on
 #' symmetry properties of the data. Makes the selection about 30\% faster
 #' (on average), but may yield slightly worse results in few special cases.
 #' @param method indicates the estimation method: either maximum
-#' likelihood estimation (\code{method = "mle"}; default) or inversion of
-#' Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
-#' one parameter families and the Student t copula can be used (\code{family =
-#' 1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
-#' \code{par2} is found by a crude profile likelihood optimization over the
+#' likelihood estimation (`method = "mle"`; default) or inversion of
+#' Kendall's tau (`method = "itau"`). For `method = "itau"` only
+#' one parameter families and the Student t copula can be used (`family =
+#' 1,2,3,4,5,6,13,14,16,23,24,26,33,34` or `36`). For the t-copula,
+#' `par2` is found by a crude profile likelihood optimization over the
 #' interval (2, 10].
-#' @param cores integer; if \code{cores > 1}, estimation will be parallelized
-#' within each tree (using \code{\link[foreach]{foreach}}). Note that
+#' @param cores integer; if `cores > 1`, estimation will be parallelized
+#' within each tree (using [foreach::foreach()]). Note that
 #' parallelization causes substantial overhead and may be slower than
 #' single-threaded computation when dimension, sample size, or family set are
-#' small or \code{method = "itau"}.
+#' small or `method = "itau"`.
 #'
-#' @return An \code{\link{RVineMatrix}} object with the selected structure
-#' (\code{RVM$Matrix}) and families (\code{RVM$family}) as well as sequentially
-#' estimated parameters stored in \code{RVM$par} and \code{RVM$par2}. The object
+#' @return An [RVineMatrix()] object with the selected structure
+#' (`RVM$Matrix`) and families (`RVM$family`) as well as sequentially
+#' estimated parameters stored in `RVM$par` and `RVM$par2`. The object
 #' is augmented by the following information about the fit:
 #' \item{se, se2}{standard errors for the parameter estimates; note that these
 #' are only approximate since they do not
@@ -71,7 +71,7 @@
 #' \item{p.value.indeptest}{matrix of p-values of the independence test.}
 #'
 #' @note For a comprehensive summary of the vine copula model, use
-#' \code{summary(object)}; to see all its contents, use \code{str(object)}.
+#' `summary(object)`; to see all its contents, use `str(object)`.
 #'
 #' @details
 #' R-vine trees are selected using maximum spanning trees w.r.t. some edge
@@ -87,26 +87,26 @@
 #'
 #' Some commonly used edge weights are implemented:
 #' \tabular{ll}{
-#' \code{"tau"} \tab absolute value of empirical Kendall's tau. \cr
-#' \code{"rho"} \tab absolute value of empirical Spearman's rho. \cr
-#' \code{"AIC"} \tab Akaike information (multiplied by -1). \cr
-#' \code{"BIC"} \tab Bayesian information criterion (multiplied by -1). \cr
-#' \code{"cAIC"}\tab corrected Akaike information criterion (multiplied by -1). \cr
+#' `"tau"` \tab absolute value of empirical Kendall's tau. \cr
+#' `"rho"` \tab absolute value of empirical Spearman's rho. \cr
+#' `"AIC"` \tab Akaike information (multiplied by -1). \cr
+#' `"BIC"` \tab Bayesian information criterion (multiplied by -1). \cr
+#' `"cAIC"`\tab corrected Akaike information criterion (multiplied by -1). \cr
 #' }
-#' If the data contain NAs, the edge weights in \code{"tau"} and \code{"rho"} are
+#' If the data contain NAs, the edge weights in `"tau"` and `"rho"` are
 #' multiplied by the square root of the proportion of complete observations. This
 #' penalizes pairs where less observations are used. \cr
 #'
-#' The criteria \code{"AIC"}, \code{"BIC"}, and \code{"cAIC"} require estimation and
+#' The criteria `"AIC"`, `"BIC"`, and `"cAIC"` require estimation and
 #' model selection for all possible pairs. This is computationally expensive and
-#' much slower than \code{"tau"} or \code{"rho"}.
+#' much slower than `"tau"` or `"rho"`.
 #' The user can also specify a custom function to calculate the edge weights.
-#' The function has to be of type \code{function(u1, u2, weights) ...} and must
+#' The function has to be of type `function(u1, u2, weights) ...` and must
 #' return a numeric value. The weights argument must exist, but does not has to
-#' be used. For example, \code{"tau"} (without using weights) can be implemented
+#' be used. For example, `"tau"` (without using weights) can be implemented
 #' as follows:\cr
-#' \code{function(u1, u2, weights)} \cr
-#'     \code{abs(cor(u1, u2, method = "kendall", use = "complete.obs"))}
+#' `function(u1, u2, weights)` \cr
+#'     `abs(cor(u1, u2, method = "kendall", use = "complete.obs"))`
 #'
 #'
 #' The root nodes of C-vine trees are determined similarly by identifying the
@@ -121,12 +121,12 @@
 #' @author Jeffrey Dissmann, Eike Brechmann, Ulf Schepsmeier, Thomas Nagler
 #'
 #' @seealso
-#' \code{\link{RVineMatrix}},
-#' \code{\link{BiCop}},
-#' \code{\link{RVineCopSelect}},
-#' \code{\link{plot.RVineMatrix}},
-#' \code{\link{contour.RVineMatrix}},
-#' \code{\link[foreach]{foreach}}
+#' [RVineMatrix()],
+#' [BiCop()],
+#' [RVineCopSelect()],
+#' [plot.RVineMatrix()],
+#' [contour.RVineMatrix()],
+#' [foreach::foreach()]
 #'
 #' @references Brechmann, E. C., C. Czado, and K. Aas (2012). Truncated regular
 #' vines in high dimensions with applications to financial data. Canadian

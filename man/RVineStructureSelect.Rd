@@ -31,7 +31,7 @@ pair-copula family that allows for positive and one that allows for negative
 dependence. Not listed copula families might be included to better handle
 limit cases.  If \code{familyset = NA} (default), selection among all
 possible families is performed.  Coding of pair-copula families is the same
-as in \code{\link{BiCop}}.}
+as in \code{\link[=BiCop]{BiCop()}}.}
 
 \item{type}{Type of the vine model to be specified:\cr
 \code{0} or \code{"RVine"} = R-vine (default) \cr
@@ -39,15 +39,15 @@ as in \code{\link{BiCop}}.}
 C- and D-vine copula models with pre-specified order can be specified using
 \code{CDVineCopSelect} of the package CDVine. Similarly, R-vine copula
 models with pre-specified tree structure can be specified using
-\code{\link{RVineCopSelect}}.}
+\code{\link[=RVineCopSelect]{RVineCopSelect()}}.}
 
 \item{selectioncrit}{Character indicating the criterion for pair-copula
 selection. Possible choices:\code{selectioncrit = "AIC"} (default),
-\code{"BIC"}, or \code{"logLik"} (see \code{\link{BiCopSelect}}).}
+\code{"BIC"}, or \code{"logLik"} (see \code{\link[=BiCopSelect]{BiCopSelect()}}).}
 
 \item{indeptest}{logical; whether a hypothesis test for the independence of
 \code{u1} and \code{u2} is performed before bivariate copula selection
-(default: \code{indeptest = FALSE}; see \code{\link{BiCopIndTest}}).  The
+(default: \code{indeptest = FALSE}; see \code{\link[=BiCopIndTest]{BiCopIndTest()}}).  The
 independence copula is chosen for a (conditional) pair if the null
 hypothesis of independence cannot be rejected.}
 
@@ -67,29 +67,27 @@ printed (default: \code{progress = FALSE}).}
 \item{rotations}{If \code{TRUE}, all rotations of the families in
 \code{familyset} are included.}
 
-\item{se}{Logical; whether standard errors are estimated (default: \code{se
-= FALSE}).}
+\item{se}{Logical; whether standard errors are estimated (default: \code{se = FALSE}).}
 
 \item{presel}{Logical; whether to exclude families before fitting based on
-symmetry properties of the data. Makes the selection about 30\% faster
+symmetry properties of the data. Makes the selection about 30\\% faster
 (on average), but may yield slightly worse results in few special cases.}
 
 \item{method}{indicates the estimation method: either maximum
 likelihood estimation (\code{method = "mle"}; default) or inversion of
 Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
-one parameter families and the Student t copula can be used (\code{family =
-1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
+one parameter families and the Student t copula can be used (\verb{family = 1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
 \code{par2} is found by a crude profile likelihood optimization over the
 interval (2, 10].}
 
 \item{cores}{integer; if \code{cores > 1}, estimation will be parallelized
-within each tree (using \code{\link[foreach]{foreach}}). Note that
+within each tree (using \code{\link[foreach:foreach]{foreach::foreach()}}). Note that
 parallelization causes substantial overhead and may be slower than
 single-threaded computation when dimension, sample size, or family set are
 small or \code{method = "itau"}.}
 }
 \value{
-An \code{\link{RVineMatrix}} object with the selected structure
+An \code{\link[=RVineMatrix]{RVineMatrix()}} object with the selected structure
 (\code{RVM$Matrix}) and families (\code{RVM$family}) as well as sequentially
 estimated parameters stored in \code{RVM$par} and \code{RVM$par2}. The object
 is augmented by the following information about the fit:
@@ -106,7 +104,7 @@ account for the sequential nature of the estimation,}
 \description{
 This function fits either an R- or a C-vine copula model to a d-dimensional
 copula data set. Tree structures are determined and appropriate pair-copula
-families are selected using \code{\link{BiCopSelect}} and estimated
+families are selected using \code{\link[=BiCopSelect]{BiCopSelect()}} and estimated
 sequentially (forward selection of trees).
 }
 \details{
@@ -141,9 +139,8 @@ The function has to be of type \code{function(u1, u2, weights) ...} and must
 return a numeric value. The weights argument must exist, but does not has to
 be used. For example, \code{"tau"} (without using weights) can be implemented
 as follows:\cr
-\code{function(u1, u2, weights)} \cr
-    \code{abs(cor(u1, u2, method = "kendall", use = "complete.obs"))}
-
+\verb{function(u1, u2, weights)} \cr
+\code{abs(cor(u1, u2, method = "kendall", use = "complete.obs"))}
 
 The root nodes of C-vine trees are determined similarly by identifying the
 node with strongest dependencies to all other nodes. That is we take the
@@ -201,12 +198,12 @@ Selecting and estimating regular vine copulae and application to financial
 returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 }
 \seealso{
-\code{\link{RVineMatrix}},
-\code{\link{BiCop}},
-\code{\link{RVineCopSelect}},
-\code{\link{plot.RVineMatrix}},
-\code{\link{contour.RVineMatrix}},
-\code{\link[foreach]{foreach}}
+\code{\link[=RVineMatrix]{RVineMatrix()}},
+\code{\link[=BiCop]{BiCop()}},
+\code{\link[=RVineCopSelect]{RVineCopSelect()}},
+\code{\link[=plot.RVineMatrix]{plot.RVineMatrix()}},
+\code{\link[=contour.RVineMatrix]{contour.RVineMatrix()}},
+\code{\link[foreach:foreach]{foreach::foreach()}}
 }
 \author{
 Jeffrey Dissmann, Eike Brechmann, Ulf Schepsmeier, Thomas Nagler

@@ -6,69 +6,69 @@
 #'
 #'
 #' @param data An N x d data matrix (with uniform margins).
-#' @param RVM An \code{\link{RVineMatrix}} object including the structure and
+#' @param RVM An [RVineMatrix()] object including the structure and
 #' the pair-copula families and parameters (if known).
 #' @param start Lower triangular d x d matrix with zero diagonal entries with
 #' starting values for the pair-copula parameters (optional; otherwise they are
-#' calculated via \cr \code{\link{RVineSeqEst}}; default: \code{start =
-#' RVM$par}).
+#' calculated via \cr [RVineSeqEst()]; default: `start =
+#' RVM$par`).
 #' @param start2 Lower triangular d x d matrix with zero diagonal entries with
 #' starting values for the second parameters of pair-copula families with two
 #' parameters (optional; otherwise they are calculated via
-#' \code{\link{RVineSeqEst}}; default: \code{start2 = RVM$par2}).
+#' [RVineSeqEst()]; default: `start2 = RVM$par2`).
 #' @param maxit The maximum number of iteration steps (optional; default:
-#' \code{maxit = 200}).
+#' `maxit = 200`).
 #' @param max.df Numeric; upper bound for the estimation of the degrees of
-#' freedom parameter of the t-copula (default: \code{max.df = 30}; for more
-#' details see \code{\link{BiCopEst}}).
+#' freedom parameter of the t-copula (default: `max.df = 30`; for more
+#' details see [BiCopEst()]).
 #' @param max.BB List; upper bounds for the estimation of the two parameters
 #' (in absolute values) of the BB1, BB6, BB7 and BB8 copulas \cr (default:
-#' \code{max.BB = list(BB1=c(5,6),BB6=c(6,6),BB7=c(5,6),BB8=c(6,1))}).
+#' `max.BB = list(BB1=c(5,6),BB6=c(6,6),BB7=c(5,6),BB8=c(6,1))`).
 #' @param grad If RVM$family only contains one parameter copula families or the
 #' t-copula the analytical gradient can be used for maximization of the
-#' log-likelihood (see \code{\link{RVineGrad}}; default: \code{grad = FALSE}).
+#' log-likelihood (see [RVineGrad()]; default: `grad = FALSE`).
 #' @param hessian Logical; whether the Hessian matrix of parameter estimates is
-#' estimated (default: \code{hessian = FALSE}). Note that this is not the
-#' Hessian Matrix calculated via \code{\link{RVineHessian}} but via finite
+#' estimated (default: `hessian = FALSE`). Note that this is not the
+#' Hessian Matrix calculated via [RVineHessian()] but via finite
 #' differences.
 #' @param se Logical; whether standard errors of parameter estimates are
-#' estimated on the basis of the Hessian matrix (see above; default: \code{se =
-#' FALSE}).
-#' @param ... Further arguments for \code{optim} (e.g. \code{factr} controls
-#' the convergence of the "L-BFGS-B" method, or \code{trace}, a non-negative
+#' estimated on the basis of the Hessian matrix (see above; default: `se =
+#' FALSE`).
+#' @param ... Further arguments for `optim` (e.g. `factr` controls
+#' the convergence of the "L-BFGS-B" method, or `trace`, a non-negative
 #' integer, determines if tracing information on the progress of the
 #' optimization is produced.) \cr For more details see the documentation of
-#' \code{\link{optim}}.
+#' [optim()].
 #'
-#' @return \item{RVM}{\code{\link{RVineMatrix}} object with the calculated
-#' parameters stored in \code{RVM$par} and \code{RVM$par2}. Additional
+#' @return \item{RVM}{[RVineMatrix()] object with the calculated
+#' parameters stored in `RVM$par` and `RVM$par2`. Additional
 #' information about the fit is added (e.g., log-likelihood, AIC, BIC).}
 #' \item{value}{Optimized log-likelihood value corresponding to the estimated
 #' pair-copula parameters.} \item{convergence}{An integer code indicating
-#' either successful convergence (\code{convergence = 0}) or an error:\cr
-#' \code{1} = the iteration limit \code{maxit} has been reached \cr \code{51} =
-#' a warning from the "L-BFGS-B" method; see component \code{message} for
-#' further details \cr \code{52} = an error from the "L-BFGS-B" method; see
-#' component \code{message} for further details} \item{message}{A character
-#' string giving any additional information returned by \code{\link{optim}}, or
-#' \code{NULL}.} \item{counts}{A two-element integer vector giving the number
-#' of calls to \code{fn} and \code{gr} respectively.  This excludes those calls
-#' needed to compute the Hessian, if requested, and any calls to \code{fn} to
+#' either successful convergence (`convergence = 0`) or an error:\cr
+#' `1` = the iteration limit `maxit` has been reached \cr `51` =
+#' a warning from the "L-BFGS-B" method; see component `message` for
+#' further details \cr `52` = an error from the "L-BFGS-B" method; see
+#' component `message` for further details} \item{message}{A character
+#' string giving any additional information returned by [optim()], or
+#' `NULL`.} \item{counts}{A two-element integer vector giving the number
+#' of calls to `fn` and `gr` respectively.  This excludes those calls
+#' needed to compute the Hessian, if requested, and any calls to `fn` to
 #' compute a finite-difference approximation to the gradient.}
-#' \item{hessian}{If \code{hessian = TRUE}, the Hessian matrix is returned. Its
-#' calculation is on the basis of finite differences (output of \code{optim}).}
+#' \item{hessian}{If `hessian = TRUE`, the Hessian matrix is returned. Its
+#' calculation is on the basis of finite differences (output of `optim`).}
 #'
-#' @note \code{RVineMLE} uses the L-BFGS-B method for optimization. \cr If the
+#' @note `RVineMLE` uses the L-BFGS-B method for optimization. \cr If the
 #' analytical gradient is used for maximization, computations may be up to 10
 #' times faster than using finite differences.
 #'
 #' @author Ulf Schepsmeier, Jeffrey Dissmann
 #'
-#' @seealso \code{\link{RVineSeqEst}},
-#' \code{\link{RVineStructureSelect}},
-#' \code{\link{RVineMatrix}},
-#' \code{\link{RVineGrad}},
-#' \code{\link{RVineHessian}}
+#' @seealso [RVineSeqEst()],
+#' [RVineStructureSelect()],
+#' [RVineMatrix()],
+#' [RVineGrad()],
+#' [RVineHessian()]
 #'
 #' @references Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 #' (2013). Selecting and estimating regular vine copulae and application to
@@ -76,7 +76,7 @@
 #'
 #' Stoeber, J. and U. Schepsmeier (2013). Estimating standard errors in regular
 #' vine copula models. Computational Statistics, 1-29
-#' \url{http://link.springer.com/article/10.1007/s00180-013-0423-8#}.
+#' <http://link.springer.com/article/10.1007/s00180-013-0423-8#>.
 #'
 #' @examples
 #'

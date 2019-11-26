@@ -21,25 +21,24 @@ RVineMLE(
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}
 
-\item{RVM}{An \code{\link{RVineMatrix}} object including the structure and
+\item{RVM}{An \code{\link[=RVineMatrix]{RVineMatrix()}} object including the structure and
 the pair-copula families and parameters (if known).}
 
 \item{start}{Lower triangular d x d matrix with zero diagonal entries with
 starting values for the pair-copula parameters (optional; otherwise they are
-calculated via \cr \code{\link{RVineSeqEst}}; default: \code{start =
-RVM$par}).}
+calculated via \cr \code{\link[=RVineSeqEst]{RVineSeqEst()}}; default: \code{start = RVM$par}).}
 
 \item{start2}{Lower triangular d x d matrix with zero diagonal entries with
 starting values for the second parameters of pair-copula families with two
 parameters (optional; otherwise they are calculated via
-\code{\link{RVineSeqEst}}; default: \code{start2 = RVM$par2}).}
+\code{\link[=RVineSeqEst]{RVineSeqEst()}}; default: \code{start2 = RVM$par2}).}
 
 \item{maxit}{The maximum number of iteration steps (optional; default:
 \code{maxit = 200}).}
 
 \item{max.df}{Numeric; upper bound for the estimation of the degrees of
 freedom parameter of the t-copula (default: \code{max.df = 30}; for more
-details see \code{\link{BiCopEst}}).}
+details see \code{\link[=BiCopEst]{BiCopEst()}}).}
 
 \item{max.BB}{List; upper bounds for the estimation of the two parameters
 (in absolute values) of the BB1, BB6, BB7 and BB8 copulas \cr (default:
@@ -47,25 +46,24 @@ details see \code{\link{BiCopEst}}).}
 
 \item{grad}{If RVM$family only contains one parameter copula families or the
 t-copula the analytical gradient can be used for maximization of the
-log-likelihood (see \code{\link{RVineGrad}}; default: \code{grad = FALSE}).}
+log-likelihood (see \code{\link[=RVineGrad]{RVineGrad()}}; default: \code{grad = FALSE}).}
 
 \item{hessian}{Logical; whether the Hessian matrix of parameter estimates is
 estimated (default: \code{hessian = FALSE}). Note that this is not the
-Hessian Matrix calculated via \code{\link{RVineHessian}} but via finite
+Hessian Matrix calculated via \code{\link[=RVineHessian]{RVineHessian()}} but via finite
 differences.}
 
 \item{se}{Logical; whether standard errors of parameter estimates are
-estimated on the basis of the Hessian matrix (see above; default: \code{se =
-FALSE}).}
+estimated on the basis of the Hessian matrix (see above; default: \code{se = FALSE}).}
 
 \item{...}{Further arguments for \code{optim} (e.g. \code{factr} controls
 the convergence of the "L-BFGS-B" method, or \code{trace}, a non-negative
 integer, determines if tracing information on the progress of the
 optimization is produced.) \cr For more details see the documentation of
-\code{\link{optim}}.}
+\code{\link[=optim]{optim()}}.}
 }
 \value{
-\item{RVM}{\code{\link{RVineMatrix}} object with the calculated
+\item{RVM}{\code{\link[=RVineMatrix]{RVineMatrix()}} object with the calculated
 parameters stored in \code{RVM$par} and \code{RVM$par2}. Additional
 information about the fit is added (e.g., log-likelihood, AIC, BIC).}
 \item{value}{Optimized log-likelihood value corresponding to the estimated
@@ -75,7 +73,7 @@ either successful convergence (\code{convergence = 0}) or an error:\cr
 a warning from the "L-BFGS-B" method; see component \code{message} for
 further details \cr \code{52} = an error from the "L-BFGS-B" method; see
 component \code{message} for further details} \item{message}{A character
-string giving any additional information returned by \code{\link{optim}}, or
+string giving any additional information returned by \code{\link[=optim]{optim()}}, or
 \code{NULL}.} \item{counts}{A two-element integer vector giving the number
 of calls to \code{fn} and \code{gr} respectively.  This excludes those calls
 needed to compute the Hessian, if requested, and any calls to \code{fn} to
@@ -148,11 +146,11 @@ vine copula models. Computational Statistics, 1-29
 \url{http://link.springer.com/article/10.1007/s00180-013-0423-8#}.
 }
 \seealso{
-\code{\link{RVineSeqEst}},
-\code{\link{RVineStructureSelect}},
-\code{\link{RVineMatrix}},
-\code{\link{RVineGrad}},
-\code{\link{RVineHessian}}
+\code{\link[=RVineSeqEst]{RVineSeqEst()}},
+\code{\link[=RVineStructureSelect]{RVineStructureSelect()}},
+\code{\link[=RVineMatrix]{RVineMatrix()}},
+\code{\link[=RVineGrad]{RVineGrad()}},
+\code{\link[=RVineHessian]{RVineHessian()}}
 }
 \author{
 Ulf Schepsmeier, Jeffrey Dissmann

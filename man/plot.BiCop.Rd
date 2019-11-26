@@ -10,33 +10,31 @@
 \method{contour}{BiCop}(x, margins = "norm", size = 100L, ...)
 }
 \arguments{
-\item{x}{\code{BiCop object.}}
+\item{x}{\verb{BiCop object.}}
 
 \item{type}{plot type; either \code{"surface"}, \code{"contour"}, or
 \code{"lambda"} (partial matching is activated); the latter is only
-implemented for a few families (c.f., \code{\link{BiCopLambda}}).}
+implemented for a few families (c.f., \code{\link[=BiCopLambda]{BiCopLambda()}}).}
 
 \item{margins}{only relevant for types \code{"contour"} and
 \code{"surface"}; options are: \code{"unif"} for the original copula density,
 \code{"norm"} for the transformed density with standard normal margins,
 \code{"exp"} with standard exponential margins, and  \code{"flexp"} with
-flipped exponential margins. Default is \code{"norm"} for \code{type =
-"contour"}, and \code{"unif"} for \code{type = "surface"}.}
+flipped exponential margins. Default is \code{"norm"} for \code{type = "contour"}, and \code{"unif"} for \code{type = "surface"}.}
 
 \item{size}{integer; only relevant for types \code{"contour"} and
 \code{"surface"}; the plot is based on values on a \eqn{size x size} grid;
-default is 100 for \code{type = "contour"}, and 25 for \code{type =
-"surface"}.}
+default is 100 for \code{type = "contour"}, and 25 for \code{type = "surface"}.}
 
-\item{\dots}{optional arguments passed to \code{\link{contour}} or
-\code{\link{wireframe}}.}
+\item{\dots}{optional arguments passed to \code{\link[=contour]{contour()}} or
+\code{\link[=wireframe]{wireframe()}}.}
 }
 \description{
 There are several options for plotting BiCop objects. The density of a
 bivariate copula density can be visualized as surface/perspective or contour
 plot. Optionally, the density can be coupled with standard normal margins
 (default for contour plots). Furthermore, a lambda-plot is available (cf.,
-\code{\link{BiCopLambda}}).
+\code{\link[=BiCopLambda]{BiCopLambda()}}).
 }
 \examples{
 
@@ -50,7 +48,7 @@ contour(obj, margins = "unif")  # contour plot of copula density
 
 }
 \seealso{
-\code{\link{BiCop}}, \code{\link{contour}}, \code{\link{wireframe}}
+\code{\link[=BiCop]{BiCop()}}, \code{\link[=contour]{contour()}}, \code{\link[=wireframe]{wireframe()}}
 }
 \author{
 Thomas Nagler

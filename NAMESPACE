@@ -1,7 +1,6 @@
 import(mvtnorm)
 import(methods)
 import(lattice)
-import(network)
 
 importFrom("graphics", "contour", "plot")
 importFrom("grDevices", "colorRampPalette", "rgb", "terrain.colors", "col2rgb", "gray")

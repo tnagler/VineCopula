@@ -5,16 +5,16 @@
 #'
 #'
 #' @aliases RVinePcor2cor RVineCor2pcor
-#' @param RVM \code{\link{RVineMatrix}} defining only the R-vine structure for
-#' \code{Cor2pcor} and providing as well the partial correlations for
-#' \code{Pcor2cor}.
+#' @param RVM [RVineMatrix()] defining only the R-vine structure for
+#' `Cor2pcor` and providing as well the partial correlations for
+#' `Pcor2cor`.
 #' @param corMat correlation matrix
 #' @return \item{RVM}{RVineMatrix with transformed partial correlations (for
-#' \code{Cor2pcor})} \item{cor}{correlation matrix (for \code{Pcor2cor})}
-#' @note The behavior of \code{RVinePcor2ccor} differs from older versions (<=
+#' `Cor2pcor`)} \item{cor}{correlation matrix (for `Pcor2cor`)}
+#' @note The behavior of `RVinePcor2ccor` differs from older versions (<=
 #' 1.4). The RVM object is now normalized such that the order of the returned
 #' correlation matrix conforms with the correlation matrix of the data. If
-#' \code{RVM$names} are non-default, the initial ordering of the variables
+#' `RVM$names` are non-default, the initial ordering of the variables
 #' cannot be traced back and the matrix has to be interpreted as indicated by
 #' the row- and column names.
 #' @keywords vine partial correlation

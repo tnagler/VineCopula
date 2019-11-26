@@ -22,7 +22,7 @@ BiCopMetaContour(
 )
 }
 \arguments{
-\item{u1, u2}{Data vectors of equal length with values in [0,1] (default:
+\item{u1, u2}{Data vectors of equal length with values in \eqn{[0,1]} (default:
 \code{u1} and \code{u2 = NULL}).}
 
 \item{bw}{Bandwidth (smoothing factor; default: \code{bw = 1}).}
@@ -30,11 +30,9 @@ BiCopMetaContour(
 \item{size}{Number of grid points; default: \code{size = 100}.}
 
 \item{levels}{Vector of contour levels. For Gaussian, Student-t or
-exponential margins the default value (\code{levels = c(0.01, 0.05, 0.1,
-0.15, 0.2)}) typically is a good choice. For uniform margins we
+exponential margins the default value (\code{levels = c(0.01, 0.05, 0.1, 0.15, 0.2)}) typically is a good choice. For uniform margins we
 recommend\cr \code{levels = c(0.1, 0.3, 0.5, 0.7, 0.9, 1.1, 1.3, 1.5)}\cr
-and for Gamma margins\cr \code{levels = c(0.005, 0.01, 0.03, 0.05, 0.07,
-0.09)}.}
+and for Gamma margins\cr \code{levels = c(0.005, 0.01, 0.03, 0.05, 0.07, 0.09)}.}
 
 \item{family}{An integer defining the bivariate copula family or indicating
 an empirical contour plot: \cr
@@ -51,35 +49,32 @@ an empirical contour plot: \cr
 \code{8} = BB6 copula \cr
 \code{9} = BB7 copula \cr
 \code{10} = BB8 copula \cr
-\code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-\code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-\code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
-\code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
-\code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
-\code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
+\code{13} = rotated Clayton copula (180 degrees; \verb{survival Clayton'') \\cr `14` = rotated Gumbel copula (180 degrees; }survival Gumbel'') \cr
+\code{16} = rotated Joe copula (180 degrees; \verb{survival Joe'') \\cr `17` = rotated BB1 copula (180 degrees; }survival BB1'')\cr
+\code{18} = rotated BB6 copula (180 degrees; \verb{survival BB6'')\\cr `19` = rotated BB7 copula (180 degrees; }survival BB7'')\cr
 \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
 \code{23} = rotated Clayton copula (90 degrees) \cr
-\code{24} = rotated Gumbel copula (90 degrees) \cr
-\code{26} = rotated Joe copula (90 degrees) \cr
-\code{27} = rotated BB1 copula (90 degrees) \cr
-\code{28} = rotated BB6 copula (90 degrees) \cr
-\code{29} = rotated BB7 copula (90 degrees) \cr
-\code{30} = rotated BB8 copula (90 degrees) \cr
-\code{33} = rotated Clayton copula (270 degrees) \cr
-\code{34} = rotated Gumbel copula (270 degrees) \cr
-\code{36} = rotated Joe copula (270 degrees) \cr
-\code{37} = rotated BB1 copula (270 degrees) \cr
-\code{38} = rotated BB6 copula (270 degrees) \cr
-\code{39} = rotated BB7 copula (270 degrees) \cr
-\code{40} = rotated BB8 copula (270 degrees) \cr
-\code{104} = Tawn type 1 copula \cr
-\code{114} = rotated Tawn type 1 copula (180 degrees) \cr
-\code{124} = rotated Tawn type 1 copula (90 degrees) \cr
-\code{134} = rotated Tawn type 1 copula (270 degrees) \cr
-\code{204} = Tawn type 2 copula \cr
-\code{214} = rotated Tawn type 2 copula (180 degrees) \cr
-\code{224} = rotated Tawn type 2 copula (90 degrees) \cr
-\code{234} = rotated Tawn type 2 copula (270 degrees) \cr}
+`24` = rotated Gumbel copula (90 degrees) \cr
+`26` = rotated Joe copula (90 degrees) \cr
+`27` = rotated BB1 copula (90 degrees) \cr
+`28` = rotated BB6 copula (90 degrees) \cr
+`29` = rotated BB7 copula (90 degrees) \cr
+`30` = rotated BB8 copula (90 degrees) \cr
+`33` = rotated Clayton copula (270 degrees) \cr
+`34` = rotated Gumbel copula (270 degrees) \cr
+`36` = rotated Joe copula (270 degrees) \cr
+`37` = rotated BB1 copula (270 degrees) \cr
+`38` = rotated BB6 copula (270 degrees) \cr
+`39` = rotated BB7 copula (270 degrees) \cr
+`40` = rotated BB8 copula (270 degrees) \cr
+`104` = Tawn type 1 copula \cr
+`114` = rotated Tawn type 1 copula (180 degrees) \cr
+`124` = rotated Tawn type 1 copula (90 degrees) \cr
+`134` = rotated Tawn type 1 copula (270 degrees) \cr
+`204` = Tawn type 2 copula \cr
+`214` = rotated Tawn type 2 copula (180 degrees) \cr
+`224` = rotated Tawn type 2 copula (90 degrees) \cr
+`234` = rotated Tawn type 2 copula (270 degrees) \cr}
 
 \item{par}{Copula parameter; if empirical contour plot, \code{par = NULL} or
 \code{0} (default).}
@@ -87,8 +82,7 @@ an empirical contour plot: \cr
 \item{par2}{Second copula parameter for t-, BB1, BB6, BB7, BB8, Tawn type 1
 and type 2 copulas (default: \code{par2 = 0}).}
 
-\item{PLOT}{Logical; whether the results are plotted.  If \code{PLOT =
-FALSE}, the values \code{x}, \code{y} and \code{z} are returned (see below;
+\item{PLOT}{Logical; whether the results are plotted.  If \code{PLOT = FALSE}, the values \code{x}, \code{y} and \code{z} are returned (see below;
 default: \code{PLOT = TRUE}).}
 
 \item{margins}{Character; margins for the bivariate copula contour plot.
@@ -106,11 +100,11 @@ specified by \code{margins.par}\cr
 necessary (default: \code{margins.par = 0}), i.e.,
 \itemize{
 \item a positive real number for the degrees of freedom of
-Student t margins (see \code{\link{dt}}),
+Student t margins (see \code{\link[=dt]{dt()}}),
 \item a 2-dimensional vector of positive real numbers for
-the shape and scale parameters of Gamma margins (see \code{\link{dgamma}}),
+the shape and scale parameters of Gamma margins (see \code{\link[=dgamma]{dgamma()}}),
 \item a positive real number for the rate parameter of
-exponential margins (see \code{\link{dexp}}).
+exponential margins (see \code{\link[=dexp]{dexp()}}).
 }}
 
 \item{xylim}{A 2-dimensional vector of the x- and y-limits.  By default
@@ -137,8 +131,8 @@ grid points given by \code{x} and \code{y}.}
 }
 \description{
 Note: This function is deprecated and only available for backwards
-compatibility. See \code{\link{contour.BiCop}} for contour plots of
-parametric copulas, and \code{\link{BiCopKDE}} for kernel estimates.
+compatibility. See \code{\link[=contour.BiCop]{contour.BiCop()}} for contour plots of
+parametric copulas, and \code{\link[=BiCopKDE]{BiCopKDE()}} for kernel estimates.
 }
 \note{
 The combination \code{family = 0} (independence copula) and
@@ -171,8 +165,8 @@ BiCopKDE(dat[, 1], dat[, 2],
 
 }
 \seealso{
-\code{\link{BiCopChiPlot}}, \code{\link{BiCopKPlot}},
-\code{\link{BiCopLambda}}
+\code{\link[=BiCopChiPlot]{BiCopChiPlot()}}, \code{\link[=BiCopKPlot]{BiCopKPlot()}},
+\code{\link[=BiCopLambda]{BiCopLambda()}}
 }
 \author{
 Ulf Schepsmeier, Alexander Bauer

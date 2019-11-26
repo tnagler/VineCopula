@@ -9,10 +9,10 @@ RVineSim(N, RVM, U = NULL)
 \arguments{
 \item{N}{Number of d-dimensional observations to simulate.}
 
-\item{RVM}{An \code{\link{RVineMatrix}} object containing the information of
+\item{RVM}{An \code{\link[=RVineMatrix]{RVineMatrix()}} object containing the information of
 the R-vine copula model.}
 
-\item{U}{If not \code{\link{NULL}}, an (N,d)-matrix of U[0,1] random
+\item{U}{If not \code{\link[=NULL]{NULL()}}, an (N,d)-matrix of \eqn{U[0,1]} random
 variates to be transformed to the copula sample.}
 }
 \value{
@@ -67,7 +67,7 @@ Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 }
 \seealso{
-\code{\link{RVineMatrix}}, \code{\link{BiCopSim}}
+\code{\link[=RVineMatrix]{RVineMatrix()}}, \code{\link[=BiCopSim]{BiCopSim()}}
 }
 \author{
 Jeffrey Dissmann

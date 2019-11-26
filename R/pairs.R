@@ -5,10 +5,10 @@
 #' correlations on the upper panel and histograms on the diagonal panel.
 #'
 #'
-#' @param x \code{copuladata} object.
+#' @param x `copuladata` object.
 #' @param labels variable names/labels.
-#' @param \dots other graphical parameters (see \code{\link[graphics]{par}}) or
-#' options passed to \code{\link{BiCopKDE}}.
+#' @param \dots other graphical parameters (see [graphics::par()]) or
+#' options passed to [BiCopKDE()].
 #' @param lower.panel panel function to be used on the lower diagonal panels
 #' (if not supplied, a default function is used)
 #' @param upper.panel panel function to be used on the upper diagonal panels
@@ -16,28 +16,28 @@
 #' @param diag.panel panel function to be used on the diagonal panels (if not
 #' supplied, a default function is used)
 #' @param label.pos y position of labels in the diagonal panel; default:
-#' \code{label.pos = 0.85}.
+#' `label.pos = 0.85`.
 #' @param cex.labels magnification to be used for the labels of the diagonal
-#' panel; default: \code{cex.labels = 1}.
-#' @param gap distance between subplots, in margin lines; default: \code{gap =
-#' 0}.
+#' panel; default: `cex.labels = 1`.
+#' @param gap distance between subplots, in margin lines; default: `gap =
+#' 0`.
 #' @param method a character string indicating which correlation coefficients
-#' are computed. One of \code{"pearson"}, \code{"kendall"} (default), or
-#' \code{"spearman"}
-#' @param ccols color to be used for the contour plots; default: \code{ccols =
-#' terrain.colors(30)}.
+#' are computed. One of `"pearson"`, `"kendall"` (default), or
+#' `"spearman"`
+#' @param ccols color to be used for the contour plots; default: `ccols =
+#' terrain.colors(30)`.
 #' @param margins character; margins for the contour plots. Options are:\cr
-#' \code{"unif"} for the original copula density,
-#' \code{"norm"} for the transformed density with standard normal margins,
-#' \code{"exp"} with standard exponential margins, and  \code{"flexp"} with
+#' `"unif"` for the original copula density,
+#' `"norm"` for the transformed density with standard normal margins,
+#' `"exp"` with standard exponential margins, and  `"flexp"` with
 #' flipped exponential margins.
-#' @note If the default panel functions are used \cr \itemize{ \item \code{col}
+#' @note If the default panel functions are used \cr \itemize{ \item `col`
 #' changes only the color of the points in the scatter plot
-#' (\code{upper.panel}) \cr \item \code{cex} changes only the magnification of
-#' the points in the scatter plot (\code{upper.panel}) }
+#' (`upper.panel`) \cr \item `cex` changes only the magnification of
+#' the points in the scatter plot (`upper.panel`) }
 #' @author Tobias Erhardt
-#' @seealso \code{\link[graphics]{pairs}}, \code{\link{as.copuladata}},
-#' \code{\link{BiCopKDE}}
+#' @seealso [graphics::pairs()], [as.copuladata()],
+#' [BiCopKDE()]
 #' @examples
 #'
 #' data(daxreturns)

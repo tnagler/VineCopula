@@ -6,47 +6,47 @@
 #' This function plots/returns the lambda-function of given bivariate copula
 #' data.
 #'
-#' If the family and parameter specification is stored in a \code{\link{BiCop}}
-#' object \code{obj}, the alternative versions \cr
+#' If the family and parameter specification is stored in a [BiCop()]
+#' object `obj`, the alternative versions \cr
 #' \preformatted{BiCopLambda(obj, PLOT = TRUE, ...)}
 #' and
 #' \preformatted{BiCopLambda((u1, u2, obj, PLOT = TRUE, ...)}
 #' can be used.
 #'
-#' @param u1,u2 Data vectors of equal length with values in [0,1] (default:
-#' \code{u1} and \code{u2 = NULL}).
+#' @param u1,u2 Data vectors of equal length with values in \eqn{[0,1]} (default:
+#' `u1` and `u2 = NULL`).
 #' @param family An integer defining the bivariate copula family or indicating
 #' the empirical lambda-function: \cr
-#' \code{"emp"} = empirical lambda-function
+#' `"emp"` = empirical lambda-function
 #' (default) \cr
-#' \code{1} = Gaussian copula; the theoretical lambda-function is simulated
+#' `1` = Gaussian copula; the theoretical lambda-function is simulated
 #' (no closed formula available) \cr
-#' \code{2} = Student-t copula; the theoretical lambda-function is simulated
+#' `2` = Student-t copula; the theoretical lambda-function is simulated
 #' (no closed formula available) \cr
-#' \code{3} = Clayton copula \cr
-#' \code{4} = Gumbel copula \cr
-#' \code{5} = Frank copula \cr
-#' \code{6} = Joe copula \cr
-#' \code{7} = BB1 copula \cr
-#' \code{8} = BB6 copula \cr
-#' \code{9} = BB7 copula \cr
-#' \code{10} = BB8
+#' `3` = Clayton copula \cr
+#' `4` = Gumbel copula \cr
+#' `5` = Frank copula \cr
+#' `6` = Joe copula \cr
+#' `7` = BB1 copula \cr
+#' `8` = BB6 copula \cr
+#' `9` = BB7 copula \cr
+#' `10` = BB8
 #' copula
 #' @param par Copula parameter; if the empirical lambda-function is chosen,
-#' \code{par = NULL} or \code{0} (default).
+#' `par = NULL` or `0` (default).
 #' @param par2 Second copula parameter for t-, BB1, BB6, BB7 and BB8 copulas
-#' (default: \code{par2 = 0}).
-#' @param PLOT Logical; whether the results are plotted. If \code{PLOT =
-#' FALSE}, the values \cr \code{empLambda} and/or \code{theoLambda} are
-#' returned (see below; default: \code{PLOT = TRUE}).
+#' (default: `par2 = 0`).
+#' @param PLOT Logical; whether the results are plotted. If `PLOT =
+#' FALSE`, the values \cr `empLambda` and/or `theoLambda` are
+#' returned (see below; default: `PLOT = TRUE`).
 #' @param ... Additional plot arguments.
-#' @param obj \code{BiCop} object containing the family and parameter
+#' @param obj `BiCop` object containing the family and parameter
 #' specification.
 #'
 #' @return \item{empLambda}{If the empirical lambda-function is chosen and
-#' \code{PLOT = FALSE}, a vector of the empirical lambda's is returned.}
+#' `PLOT = FALSE`, a vector of the empirical lambda's is returned.}
 #' \item{theoLambda}{If the theoretical lambda-function is chosen and
-#' \code{PLOT = FALSE}, a vector of the theoretical lambda's is returned.}
+#' `PLOT = FALSE`, a vector of the theoretical lambda's is returned.}
 #' @note The \eqn{\lambda}-function is characteristic for each bivariate copula
 #' family and defined by Kendall's distribution function \eqn{K}:
 #' \deqn{ \lambda(v,\theta) := v - K(v,\theta) } with
@@ -70,16 +70,16 @@
 #' Kendall's tau \eqn{=1} (\eqn{\lambda=0}).
 #'
 #' For rotated bivariate copulas one has to transform the input arguments
-#' \code{u1} and/or \code{u2}. In particular, for copulas rotated by 90 degrees
-#' \code{u1} has to be set to \code{1-u1}, for 270 degrees \code{u2} to
-#' \code{1-u2} and for survival copulas \code{u1} and \code{u2} to \code{1-u1}
-#' and \code{1-u2}, respectively. Then \eqn{\lambda}-functions for the
+#' `u1` and/or `u2`. In particular, for copulas rotated by 90 degrees
+#' `u1` has to be set to `1-u1`, for 270 degrees `u2` to
+#' `1-u2` and for survival copulas `u1` and `u2` to `1-u1`
+#' and `1-u2`, respectively. Then \eqn{\lambda}-functions for the
 #' corresponding non-rotated copula families can be considered.
 #'
 #' @author Ulf Schepsmeier
 #'
-#' @seealso \code{\link{BiCopMetaContour}}, \code{\link{BiCopKPlot}},
-#' \code{\link{BiCopChiPlot}}, \code{\link{BiCop}}
+#' @seealso [BiCopMetaContour()], [BiCopKPlot()],
+#' [BiCopChiPlot()], [BiCop()]
 #'
 #' @references Genest, C. and L.-P. Rivest (1993). Statistical inference
 #' procedures for bivariate Archimedean copulas. Journal of the American
@@ -88,7 +88,7 @@
 #' Schepsmeier, U. (2010). Maximum likelihood estimation of C-vine pair-copula
 #' constructions based on bivariate copulas from different families. Diploma
 #' thesis, Technische Universitaet Muenchen.\cr
-#' \url{http://mediatum.ub.tum.de/?id=1079296}.
+#' <http://mediatum.ub.tum.de/?id=1079296>.
 #'
 #' @examples
 #' \dontshow{set.seed(123)}

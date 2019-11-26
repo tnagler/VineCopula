@@ -4,18 +4,18 @@
 #' parameters of an R-vine copula model.
 #'
 #'
-#' @param RVM An \code{\link{RVineMatrix}} object.
-#' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
+#' @param RVM An [RVineMatrix()] object.
+#' @param check.pars logical; default is `TRUE`; if `FALSE`, checks
 #' for family/parameter-consistency are omitted (should only be used with care).
 #'
 #' @return Matrix with the same structure as the family and parameter matrices
-#' of the \code{\link{RVineMatrix}} object \code{RVM} where the entries are
+#' of the [RVineMatrix()] object `RVM` where the entries are
 #' values of Kendall's tau corresponding to the families and parameters of the
-#' R-vine copula model given by \code{RVM}.
+#' R-vine copula model given by `RVM`.
 #'
 #' @author Jeffrey Dissmann
 #'
-#' @seealso \code{\link{RVineMatrix}}, \code{\link{BiCopPar2Tau}}
+#' @seealso [RVineMatrix()], [BiCopPar2Tau()]
 #'
 #' @examples
 #'

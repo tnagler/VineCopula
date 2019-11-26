@@ -4,29 +4,29 @@
 #' bivariate copula density can be visualized as surface/perspective or contour
 #' plot. Optionally, the density can be coupled with standard normal margins
 #' (default for contour plots). Furthermore, a lambda-plot is available (cf.,
-#' \code{\link{BiCopLambda}}).
+#' [BiCopLambda()]).
 #'
 #' @method plot BiCop
 #'
 #' @aliases plot.BiCop contour.BiCop
-#' @param x \code{BiCop object.}
-#' @param type plot type; either \code{"surface"}, \code{"contour"}, or
-#' \code{"lambda"} (partial matching is activated); the latter is only
-#' implemented for a few families (c.f., \code{\link{BiCopLambda}}).
-#' @param margins only relevant for types \code{"contour"} and
-#' \code{"surface"}; options are: \code{"unif"} for the original copula density,
-#' \code{"norm"} for the transformed density with standard normal margins,
-#' \code{"exp"} with standard exponential margins, and  \code{"flexp"} with
-#' flipped exponential margins. Default is \code{"norm"} for \code{type =
-#' "contour"}, and \code{"unif"} for \code{type = "surface"}.
-#' @param size integer; only relevant for types \code{"contour"} and
-#' \code{"surface"}; the plot is based on values on a \eqn{size x size} grid;
-#' default is 100 for \code{type = "contour"}, and 25 for \code{type =
-#' "surface"}.
-#' @param \dots optional arguments passed to \code{\link{contour}} or
-#' \code{\link{wireframe}}.
+#' @param x `BiCop object.`
+#' @param type plot type; either `"surface"`, `"contour"`, or
+#' `"lambda"` (partial matching is activated); the latter is only
+#' implemented for a few families (c.f., [BiCopLambda()]).
+#' @param margins only relevant for types `"contour"` and
+#' `"surface"`; options are: `"unif"` for the original copula density,
+#' `"norm"` for the transformed density with standard normal margins,
+#' `"exp"` with standard exponential margins, and  `"flexp"` with
+#' flipped exponential margins. Default is `"norm"` for `type =
+#' "contour"`, and `"unif"` for `type = "surface"`.
+#' @param size integer; only relevant for types `"contour"` and
+#' `"surface"`; the plot is based on values on a \eqn{size x size} grid;
+#' default is 100 for `type = "contour"`, and 25 for `type =
+#' "surface"`.
+#' @param \dots optional arguments passed to [contour()] or
+#' [wireframe()].
 #' @author Thomas Nagler
-#' @seealso \code{\link{BiCop}}, \code{\link{contour}}, \code{\link{wireframe}}
+#' @seealso [BiCop()], [contour()], [wireframe()]
 #' @keywords plot
 #' @examples
 #'

@@ -9,7 +9,7 @@ RVineStdError(hessian, RVM)
 \arguments{
 \item{hessian}{The Hessian matrix of the given R-vine.}
 
-\item{RVM}{An \code{\link{RVineMatrix}} object including the structure, the
+\item{RVM}{An \code{\link[=RVineMatrix]{RVineMatrix()}} object including the structure, the
 pair-copula families, and the parameters.}
 }
 \value{
@@ -93,13 +93,13 @@ vine copula models. Computational Statistics, 28 (6), 2679-2707
 \url{http://link.springer.com/article/10.1007/s00180-013-0423-8#}.
 }
 \seealso{
-\code{\link{BiCopDeriv}},
-\code{\link{BiCopDeriv2}},
-\code{\link{BiCopHfuncDeriv}},
-\code{\link{BiCopHfuncDeriv2}}, \cr
-\code{\link{RVineMatrix}},
-\code{\link{RVineHessian}},
-\code{\link{RVineGrad}}
+\code{\link[=BiCopDeriv]{BiCopDeriv()}},
+\code{\link[=BiCopDeriv2]{BiCopDeriv2()}},
+\code{\link[=BiCopHfuncDeriv]{BiCopHfuncDeriv()}},
+\code{\link[=BiCopHfuncDeriv2]{BiCopHfuncDeriv2()}}, \cr
+\code{\link[=RVineMatrix]{RVineMatrix()}},
+\code{\link[=RVineHessian]{RVineHessian()}},
+\code{\link[=RVineGrad]{RVineGrad()}}
 }
 \author{
 Ulf Schepsmeier, Jakob Stoeber

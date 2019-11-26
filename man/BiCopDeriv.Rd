@@ -17,7 +17,7 @@ BiCopDeriv(
 )
 }
 \arguments{
-\item{u1, u2}{numeric vectors of equal length with values in [0,1].}
+\item{u1, u2}{numeric vectors of equal length with values in \eqn{[0,1]}.}
 
 \item{family}{integer; single number or vector of size \code{length(u1)};
 defines the bivariate copula family: \cr
@@ -28,15 +28,14 @@ defines the bivariate copula family: \cr
 \code{4} = Gumbel copula \cr
 \code{5} = Frank copula \cr
 \code{6} = Joe copula \cr
-\code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-\code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+\code{13} = rotated Clayton copula (180 degrees; \verb{survival Clayton'') \\cr `14` = rotated Gumbel copula (180 degrees; }survival Gumbel'') \cr
 \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
 \code{23} = rotated Clayton copula (90 degrees) \cr
-\code{24} = rotated Gumbel copula (90 degrees) \cr
-\code{26} = rotated Joe copula (90 degrees) \cr
-\code{33} = rotated Clayton copula (270 degrees) \cr
-\code{34} = rotated Gumbel copula (270 degrees) \cr
-\code{36} = rotated Joe copula (270 degrees) \cr}
+`24` = rotated Gumbel copula (90 degrees) \cr
+`26` = rotated Joe copula (90 degrees) \cr
+`33` = rotated Clayton copula (270 degrees) \cr
+`34` = rotated Gumbel copula (270 degrees) \cr
+`36` = rotated Joe copula (270 degrees) \cr}
 
 \item{par}{numeric; single number or vector of size \code{length(u1)};
 copula parameter.}
@@ -54,8 +53,7 @@ positive integer for the Students's t copula \code{family = 2}.}
 
 \item{log}{Logical; if \code{TRUE} than the derivative of the log-likelihood
 is returned (default: \code{log = FALSE}; only available for the derivatives
-with respect to the parameter(s) (\code{deriv = "par"} or \code{deriv =
-"par2"})).}
+with respect to the parameter(s) (\code{deriv = "par"} or \code{deriv = "par2"})).}
 
 \item{obj}{\code{BiCop} object containing the family and parameter
 specification.}
@@ -78,7 +76,7 @@ This function evaluates the derivative of a given parametric bivariate
 copula density with respect to its parameter(s) or one of its arguments.
 }
 \details{
-If the family and parameter specification is stored in a \code{\link{BiCop}}
+If the family and parameter specification is stored in a \code{\link[=BiCop]{BiCop()}}
 object \code{obj}, the alternative version \cr
 \preformatted{BiCopDeriv(u1, u2, obj, deriv = "par", log = FALSE)}
 can be used.
@@ -107,9 +105,9 @@ information of bivariate copulas. Statistical Papers, 55 (2), 525-542. \cr
 \url{http://link.springer.com/article/10.1007/s00362-013-0498-x}.
 }
 \seealso{
-\code{\link{RVineGrad}}, \code{\link{RVineHessian}},
-\code{\link{BiCopDeriv2}}, \code{\link{BiCopHfuncDeriv}},
-\code{\link{BiCop}}
+\code{\link[=RVineGrad]{RVineGrad()}}, \code{\link[=RVineHessian]{RVineHessian()}},
+\code{\link[=BiCopDeriv2]{BiCopDeriv2()}}, \code{\link[=BiCopHfuncDeriv]{BiCopHfuncDeriv()}},
+\code{\link[=BiCop]{BiCop()}}
 }
 \author{
 Ulf Schepsmeier

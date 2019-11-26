@@ -7,10 +7,9 @@
 BiCopKPlot(u1, u2, PLOT = TRUE, ...)
 }
 \arguments{
-\item{u1, u2}{Data vectors of equal length with values in [0,1].}
+\item{u1, u2}{Data vectors of equal length with values in \eqn{[0,1]}.}
 
-\item{PLOT}{Logical; whether the results are plotted. If \code{PLOT =
-FALSE}, the values \code{W.in} and \code{Hi.sort} are returned (see below;
+\item{PLOT}{Logical; whether the results are plotted. If \code{PLOT = FALSE}, the values \code{W.in} and \code{Hi.sort} are returned (see below;
 default: \code{PLOT = TRUE}).}
 
 \item{...}{Additional plot arguments.}
@@ -84,8 +83,8 @@ to know about copula modeling but were afraid to ask. Journal of Hydrologic
 Engineering, 12 (4), 347-368.
 }
 \seealso{
-\code{\link{BiCopMetaContour}}, \code{\link{BiCopChiPlot}},
-\code{\link{BiCopLambda}}, \code{\link{BiCopGofTest}}
+\code{\link[=BiCopMetaContour]{BiCopMetaContour()}}, \code{\link[=BiCopChiPlot]{BiCopChiPlot()}},
+\code{\link[=BiCopLambda]{BiCopLambda()}}, \code{\link[=BiCopGofTest]{BiCopGofTest()}}
 }
 \author{
 Natalia Belgorodski, Ulf Schepsmeier

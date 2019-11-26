@@ -13,8 +13,8 @@
 #' @param weights Numerical; weights for each observation (optional).
 #' @return Matrix of the empirical Kendall's taus.
 #' @author Ulf Schepsmeier
-#' @seealso \code{\link{BiCopTau2Par}}, \code{\link{BiCopPar2Tau}},
-#' \code{\link{BiCopEst}}
+#' @seealso [BiCopTau2Par()], [BiCopPar2Tau()],
+#' [BiCopEst()]
 #' @references Knight, W. R. (1966). A computer method for calculating
 #' Kendall's tau with ungrouped data. Journal of the American Statistical
 #' Association 61 (314), 436-439.

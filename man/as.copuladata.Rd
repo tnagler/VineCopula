@@ -11,7 +11,7 @@ as.copuladata(data)
 }
 \arguments{
 \item{data}{Either a \code{data.frame}, a \code{matrix} or a \code{list}
-containing copula data (i.e. data with uniform margins on [0,1]). The
+containing copula data (i.e. data with uniform margins on \eqn{[0,1]}). The
 \code{list} elements have to be vectors of identical length.}
 }
 \description{
@@ -34,7 +34,7 @@ class(as.copuladata(data))
 
 }
 \seealso{
-\code{\link{pobs}}, \code{\link{pairs.copuladata}}
+\code{\link[=pobs]{pobs()}}, \code{\link[=pairs.copuladata]{pairs.copuladata()}}
 }
 \author{
 Tobias Erhardt

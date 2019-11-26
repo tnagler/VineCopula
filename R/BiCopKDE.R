@@ -1,34 +1,34 @@
 #' Kernel estimate of  a Bivariate Copula Density
 #'
 #' A kernel density estimate of the copula density is visualized. The function
-#' provides the same options as \code{\link{plot.BiCop}}. Further arguments can
-#' be passed to \code{\link[kdecopula]{kdecop}} to modify the estimate. The
-#' \code{\link[kdecopula]{kdecopula-package}} must be installed to use
+#' provides the same options as [plot.BiCop()]. Further arguments can
+#' be passed to [kdecopula::kdecop()] to modify the estimate. The
+#' [kdecopula::kdecopula-package()] must be installed to use
 #' this function.
 #'
-#' @param u1,u2 numeric vectors of equal length with values in [0,1].
-#' @param type plot type; either \code{"contour"} or \code{"surface"} (partial
+#' @param u1,u2 numeric vectors of equal length with values in \eqn{[0,1]}.
+#' @param type plot type; either `"contour"` or `"surface"` (partial
 #' matching is activated) for a contour or perspective/surface plot
 #' respectively.
-#' @param margins only relevant for types \code{"contour"} and
-#' \code{"surface"}; options are: \code{"unif"} for the original copula density,
-#' \code{"norm"} for the transformed density with standard normal margins,
-#' \code{"exp"} with standard exponential margins, and  \code{"flexp"} with
-#' flipped exponential margins. Default is \code{"norm"} for \code{type =
-#' "contour"}, and \code{"unif"} for \code{type = "surface"}.
-#' \code{"norm"} for the transformed density with standard normal margins
-#' (partial matching is activated). Default is \code{"norm"} for \code{type =
-#' "contour"}, and \code{"unif"} for \code{type = "surface"}.
-#' @param size integer; the plot is based on values on a \code{size x size}
-#' grid; default is 100 for \code{type = "contour"}, and 25 for \code{type =
-#' "surface"}.
+#' @param margins only relevant for types `"contour"` and
+#' `"surface"`; options are: `"unif"` for the original copula density,
+#' `"norm"` for the transformed density with standard normal margins,
+#' `"exp"` with standard exponential margins, and  `"flexp"` with
+#' flipped exponential margins. Default is `"norm"` for `type =
+#' "contour"`, and `"unif"` for `type = "surface"`.
+#' `"norm"` for the transformed density with standard normal margins
+#' (partial matching is activated). Default is `"norm"` for `type =
+#' "contour"`, and `"unif"` for `type = "surface"`.
+#' @param size integer; the plot is based on values on a `size x size`
+#' grid; default is 100 for `type = "contour"`, and 25 for `type =
+#' "surface"`.
 #' @param kde.pars list of arguments passed to
-#'  \code{\link[kdecopula]{kdecop}}.
-#' @param \dots optional arguments passed to \code{\link{contour}} or
-#' \code{\link{wireframe}}.
+#'  [kdecopula::kdecop()].
+#' @param \dots optional arguments passed to [contour()] or
+#' [wireframe()].
 #'
 #' @details
-#' For further details on estimation see \code{\link[kdecopula]{kdecop}}.
+#' For further details on estimation see [kdecopula::kdecop()].
 #'
 #' @author Thomas Nagler
 #'

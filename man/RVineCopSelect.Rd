@@ -30,18 +30,18 @@ dependence. Not listed copula families might be included to better handle
 limit cases.  If \code{familyset = NA} (default), selection among all
 possible families is performed. If a vector of negative numbers is provided,
 selection among all but \code{abs(familyset)} is performed. Coding of
-pair copula families is the same as in \code{\link{BiCop}}.}
+pair copula families is the same as in \code{\link[=BiCop]{BiCop()}}.}
 
 \item{Matrix}{lower or upper triangular d x d matrix that defines the R-vine
 tree structure.}
 
 \item{selectioncrit}{Character indicating the criterion for pair-copula
 selection. Possible choices: \code{selectioncrit = "AIC"} (default),
-\code{"BIC"}, or \code{"logLik"} (see \code{\link{BiCopSelect}}).}
+\code{"BIC"}, or \code{"logLik"} (see \code{\link[=BiCopSelect]{BiCopSelect()}}).}
 
 \item{indeptest}{Logical; whether a hypothesis test for the independence of
 \code{u1} and \code{u2} is performed before bivariate copula selection
-(default: \code{indeptest = FALSE}; see \code{\link{BiCopIndTest}}).  The
+(default: \code{indeptest = FALSE}; see \code{\link[=BiCopIndTest]{BiCopIndTest()}}).  The
 independence copula is chosen for a (conditional) pair if the null
 hypothesis of independence cannot be rejected.}
 
@@ -55,29 +55,27 @@ hypothesis of independence cannot be rejected.}
 \item{rotations}{logical; if \code{TRUE}, all rotations of the families in
 \code{familyset} are included.}
 
-\item{se}{Logical; whether standard errors are estimated (default: \code{se
-= FALSE}).}
+\item{se}{Logical; whether standard errors are estimated (default: \code{se = FALSE}).}
 
 \item{presel}{Logical; whether to exclude families before fitting based on
-symmetry properties of the data. Makes the selection about 30\% faster
+symmetry properties of the data. Makes the selection about 30\\% faster
 (on average), but may yield slightly worse results in few special cases.}
 
 \item{method}{indicates the estimation method: either maximum
 likelihood estimation (\code{method = "mle"}; default) or inversion of
 Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
-one parameter families and the Student t copula can be used (\code{family =
-1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
+one parameter families and the Student t copula can be used (\verb{family = 1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
 \code{par2} is found by a crude profile likelihood optimization over the
 interval (2, 10].}
 
 \item{cores}{integer; if \code{cores > 1}, estimation will be parallelized
-within each tree (using \code{\link[foreach]{foreach}}). Note that
+within each tree (using \code{\link[foreach:foreach]{foreach::foreach()}}). Note that
 parallelization causes substantial overhead and may be slower than
 single-threaded computation when dimension, sample size, or family set are
 small or \code{method = "itau"}.}
 }
 \value{
-An \code{\link{RVineMatrix}} object with the selected families
+An \code{\link[=RVineMatrix]{RVineMatrix()}} object with the selected families
 (\code{RVM$family}) as well as sequentially
 estimated parameters stored in \code{RVM$par} and \code{RVM$par2}. The object
 is augmented by the following information about the fit:
@@ -93,12 +91,12 @@ account for the sequential nature of the estimation,}
 }
 \description{
 This function fits a R-vine copula model to a d-dimensional copula data set.
-Pair-copula families are selected using \code{\link{BiCopSelect}} and
+Pair-copula families are selected using \code{\link[=BiCopSelect]{BiCopSelect()}} and
 estimated sequentially.
 }
 \details{
 R-vine copula models with unknown structure can be specified using
-\code{\link{RVineStructureSelect}}.
+\code{\link[=RVineStructureSelect]{RVineStructureSelect()}}.
 }
 \note{
 For a comprehensive summary of the vine copula model, use
@@ -162,12 +160,12 @@ Selecting and estimating regular vine copulae and application to financial
 returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 }
 \seealso{
-\code{\link{RVineMatrix}},
-\code{\link{BiCop}},
-\code{\link{BiCopSelect}},
-\code{\link{plot.RVineMatrix}},
-\code{\link{contour.RVineMatrix}},
-\code{\link[foreach]{foreach}}
+\code{\link[=RVineMatrix]{RVineMatrix()}},
+\code{\link[=BiCop]{BiCop()}},
+\code{\link[=BiCopSelect]{BiCopSelect()}},
+\code{\link[=plot.RVineMatrix]{plot.RVineMatrix()}},
+\code{\link[=contour.RVineMatrix]{contour.RVineMatrix()}},
+\code{\link[foreach:foreach]{foreach::foreach()}}
 }
 \author{
 Eike Brechmann, Thomas Nagler

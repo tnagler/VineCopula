@@ -6,7 +6,7 @@
 #' (Wang and Wells, 2000; Genest et al., 2006). It computes the test statistics
 #' and p-values.
 #'
-#' \code{method = "white"}:\cr This goodness-of fit test uses the information
+#' `method = "white"`:\cr This goodness-of fit test uses the information
 #' matrix equality of White (1982) and was investigated by Huang and Prokhorov
 #' (2011). The main contribution is that under correct model specification the
 #' Fisher Information can be equivalently calculated as minus the expected
@@ -24,79 +24,79 @@
 #' where is no uncertainty in the margins. The correction can be found in Huang
 #' and Prokhorov (2011). It involves two-dimensional integrals.\cr WARNING: For
 #' the t-copula the test may be unstable. The results for the t-copula
-#' therefore have to be treated carefully.\cr \cr \code{method = "kendall"}:\cr
+#' therefore have to be treated carefully.\cr \cr `method = "kendall"`:\cr
 #' This copula goodness-of-fit test is based on Kendall's process as
 #' proposed by Wang and Wells (2000). For computation of p-values, the
 #' parametric bootstrap described by Genest et al. (2006) is used. For
 #' rotated copulas the input arguments are transformed and the goodness-of-fit
 #' procedure for the corresponding non-rotated copula is used.
 #'
-#' @param u1,u2 Numeric vectors of equal length with values in [0,1].
+#' @param u1,u2 Numeric vectors of equal length with values in \eqn{[0,1]}.
 #' @param family An integer defining the bivariate copula family: \cr
-#' \code{0} = independence copula \cr
-#' \code{1} = Gaussian copula \cr
-#' \code{2} = Student t copula (t-copula) (only for \code{method = "white"}; see details)\cr
-#' \code{3} = Clayton copula \cr
-#' \code{4} = Gumbel copula \cr
-#' \code{5} = Frank copula \cr
-#' \code{6} = Joe copula \cr
-#' \code{7} = BB1 copula (only for \code{method = "kendall"})\cr
-#' \code{8} = BB6 copula (only for \code{method = "kendall"})\cr
-#' \code{9} = BB7 copula (only for \code{method = "kendall"})\cr
-#' \code{10} = BB8 copula (only for \code{method ="kendall"})\cr
-#' \code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-#' \code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-#' \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
-#' \code{17} = rotated BB1 copula (180 degrees; ``survival BB1'';
-#' only for \code{method = "kendall"})\cr
-#' \code{18} = rotated BB6 copula (180 degrees; ``survival BB6'';
-#' only for \code{method = "kendall"})\cr
-#' \code{19} = rotated BB7 copula (180 degrees; ``survival BB7'';
-#' only for \code{method = "kendall"})\cr
-#' \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'';
-#' only for \code{method = "kendall"})\cr
-#' \code{23} = rotated Clayton copula (90 degrees) \cr
-#' \code{24} = rotated Gumbel copula (90 degrees) \cr
-#' \code{26} = rotated Joe copula (90 degrees) \cr
-#' \code{27} = rotated BB1 copula (90 degrees; only for \code{method = "kendall"}) \cr
-#' \code{28} = rotated BB6 copula (90 degrees; only for \code{method = "kendall"}) \cr
-#' \code{29} = rotated BB7 copula (90 degrees; only for \code{method = "kendall"}) \cr
-#' \code{30} = rotated BB8 copula (90 degrees; only for \code{method = "kendall"}) \cr
-#' \code{33} = rotated Clayton copula (270 degrees) \cr
-#' \code{34} = rotated Gumbel copula (270 degrees) \cr
-#' \code{36} = rotated Joe copula (270 degrees) \cr
-#' \code{37} = rotated BB1 copula (270 degrees; only for \code{method = "kendall"}) \cr
-#' \code{38} = rotated BB6 copula (270 degrees; only for \code{method = "kendall"}) \cr
-#' \code{39} = rotated BB7 copula (270 degrees; only for \code{method = "kendall"}) \cr
-#' \code{40} = rotated BB8 copula (270 degrees; only for \code{method = "kendall"})
+#' `0` = independence copula \cr
+#' `1` = Gaussian copula \cr
+#' `2` = Student t copula (t-copula) (only for `method = "white"`; see details)\cr
+#' `3` = Clayton copula \cr
+#' `4` = Gumbel copula \cr
+#' `5` = Frank copula \cr
+#' `6` = Joe copula \cr
+#' `7` = BB1 copula (only for `method = "kendall"`)\cr
+#' `8` = BB6 copula (only for `method = "kendall"`)\cr
+#' `9` = BB7 copula (only for `method = "kendall"`)\cr
+#' `10` = BB8 copula (only for `method ="kendall"`)\cr
+#' `13` = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
+#' `14` = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+#' `16` = rotated Joe copula (180 degrees; ``survival Joe'') \cr
+#' `17` = rotated BB1 copula (180 degrees; ``survival BB1'';
+#' only for `method = "kendall"`)\cr
+#' `18` = rotated BB6 copula (180 degrees; ``survival BB6'';
+#' only for `method = "kendall"`)\cr
+#' `19` = rotated BB7 copula (180 degrees; ``survival BB7'';
+#' only for `method = "kendall"`)\cr
+#' `20` = rotated BB8 copula (180 degrees; ``survival BB8'';
+#' only for `method = "kendall"`)\cr
+#' `23` = rotated Clayton copula (90 degrees) \cr
+#' `24` = rotated Gumbel copula (90 degrees) \cr
+#' `26` = rotated Joe copula (90 degrees) \cr
+#' `27` = rotated BB1 copula (90 degrees; only for `method = "kendall"`) \cr
+#' `28` = rotated BB6 copula (90 degrees; only for `method = "kendall"`) \cr
+#' `29` = rotated BB7 copula (90 degrees; only for `method = "kendall"`) \cr
+#' `30` = rotated BB8 copula (90 degrees; only for `method = "kendall"`) \cr
+#' `33` = rotated Clayton copula (270 degrees) \cr
+#' `34` = rotated Gumbel copula (270 degrees) \cr
+#' `36` = rotated Joe copula (270 degrees) \cr
+#' `37` = rotated BB1 copula (270 degrees; only for `method = "kendall"`) \cr
+#' `38` = rotated BB6 copula (270 degrees; only for `method = "kendall"`) \cr
+#' `39` = rotated BB7 copula (270 degrees; only for `method = "kendall"`) \cr
+#' `40` = rotated BB8 copula (270 degrees; only for `method = "kendall"`)
 #' @param par Copula parameter (optional).
 #' @param par2 Second parameter for bivariate t-copula (optional); default:
-#' \code{par2 = 0}.
+#' `par2 = 0`.
 #' @param max.df Numeric; upper bound for the estimation of the degrees of
-#' freedom parameter of the t-copula (default: \code{max.df = 30}).
+#' freedom parameter of the t-copula (default: `max.df = 30`).
 #' @param method A string indicating the goodness-of-fit method:\cr
-#' \code{"white"} = goodness-of-fit test based on White's information matrix
+#' `"white"` = goodness-of-fit test based on White's information matrix
 #' equality (default) \cr
-#' \code{"kendall"} = goodness-of-fit test based on Kendall's process
-#' @param B Integer; number of bootstrap samples (default: \code{B = 100}).
-#' For \code{B = 0} only the the test statistics are returned.\cr WARNING: If
-#' \code{B} is chosen too large, computations will take very long.
-#' @param obj \code{BiCop} object containing the family and parameter
+#' `"kendall"` = goodness-of-fit test based on Kendall's process
+#' @param B Integer; number of bootstrap samples (default: `B = 100`).
+#' For `B = 0` only the the test statistics are returned.\cr WARNING: If
+#' `B` is chosen too large, computations will take very long.
+#' @param obj `BiCop` object containing the family and parameter
 #' specification.
-#' @return For \code{method = "white"}: \item{p.value}{Asymptotic p-value.}
+#' @return For `method = "white"`: \item{p.value}{Asymptotic p-value.}
 #' \item{statistic}{The observed test statistic.}\cr
-#' For \code{method ="kendall"}
+#' For `method ="kendall"`
 #' \item{p.value.CvM}{Bootstrapped p-value of the goodness-of-fit
-#' test using the Cramer-von Mises statistic (if \code{B > 0}).}
+#' test using the Cramer-von Mises statistic (if `B > 0`).}
 #' \item{p.value.KS}{Bootstrapped p-value of the goodness-of-fit test using the
-#' Kolmogorov-Smirnov statistic (if \code{B > 0}).} \item{statistic.CvM}{The
+#' Kolmogorov-Smirnov statistic (if `B > 0`).} \item{statistic.CvM}{The
 #' observed Cramer-von Mises test statistic.} \item{statistic.KS}{The observed
 #' Kolmogorov-Smirnov test statistic.}
 #'
 #' @author Ulf Schepsmeier, Wanling Huang, Jiying Luo, Eike Brechmann
 #'
-#' @seealso \code{\link{BiCopDeriv2}}, \code{\link{BiCopDeriv}},
-#' \code{\link{BiCopIndTest}}, \code{\link{BiCopVuongClarke}}
+#' @seealso [BiCopDeriv2()], [BiCopDeriv()],
+#' [BiCopIndTest()], [BiCopVuongClarke()]
 #'
 #' @references
 #'
@@ -112,7 +112,7 @@
 #' Scandinavian Journal of Statistics, 33(2), 337-366.
 #' Luo J. (2011). Stepwise estimation of D-vines with arbitrary specified
 #' copula pairs and EDA tools. Diploma thesis, Technische Universitaet
-#' Muenchen.\cr \url{http://mediatum.ub.tum.de/?id=1079291}.
+#' Muenchen.\cr <http://mediatum.ub.tum.de/?id=1079291>.
 #'
 #' White, H. (1982) Maximum likelihood estimation of misspecified models,
 #' Econometrica, 50, 1-26.

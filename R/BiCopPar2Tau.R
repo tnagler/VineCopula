@@ -3,117 +3,117 @@
 #' This function computes the theoretical Kendall's tau value of a bivariate
 #' copula for given parameter values.
 #'
-#' If the family and parameter specification is stored in a \code{\link{BiCop}}
-#' object \code{obj}, the alternative version \cr
+#' If the family and parameter specification is stored in a [BiCop()]
+#' object `obj`, the alternative version \cr
 #' \preformatted{BiCopPar2Tau(obj)} can be used.
 #'
-#' @param family integer; single number or vector of size \code{m}; defines the
+#' @param family integer; single number or vector of size `m`; defines the
 #' bivariate copula family: \cr
-#' \code{0} = independence copula \cr
-#' \code{1} = Gaussian copula \cr
-#' \code{2} = Student t copula (t-copula) \cr
-#' \code{3} = Clayton copula \cr
-#' \code{4} = Gumbel copula \cr
-#' \code{5} = Frank copula \cr
-#' \code{6} = Joe copula \cr
-#' \code{7} = BB1 copula \cr
-#' \code{8} = BB6 copula \cr
-#' \code{9} = BB7 copula \cr
-#' \code{10} = BB8 copula \cr
-#' \code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-#' \code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-#' \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
-#' \code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
-#' \code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
-#' \code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
-#' \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
-#' \code{23} = rotated Clayton copula (90 degrees) \cr
-#' \code{24} = rotated Gumbel copula (90 degrees) \cr
-#' \code{26} = rotated Joe copula (90 degrees) \cr
-#' \code{27} = rotated BB1 copula (90 degrees) \cr
-#' \code{28} = rotated BB6 copula (90 degrees) \cr
-#' \code{29} = rotated BB7 copula (90 degrees) \cr
-#' \code{30} = rotated BB8 copula (90 degrees) \cr
-#' \code{33} = rotated Clayton copula (270 degrees) \cr
-#' \code{34} = rotated Gumbel copula (270 degrees) \cr
-#' \code{36} = rotated Joe copula (270 degrees) \cr
-#' \code{37} = rotated BB1 copula (270 degrees) \cr
-#' \code{38} = rotated BB6 copula (270 degrees) \cr
-#' \code{39} = rotated BB7 copula (270 degrees) \cr
-#' \code{40} = rotated BB8 copula (270 degrees) \cr
-#' \code{104} = Tawn type 1 copula \cr
-#' \code{114} = rotated Tawn type 1 copula (180 degrees) \cr
-#' \code{124} = rotated Tawn type 1 copula (90 degrees) \cr
-#' \code{134} = rotated Tawn type 1 copula (270 degrees) \cr
-#' \code{204} = Tawn type 2 copula \cr
-#' \code{214} = rotated Tawn type 2 copula (180 degrees) \cr
-#' \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
-#' \code{234} = rotated Tawn type 2 copula (270 degrees) \cr
-#' @param par numeric; single number or vector of size \code{n}; copula
+#' `0` = independence copula \cr
+#' `1` = Gaussian copula \cr
+#' `2` = Student t copula (t-copula) \cr
+#' `3` = Clayton copula \cr
+#' `4` = Gumbel copula \cr
+#' `5` = Frank copula \cr
+#' `6` = Joe copula \cr
+#' `7` = BB1 copula \cr
+#' `8` = BB6 copula \cr
+#' `9` = BB7 copula \cr
+#' `10` = BB8 copula \cr
+#' `13` = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
+#' `14` = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+#' `16` = rotated Joe copula (180 degrees; ``survival Joe'') \cr
+#' `17` = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
+#' `18` = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
+#' `19` = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
+#' `20` = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
+#' `23` = rotated Clayton copula (90 degrees) \cr
+#' `24` = rotated Gumbel copula (90 degrees) \cr
+#' `26` = rotated Joe copula (90 degrees) \cr
+#' `27` = rotated BB1 copula (90 degrees) \cr
+#' `28` = rotated BB6 copula (90 degrees) \cr
+#' `29` = rotated BB7 copula (90 degrees) \cr
+#' `30` = rotated BB8 copula (90 degrees) \cr
+#' `33` = rotated Clayton copula (270 degrees) \cr
+#' `34` = rotated Gumbel copula (270 degrees) \cr
+#' `36` = rotated Joe copula (270 degrees) \cr
+#' `37` = rotated BB1 copula (270 degrees) \cr
+#' `38` = rotated BB6 copula (270 degrees) \cr
+#' `39` = rotated BB7 copula (270 degrees) \cr
+#' `40` = rotated BB8 copula (270 degrees) \cr
+#' `104` = Tawn type 1 copula \cr
+#' `114` = rotated Tawn type 1 copula (180 degrees) \cr
+#' `124` = rotated Tawn type 1 copula (90 degrees) \cr
+#' `134` = rotated Tawn type 1 copula (270 degrees) \cr
+#' `204` = Tawn type 2 copula \cr
+#' `214` = rotated Tawn type 2 copula (180 degrees) \cr
+#' `224` = rotated Tawn type 2 copula (90 degrees) \cr
+#' `234` = rotated Tawn type 2 copula (270 degrees) \cr
+#' @param par numeric; single number or vector of size `n`; copula
 #' parameter.
-#' @param par2 numeric; single number or vector of size \code{n}; second
+#' @param par2 numeric; single number or vector of size `n`; second
 #' parameter for bivariate copulas with two parameters (t, BB1, BB6, BB7, BB8,
-#' Tawn type 1 and type 2; default: \code{par2 = 0}).  Note that the degrees of
+#' Tawn type 1 and type 2; default: `par2 = 0`).  Note that the degrees of
 #' freedom parameter of the t-copula does not need to be set, because the
 #' theoretical Kendall's tau value of the t-copula is independent of this
 #' choice.
-#' @param obj \code{BiCop} object containing the family and parameter
+#' @param obj `BiCop` object containing the family and parameter
 #' specification.
-#' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
+#' @param check.pars logical; default is `TRUE`; if `FALSE`, checks
 #' for family/parameter-consistency are omitted (should only be used with
 #' care).
 #' @return Theoretical value of Kendall's tau (vector) corresponding to the
-#' bivariate copula \code{family} and parameter vector \eqn{(\theta, \delta) =}
-#' \code{(par, par2)}.
-#' \tabular{ll}{ No. (\code{family}) \tab Kendall's tau (\code{tau}) \cr
-#' \code{1, 2} \tab \eqn{\frac{2}{\pi}\arcsin(\theta)}{2 / \pi arcsin(\theta)} \cr
-#' \code{3, 13} \tab \eqn{\frac{\theta}{\theta+2}}{\theta / (\theta+2)} \cr
-#' \code{4, 14} \tab \eqn{1-\frac{1}{\theta}}{1-1/\theta} \cr
-#' \code{5} \tab \eqn{1-\frac{4}{\theta}+4\frac{D_1(\theta)}{\theta}}{1-4/\theta +
+#' bivariate copula `family` and parameter vector \eqn{(\theta, \delta) =}
+#' `(par, par2)`.
+#' \tabular{ll}{ No. (`family`) \tab Kendall's tau (`tau`) \cr
+#' `1, 2` \tab \eqn{\frac{2}{\pi}\arcsin(\theta)}{2 / \pi arcsin(\theta)} \cr
+#' `3, 13` \tab \eqn{\frac{\theta}{\theta+2}}{\theta / (\theta+2)} \cr
+#' `4, 14` \tab \eqn{1-\frac{1}{\theta}}{1-1/\theta} \cr
+#' `5` \tab \eqn{1-\frac{4}{\theta}+4\frac{D_1(\theta)}{\theta}}{1-4/\theta +
 #' 4 D_1(\theta)/\theta} \cr
 #' \tab with \eqn{D_1(\theta)=\int_0^\theta \frac{x/\theta}{\exp(x)-1}dx}{D_1(\theta)=
 #' \int_0^\theta (x/\theta)/(exp(x)-1)dx} (Debye function) \cr
-#' \code{6, 16} \tab \eqn{1+\frac{4}{\theta^2}\int_0^1
+#' `6, 16` \tab \eqn{1+\frac{4}{\theta^2}\int_0^1
 #' x\log(x)(1-x)^{2(1-\theta)/\theta}dx}{1+4/\theta^2\int_0^1
 #' x\log(x)(1-x)^{2(1-\theta)/\theta}dx} \cr
-#' \code{7, 17} \tab \eqn{1-\frac{2}{\delta(\theta+2)}}{1-2/(\delta(\theta+2))} \cr
-#' \code{8, 18} \tab \eqn{1+4\int_0^1 -\log(-(1-t)^\theta+1)
+#' `7, 17` \tab \eqn{1-\frac{2}{\delta(\theta+2)}}{1-2/(\delta(\theta+2))} \cr
+#' `8, 18` \tab \eqn{1+4\int_0^1 -\log(-(1-t)^\theta+1)
 #' (1-t-(1-t)^{-\theta}+(1-t)^{-\theta}t)/(\delta\theta) dt} \cr
-#' \code{9, 19} \tab \eqn{1+4\int_0^1 ( (1-(1-t)^{\theta})^{-\delta} - 1)
+#' `9, 19` \tab \eqn{1+4\int_0^1 ( (1-(1-t)^{\theta})^{-\delta} - 1)
 #' /( -\theta\delta(1-t)^{\theta-1}(1-(1-t)^{\theta})^{-\delta-1} ) dt} \cr
-#' \code{10, 20} \tab \eqn{1+4\int_0^1
+#' `10, 20` \tab \eqn{1+4\int_0^1
 #' -\log \left(((1-t\delta)^\theta-1)/((1-\delta)^\theta-1) \right) } \cr
 #' \tab \eqn{* (1-t\delta-(1-t\delta)^{-\theta}+(1-t\delta)^{-\theta}t\delta)/(\theta\delta) dt} \cr
-#' \code{23, 33} \tab \eqn{\frac{\theta}{2-\theta}}{\theta/(2-\theta)} \cr
-#' \code{24, 34} \tab \eqn{-1-\frac{1}{\theta}}{-1-1/\theta} \cr
-#' \code{26, 36} \tab \eqn{-1-\frac{4}{\theta^2}\int_0^1
+#' `23, 33` \tab \eqn{\frac{\theta}{2-\theta}}{\theta/(2-\theta)} \cr
+#' `24, 34` \tab \eqn{-1-\frac{1}{\theta}}{-1-1/\theta} \cr
+#' `26, 36` \tab \eqn{-1-\frac{4}{\theta^2}\int_0^1
 #' x\log(x)(1-x)^{-2(1+\theta)/\theta}dx}{-1-4/\theta^2
 #' \int_0^1 x\log(x)(1-x)^{-2(1+\theta)/\theta}dx} \cr
-#' \code{27, 37} \tab \eqn{-1-\frac{2}{\delta(2-\theta)}}{1-2/(\delta(\theta+2))} \cr
-#' \code{28, 38} \tab \eqn{-1-4\int_0^1 -\log(-(1-t)^{-\theta}+1)
+#' `27, 37` \tab \eqn{-1-\frac{2}{\delta(2-\theta)}}{1-2/(\delta(\theta+2))} \cr
+#' `28, 38` \tab \eqn{-1-4\int_0^1 -\log(-(1-t)^{-\theta}+1)
 #' (1-t-(1-t)^{\theta}+(1-t)^{\theta}t)/(\delta\theta) dt} \cr
-#' \code{29, 39} \tab \eqn{-1-4\int_0^1 ( (1-(1-t)^{-\theta})^{\delta} - 1)
+#' `29, 39` \tab \eqn{-1-4\int_0^1 ( (1-(1-t)^{-\theta})^{\delta} - 1)
 #' /( -\theta\delta(1-t)^{-\theta-1}(1-(1-t)^{-\theta})^{\delta-1} ) dt} \cr
-#' \code{30, 40} \tab \eqn{-1-4\int_0^1 -\log
+#' `30, 40` \tab \eqn{-1-4\int_0^1 -\log
 #' \left( ((1+t\delta)^{-\theta}-1)/((1+\delta)^{-\theta}-1) \right)} \cr
 #' \tab \eqn{* (1+t\delta-(1+t\delta)^{\theta}-(1+t\delta)^{\theta}t\delta)/(\theta\delta) dt} \cr
-#' \code{104,114} \tab \eqn{\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt} \cr
+#' `104,114` \tab \eqn{\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt} \cr
 #' \tab with \eqn{A(t) = (1-\delta)t+[(\delta(1-t))^{\theta}+t^{\theta}]^{1/\theta}} \cr
-#' \code{204,214} \tab \eqn{\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt}  \cr
+#' `204,214` \tab \eqn{\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt}  \cr
 #' \tab with \eqn{A(t) = (1-\delta)(1-t)+[(1-t)^{-\theta}+(\delta t)^{-\theta}]^{-1/\theta}} \cr
-#' \code{124,134} \tab \eqn{-\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt} \cr
+#' `124,134` \tab \eqn{-\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt} \cr
 #' \tab with \eqn{A(t) = (1-\delta)t+[(\delta(1-t))^{-\theta}+t^{-\theta}]^{-1/\theta}} \cr
-#' \code{224,234} \tab \eqn{-\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt} \cr
+#' `224,234` \tab \eqn{-\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt} \cr
 #' \tab with \eqn{A(t) = (1-\delta)(1-t)+[(1-t)^{-\theta}+(\delta t)^{-\theta}]^{-1/\theta}} \cr
 #'
 #' }
 #'
-#' @note The number \code{n} can be chosen arbitrarily, but must agree across
+#' @note The number `n` can be chosen arbitrarily, but must agree across
 #' arguments.
 #'
 #' @author Ulf Schepsmeier, Tobias Erhardt
 #'
-#' @seealso \code{\link{BiCopTau2Par}}, \code{\link{BiCop}}
+#' @seealso [BiCopTau2Par()], [BiCop()]
 #'
 #' @references Joe, H. (1997). Multivariate Models and Dependence Concepts.
 #' Chapman and Hall, London.

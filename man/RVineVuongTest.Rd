@@ -9,7 +9,7 @@ RVineVuongTest(data, RVM1, RVM2)
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}
 
-\item{RVM1, RVM2}{\code{\link{RVineMatrix}} objects of models 1 and 2.}
+\item{RVM1, RVM2}{\code{\link[=RVineMatrix]{RVineMatrix()}} objects of models 1 and 2.}
 }
 \value{
 \item{statistic, statistic.Akaike, statistic.Schwarz}{Test
@@ -20,7 +20,7 @@ correction.}
 }
 \description{
 This function performs a Vuong test between two d-dimensional R-vine copula
-models as specified by their \code{\link{RVineMatrix}} objects.
+models as specified by their \code{\link[=RVineMatrix]{RVineMatrix()}} objects.
 }
 \details{
 The likelihood-ratio based test proposed by Vuong (1989) can be used for
@@ -80,8 +80,8 @@ Vuong, Q. H. (1989). Ratio tests for model selection and
 non-nested hypotheses. Econometrica 57 (2), 307-333.
 }
 \seealso{
-\code{\link{RVineClarkeTest}}, \code{\link{RVineAIC}},
-\code{\link{RVineBIC}}
+\code{\link[=RVineClarkeTest]{RVineClarkeTest()}}, \code{\link[=RVineAIC]{RVineAIC()}},
+\code{\link[=RVineBIC]{RVineBIC()}}
 }
 \author{
 Jeffrey Dissmann, Eike Brechmann
