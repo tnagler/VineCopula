@@ -224,10 +224,10 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
         } else if (Copula.Types[i] %in% c(4, 14)) {
             # gumbel
             lb[i] <- 1.0001
-            ub[i] <- 100
+            ub[i] <- 50
         } else if (Copula.Types[i] %in% c(24, 34)) {
             # rotated gumbel
-            lb[i] <- -100
+            lb[i] <- -50
             ub[i] <- -1.0001
         } else if (Copula.Types[i] == 5) {
             # frank

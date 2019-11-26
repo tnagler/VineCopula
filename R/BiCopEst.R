@@ -997,7 +997,7 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
             up <- 100
         } else if (family %in% c(4, 14)) {
             low <- 1.0001
-            up <- 100
+            up <- 50
         } else if (family %in% c(5)) {
             low <- -100
             up <- 100
@@ -1009,7 +1009,7 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
             low <- -100
         } else if (family %in% c(24, 34)) {
             up <- -1.0001
-            low <- -100
+            low <- -50
         } else if (family %in% c(26, 36)) {
             up <- -1.0001
             low <- -50

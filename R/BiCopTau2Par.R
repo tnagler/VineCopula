@@ -124,14 +124,18 @@ BiCopTau2Par <- function(family, tau, check.taus = TRUE) {
         BiCopCheckTaus(family, tau)
 
     ## calculate the parameter
-    out <- vapply(1:length(tau),
+    par <- vapply(seq_along(tau),
                   function(i) calcPar(family[i], tau[i]),
                   numeric(1))
+    par <- vapply(seq_along(par),
+                  function(i) adjustPars(family[i], par[i], 0)[1],
+                  numeric(1))
+
 
     ## return result
     if (length(dims) > 1)
-        out <- array(out, dim = dims)
-    out
+        par <- array(par, dim = dims)
+    par
 }
 
 calcPar <- function(family, tau) {
