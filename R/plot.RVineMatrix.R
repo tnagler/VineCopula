@@ -65,6 +65,8 @@
 #'
 plot.RVineMatrix <- function(x, tree = "ALL", type = 0, edge.labels = NULL,
                              legend.pos = "bottomleft", interactive = FALSE, ...) {
+    if (!requireNamespace("network", quietly = TRUE))
+        stop("The 'network' package must be installed.")
 
     M <- x$Matrix
     d <- nrow(M)

@@ -1,7 +1,7 @@
 Package: VineCopula
 Type: Package
 Title: Statistical Inference of Vine Copulas
-Version: 2.4.0
+Version: 2.3.0
 Description: Provides tools for the statistical analysis of vine copula models.
     The package includes tools for parameter estimation, model selection,
     simulation, goodness-of-fit tests, and visualization. Tools for estimation,
@@ -31,7 +31,6 @@ Imports:
     utils,
     MASS,
     mvtnorm,
-    network,
     methods,
     ADGofTest,
     lattice,
@@ -42,7 +41,8 @@ Suggests:
     shiny,
     testthat,
     numDeriv,
-    kdecopula (>= 0.8.0)
+    kdecopula (>= 0.8.0),
+    network
 License: GPL (>= 2)
 LazyLoad: yes
 BugReports: https://github.com/tnagler/VineCopula/issues
