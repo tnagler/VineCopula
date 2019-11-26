@@ -8,7 +8,7 @@ Description: Provides tools for the statistical analysis of vine copula models.
     selection and exploratory data analysis of bivariate copula models are also
     provided.
 Authors@R: c(
-    person("Thomas", "Nagler",, "thomas.nagler@tum.de", role = c("aut", "cre")),
+    person("Thomas", "Nagler",, "mail@tnagler.com", role = c("aut", "cre")),
     person("Ulf", "Schepsmeier",, "ulf.schepsmeier@tum.de", role = "aut"),
     person("Jakob", "Stoeber",, role = "aut"),
     person("Eike Christian", "Brechmann",, role = "aut"),
