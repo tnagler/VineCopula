@@ -48,4 +48,17 @@
 #' # estimate vine copula model
 #' fit <- RVineStructureSelect(udat, familyset = c(1, 2))
 #'
-NULL
+pobs <- function(x, na.last = "keep",
+                 ties.method = eval(formals(rank)$ties.method),
+                 lower.tail = TRUE) {
+    ties.method <- match.arg(ties.method)
+    U <- if (!is.null(dim(x)))
+        apply(x, 2, rank, na.last = na.last, ties.method = ties.method)/(nrow(x) + 1)
+    else rank(x, na.last = na.last, ties.method = ties.method)/(length(x) +  1)
+    if (inherits(x, "zoo"))
+        attributes(U) <- attributes(x)
+    if (lower.tail)
+        U
+    else 1 - U
+}
+

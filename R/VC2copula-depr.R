@@ -1,63 +1,3 @@
-#' Compute the pseudo-observations for the given data matrix.
-#'
-#' @param x \eqn{n x d}-matrix of random variates to be converted to
-#'   pseudo-observations.
-#' @param na.last passed to [base::rank()].
-#' @param ties.method passed to [base::rank()].
-#' @param lower.tail logical which, if FALSE, returns the pseudo-observations
-#'   when applying the empirical marginal survival functions.
-#'
-#' @details Given n realizations \eqn{x_i=(x_{i1},...,x_{id}), i = 1,...,n} of a
-#' random vector X, the pseudo-observations are defined via
-#' \eqn{u_{ij}=r_{ij}/(n+1)} for \eqn{i = 1,...,n; j = 1,...,d,} where
-#' \eqn{r_{ij}} denotes the rank of \eqn{x_{ij}} among all \eqn{x_{kj}, k \in
-#' \{1,...,n\}}. The pseudo-observations can thus also be computed by
-#' component-wise applying the empirical distribution functions to the data and
-#' scaling the result by n/(n+1). This asymptotically negligible scaling factor
-#' is used to force the variates to fall inside the open unit hypercube, for
-#' example, to avoid problems with density evaluation at the boundaries. Note
-#' that `pobs(, lower.tail=FALSE)` simply returns `1-pobs()`.
-#'
-#' @return matrix of the same dimensions as x containing the
-#' pseudo-observations.
-#'
-#' @note This function is borrowed from the copula package.
-#'
-#' @author Marius Hofert
-#'
-#' @examples
-#'
-#' ## Simple definition of the function:
-#' pobs
-#'
-#' ## simulate data from a multivariate normal distribution
-#' library(mvtnorm)
-#' set.seed(123)
-#' Sigma <- matrix(c(2, 1, -0.2, 1, 1, 0.3, -0.2, 0.3, 0.5), 3, 3)
-#' mu <- c(-3, 2, 1)
-#' dat <- rmvnorm(500, sigma = Sigma)
-#' pairs(dat)  # plot observations
-#'
-#' ## compute pseudo-observations for copula inference
-#' udat <- pobs(dat)
-#' pairs(udat)
-#' # estimate vine copula model
-#' fit <- RVineStructureSelect(udat, familyset = c(1, 2))
-pobs <- function(x, na.last = "keep",
-                 ties.method = eval(formals(rank)$ties.method),
-                 lower.tail = TRUE) {
-  ties.method <- match.arg(ties.method)
-  U <- if (!is.null(dim(x)))
-    apply(x, 2, rank, na.last = na.last, ties.method = ties.method)/(nrow(x) + 1)
-  else rank(x, na.last = na.last, ties.method = ties.method)/(length(x) +  1)
-  if (inherits(x, "zoo"))
-    attributes(U) <- attributes(x)
-  if (lower.tail)
-    U
-  else 1 - U
-}
-
-
 #' Deprecated
 #'
 #' This functionality is deprecated in 'VineCopula'. Use the package 'VC2copula'
@@ -88,14 +28,17 @@ copulaFromFamilyIndex <- function(family, par, par2 = 0) {
 setClass("surClaytonCopula", slots = c(param = "numeric"))
 setClass("r90ClaytonCopula", slots = c(param = "numeric"))
 setClass("r270ClaytonCopula", slots = c(param = "numeric"))
+#' @rdname VC2copula-deprecated
 surClaytonCopula <- function (param=c(1,1)) {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
 }
+#' @rdname VC2copula-deprecated
 r90ClaytonCopula <- function (param=c(1,1)) {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
 }
+#' @rdname VC2copula-deprecated
 r270ClaytonCopula <- function (param=c(1,1)) {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
@@ -117,14 +60,17 @@ r270ClaytonCopula <- function (param=c(1,1)) {
 setClass("surGumbelCopula", slots = c(param = "numeric"))
 setClass("r90GumbelCopula", slots = c(param = "numeric"))
 setClass("r270GumbelCopula", slots = c(param = "numeric"))
+#' @rdname VC2copula-deprecated
 surGumbelCopula <- function (param=c(1,1)) {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
 }
+#' @rdname VC2copula-deprecated
 r90GumbelCopula <- function (param=c(1,1)) {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
 }
+#' @rdname VC2copula-deprecated
 r270GumbelCopula <- function (param=c(1,1)) {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
@@ -152,18 +98,22 @@ setClass("joeBiCopula", slots = c(param = "numeric"))
 setClass("surJoeBiCopula", slots = c(param = "numeric"))
 setClass("r90JoeBiCopula", slots = c(param = "numeric"))
 setClass("r270JoeBiCopula", slots = c(param = "numeric"))
+#' @rdname VC2copula-deprecated
 joeBiCopula <- function (param=c(1,1)) {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
 }
+#' @rdname VC2copula-deprecated
 surJoeBiCopula <- function (param=c(1,1)) {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
 }
+#' @rdname VC2copula-deprecated
 r90JoeBiCopula <- function (param=c(1,1)) {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
 }
+#' @rdname VC2copula-deprecated
 r270JoeBiCopula <- function (param=c(1,1)) {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
@@ -186,19 +136,23 @@ setClass("BB1Copula", slots = c(param = "numeric"))
 setClass("surBB1Copula", slots = c(param = "numeric"))
 setClass("r90BB1Copula", slots = c(param = "numeric"))
 setClass("r270BB1Copula", slots = c(param = "numeric"))
-BB1Copula <- function (param=c(1,1)) {
+#' @rdname VC2copula-deprecated
+BB1Copula <- function(param=c(1,1)) {
   stop("Function is deprecated in package VineCopula. ",
        "Use the 'VC2copula' package instead.")
 }
-surBB1Copula <- function (param=c(1,1)) {
+#' @rdname VC2copula-deprecated
+surBB1Copula <- function(param=c(1,1)) {
   stop("Function is deprecated in package VineCopula. ",
        "Use the 'VC2copula' package instead.")
 }
-r90BB1Copula <- function (param=c(1,1)) {
+#' @rdname VC2copula-deprecated
+r90BB1Copula <- function(param=c(1,1)) {
   stop("Function is deprecated in package VineCopula. ",
        "Use the 'VC2copula' package instead.")
 }
-r270BB1Copula <- function (param=c(1,1)) {
+#' @rdname VC2copula-deprecated
+r270BB1Copula <- function(param=c(1,1)) {
   stop("Function is deprecated in package VineCopula. ",
        "Use the 'VC2copula' package instead.")
 }
@@ -221,18 +175,22 @@ setClass("BB6Copula", slots = c(param = "numeric"))
 setClass("surBB6Copula", slots = c(param = "numeric"))
 setClass("r90BB6Copula", slots = c(param = "numeric"))
 setClass("r270BB6Copula", slots = c(param = "numeric"))
+#' @rdname VC2copula-deprecated
 BB6Copula <- function (param=c(1,1)) {
   stop("Function is deprecated in package VineCopula. ",
        "Use the 'VC2copula' package instead.")
 }
+#' @rdname VC2copula-deprecated
 surBB6Copula <- function (param=c(1,1)) {
   stop("Function is deprecated in package VineCopula. ",
        "Use the 'VC2copula' package instead.")
 }
+#' @rdname VC2copula-deprecated
 r90BB6Copula <- function (param=c(1,1)) {
   stop("Function is deprecated in package VineCopula. ",
        "Use the 'VC2copula' package instead.")
 }
+#' @rdname VC2copula-deprecated
 r270BB6Copula <- function (param=c(1,1)) {
   stop("Function is deprecated in package VineCopula. ",
        "Use the 'VC2copula' package instead.")
@@ -255,18 +213,22 @@ setClass("BB7Copula", slots = c(param = "numeric"))
 setClass("surBB7Copula", slots = c(param = "numeric"))
 setClass("r90BB7Copula", slots = c(param = "numeric"))
 setClass("r270BB7Copula", slots = c(param = "numeric"))
+#' @rdname VC2copula-deprecated
 BB7Copula <- function (param=c(1,1)) {
   stop("Function is deprecated in package VineCopula. ",
        "Use the 'VC2copula' package instead.")
 }
+#' @rdname VC2copula-deprecated
 surBB7Copula <- function (param=c(1,1)) {
   stop("Function is deprecated in package VineCopula. ",
        "Use the 'VC2copula' package instead.")
 }
+#' @rdname VC2copula-deprecated
 r90BB7Copula <- function (param=c(1,1)) {
   stop("Function is deprecated in package VineCopula. ",
        "Use the 'VC2copula' package instead.")
 }
+#' @rdname VC2copula-deprecated
 r270BB7Copula <- function (param=c(1,1)) {
   stop("Function is deprecated in package VineCopula. ",
        "Use the 'VC2copula' package instead.")
@@ -290,18 +252,22 @@ setClass("BB8Copula", slots = c(param = "numeric"))
 setClass("surBB8Copula", slots = c(param = "numeric"))
 setClass("r90BB8Copula", slots = c(param = "numeric"))
 setClass("r270BB8Copula", slots = c(param = "numeric"))
+#' @rdname VC2copula-deprecated
 BB8Copula <- function (param=c(1,1)) {
-    stop("This functionality  is deprecated in 'VineCopula'. ",
-         "Use the package 'VC2copula' instead.")
+  stop("This functionality  is deprecated in 'VineCopula'. ",
+       "Use the package 'VC2copula' instead.")
 }
+#' @rdname VC2copula-deprecated
 surBB8Copula <- function (param=c(1,1)) {
-    stop("This functionality  is deprecated in 'VineCopula'. ",
-         "Use the package 'VC2copula' instead.")
+  stop("This functionality  is deprecated in 'VineCopula'. ",
+       "Use the package 'VC2copula' instead.")
 }
+#' @rdname VC2copula-deprecated
 r90BB8Copula <- function (param=c(1,1)) {
-    stop("This functionality  is deprecated in 'VineCopula'. ",
-         "Use the package 'VC2copula' instead.")
+  stop("This functionality  is deprecated in 'VineCopula'. ",
+       "Use the package 'VC2copula' instead.")
 }
+#' @rdname VC2copula-deprecated
 r270BB8Copula <- function (param=c(1,1)) {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
@@ -327,18 +293,22 @@ setClass("tawnT1Copula", slots = c(param = "numeric"))
 setClass("surTawnT1Copula", slots = c(param = "numeric"))
 setClass("r90TawnT1Copula", slots = c(param = "numeric"))
 setClass("r270TawnT1Copula", slots = c(param = "numeric"))
+#' @rdname VC2copula-deprecated
 tawnT1Copula <- function (param=c(1,1)) {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
 }
+#' @rdname VC2copula-deprecated
 surTawnT1Copula <- function (param=c(1,1)) {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
 }
+#' @rdname VC2copula-deprecated
 r90TawnT1Copula <- function (param=c(1,1)) {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
 }
+#' @rdname VC2copula-deprecated
 r270TawnT1Copula <- function (param=c(1,1)) {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
@@ -364,29 +334,33 @@ setClass("tawnT2Copula", slots = c(param = "numeric"))
 setClass("surTawnT2Copula", slots = c(param = "numeric"))
 setClass("r90TawnT2Copula", slots = c(param = "numeric"))
 setClass("r270TawnT2Copula", slots = c(param = "numeric"))
+#' @rdname VC2copula-deprecated
 tawnT2Copula <- function (param=c(1,1)) {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
 }
+#' @rdname VC2copula-deprecated
 surTawnT2Copula <- function (param=c(1,1)) {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
 }
+#' @rdname VC2copula-deprecated
 r90TawnT2Copula <- function (param=c(1,1)) {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
 }
+#' @rdname VC2copula-deprecated
 r270TawnT2Copula <- function (param=c(1,1)) {
   stop("This functionality is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
 }
 
+setClass("vineCopula", slots = c(param = "numeric"))
 #' @rdname VC2copula-deprecated
 #' @aliases vineCopula-class vineCopula fitCopula vineCopula-method
 #' @param RVM ...
 #' @param type ...
 #' @param param ...
-setClass("vineCopula", slots = c(param = "numeric"))
 vineCopula <- function(RVM, type="CVine") {
   stop("This functionality  is deprecated in 'VineCopula'. ",
        "Use the package 'VC2copula' instead.")
