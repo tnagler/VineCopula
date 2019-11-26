@@ -200,9 +200,9 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC",
         if (is.na(cores))
             cores <- max(1, detectCores() - 1)
         if (cores > 1) {
-            cl <- makeCluster(cores)
-            registerDoParallel(cl)
-            on.exit(try(stopCluster(), silent = TRUE))
+            cl <- makePSOCKcluster(cores)
+            setDefaultCluster(cl)
+            on.exit(try(stopCluster(cl), silent = TRUE))
             on.exit(try(closeAllConnections(), silent = TRUE), add = TRUE)
         }
     }
@@ -294,15 +294,11 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC",
         }
 
         ## run pair-copula selection for tree k
-        res.k <- if (cores > 1) {
-            foreach(i = 1:(k-1),
-                    .packages = c("VineCopula"),
-                    .export = "familyset") %dopar% doEst(i)
-        } else {
-            lapply(1:(k-1), doEst)
-        }
+        if (cores > 1)
+            lapply <- function(...) parallel::parLapply(getDefaultCluster(), ...)
+        res.k <- lapply(seq_len(k - 1), doEst)
 
-        for (i in 1:(k-1)) {
+        for (i in seq_len(k - 1)) {
             ## store info about selected pair-copula in matrices
             Types[k, i]   <- res.k[[i]]$cfit$family
             Params[k, i]  <- res.k[[i]]$cfit$par

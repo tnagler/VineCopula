@@ -235,9 +235,9 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0,
         if (is.na(cores))
             cores <- max(1, detectCores() - 1)
         if (cores > 1) {
-            cl <- makeCluster(cores)
-            registerDoParallel(cl)
-            on.exit(try(stopCluster(), silent = TRUE))
+            cl <- makePSOCKcluster(cores)
+            setDefaultCluster(cl)
+            on.exit(try(stopCluster(cl), silent = TRUE))
             on.exit(try(closeAllConnections(), silent = TRUE), add = TRUE)
         }
     }
@@ -596,32 +596,18 @@ fit.FirstTreeCopulas <- function(MST, data.univ, familyset, selectioncrit,
     }
 
     ## estimate parameters and select family
-    if (cores > 1) {
-        pc.fits <- foreach(i = 1:length(pc.data),
-                           .export = c("pcSelect",
-                                       "fit.ACopula",
-                                       "BiCopSelect")) %dopar%
-            pcSelect(pc.data[[i]],
-                     familyset,
-                     selectioncrit,
-                     indeptest,
-                     level,
-                     weights,
-                     se,
-                     presel,
-                     method)
-    } else {
-        pc.fits <- lapply(X = pc.data,
-                          FUN = pcSelect,
-                          familyset,
-                          selectioncrit,
-                          indeptest,
-                          level,
-                          weights,
-                          se,
-                          presel,
-                          method)
-    }
+    if (cores > 1)
+        lapply <- function(...) parallel::parLapply(getDefaultCluster(), ...)
+    pc.fits <- lapply(pc.data,
+                      pcSelect,
+                      familyset = familyset,
+                      selectioncrit = selectioncrit,
+                      indeptest = indeptest,
+                      level = level,
+                      weights = weights,
+                      se = se,
+                      presel = presel,
+                      method = method)
 
     ## store estimated model and pseudo-obversations for next tree
     for (i in 1:d) {
@@ -707,31 +693,19 @@ fit.TreeCopulas <- function(MST, oldVineGraph, familyset, selectioncrit,
     }
 
     ## estimate parameters and select family
-    if (cores > 1) {
-        pc.fits <- foreach(i = 1:length(pc.data),
-                           .export = c("pcSelect", "fit.ACopula"),
-                           .packages = "VineCopula") %dopar%
-            pcSelect(pc.data[[i]],
-                     familyset,
-                     selectioncrit,
-                     indeptest,
-                     level,
-                     weights,
-                     se,
-                     presel,
-                     method)
-    } else {
-        pc.fits <- lapply(X = pc.data,
-                          FUN = pcSelect,
-                          familyset,
-                          selectioncrit,
-                          indeptest,
-                          level,
-                          weights,
-                          se,
-                          presel,
-                          method)
-    }
+    if (cores > 1)
+        lapply <- function(...) parallel::parLapply(getDefaultCluster(), ...)
+    pc.fits <- lapply(pc.data,
+                      pcSelect,
+                      familyset = familyset,
+                      selectioncrit = selectioncrit,
+                      indeptest = indeptest,
+                      level = level,
+                      weights = weights,
+                      se = se,
+                      presel = presel,
+                      method = method)
+
 
     ## store estimated model and pseudo-obversations for next tree
     for (i in 1:d) {
@@ -762,24 +736,15 @@ buildNextGraph <- function(oldVineGraph, treecrit, weights = NA, parallel,
     g$V$conditioningSet <- oldVineGraph$E$conditioningSet
 
     ## get info for all edges
-    if (parallel) {
-        i <- NA  # dummy for CRAN checks
-        out <- foreach(i = 1:nrow(g$E$nums)) %dopar%
-            getEdgeInfo(i,
-                        g = g,
-                        oldVineGraph = oldVineGraph,
-                        treecrit = treecrit,
-                        weights = weights,
-                        truncated = truncated)
-    } else {
-        out <- lapply(1:nrow(g$E$nums),
-                      getEdgeInfo,
-                      g = g,
-                      oldVineGraph = oldVineGraph,
-                      treecrit = treecrit,
-                      weights = weights,
-                      truncated = truncated)
-    }
+    if (parallel)
+        lapply <- function(...) parallel::parLapply(getDefaultCluster(), ...)
+    out <- lapply(seq_len(nrow(g$E$nums)),
+                  getEdgeInfo,
+                  g = g,
+                  oldVineGraph = oldVineGraph,
+                  treecrit = treecrit,
+                  weights = weights,
+                  truncated = truncated)
 
     ## annotate graph (same order as in old version of this function)
     g$E$weights         <- sapply(out, function(x) x$w)
@@ -1076,7 +1041,7 @@ as.RVM2 <- function(RVine, data, callexp) {
     npar <- sum(RVM$family %in% allfams[onepar], na.rm = TRUE) +
         2 * sum(RVM$family %in% allfams[twopar], na.rm = TRUE)
     npar_pair <- matrix((RVM$family %in% allfams[onepar]) +
-        2 * (RVM$family %in% allfams[twopar]), nrow = n, ncol = n)
+                            2 * (RVM$family %in% allfams[twopar]), nrow = n, ncol = n)
     N <- nrow(data)
     RVM$AIC <- -2 * like$loglik + 2 * npar
     RVM$pair.AIC <- -2 * logLiks + 2 * npar_pair

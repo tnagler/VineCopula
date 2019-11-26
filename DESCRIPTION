@@ -36,9 +36,7 @@ Imports:
     kdecopula (>= 0.8.0),
     ADGofTest,
     lattice,
-    doParallel,
-    parallel,
-    foreach
+    parallel
 Suggests:
     CDVine,
     TSP,

@@ -17,9 +17,10 @@ importFrom("utils", "combn", "getFromNamespace", "modifyList", "data")
 importFrom("ADGofTest", "ad.test")
 importFrom("MASS", "bandwidth.nrd", "ginv", "kde2d")
 
-importFrom("doParallel", "registerDoParallel")
-importFrom("foreach", "%dopar%",  "foreach")
-importFrom("parallel", "makeCluster", "stopCluster", "detectCores")
+importFrom("parallel",
+           "makePSOCKcluster", "stopCluster",
+           "setDefaultCluster", "getDefaultCluster",
+           "detectCores", "parLapply")
 
 export(pobs)
 
