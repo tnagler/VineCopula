@@ -108,9 +108,9 @@ checkPars <- function(x, cl) {
         stop("\n In ", cl, ": ",
              "The parameter of the Clayton copula has to be in the interval (0,100]",
              call. = FALSE)
-    } else if ((family == 4 || family == 14) && (par < 1 || par > 100)) {
+    } else if ((family == 4 || family == 14) && (par < 1 || par > 50)) {
         stop("\n In ", cl, ": ",
-             "The parameter of the Gumbel copula has to be in the interval [1,100].",
+             "The parameter of the Gumbel copula has to be in the interval [1,50].",
              call. = FALSE)
     } else if (family == 5) {
         if (par == 0)
@@ -165,9 +165,9 @@ checkPars <- function(x, cl) {
         stop("\n In ", cl, ": ",
              "The parameter of the rotated Clayton copula has to be be in the interval [-100,0)",
              call. = FALSE)
-    } else if ((family == 24 || family == 34) && (par > -1 || par < -100)) {
+    } else if ((family == 24 || family == 34) && (par > -1 || par < -50)) {
         stop("\n In ", cl, ": ",
-             "The parameter of the rotated Gumbel copula has to be in the interval [-100,-1].",
+             "The parameter of the rotated Gumbel copula has to be in the interval [-50,-1].",
              call. = FALSE)
     } else if ((family == 26 || family == 36) && (par >= -1 || par < -50)) {
         stop("\n In ", cl, ": ",
@@ -255,8 +255,8 @@ checkPars <- function(x, cl) {
 adjustPars <- function(family, par, par2) {
     if ((family %in% c(3, 13, 23, 33)) && (abs(par) > 100)) {
         par <- sign(par) * 100
-    } else if ((family %in% c(4, 14, 24, 34)) && (abs(par) > 100)) {
-        par <- sign(par) * 100
+    } else if ((family %in% c(4, 14, 24, 34)) && (abs(par) > 50)) {
+        par <- sign(par) * 50
     } else if ((family == 5) && (abs(par) > 100)) {
         par <- sign(par) * 100
     } else if ((family %in% c(6, 16, 26, 36)) && (abs(par) > 50)) {
@@ -322,4 +322,32 @@ BiCopCheckTaus <- function(family, tau) {
 
     ## return TRUE if all checks pass
     TRUE
+}
+
+adjustTaus <- function(family, tau) {
+    tau <- vapply(tau, function(tau) {
+        if (family %in% c(3, 13) && tau <= 0) {
+            tau <- BiCopPar2Tau(family, 1e-04)
+        }
+        if (family %in% c(4, 14) && tau < 0) {
+            tau <- BiCopPar2Tau(family, 1.0001)
+        }
+        if (family == 5 && tau == 0) {
+            tau <- BiCopPar2Tau(family, 1e-04)
+        }
+        if (family %in% c(6, 16) && tau < 0) {
+            tau <- BiCopPar2Tau(family, 1.0001)
+        }
+        if (family %in% c(23, 33) && tau >= 0) {
+            tau <- BiCopPar2Tau(family, -1e-04)
+        }
+        if (family %in% c(24, 34) && tau > 0) {
+            tau <- BiCopPar2Tau(family, -1.0001)
+        }
+        if (family %in% c(26, 36) && tau > 0) {
+            tau <- BiCopPar2Tau(family, -1.0001)
+        }
+        tau
+    }, numeric(1))
+    tau
 }
