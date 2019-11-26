@@ -13,3 +13,4 @@ revdep
 ^docs$
 ^-*\.directory^
 ^CRAN-RELEASE$
+^\.github/workflows/R-CMD-check\.yaml$
