@@ -3,6 +3,14 @@
 \name{pobs}
 \alias{pobs}
 \title{Pseudo-Observations}
+\usage{
+pobs(
+  x,
+  na.last = "keep",
+  ties.method = eval(formals(rank)$ties.method),
+  lower.tail = TRUE
+)
+}
 \arguments{
 \item{x}{\eqn{n\times d}{n x d}-matrix of random variates to be converted to
 pseudo-observations.}

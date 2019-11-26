@@ -4,8 +4,14 @@
 \alias{RVineGrad}
 \title{Gradient of the Log-Likelihood of an R-Vine Copula Model}
 \usage{
-RVineGrad(data, RVM, par = RVM$par, par2 = RVM$par2, start.V = NA,
-  posParams = (RVM$family > 0))
+RVineGrad(
+  data,
+  RVM,
+  par = RVM$par,
+  par2 = RVM$par2,
+  start.V = NA,
+  posParams = (RVM$family > 0)
+)
 }
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}

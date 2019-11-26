@@ -4,10 +4,22 @@
 \alias{BiCopMetaContour}
 \title{Contour Plot of Bivariate Meta Distribution}
 \usage{
-BiCopMetaContour(u1 = NULL, u2 = NULL, bw = 1, size = 100,
-  levels = c(0.01, 0.05, 0.1, 0.15, 0.2), family = "emp", par = 0,
-  par2 = 0, PLOT = TRUE, margins = "norm", margins.par = 0,
-  xylim = NA, obj = NULL, ...)
+BiCopMetaContour(
+  u1 = NULL,
+  u2 = NULL,
+  bw = 1,
+  size = 100,
+  levels = c(0.01, 0.05, 0.1, 0.15, 0.2),
+  family = "emp",
+  par = 0,
+  par2 = 0,
+  PLOT = TRUE,
+  margins = "norm",
+  margins.par = 0,
+  xylim = NA,
+  obj = NULL,
+  ...
+)
 }
 \arguments{
 \item{u1, u2}{Data vectors of equal length with values in [0,1] (default:

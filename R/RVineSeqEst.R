@@ -154,9 +154,9 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
         if (is.na(cores))
             cores <- max(1, detectCores() - 1)
         if (cores > 1) {
-            cl <- makeCluster(cores)
-            registerDoParallel(cl)
-            on.exit(try(stopCluster(), silent = TRUE))
+            cl <- makePSOCKcluster(cores)
+            setDefaultCluster(cl)
+            on.exit(try(stopCluster(cl), silent = TRUE))
             on.exit(try(closeAllConnections(), silent = TRUE), add = TRUE)
         }
     }
@@ -242,13 +242,9 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
         }
 
         ## run pair-copula estimation for tree k
-        res.k <- if (cores > 1) {
-            foreach(i = 1:(k-1),
-                    .packages = c("VineCopula"),
-                    .export = ) %dopar% doEst(i)
-        } else {
-            lapply(1:(k-1), doEst)
-        }
+        if (cores > 1)
+            lapply <- function(...) parallel::parLapply(getDefaultCluster(), ...)
+        res.k <- lapply(seq_len(k - 1), doEst)
 
         for (i in 1:(k-1)) {
             ## store results in matrices

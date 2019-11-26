@@ -62,27 +62,27 @@
 #'
 BiCopCheck <- function(family, par, par2 = 0, ...) {
     # see if call has been passed via ...
-    cl <- ifelse(!is.null(list(...)$call), list(...)$call[1], "BiCopCheck")
+    call_ <- ifelse(!is.null(list(...)$call), list(...)$call[1], "BiCopCheck")
 
     ## check if all required parameters are set
     if (!(all(family %in% c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 16, 17, 18, 19,
                             20, 23, 24, 26, 27, 28, 29, 30, 33, 34, 36, 37, 38, 39,
                             40, 41, 42, 51, 52,  61, 62, 71, 72,
                             104, 114, 124, 134, 204, 214, 224, 234))))
-        stop("\n In ", cl, ": ",
+        stop("\n In ", call_, ": ",
              "Copula family not implemented.",
              call. = FALSE)
     if (any((family %in% allfams[twopar]) & (par2 == 0)))
-        stop("\n In ", cl, ": ",
+        stop("\n In ", call_, ": ",
              "For t-, BB1, BB6, BB7, BB8 and Tawn copulas, 'par2' must be set.",
              call. = FALSE)
     if (length(par) < 1)
-        stop("\n In ", cl, ": ",
+        stop("\n In ", call_, ": ",
              "'par' not set.",
              call. = FALSE)
     stopifnot(length(par) == length(par2))
 
-    apply(cbind(family, par, par2), 1, checkPars, cl = cl)
+    apply(cbind(family, par, par2), 1, checkPars, cl = call_)
 
     ## return TRUE if all checks pass
     TRUE

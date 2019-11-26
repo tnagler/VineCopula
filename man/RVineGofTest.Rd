@@ -4,8 +4,14 @@
 \alias{RVineGofTest}
 \title{Goodness-of-Fit Tests for R-Vine Copula Models}
 \usage{
-RVineGofTest(data, RVM, method = "White", statistic = "CvM", B = 200,
-  alpha = 2)
+RVineGofTest(
+  data,
+  RVM,
+  method = "White",
+  statistic = "CvM",
+  B = 200,
+  alpha = 2
+)
 }
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}
