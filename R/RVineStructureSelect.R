@@ -318,7 +318,7 @@ set_treecrit <- function(treecrit, famset) {
     if (is.function(treecrit)) {
         w <- try(treecrit(u1 = runif(10), u2 = runif(10), weights = rep(1, 10)),
                  silent = TRUE)
-        if (!any(class(w) == "error"))
+        if (inherits(w, "try-error"))
             stop("treecrit must be of the form 'function(u1, u2, weights)'")
         if (!is.numeric(w) || length(w) > 1)
             stop("treecrit does not return a numeric scalar")
