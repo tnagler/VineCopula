@@ -4,8 +4,16 @@
 \alias{BiCopCondSim}
 \title{Conditional simulation from a Bivariate Copula}
 \usage{
-BiCopCondSim(N, cond.val, cond.var, family, par, par2 = 0, obj = NULL,
-  check.pars = TRUE)
+BiCopCondSim(
+  N,
+  cond.val,
+  cond.var,
+  family,
+  par,
+  par2 = 0,
+  obj = NULL,
+  check.pars = TRUE
+)
 }
 \arguments{
 \item{N}{Number of observations simulated.}

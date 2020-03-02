@@ -4,11 +4,23 @@
 \alias{RVineStructureSelect}
 \title{Sequential Specification of R- and C-Vine Copula Models}
 \usage{
-RVineStructureSelect(data, familyset = NA, type = 0,
-  selectioncrit = "AIC", indeptest = FALSE, level = 0.05,
-  trunclevel = NA, progress = FALSE, weights = NA,
-  treecrit = "tau", rotations = TRUE, se = FALSE, presel = TRUE,
-  method = "mle", cores = 1)
+RVineStructureSelect(
+  data,
+  familyset = NA,
+  type = 0,
+  selectioncrit = "AIC",
+  indeptest = FALSE,
+  level = 0.05,
+  trunclevel = NA,
+  progress = FALSE,
+  weights = NA,
+  treecrit = "tau",
+  rotations = TRUE,
+  se = FALSE,
+  presel = TRUE,
+  method = "mle",
+  cores = 1
+)
 }
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}

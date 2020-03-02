@@ -1,3 +1,13 @@
+VineCopula (in progress)
+----------------------------------------------------------------
+
+NEW FEATURES
+
+  * `RVineSim` optionally accepts a list of `RVineMatrix` models that must 
+    share the same structure, but can differ in in family/parameters (#69, #70).
+    Thanks @notEvil.
+  
+  
 VineCopula 2.2.0 (July 15, 2019)
 ----------------------------------------------------------------
 

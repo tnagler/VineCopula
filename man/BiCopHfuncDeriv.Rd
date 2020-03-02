@@ -4,8 +4,16 @@
 \alias{BiCopHfuncDeriv}
 \title{Derivatives of the h-Function of a Bivariate Copula}
 \usage{
-BiCopHfuncDeriv(u1, u2, family, par, par2 = 0, deriv = "par",
-  obj = NULL, check.pars = TRUE)
+BiCopHfuncDeriv(
+  u1,
+  u2,
+  family,
+  par,
+  par2 = 0,
+  deriv = "par",
+  obj = NULL,
+  check.pars = TRUE
+)
 }
 \arguments{
 \item{u1, u2}{numeric vectors of equal length with values in [0,1].}

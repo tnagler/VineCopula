@@ -10,14 +10,16 @@ RVineSim(N, RVM, U = NULL)
 \item{N}{Number of d-dimensional observations to simulate.}
 
 \item{RVM}{An \code{\link{RVineMatrix}} object containing the information of
-the R-vine copula model.}
+the R-vine copula model. Optionally, a length-`N` list of
+\code{\link{RVineMatrix}} objects sharing the same structure, but possibly
+different family/parameter can be supplied.}
 
-\item{U}{If not \code{\link{NULL}}, an (N,d)-matrix of U[0,1] random
-variates to be transformed to the copula sample.}
+\item{U}{If not \code{\link{NULL}}, an (N,d)-matrix of U[0,1] random variates
+to be transformed to the copula sample.}
 }
 \value{
-An \code{N} x d matrix of data simulated from the given R-vine
-copula model.
+An \code{N} x d matrix of data simulated from the given R-vine copula
+  model.
 }
 \description{
 This function simulates from a given R-vine copula model.
@@ -63,8 +65,8 @@ simdata <- RVineSim(300, RVM)
 }
 \references{
 Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
-(2013). Selecting and estimating regular vine copulae and application to
-financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
+  (2013). Selecting and estimating regular vine copulae and application to
+  financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 }
 \seealso{
 \code{\link{RVineMatrix}}, \code{\link{BiCopSim}}

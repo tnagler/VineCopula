@@ -4,10 +4,21 @@
 \alias{RVineCopSelect}
 \title{Sequential Pair-Copula Selection and Estimation for R-Vine Copula Models}
 \usage{
-RVineCopSelect(data, familyset = NA, Matrix, selectioncrit = "AIC",
-  indeptest = FALSE, level = 0.05, trunclevel = NA, weights = NA,
-  rotations = TRUE, se = FALSE, presel = TRUE, method = "mle",
-  cores = 1)
+RVineCopSelect(
+  data,
+  familyset = NA,
+  Matrix,
+  selectioncrit = "AIC",
+  indeptest = FALSE,
+  level = 0.05,
+  trunclevel = NA,
+  weights = NA,
+  rotations = TRUE,
+  se = FALSE,
+  presel = TRUE,
+  method = "mle",
+  cores = 1
+)
 }
 \arguments{
 \item{data}{N x d data matrix (with uniform margins).}

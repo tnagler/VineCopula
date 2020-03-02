@@ -6,14 +6,11 @@
 \alias{BiCopHinv2}
 \title{Inverse Conditional Distribution Function of a Bivariate Copula}
 \usage{
-BiCopHinv(u1, u2, family, par, par2 = 0, obj = NULL,
-  check.pars = TRUE)
+BiCopHinv(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE)
 
-BiCopHinv1(u1, u2, family, par, par2 = 0, obj = NULL,
-  check.pars = TRUE)
+BiCopHinv1(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE)
 
-BiCopHinv2(u1, u2, family, par, par2 = 0, obj = NULL,
-  check.pars = TRUE)
+BiCopHinv2(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRUE)
 }
 \arguments{
 \item{u1, u2}{numeric vectors of equal length with values in [0,1].}

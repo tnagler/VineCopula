@@ -4,9 +4,16 @@
 \alias{RVineLogLik}
 \title{Log-Likelihood of an R-Vine Copula Model}
 \usage{
-RVineLogLik(data, RVM, par = RVM$par, par2 = RVM$par2,
-  separate = FALSE, verbose = TRUE, check.pars = TRUE,
-  calculate.V = TRUE)
+RVineLogLik(
+  data,
+  RVM,
+  par = RVM$par,
+  par2 = RVM$par2,
+  separate = FALSE,
+  verbose = TRUE,
+  check.pars = TRUE,
+  calculate.V = TRUE
+)
 }
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}
