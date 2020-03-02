@@ -1,61 +1,61 @@
 #' Sequential Pair-Copula Selection and Estimation for R-Vine Copula Models
 #'
 #' This function fits a R-vine copula model to a d-dimensional copula data set.
-#' Pair-copula families are selected using \code{\link{BiCopSelect}} and
+#' Pair-copula families are selected using [BiCopSelect()] and
 #' estimated sequentially.
 #'
 #' R-vine copula models with unknown structure can be specified using
-#' \code{\link{RVineStructureSelect}}.
+#' [RVineStructureSelect()].
 #'
 #' @param data N x d data matrix (with uniform margins).
 #' @param familyset integer vector of pair-copula families to select from.
 #' The vector has to include at least one
 #' pair-copula family that allows for positive and one that allows for negative
 #' dependence. Not listed copula families might be included to better handle
-#' limit cases.  If \code{familyset = NA} (default), selection among all
+#' limit cases.  If `familyset = NA` (default), selection among all
 #' possible families is performed. If a vector of negative numbers is provided,
-#' selection among all but \code{abs(familyset)} is performed. Coding of
-#' pair copula families is the same as in \code{\link{BiCop}}.
+#' selection among all but `abs(familyset)` is performed. Coding of
+#' pair copula families is the same as in [BiCop()].
 #' @param Matrix lower or upper triangular d x d matrix that defines the R-vine
 #' tree structure.
 #' @param selectioncrit Character indicating the criterion for pair-copula
-#' selection. Possible choices: \code{selectioncrit = "AIC"} (default),
-#' \code{"BIC"}, or \code{"logLik"} (see \code{\link{BiCopSelect}}).
+#' selection. Possible choices: `selectioncrit = "AIC"` (default),
+#' `"BIC"`, or `"logLik"` (see [BiCopSelect()]).
 #' @param indeptest Logical; whether a hypothesis test for the independence of
-#' \code{u1} and \code{u2} is performed before bivariate copula selection
-#' (default: \code{indeptest = FALSE}; see \code{\link{BiCopIndTest}}).  The
+#' `u1` and `u2` is performed before bivariate copula selection
+#' (default: `indeptest = FALSE`; see [BiCopIndTest()]).  The
 #' independence copula is chosen for a (conditional) pair if the null
 #' hypothesis of independence cannot be rejected.
 #' @param level numeric; significance level of the independence test (default:
-#' \code{level = 0.05}).
+#' `level = 0.05`).
 #' @param trunclevel integer; level of truncation.
 #' @param weights Numerical; weights for each observation (optional).
-#' @param rotations logical; if \code{TRUE}, all rotations of the families in
-#' \code{familyset} are included.
-#' @param se Logical; whether standard errors are estimated (default: \code{se
-#' = FALSE}).
+#' @param rotations logical; if `TRUE`, all rotations of the families in
+#' `familyset` are included.
+#' @param se Logical; whether standard errors are estimated (default: `se
+#' = FALSE`).
 #' @param presel Logical; whether to exclude families before fitting based on
 #' symmetry properties of the data. Makes the selection about 30\% faster
 #' (on average), but may yield slightly worse results in few special cases.
 #' @param method indicates the estimation method: either maximum
-#' likelihood estimation (\code{method = "mle"}; default) or inversion of
-#' Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
-#' one parameter families and the Student t copula can be used (\code{family =
-#' 1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
-#' \code{par2} is found by a crude profile likelihood optimization over the
+#' likelihood estimation (`method = "mle"`; default) or inversion of
+#' Kendall's tau (`method = "itau"`). For `method = "itau"` only
+#' one parameter families and the Student t copula can be used (`family =
+#' 1,2,3,4,5,6,13,14,16,23,24,26,33,34` or `36`). For the t-copula,
+#' `par2` is found by a crude profile likelihood optimization over the
 #' interval (2, 10].
-#' @param cores integer; if \code{cores > 1}, estimation will be parallelized
-#' within each tree (using \code{\link[foreach]{foreach}}). Note that
+#' @param cores integer; if `cores > 1`, estimation will be parallelized
+#' within each tree (using [foreach::foreach()]). Note that
 #' parallelization causes substantial overhead and may be slower than
 #' single-threaded computation when dimension, sample size, or family set are
-#' small or \code{method = "itau"}.
+#' small or `method = "itau"`.
 #'
-#' @return An \code{\link{RVineMatrix}} object with the selected families
-#' (\code{RVM$family}) as well as sequentially
-#' estimated parameters stored in \code{RVM$par} and \code{RVM$par2}. The object
+#' @return An [RVineMatrix()] object with the selected families
+#' (`RVM$family`) as well as sequentially
+#' estimated parameters stored in `RVM$par` and `RVM$par2`. The object
 #' is augmented by the following information about the fit:
 #' \item{se, se2}{standard errors for the parameter estimates  (if
-#' \code{se = TRUE}; note that these are only approximate since they do not
+#' `se = TRUE`; note that these are only approximate since they do not
 #' account for the sequential nature of the estimation,}
 #' \item{nobs}{number of observations,}
 #' \item{logLik, pair.logLik}{log likelihood (overall and pairwise)}
@@ -65,17 +65,17 @@
 #' \item{p.value.indeptest}{matrix of p-values of the independence test.}#'
 #'
 #' @note For a comprehensive summary of the vine copula model, use
-#' \code{summary(object)}; to see all its contents, use \code{str(object)}.
+#' `summary(object)`; to see all its contents, use `str(object)`.
 #'
 #' @author Eike Brechmann, Thomas Nagler
 #'
 #' @seealso
-#' \code{\link{RVineMatrix}},
-#' \code{\link{BiCop}},
-#' \code{\link{BiCopSelect}},
-#' \code{\link{plot.RVineMatrix}},
-#' \code{\link{contour.RVineMatrix}},
-#' \code{\link[foreach]{foreach}}
+#' [RVineMatrix()],
+#' [BiCop()],
+#' [BiCopSelect()],
+#' [plot.RVineMatrix()],
+#' [contour.RVineMatrix()],
+#' [foreach::foreach()]
 #'
 #' @references Brechmann, E. C., C. Czado, and K. Aas (2012). Truncated regular
 #' vines in high dimensions with applications to financial data. Canadian
@@ -200,9 +200,9 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC",
         if (is.na(cores))
             cores <- max(1, detectCores() - 1)
         if (cores > 1) {
-            cl <- makeCluster(cores)
-            registerDoParallel(cl)
-            on.exit(try(stopCluster(), silent = TRUE))
+            cl <- makePSOCKcluster(cores)
+            setDefaultCluster(cl)
+            on.exit(try(stopCluster(cl), silent = TRUE))
             on.exit(try(closeAllConnections(), silent = TRUE), add = TRUE)
         }
     }
@@ -294,15 +294,11 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC",
         }
 
         ## run pair-copula selection for tree k
-        res.k <- if (cores > 1) {
-            foreach(i = 1:(k-1),
-                    .packages = c("VineCopula"),
-                    .export = "familyset") %dopar% doEst(i)
-        } else {
-            lapply(1:(k-1), doEst)
-        }
+        if (cores > 1)
+            lapply <- function(...) parallel::parLapply(getDefaultCluster(), ...)
+        res.k <- lapply(seq_len(k - 1), doEst)
 
-        for (i in 1:(k-1)) {
+        for (i in seq_len(k - 1)) {
             ## store info about selected pair-copula in matrices
             Types[k, i]   <- res.k[[i]]$cfit$family
             Params[k, i]  <- res.k[[i]]$cfit$par

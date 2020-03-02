@@ -7,10 +7,9 @@
 BiCopChiPlot(u1, u2, PLOT = TRUE, mode = "NULL", ...)
 }
 \arguments{
-\item{u1, u2}{Data vectors of equal length with values in [0,1].}
+\item{u1, u2}{Data vectors of equal length with values in \eqn{[0,1]}.}
 
-\item{PLOT}{Logical; whether the results are plotted. If \code{PLOT =
-FALSE}, the values \code{lambda}, \code{chi} and \code{control.bounds} are
+\item{PLOT}{Logical; whether the results are plotted. If \code{PLOT = FALSE}, the values \code{lambda}, \code{chi} and \code{control.bounds} are
 returned (see below; default: \code{PLOT = TRUE}).}
 
 \item{mode}{Character; whether a general, lower or upper chi-plot is
@@ -25,7 +24,7 @@ calculated.  Possible values are \code{mode = "NULL"}, \code{"upper"} and
 (y-axis).} \item{control.bounds}{A 2-dimensional vector of bounds
 \eqn{((1.54/\sqrt{n},-1.54/\sqrt{n})}, where \eqn{n} is the length of
 \code{u1} and where the chosen values correspond to an approximate
-significance level of 10\%.}
+significance level of \eqn{10\%}.}
 }
 \description{
 This function creates a chi-plot of given bivariate copula data.
@@ -110,8 +109,8 @@ about copula modeling but were afraid to ask. Journal of Hydrologic
 Engineering, 12 (4), 347-368.
 }
 \seealso{
-\code{\link{BiCopMetaContour}}, \code{\link{BiCopKPlot}},
-\code{\link{BiCopLambda}}
+\code{\link[=BiCopMetaContour]{BiCopMetaContour()}}, \code{\link[=BiCopKPlot]{BiCopKPlot()}},
+\code{\link[=BiCopLambda]{BiCopLambda()}}
 }
 \author{
 Natalia Belgorodski, Ulf Schepsmeier

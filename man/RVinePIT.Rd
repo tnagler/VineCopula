@@ -9,7 +9,7 @@ RVinePIT(data, RVM)
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}
 
-\item{RVM}{\code{\link{RVineMatrix}} objects of the R-vine model.}
+\item{RVM}{\code{\link[=RVineMatrix]{RVineMatrix()}} objects of the R-vine model.}
 }
 \value{
 An \code{N} x d matrix of PIT data from the given R-vine copula
@@ -61,7 +61,7 @@ vine copula models with fixed margins. Journal of Multivariate Analysis 138,
 34-52.
 }
 \seealso{
-\code{\link{RVineGofTest}}
+\code{\link[=RVineGofTest]{RVineGofTest()}}
 }
 \author{
 Ulf Schepsmeier

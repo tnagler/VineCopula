@@ -2,43 +2,43 @@
 #'
 #' This function sequentially estimates the pair-copula parameters of a
 #' d-dimensional R-vine copula model as specified by the corresponding
-#' \code{\link{RVineMatrix}} object.
+#' [RVineMatrix()] object.
 #'
 #' The pair-copula parameter estimation is performed tree-wise, i.e., for each
 #' R-vine tree the results from the previous tree(s) are used to calculate the
-#' new copula parameters using \code{\link{BiCopEst}}.
+#' new copula parameters using [BiCopEst()].
 #'
 #' @param data An N x d data matrix (with uniform margins).
-#' @param RVM An \code{\link{RVineMatrix}} object including the structure, the
+#' @param RVM An [RVineMatrix()] object including the structure, the
 #' pair-copula families and the pair-copula parameters (if they are known).
 #' @param method indicates the estimation method: either maximum
-#' likelihood estimation (\code{method = "mle"}; default) or inversion of
-#' Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
-#' one parameter families and the Student t copula can be used (\code{family =
-#' 1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
-#' \code{par2} is found by a crude profile likelihood optimization over the
+#' likelihood estimation (`method = "mle"`; default) or inversion of
+#' Kendall's tau (`method = "itau"`). For `method = "itau"` only
+#' one parameter families and the Student t copula can be used (`family =
+#' 1,2,3,4,5,6,13,14,16,23,24,26,33,34` or `36`). For the t-copula,
+#' `par2` is found by a crude profile likelihood optimization over the
 #' interval (2, 10].
-#' @param se Logical; whether standard errors are estimated (default: \code{se
-#' = FALSE}).
+#' @param se Logical; whether standard errors are estimated (default: `se
+#' = FALSE`).
 #' @param max.df Numeric; upper bound for the estimation of the degrees of
-#' freedom parameter of the t-copula (default: \code{max.df = 30}; for more
-#' details see \code{\link{BiCopEst}}).
+#' freedom parameter of the t-copula (default: `max.df = 30`; for more
+#' details see [BiCopEst()]).
 #' @param max.BB List; upper bounds for the estimation of the two parameters
 #' (in absolute values) of the BB1, BB6, BB7 and BB8 copulas \cr (default:
-#' \code{max.BB = list(BB1=c(5,6),BB6=c(6,6),BB7=c(5,6),BB8=c(6,1))}).
+#' `max.BB = list(BB1=c(5,6),BB6=c(6,6),BB7=c(5,6),BB8=c(6,1))`).
 #' @param progress Logical; whether the pairwise estimation progress is printed
-#' (default: \code{progress = FALSE}).
+#' (default: `progress = FALSE`).
 #' @param weights Numerical; weights for each observation (optional).
-#' @param cores integer; if \code{cores > 1}, estimation will be parallelized
-#' within each tree (using \code{\link[foreach]{foreach}}). However, the
+#' @param cores integer; if `cores > 1`, estimation will be parallelized
+#' within each tree (using [foreach::foreach()]). However, the
 #' overhead caused by parallelization is likely to make the function run slower
-#' unless sample size is really large and \code{method = "itau"}.
+#' unless sample size is really large and `method = "itau"`.
 #'
-#' @return An \code{\link{RVineMatrix}} object with the sequentially
-#' estimated parameters stored in \code{RVM$par} and \code{RVM$par2}. The object
+#' @return An [RVineMatrix()] object with the sequentially
+#' estimated parameters stored in `RVM$par` and `RVM$par2`. The object
 #' is augmented by the following information about the fit:
 #' \item{se, se2}{standard errors for the parameter estimates (if
-#' \code{se = TRUE}); note that these are only approximate since they do not
+#' `se = TRUE`); note that these are only approximate since they do not
 #' account for the sequential nature of the estimation,}
 #' \item{nobs}{number of observations,}
 #' \item{logLik, pair.logLik}{log likelihood (overall and pairwise)}
@@ -48,17 +48,17 @@
 #' \item{p.value.indeptest}{matrix of p-values of the independence test.}
 #'
 #' @note For a comprehensive summary of the fitted model, use
-#' \code{summary(object)}; to see all its contents, use \code{str(object)}.
+#' `summary(object)`; to see all its contents, use `str(object)`.
 #'
 #' @author Ulf Schepsmeier, Jeffrey Dissmann, Thomas Nagler
 #'
 #' @seealso
-#' \code{\link{RVineMatrix}},
-#' \code{\link{BiCop}},
-#' \code{\link{BiCopEst}},
-#' \code{\link{plot.RVineMatrix}},
-#' \code{\link{contour.RVineMatrix}},
-#' \code{\link[foreach]{foreach}}
+#' [RVineMatrix()],
+#' [BiCop()],
+#' [BiCopEst()],
+#' [plot.RVineMatrix()],
+#' [contour.RVineMatrix()],
+#' [foreach::foreach()]
 #'
 #' @examples
 #'
@@ -154,9 +154,9 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
         if (is.na(cores))
             cores <- max(1, detectCores() - 1)
         if (cores > 1) {
-            cl <- makeCluster(cores)
-            registerDoParallel(cl)
-            on.exit(try(stopCluster(), silent = TRUE))
+            cl <- makePSOCKcluster(cores)
+            setDefaultCluster(cl)
+            on.exit(try(stopCluster(cl), silent = TRUE))
             on.exit(try(closeAllConnections(), silent = TRUE), add = TRUE)
         }
     }
@@ -242,13 +242,9 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
         }
 
         ## run pair-copula estimation for tree k
-        res.k <- if (cores > 1) {
-            foreach(i = 1:(k-1),
-                    .packages = c("VineCopula"),
-                    .export = ) %dopar% doEst(i)
-        } else {
-            lapply(1:(k-1), doEst)
-        }
+        if (cores > 1)
+            lapply <- function(...) parallel::parLapply(getDefaultCluster(), ...)
+        res.k <- lapply(seq_len(k - 1), doEst)
 
         for (i in 1:(k-1)) {
             ## store results in matrices

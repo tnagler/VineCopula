@@ -24,7 +24,7 @@ The matrix M do not have to be given in natural order or the diagonal
 in order d:1. The test checks if it can be done in order to be a valid
 R-vine matrix. \cr If a function in this package needs the natural order the
 \code{RVineMatrix} object is automatically "normalized". \cr The function
-\code{\link{RVineMatrix}} automatically checks if the given R-vine matrix is
+\code{\link[=RVineMatrix]{RVineMatrix()}} automatically checks if the given R-vine matrix is
 valid.
 }
 \examples{
@@ -63,7 +63,7 @@ generation algorithm and number of equivalence classes. In Dependence
 Modeling: Vine Copula Handbook, pp 219--231. World Scientific, Singapore.
 }
 \seealso{
-\code{\link{RVineMatrix}}
+\code{\link[=RVineMatrix]{RVineMatrix()}}
 }
 \author{
 Harry Joe

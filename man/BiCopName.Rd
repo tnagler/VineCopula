@@ -85,7 +85,7 @@ BiCopName(c("Clayton","t","J"))    # as number
 
 }
 \seealso{
-\code{\link{RVineTreePlot}}
+\code{\link[=RVineTreePlot]{RVineTreePlot()}}
 }
 \author{
 Ulf Schepsmeier

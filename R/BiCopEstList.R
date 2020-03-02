@@ -6,7 +6,7 @@
 #'
 #' First all available copulas are fitted using maximum likelihood estimation.
 #' Then the criteria are computed for all available copula families (e.g., if
-#' \code{u1} and \code{u2} are negatively
+#' `u1` and `u2` are negatively
 #' dependent, Clayton, Gumbel, Joe, BB1, BB6, BB7 and BB8 and their survival
 #' copulas are not considered) and the family with the minimum value is chosen.
 #' For observations \eqn{u_{i,j},\ i=1,...,N,\ j=1,2,}{u_{i,j}, i=1,...,N,\
@@ -21,59 +21,59 @@
 #' is chosen, the penalty for two parameter families is stronger than when
 #' using the AIC.
 #'
-#' @param u1,u2 Data vectors of equal length with values in [0,1].
+#' @param u1,u2 Data vectors of equal length with values in \eqn{[0,1]}.
 #' @param familyset Vector of bivariate copula families to select from.
 #' The vector has to include at least one bivariate copula
 #' family that allows for positive and one that allows for negative dependence.
-#' If \code{familyset = NA} (default), selection among all possible families is
+#' If `familyset = NA` (default), selection among all possible families is
 #' performed.  Coding of bivariate copula families: \cr
-#' \code{0} = independence copula \cr
-#' \code{1} = Gaussian copula \cr
-#' \code{2} = Student t copula (t-copula) \cr
-#' \code{3} = Clayton copula \cr
-#' \code{4} = Gumbel copula \cr
-#' \code{5} = Frank copula \cr
-#' \code{6} = Joe copula \cr
-#' \code{7} = BB1 copula \cr
-#' \code{8} = BB6 copula \cr
-#' \code{9} = BB7 copula \cr
-#' \code{10} = BB8 copula \cr
-#' \code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-#' \code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-#' \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
-#' \code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
-#' \code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
-#' \code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
-#' \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
-#' \code{23} = rotated Clayton copula (90 degrees) \cr
-#' \code{24} = rotated Gumbel copula (90 degrees) \cr
-#' \code{26} = rotated Joe copula (90 degrees) \cr
-#' \code{27} = rotated BB1 copula (90 degrees) \cr
-#' \code{28} = rotated BB6 copula (90 degrees) \cr
-#' \code{29} = rotated BB7 copula (90 degrees) \cr
-#' \code{30} = rotated BB8 copula (90 degrees) \cr
-#' \code{33} = rotated Clayton copula (270 degrees) \cr
-#' \code{34} = rotated Gumbel copula (270 degrees) \cr
-#' \code{36} = rotated Joe copula (270 degrees) \cr
-#' \code{37} = rotated BB1 copula (270 degrees) \cr
-#' \code{38} = rotated BB6 copula (270 degrees) \cr
-#' \code{39} = rotated BB7 copula (270 degrees) \cr
-#' \code{40} = rotated BB8 copula (270 degrees) \cr
-#' \code{104} = Tawn type 1 copula \cr
-#' \code{114} = rotated Tawn type 1 copula (180 degrees) \cr
-#' \code{124} = rotated Tawn type 1 copula (90 degrees) \cr
-#' \code{134} = rotated Tawn type 1 copula (270 degrees) \cr
-#' \code{204} = Tawn type 2 copula \cr
-#' \code{214} = rotated Tawn type 2 copula (180 degrees) \cr
-#' \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
-#' \code{234} = rotated Tawn type 2 copula (270 degrees) \cr
+#' `0` = independence copula \cr
+#' `1` = Gaussian copula \cr
+#' `2` = Student t copula (t-copula) \cr
+#' `3` = Clayton copula \cr
+#' `4` = Gumbel copula \cr
+#' `5` = Frank copula \cr
+#' `6` = Joe copula \cr
+#' `7` = BB1 copula \cr
+#' `8` = BB6 copula \cr
+#' `9` = BB7 copula \cr
+#' `10` = BB8 copula \cr
+#' `13` = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
+#' `14` = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+#' `16` = rotated Joe copula (180 degrees; ``survival Joe'') \cr
+#' `17` = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
+#' `18` = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
+#' `19` = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
+#' `20` = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
+#' `23` = rotated Clayton copula (90 degrees) \cr
+#' `24` = rotated Gumbel copula (90 degrees) \cr
+#' `26` = rotated Joe copula (90 degrees) \cr
+#' `27` = rotated BB1 copula (90 degrees) \cr
+#' `28` = rotated BB6 copula (90 degrees) \cr
+#' `29` = rotated BB7 copula (90 degrees) \cr
+#' `30` = rotated BB8 copula (90 degrees) \cr
+#' `33` = rotated Clayton copula (270 degrees) \cr
+#' `34` = rotated Gumbel copula (270 degrees) \cr
+#' `36` = rotated Joe copula (270 degrees) \cr
+#' `37` = rotated BB1 copula (270 degrees) \cr
+#' `38` = rotated BB6 copula (270 degrees) \cr
+#' `39` = rotated BB7 copula (270 degrees) \cr
+#' `40` = rotated BB8 copula (270 degrees) \cr
+#' `104` = Tawn type 1 copula \cr
+#' `114` = rotated Tawn type 1 copula (180 degrees) \cr
+#' `124` = rotated Tawn type 1 copula (90 degrees) \cr
+#' `134` = rotated Tawn type 1 copula (270 degrees) \cr
+#' `204` = Tawn type 2 copula \cr
+#' `214` = rotated Tawn type 2 copula (180 degrees) \cr
+#' `224` = rotated Tawn type 2 copula (90 degrees) \cr
+#' `234` = rotated Tawn type 2 copula (270 degrees) \cr
 #' @param weights Numerical; weights for each observation (optional).
-#' @param rotations If \code{TRUE}, all rotations of the families in
-#' \code{familyset} are included.
-#' @param ... further arguments passed to \code{\link{BiCopEst}}.
+#' @param rotations If `TRUE`, all rotations of the families in
+#' `familyset` are included.
+#' @param ... further arguments passed to [BiCopEst()].
 #'
 #' @return A list containing
-#' \item{models}{a list of \code{\link{BiCop}} objects corresponding to the
+#' \item{models}{a list of [BiCop()] objects corresponding to the
 #' `familyset`` (only families corresponding to the sign of the empirical
 #' Kendall's tau are used),}
 #' \item{summary}{a data frame containing the log-likelihoods, AICs, and BICs
@@ -83,8 +83,8 @@
 #' @author Thomas Nagler
 #'
 #' @seealso
-#' \code{\link{BiCop}},
-#' \code{\link{BiCopEst}}
+#' [BiCop()],
+#' [BiCopEst()]
 #'
 #'
 #' @references Akaike, H. (1973). Information theory and an extension of the

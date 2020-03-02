@@ -33,8 +33,8 @@ Kendall's tau with ungrouped data. Journal of the American Statistical
 Association 61 (314), 436-439.
 }
 \seealso{
-\code{\link{BiCopTau2Par}}, \code{\link{BiCopPar2Tau}},
-\code{\link{BiCopEst}}
+\code{\link[=BiCopTau2Par]{BiCopTau2Par()}}, \code{\link[=BiCopPar2Tau]{BiCopPar2Tau()}},
+\code{\link[=BiCopEst]{BiCopEst()}}
 }
 \author{
 Ulf Schepsmeier

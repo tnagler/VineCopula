@@ -8,6 +8,28 @@ NEW FEATURES
     Thanks @notEvil.
   
   
+VineCopula 2.3.0 (November 26, 2019)
+----------------------------------------------------------------
+
+DEPENDENCIES
+
+  * removed dependencies to packages doParallel and foreach (#67).
+  
+  * moved packages kdecopula and network to `Suggests`. They need to be 
+    installed manually for `BiCopKDE()` and `plot.RVineMatrix()` to work (#67).
+    
+  * removed dependency to package copula. All functionality extending copula
+    will be provided by the VC2copula package: 
+    https://github.com/tnagler/VC2copula (#67).
+    
+BUG FIXES
+
+  * stricter upper bound for Gumbel parameters to avoid numerical issues.
+  
+  * fix bug in `BiCopEst()` when the parameter is slightly beyond parameter
+    bounds (#64, thanks to @notEvil).
+  
+
 VineCopula 2.2.0 (July 15, 2019)
 ----------------------------------------------------------------
 

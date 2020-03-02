@@ -16,7 +16,7 @@ BiCopEst(
 )
 }
 \arguments{
-\item{u1, u2}{Data vectors of equal length with values in [0,1].}
+\item{u1, u2}{Data vectors of equal length with values in \eqn{[0,1]}.}
 
 \item{family}{An integer defining the bivariate copula family: \cr
 \code{0} = independence copula \cr
@@ -30,41 +30,37 @@ BiCopEst(
 \code{8} = BB6 copula \cr
 \code{9} = BB7 copula \cr
 \code{10} = BB8 copula \cr
-\code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-\code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-\code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
-\code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
-\code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
-\code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
+\code{13} = rotated Clayton copula (180 degrees; \verb{survival Clayton'') \\cr `14` = rotated Gumbel copula (180 degrees; }survival Gumbel'') \cr
+\code{16} = rotated Joe copula (180 degrees; \verb{survival Joe'') \\cr `17` = rotated BB1 copula (180 degrees; }survival BB1'')\cr
+\code{18} = rotated BB6 copula (180 degrees; \verb{survival BB6'')\\cr `19` = rotated BB7 copula (180 degrees; }survival BB7'')\cr
 \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
 \code{23} = rotated Clayton copula (90 degrees) \cr
-\code{24} = rotated Gumbel copula (90 degrees) \cr
-\code{26} = rotated Joe copula (90 degrees) \cr
-\code{27} = rotated BB1 copula (90 degrees) \cr
-\code{28} = rotated BB6 copula (90 degrees) \cr
-\code{29} = rotated BB7 copula (90 degrees) \cr
-\code{30} = rotated BB8 copula (90 degrees) \cr
-\code{33} = rotated Clayton copula (270 degrees) \cr
-\code{34} = rotated Gumbel copula (270 degrees) \cr
-\code{36} = rotated Joe copula (270 degrees) \cr
-\code{37} = rotated BB1 copula (270 degrees) \cr
-\code{38} = rotated BB6 copula (270 degrees) \cr
-\code{39} = rotated BB7 copula (270 degrees) \cr
-\code{40} = rotated BB8 copula (270 degrees) \cr
-\code{104} = Tawn type 1 copula \cr
-\code{114} = rotated Tawn type 1 copula (180 degrees) \cr
-\code{124} = rotated Tawn type 1 copula (90 degrees) \cr
-\code{134} = rotated Tawn type 1 copula (270 degrees) \cr
-\code{204} = Tawn type 2 copula \cr
-\code{214} = rotated Tawn type 2 copula (180 degrees) \cr
-\code{224} = rotated Tawn type 2 copula (90 degrees) \cr
-\code{234} = rotated Tawn type 2 copula (270 degrees) \cr}
+`24` = rotated Gumbel copula (90 degrees) \cr
+`26` = rotated Joe copula (90 degrees) \cr
+`27` = rotated BB1 copula (90 degrees) \cr
+`28` = rotated BB6 copula (90 degrees) \cr
+`29` = rotated BB7 copula (90 degrees) \cr
+`30` = rotated BB8 copula (90 degrees) \cr
+`33` = rotated Clayton copula (270 degrees) \cr
+`34` = rotated Gumbel copula (270 degrees) \cr
+`36` = rotated Joe copula (270 degrees) \cr
+`37` = rotated BB1 copula (270 degrees) \cr
+`38` = rotated BB6 copula (270 degrees) \cr
+`39` = rotated BB7 copula (270 degrees) \cr
+`40` = rotated BB8 copula (270 degrees) \cr
+`104` = Tawn type 1 copula \cr
+`114` = rotated Tawn type 1 copula (180 degrees) \cr
+`124` = rotated Tawn type 1 copula (90 degrees) \cr
+`134` = rotated Tawn type 1 copula (270 degrees) \cr
+`204` = Tawn type 2 copula \cr
+`214` = rotated Tawn type 2 copula (180 degrees) \cr
+`224` = rotated Tawn type 2 copula (90 degrees) \cr
+`234` = rotated Tawn type 2 copula (270 degrees) \cr}
 
 \item{method}{indicates the estimation method: either maximum
 likelihood estimation (\code{method = "mle"}; default) or inversion of
 Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
-one parameter families and the Student t copula can be used (\code{family =
-1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
+one parameter families and the Student t copula can be used (\verb{family = 1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
 \code{par2} is found by a crude profile likelihood optimization over the
 interval (2, 10].}
 
@@ -81,7 +77,7 @@ freedom parameter of the t-copula (default: \code{max.df = 30}).}
 \item{weights}{Numerical; weights for each observation (optional).}
 }
 \value{
-An object of class \code{\link{BiCop}}, augmented with the following
+An object of class \code{\link[=BiCop]{BiCop()}}, augmented with the following
 entries:
 \item{se, se2}{standard errors for the parameter estimates (if
 \code{se = TRUE},}
@@ -101,8 +97,8 @@ maximum likelihood estimation for implemented copula families.
 If \code{method = "itau"}, the function computes the empirical Kendall's tau
 of the given copula data and exploits the one-to-one relationship of copula
 parameter and Kendall's tau which is available for many one parameter
-bivariate copula families (see \code{\link{BiCopPar2Tau}} and
-\code{\link{BiCopTau2Par}}). The inversion of Kendall's tau is however not
+bivariate copula families (see \code{\link[=BiCopPar2Tau]{BiCopPar2Tau()}} and
+\code{\link[=BiCopTau2Par]{BiCopTau2Par()}}). The inversion of Kendall's tau is however not
 available for all bivariate copula families (see above). If a two parameter
 copula family is chosen and \code{method = "itau"}, a warning message is
 returned and the MLE is calculated.
@@ -177,11 +173,11 @@ Joe, H. (1997). Multivariate Models and Dependence Concepts.
 Chapman and Hall, London.
 }
 \seealso{
-\code{\link{BiCop}},
-\code{\link{BiCopPar2Tau}},
-\code{\link{BiCopTau2Par}},
-\code{\link{RVineSeqEst}},
-\code{\link{BiCopSelect}},
+\code{\link[=BiCop]{BiCop()}},
+\code{\link[=BiCopPar2Tau]{BiCopPar2Tau()}},
+\code{\link[=BiCopTau2Par]{BiCopTau2Par()}},
+\code{\link[=RVineSeqEst]{RVineSeqEst()}},
+\code{\link[=BiCopSelect]{BiCopSelect()}},
 }
 \author{
 Ulf Schepsmeier, Eike Brechmann, Jakob Stoeber, Carlos Almeida

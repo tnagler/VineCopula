@@ -19,8 +19,7 @@ R-vine tree structure.}
 
 \item{family}{Lower (or upper) triangular d x d matrix with zero diagonal
 entries that assigns the pair-copula families to each (conditional) pair
-defined by \code{Matrix} (default: \code{family =
-array(0,dim=dim(Matrix))}).  The bivariate copula families are defined as
+defined by \code{Matrix} (default: \code{family = array(0,dim=dim(Matrix))}).  The bivariate copula families are defined as
 follows:\cr
 \code{0} = independence copula \cr
 \code{1} = Gaussian copula \cr
@@ -33,79 +32,74 @@ follows:\cr
 \code{8} = BB6 copula \cr
 \code{9} = BB7 copula \cr
 \code{10} = BB8 copula \cr
-\code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-\code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-\code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
-\code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
-\code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
-\code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
+\code{13} = rotated Clayton copula (180 degrees; \verb{survival Clayton'') \\cr `14` = rotated Gumbel copula (180 degrees; }survival Gumbel'') \cr
+\code{16} = rotated Joe copula (180 degrees; \verb{survival Joe'') \\cr `17` = rotated BB1 copula (180 degrees; }survival BB1'')\cr
+\code{18} = rotated BB6 copula (180 degrees; \verb{survival BB6'')\\cr `19` = rotated BB7 copula (180 degrees; }survival BB7'')\cr
 \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
 \code{23} = rotated Clayton copula (90 degrees) \cr
-\code{24} = rotated Gumbel copula (90 degrees) \cr
-\code{26} = rotated Joe copula (90 degrees) \cr
-\code{27} = rotated BB1 copula (90 degrees) \cr
-\code{28} = rotated BB6 copula (90 degrees) \cr
-\code{29} = rotated BB7 copula (90 degrees) \cr
-\code{30} = rotated BB8 copula (90 degrees) \cr
-\code{33} = rotated Clayton copula (270 degrees) \cr
-\code{34} = rotated Gumbel copula (270 degrees) \cr
-\code{36} = rotated Joe copula (270 degrees) \cr
-\code{37} = rotated BB1 copula (270 degrees) \cr
-\code{38} = rotated BB6 copula (270 degrees) \cr
-\code{39} = rotated BB7 copula (270 degrees) \cr
-\code{40} = rotated BB8 copula (270 degrees) \cr
-\code{104} = Tawn type 1 copula \cr
-\code{114} = rotated Tawn type 1 copula (180 degrees) \cr
-\code{124} = rotated Tawn type 1 copula (90 degrees) \cr
-\code{134} = rotated Tawn type 1 copula (270 degrees) \cr
-\code{204} = Tawn type 2 copula \cr
-\code{214} = rotated Tawn type 2 copula (180 degrees) \cr
-\code{224} = rotated Tawn type 2 copula (90 degrees) \cr
-\code{234} = rotated Tawn type 2 copula (270 degrees) \cr}
+`24` = rotated Gumbel copula (90 degrees) \cr
+`26` = rotated Joe copula (90 degrees) \cr
+`27` = rotated BB1 copula (90 degrees) \cr
+`28` = rotated BB6 copula (90 degrees) \cr
+`29` = rotated BB7 copula (90 degrees) \cr
+`30` = rotated BB8 copula (90 degrees) \cr
+`33` = rotated Clayton copula (270 degrees) \cr
+`34` = rotated Gumbel copula (270 degrees) \cr
+`36` = rotated Joe copula (270 degrees) \cr
+`37` = rotated BB1 copula (270 degrees) \cr
+`38` = rotated BB6 copula (270 degrees) \cr
+`39` = rotated BB7 copula (270 degrees) \cr
+`40` = rotated BB8 copula (270 degrees) \cr
+`104` = Tawn type 1 copula \cr
+`114` = rotated Tawn type 1 copula (180 degrees) \cr
+`124` = rotated Tawn type 1 copula (90 degrees) \cr
+`134` = rotated Tawn type 1 copula (270 degrees) \cr
+`204` = Tawn type 2 copula \cr
+`214` = rotated Tawn type 2 copula (180 degrees) \cr
+`224` = rotated Tawn type 2 copula (90 degrees) \cr
+`234` = rotated Tawn type 2 copula (270 degrees) \cr}
 
 \item{par}{Lower (or upper) triangular d x d matrix with zero diagonal
 entries that assigns the (first) pair-copula parameter to each (conditional)
-pair defined by \code{Matrix} \cr (default: \code{par = array(NA, dim =
-dim(Matrix))}).}
+pair defined by \code{Matrix} \cr (default: \code{par = array(NA, dim = dim(Matrix))}).}
 
 \item{par2}{Lower (or upper) triangular d x d matrix with zero diagonal
 entries that assigns the second parameter for pair-copula families with two
 parameters to each (conditional) pair defined by \code{Matrix} (default:
 \code{par2 = array(NA, dim = dim(Matrix))}).}
 
-\item{names}{A vector of names for the d variables; default: \code{names =
-NULL}.}
+\item{names}{A vector of names for the d variables; default: \code{names = NULL}.}
 
 \item{check.pars}{logical; default is \code{TRUE}; if \code{FALSE}, checks
 for family/parameter-consistency are omitted (should only be used with
 care).}
 }
 \value{
-An object of class \code{\link{RVineMatrix}}, i.e., a list with the
+An object of class \code{\link[=RVineMatrix]{RVineMatrix()}}, i.e., a list with the
 following components:
 \item{Matrix}{R-vine tree structure matrix.}
 \item{family}{pair-copula family matrix with values as above.}
 \item{par}{pair-copula parameter matrix.}
 \item{par2}{second pair-copula parameter matrix with parameters necessary for
- pair-copula families with two parameters.}
-\item{names}{variable names (defaults to \code{V1, V2, ...}).}
+pair-copula families with two parameters.}
+\item{names}{variable names (defaults to \verb{V1, V2, ...}).}
 \item{MaxMat, CondDistr}{additional matrices required internally for
 evaluating the density etc.,}
 \item{type}{the type of the vine copula structure; possible types are:
 \itemize{
-\item{\code{"C-vine": }}{all trees consist of a star,}
-\item{\code{"D-vine": }}{all trees consist of a path,}
-\item{\code{"R-vine": }}{all structures that are neither a C- nor D-vine,}
+\item{\verb{"C-vine": }}{all trees consist of a star,}
+\item{\verb{"D-vine": }}{all trees consist of a path,}
+\item{\verb{"R-vine": }}{all structures that are neither a C- nor D-vine,}
 }}
 \item{tau}{Kendall's tau matrix,}
 \item{taildep}{matrices of lower and upper tail dependence coefficients,}
 \item{beta}{Blomqvist's beta matrix.}
-Objects of this class are also returned by the \code{\link{RVineSeqEst}},
-\code{\link{RVineCopSelect}}, and \code{\link{RVineStructureSelect}}
+Objects of this class are also returned by the \code{\link[=RVineSeqEst]{RVineSeqEst()}},
+\code{\link[=RVineCopSelect]{RVineCopSelect()}}, and \code{\link[=RVineStructureSelect]{RVineStructureSelect()}}
 functions. In this case, further information about the fit is added.
 }
 \description{
-This function creates an \code{\link{RVineMatrix}} object which encodes an
+This function creates an \code{\link[=RVineMatrix]{RVineMatrix()}} object which encodes an
 R-vine copula model. It contains the matrix identifying the R-vine tree
 structure, the matrix identifying the copula families utilized and two
 matrices for corresponding parameter values.
@@ -113,8 +107,8 @@ matrices for corresponding parameter values.
 \note{
 For a comprehensive summary of the vine copula model, use
 \code{summary(object)}; to see all its contents, use \code{str(object)}.\cr
-The \code{\link{RVineMatrix}} function automatically checks if the given
-matrix is a valid R-vine matrix (see \code{\link{RVineMatrixCheck}}). \cr
+The \code{\link[=RVineMatrix]{RVineMatrix()}} function automatically checks if the given
+matrix is a valid R-vine matrix (see \code{\link[=RVineMatrixCheck]{RVineMatrixCheck()}}). \cr
 Although the function allows upper triangular matrices as its input, it will
 always store them as lower triangular matrices.
 }
@@ -167,13 +161,13 @@ Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 }
 \seealso{
-\code{\link{RVineMatrixCheck}},
-\code{\link{RVineSeqEst}},
-\code{\link{RVineCopSelect}},
-\code{\link{RVineStructureSelect}},
-\code{\link{RVineSim}},
-\code{\link{C2RVine}},
-\code{\link{D2RVine}}
+\code{\link[=RVineMatrixCheck]{RVineMatrixCheck()}},
+\code{\link[=RVineSeqEst]{RVineSeqEst()}},
+\code{\link[=RVineCopSelect]{RVineCopSelect()}},
+\code{\link[=RVineStructureSelect]{RVineStructureSelect()}},
+\code{\link[=RVineSim]{RVineSim()}},
+\code{\link[=C2RVine]{C2RVine()}},
+\code{\link[=D2RVine]{D2RVine()}}
 }
 \author{
 Jeffrey Dissmann, Thomas Nagler

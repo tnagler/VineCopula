@@ -16,7 +16,7 @@ BiCopLambda(
 )
 }
 \arguments{
-\item{u1, u2}{Data vectors of equal length with values in [0,1] (default:
+\item{u1, u2}{Data vectors of equal length with values in \eqn{[0,1]} (default:
 \code{u1} and \code{u2 = NULL}).}
 
 \item{family}{An integer defining the bivariate copula family or indicating
@@ -43,8 +43,7 @@ copula}
 \item{par2}{Second copula parameter for t-, BB1, BB6, BB7 and BB8 copulas
 (default: \code{par2 = 0}).}
 
-\item{PLOT}{Logical; whether the results are plotted. If \code{PLOT =
-FALSE}, the values \cr \code{empLambda} and/or \code{theoLambda} are
+\item{PLOT}{Logical; whether the results are plotted. If \code{PLOT = FALSE}, the values \cr \code{empLambda} and/or \code{theoLambda} are
 returned (see below; default: \code{PLOT = TRUE}).}
 
 \item{obj}{\code{BiCop} object containing the family and parameter
@@ -63,7 +62,7 @@ This function plots/returns the lambda-function of given bivariate copula
 data.
 }
 \details{
-If the family and parameter specification is stored in a \code{\link{BiCop}}
+If the family and parameter specification is stored in a \code{\link[=BiCop]{BiCop()}}
 object \code{obj}, the alternative versions \cr
 \preformatted{BiCopLambda(obj, PLOT = TRUE, ...)}
 and
@@ -126,8 +125,8 @@ thesis, Technische Universitaet Muenchen.\cr
 \url{http://mediatum.ub.tum.de/?id=1079296}.
 }
 \seealso{
-\code{\link{BiCopMetaContour}}, \code{\link{BiCopKPlot}},
-\code{\link{BiCopChiPlot}}, \code{\link{BiCop}}
+\code{\link[=BiCopMetaContour]{BiCopMetaContour()}}, \code{\link[=BiCopKPlot]{BiCopKPlot()}},
+\code{\link[=BiCopChiPlot]{BiCopChiPlot()}}, \code{\link[=BiCop]{BiCop()}}
 }
 \author{
 Ulf Schepsmeier

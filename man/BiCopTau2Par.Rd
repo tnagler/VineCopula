@@ -12,18 +12,17 @@ bivariate copula family: \cr \code{0} = independence copula \cr \code{1} =
 Gaussian copula \cr \code{2} = Student t copula (Here only the first
 parameter can be computed) \cr \code{3} = Clayton copula \cr \code{4} =
 Gumbel copula \cr \code{5} = Frank copula \cr \code{6} = Joe copula \cr
-\code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-\code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+\code{13} = rotated Clayton copula (180 degrees; \verb{survival Clayton'') \\cr `14` = rotated Gumbel copula (180 degrees; }survival Gumbel'') \cr
 \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr \code{23}
-= rotated Clayton copula (90 degrees) \cr \code{24} = rotated Gumbel copula
-(90 degrees) \cr \code{26} = rotated Joe copula (90 degrees) \cr \code{33} =
-rotated Clayton copula (270 degrees) \cr \code{34} = rotated Gumbel copula
-(270 degrees) \cr \code{36} = rotated Joe copula (270 degrees)\cr Note that
+= rotated Clayton copula (90 degrees) \cr `24` = rotated Gumbel copula
+(90 degrees) \cr `26` = rotated Joe copula (90 degrees) \cr `33` =
+rotated Clayton copula (270 degrees) \cr `34` = rotated Gumbel copula
+(270 degrees) \cr `36` = rotated Joe copula (270 degrees)\cr Note that
 (with exception of the t-copula) two parameter bivariate copula families
 cannot be used.}
 
 \item{tau}{numeric; single number or vector of size \code{n}; Kendall's tau
-value (vector with elements in [-1,1]).}
+value (vector with elements in \eqn{[-1,1]}).}
 
 \item{check.taus}{logical; default is \code{TRUE}; if \code{FALSE}, checks
 for family/tau-consistency are omitted (should only be used with care).}
@@ -31,14 +30,14 @@ for family/tau-consistency are omitted (should only be used with care).}
 \value{
 Parameter (vector) corresponding to the bivariate copula family and
 the value(s) of Kendall's tau (\eqn{\tau}). \tabular{ll}{ No.
-(\code{family}) \tab Parameter (\code{par}) \cr \code{1, 2} \tab
-\eqn{\sin(\tau \frac{\pi}{2})}{sin(\tau \pi/2)} \cr \code{3, 13} \tab
-\eqn{2\frac{\tau}{1-\tau}}{2\tau/(1-\tau)} \cr \code{4, 14} \tab
+(\code{family}) \tab Parameter (\code{par}) \cr \verb{1, 2} \tab
+\eqn{\sin(\tau \frac{\pi}{2})}{sin(\tau \pi/2)} \cr \verb{3, 13} \tab
+\eqn{2\frac{\tau}{1-\tau}}{2\tau/(1-\tau)} \cr \verb{4, 14} \tab
 \eqn{\frac{1}{1-\tau}}{1/(1-\tau)} \cr \code{5} \tab no closed form
-expression (numerical inversion) \cr \code{6, 16} \tab no closed form
-expression (numerical inversion) \cr \code{23, 33} \tab
-\eqn{2\frac{\tau}{1+\tau}}{2\tau/(1+\tau)} \cr \code{24, 34} \tab
-\eqn{-\frac{1}{1+\tau}}{-1/(1+\tau)} \cr \code{26, 36} \tab no closed form
+expression (numerical inversion) \cr \verb{6, 16} \tab no closed form
+expression (numerical inversion) \cr \verb{23, 33} \tab
+\eqn{2\frac{\tau}{1+\tau}}{2\tau/(1+\tau)} \cr \verb{24, 34} \tab
+\eqn{-\frac{1}{1+\tau}}{-1/(1+\tau)} \cr \verb{26, 36} \tab no closed form
 expression (numerical inversion) }
 }
 \description{
@@ -108,7 +107,7 @@ of mixed C-vines with application to exchange rates. Statistical Modelling,
 12(3), 229-255.
 }
 \seealso{
-\code{\link{BiCopPar2Tau}}
+\code{\link[=BiCopPar2Tau]{BiCopPar2Tau()}}
 }
 \author{
 Jakob Stoeber, Eike Brechmann, Tobias Erhardt

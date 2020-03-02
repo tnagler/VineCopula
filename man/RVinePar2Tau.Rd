@@ -7,14 +7,14 @@
 RVinePar2Tau(RVM, check.pars = TRUE)
 }
 \arguments{
-\item{RVM}{An \code{\link{RVineMatrix}} object.}
+\item{RVM}{An \code{\link[=RVineMatrix]{RVineMatrix()}} object.}
 
 \item{check.pars}{logical; default is \code{TRUE}; if \code{FALSE}, checks
 for family/parameter-consistency are omitted (should only be used with care).}
 }
 \value{
 Matrix with the same structure as the family and parameter matrices
-of the \code{\link{RVineMatrix}} object \code{RVM} where the entries are
+of the \code{\link[=RVineMatrix]{RVineMatrix()}} object \code{RVM} where the entries are
 values of Kendall's tau corresponding to the families and parameters of the
 R-vine copula model given by \code{RVM}.
 }
@@ -61,7 +61,7 @@ tau <- RVinePar2Tau(RVM)
 
 }
 \seealso{
-\code{\link{RVineMatrix}}, \code{\link{BiCopPar2Tau}}
+\code{\link[=RVineMatrix]{RVineMatrix()}}, \code{\link[=BiCopPar2Tau]{BiCopPar2Tau()}}
 }
 \author{
 Jeffrey Dissmann

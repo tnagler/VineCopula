@@ -35,32 +35,32 @@
 #' convenience. For more details see Dissmann et al. (2013).
 #'
 #' @param data An N x d data matrix (with uniform margins).
-#' @param RVM An \code{\link{RVineMatrix}} object including the structure and
+#' @param RVM An [RVineMatrix()] object including the structure and
 #' the pair-copula families and parameters.
 #' @param par A d x d matrix with the pair-copula parameters (optional;
-#' default: \code{par = RVM$par}).
+#' default: `par = RVM$par`).
 #' @param par2 A d x d matrix with the second parameters of pair-copula
-#' families with two parameters (optional; default: \code{par2 = RVM$par2}).
+#' families with two parameters (optional; default: `par2 = RVM$par2`).
 #' @param separate Logical; whether log-likelihoods are returned point wisely
-#' (default: \code{separate = FALSE}).
+#' (default: `separate = FALSE`).
 #' @param verbose In case something goes wrong, additional output will be
 #' plotted.
-#' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
+#' @param check.pars logical; default is `TRUE`; if `FALSE`, checks
 #' for family/parameter-consistency are omitted (should only be used with
 #' care).
 #' @param calculate.V logical; whether V matrices should be calculated. Default
-#' is \code{TRUE}, but requires a lot of memory when dimension is large.
-#' Use \code{FALSE} for a memory efficient version.
+#' is `TRUE`, but requires a lot of memory when dimension is large.
+#' Use `FALSE` for a memory efficient version.
 #'
 #' @return \item{loglik}{The calculated log-likelihood value of the R-vine
 #' copula model.} \item{V}{The stored transformations (h-functions and
 #' log-likelihoods of each pair-copula) which may be used for posterior updates
-#' (three matrices: \code{direct}, \code{indirect} and \code{value}).}
+#' (three matrices: `direct`, `indirect` and `value`).}
 #'
 #' @author Ulf Schepsmeier, Jeffrey Dissmann, Jakob Stoeber
 #'
-#' @seealso \code{\link{BiCopHfunc}}, \code{\link{RVineMatrix}},
-#' \code{\link{RVineMLE}}, \code{\link{RVineAIC}}, \code{\link{RVineBIC}}
+#' @seealso [BiCopHfunc()], [RVineMatrix()],
+#' [RVineMLE()], [RVineAIC()], [RVineBIC()]
 #'
 #' @references Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 #' (2013). Selecting and estimating regular vine copulae and application to
@@ -281,19 +281,19 @@ RVineLogLik <- function(data, RVM, par = RVM$par, par2 = RVM$par2,
 #' component \eqn{v_j} removed. The notation of h-functions is introduced for
 #' convenience. For more details see Dissmann et al. (2013).
 #'
-#' The function is actually just a wrapper to \code{\link{RVineLogLik}}.
+#' The function is actually just a wrapper to [RVineLogLik()].
 #'
 #' @param newdata An N x d data matrix that specifies where the density shall
 #' be evaluated.
-#' @param RVM An \code{\link{RVineMatrix}} object including the structure and
+#' @param RVM An [RVineMatrix()] object including the structure and
 #' the pair-copula families and parameters.
 #' @param verbose In case something goes wrong, additional output will be
 #' plotted.
 #'
 #' @author Thomas Nagler
 #'
-#' @seealso \code{\link{BiCopHfunc}}, \code{\link{RVineMatrix}},
-#' \code{\link{RVineMLE}}, \code{\link{RVineAIC}}, \code{\link{RVineBIC}}
+#' @seealso [BiCopHfunc()], [RVineMatrix()],
+#' [RVineMLE()], [RVineAIC()], [RVineBIC()]
 #'
 #' @references Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 #' (2013). Selecting and estimating regular vine copulae and application to

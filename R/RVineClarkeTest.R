@@ -1,7 +1,7 @@
 #' Clarke Test Comparing Two R-Vine Copula Models
 #'
 #' This function performs a Clarke test between two d-dimensional R-vine copula
-#' models as specified by their \code{\link{RVineMatrix}} objects.
+#' models as specified by their [RVineMatrix()] objects.
 #'
 #' The test proposed by Clarke (2007) allows to compare non-nested models. For
 #' this let \eqn{c_1} and \eqn{c_2} be two competing vine copulas in terms of
@@ -33,15 +33,15 @@
 #' the AIC and the BIC, respectively.
 #'
 #' @param data An N x d data matrix (with uniform margins).
-#' @param RVM1,RVM2 \code{\link{RVineMatrix}} objects of models 1 and 2.
+#' @param RVM1,RVM2 [RVineMatrix()] objects of models 1 and 2.
 #' @return \item{statistic, statistic.Akaike, statistic.Schwarz}{Test
 #' statistics without correction, with Akaike correction and with Schwarz
 #' correction.} \item{p.value, p.value.Akaike, p.value.Schwarz}{P-values of
 #' tests without correction, with Akaike correction and with Schwarz
 #' correction.}
 #' @author Jeffrey Dissmann, Eike Brechmann
-#' @seealso \code{\link{RVineVuongTest}}, \code{\link{RVineAIC}},
-#' \code{\link{RVineBIC}}
+#' @seealso [RVineVuongTest()], [RVineAIC()],
+#' [RVineBIC()]
 #' @references Clarke, K. A. (2007). A Simple Distribution-Free Test for
 #' Nonnested Model Selection. Political Analysis, 15, 347-363.
 #' @examples

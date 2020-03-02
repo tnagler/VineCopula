@@ -10,7 +10,7 @@ RVineCor2pcor(RVM, corMat)
 RVinePcor2cor(RVM)
 }
 \arguments{
-\item{RVM}{\code{\link{RVineMatrix}} defining only the R-vine structure for
+\item{RVM}{\code{\link[=RVineMatrix]{RVineMatrix()}} defining only the R-vine structure for
 \code{Cor2pcor} and providing as well the partial correlations for
 \code{Pcor2cor}.}
 

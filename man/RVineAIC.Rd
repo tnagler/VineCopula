@@ -12,7 +12,7 @@ RVineBIC(data, RVM, par = RVM$par, par2 = RVM$par2)
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}
 
-\item{RVM}{An \code{\link{RVineMatrix}} object including the structure and
+\item{RVM}{An \code{\link[=RVineMatrix]{RVineMatrix()}} object including the structure and
 the pair-copula families and parameters.}
 
 \item{par}{A d x d matrix with the pair-copula parameters (optional;
@@ -24,8 +24,7 @@ families with two parameters (optional; default: \code{par2 = RVM$par2}).}
 \value{
 \item{AIC, BIC}{The computed AIC or BIC value, respectively.}
 \item{pair.AIC, pair.BIC}{A d x d matrix of individual contributions to the
-AIC or BIC value for each pair-copula, respectively. Note: \code{AIC =
-sum(pair.AIC)} and similarly \code{BIC = sum(pair.BIC)}.}
+AIC or BIC value for each pair-copula, respectively. Note: \code{AIC = sum(pair.AIC)} and similarly \code{BIC = sum(pair.BIC)}.}
 }
 \description{
 These functions calculate the Akaike and Bayesian Information criteria of a
@@ -97,8 +96,8 @@ Schwarz, G. E. (1978). Estimating the dimension of a model. Annals of
 Statistics 6 (2), 461-464.
 }
 \seealso{
-\code{\link{RVineLogLik}}, \code{\link{RVineVuongTest}},
-\code{\link{RVineClarkeTest}}
+\code{\link[=RVineLogLik]{RVineLogLik()}}, \code{\link[=RVineVuongTest]{RVineVuongTest()}},
+\code{\link[=RVineClarkeTest]{RVineClarkeTest()}}
 }
 \author{
 Eike Brechmann

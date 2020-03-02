@@ -1,8 +1,7 @@
 VineCopula
 ==========
 
-[![Build status Linux](https://travis-ci.org/tnagler/VineCopula.svg?branch=master)](https://travis-ci.org/tnagler/VineCopula)
-[![Windows Build status](http://ci.appveyor.com/api/projects/status/github/tnagler/VineCopula?svg=true)](https://ci.appveyor.com/project/tnagler/VineCopula)
+[![R build status](https://github.com/tnagler/VineCopula/workflows/R-CMD-check/badge.svg)](https://github.com/tnagler/VineCopula)
 [![CRAN version](http://www.r-pkg.org/badges/version/VineCopula)](https://cran.r-project.org/package=VineCopula) 
 [![CRAN downloads](http://cranlogs.r-pkg.org/badges/VineCopula)](https://cran.r-project.org/package=VineCopula)
 
@@ -16,6 +15,22 @@ simulation, goodness-of-fit tests, and visualization. Tools for estimation,
 selection and exploratory data analysis of **bivariate copula** models are also
 provided. Please see the [API documentation](https://tnagler.github.io/VineCopula/)
 for a detailed description of all functions.
+
+
+Status
+-----------------
+
+The library is no longer actively developed, but will continued to be maintained.
+Check out the [rvinecopulib](https://github.com/vinecopulib/rvinecopulib) package
+for an alternative with several benefits:  
+
+  * a sleaker and more modern API,  
+  
+  * shorter runtimes, especially in high dimensions,  
+  
+  * nonparametric and multi-parameter families,  
+  
+  * ability to model discrete variables.  
 
 
 Table of contents

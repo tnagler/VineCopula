@@ -7,42 +7,42 @@
 #' @param order A d-dimensional vector specifying the order of the root nodes
 #' in the C-vine.
 #' @param family A d*(d-1)/2 vector of pair-copula families with values\cr
-#' \code{0} = independence copula \cr \code{1} = Gaussian copula \cr \code{2} =
-#' Student t copula (t-copula) \cr \code{3} = Clayton copula \cr \code{4} =
-#' Gumbel copula \cr \code{5} = Frank copula \cr \code{6} = Joe copula \cr
-#' \code{7} = BB1 copula \cr \code{8} = BB6 copula \cr \code{9} = BB7 copula
-#' \cr \code{10} = BB8 copula \cr \code{13} = rotated Clayton copula (180
-#' degrees; ``survival Clayton'') \cr \code{14} = rotated Gumbel copula (180
-#' degrees; ``survival Gumbel'') \cr \code{16} = rotated Joe copula (180
-#' degrees; ``survival Joe'') \cr \code{17} = rotated BB1 copula (180 degrees;
-#' ``survival BB1'')\cr \code{18} = rotated BB6 copula (180 degrees; ``survival
-#' BB6'')\cr \code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
-#' \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr \code{23}
-#' = rotated Clayton copula (90 degrees) \cr \code{24} = rotated Gumbel copula
-#' (90 degrees) \cr \code{26} = rotated Joe copula (90 degrees) \cr \code{27} =
-#' rotated BB1 copula (90 degrees) \cr \code{28} = rotated BB6 copula (90
-#' degrees) \cr \code{29} = rotated BB7 copula (90 degrees) \cr \code{30} =
-#' rotated BB8 copula (90 degrees) \cr \code{33} = rotated Clayton copula (270
-#' degrees) \cr \code{34} = rotated Gumbel copula (270 degrees) \cr \code{36} =
-#' rotated Joe copula (270 degrees) \cr \code{37} = rotated BB1 copula (270
-#' degrees) \cr \code{38} = rotated BB6 copula (270 degrees) \cr \code{39} =
-#' rotated BB7 copula (270 degrees) \cr \code{40} = rotated BB8 copula (270
-#' degrees) \cr \code{104} = Tawn type 1 copula \cr \code{114} = rotated Tawn
-#' type 1 copula (180 degrees) \cr \code{124} = rotated Tawn type 1 copula (90
-#' degrees) \cr \code{134} = rotated Tawn type 1 copula (270 degrees) \cr
-#' \code{204} = Tawn type 2 copula \cr \code{214} = rotated Tawn type 2 copula
-#' (180 degrees) \cr \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
-#' \code{234} = rotated Tawn type 2 copula (270 degrees) \cr
+#' `0` = independence copula \cr `1` = Gaussian copula \cr `2` =
+#' Student t copula (t-copula) \cr `3` = Clayton copula \cr `4` =
+#' Gumbel copula \cr `5` = Frank copula \cr `6` = Joe copula \cr
+#' `7` = BB1 copula \cr `8` = BB6 copula \cr `9` = BB7 copula
+#' \cr `10` = BB8 copula \cr `13` = rotated Clayton copula (180
+#' degrees; ``survival Clayton'') \cr `14` = rotated Gumbel copula (180
+#' degrees; ``survival Gumbel'') \cr `16` = rotated Joe copula (180
+#' degrees; ``survival Joe'') \cr `17` = rotated BB1 copula (180 degrees;
+#' ``survival BB1'')\cr `18` = rotated BB6 copula (180 degrees; ``survival
+#' BB6'')\cr `19` = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
+#' `20` = rotated BB8 copula (180 degrees; ``survival BB8'')\cr `23`
+#' = rotated Clayton copula (90 degrees) \cr `24` = rotated Gumbel copula
+#' (90 degrees) \cr `26` = rotated Joe copula (90 degrees) \cr `27` =
+#' rotated BB1 copula (90 degrees) \cr `28` = rotated BB6 copula (90
+#' degrees) \cr `29` = rotated BB7 copula (90 degrees) \cr `30` =
+#' rotated BB8 copula (90 degrees) \cr `33` = rotated Clayton copula (270
+#' degrees) \cr `34` = rotated Gumbel copula (270 degrees) \cr `36` =
+#' rotated Joe copula (270 degrees) \cr `37` = rotated BB1 copula (270
+#' degrees) \cr `38` = rotated BB6 copula (270 degrees) \cr `39` =
+#' rotated BB7 copula (270 degrees) \cr `40` = rotated BB8 copula (270
+#' degrees) \cr `104` = Tawn type 1 copula \cr `114` = rotated Tawn
+#' type 1 copula (180 degrees) \cr `124` = rotated Tawn type 1 copula (90
+#' degrees) \cr `134` = rotated Tawn type 1 copula (270 degrees) \cr
+#' `204` = Tawn type 2 copula \cr `214` = rotated Tawn type 2 copula
+#' (180 degrees) \cr `224` = rotated Tawn type 2 copula (90 degrees) \cr
+#' `234` = rotated Tawn type 2 copula (270 degrees) \cr
 #' @param par A d*(d-1)/2 vector of pair-copula parameters.
 #' @param par2 A d*(d-1)/2 vector of second pair-copula parameters (optional;
-#' default:\cr \code{par2 = rep(0,length(family))}), necessary for the t-, BB1,
+#' default:\cr `par2 = rep(0,length(family))`), necessary for the t-, BB1,
 #' BB6, BB7, BB8, Tawn type 1 and type 2 copulas.
 #'
-#' @return An \code{\link{RVineMatrix}} object.
+#' @return An [RVineMatrix()] object.
 #'
 #' @author Ulf Schepsmeier, Eike Brechmann
 #'
-#' @seealso \code{\link{RVineMatrix}}, \code{\link{D2RVine}}
+#' @seealso [RVineMatrix()], [D2RVine()]
 #'
 #' @examples
 #' # set up C-vine copula model with mixed pair-copulas

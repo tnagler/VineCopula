@@ -18,7 +18,7 @@ RVineLogLik(
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}
 
-\item{RVM}{An \code{\link{RVineMatrix}} object including the structure and
+\item{RVM}{An \code{\link[=RVineMatrix]{RVineMatrix()}} object including the structure and
 the pair-copula families and parameters.}
 
 \item{par}{A d x d matrix with the pair-copula parameters (optional;
@@ -63,7 +63,7 @@ trees and corresponding edge sets \eqn{E_1,...,E_{d-1}} is given by
  =\sum_{i=1}^N \sum_{k=1}^{d-1} \sum_{e\in E_k}
 \ln[c_{j(e),k(e)|D(e)}(F(u_{i,j(e)}|u_{i,D(e)}),F(u_{i,k(e)}|u_{i,D(e)})|\theta_{j(e),k(e)|D(e)})],
 }
- where \eqn{\boldsymbol{u}_i=(u_{i,1},...,u_{i,d})^\prime\in[0,1]^d,\
+where \eqn{\boldsymbol{u}_i=(u_{i,1},...,u_{i,d})^\prime\in[0,1]^d,\
 i=1,...,N}{u_i=(u_{i,1},...,u_{i,d})'\in[0,1]^d, i=1,...,N}. Further
 \eqn{c_{j(e),k(e)|D(e)}} denotes a bivariate copula density associated to an
 edge \eqn{e} and with parameter(s)
@@ -136,8 +136,8 @@ Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 }
 \seealso{
-\code{\link{BiCopHfunc}}, \code{\link{RVineMatrix}},
-\code{\link{RVineMLE}}, \code{\link{RVineAIC}}, \code{\link{RVineBIC}}
+\code{\link[=BiCopHfunc]{BiCopHfunc()}}, \code{\link[=RVineMatrix]{RVineMatrix()}},
+\code{\link[=RVineMLE]{RVineMLE()}}, \code{\link[=RVineAIC]{RVineAIC()}}, \code{\link[=RVineBIC]{RVineBIC()}}
 }
 \author{
 Ulf Schepsmeier, Jeffrey Dissmann, Jakob Stoeber

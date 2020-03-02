@@ -4,43 +4,43 @@
 #' for a given value of Kendall's tau.
 #'
 #'
-#' @param family integer; single number or vector of size \code{n}; defines the
-#' bivariate copula family: \cr \code{0} = independence copula \cr \code{1} =
-#' Gaussian copula \cr \code{2} = Student t copula (Here only the first
-#' parameter can be computed) \cr \code{3} = Clayton copula \cr \code{4} =
-#' Gumbel copula \cr \code{5} = Frank copula \cr \code{6} = Joe copula \cr
-#' \code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-#' \code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-#' \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr \code{23}
-#' = rotated Clayton copula (90 degrees) \cr \code{24} = rotated Gumbel copula
-#' (90 degrees) \cr \code{26} = rotated Joe copula (90 degrees) \cr \code{33} =
-#' rotated Clayton copula (270 degrees) \cr \code{34} = rotated Gumbel copula
-#' (270 degrees) \cr \code{36} = rotated Joe copula (270 degrees)\cr Note that
+#' @param family integer; single number or vector of size `n`; defines the
+#' bivariate copula family: \cr `0` = independence copula \cr `1` =
+#' Gaussian copula \cr `2` = Student t copula (Here only the first
+#' parameter can be computed) \cr `3` = Clayton copula \cr `4` =
+#' Gumbel copula \cr `5` = Frank copula \cr `6` = Joe copula \cr
+#' `13` = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
+#' `14` = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+#' `16` = rotated Joe copula (180 degrees; ``survival Joe'') \cr `23`
+#' = rotated Clayton copula (90 degrees) \cr `24` = rotated Gumbel copula
+#' (90 degrees) \cr `26` = rotated Joe copula (90 degrees) \cr `33` =
+#' rotated Clayton copula (270 degrees) \cr `34` = rotated Gumbel copula
+#' (270 degrees) \cr `36` = rotated Joe copula (270 degrees)\cr Note that
 #' (with exception of the t-copula) two parameter bivariate copula families
 #' cannot be used.
-#' @param tau numeric; single number or vector of size \code{n}; Kendall's tau
-#' value (vector with elements in [-1,1]).
-#' @param check.taus logical; default is \code{TRUE}; if \code{FALSE}, checks
+#' @param tau numeric; single number or vector of size `n`; Kendall's tau
+#' value (vector with elements in \eqn{[-1,1]}).
+#' @param check.taus logical; default is `TRUE`; if `FALSE`, checks
 #' for family/tau-consistency are omitted (should only be used with care).
 #'
 #' @return Parameter (vector) corresponding to the bivariate copula family and
 #' the value(s) of Kendall's tau (\eqn{\tau}). \tabular{ll}{ No.
-#' (\code{family}) \tab Parameter (\code{par}) \cr \code{1, 2} \tab
-#' \eqn{\sin(\tau \frac{\pi}{2})}{sin(\tau \pi/2)} \cr \code{3, 13} \tab
-#' \eqn{2\frac{\tau}{1-\tau}}{2\tau/(1-\tau)} \cr \code{4, 14} \tab
-#' \eqn{\frac{1}{1-\tau}}{1/(1-\tau)} \cr \code{5} \tab no closed form
-#' expression (numerical inversion) \cr \code{6, 16} \tab no closed form
-#' expression (numerical inversion) \cr \code{23, 33} \tab
-#' \eqn{2\frac{\tau}{1+\tau}}{2\tau/(1+\tau)} \cr \code{24, 34} \tab
-#' \eqn{-\frac{1}{1+\tau}}{-1/(1+\tau)} \cr \code{26, 36} \tab no closed form
+#' (`family`) \tab Parameter (`par`) \cr `1, 2` \tab
+#' \eqn{\sin(\tau \frac{\pi}{2})}{sin(\tau \pi/2)} \cr `3, 13` \tab
+#' \eqn{2\frac{\tau}{1-\tau}}{2\tau/(1-\tau)} \cr `4, 14` \tab
+#' \eqn{\frac{1}{1-\tau}}{1/(1-\tau)} \cr `5` \tab no closed form
+#' expression (numerical inversion) \cr `6, 16` \tab no closed form
+#' expression (numerical inversion) \cr `23, 33` \tab
+#' \eqn{2\frac{\tau}{1+\tau}}{2\tau/(1+\tau)} \cr `24, 34` \tab
+#' \eqn{-\frac{1}{1+\tau}}{-1/(1+\tau)} \cr `26, 36` \tab no closed form
 #' expression (numerical inversion) }
 #'
-#' @note The number \code{n} can be chosen arbitrarily, but must agree across
+#' @note The number `n` can be chosen arbitrarily, but must agree across
 #' arguments.
 #'
 #' @author Jakob Stoeber, Eike Brechmann, Tobias Erhardt
 #'
-#' @seealso \code{\link{BiCopPar2Tau}}
+#' @seealso [BiCopPar2Tau()]
 #'
 #' @references Joe, H. (1997). Multivariate Models and Dependence Concepts.
 #' Chapman and Hall, London.
@@ -124,14 +124,18 @@ BiCopTau2Par <- function(family, tau, check.taus = TRUE) {
         BiCopCheckTaus(family, tau)
 
     ## calculate the parameter
-    out <- vapply(1:length(tau),
+    par <- vapply(seq_along(tau),
                   function(i) calcPar(family[i], tau[i]),
                   numeric(1))
+    par <- vapply(seq_along(par),
+                  function(i) adjustPars(family[i], par[i], 0)[1],
+                  numeric(1))
+
 
     ## return result
     if (length(dims) > 1)
-        out <- array(out, dim = dims)
-    out
+        par <- array(par, dim = dims)
+    par
 }
 
 calcPar <- function(family, tau) {
@@ -171,8 +175,8 @@ Frank.itau.JJ <- function(tau) {
         a <- -1
         tau <- -tau
     }
-    v <- uniroot(function(x) tau - (1 - 4/x + 4/x * debye1(x)),
-                 lower = 0 + .Machine$double.eps^0.5, upper = 5e5,
+    v <- uniroot(function(x) tau - frankTau(x),
+                 lower = 0 + .Machine$double.eps^0.5, upper = 100,
                  tol = .Machine$double.eps^0.5)$root
     return(a*v)
 }

@@ -1,16 +1,16 @@
 #' Copula Data Objects
 #'
-#' The function \code{as.copuladata} coerces an object (\code{data.frame},
-#' \code{matrix}, \code{list}) to a \code{copuladata} object.
+#' The function `as.copuladata` coerces an object (`data.frame`,
+#' `matrix`, `list`) to a `copuladata` object.
 #'
 #'
 #' @aliases as.copuladata as.copuladata.data.frame as.copuladata.matrix
 #' as.copuladata.list
-#' @param data Either a \code{data.frame}, a \code{matrix} or a \code{list}
-#' containing copula data (i.e. data with uniform margins on [0,1]). The
-#' \code{list} elements have to be vectors of identical length.
+#' @param data Either a `data.frame`, a `matrix` or a `list`
+#' containing copula data (i.e. data with uniform margins on \eqn{[0,1]}). The
+#' `list` elements have to be vectors of identical length.
 #' @author Tobias Erhardt
-#' @seealso \code{\link{pobs}}, \code{\link{pairs.copuladata}}
+#' @seealso [pobs()], [pairs.copuladata()]
 #' @examples
 #'
 #' data(daxreturns)

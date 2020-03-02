@@ -3,13 +3,21 @@
 \name{pobs}
 \alias{pobs}
 \title{Pseudo-Observations}
+\usage{
+pobs(
+  x,
+  na.last = "keep",
+  ties.method = eval(formals(rank)$ties.method),
+  lower.tail = TRUE
+)
+}
 \arguments{
 \item{x}{\eqn{n\times d}{n x d}-matrix of random variates to be converted to
 pseudo-observations.}
 
-\item{na.last, ties.method}{are passed to \code{\link{rank}}; see there.}
+\item{na.last, ties.method}{are passed to \code{\link[=rank]{rank()}}; see there.}
 
-\item{lower.tail}{\code{\link{logical}} which, if \code{FALSE}, returns the
+\item{lower.tail}{\code{\link[=logical]{logical()}} which, if \code{FALSE}, returns the
 pseudo-observations when applying the empirical marginal survival functions.}
 }
 \value{
@@ -36,7 +44,7 @@ avoid problems with density evaluation at the boundaries. Note that
 }
 \note{
 This function is borrowed from the
-\code{\link[copula:pobs]{copula}} package.
+\code{\link[copula:pobs]{copula()}} package.
 }
 \examples{
 

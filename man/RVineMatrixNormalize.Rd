@@ -7,14 +7,14 @@
 RVineMatrixNormalize(RVM)
 }
 \arguments{
-\item{RVM}{\code{\link{RVineMatrix}} defining the R-vine structure}
+\item{RVM}{\code{\link[=RVineMatrix]{RVineMatrix()}} defining the R-vine structure}
 }
 \value{
-\item{RVM}{An \code{\link{RVineMatrix}} in natural ordering with
+\item{RVM}{An \code{\link[=RVineMatrix]{RVineMatrix()}} in natural ordering with
 entries in \code{RVM$names} keeping track of the reordering.}
 }
 \description{
-An \code{\link{RVineMatrix}} is permuted to achieve a natural ordering (i.e.
+An \code{\link[=RVineMatrix]{RVineMatrix()}} is permuted to achieve a natural ordering (i.e.
 \code{diag(RVM$Matrix) == d:1})
 }
 \examples{

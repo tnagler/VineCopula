@@ -1,19 +1,14 @@
 ## Test environments
-* ubuntu 14.04 (release, devel) 
-* CRAN win-builder (devel, release)
+* ubuntu 16.04 (release) 
+* Windows Server 2019 (release) 
+* macOS Catalina 10.15 (devel, release)
 
 ## R CMD check results
 There were no ERROR or WARNINGs. 
 
-## Downstream dependencies (all notes unrelated to this package)
-AssetCorr              : 0 errors | 0 warnings | 0 notes
-CDVineCopulaConditional: 0 errors | 0 warnings | 0 notes
-copula                 : 0 errors | 0 warnings | 1 note 
-CopulaRegression       : 0 errors | 0 warnings | 2 notes
-gamCopula              : 0 errors | 0 warnings | 0 notes
-GJRM                   : 0 errors | 0 warnings | 0 notes 
-gofCopula              : 0 errors | 0 warnings | 0 notes
-kdecopula              : 0 errors | 0 warnings | 0 notes
-kdevine                : 0 errors | 0 warnings | 0 notes
-OpVaR                  : 0 errors | 0 warnings | 0 notes
-pacotest               : 0 errors | 0 warnings | 1 note 
+## revdepcheck results
+
+We checked 10 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+
+ * We saw 0 new problems
+ * We failed to check 0 packages

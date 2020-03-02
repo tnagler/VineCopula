@@ -9,7 +9,7 @@ RVineClarkeTest(data, RVM1, RVM2)
 \arguments{
 \item{data}{An N x d data matrix (with uniform margins).}
 
-\item{RVM1, RVM2}{\code{\link{RVineMatrix}} objects of models 1 and 2.}
+\item{RVM1, RVM2}{\code{\link[=RVineMatrix]{RVineMatrix()}} objects of models 1 and 2.}
 }
 \value{
 \item{statistic, statistic.Akaike, statistic.Schwarz}{Test
@@ -20,7 +20,7 @@ correction.}
 }
 \description{
 This function performs a Clarke test between two d-dimensional R-vine copula
-models as specified by their \code{\link{RVineMatrix}} objects.
+models as specified by their \code{\link[=RVineMatrix]{RVineMatrix()}} objects.
 }
 \details{
 The test proposed by Clarke (2007) allows to compare non-nested models. For
@@ -86,8 +86,8 @@ Clarke, K. A. (2007). A Simple Distribution-Free Test for
 Nonnested Model Selection. Political Analysis, 15, 347-363.
 }
 \seealso{
-\code{\link{RVineVuongTest}}, \code{\link{RVineAIC}},
-\code{\link{RVineBIC}}
+\code{\link[=RVineVuongTest]{RVineVuongTest()}}, \code{\link[=RVineAIC]{RVineAIC()}},
+\code{\link[=RVineBIC]{RVineBIC()}}
 }
 \author{
 Jeffrey Dissmann, Eike Brechmann

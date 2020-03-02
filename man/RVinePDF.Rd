@@ -10,7 +10,7 @@ RVinePDF(newdata, RVM, verbose = TRUE)
 \item{newdata}{An N x d data matrix that specifies where the density shall
 be evaluated.}
 
-\item{RVM}{An \code{\link{RVineMatrix}} object including the structure and
+\item{RVM}{An \code{\link[=RVineMatrix]{RVineMatrix()}} object including the structure and
 the pair-copula families and parameters.}
 
 \item{verbose}{In case something goes wrong, additional output will be
@@ -47,7 +47,7 @@ and \eqn{\boldsymbol{v}_{-j}}{v_{-j}} denotes a vector with the \eqn{j}-th
 component \eqn{v_j} removed. The notation of h-functions is introduced for
 convenience. For more details see Dissmann et al. (2013).
 
-The function is actually just a wrapper to \code{\link{RVineLogLik}}.
+The function is actually just a wrapper to \code{\link[=RVineLogLik]{RVineLogLik()}}.
 }
 \examples{
 
@@ -93,8 +93,8 @@ Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka
 financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 }
 \seealso{
-\code{\link{BiCopHfunc}}, \code{\link{RVineMatrix}},
-\code{\link{RVineMLE}}, \code{\link{RVineAIC}}, \code{\link{RVineBIC}}
+\code{\link[=BiCopHfunc]{BiCopHfunc()}}, \code{\link[=RVineMatrix]{RVineMatrix()}},
+\code{\link[=RVineMLE]{RVineMLE()}}, \code{\link[=RVineAIC]{RVineAIC()}}, \code{\link[=RVineBIC]{RVineBIC()}}
 }
 \author{
 Thomas Nagler

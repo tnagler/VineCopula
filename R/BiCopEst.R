@@ -4,93 +4,93 @@
 #' inversion of empirical Kendall's tau (for one parameter copula families only) or
 #' maximum likelihood estimation for implemented copula families.
 #'
-#' If \code{method = "itau"}, the function computes the empirical Kendall's tau
+#' If `method = "itau"`, the function computes the empirical Kendall's tau
 #' of the given copula data and exploits the one-to-one relationship of copula
 #' parameter and Kendall's tau which is available for many one parameter
-#' bivariate copula families (see \code{\link{BiCopPar2Tau}} and
-#' \code{\link{BiCopTau2Par}}). The inversion of Kendall's tau is however not
+#' bivariate copula families (see [BiCopPar2Tau()] and
+#' [BiCopTau2Par()]). The inversion of Kendall's tau is however not
 #' available for all bivariate copula families (see above). If a two parameter
-#' copula family is chosen and \code{method = "itau"}, a warning message is
+#' copula family is chosen and `method = "itau"`, a warning message is
 #' returned and the MLE is calculated.
 #'
-#' For \code{method = "mle"} copula parameters are estimated by maximum
-#' likelihood using starting values obtained by \code{method = "itau"}.  If no
+#' For `method = "mle"` copula parameters are estimated by maximum
+#' likelihood using starting values obtained by `method = "itau"`.  If no
 #' starting values are available by inversion of Kendall's tau, starting values
-#' have to be provided given expert knowledge and the boundaries \code{max.df}
-#' and \code{max.BB} respectively. Note: The MLE is performed via numerical
+#' have to be provided given expert knowledge and the boundaries `max.df`
+#' and `max.BB` respectively. Note: The MLE is performed via numerical
 #' maximization using the L_BFGS-B method. For the Gaussian, the t- and the
 #' one-parametric Archimedean copulas we can use the gradients, but for the BB
 #' copulas we have to use finite differences for the L_BFGS-B method.
 #'
 #' A warning message is returned if the estimate of the degrees of freedom
-#' parameter of the t-copula is larger than \code{max.df}. For high degrees of
+#' parameter of the t-copula is larger than `max.df`. For high degrees of
 #' freedom the t-copula is almost indistinguishable from the Gaussian and it is
 #' advised to use the Gaussian copula in this case. As a rule of thumb
-#' \code{max.df = 30} typically is a good choice. Moreover, standard errors of
+#' `max.df = 30` typically is a good choice. Moreover, standard errors of
 #' the degrees of freedom parameter estimate cannot be estimated in this case.
 #'
-#' @param u1,u2 Data vectors of equal length with values in [0,1].
+#' @param u1,u2 Data vectors of equal length with values in \eqn{[0,1]}.
 #' @param family An integer defining the bivariate copula family: \cr
-#' \code{0} = independence copula \cr
-#' \code{1} = Gaussian copula \cr
-#' \code{2} = Student t copula (t-copula) \cr
-#' \code{3} = Clayton copula \cr
-#' \code{4} = Gumbel copula \cr
-#' \code{5} = Frank copula \cr
-#' \code{6} = Joe copula \cr
-#' \code{7} = BB1 copula \cr
-#' \code{8} = BB6 copula \cr
-#' \code{9} = BB7 copula \cr
-#' \code{10} = BB8 copula \cr
-#' \code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-#' \code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-#' \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
-#' \code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
-#' \code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
-#' \code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
-#' \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
-#' \code{23} = rotated Clayton copula (90 degrees) \cr
-#' \code{24} = rotated Gumbel copula (90 degrees) \cr
-#' \code{26} = rotated Joe copula (90 degrees) \cr
-#' \code{27} = rotated BB1 copula (90 degrees) \cr
-#' \code{28} = rotated BB6 copula (90 degrees) \cr
-#' \code{29} = rotated BB7 copula (90 degrees) \cr
-#' \code{30} = rotated BB8 copula (90 degrees) \cr
-#' \code{33} = rotated Clayton copula (270 degrees) \cr
-#' \code{34} = rotated Gumbel copula (270 degrees) \cr
-#' \code{36} = rotated Joe copula (270 degrees) \cr
-#' \code{37} = rotated BB1 copula (270 degrees) \cr
-#' \code{38} = rotated BB6 copula (270 degrees) \cr
-#' \code{39} = rotated BB7 copula (270 degrees) \cr
-#' \code{40} = rotated BB8 copula (270 degrees) \cr
-#' \code{104} = Tawn type 1 copula \cr
-#' \code{114} = rotated Tawn type 1 copula (180 degrees) \cr
-#' \code{124} = rotated Tawn type 1 copula (90 degrees) \cr
-#' \code{134} = rotated Tawn type 1 copula (270 degrees) \cr
-#' \code{204} = Tawn type 2 copula \cr
-#' \code{214} = rotated Tawn type 2 copula (180 degrees) \cr
-#' \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
-#' \code{234} = rotated Tawn type 2 copula (270 degrees) \cr
+#' `0` = independence copula \cr
+#' `1` = Gaussian copula \cr
+#' `2` = Student t copula (t-copula) \cr
+#' `3` = Clayton copula \cr
+#' `4` = Gumbel copula \cr
+#' `5` = Frank copula \cr
+#' `6` = Joe copula \cr
+#' `7` = BB1 copula \cr
+#' `8` = BB6 copula \cr
+#' `9` = BB7 copula \cr
+#' `10` = BB8 copula \cr
+#' `13` = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
+#' `14` = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+#' `16` = rotated Joe copula (180 degrees; ``survival Joe'') \cr
+#' `17` = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
+#' `18` = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
+#' `19` = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
+#' `20` = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
+#' `23` = rotated Clayton copula (90 degrees) \cr
+#' `24` = rotated Gumbel copula (90 degrees) \cr
+#' `26` = rotated Joe copula (90 degrees) \cr
+#' `27` = rotated BB1 copula (90 degrees) \cr
+#' `28` = rotated BB6 copula (90 degrees) \cr
+#' `29` = rotated BB7 copula (90 degrees) \cr
+#' `30` = rotated BB8 copula (90 degrees) \cr
+#' `33` = rotated Clayton copula (270 degrees) \cr
+#' `34` = rotated Gumbel copula (270 degrees) \cr
+#' `36` = rotated Joe copula (270 degrees) \cr
+#' `37` = rotated BB1 copula (270 degrees) \cr
+#' `38` = rotated BB6 copula (270 degrees) \cr
+#' `39` = rotated BB7 copula (270 degrees) \cr
+#' `40` = rotated BB8 copula (270 degrees) \cr
+#' `104` = Tawn type 1 copula \cr
+#' `114` = rotated Tawn type 1 copula (180 degrees) \cr
+#' `124` = rotated Tawn type 1 copula (90 degrees) \cr
+#' `134` = rotated Tawn type 1 copula (270 degrees) \cr
+#' `204` = Tawn type 2 copula \cr
+#' `214` = rotated Tawn type 2 copula (180 degrees) \cr
+#' `224` = rotated Tawn type 2 copula (90 degrees) \cr
+#' `234` = rotated Tawn type 2 copula (270 degrees) \cr
 #' @param method indicates the estimation method: either maximum
-#' likelihood estimation (\code{method = "mle"}; default) or inversion of
-#' Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
-#' one parameter families and the Student t copula can be used (\code{family =
-#' 1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
-#' \code{par2} is found by a crude profile likelihood optimization over the
+#' likelihood estimation (`method = "mle"`; default) or inversion of
+#' Kendall's tau (`method = "itau"`). For `method = "itau"` only
+#' one parameter families and the Student t copula can be used (`family =
+#' 1,2,3,4,5,6,13,14,16,23,24,26,33,34` or `36`). For the t-copula,
+#' `par2` is found by a crude profile likelihood optimization over the
 #' interval (2, 10].
 #' @param se Logical; whether standard error(s) of parameter estimates is/are
-#' estimated (default: \code{se = FALSE}).
+#' estimated (default: `se = FALSE`).
 #' @param max.df Numeric; upper bound for the estimation of the degrees of
-#' freedom parameter of the t-copula (default: \code{max.df = 30}).
+#' freedom parameter of the t-copula (default: `max.df = 30`).
 #' @param max.BB List; upper bounds for the estimation of the two parameters
 #' (in absolute values) of the BB1, BB6, BB7 and BB8 copulas \cr (default:
-#' \code{max.BB = list(BB1=c(5,6),BB6=c(6,6),BB7=c(5,6),BB8=c(6,1))}).
+#' `max.BB = list(BB1=c(5,6),BB6=c(6,6),BB7=c(5,6),BB8=c(6,1))`).
 #' @param weights Numerical; weights for each observation (optional).
 #'
-#' @return An object of class \code{\link{BiCop}}, augmented with the following
+#' @return An object of class [BiCop()], augmented with the following
 #' entries:
 #' \item{se, se2}{standard errors for the parameter estimates (if
-#' \code{se = TRUE},}
+#' `se = TRUE`,}
 #' \item{nobs}{number of observations,}
 #' \item{logLik}{log likelihood}
 #' \item{AIC}{Aikaike's Informaton Criterion,}
@@ -98,17 +98,17 @@
 #' \item{emptau}{empirical value of Kendall's tau,}
 #' \item{p.value.indeptest}{p-value of the independence test.}
 #'
-#' @note For a comprehensive summary of the fitted model, use \code{summary(object)};
-#' to see all its contents, use \code{str(object)}.
+#' @note For a comprehensive summary of the fitted model, use `summary(object)`;
+#' to see all its contents, use `str(object)`.
 #'
 #' @author Ulf Schepsmeier, Eike Brechmann, Jakob Stoeber, Carlos Almeida
 #'
 #' @seealso
-#' \code{\link{BiCop}},
-#' \code{\link{BiCopPar2Tau}},
-#' \code{\link{BiCopTau2Par}},
-#' \code{\link{RVineSeqEst}},
-#' \code{\link{BiCopSelect}},
+#' [BiCop()],
+#' [BiCopPar2Tau()],
+#' [BiCopTau2Par()],
+#' [RVineSeqEst()],
+#' [BiCopSelect()],
 #'
 #' @references Joe, H. (1997). Multivariate Models and Dependence Concepts.
 #' Chapman and Hall, London.
@@ -173,7 +173,7 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = FALSE, max.df = 30,
     ## calculate empirical Kendall's tau and invert for initial estimate
     tau <- fasttau(u1, u2, weights)
     if (family %in% c(0, 2, allfams[onepar]))
-        theta <- BiCopTau2Par(family, tau)
+        theta <- BiCopTau2Par(family, adjustTaus(family, tau))
 
     ## inversion of kendall's tau -----------------------------
     if (method == "itau") {
@@ -460,7 +460,7 @@ BiCopEst.intern <- function(u1, u2, family, method = "mle", se = TRUE, max.df = 
     ## calculate empirical Kendall's tau and invert for initial estimate
     tau <- fasttau(u1, u2, weights)
     if (family %in% c(0, 2, allfams[onepar]))
-        theta <- BiCopTau2Par(family, tau, check.taus = FALSE)
+        theta <- BiCopTau2Par(family, adjustTaus(family, tau), check.taus = FALSE)
 
     ## inversion of kendall's tau -----------------------------
     if (method == "itau") {
@@ -997,7 +997,7 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
             up <- 100
         } else if (family %in% c(4, 14)) {
             low <- 1.0001
-            up <- 100
+            up <- 50
         } else if (family %in% c(5)) {
             low <- -100
             up <- 100
@@ -1009,7 +1009,7 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
             low <- -100
         } else if (family %in% c(24, 34)) {
             up <- -1.0001
-            low <- -100
+            low <- -50
         } else if (family %in% c(26, 36)) {
             up <- -1.0001
             low <- -50

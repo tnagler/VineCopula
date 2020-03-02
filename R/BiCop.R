@@ -1,62 +1,62 @@
 #' Constructing BiCop-objects
 #'
-#' This function creates an object of class \code{BiCop} and checks for
+#' This function creates an object of class `BiCop` and checks for
 #' family/parameter consistency.
 #'
 #' @param family An integer defining the bivariate copula family: \cr
-#' \code{0} = independence copula \cr
-#' \code{1} = Gaussian copula \cr
-#' \code{2} = Student t copula (t-copula) \cr
-#' \code{3} = Clayton copula \cr
-#' \code{4} = Gumbel copula \cr
-#' \code{5} = Frank copula \cr
-#' \code{6} = Joe copula \cr
-#' \code{7} = BB1 copula \cr
-#' \code{8} = BB6 copula \cr
-#' \code{9} = BB7 copula \cr
-#' \code{10} = BB8 copula \cr
-#' \code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-#' \code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-#' \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
-#' \code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
-#' \code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
-#' \code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
-#' \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
-#' \code{23} = rotated Clayton copula (90 degrees) \cr
-#' \code{24} = rotated Gumbel copula (90 degrees) \cr
-#' \code{26} = rotated Joe copula (90 degrees) \cr
-#' \code{27} = rotated BB1 copula (90 degrees) \cr
-#' \code{28} = rotated BB6 copula (90 degrees) \cr
-#' \code{29} = rotated BB7 copula (90 degrees) \cr
-#' \code{30} = rotated BB8 copula (90 degrees) \cr
-#' \code{33} = rotated Clayton copula (270 degrees) \cr
-#' \code{34} = rotated Gumbel copula (270 degrees) \cr
-#' \code{36} = rotated Joe copula (270 degrees) \cr
-#' \code{37} = rotated BB1 copula (270 degrees) \cr
-#' \code{38} = rotated BB6 copula (270 degrees) \cr
-#' \code{39} = rotated BB7 copula (270 degrees) \cr
-#' \code{40} = rotated BB8 copula (270 degrees) \cr
-#' \code{104} = Tawn type 1 copula \cr
-#' \code{114} = rotated Tawn type 1 copula (180 degrees) \cr
-#' \code{124} = rotated Tawn type 1 copula (90 degrees) \cr
-#' \code{134} = rotated Tawn type 1 copula (270 degrees) \cr
-#' \code{204} = Tawn type 2 copula \cr
-#' \code{214} = rotated Tawn type 2 copula (180 degrees) \cr
-#' \code{224} = rotated Tawn type 2 copula (90 degrees) \cr
-#' \code{234} = rotated Tawn type 2 copula (270 degrees) \cr
+#' `0` = independence copula \cr
+#' `1` = Gaussian copula \cr
+#' `2` = Student t copula (t-copula) \cr
+#' `3` = Clayton copula \cr
+#' `4` = Gumbel copula \cr
+#' `5` = Frank copula \cr
+#' `6` = Joe copula \cr
+#' `7` = BB1 copula \cr
+#' `8` = BB6 copula \cr
+#' `9` = BB7 copula \cr
+#' `10` = BB8 copula \cr
+#' `13` = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
+#' `14` = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+#' `16` = rotated Joe copula (180 degrees; ``survival Joe'') \cr
+#' `17` = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
+#' `18` = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
+#' `19` = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
+#' `20` = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
+#' `23` = rotated Clayton copula (90 degrees) \cr
+#' `24` = rotated Gumbel copula (90 degrees) \cr
+#' `26` = rotated Joe copula (90 degrees) \cr
+#' `27` = rotated BB1 copula (90 degrees) \cr
+#' `28` = rotated BB6 copula (90 degrees) \cr
+#' `29` = rotated BB7 copula (90 degrees) \cr
+#' `30` = rotated BB8 copula (90 degrees) \cr
+#' `33` = rotated Clayton copula (270 degrees) \cr
+#' `34` = rotated Gumbel copula (270 degrees) \cr
+#' `36` = rotated Joe copula (270 degrees) \cr
+#' `37` = rotated BB1 copula (270 degrees) \cr
+#' `38` = rotated BB6 copula (270 degrees) \cr
+#' `39` = rotated BB7 copula (270 degrees) \cr
+#' `40` = rotated BB8 copula (270 degrees) \cr
+#' `104` = Tawn type 1 copula \cr
+#' `114` = rotated Tawn type 1 copula (180 degrees) \cr
+#' `124` = rotated Tawn type 1 copula (90 degrees) \cr
+#' `134` = rotated Tawn type 1 copula (270 degrees) \cr
+#' `204` = Tawn type 2 copula \cr
+#' `214` = rotated Tawn type 2 copula (180 degrees) \cr
+#' `224` = rotated Tawn type 2 copula (90 degrees) \cr
+#' `234` = rotated Tawn type 2 copula (270 degrees) \cr
 #' @param par Copula parameter.
 #' @param par2 Second parameter for bivariate copulas with two parameters (t,
-#' BB1, BB6, BB7, BB8, Tawn type 1 and type 2; default is \code{par2 = 0}).
-#' \code{par2} should be an positive integer for the Students's t copula
-#' \code{family = 2}.
+#' BB1, BB6, BB7, BB8, Tawn type 1 and type 2; default is `par2 = 0`).
+#' `par2` should be an positive integer for the Students's t copula
+#' `family = 2`.
 #' @param tau numeric; value of Kendall's tau; has to lie in the interval
 #' (-1, 1). Can only be used with one-parameter families and the t copula.
-#' If \code{tau} is provided, \code{par} will be ignored.
-#' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
+#' If `tau` is provided, `par` will be ignored.
+#' @param check.pars logical; default is `TRUE`; if `FALSE`, checks
 #' for family/parameter-consistency are omitted (should only be used with
 #' care).
 #'
-#' @return An object of class \code{\link{BiCop}}. It is a list containing
+#' @return An object of class [BiCop()]. It is a list containing
 #' information about the bivariate copula. Its components are:
 #' \item{family, par, par2}{copula family number and parameter(s),}
 #' \item{npars}{number of parameters,}
@@ -65,23 +65,23 @@
 #' \item{beta}{Blomqvist's beta,}
 #' \item{taildep}{lower and upper tail dependence coefficients,}
 #' \item{call}{the call that created the object.}
-#' Objects of this class are also returned by the \code{\link{BiCopEst}} and
-#' \code{\link{BiCopSelect}} functions. In this case, further information about
+#' Objects of this class are also returned by the [BiCopEst()] and
+#' [BiCopSelect()] functions. In this case, further information about
 #' the fit is added.
 #'
-#' @note For a comprehensive summary of the model, use \code{summary(object)};
-#' to see all its contents, use \code{str(object)}.
+#' @note For a comprehensive summary of the model, use `summary(object)`;
+#' to see all its contents, use `str(object)`.
 #'
 #' @author Thomas Nagler
 #'
 #' @seealso
-#' \code{\link{BiCopPDF}},
-#' \code{\link{BiCopHfunc}},
-#' \code{\link{BiCopSim}},
-#' \code{\link{BiCopEst}},
-#' \code{\link{BiCopSelect}},
-#' \code{\link{plot.BiCop}},
-#' \code{\link{contour.BiCop}}
+#' [BiCopPDF()],
+#' [BiCopHfunc()],
+#' [BiCopSim()],
+#' [BiCopEst()],
+#' [BiCopSelect()],
+#' [plot.BiCop()],
+#' [contour.BiCop()]
 #'
 #' @examples
 #'

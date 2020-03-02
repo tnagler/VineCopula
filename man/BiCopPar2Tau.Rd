@@ -20,35 +20,32 @@ bivariate copula family: \cr
 \code{8} = BB6 copula \cr
 \code{9} = BB7 copula \cr
 \code{10} = BB8 copula \cr
-\code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-\code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-\code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
-\code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
-\code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
-\code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
+\code{13} = rotated Clayton copula (180 degrees; \verb{survival Clayton'') \\cr `14` = rotated Gumbel copula (180 degrees; }survival Gumbel'') \cr
+\code{16} = rotated Joe copula (180 degrees; \verb{survival Joe'') \\cr `17` = rotated BB1 copula (180 degrees; }survival BB1'')\cr
+\code{18} = rotated BB6 copula (180 degrees; \verb{survival BB6'')\\cr `19` = rotated BB7 copula (180 degrees; }survival BB7'')\cr
 \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
 \code{23} = rotated Clayton copula (90 degrees) \cr
-\code{24} = rotated Gumbel copula (90 degrees) \cr
-\code{26} = rotated Joe copula (90 degrees) \cr
-\code{27} = rotated BB1 copula (90 degrees) \cr
-\code{28} = rotated BB6 copula (90 degrees) \cr
-\code{29} = rotated BB7 copula (90 degrees) \cr
-\code{30} = rotated BB8 copula (90 degrees) \cr
-\code{33} = rotated Clayton copula (270 degrees) \cr
-\code{34} = rotated Gumbel copula (270 degrees) \cr
-\code{36} = rotated Joe copula (270 degrees) \cr
-\code{37} = rotated BB1 copula (270 degrees) \cr
-\code{38} = rotated BB6 copula (270 degrees) \cr
-\code{39} = rotated BB7 copula (270 degrees) \cr
-\code{40} = rotated BB8 copula (270 degrees) \cr
-\code{104} = Tawn type 1 copula \cr
-\code{114} = rotated Tawn type 1 copula (180 degrees) \cr
-\code{124} = rotated Tawn type 1 copula (90 degrees) \cr
-\code{134} = rotated Tawn type 1 copula (270 degrees) \cr
-\code{204} = Tawn type 2 copula \cr
-\code{214} = rotated Tawn type 2 copula (180 degrees) \cr
-\code{224} = rotated Tawn type 2 copula (90 degrees) \cr
-\code{234} = rotated Tawn type 2 copula (270 degrees) \cr}
+`24` = rotated Gumbel copula (90 degrees) \cr
+`26` = rotated Joe copula (90 degrees) \cr
+`27` = rotated BB1 copula (90 degrees) \cr
+`28` = rotated BB6 copula (90 degrees) \cr
+`29` = rotated BB7 copula (90 degrees) \cr
+`30` = rotated BB8 copula (90 degrees) \cr
+`33` = rotated Clayton copula (270 degrees) \cr
+`34` = rotated Gumbel copula (270 degrees) \cr
+`36` = rotated Joe copula (270 degrees) \cr
+`37` = rotated BB1 copula (270 degrees) \cr
+`38` = rotated BB6 copula (270 degrees) \cr
+`39` = rotated BB7 copula (270 degrees) \cr
+`40` = rotated BB8 copula (270 degrees) \cr
+`104` = Tawn type 1 copula \cr
+`114` = rotated Tawn type 1 copula (180 degrees) \cr
+`124` = rotated Tawn type 1 copula (90 degrees) \cr
+`134` = rotated Tawn type 1 copula (270 degrees) \cr
+`204` = Tawn type 2 copula \cr
+`214` = rotated Tawn type 2 copula (180 degrees) \cr
+`224` = rotated Tawn type 2 copula (90 degrees) \cr
+`234` = rotated Tawn type 2 copula (270 degrees) \cr}
 
 \item{par}{numeric; single number or vector of size \code{n}; copula
 parameter.}
@@ -70,46 +67,46 @@ care).}
 \value{
 Theoretical value of Kendall's tau (vector) corresponding to the
 bivariate copula \code{family} and parameter vector \eqn{(\theta, \delta) =}
-\code{(par, par2)}.
+\verb{(par, par2)}.
 \tabular{ll}{ No. (\code{family}) \tab Kendall's tau (\code{tau}) \cr
-\code{1, 2} \tab \eqn{\frac{2}{\pi}\arcsin(\theta)}{2 / \pi arcsin(\theta)} \cr
-\code{3, 13} \tab \eqn{\frac{\theta}{\theta+2}}{\theta / (\theta+2)} \cr
-\code{4, 14} \tab \eqn{1-\frac{1}{\theta}}{1-1/\theta} \cr
+\verb{1, 2} \tab \eqn{\frac{2}{\pi}\arcsin(\theta)}{2 / \pi arcsin(\theta)} \cr
+\verb{3, 13} \tab \eqn{\frac{\theta}{\theta+2}}{\theta / (\theta+2)} \cr
+\verb{4, 14} \tab \eqn{1-\frac{1}{\theta}}{1-1/\theta} \cr
 \code{5} \tab \eqn{1-\frac{4}{\theta}+4\frac{D_1(\theta)}{\theta}}{1-4/\theta +
 4 D_1(\theta)/\theta} \cr
 \tab with \eqn{D_1(\theta)=\int_0^\theta \frac{x/\theta}{\exp(x)-1}dx}{D_1(\theta)=
 \int_0^\theta (x/\theta)/(exp(x)-1)dx} (Debye function) \cr
-\code{6, 16} \tab \eqn{1+\frac{4}{\theta^2}\int_0^1
+\verb{6, 16} \tab \eqn{1+\frac{4}{\theta^2}\int_0^1
 x\log(x)(1-x)^{2(1-\theta)/\theta}dx}{1+4/\theta^2\int_0^1
 x\log(x)(1-x)^{2(1-\theta)/\theta}dx} \cr
-\code{7, 17} \tab \eqn{1-\frac{2}{\delta(\theta+2)}}{1-2/(\delta(\theta+2))} \cr
-\code{8, 18} \tab \eqn{1+4\int_0^1 -\log(-(1-t)^\theta+1)
+\verb{7, 17} \tab \eqn{1-\frac{2}{\delta(\theta+2)}}{1-2/(\delta(\theta+2))} \cr
+\verb{8, 18} \tab \eqn{1+4\int_0^1 -\log(-(1-t)^\theta+1)
 (1-t-(1-t)^{-\theta}+(1-t)^{-\theta}t)/(\delta\theta) dt} \cr
-\code{9, 19} \tab \eqn{1+4\int_0^1 ( (1-(1-t)^{\theta})^{-\delta} - 1)
+\verb{9, 19} \tab \eqn{1+4\int_0^1 ( (1-(1-t)^{\theta})^{-\delta} - 1)
 /( -\theta\delta(1-t)^{\theta-1}(1-(1-t)^{\theta})^{-\delta-1} ) dt} \cr
-\code{10, 20} \tab \eqn{1+4\int_0^1
+\verb{10, 20} \tab \eqn{1+4\int_0^1
 -\log \left(((1-t\delta)^\theta-1)/((1-\delta)^\theta-1) \right) } \cr
 \tab \eqn{* (1-t\delta-(1-t\delta)^{-\theta}+(1-t\delta)^{-\theta}t\delta)/(\theta\delta) dt} \cr
-\code{23, 33} \tab \eqn{\frac{\theta}{2-\theta}}{\theta/(2-\theta)} \cr
-\code{24, 34} \tab \eqn{-1-\frac{1}{\theta}}{-1-1/\theta} \cr
-\code{26, 36} \tab \eqn{-1-\frac{4}{\theta^2}\int_0^1
+\verb{23, 33} \tab \eqn{\frac{\theta}{2-\theta}}{\theta/(2-\theta)} \cr
+\verb{24, 34} \tab \eqn{-1-\frac{1}{\theta}}{-1-1/\theta} \cr
+\verb{26, 36} \tab \eqn{-1-\frac{4}{\theta^2}\int_0^1
 x\log(x)(1-x)^{-2(1+\theta)/\theta}dx}{-1-4/\theta^2
 \int_0^1 x\log(x)(1-x)^{-2(1+\theta)/\theta}dx} \cr
-\code{27, 37} \tab \eqn{-1-\frac{2}{\delta(2-\theta)}}{1-2/(\delta(\theta+2))} \cr
-\code{28, 38} \tab \eqn{-1-4\int_0^1 -\log(-(1-t)^{-\theta}+1)
+\verb{27, 37} \tab \eqn{-1-\frac{2}{\delta(2-\theta)}}{1-2/(\delta(\theta+2))} \cr
+\verb{28, 38} \tab \eqn{-1-4\int_0^1 -\log(-(1-t)^{-\theta}+1)
 (1-t-(1-t)^{\theta}+(1-t)^{\theta}t)/(\delta\theta) dt} \cr
-\code{29, 39} \tab \eqn{-1-4\int_0^1 ( (1-(1-t)^{-\theta})^{\delta} - 1)
+\verb{29, 39} \tab \eqn{-1-4\int_0^1 ( (1-(1-t)^{-\theta})^{\delta} - 1)
 /( -\theta\delta(1-t)^{-\theta-1}(1-(1-t)^{-\theta})^{\delta-1} ) dt} \cr
-\code{30, 40} \tab \eqn{-1-4\int_0^1 -\log
+\verb{30, 40} \tab \eqn{-1-4\int_0^1 -\log
 \left( ((1+t\delta)^{-\theta}-1)/((1+\delta)^{-\theta}-1) \right)} \cr
 \tab \eqn{* (1+t\delta-(1+t\delta)^{\theta}-(1+t\delta)^{\theta}t\delta)/(\theta\delta) dt} \cr
-\code{104,114} \tab \eqn{\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt} \cr
+\verb{104,114} \tab \eqn{\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt} \cr
 \tab with \eqn{A(t) = (1-\delta)t+[(\delta(1-t))^{\theta}+t^{\theta}]^{1/\theta}} \cr
-\code{204,214} \tab \eqn{\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt}  \cr
+\verb{204,214} \tab \eqn{\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt}  \cr
 \tab with \eqn{A(t) = (1-\delta)(1-t)+[(1-t)^{-\theta}+(\delta t)^{-\theta}]^{-1/\theta}} \cr
-\code{124,134} \tab \eqn{-\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt} \cr
+\verb{124,134} \tab \eqn{-\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt} \cr
 \tab with \eqn{A(t) = (1-\delta)t+[(\delta(1-t))^{-\theta}+t^{-\theta}]^{-1/\theta}} \cr
-\code{224,234} \tab \eqn{-\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt} \cr
+\verb{224,234} \tab \eqn{-\int_0^1 \frac{t(1-t)A^{\prime\prime}(t)}{A(t)}dt} \cr
 \tab with \eqn{A(t) = (1-\delta)(1-t)+[(1-t)^{-\theta}+(\delta t)^{-\theta}]^{-1/\theta}} \cr
 
 }
@@ -119,7 +116,7 @@ This function computes the theoretical Kendall's tau value of a bivariate
 copula for given parameter values.
 }
 \details{
-If the family and parameter specification is stored in a \code{\link{BiCop}}
+If the family and parameter specification is stored in a \code{\link[=BiCop]{BiCop()}}
 object \code{obj}, the alternative version \cr
 \preformatted{BiCopPar2Tau(obj)} can be used.
 }
@@ -264,7 +261,7 @@ of mixed C-vines with application to exchange rates. Statistical Modelling,
 12(3), 229-255.
 }
 \seealso{
-\code{\link{BiCopTau2Par}}, \code{\link{BiCop}}
+\code{\link[=BiCopTau2Par]{BiCopTau2Par()}}, \code{\link[=BiCop]{BiCop()}}
 }
 \author{
 Ulf Schepsmeier, Tobias Erhardt

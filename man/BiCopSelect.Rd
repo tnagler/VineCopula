@@ -19,7 +19,7 @@ BiCopSelect(
 )
 }
 \arguments{
-\item{u1, u2}{Data vectors of equal length with values in [0,1].}
+\item{u1, u2}{Data vectors of equal length with values in \eqn{[0,1]}.}
 
 \item{familyset}{Vector of bivariate copula families to select from.
 The vector has to include at least one bivariate copula
@@ -39,35 +39,32 @@ families: \cr
 \code{8} = BB6 copula \cr
 \code{9} = BB7 copula \cr
 \code{10} = BB8 copula \cr
-\code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-\code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-\code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
-\code{17} = rotated BB1 copula (180 degrees; ``survival BB1'')\cr
-\code{18} = rotated BB6 copula (180 degrees; ``survival BB6'')\cr
-\code{19} = rotated BB7 copula (180 degrees; ``survival BB7'')\cr
+\code{13} = rotated Clayton copula (180 degrees; \verb{survival Clayton'') \\cr `14` = rotated Gumbel copula (180 degrees; }survival Gumbel'') \cr
+\code{16} = rotated Joe copula (180 degrees; \verb{survival Joe'') \\cr `17` = rotated BB1 copula (180 degrees; }survival BB1'')\cr
+\code{18} = rotated BB6 copula (180 degrees; \verb{survival BB6'')\\cr `19` = rotated BB7 copula (180 degrees; }survival BB7'')\cr
 \code{20} = rotated BB8 copula (180 degrees; ``survival BB8'')\cr
 \code{23} = rotated Clayton copula (90 degrees) \cr
-\code{24} = rotated Gumbel copula (90 degrees) \cr
-\code{26} = rotated Joe copula (90 degrees) \cr
-\code{27} = rotated BB1 copula (90 degrees) \cr
-\code{28} = rotated BB6 copula (90 degrees) \cr
-\code{29} = rotated BB7 copula (90 degrees) \cr
-\code{30} = rotated BB8 copula (90 degrees) \cr
-\code{33} = rotated Clayton copula (270 degrees) \cr
-\code{34} = rotated Gumbel copula (270 degrees) \cr
-\code{36} = rotated Joe copula (270 degrees) \cr
-\code{37} = rotated BB1 copula (270 degrees) \cr
-\code{38} = rotated BB6 copula (270 degrees) \cr
-\code{39} = rotated BB7 copula (270 degrees) \cr
-\code{40} = rotated BB8 copula (270 degrees) \cr
-\code{104} = Tawn type 1 copula \cr
-\code{114} = rotated Tawn type 1 copula (180 degrees) \cr
-\code{124} = rotated Tawn type 1 copula (90 degrees) \cr
-\code{134} = rotated Tawn type 1 copula (270 degrees) \cr
-\code{204} = Tawn type 2 copula \cr
-\code{214} = rotated Tawn type 2 copula (180 degrees) \cr
-\code{224} = rotated Tawn type 2 copula (90 degrees) \cr
-\code{234} = rotated Tawn type 2 copula (270 degrees) \cr}
+`24` = rotated Gumbel copula (90 degrees) \cr
+`26` = rotated Joe copula (90 degrees) \cr
+`27` = rotated BB1 copula (90 degrees) \cr
+`28` = rotated BB6 copula (90 degrees) \cr
+`29` = rotated BB7 copula (90 degrees) \cr
+`30` = rotated BB8 copula (90 degrees) \cr
+`33` = rotated Clayton copula (270 degrees) \cr
+`34` = rotated Gumbel copula (270 degrees) \cr
+`36` = rotated Joe copula (270 degrees) \cr
+`37` = rotated BB1 copula (270 degrees) \cr
+`38` = rotated BB6 copula (270 degrees) \cr
+`39` = rotated BB7 copula (270 degrees) \cr
+`40` = rotated BB8 copula (270 degrees) \cr
+`104` = Tawn type 1 copula \cr
+`114` = rotated Tawn type 1 copula (180 degrees) \cr
+`124` = rotated Tawn type 1 copula (90 degrees) \cr
+`134` = rotated Tawn type 1 copula (270 degrees) \cr
+`204` = Tawn type 2 copula \cr
+`214` = rotated Tawn type 2 copula (180 degrees) \cr
+`224` = rotated Tawn type 2 copula (90 degrees) \cr
+`234` = rotated Tawn type 2 copula (270 degrees) \cr}
 
 \item{selectioncrit}{Character indicating the criterion for bivariate copula
 selection. Possible choices: \code{selectioncrit = "AIC"} (default),
@@ -75,7 +72,7 @@ selection. Possible choices: \code{selectioncrit = "AIC"} (default),
 
 \item{indeptest}{Logical; whether a hypothesis test for the independence of
 \code{u1} and \code{u2} is performed before bivariate copula selection
-(default: \code{indeptest = FALSE}; see \code{\link{BiCopIndTest}}).  The
+(default: \code{indeptest = FALSE}; see \code{\link[=BiCopIndTest]{BiCopIndTest()}}).  The
 independence copula is chosen if the null hypothesis of independence cannot
 be rejected.}
 
@@ -91,19 +88,18 @@ be rejected.}
 estimated (default: \code{se = FALSE}).}
 
 \item{presel}{Logical; whether to exclude families before fitting based on
-symmetry properties of the data. Makes the selection about 30\% faster
+symmetry properties of the data. Makes the selection about 30\\% faster
 (on average), but may yield slightly worse results in few special cases.}
 
 \item{method}{indicates the estimation method: either maximum
 likelihood estimation (\code{method = "mle"}; default) or inversion of
 Kendall's tau (\code{method = "itau"}). For \code{method = "itau"} only
-one parameter families and the Student t copula can be used (\code{family =
-1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
+one parameter families and the Student t copula can be used (\verb{family = 1,2,3,4,5,6,13,14,16,23,24,26,33,34} or \code{36}). For the t-copula,
 \code{par2} is found by a crude profile likelihood optimization over the
 interval (2, 10].}
 }
 \value{
-An object of class \code{\link{BiCop}}, augmented with the following
+An object of class \code{\link[=BiCop]{BiCop()}}, augmented with the following
 entries:
 \item{se, se2}{standard errors for the parameter estimates (if
 \code{se = TRUE},}
@@ -145,7 +141,7 @@ For a comprehensive summary of the fitted model, use
 \code{summary(object)}; to see all its contents, use \code{str(object)}.
 
 The parameters of the Student t and BB copulas are restricted (see
-defaults in \code{\link{BiCopEst}} to avoid being to close to their limiting
+defaults in \code{\link[=BiCopEst]{BiCopEst()}} to avoid being to close to their limiting
 cases.
 }
 \examples{
@@ -193,11 +189,11 @@ Schwarz, G. E. (1978). Estimating the dimension of a model. Annals of
 Statistics 6 (2), 461-464.
 }
 \seealso{
-\code{\link{BiCop}},
-\code{\link{BiCopEst}},
-\code{\link{RVineStructureSelect}},
-\code{\link{RVineCopSelect}},
-\code{\link{BiCopIndTest}},
+\code{\link[=BiCop]{BiCop()}},
+\code{\link[=BiCopEst]{BiCopEst()}},
+\code{\link[=RVineStructureSelect]{RVineStructureSelect()}},
+\code{\link[=RVineCopSelect]{RVineCopSelect()}},
+\code{\link[=BiCopIndTest]{BiCopIndTest()}},
 }
 \author{
 Eike Brechmann, Jeffrey Dissmann, Thomas Nagler

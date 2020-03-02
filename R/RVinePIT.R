@@ -19,13 +19,13 @@
 #' given in the appendix of Schepsmeier (2015).
 #'
 #' @param data An N x d data matrix (with uniform margins).
-#' @param RVM \code{\link{RVineMatrix}} objects of the R-vine model.
-#' @return An \code{N} x d matrix of PIT data from the given R-vine copula
+#' @param RVM [RVineMatrix()] objects of the R-vine model.
+#' @return An `N` x d matrix of PIT data from the given R-vine copula
 #' model.
 #'
 #' @author Ulf Schepsmeier
 #'
-#' @seealso \code{\link{RVineGofTest}}
+#' @seealso [RVineGofTest()]
 #'
 #' @references Rosenblatt, M. (1952).  Remarks on a Multivariate
 #' Transformation. The Annals of Mathematical Statistics 23 (3), 470-472.

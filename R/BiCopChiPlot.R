@@ -57,32 +57,32 @@
 #' margins. Control bounds around zero indicate whether there is significant
 #' dependence present.
 #'
-#' If \code{mode = "lower"} or \code{"upper"}, the above quantities are
+#' If `mode = "lower"` or `"upper"`, the above quantities are
 #' calculated only for those \eqn{u_{i,1}}'s and \eqn{u_{i,2}}'s which are
 #' smaller/larger than the respective means of
-#' \code{u1}\eqn{=(u_{1,1},...,u_{N,1})} and
-#' \code{u2}\eqn{=(u_{1,2},...,u_{N,2})}.
+#' `u1`\eqn{=(u_{1,1},...,u_{N,1})} and
+#' `u2`\eqn{=(u_{1,2},...,u_{N,2})}.
 #'
-#' @param u1,u2 Data vectors of equal length with values in [0,1].
-#' @param PLOT Logical; whether the results are plotted. If \code{PLOT =
-#' FALSE}, the values \code{lambda}, \code{chi} and \code{control.bounds} are
-#' returned (see below; default: \code{PLOT = TRUE}).
+#' @param u1,u2 Data vectors of equal length with values in \eqn{[0,1]}.
+#' @param PLOT Logical; whether the results are plotted. If `PLOT =
+#' FALSE`, the values `lambda`, `chi` and `control.bounds` are
+#' returned (see below; default: `PLOT = TRUE`).
 #' @param mode Character; whether a general, lower or upper chi-plot is
-#' calculated.  Possible values are \code{mode = "NULL"}, \code{"upper"} and
-#' \code{"lower"}. \cr \code{"NULL"} = general chi-plot (default)\cr
-#' \code{"upper"} = upper chi-plot\cr \code{"lower"} = lower chi-plot
+#' calculated.  Possible values are `mode = "NULL"`, `"upper"` and
+#' `"lower"`. \cr `"NULL"` = general chi-plot (default)\cr
+#' `"upper"` = upper chi-plot\cr `"lower"` = lower chi-plot
 #' @param ... Additional plot arguments.
 #'
 #' @return \item{lambda}{Lambda-statistics (x-axis).} \item{chi}{Chi-statistics
 #' (y-axis).} \item{control.bounds}{A 2-dimensional vector of bounds
 #' \eqn{((1.54/\sqrt{n},-1.54/\sqrt{n})}, where \eqn{n} is the length of
-#' \code{u1} and where the chosen values correspond to an approximate
-#' significance level of 10\%.}
+#' `u1` and where the chosen values correspond to an approximate
+#' significance level of \eqn{10\%}.}
 #'
 #' @author Natalia Belgorodski, Ulf Schepsmeier
 #'
-#' @seealso \code{\link{BiCopMetaContour}}, \code{\link{BiCopKPlot}},
-#' \code{\link{BiCopLambda}}
+#' @seealso [BiCopMetaContour()], [BiCopKPlot()],
+#' [BiCopLambda()]
 #'
 #' @references Abberger, K. (2004). A simple graphical method to explore
 #' tail-dependence in stock-return pairs. Discussion Paper, University of
@@ -231,16 +231,16 @@ BiCopChiPlot <- function(u1, u2, PLOT = TRUE, mode = "NULL", ...) {
 #' this indicates a perfect negative dependence between \eqn{U_1} and
 #' \eqn{U_2}.
 #'
-#' @param u1,u2 Data vectors of equal length with values in [0,1].
-#' @param PLOT Logical; whether the results are plotted. If \code{PLOT =
-#' FALSE}, the values \code{W.in} and \code{Hi.sort} are returned (see below;
-#' default: \code{PLOT = TRUE}).
+#' @param u1,u2 Data vectors of equal length with values in \eqn{[0,1]}.
+#' @param PLOT Logical; whether the results are plotted. If `PLOT =
+#' FALSE`, the values `W.in` and `Hi.sort` are returned (see below;
+#' default: `PLOT = TRUE`).
 #' @param ... Additional plot arguments.
 #' @return \item{W.in}{W-statistics (x-axis).} \item{Hi.sort}{H-statistics
 #' (y-axis).}
 #' @author Natalia Belgorodski, Ulf Schepsmeier
-#' @seealso \code{\link{BiCopMetaContour}}, \code{\link{BiCopChiPlot}},
-#' \code{\link{BiCopLambda}}, \code{\link{BiCopGofTest}}
+#' @seealso [BiCopMetaContour()], [BiCopChiPlot()],
+#' [BiCopLambda()], [BiCopGofTest()]
 #' @references Genest, C. and A. C. Favre (2007). Everything you always wanted
 #' to know about copula modeling but were afraid to ask. Journal of Hydrologic
 #' Engineering, 12 (4), 347-368.

@@ -4,72 +4,72 @@
 #' bivariate copula density with respect to its parameter(s) and/or its
 #' arguments.
 #'
-#' If the family and parameter specification is stored in a \code{\link{BiCop}}
-#' object \code{obj}, the alternative version \cr
+#' If the family and parameter specification is stored in a [BiCop()]
+#' object `obj`, the alternative version \cr
 #' \preformatted{BiCopDeriv2(u1, u2, obj, deriv = "par")}
 #' can be used.
 #'
-#' @param u1,u2 numeric vectors of equal length with values in [0,1].
-#' @param family integer; single number or vector of size \code{length(u1)};
+#' @param u1,u2 numeric vectors of equal length with values in \eqn{[0,1]}.
+#' @param family integer; single number or vector of size `length(u1)`;
 #' defines the bivariate copula family:  \cr
-#' \code{0} = independence copula \cr
-#' \code{1} = Gaussian copula \cr
-#' \code{2} = Student t copula (t-copula) \cr
-#' \code{3} = Clayton copula \cr
-#' \code{4} = Gumbel copula \cr
-#' \code{5} = Frank copula \cr
-#' \code{6} = Joe copula \cr
-#' \code{13} = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
-#' \code{14} = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
-#' \code{16} = rotated Joe copula (180 degrees; ``survival Joe'') \cr
-#' \code{23} = rotated Clayton copula (90 degrees) \cr
-#' \code{24} = rotated Gumbel copula (90 degrees) \cr
-#' \code{26} = rotated Joe copula (90 degrees) \cr
-#' \code{33} = rotated Clayton copula (270 degrees) \cr
-#' \code{34} = rotated Gumbel copula (270 degrees) \cr
-#' \code{36} = rotated Joe copula (270 degrees) \cr
+#' `0` = independence copula \cr
+#' `1` = Gaussian copula \cr
+#' `2` = Student t copula (t-copula) \cr
+#' `3` = Clayton copula \cr
+#' `4` = Gumbel copula \cr
+#' `5` = Frank copula \cr
+#' `6` = Joe copula \cr
+#' `13` = rotated Clayton copula (180 degrees; ``survival Clayton'') \cr
+#' `14` = rotated Gumbel copula (180 degrees; ``survival Gumbel'') \cr
+#' `16` = rotated Joe copula (180 degrees; ``survival Joe'') \cr
+#' `23` = rotated Clayton copula (90 degrees) \cr
+#' `24` = rotated Gumbel copula (90 degrees) \cr
+#' `26` = rotated Joe copula (90 degrees) \cr
+#' `33` = rotated Clayton copula (270 degrees) \cr
+#' `34` = rotated Gumbel copula (270 degrees) \cr
+#' `36` = rotated Joe copula (270 degrees) \cr
 #' @param par Copula parameter.
-#' @param par2 integer; single number or vector of size \code{length(u1)};
-#' second parameter for the t-Copula; default is \code{par2 = 0}, should be an
-#' positive integer for the Students's t copula \code{family = 2}.
+#' @param par2 integer; single number or vector of size `length(u1)`;
+#' second parameter for the t-Copula; default is `par2 = 0`, should be an
+#' positive integer for the Students's t copula `family = 2`.
 #' @param deriv Derivative argument \cr
-#' \code{"par"} = second derivative with respect to
+#' `"par"` = second derivative with respect to
 #' the first parameter (default)\cr
-#' \code{"par2"} = second derivative with respect to
+#' `"par2"` = second derivative with respect to
 #' the second parameter (only available for the t-copula) \cr
-#' \code{"u1"} = second derivative with respect to
-#' the first argument \code{u1} \cr
-#' \code{"u2"} = second derivative with respect to
-#' the second argument \code{u2} \cr
-#' \code{"par1par2"} = second derivative with respect to
+#' `"u1"` = second derivative with respect to
+#' the first argument `u1` \cr
+#' `"u2"` = second derivative with respect to
+#' the second argument `u2` \cr
+#' `"par1par2"` = second derivative with respect to
 #' the first and second parameter (only available for the t-copula)
-#' \cr \code{"par1u1"} = second derivative with respect to
+#' \cr `"par1u1"` = second derivative with respect to
 #' the first parameter and the first argument \cr
-#' \code{"par2u1"} = second derivative with respect to the
+#' `"par2u1"` = second derivative with respect to the
 #' second parameter and the first argument (only available for the t-copula) \cr
-#' \code{"par1u2"} = second derivative with respect to
+#' `"par1u2"` = second derivative with respect to
 #' the first parameter and the second argument \cr
-#' \code{"par2u2"} = second derivative with respect to
+#' `"par2u2"` = second derivative with respect to
 #' the second parameter and the second argument
 #' (only available for the t-copula) \cr
-#' @param obj \code{BiCop} object containing the family and parameter
+#' @param obj `BiCop` object containing the family and parameter
 #' specification.
-#' @param check.pars logical; default is \code{TRUE}; if \code{FALSE}, checks
+#' @param check.pars logical; default is `TRUE`; if `FALSE`, checks
 #' for family/parameter-consistency are omitted (should only be used with
 #' care).
 #' @return A numeric vector of the second-order bivariate copula derivative
 #' \itemize{
-#' \item of the copula \code{family}
-#' \item with parameter(s) \code{par}, \code{par2}
-#' \item with respect to \code{deriv}
-#' \item evaluated at \code{u1} and \code{u2}.
+#' \item of the copula `family`
+#' \item with parameter(s) `par`, `par2`
+#' \item with respect to `deriv`
+#' \item evaluated at `u1` and `u2`.
 #' }
 #' @author Ulf Schepsmeier, Jakob Stoeber
-#' @seealso \code{\link{RVineGrad}}, \code{\link{RVineHessian}},
-#' \code{\link{BiCopDeriv}}, \code{\link{BiCopHfuncDeriv}}, \code{\link{BiCop}}
+#' @seealso [RVineGrad()], [RVineHessian()],
+#' [BiCopDeriv()], [BiCopHfuncDeriv()], [BiCop()]
 #' @references Schepsmeier, U. and J. Stoeber (2014). Derivatives and Fisher
 #' information of bivariate copulas. Statistical Papers, 55 (2), 525-542. \cr
-#' \url{http://link.springer.com/article/10.1007/s00362-013-0498-x}.
+#' <http://link.springer.com/article/10.1007/s00362-013-0498-x>.
 #' @examples
 #'
 #' ## simulate from a bivariate Student-t copula
