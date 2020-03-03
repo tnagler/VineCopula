@@ -10,7 +10,9 @@ RVineSim(N, RVM, U = NULL)
 \item{N}{Number of d-dimensional observations to simulate.}
 
 \item{RVM}{An \code{\link[=RVineMatrix]{RVineMatrix()}} object containing the information of
-the R-vine copula model.}
+the R-vine copula model. Optionally, a length-\code{N} list of
+\code{\link[=RVineMatrix]{RVineMatrix()}}  objects sharing the same structure, but possibly
+different family/parameter can be supplied.}
 
 \item{U}{If not \code{\link[=NULL]{NULL()}}, an (N,d)-matrix of \eqn{U[0,1]} random
 variates to be transformed to the copula sample.}
