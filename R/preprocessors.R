@@ -312,7 +312,7 @@ prep_familyset <- function(args) {
     if (is.na(args$familyset[1]))
         args$familyset <- allfams
     if (!all(abs(args$familyset) %in% allfams)) {
-        wrong_fam <- args$familyset[-which(args$familyset %in% allfams)]
+        wrong_fam <- args$familyset[-which(abs(args$familyset) %in% allfams)]
         if (length(wrong_fam) == 1) {
             msg <- paste("Copula family", wrong_fam)
         } else {
@@ -328,8 +328,9 @@ prep_familyset <- function(args) {
         stop("\n In ", args$call[1], ": ",
              "'familyset' must not contain positive AND negative numbers.",
              call. = FALSE)
-        args$familyset <- setdiff(allfams, -args$familyset)
     }
+    if (any(args$familyset < 0))
+        args$familyset <- setdiff(allfams, -args$familyset)
     args
 }
 
