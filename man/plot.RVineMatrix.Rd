@@ -32,7 +32,7 @@ for the contours}
 
 \item{\dots}{Arguments passed to
 \code{\link[network:plot.network]{network::plot.network()}} or
-\code{\link[VineCopula:plot.BiCop]{VineCopula::plot.BiCop()}} respectively.}
+\code{\link[=plot.BiCop]{plot.BiCop()}} respectively.}
 
 \item{type}{integer; specifies how to make use of variable names: \cr
 \code{0} = variable names are ignored, \cr \code{1} = variable names are
@@ -41,7 +41,7 @@ legend for variable names.}
 
 \item{edge.labels}{character; either a vector of edge labels or one of the
 following: \cr \code{"family"} = pair-copula family abbreviation (see
-\code{\link[VineCopula:BiCopName]{VineCopula::BiCopName()}}), \cr \code{"par"} =
+\code{\link[=BiCopName]{BiCopName()}}), \cr \code{"par"} =
 pair-copula parameters, \cr \code{"tau"} = pair-copula Kendall's tau (by
 conversion of parameters) \cr \code{"family-par"} = pair-copula family and
 parameters \cr \code{"family-tau"} = pair-copula family and Kendall's tau.}
@@ -57,7 +57,7 @@ There are two plotting generics for \code{RVineMatrix} objects.
 \code{plot.RVineMatrix} plots one or all trees of a given R-vine copula
 model. Edges can be labeled with information about the corresponding
 pair-copula. \code{contour.RVineMatrix} produces a matrix of contour plots
-(using \code{\link[VineCopula:plot.BiCop]{VineCopula::plot.BiCop()}}).
+(using \code{\link[=plot.BiCop]{plot.BiCop()}}).
 }
 \details{
 If you want the contour boxes to be perfect squares, the plot height should
@@ -80,10 +80,10 @@ contour(RVM)
 
 }
 \seealso{
-\code{\link[VineCopula:RVineMatrix]{VineCopula::RVineMatrix()}},
+\code{\link[=RVineMatrix]{RVineMatrix()}},
 \code{\link[network:plot.network]{network::plot.network()}},
-\code{\link[VineCopula:plot.BiCop]{VineCopula::plot.BiCop()}},
-\code{\link[VineCopula:BiCopName]{VineCopula::BiCopName()}},
+\code{\link[=plot.BiCop]{plot.BiCop()}},
+\code{\link[=BiCopName]{BiCopName()}},
 \code{\link[graphics:legend]{graphics::legend()}}
 }
 \author{

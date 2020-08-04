@@ -4,8 +4,10 @@
 \name{daxreturns}
 \alias{daxreturns}
 \title{Major German Stocks}
-\format{A data frame with 1158 observations on 15 variables. Column names
-correspond to ticker symbols of the stocks.}
+\format{
+A data frame with 1158 observations on 15 variables. Column names
+correspond to ticker symbols of the stocks.
+}
 \source{
 Yahoo! Finance
 }

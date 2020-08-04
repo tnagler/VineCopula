@@ -27,7 +27,7 @@ legend for variable names.}
 
 \item{edge.labels}{character; either a vector of edge labels or one of the
 following: \cr \code{"family"} = pair-copula family abbreviation (see
-\code{\link[VineCopula:BiCopName]{VineCopula::BiCopName()}}), \cr \code{"par"} =
+\code{\link[=BiCopName]{BiCopName()}}), \cr \code{"par"} =
 pair-copula parameters, \cr \code{"tau"} = pair-copula Kendall's tau (by
 conversion of parameters) \cr \code{"family-par"} = pair-copula family and
 parameters \cr \code{"family-tau"} = pair-copula family and Kendall's tau.}
@@ -43,10 +43,10 @@ positioning of vertices with his mouse.}
 }
 \description{
 Function is deprecated since \verb{VineCopula 2.0}. Use
-\code{\link[VineCopula:plot.RVineMatrix]{VineCopula::plot.RVineMatrix()}} instead.
+\code{\link[=plot.RVineMatrix]{plot.RVineMatrix()}} instead.
 }
 \seealso{
-\code{\link[VineCopula:plot.RVineMatrix]{VineCopula::plot.RVineMatrix()}}
+\code{\link[=plot.RVineMatrix]{plot.RVineMatrix()}}
 }
 \author{
 Thomas Nagler
