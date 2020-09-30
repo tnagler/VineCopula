@@ -88,7 +88,7 @@
 #' Schepsmeier, U. (2010). Maximum likelihood estimation of C-vine pair-copula
 #' constructions based on bivariate copulas from different families. Diploma
 #' thesis, Technische Universitaet Muenchen.\cr
-#' <http://mediatum.ub.tum.de/?id=1079296>.
+#' <https://mediatum.ub.tum.de/?id=1079296>.
 #'
 #' @examples
 #' \dontshow{set.seed(123)}

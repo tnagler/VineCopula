@@ -112,7 +112,7 @@
 #' Scandinavian Journal of Statistics, 33(2), 337-366.
 #' Luo J. (2011). Stepwise estimation of D-vines with arbitrary specified
 #' copula pairs and EDA tools. Diploma thesis, Technische Universitaet
-#' Muenchen.\cr <http://mediatum.ub.tum.de/?id=1079291>.
+#' Muenchen.\cr <https://mediatum.ub.tum.de/?id=1079291>.
 #'
 #' White, H. (1982) Maximum likelihood estimation of misspecified models,
 #' Econometrica, 50, 1-26.

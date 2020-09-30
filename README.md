@@ -2,12 +2,12 @@ VineCopula
 ==========
 
 [![R build status](https://github.com/tnagler/VineCopula/workflows/R-CMD-check/badge.svg)](https://github.com/tnagler/VineCopula)
-[![CRAN version](http://www.r-pkg.org/badges/version/VineCopula)](https://cran.r-project.org/package=VineCopula) 
-[![CRAN downloads](http://cranlogs.r-pkg.org/badges/VineCopula)](https://cran.r-project.org/package=VineCopula)
+[![CRAN version](https://www.r-pkg.org/badges/version/VineCopula)](https://cran.r-project.org/package=VineCopula) 
+[![CRAN downloads](https://cranlogs.r-pkg.org/badges/VineCopula)](https://cran.r-project.org/package=VineCopula)
 
 Vine copulas are a flexible class of dependence models consisting of bivariate 
 building blocks (see e.g., Aas et al., 2009). You can find a comprehensive 
-list of publications and other materials on [vine-copula.org](http://www.statistics.ma.tum.de/en/research/vine-copula-models/).
+list of publications and other materials on [vine-copula.org](https://www.statistics.ma.tum.de/en/research/vine-copula-models/).
 
 This package is primarily made for the statistical analysis of **vine copula
 models**. The package includes tools for parameter estimation, model selection,
@@ -251,13 +251,13 @@ Brechmann, E. C., C. Czado, and K. Aas (2012). Truncated regular vines in high d
 
 Brechmann, E. C. and C. Czado (2011). Risk management with high-dimensional vine copulas: An analysis of the Euro Stoxx 50. Statistics & Risk Modeling, 30 (4), 307-342.
 
-Brechmann, E. C. and U. Schepsmeier (2013). Modeling Dependence with C- and D-Vine Copulas: The R Package CDVine. Journal of Statistical Software, 52 (3), 1-27. <http://www.jstatsoft.org/v52/i03/>.
+Brechmann, E. C. and U. Schepsmeier (2013). Modeling Dependence with C- and D-Vine Copulas: The R Package CDVine. Journal of Statistical Software, 52 (3), 1-27. <https://www.jstatsoft.org/v52/i03/>.
 
 Czado, C., U. Schepsmeier, and A. Min (2012). Maximum likelihood estimation of mixed C-vines with application to exchange rates. Statistical Modelling, 12(3), 229-255.
 
 Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka (2013). Selecting and estimating regular vine copulae and application to financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 
-Eschenburg, P. (2013). Properties of extreme-value copulas Diploma thesis, Technische Universitaet Muenchen <http://mediatum.ub.tum.de/node?id=1145695>.
+Eschenburg, P. (2013). Properties of extreme-value copulas Diploma thesis, Technische Universitaet Muenchen <https://mediatum.ub.tum.de/node?id=1145695>.
 
 Hofert, M., I. Kojadinovic, M. Maechler, and J. Yan (2015). copula: Multivariate
 Dependence with Copulas. R package version 0.999-13 
@@ -278,12 +278,12 @@ Nelsen, R. (2006). An introduction to copulas. Springer
 Nagler, T. (2015). kdecopula: Kernel Smoothing for Bivariate Copula Densities. R package
 version 0.6.0. <https://cran.r-project.org/package=kdecopula>
 
-Schepsmeier, U. and J. Stoeber (2012). Derivatives and Fisher information of bivariate copulas. Statistical Papers, 55 (2), 525-542. <http://link.springer.com/article/10.1007/s00362-013-0498-x>.
+Schepsmeier, U. and J. Stoeber (2012). Derivatives and Fisher information of bivariate copulas. Statistical Papers, 55 (2), 525-542. <https://link.springer.com/article/10.1007/s00362-013-0498-x>.
 
-Schepsmeier, U. (2013) A goodness-of-fit test for regular vine copula models. Preprint. <http://arxiv.org/abs/1306.0818>.
+Schepsmeier, U. (2013) A goodness-of-fit test for regular vine copula models. Preprint. <https://arxiv.org/abs/1306.0818>.
 
 Schepsmeier, U. (2015) Efficient information based goodness-of-fit tests for vine copula models with fixed margins. Journal of Multivariate Analysis 138, 34-52.
 
-Stoeber, J. and U. Schepsmeier (2013). Estimating standard errors in regular vine copula models. Computational Statistics, 28 (6), 2679-2707 <http://link.springer.com/article/10.1007/s00180-013-0423-8>.
+Stoeber, J. and U. Schepsmeier (2013). Estimating standard errors in regular vine copula models. Computational Statistics, 28 (6), 2679-2707 <https://link.springer.com/article/10.1007/s00180-013-0423-8>.
 
 White, H. (1982) Maximum likelihood estimation of misspecified models, Econometrica, 50, 1-26.

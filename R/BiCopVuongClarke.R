@@ -105,7 +105,7 @@
 #' @references Belgorodski, N. (2010) Selecting pair-copula families for
 #' regular vines with application to the multivariate analysis of European
 #' stock market indices Diploma thesis, Technische Universitaet Muenchen.
-#' <http://mediatum.ub.tum.de/?id=1079284>.
+#' <https://mediatum.ub.tum.de/?id=1079284>.
 #'
 #' Clarke, K. A. (2007). A Simple Distribution-Free Test for Nonnested Model
 #' Selection. Political Analysis, 15, 347-363.

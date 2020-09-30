@@ -76,7 +76,7 @@
 #'
 #' Stoeber, J. and U. Schepsmeier (2013). Estimating standard errors in regular
 #' vine copula models. Computational Statistics, 1-29
-#' <http://link.springer.com/article/10.1007/s00180-013-0423-8#>.
+#' <https://link.springer.com/article/10.1007/s00180-013-0423-8#>.
 #'
 #' @examples
 #'

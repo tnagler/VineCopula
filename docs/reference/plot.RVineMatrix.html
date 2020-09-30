@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -40,8 +44,7 @@
 plot.RVineMatrix plots one or all trees of a given R-vine copula
 model. Edges can be labeled with information about the corresponding
 pair-copula. contour.RVineMatrix produces a matrix of contour plots
-(using VineCopula::plot.BiCop())." />
-<meta name="twitter:card" content="summary" />
+(using plot.BiCop())." />
 
 
 
@@ -59,7 +62,7 @@ pair-copula. contour.RVineMatrix produces a matrix of contour plots
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -73,7 +76,7 @@ pair-copula. contour.RVineMatrix produces a matrix of contour plots
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.0</span>
       </span>
     </div>
 
@@ -94,7 +97,7 @@ pair-copula. contour.RVineMatrix produces a matrix of contour plots
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/tnagler/VineCopula">
+  <a href="https://github.com/tnagler/VineCopula/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -122,14 +125,14 @@ pair-copula. contour.RVineMatrix produces a matrix of contour plots
 <code>plot.RVineMatrix</code> plots one or all trees of a given R-vine copula
 model. Edges can be labeled with information about the corresponding
 pair-copula. <code>contour.RVineMatrix</code> produces a matrix of contour plots
-(using <code><a href='plot.BiCop.html'>VineCopula::plot.BiCop()</a></code>).</p>
+(using <code><a href='plot.BiCop.html'>plot.BiCop()</a></code>).</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for RVineMatrix</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/contour.html'>contour</a></span>(<span class='no'>x</span>, <span class='kw'>tree</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>, <span class='kw'>xylim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cex.nums</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for RVineMatrix</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(
   <span class='no'>x</span>,
   <span class='kw'>tree</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>,
   <span class='kw'>type</span> <span class='kw'>=</span> <span class='fl'>0</span>,
@@ -168,7 +171,7 @@ for the contours</p></td>
       <th>...</th>
       <td><p>Arguments passed to
 <code><a href='https://rdrr.io/pkg/network/man/plot.network.html'>network::plot.network()</a></code> or
-<code><a href='plot.BiCop.html'>VineCopula::plot.BiCop()</a></code> respectively.</p></td>
+<code><a href='plot.BiCop.html'>plot.BiCop()</a></code> respectively.</p></td>
     </tr>
     <tr>
       <th>type</th>
@@ -181,7 +184,7 @@ legend for variable names.</p></td>
       <th>edge.labels</th>
       <td><p>character; either a vector of edge labels or one of the
 following: <br /> <code>"family"</code> = pair-copula family abbreviation (see
-<code><a href='BiCopName.html'>VineCopula::BiCopName()</a></code>), <br /> <code>"par"</code> =
+<code><a href='BiCopName.html'>BiCopName()</a></code>), <br /> <code>"par"</code> =
 pair-copula parameters, <br /> <code>"tau"</code> = pair-copula Kendall's tau (by
 conversion of parameters) <br /> <code>"family-par"</code> = pair-copula family and
 parameters <br /> <code>"family-tau"</code> = pair-copula family and Kendall's tau.</p></td>
@@ -204,10 +207,10 @@ positioning of vertices with his mouse.</p></td>
 be <code>1.25/length(tree)*(d - min(tree))</code> times the plot width.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='RVineMatrix.html'>VineCopula::RVineMatrix()</a></code>,
+    <div class='dont-index'><p><code><a href='RVineMatrix.html'>RVineMatrix()</a></code>,
 <code><a href='https://rdrr.io/pkg/network/man/plot.network.html'>network::plot.network()</a></code>,
-<code><a href='plot.BiCop.html'>VineCopula::plot.BiCop()</a></code>,
-<code><a href='BiCopName.html'>VineCopula::BiCopName()</a></code>,
+<code><a href='plot.BiCop.html'>plot.BiCop()</a></code>,
+<code><a href='BiCopName.html'>BiCopName()</a></code>,
 <code><a href='https://rdrr.io/r/graphics/legend.html'>graphics::legend()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -220,23 +223,16 @@ be <code>1.25/length(tree)*(d - min(tree))</code> times the plot width.</p>
 <span class='no'>RVM</span>  <span class='kw'>&lt;-</span> <span class='fu'><a href='RVineMatrix.html'>RVineMatrix</a></span>(<span class='no'>strucmat</span>, <span class='no'>fammat</span>, <span class='no'>parmat</span>, <span class='no'>par2mat</span>)
 
 <span class='co'># plot trees</span>
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>RVM</span>)
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>RVM</span>)
 
 <span class='co'># show contour plots</span>
 <span class='fu'><a href='https://rdrr.io/r/graphics/contour.html'>contour</a></span>(<span class='no'>RVM</span>)</div><div class='img'><img src='plot.RVineMatrix-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Thomas Nagler, Nicole Barthel</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -247,7 +243,7 @@ be <code>1.25/length(tree)*(d - min(tree))</code> times the plot width.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

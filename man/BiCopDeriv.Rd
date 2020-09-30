@@ -102,7 +102,7 @@ BiCopDeriv(u1, u2, cop, deriv = "u2")
 \references{
 Schepsmeier, U. and J. Stoeber (2014). Derivatives and Fisher
 information of bivariate copulas. Statistical Papers, 55 (2), 525-542. \cr
-\url{http://link.springer.com/article/10.1007/s00362-013-0498-x}.
+\url{https://link.springer.com/article/10.1007/s00362-013-0498-x}.
 }
 \seealso{
 \code{\link[=RVineGrad]{RVineGrad()}}, \code{\link[=RVineHessian]{RVineHessian()}},

@@ -220,7 +220,7 @@ RVineGofTest(daxreturns[,1:5], RVM, method = "ECP2",
 \references{
 Berg, D. and H. Bakken (2007) A copula goodness-of-fit approach
 based on the conditional probability integral transformation.
-\url{http://www.danielberg.no/publications/Btest.pdf}
+\url{https://www.danielberg.no/publications/Btest.pdf}
 
 Breymann, W., A. Dias and P. Embrechts (2003) Dependence structures for
 multivariate high-frequency data in finance. Quantitative Finance 3, 1-14
@@ -232,7 +232,7 @@ Huang, w. and A. Prokhorov (2011). A goodness-of-fit test for copulas. to
 appear in Econometric Reviews
 
 Schepsmeier, U. (2013) A goodness-of-fit test for regular vine copula
-models.  Preprint \url{http://arxiv.org/abs/1306.0818}
+models.  Preprint \url{https://arxiv.org/abs/1306.0818}
 
 Schepsmeier, U. (2015) Efficient information based goodness-of-fit tests for
 vine copula models with fixed margins. Journal of Multivariate Analysis 138,

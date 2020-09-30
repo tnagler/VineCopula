@@ -147,8 +147,7 @@ void pit(int* T, int* d, int* family, int* type, double* par, double* nu, double
 // Reference: Schepsmeier (2015)
 
 // Ulf Schepsmeier, Efficient information based goodness-of-fit tests for vine copula models with fixed margins: A comprehensive review,
-// Journal of Multivariate Analysis, Available online 14 January 2015, ISSN 0047-259X, http://dx.doi.org/10.1016/j.jmva.2015.01.001.
-// (http://www.sciencedirect.com/science/article/pii/S0047259X15000068)
+// Journal of Multivariate Analysis, Available online 14 January 2015, ISSN 0047-259X, https://dx.doi.org/10.1016/j.jmva.2015.01.001.
 
 
 void RvinePIT(int* T, int* d, int* family, int* maxmat, int* matrix, int* condirect, int* conindirect, double* par, double* par2, double* data,

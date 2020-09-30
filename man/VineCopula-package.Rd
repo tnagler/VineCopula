@@ -49,7 +49,7 @@ vine copulas: An analysis of the Euro Stoxx 50. Statistics & Risk Modeling,
 
 Brechmann, E. C. and U. Schepsmeier (2013). Modeling Dependence with C- and
 D-Vine Copulas: The R Package CDVine. Journal of Statistical Software, 52
-(3), 1-27. \url{http://www.jstatsoft.org/v52/i03/}.
+(3), 1-27. \url{https://www.jstatsoft.org/v52/i03/}.
 
 Czado, C., U. Schepsmeier, and A. Min (2012). Maximum likelihood estimation
 of mixed C-vines with application to exchange rates. Statistical Modelling,
@@ -61,7 +61,7 @@ returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 
 Eschenburg, P. (2013). Properties of extreme-value copulas Diploma thesis,
 Technische Universitaet Muenchen
-\url{http://mediatum.ub.tum.de/node?id=1145695}
+\url{https://mediatum.ub.tum.de/node?id=1145695}
 
 Joe, H. (1996). Families of m-variate distributions with given margins and
 m(m-1)/2 bivariate dependence parameters. In L. Rueschendorf, B. Schweizer,
@@ -85,10 +85,10 @@ Nelsen, R. (2006).  An introduction to copulas.  Springer
 
 Schepsmeier, U. and J. Stoeber (2014). Derivatives and Fisher information of
 bivariate copulas. Statistical Papers, 55 (2), 525-542. \cr
-\url{http://link.springer.com/article/10.1007/s00362-013-0498-x}.
+\url{https://link.springer.com/article/10.1007/s00362-013-0498-x}.
 
 Schepsmeier, U. (2013) A goodness-of-fit test for regular vine copula
-models.  Preprint \url{http://arxiv.org/abs/1306.0818}
+models.  Preprint \url{https://arxiv.org/abs/1306.0818}
 
 Schepsmeier, U. (2015) Efficient information based goodness-of-fit tests for
 vine copula models with fixed margins. Journal of Multivariate Analysis 138,
@@ -96,7 +96,7 @@ vine copula models with fixed margins. Journal of Multivariate Analysis 138,
 
 Stoeber, J. and U. Schepsmeier (2013). Estimating standard errors in regular
 vine copula models. Computational Statistics, 28 (6), 2679-2707 \cr
-\url{http://link.springer.com/article/10.1007/s00180-013-0423-8#}.
+\url{https://link.springer.com/article/10.1007/s00180-013-0423-8#}.
 
 White, H. (1982) Maximum likelihood estimation of misspecified models,
 Econometrica, 50, 1-26.

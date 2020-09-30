@@ -1,11 +1,22 @@
-VineCopula (in progress)
+VineCopula 2.4.0 (September 30, 2020)
 ----------------------------------------------------------------
 
 NEW FEATURES
 
-  * `RVineSim` optionally accepts a list of `RVineMatrix` models that must 
-    share the same structure, but can differ in in family/parameters (#69, #70).
-    Thanks @notEvil.
+  * `RVineSim` optionally accepts a length-`N` list of `RVineMatrix` models that 
+    must share the same structure, but can differ in in family/parameters (#69, #70).
+    In that case, simulation is vectorized and each draw corresponds to a model 
+    specification from the list. Thanks @notEvil.
+ 
+BUG FIXES
+
+  * fixed bug when excluding models from the family set by specifying a negative 
+    family index.
+    
+  * throw appropriate error when `treecrit` function is misspecified.
+  
+  * fix gcc11 error caused by (redundant) `printError()` in C-code.
+  
   
   
 VineCopula 2.3.0 (November 26, 2019)

@@ -1,6 +1,6 @@
 ###########################################
 # Algorithm for weighted tau adapted from matlab code by
-# http://www.mathworks.com/matlabcentral/fileexchange/27361-weighted-kendall-rank-correlation-matrix/content/kendalltau.m
+# https://www.mathworks.com/matlabcentral/fileexchange/27361-weighted-kendall-rank-correlation-matrix/content/kendalltau.m
 ############################################
 
 #' Matrix of Empirical Kendall's Tau Values

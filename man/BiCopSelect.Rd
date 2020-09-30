@@ -179,7 +179,7 @@ Budapest, Akademiai Kiado, pp. 267-281.
 
 Brechmann, E. C. (2010). Truncated and simplified regular vines and their
 applications. Diploma thesis, Technische Universitaet Muenchen.\cr
-\url{http://mediatum.ub.tum.de/?id=1079285}.
+\url{https://mediatum.ub.tum.de/?id=1079285}.
 
 Manner, H. (2007). Estimation and model selection of copulas with an
 application to exchange rates. METEOR research memorandum 07/056, Maastricht

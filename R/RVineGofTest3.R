@@ -185,7 +185,7 @@
 #'
 #' @references Berg, D. and H. Bakken (2007) A copula goodness-of-fit approach
 #' based on the conditional probability integral transformation.
-#' <http://www.danielberg.no/publications/Btest.pdf>
+#' <https://www.danielberg.no/publications/Btest.pdf>
 #'
 #' Breymann, W., A. Dias and P. Embrechts (2003) Dependence structures for
 #' multivariate high-frequency data in finance. Quantitative Finance 3, 1-14
@@ -197,7 +197,7 @@
 #' appear in Econometric Reviews
 #'
 #' Schepsmeier, U. (2013) A goodness-of-fit test for regular vine copula
-#' models.  Preprint <http://arxiv.org/abs/1306.0818>
+#' models.  Preprint <https://arxiv.org/abs/1306.0818>
 #'
 #' Schepsmeier, U. (2015) Efficient information based goodness-of-fit tests for
 #' vine copula models with fixed margins. Journal of Multivariate Analysis 138,

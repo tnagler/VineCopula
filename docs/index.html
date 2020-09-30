@@ -6,23 +6,23 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Statistical Inference of Vine Copulas • VineCopula</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
+<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Statistical Inference of Vine Copulas">
 <meta property="og:description" content="Provides tools for the statistical analysis of vine copula models.
     The package includes tools for parameter estimation, model selection,
     simulation, goodness-of-fit tests, and visualization. Tools for estimation,
     selection and exploratory data analysis of bivariate copula models are also
     provided.">
-<meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.0</span>
       </span>
     </div>
 
@@ -56,7 +56,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/tnagler/VineCopula">
+  <a href="https://github.com/tnagler/VineCopula/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -77,7 +77,7 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#vinecopula" class="anchor"></a>VineCopula</h1></div>
 
-<p>Vine copulas are a flexible class of dependence models consisting of bivariate building blocks (see e.g., Aas et al., 2009). You can find a comprehensive list of publications and other materials on <a href="http://www.statistics.ma.tum.de/en/research/vine-copula-models/">vine-copula.org</a>.</p>
+<p>Vine copulas are a flexible class of dependence models consisting of bivariate building blocks (see e.g., Aas et al., 2009). You can find a comprehensive list of publications and other materials on <a href="https://www.statistics.ma.tum.de/en/research/vine-copula-models/">vine-copula.org</a>.</p>
 <p>This package is primarily made for the statistical analysis of <strong>vine copula models</strong>. The package includes tools for parameter estimation, model selection, simulation, goodness-of-fit tests, and visualization. Tools for estimation, selection and exploratory data analysis of <strong>bivariate copula</strong> models are also provided. Please see the <a href="https://tnagler.github.io/VineCopula/">API documentation</a> for a detailed description of all functions.</p>
 <div id="status" class="section level2">
 <h2 class="hasAnchor">
@@ -116,11 +116,11 @@
 <ul>
 <li>
 <p>the stable release on CRAN:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"VineCopula"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"VineCopula"</span>)</pre></div>
 </li>
 <li>
 <p>the latest development version:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/reexports.html">install_github</a></span>(<span class="st">"tnagler/VineCopula"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"tnagler/VineCopula"</span>)</pre></div>
 </li>
 </ul>
 <hr>
@@ -157,7 +157,7 @@
 <a href="#vine-copula-modeling-the-rvine-family" class="anchor"></a>Vine copula modeling: the RVine-family</h3>
 <ul>
 <li>
-<p><code>RVineMatrix</code>: Creates a vine copula model by specifying structure, family and parameter matrices. Such matrices have been introduced by Dissman et al. (2013). Returns an object of class <code>RVineMatrix</code>. The class has the following methods:</p>
+<p><code>RVineMatrix</code>: Creates a vine copula model by specifying structure, family and parameter matrices. Such matrices have been introduced by Dissman et al.  (2013). Returns an object of class <code>RVineMatrix</code>. The class has the following methods:</p>
 <ul>
 <li><p><code>plot</code>: Plots the trees of the the R-vine tree structure. Optionally, you can annotate the edges with pair-copula families and parameters.</p></li>
 <li><p><code>contour</code>: Creates a matrix of contour plots associated with the pair-copulas.</p></li>
@@ -166,7 +166,7 @@
 <li><p><code>RVineSim</code>: Simulates from a vine copula model.</p></li>
 <li><p><code>RVineSeqEst</code>: Estimates the parameters of a vine copula model with prespecified structure and families.</p></li>
 <li><p><code>RVineCopSelect</code>: Estimates the parameters and selects the best family for a vine copula model with prespecified structure matrix.</p></li>
-<li><p><code>RVineStructureSelect</code>: Fits a vine copula model assuming no prior knowledge. It selects the R-vine structure using Dissmann et al. (2013)’s method, estimates parameters for various families, and selects the best family for each pair.</p></li>
+<li><p><code>RVineStructureSelect</code>: Fits a vine copula model assuming no prior knowledge. It selects the R-vine structure using Dissmann et al. (2013)’s method, estimates parameters for various families, and selects the best family for each pair.</p></li>
 <li><p><code>RVineGoFTest</code>: Goodness-of-Fit tests for a vine copula model (c.f., Schepsmeier, 2013, 2015). Related functions are <code>RVineGrad</code>, <code>RVineHessian</code>, <code>RVineStdError</code>, and <code>RVinePIT</code>.</p></li>
 <li><p><code>RVineVoungTest</code>, <code>RVineClarkeTest</code>: Vuong and Clarke tests for comparing two vine copula models.</p></li>
 <li><p><code>RVinePar2Tau</code>, <code>RVinePar2Beta</code>: Calculate dependence measures corresponding to a vine copula model.</p></li>
@@ -380,10 +380,10 @@ Author: Ulf Schepsmeier</p>
 <p>Bedford, T. and R. M. Cooke (2002). Vines - a new graphical model for dependent random variables. Annals of Statistics 30, 1031-1068.</p>
 <p>Brechmann, E. C., C. Czado, and K. Aas (2012). Truncated regular vines in high dimensions with applications to financial data. Canadian Journal of Statistics 40 (1), 68-85.</p>
 <p>Brechmann, E. C. and C. Czado (2011). Risk management with high-dimensional vine copulas: An analysis of the Euro Stoxx 50. Statistics &amp; Risk Modeling, 30 (4), 307-342.</p>
-<p>Brechmann, E. C. and U. Schepsmeier (2013). Modeling Dependence with C- and D-Vine Copulas: The R Package CDVine. Journal of Statistical Software, 52 (3), 1-27. <a href="http://www.jstatsoft.org/v52/i03/" class="uri">http://www.jstatsoft.org/v52/i03/</a>.</p>
+<p>Brechmann, E. C. and U. Schepsmeier (2013). Modeling Dependence with C- and D-Vine Copulas: The R Package CDVine. Journal of Statistical Software, 52 (3), 1-27. <a href="https://www.jstatsoft.org/v52/i03/" class="uri">https://www.jstatsoft.org/v52/i03/</a>.</p>
 <p>Czado, C., U. Schepsmeier, and A. Min (2012). Maximum likelihood estimation of mixed C-vines with application to exchange rates. Statistical Modelling, 12(3), 229-255.</p>
 <p>Dissmann, J. F., E. C. Brechmann, C. Czado, and D. Kurowicka (2013). Selecting and estimating regular vine copulae and application to financial returns. Computational Statistics &amp; Data Analysis, 59 (1), 52-69.</p>
-<p>Eschenburg, P. (2013). Properties of extreme-value copulas Diploma thesis, Technische Universitaet Muenchen <a href="http://mediatum.ub.tum.de/node?id=1145695" class="uri">http://mediatum.ub.tum.de/node?id=1145695</a>.</p>
+<p>Eschenburg, P. (2013). Properties of extreme-value copulas Diploma thesis, Technische Universitaet Muenchen <a href="https://mediatum.ub.tum.de/node?id=1145695" class="uri">https://mediatum.ub.tum.de/node?id=1145695</a>.</p>
 <p>Hofert, M., I. Kojadinovic, M. Maechler, and J. Yan (2015). copula: Multivariate Dependence with Copulas. R package version 0.999-13 <a href="https://cran.r-project.org/package=VineCopula" class="uri">https://cran.r-project.org/package=VineCopula</a></p>
 <p>Joe, H. (1996). Families of m-variate distributions with given margins and m(m-1)/2 bivariate dependence parameters. In L. Rueschendorf, B. Schweizer, and M. D. Taylor (Eds.), Distributions with fixed marginals and related topics, pp. 120-141. Hayward: Institute of Mathematical Statistics.</p>
 <p>Joe, H. (1997). Multivariate Models and Dependence Concepts. London: Chapman and Hall.</p>
@@ -392,22 +392,22 @@ Author: Ulf Schepsmeier</p>
 <p>Kurowicka, D. and H. Joe (Eds.) (2011). Dependence Modeling: Vine Copula Handbook. Singapore: World Scientific Publishing Co.</p>
 <p>Nelsen, R. (2006). An introduction to copulas. Springer</p>
 <p>Nagler, T. (2015). kdecopula: Kernel Smoothing for Bivariate Copula Densities. R package version 0.6.0. <a href="https://cran.r-project.org/package=kdecopula" class="uri">https://cran.r-project.org/package=kdecopula</a></p>
-<p>Schepsmeier, U. and J. Stoeber (2012). Derivatives and Fisher information of bivariate copulas. Statistical Papers, 55 (2), 525-542. <a href="http://link.springer.com/article/10.1007/s00362-013-0498-x" class="uri">http://link.springer.com/article/10.1007/s00362-013-0498-x</a>.</p>
-<p>Schepsmeier, U. (2013) A goodness-of-fit test for regular vine copula models. Preprint. <a href="http://arxiv.org/abs/1306.0818" class="uri">http://arxiv.org/abs/1306.0818</a>.</p>
+<p>Schepsmeier, U. and J. Stoeber (2012). Derivatives and Fisher information of bivariate copulas. Statistical Papers, 55 (2), 525-542. <a href="https://link.springer.com/article/10.1007/s00362-013-0498-x" class="uri">https://link.springer.com/article/10.1007/s00362-013-0498-x</a>.</p>
+<p>Schepsmeier, U. (2013) A goodness-of-fit test for regular vine copula models. Preprint. <a href="https://arxiv.org/abs/1306.0818" class="uri">https://arxiv.org/abs/1306.0818</a>.</p>
 <p>Schepsmeier, U. (2015) Efficient information based goodness-of-fit tests for vine copula models with fixed margins. Journal of Multivariate Analysis 138, 34-52.</p>
-<p>Stoeber, J. and U. Schepsmeier (2013). Estimating standard errors in regular vine copula models. Computational Statistics, 28 (6), 2679-2707 <a href="http://link.springer.com/article/10.1007/s00180-013-0423-8" class="uri">http://link.springer.com/article/10.1007/s00180-013-0423-8</a>.</p>
+<p>Stoeber, J. and U. Schepsmeier (2013). Estimating standard errors in regular vine copula models. Computational Statistics, 28 (6), 2679-2707 <a href="https://link.springer.com/article/10.1007/s00180-013-0423-8" class="uri">https://link.springer.com/article/10.1007/s00180-013-0423-8</a>.</p>
 <p>White, H. (1982) Maximum likelihood estimation of misspecified models, Econometrica, 50, 1-26.</p>
 </div>
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=VineCopula">https://​cloud.r-project.org/​package=VineCopula</a>
 </li>
-<li>Browse source code at <br><a href="https://github.com/tnagler/VineCopula">https://​github.com/​tnagler/​VineCopula</a>
+<li>Browse source code at <br><a href="https://github.com/tnagler/VineCopula/">https://​github.com/​tnagler/​VineCopula/​</a>
 </li>
 <li>Report a bug at <br><a href="https://github.com/tnagler/VineCopula/issues">https://​github.com/​tnagler/​VineCopula/​issues</a>
 </li>
@@ -436,8 +436,8 @@ Author: Ulf Schepsmeier</p>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/tnagler/VineCopula"><img src="https://github.com/tnagler/VineCopula/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://cran.r-project.org/package=VineCopula"><img src="http://www.r-pkg.org/badges/version/VineCopula" alt="CRAN version"></a></li>
-<li><a href="https://cran.r-project.org/package=VineCopula"><img src="http://cranlogs.r-pkg.org/badges/VineCopula" alt="CRAN downloads"></a></li>
+<li><a href="https://cran.r-project.org/package=VineCopula"><img src="https://www.r-pkg.org/badges/version/VineCopula" alt="CRAN version"></a></li>
+<li><a href="https://cran.r-project.org/package=VineCopula"><img src="https://cranlogs.r-pkg.org/badges/VineCopula" alt="CRAN downloads"></a></li>
 </ul>
 </div>
 </div>
@@ -449,7 +449,7 @@ Author: Ulf Schepsmeier</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

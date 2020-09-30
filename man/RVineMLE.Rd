@@ -143,7 +143,7 @@ financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 
 Stoeber, J. and U. Schepsmeier (2013). Estimating standard errors in regular
 vine copula models. Computational Statistics, 1-29
-\url{http://link.springer.com/article/10.1007/s00180-013-0423-8#}.
+\url{https://link.springer.com/article/10.1007/s00180-013-0423-8#}.
 }
 \seealso{
 \code{\link[=RVineSeqEst]{RVineSeqEst()}},

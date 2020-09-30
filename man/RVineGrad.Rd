@@ -124,14 +124,14 @@ financial returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 Schepsmeier, U. and J. Stoeber (2014)
 Derivatives and Fisher information of bivariate copulas.
 Statistical Papers, 55(2), 525-542.
-online first: \url{http://link.springer.com/article/10.1007/s00362-013-0498-x}.
+online first: \url{https://link.springer.com/article/10.1007/s00362-013-0498-x}.
 
 Web supplement: Derivatives and Fisher Information of bivariate copulas.
-\url{http://mediatum.ub.tum.de/node?id=1119201}
+\url{https://mediatum.ub.tum.de/node?id=1119201}
 
 Stoeber, J. and U. Schepsmeier (2013). Estimating standard errors in regular
 vine copula models. Computational Statistics, 28 (6), 2679-2707
-\url{http://link.springer.com/article/10.1007/s00180-013-0423-8#}.
+\url{https://link.springer.com/article/10.1007/s00180-013-0423-8#}.
 }
 \seealso{
 \code{\link[=BiCopDeriv]{BiCopDeriv()}},
