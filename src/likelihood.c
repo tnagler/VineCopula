@@ -909,11 +909,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
             else ll += log(f);
         }
     }
-    else
-    {
-        Rprintf("%d\n",*family);
-        printError("Error in LL\t:","Unknown copula family");
-    }
+
     //Free memory:
     Free(dat);
     //Write to output vector:
@@ -1329,7 +1325,6 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
         Free(fuc); Free(param);
     }
 
-    else printError("Error in copLik\t:","Unknown copula family");
     //Free memory:
     Free(dat);
     //Write to output vector:
