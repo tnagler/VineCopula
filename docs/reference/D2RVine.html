@@ -73,7 +73,7 @@ corresponding R-vine structure." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.1</span>
       </span>
     </div>
 
@@ -188,22 +188,7 @@ BB6, BB7, BB8, Tawn type 1 and type 2 copulas.</p></td>
 <span class='no'>par2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>5</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>2</span>, <span class='fl'>0</span>)
 
 <span class='co'># transform to R-vine matrix notation</span>
-<span class='no'>RVM</span> <span class='kw'>&lt;-</span> <span class='fu'>D2RVine</span>(<span class='no'>order</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>)
-<span class='co'># \donttest{</span>
-<span class='co'># load package CDVine for comparison</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>CDVine</span>)
-
-<span class='co'># simulate a sample of size 500 from a 4-dimensional D-vine</span>
-<span class='no'>type</span> <span class='kw'>&lt;-</span> <span class='fl'>2</span>  <span class='co'># D-vine</span>
-<span class='no'>simdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/CDVine/man/CDVineSim.html'>CDVineSim</a></span>(<span class='fl'>500</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>, <span class='no'>type</span>)
-
-<span class='co'># determine log-likelihood</span>
-<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/CDVine/man/CDVineLogLik.html'>CDVineLogLik</a></span>(<span class='no'>simdata</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>, <span class='no'>type</span>)
-<span class='no'>out</span>$<span class='no'>loglik</span></div><div class='output co'>#&gt; [1] 976.5096</div><div class='input'>
-<span class='co'># check that log-likelihood stays the same</span>
-<span class='no'>out2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RVineLogLik.html'>RVineLogLik</a></span>(<span class='no'>simdata</span>, <span class='no'>RVM</span>)
-<span class='no'>out2</span>$<span class='no'>loglik</span></div><div class='output co'>#&gt; [1] 976.5096</div><div class='input'># }
-</div></pre>
+<span class='no'>RVM</span> <span class='kw'>&lt;-</span> <span class='fu'>D2RVine</span>(<span class='no'>order</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

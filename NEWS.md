@@ -1,3 +1,11 @@
+VineCopula 2.4.0 (October 18, 2020)
+----------------------------------------------------------------
+
+DEPENDS
+
+  * Removed archived package `CDVine` from Suggests.
+
+  
 VineCopula 2.4.0 (September 30, 2020)
 ----------------------------------------------------------------
 

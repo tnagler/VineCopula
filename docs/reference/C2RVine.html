@@ -73,7 +73,7 @@ corresponding R-vine structure." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.1</span>
       </span>
     </div>
 
@@ -188,30 +188,7 @@ BB6, BB7, BB8, Tawn type 1 and type 2 copulas.</p></td>
 <span class='no'>par2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>5</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>2</span>, <span class='fl'>0</span>)
 
 <span class='co'># transform to R-vine matrix notation</span>
-<span class='no'>RVM</span> <span class='kw'>&lt;-</span> <span class='fu'>C2RVine</span>(<span class='no'>order</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>)
-<span class='co'># \donttest{</span>
-<span class='co'># load package CDVine for comparison</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>CDVine</span>)</div><div class='output co'>#&gt; <span class='message'>The CDVine package is no longer developed actively.</span>
-#&gt; <span class='message'>Please consider using the more general VineCopula package</span>
-#&gt; <span class='message'>(see https://CRAN.R-project.org/package=VineCopula),</span>
-#&gt; <span class='message'>which extends and improves the functionality of CDVine.</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘CDVine’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:VineCopula’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    BiCopCDF, BiCopChiPlot, BiCopEst, BiCopHfunc, BiCopIndTest,</span>
-#&gt; <span class='message'>    BiCopKPlot, BiCopLambda, BiCopMetaContour, BiCopName,</span>
-#&gt; <span class='message'>    BiCopPar2TailDep, BiCopPar2Tau, BiCopPDF, BiCopSelect, BiCopSim,</span>
-#&gt; <span class='message'>    BiCopTau2Par, BiCopVuongClarke</span></div><div class='input'>
-<span class='co'># simulate a sample of size 500 from a 4-dimensional D-vine</span>
-<span class='no'>type</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>  <span class='co'># C-vine</span>
-<span class='no'>simdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/CDVine/man/CDVineSim.html'>CDVineSim</a></span>(<span class='fl'>500</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>, <span class='no'>type</span>)
-
-<span class='co'># determine log-likelihood</span>
-<span class='no'>out</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/CDVine/man/CDVineLogLik.html'>CDVineLogLik</a></span>(<span class='no'>simdata</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>, <span class='no'>type</span>)
-<span class='no'>out</span>$<span class='no'>loglik</span></div><div class='output co'>#&gt; [1] 894.8904</div><div class='input'>
-<span class='co'># check that log-likelihood stays the same</span>
-<span class='no'>out2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RVineLogLik.html'>RVineLogLik</a></span>(<span class='no'>simdata</span>, <span class='no'>RVM</span>)
-<span class='no'>out2</span>$<span class='no'>loglik</span></div><div class='output co'>#&gt; [1] 894.8904</div><div class='input'># }
-</div></pre>
+<span class='no'>RVM</span> <span class='kw'>&lt;-</span> <span class='fu'>C2RVine</span>(<span class='no'>order</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='no'>par2</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
