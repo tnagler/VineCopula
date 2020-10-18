@@ -59,22 +59,6 @@ par2 <- c(0, 5, 0, 0, 2, 0)
 
 # transform to R-vine matrix notation
 RVM <- C2RVine(order, family, par, par2)
-\donttest{
-# load package CDVine for comparison
-library(CDVine)
-
-# simulate a sample of size 500 from a 4-dimensional D-vine
-type <- 1  # C-vine
-simdata <- CDVineSim(500, family, par, par2, type)
-
-# determine log-likelihood
-out <- CDVineLogLik(simdata, family, par, par2, type)
-out$loglik
-
-# check that log-likelihood stays the same
-out2 <- RVineLogLik(simdata, RVM)
-out2$loglik
-}
 }
 \seealso{
 \code{\link[=RVineMatrix]{RVineMatrix()}}, \code{\link[=D2RVine]{D2RVine()}}
