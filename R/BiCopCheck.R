@@ -104,26 +104,26 @@ checkPars <- function(x, cl) {
             stop("\n In ", cl, ": ",
                  "The degrees of freedom parameter of the t-copula has to be larger than 2.",
                  call. = FALSE)
-    } else if ((family == 3 || family == 13) && (par <= 0 || par > 100)) {
+    } else if ((family == 3 || family == 13) && (par <= 0 || par > 28)) {
         stop("\n In ", cl, ": ",
-             "The parameter of the Clayton copula has to be in the interval (0,100]",
+             "The parameter of the Clayton copula has to be in the interval (0,28]",
              call. = FALSE)
-    } else if ((family == 4 || family == 14) && (par < 1 || par > 50)) {
+    } else if ((family == 4 || family == 14) && (par < 1 || par > 17)) {
         stop("\n In ", cl, ": ",
-             "The parameter of the Gumbel copula has to be in the interval [1,50].",
+             "The parameter of the Gumbel copula has to be in the interval [1,17].",
              call. = FALSE)
     } else if (family == 5) {
         if (par == 0)
             stop("\n In ", cl, ": ",
                  "The parameter of the Frank copula has to be unequal to 0.",
                  call. = FALSE)
-        if (abs(par) > 100)
+        if (abs(par) > 35)
             stop("\n In ", cl, ": ",
-                 "The parameter of the Frank copula has to be in the interval [-100, 100].",
+                 "The parameter of the Frank copula has to be in the interval [-35, 35].",
                  call. = FALSE)
-    } else if ((family == 6 || family == 16) && (par <= 1 || par > 50)) {
+    } else if ((family == 6 || family == 16) && (par <= 1 || par > 30)) {
         stop("\n In ", cl, ": ",
-             "The parameter of the Joe copula has to be in the interval (1,50].",
+             "The parameter of the Joe copula has to be in the interval (1,30].",
              call. = FALSE)
     } else if ((family == 7 || family == 17)) {
         if (par <= 0 || par > 7)
@@ -161,17 +161,17 @@ checkPars <- function(x, cl) {
             stop("\n In ", cl, ": ",
                  "The second parameter of the BB8 copula has to be in the interval [1e-4,1].",
                  call. = FALSE)
-    } else if ((family == 23 || family == 33) && (par >= 0 || par < -100)) {
+    } else if ((family == 23 || family == 33) && (par >= 0 || par < -28)) {
         stop("\n In ", cl, ": ",
-             "The parameter of the rotated Clayton copula has to be be in the interval [-100,0)",
+             "The parameter of the rotated Clayton copula has to be be in the interval [-28,0)",
              call. = FALSE)
-    } else if ((family == 24 || family == 34) && (par > -1 || par < -50)) {
+    } else if ((family == 24 || family == 34) && (par > -1 || par < -17)) {
         stop("\n In ", cl, ": ",
-             "The parameter of the rotated Gumbel copula has to be in the interval [-50,-1].",
+             "The parameter of the rotated Gumbel copula has to be in the interval [-17,-1].",
              call. = FALSE)
-    } else if ((family == 26 || family == 36) && (par >= -1 || par < -50)) {
+    } else if ((family == 26 || family == 36) && (par >= -1 || par < -30)) {
         stop("\n In ", cl, ": ",
-             "The parameter of the rotated Joe copula has to be in the interval [-50,-1).",
+             "The parameter of the rotated Joe copula has to be in the interval [-30,-1).",
              call. = FALSE)
     } else if ((family == 27 || family == 37)) {
         if (par >= 0 || par < -7)
@@ -253,14 +253,14 @@ checkPars <- function(x, cl) {
 
 ## check for family/parameter consistency
 adjustPars <- function(family, par, par2) {
-    if ((family %in% c(3, 13, 23, 33)) && (abs(par) > 100)) {
-        par <- sign(par) * 100
-    } else if ((family %in% c(4, 14, 24, 34)) && (abs(par) > 50)) {
-        par <- sign(par) * 50
-    } else if ((family == 5) && (abs(par) > 100)) {
-        par <- sign(par) * 100
-    } else if ((family %in% c(6, 16, 26, 36)) && (abs(par) > 50)) {
-        par <- sign(par) * 50
+    if ((family %in% c(3, 13, 23, 33)) && (abs(par) > 28)) {
+        par <- sign(par) * 28
+    } else if ((family %in% c(4, 14, 24, 34)) && (abs(par) > 17)) {
+        par <- sign(par) * 17
+    } else if ((family == 5) && (abs(par) > 35)) {
+        par <- sign(par) * 35
+    } else if ((family %in% c(6, 16, 26, 36)) && (abs(par) > 30)) {
+        par <- sign(par) * 30
     } else if (family %in% c(7, 17, 27, 37)) {
         if (abs(par) > 7)
             par <- sign(par) * 7
