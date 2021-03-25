@@ -994,25 +994,25 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
             up <- 0.9999
         } else if (family %in% c(3, 13)) {
             low <- 1e-04
-            up <- 100
+            up <- 28
         } else if (family %in% c(4, 14)) {
             low <- 1.0001
-            up <- 50
+            up <- 17
         } else if (family %in% c(5)) {
-            low <- -100
-            up <- 100
+            low <- -35
+            up <- 35
         } else if (family %in% c(6, 16)) {
             low <- 1.0001
-            up <- 50
+            up <- 30
         } else if (family %in% c(23, 33)) {
             up <- -1e-04
-            low <- -100
+            low <- -28
         } else if (family %in% c(24, 34)) {
             up <- -1.0001
-            low <- -50
+            low <- -17
         } else if (family %in% c(26, 36)) {
             up <- -1.0001
-            low <- -50
+            low <- -30
         } else if (family %in% c(41, 51)) {
             low <- 1e-04
             up <- BiCopTau2Par(family, 0.85)

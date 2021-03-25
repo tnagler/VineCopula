@@ -161,9 +161,10 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
         }
     }
 
-    ## loop over all trees and pair-copulas
+    ## loop over all trees and pair-copulas up to a truncation level
     warn <- NULL
-    for (k in d:2) {
+    trc_lvl <- tail(which(apply(RVM$family, 1, function(x) all(x == 0))), 1)
+    for(k in d:(trc_lvl+1)) {
         doEst <- function(i) {
             if (k > i) {
                 ## get pseudo-observaions
