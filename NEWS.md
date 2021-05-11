@@ -1,4 +1,13 @@
-VineCopula 2.4.0 (October 18, 2020)
+VineCopula 2.4.2 (May 11, 2021)
+----------------------------------------------------------------
+
+* Improved numeric stability by more conservative parameter bounds (#74, 
+  thanks to @oezgesahin).
+  
+* Removed all calls to `closeAllConnections()`.
+
+
+VineCopula 2.4.1 (October 18, 2020)
 ----------------------------------------------------------------
 
 DEPENDS

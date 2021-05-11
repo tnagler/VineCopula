@@ -74,7 +74,7 @@ Schepsmeier (2013)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.2</span>
       </span>
     </div>
 
@@ -356,16 +356,16 @@ Econometrica, 50, 1-26.</p>
 
 <span class='co'># White test with asymptotic p-value</span>
 <span class='fu'>RVineGofTest</span>(<span class='no'>daxreturns</span>[,<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='no'>RVM</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; $White
-#&gt; [1] 120.5855
+#&gt; [1] 120.5856
 #&gt; 
 #&gt; $p.value
-#&gt; [1] 0.141871
+#&gt; [1] 0.1418691
 #&gt; </div><div class='input'>
 <span class='co'># ECP2 test with Cramer-von-Mises test statistic and a bootstrap</span>
 <span class='co'># with 200 replications for the calculation of the p-value</span>
 <span class='fu'>RVineGofTest</span>(<span class='no'>daxreturns</span>[,<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='no'>RVM</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ECP2"</span>,
              <span class='kw'>statistic</span> <span class='kw'>=</span> <span class='st'>"CvM"</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; $CvM
-#&gt; [1] 0.1153034
+#&gt; [1] 0.1153089
 #&gt; 
 #&gt; $p.value
 #&gt; [1] 0.69
