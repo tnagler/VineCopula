@@ -157,7 +157,6 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
             cl <- makePSOCKcluster(cores)
             setDefaultCluster(cl)
             on.exit(try(stopCluster(cl), silent = TRUE))
-            on.exit(try(closeAllConnections(), silent = TRUE), add = TRUE)
         }
     }
 

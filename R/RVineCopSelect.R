@@ -203,7 +203,6 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC",
             cl <- makePSOCKcluster(cores)
             setDefaultCluster(cl)
             on.exit(try(stopCluster(cl), silent = TRUE))
-            on.exit(try(closeAllConnections(), silent = TRUE), add = TRUE)
         }
     }
 

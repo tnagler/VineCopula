@@ -238,7 +238,6 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0,
             cl <- makePSOCKcluster(cores)
             setDefaultCluster(cl)
             on.exit(try(stopCluster(cl), silent = TRUE))
-            on.exit(try(closeAllConnections(), silent = TRUE), add = TRUE)
         }
     }
 
