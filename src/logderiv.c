@@ -7,8 +7,8 @@
 #include "VineCopula/incompleteBeta.h"
 #include "VineCopula/logderiv.h"
 
-#define UMAX  1-1e-10
-#define UMIN  1e-10
+#define UMAX  1-1e-12
+#define UMIN  1e-12
 
 
 //////////////////////////////////

@@ -18,9 +18,9 @@
 #include "VineCopula/cdvine.h"			// Header file for this C-file
 #include "VineCopula/hfunc.h"			// h-functions, i.e. conditional densities; also inverse h-functions
 
-#define UMAX  1-1e-10
+#define UMAX  1-1e-12
 
-#define UMIN  1e-10
+#define UMIN  1e-12
 
 #define XEPS 1e-4
 

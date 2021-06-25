@@ -1,15 +1,13 @@
-Removes weak dependence (in examples) on archived package 'CDVine'
+Patch removing calls to `closeAllConnections()`. 
 
 ## Test environments
-* ubuntu 16.04 (release) 
+* ubuntu 16.04 (devel, release) 
 * Windows Server 2019 (release) 
 * CRAN win builder (devel)
 * macOS Catalina 10.15 (devel, release)
 
 ## R CMD check results
 There were no ERROR or WARNINGs. 
-
-## revdepcheck results
 
 ## revdepcheck results
 
