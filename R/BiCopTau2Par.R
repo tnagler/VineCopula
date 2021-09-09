@@ -176,7 +176,7 @@ Frank.itau.JJ <- function(tau) {
         tau <- -tau
     }
     v <- uniroot(function(x) tau - frankTau(x),
-                 lower = 0 + .Machine$double.eps^0.5, upper = 100,
+                 lower = 0 + .Machine$double.eps^0.5, upper = 1e5,
                  tol = .Machine$double.eps^0.5)$root
     return(a*v)
 }
