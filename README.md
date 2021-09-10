@@ -64,7 +64,8 @@ You can install:
 -   the latest development version:
 
     ``` r
-    devtools::install_github("tnagler/VineCopula")
+    # install.packages("remotes")
+    remotes::install_github("tnagler/VineCopula")
     ```
 
 ------------------------------------------------------------------------
