@@ -18,8 +18,8 @@
 #include "VineCopula/tcopuladeriv_new.h"
 #include "VineCopula/incompleteBeta.h"
 
-#define UMAX  1-1e-10
-#define UMIN  1e-10
+#define UMAX  1-1e-12
+#define UMIN  1e-12
 
 
 void diffX_nu_tCopula(double* x, double* param, double* out)

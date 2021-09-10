@@ -11,7 +11,7 @@ importFrom("stats", "cor", "dexp", "dgamma", "dnorm", "dt", "sd", "approx",
            "integrate", "ks.test", "optim", "optimize", "pbinom",
            "pchisq", "pexp", "pgamma", "pnorm", "pt", "qexp", "qgamma",
            "qnorm", "qt", "runif", "uniroot", "var", "complete.cases", "rbinom")
-importFrom("utils", "combn", "getFromNamespace", "modifyList", "data")
+importFrom("utils", "combn", "getFromNamespace", "modifyList", "data", "tail")
 
 importFrom("ADGofTest", "ad.test")
 importFrom("MASS", "bandwidth.nrd", "ginv", "kde2d")

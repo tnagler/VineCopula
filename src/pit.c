@@ -10,9 +10,9 @@
 #include "VineCopula/pit.h"
 #include "VineCopula/hfunc.h"
 
-#define UMAX  1-1e-10
+#define UMAX  1-1e-12
 
-#define UMIN  1e-10
+#define UMIN  1e-12
 
 #define XEPS 1e-4
 
