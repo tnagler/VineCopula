@@ -74,7 +74,7 @@ evaluates it on a given copula data set." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.3</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@ evaluates it on a given copula data set." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -96,7 +96,7 @@ evaluates it on a given copula data set." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/tnagler/VineCopula/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -124,7 +124,7 @@ d-dimensional R-vine copula model with respect to the copula parameter and
 evaluates it on a given copula data set.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>RVineHessian</span>(<span class='no'>data</span>, <span class='no'>RVM</span>)</pre>
+    <pre class="usage"><span class='fu'>RVineHessian</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>RVM</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -194,48 +194,52 @@ vine copula models. Computational Statistics, 28 (6), 2679-2707
 <code><a href='RVineMatrix.html'>RVineMatrix()</a></code>,
 <code><a href='RVineMLE.html'>RVineMLE()</a></code>,
 <code><a href='RVineGrad.html'>RVineGrad()</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Ulf Schepsmeier, Jakob Stoeber</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># define 5-dimensional R-vine tree structure matrix</span>
-<span class='no'>Matrix</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>4</span>,
+<span class='va'>Matrix</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>1</span>, <span class='fl'>4</span>,
             <span class='fl'>0</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>1</span>,
             <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>1</span>,
             <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>4</span>, <span class='fl'>1</span>,
-            <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>)
-<span class='no'>Matrix</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='no'>Matrix</span>, <span class='fl'>5</span>, <span class='fl'>5</span>)
+            <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>Matrix</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='va'>Matrix</span>, <span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span>
 
 <span class='co'># define R-vine pair-copula family matrix</span>
-<span class='no'>family</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>4</span>,
+<span class='va'>family</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>4</span>,
             <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>1</span>,
             <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>4</span>, <span class='fl'>1</span>,
             <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>3</span>,
-            <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>)
-<span class='no'>family</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='no'>family</span>, <span class='fl'>5</span>, <span class='fl'>5</span>)
+            <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>
+<span class='va'>family</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='va'>family</span>, <span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span>
 
 <span class='co'># define R-vine pair-copula parameter matrix</span>
-<span class='no'>par</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0.2</span>, <span class='fl'>0.9</span>, <span class='fl'>1.5</span>, <span class='fl'>3.9</span>,
+<span class='va'>par</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.2</span>, <span class='fl'>0.9</span>, <span class='fl'>1.5</span>, <span class='fl'>3.9</span>,
          <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1.1</span>, <span class='fl'>1.6</span>, <span class='fl'>0.9</span>,
          <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1.9</span>, <span class='fl'>0.5</span>,
          <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>4.8</span>,
-         <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>)
-<span class='no'>par</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='no'>par</span>, <span class='fl'>5</span>, <span class='fl'>5</span>)
+         <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>
+<span class='va'>par</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='va'>par</span>, <span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span>
 
 <span class='co'># define second R-vine pair-copula parameter matrix</span>
-<span class='no'>par2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>0</span>, <span class='fl'>5</span>, <span class='fl'>5</span>)
+<span class='va'>par2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>5</span>, <span class='fl'>5</span><span class='op'>)</span>
 
 <span class='co'># define RVineMatrix object</span>
-<span class='no'>RVM</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RVineMatrix.html'>RVineMatrix</a></span>(<span class='kw'>Matrix</span> <span class='kw'>=</span> <span class='no'>Matrix</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='no'>family</span>,
-                   <span class='kw'>par</span> <span class='kw'>=</span> <span class='no'>par</span>, <span class='kw'>par2</span> <span class='kw'>=</span> <span class='no'>par2</span>,
-                   <span class='kw'>names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"V1"</span>, <span class='st'>"V2"</span>, <span class='st'>"V3"</span>, <span class='st'>"V4"</span>, <span class='st'>"V5"</span>))
+<span class='va'>RVM</span> <span class='op'>&lt;-</span> <span class='fu'><a href='RVineMatrix.html'>RVineMatrix</a></span><span class='op'>(</span>Matrix <span class='op'>=</span> <span class='va'>Matrix</span>, family <span class='op'>=</span> <span class='va'>family</span>,
+                   par <span class='op'>=</span> <span class='va'>par</span>, par2 <span class='op'>=</span> <span class='va'>par2</span>,
+                   names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"V1"</span>, <span class='st'>"V2"</span>, <span class='st'>"V3"</span>, <span class='st'>"V4"</span>, <span class='st'>"V5"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># simulate a sample of size 300 from the R-vine copula model</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
-<span class='no'>simdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RVineSim.html'>RVineSim</a></span>(<span class='fl'>300</span>, <span class='no'>RVM</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
+<span class='va'>simdata</span> <span class='op'>&lt;-</span> <span class='fu'><a href='RVineSim.html'>RVineSim</a></span><span class='op'>(</span><span class='fl'>300</span>, <span class='va'>RVM</span><span class='op'>)</span>
 
 <span class='co'># compute the Hessian matrix of the first row of the data</span>
-<span class='no'>out2</span> <span class='kw'>&lt;-</span> <span class='fu'>RVineHessian</span>(<span class='no'>simdata</span>[<span class='fl'>1</span>,], <span class='no'>RVM</span>)
-<span class='no'>out2</span>$<span class='no'>hessian</span></div><div class='output co'>#&gt;              [,1]         [,2]         [,3]         [,4]         [,5]
+<span class='va'>out2</span> <span class='op'>&lt;-</span> <span class='fu'>RVineHessian</span><span class='op'>(</span><span class='va'>simdata</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span>, <span class='va'>RVM</span><span class='op'>)</span>
+<span class='va'>out2</span><span class='op'>$</span><span class='va'>hessian</span>
+</div><div class='output co'>#&gt;              [,1]         [,2]         [,3]         [,4]         [,5]
 #&gt;  [1,] -0.20835529  0.600506359 -0.647786496    1.3836564  0.295496669
 #&gt;  [2,]  0.60050636  4.561415817  2.843538595    4.7922232  0.029152110
 #&gt;  [3,] -0.64778650  2.843538595 -0.406889590   -1.8820037 -0.011448628
@@ -273,7 +277,7 @@ vine copula models. Computational Statistics, 28 (6), 2679-2707
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

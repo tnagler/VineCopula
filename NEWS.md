@@ -1,3 +1,12 @@
+VineCopula 2.4.3 (October 6, 2021)
+----------------------------------------------------------------
+
+* Fix inversion of Kendall's tau for Frank copula (#78, #79, thanks to 
+  @oezgesahin).  
+
+* Increased precision in boundary of unit cube (#77).
+
+
 VineCopula 2.4.2 (May 11, 2021)
 ----------------------------------------------------------------
 

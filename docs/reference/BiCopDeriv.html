@@ -73,7 +73,7 @@ copula density with respect to its parameter(s) or one of its arguments." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.3</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@ copula density with respect to its parameter(s) or one of its arguments." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -95,7 +95,7 @@ copula density with respect to its parameter(s) or one of its arguments." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/tnagler/VineCopula/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -122,17 +122,17 @@ copula density with respect to its parameter(s) or one of its arguments." />
 copula density with respect to its parameter(s) or one of its arguments.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>BiCopDeriv</span>(
-  <span class='no'>u1</span>,
-  <span class='no'>u2</span>,
-  <span class='no'>family</span>,
-  <span class='no'>par</span>,
-  <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>deriv</span> <span class='kw'>=</span> <span class='st'>"par"</span>,
-  <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>check.pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>BiCopDeriv</span><span class='op'>(</span>
+  <span class='va'>u1</span>,
+  <span class='va'>u2</span>,
+  <span class='va'>family</span>,
+  <span class='va'>par</span>,
+  par2 <span class='op'>=</span> <span class='fl'>0</span>,
+  deriv <span class='op'>=</span> <span class='st'>"par"</span>,
+  log <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  obj <span class='op'>=</span> <span class='cn'>NULL</span>,
+  check.pars <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -212,7 +212,7 @@ care).</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If the family and parameter specification is stored in a <code><a href='BiCop.html'>BiCop()</a></code>
-object <code>obj</code>, the alternative version <br /></p><pre><span class='fu'>BiCopDeriv</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='no'>obj</span>, <span class='kw'>deriv</span> <span class='kw'>=</span> <span class='st'>"par"</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p>can be used.</p>
+object <code>obj</code>, the alternative version <br /></p><pre><span class='fu'>BiCopDeriv</span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span>, <span class='va'>obj</span>, deriv <span class='op'>=</span> <span class='st'>"par"</span>, log <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p>can be used.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Schepsmeier, U. and J. Stoeber (2014). Derivatives and Fisher
@@ -223,18 +223,22 @@ information of bivariate copulas. Statistical Papers, 55 (2), 525-542. <br />
     <div class='dont-index'><p><code><a href='RVineGrad.html'>RVineGrad()</a></code>, <code><a href='RVineHessian.html'>RVineHessian()</a></code>,
 <code><a href='BiCopDeriv2.html'>BiCopDeriv2()</a></code>, <code><a href='BiCopHfuncDeriv.html'>BiCopHfuncDeriv()</a></code>,
 <code><a href='BiCop.html'>BiCop()</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Ulf Schepsmeier</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>## simulate from a bivariate Student-t copula</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
-<span class='no'>cop</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCop.html'>BiCop</a></span>(<span class='kw'>family</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>par</span> <span class='kw'>=</span> -<span class='fl'>0.7</span>, <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fl'>4</span>)
-<span class='no'>simdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span>(<span class='fl'>100</span>, <span class='no'>cop</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
+<span class='va'>cop</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BiCop.html'>BiCop</a></span><span class='op'>(</span>family <span class='op'>=</span> <span class='fl'>2</span>, par <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.7</span>, par2 <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>simdata</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='va'>cop</span><span class='op'>)</span>
 
 <span class='co'>## derivative of the bivariate t-copula with respect to the first parameter</span>
-<span class='no'>u1</span> <span class='kw'>&lt;-</span> <span class='no'>simdata</span>[,<span class='fl'>1</span>]
-<span class='no'>u2</span> <span class='kw'>&lt;-</span> <span class='no'>simdata</span>[,<span class='fl'>2</span>]
-<span class='fu'>BiCopDeriv</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='no'>cop</span>, <span class='kw'>deriv</span> <span class='kw'>=</span> <span class='st'>"par"</span>)</div><div class='output co'>#&gt;   [1]  -1.9491194   0.4287700  -2.1243812   0.9894915  -2.2047080  -6.8875898
+<span class='va'>u1</span> <span class='op'>&lt;-</span> <span class='va'>simdata</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>
+<span class='va'>u2</span> <span class='op'>&lt;-</span> <span class='va'>simdata</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>
+<span class='fu'>BiCopDeriv</span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span>, <span class='va'>cop</span>, deriv <span class='op'>=</span> <span class='st'>"par"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   [1]  -1.9491194   0.4287700  -2.1243812   0.9894915  -2.2047080  -6.8875898
 #&gt;   [7]  -1.7649804  -3.9093168   1.3918512   1.3725159   0.2610399   1.0257608
 #&gt;  [13]  -0.5194076  -1.8585951   1.1101953   1.4226641   0.5365931  -5.3960728
 #&gt;  [19]  -2.6089908   0.2241644  -1.4657837  -1.4961593   1.4470699  -2.1020266
@@ -252,9 +256,10 @@ information of bivariate copulas. Statistical Papers, 55 (2), 525-542. <br />
 #&gt;  [91]  -4.6053130  -2.4260304  -2.2459406  -2.7919755   1.4777421  -0.5824266
 #&gt;  [97]  -0.7432825  -5.0724114  -2.0257408  -3.7867954</div><div class='input'>
 <span class='co'>## estimate a Student-t copula for the simulated data</span>
-<span class='no'>cop</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopEst.html'>BiCopEst</a></span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='va'>cop</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BiCopEst.html'>BiCopEst</a></span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span>, family <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 <span class='co'>## and evaluate its derivative w.r.t. the second argument u2</span>
-<span class='fu'>BiCopDeriv</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='no'>cop</span>, <span class='kw'>deriv</span> <span class='kw'>=</span> <span class='st'>"u2"</span>)</div><div class='output co'>#&gt;   [1] -2.572532e+00 -4.713478e+00  7.764411e+01 -3.893079e+00 -7.353974e-03
+<span class='fu'>BiCopDeriv</span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span>, <span class='va'>cop</span>, deriv <span class='op'>=</span> <span class='st'>"u2"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   [1] -2.572532e+00 -4.713478e+00  7.764411e+01 -3.893079e+00 -7.353974e-03
 #&gt;   [6] -4.110736e+01 -2.684368e+00 -1.267933e+01  1.685358e+00 -8.459042e+00
 #&gt;  [11] -6.926049e+00 -1.906637e+00 -3.246016e+00 -1.497334e+00  3.179740e+00
 #&gt;  [16] -1.710293e+00 -3.452148e+00  7.169778e+01  1.938487e+00  3.468987e+00
@@ -290,7 +295,7 @@ information of bivariate copulas. Statistical Papers, 55 (2), 525-542. <br />
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

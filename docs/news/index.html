@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.3</span>
       </span>
     </div>
 
@@ -79,7 +79,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -93,7 +93,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/tnagler/VineCopula/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -114,6 +114,14 @@
       <small>Source: <a href='https://github.com/tnagler/VineCopula/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="vinecopula-243-october-6-2021" class="section level2">
+<h2 class="hasAnchor">
+<a href="#vinecopula-243-october-6-2021" class="anchor"></a>VineCopula 2.4.3 (October 6, 2021)</h2>
+<ul>
+<li><p>Fix inversion of Kendall’s tau for Frank copula (<a href='https://github.com/tnagler/VineCopula/issues/78'>#78</a>, <a href='https://github.com/tnagler/VineCopula/issues/79'>#79</a>, thanks to <a href='https://github.com/oezgesahin'>@oezgesahin</a>).</p></li>
+<li><p>Increased precision in boundary of unit cube (<a href='https://github.com/tnagler/VineCopula/issues/77'>#77</a>).</p></li>
+</ul>
+</div>
     <div id="vinecopula-242-may-11-2021" class="section level2">
 <h2 class="hasAnchor">
 <a href="#vinecopula-242-may-11-2021" class="anchor"></a>VineCopula 2.4.2 (May 11, 2021)</h2>
@@ -151,7 +159,7 @@
 <p>DEPENDENCIES</p>
 <ul>
 <li><p>removed dependencies to packages doParallel and foreach (<a href='https://github.com/tnagler/VineCopula/issues/67'>#67</a>).</p></li>
-<li><p>moved packages kdecopula and network to <code>Suggests</code>. They need to be installed manually for <code><a href="../reference/BiCopKDE.html">BiCopKDE()</a></code> and <code><a href="../reference/plot.RVineMatrix.html">plot.RVineMatrix()</a></code> to work (<a href='https://github.com/tnagler/VineCopula/issues/67'>#67</a>).</p></li>
+<li><p>moved packages kdecopula and network to <code>Suggests</code>. They need to be installed manually for <code><a href="../reference/BiCopKDE.html">BiCopKDE()</a></code> and <code><a href="../reference/contour.RVineMatrix.html">plot.RVineMatrix()</a></code> to work (<a href='https://github.com/tnagler/VineCopula/issues/67'>#67</a>).</p></li>
 <li><p>removed dependency to package copula. All functionality extending copula will be provided by the VC2copula package: <a href="https://github.com/tnagler/VC2copula" class="uri">https://github.com/tnagler/VC2copula</a> (<a href='https://github.com/tnagler/VineCopula/issues/67'>#67</a>).</p></li>
 </ul>
 <p>BUG FIXES</p>
@@ -297,7 +305,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

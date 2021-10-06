@@ -74,7 +74,7 @@ Schepsmeier (2013)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.3</span>
       </span>
     </div>
 
@@ -82,7 +82,7 @@ Schepsmeier (2013)." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -96,7 +96,7 @@ Schepsmeier (2013)." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/tnagler/VineCopula/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -124,14 +124,14 @@ There are 15 different goodness-of-fit tests implemented, described in
 Schepsmeier (2013).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>RVineGofTest</span>(
-  <span class='no'>data</span>,
-  <span class='no'>RVM</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"White"</span>,
-  <span class='kw'>statistic</span> <span class='kw'>=</span> <span class='st'>"CvM"</span>,
-  <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>200</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>2</span>
-)</pre>
+    <pre class="usage"><span class='fu'>RVineGofTest</span><span class='op'>(</span>
+  <span class='va'>data</span>,
+  <span class='va'>RVM</span>,
+  method <span class='op'>=</span> <span class='st'>"White"</span>,
+  statistic <span class='op'>=</span> <span class='st'>"CvM"</span>,
+  B <span class='op'>=</span> <span class='fl'>200</span>,
+  alpha <span class='op'>=</span> <span class='fl'>2</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -344,18 +344,22 @@ Econometrica, 50, 1-26.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='BiCopGofTest.html'>BiCopGofTest()</a></code>, <code><a href='RVinePIT.html'>RVinePIT()</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Ulf Schepsmeier</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## time-consuming example</span>
 
 <span class='co'># load data set</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>daxreturns</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>daxreturns</span><span class='op'>)</span>
 
 <span class='co'># select the R-vine structure, families and parameters</span>
-<span class='no'>RVM</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RVineStructureSelect.html'>RVineStructureSelect</a></span>(<span class='no'>daxreturns</span>[,<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>:<span class='fl'>6</span>))
+<span class='va'>RVM</span> <span class='op'>&lt;-</span> <span class='fu'><a href='RVineStructureSelect.html'>RVineStructureSelect</a></span><span class='op'>(</span><span class='va'>daxreturns</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># White test with asymptotic p-value</span>
-<span class='fu'>RVineGofTest</span>(<span class='no'>daxreturns</span>[,<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='no'>RVM</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>0</span>)</div><div class='output co'>#&gt; $White
+<span class='fu'>RVineGofTest</span><span class='op'>(</span><span class='va'>daxreturns</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>, <span class='va'>RVM</span>, B <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $White
 #&gt; [1] 120.5856
 #&gt; 
 #&gt; $p.value
@@ -363,8 +367,9 @@ Econometrica, 50, 1-26.</p>
 #&gt; </div><div class='input'>
 <span class='co'># ECP2 test with Cramer-von-Mises test statistic and a bootstrap</span>
 <span class='co'># with 200 replications for the calculation of the p-value</span>
-<span class='fu'>RVineGofTest</span>(<span class='no'>daxreturns</span>[,<span class='fl'>1</span>:<span class='fl'>5</span>], <span class='no'>RVM</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ECP2"</span>,
-             <span class='kw'>statistic</span> <span class='kw'>=</span> <span class='st'>"CvM"</span>, <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; $CvM
+<span class='fu'>RVineGofTest</span><span class='op'>(</span><span class='va'>daxreturns</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>]</span>, <span class='va'>RVM</span>, method <span class='op'>=</span> <span class='st'>"ECP2"</span>,
+             statistic <span class='op'>=</span> <span class='st'>"CvM"</span>, B <span class='op'>=</span> <span class='fl'>200</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $CvM
 #&gt; [1] 0.1153089
 #&gt; 
 #&gt; $p.value
@@ -387,7 +392,7 @@ Econometrica, 50, 1-26.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

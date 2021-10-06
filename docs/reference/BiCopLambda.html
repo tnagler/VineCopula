@@ -73,7 +73,7 @@ data." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.3</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@ data." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -95,7 +95,7 @@ data." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/tnagler/VineCopula/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -122,16 +122,16 @@ data." />
 data.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>BiCopLambda</span>(
-  <span class='kw'>u1</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>u2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"emp"</span>,
-  <span class='kw'>par</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>PLOT</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>BiCopLambda</span><span class='op'>(</span>
+  u1 <span class='op'>=</span> <span class='cn'>NULL</span>,
+  u2 <span class='op'>=</span> <span class='cn'>NULL</span>,
+  family <span class='op'>=</span> <span class='st'>"emp"</span>,
+  par <span class='op'>=</span> <span class='fl'>0</span>,
+  par2 <span class='op'>=</span> <span class='fl'>0</span>,
+  PLOT <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  obj <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -199,7 +199,7 @@ specification.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If the family and parameter specification is stored in a <code><a href='BiCop.html'>BiCop()</a></code>
-object <code>obj</code>, the alternative versions <br /></p><pre><span class='fu'>BiCopLambda</span>(<span class='no'>obj</span>, <span class='kw'>PLOT</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre><p>and</p><pre>BiCopLambda((u1, u2, obj, PLOT = TRUE, ...)</pre><p>can be used.</p>
+object <code>obj</code>, the alternative versions <br /></p><pre><span class='fu'>BiCopLambda</span><span class='op'>(</span><span class='va'>obj</span>, PLOT <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre><p>and</p><pre>BiCopLambda((u1, u2, obj, PLOT = TRUE, ...)</pre><p>can be used.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>The \(\lambda\)-function is characteristic for each bivariate copula
@@ -238,18 +238,25 @@ thesis, Technische Universitaet Muenchen.<br />
 
     <div class='dont-index'><p><code><a href='BiCopMetaContour.html'>BiCopMetaContour()</a></code>, <code><a href='BiCopKPlot.html'>BiCopKPlot()</a></code>,
 <code><a href='BiCopChiPlot.html'>BiCopChiPlot()</a></code>, <code><a href='BiCop.html'>BiCop()</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Ulf Schepsmeier</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
 <span class='co'># simulate from Clayton copula</span>
-<span class='no'>cop</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCop.html'>BiCop</a></span>(<span class='fl'>3</span>, <span class='kw'>tau</span> <span class='kw'>=</span> <span class='fl'>0.5</span>)
-<span class='no'>dat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span>(<span class='fl'>1000</span>, <span class='no'>cop</span>)
+<span class='va'>cop</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BiCop.html'>BiCop</a></span><span class='op'>(</span><span class='fl'>3</span>, tau <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span>
+<span class='va'>dat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='va'>cop</span><span class='op'>)</span>
 
 <span class='co'># create lambda-function plots</span>
-<span class='no'>op</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>))
-<span class='fu'>BiCopLambda</span>(<span class='no'>dat</span>[, <span class='fl'>1</span>], <span class='no'>dat</span>[, <span class='fl'>2</span>])  <span class='co'># empirical lambda-function</span>
-<span class='fu'>BiCopLambda</span>(<span class='no'>cop</span>)        <span class='co'># theoretical lambda-function</span>
-<span class='fu'>BiCopLambda</span>(<span class='no'>dat</span>[, <span class='fl'>1</span>], <span class='no'>dat</span>[, <span class='fl'>2</span>], <span class='no'>cop</span>)    <span class='co'># both</span></div><div class='img'><img src='BiCopLambda-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='no'>op</span>)</div></pre>
+<span class='va'>op</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>BiCopLambda</span><span class='op'>(</span><span class='va'>dat</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>dat</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>  <span class='co'># empirical lambda-function</span>
+<span class='fu'>BiCopLambda</span><span class='op'>(</span><span class='va'>cop</span><span class='op'>)</span>  <span class='co'># theoretical lambda-function</span>
+<span class='fu'>BiCopLambda</span><span class='op'>(</span><span class='va'>dat</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>dat</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>, <span class='va'>cop</span><span class='op'>)</span>  <span class='co'># both</span>
+</div><div class='img'><img src='BiCopLambda-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span><span class='va'>op</span><span class='op'>)</span>
+
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -265,7 +272,7 @@ thesis, Technische Universitaet Muenchen.<br />
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

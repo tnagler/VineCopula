@@ -73,7 +73,7 @@ bivariate copula for given parameter values." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.3</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@ bivariate copula for given parameter values." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -95,7 +95,7 @@ bivariate copula for given parameter values." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/tnagler/VineCopula/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -122,7 +122,7 @@ bivariate copula for given parameter values." />
 bivariate copula for given parameter values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>BiCopPar2TailDep</span>(<span class='no'>family</span>, <span class='no'>par</span>, <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>check.pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>BiCopPar2TailDep</span><span class='op'>(</span><span class='va'>family</span>, <span class='va'>par</span>, par2 <span class='op'>=</span> <span class='fl'>0</span>, obj <span class='op'>=</span> <span class='cn'>NULL</span>, check.pars <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -243,7 +243,7 @@ lll No.  Lower tail dependence  Upper tail dependence <br />
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If the family and parameter specification is stored in a <code>BiCop</code> object
-<code>obj</code>, the alternative version <br /></p><pre><span class='fu'>BiCopPar2TailDep</span>(<span class='no'>obj</span>)</pre><p>can be used.</p>
+<code>obj</code>, the alternative version <br /></p><pre><span class='fu'>BiCopPar2TailDep</span><span class='op'>(</span><span class='va'>obj</span><span class='op'>)</span></pre><p>can be used.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>The number <code>n</code> can be chosen arbitrarily, but must agree across
@@ -255,29 +255,36 @@ Chapman and Hall, London.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='BiCopPar2Tau.html'>BiCopPar2Tau()</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Eike Brechmann</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## Example 1: Gaussian copula</span>
-<span class='fu'>BiCopPar2TailDep</span>(<span class='fl'>1</span>, <span class='fl'>0.7</span>)</div><div class='output co'>#&gt; $lower
+<span class='fu'>BiCopPar2TailDep</span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.7</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $lower
 #&gt; [1] 0
 #&gt; 
 #&gt; $upper
 #&gt; [1] 0
-#&gt; </div><div class='input'><span class='fu'><a href='BiCop.html'>BiCop</a></span>(<span class='fl'>1</span>, <span class='fl'>0.7</span>)$<span class='no'>taildep</span>  <span class='co'># alternative</span></div><div class='output co'>#&gt; $lower
+#&gt; </div><div class='input'><span class='fu'><a href='BiCop.html'>BiCop</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.7</span><span class='op'>)</span><span class='op'>$</span><span class='va'>taildep</span>  <span class='co'># alternative</span>
+</div><div class='output co'>#&gt; $lower
 #&gt; [1] 0
 #&gt; 
 #&gt; $upper
 #&gt; [1] 0
 #&gt; </div><div class='input'>
 <span class='co'>## Example 2: Student-t copula</span>
-<span class='fu'>BiCopPar2TailDep</span>(<span class='fl'>2</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.6</span>, <span class='fl'>0.7</span>, <span class='fl'>0.8</span>), <span class='fl'>4</span>)</div><div class='output co'>#&gt; $lower
+<span class='fu'>BiCopPar2TailDep</span><span class='op'>(</span><span class='fl'>2</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.6</span>, <span class='fl'>0.7</span>, <span class='fl'>0.8</span><span class='op'>)</span>, <span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $lower
 #&gt; [1] 0.3143726 0.3906840 0.4895897
 #&gt; 
 #&gt; $upper
 #&gt; [1] 0.3143726 0.3906840 0.4895897
 #&gt; </div><div class='input'>
 <span class='co'>## Example 3: different copula families</span>
-<span class='fu'>BiCopPar2TailDep</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>6</span>), <span class='fl'>2</span>)</div><div class='output co'>#&gt; $lower
+<span class='fu'>BiCopPar2TailDep</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>6</span><span class='op'>)</span>, <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $lower
 #&gt; [1] 0.7071068 0.0000000 0.0000000
 #&gt; 
 #&gt; $upper
@@ -299,7 +306,7 @@ Chapman and Hall, London.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

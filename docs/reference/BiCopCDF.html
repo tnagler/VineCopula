@@ -73,7 +73,7 @@ given parametric bivariate copula." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.3</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@ given parametric bivariate copula." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -95,7 +95,7 @@ given parametric bivariate copula." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/tnagler/VineCopula/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -122,7 +122,7 @@ given parametric bivariate copula." />
 given parametric bivariate copula.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>BiCopCDF</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>check.pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>BiCopCDF</span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span>, <span class='va'>family</span>, <span class='va'>par</span>, par2 <span class='op'>=</span> <span class='fl'>0</span>, obj <span class='op'>=</span> <span class='cn'>NULL</span>, check.pars <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -208,7 +208,7 @@ care).</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If the family and parameter specification is stored in a <code><a href='BiCop.html'>BiCop()</a></code>
-object <code>obj</code>, the alternative version <br /></p><pre><span class='fu'>BiCopCDF</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='no'>obj</span>)</pre><p>can be used.</p>
+object <code>obj</code>, the alternative version <br /></p><pre><span class='fu'>BiCopCDF</span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span>, <span class='va'>obj</span><span class='op'>)</span></pre><p>can be used.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>The calculation of the cumulative distribution function (CDF) of the
@@ -221,17 +221,21 @@ integer before calculation of the CDF.</p>
 <code><a href='BiCopHfunc.html'>BiCopHfunc()</a></code>,
 <code><a href='BiCopSim.html'>BiCopSim()</a></code>,
 <code><a href='BiCop.html'>BiCop()</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Eike Brechmann</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## simulate from a bivariate Clayton copula</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
-<span class='no'>cop</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCop.html'>BiCop</a></span>(<span class='kw'>family</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>par</span> <span class='kw'>=</span> <span class='fl'>3.4</span>)
-<span class='no'>simdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span>(<span class='fl'>300</span>, <span class='no'>cop</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
+<span class='va'>cop</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BiCop.html'>BiCop</a></span><span class='op'>(</span>family <span class='op'>=</span> <span class='fl'>3</span>, par <span class='op'>=</span> <span class='fl'>3.4</span><span class='op'>)</span>
+<span class='va'>simdata</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span><span class='op'>(</span><span class='fl'>300</span>, <span class='va'>cop</span><span class='op'>)</span>
 
 <span class='co'>## evaluate the distribution function of the bivariate Clayton copula</span>
-<span class='no'>u1</span> <span class='kw'>&lt;-</span> <span class='no'>simdata</span>[,<span class='fl'>1</span>]
-<span class='no'>u2</span> <span class='kw'>&lt;-</span> <span class='no'>simdata</span>[,<span class='fl'>2</span>]
-<span class='fu'>BiCopCDF</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='no'>cop</span>)</div><div class='output co'>#&gt;   [1] 0.272443455 0.397575020 0.466088911 0.514619601 0.461444338 0.799373201
+<span class='va'>u1</span> <span class='op'>&lt;-</span> <span class='va'>simdata</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>
+<span class='va'>u2</span> <span class='op'>&lt;-</span> <span class='va'>simdata</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>
+<span class='fu'>BiCopCDF</span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span>, <span class='va'>cop</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   [1] 0.272443455 0.397575020 0.466088911 0.514619601 0.461444338 0.799373201
 #&gt;   [7] 0.596934319 0.100484924 0.119765543 0.324468736 0.818352006 0.639670814
 #&gt;  [13] 0.606316797 0.483351456 0.187054448 0.940783304 0.655702676 0.020810245
 #&gt;  [19] 0.535621671 0.228195797 0.116899611 0.329812119 0.097320715 0.195904623
@@ -282,8 +286,9 @@ integer before calculation of the CDF.</p>
 #&gt; [289] 0.166616746 0.481927968 0.838254576 0.680471355 0.568998601 0.257006396
 #&gt; [295] 0.864497651 0.278649496 0.598768656 0.085849946 0.397162727 0.408953428</div><div class='input'>
 <span class='co'>## select a bivariate copula for the simulated data</span>
-<span class='no'>cop</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopSelect.html'>BiCopSelect</a></span>(<span class='no'>u1</span>, <span class='no'>u2</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>cop</span>)</div><div class='output co'>#&gt; Family
+<span class='va'>cop</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BiCopSelect.html'>BiCopSelect</a></span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>cop</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Family
 #&gt; ------ 
 #&gt; No:    16
 #&gt; Name:  Survival Joe
@@ -304,7 +309,8 @@ integer before calculation of the CDF.</p>
 #&gt; AIC:    -329.59 
 #&gt; BIC:    -325.89 
 #&gt; </div><div class='input'><span class='co'>## and evaluate its CDF</span>
-<span class='fu'>BiCopCDF</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='no'>cop</span>)</div><div class='output co'>#&gt;   [1] 0.268500237 0.393482146 0.464894801 0.510456314 0.453162125 0.797323504
+<span class='fu'>BiCopCDF</span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span>, <span class='va'>cop</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   [1] 0.268500237 0.393482146 0.464894801 0.510456314 0.453162125 0.797323504
 #&gt;   [7] 0.588601196 0.099482787 0.118512945 0.322486687 0.814900683 0.639423910
 #&gt;  [13] 0.599058793 0.475238984 0.184087051 0.940328719 0.650089901 0.020430206
 #&gt;  [19] 0.528904332 0.224164096 0.114739937 0.323577958 0.095813856 0.192260697
@@ -370,7 +376,7 @@ integer before calculation of the CDF.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

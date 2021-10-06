@@ -73,7 +73,7 @@ independence, Gaussian and t-copulas." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.3</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@ independence, Gaussian and t-copulas." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -95,7 +95,7 @@ independence, Gaussian and t-copulas." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/tnagler/VineCopula/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -122,9 +122,9 @@ independence, Gaussian and t-copulas." />
 independence, Gaussian and t-copulas.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>RVineCor2pcor</span>(<span class='no'>RVM</span>, <span class='no'>corMat</span>)
+    <pre class="usage"><span class='fu'>RVineCor2pcor</span><span class='op'>(</span><span class='va'>RVM</span>, <span class='va'>corMat</span><span class='op'>)</span>
 
-<span class='fu'>RVinePcor2cor</span>(<span class='no'>RVM</span>)</pre>
+<span class='fu'>RVinePcor2cor</span><span class='op'>(</span><span class='va'>RVM</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,31 +160,33 @@ the row- and column names.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>## create RVineMatrix-object for Gaussian vine</span>
-<span class='no'>Matrix</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>2</span>,
+<span class='va'>Matrix</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>2</span>,
                    <span class='fl'>0</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>2</span>,
                    <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>4</span>, <span class='fl'>2</span>,
-                   <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>2</span>), <span class='fl'>4</span>, <span class='fl'>4</span>)
-<span class='no'>family</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>,
+                   <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='fl'>4</span>, <span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>family</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>,
                    <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>1</span>,
                    <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>,
-                   <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='fl'>4</span>, <span class='fl'>4</span>)
-<span class='no'>par</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0.2</span>,   <span class='fl'>0</span>, <span class='fl'>0.6</span>,
+                   <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, <span class='fl'>4</span>, <span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>par</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.2</span>,   <span class='fl'>0</span>, <span class='fl'>0.6</span>,
                 <span class='fl'>0</span>,   <span class='fl'>0</span>, <span class='fl'>0.2</span>, <span class='fl'>0.6</span>,
                 <span class='fl'>0</span>,   <span class='fl'>0</span>,   <span class='fl'>0</span>, <span class='fl'>0.6</span>,
-                <span class='fl'>0</span>,   <span class='fl'>0</span>,   <span class='fl'>0</span>,   <span class='fl'>0</span>), <span class='fl'>4</span>, <span class='fl'>4</span>)
-<span class='no'>RVM</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='RVineMatrix.html'>RVineMatrix</a></span>(<span class='no'>Matrix</span>, <span class='no'>family</span>, <span class='no'>par</span>)
+                <span class='fl'>0</span>,   <span class='fl'>0</span>,   <span class='fl'>0</span>,   <span class='fl'>0</span><span class='op'>)</span>, <span class='fl'>4</span>, <span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>RVM</span> <span class='op'>&lt;-</span> <span class='fu'><a href='RVineMatrix.html'>RVineMatrix</a></span><span class='op'>(</span><span class='va'>Matrix</span>, <span class='va'>family</span>, <span class='va'>par</span><span class='op'>)</span>
 
 <span class='co'>## calculate correlation matrix corresponding to the R-Vine model</span>
-<span class='no'>newcor</span> <span class='kw'>&lt;-</span> <span class='fu'>RVinePcor2cor</span>(<span class='no'>RVM</span>)
+<span class='va'>newcor</span> <span class='op'>&lt;-</span> <span class='fu'>RVinePcor2cor</span><span class='op'>(</span><span class='va'>RVM</span><span class='op'>)</span>
 
 <span class='co'>## transform back to partial correlations</span>
-<span class='fu'>RVineCor2pcor</span>(<span class='no'>RVM</span>, <span class='no'>newcor</span>)$<span class='no'>par</span></div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4]
+<span class='fu'>RVineCor2pcor</span><span class='op'>(</span><span class='va'>RVM</span>, <span class='va'>newcor</span><span class='op'>)</span><span class='op'>$</span><span class='va'>par</span>
+</div><div class='output co'>#&gt;      [,1] [,2] [,3] [,4]
 #&gt; [1,]  0.0  0.0  0.0    0
 #&gt; [2,]  0.2  0.0  0.0    0
 #&gt; [3,]  0.0  0.2  0.0    0
 #&gt; [4,]  0.6  0.6  0.6    0</div><div class='input'>
 <span class='co'>## check if they are equal</span>
-<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='no'>RVM</span>$<span class='no'>par</span>, <span class='fu'>RVineCor2pcor</span>(<span class='no'>RVM</span>, <span class='no'>newcor</span>)$<span class='no'>par</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>RVM</span><span class='op'>$</span><span class='va'>par</span>, <span class='fu'>RVineCor2pcor</span><span class='op'>(</span><span class='va'>RVM</span>, <span class='va'>newcor</span><span class='op'>)</span><span class='op'>$</span><span class='va'>par</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -201,7 +203,7 @@ the row- and column names.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

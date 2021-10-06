@@ -75,7 +75,7 @@ conditional distribution functions of one variable given another." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.3</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@ conditional distribution functions of one variable given another." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -97,7 +97,7 @@ conditional distribution functions of one variable given another." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/tnagler/VineCopula/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -126,16 +126,16 @@ the variables is fixed. I.e., we simulate either from
 conditional distribution functions of one variable given another.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>BiCopCondSim</span>(
-  <span class='no'>N</span>,
-  <span class='no'>cond.val</span>,
-  <span class='no'>cond.var</span>,
-  <span class='no'>family</span>,
-  <span class='no'>par</span>,
-  <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>check.pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>BiCopCondSim</span><span class='op'>(</span>
+  <span class='va'>N</span>,
+  <span class='va'>cond.val</span>,
+  <span class='va'>cond.var</span>,
+  <span class='va'>family</span>,
+  <span class='va'>par</span>,
+  par2 <span class='op'>=</span> <span class='fl'>0</span>,
+  obj <span class='op'>=</span> <span class='cn'>NULL</span>,
+  check.pars <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -228,25 +228,32 @@ related to bivariate copula with <code>family</code> and parameter(s) <code>par<
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If the family and parameter specification is stored in a <code><a href='BiCop.html'>BiCop()</a></code>
-object <code>obj</code>, the alternative version</p><pre><span class='fu'>BiCopCondSim</span>(<span class='no'>N</span>, <span class='no'>cond.val</span>, <span class='no'>cond.var</span>, <span class='no'>obj</span>)</pre><p>can be used.</p>
+object <code>obj</code>, the alternative version</p><pre><span class='fu'>BiCopCondSim</span><span class='op'>(</span><span class='va'>N</span>, <span class='va'>cond.val</span>, <span class='va'>cond.var</span>, <span class='va'>obj</span><span class='op'>)</span></pre><p>can be used.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='BiCopCDF.html'>BiCopCDF()</a></code>, <code><a href='BiCopPDF.html'>BiCopPDF()</a></code>,
 <code><a href='RVineSim.html'>RVineSim()</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Thomas Nagler</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># create bivariate t-copula</span>
-<span class='no'>obj</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCop.html'>BiCop</a></span>(<span class='kw'>family</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>par</span> <span class='kw'>=</span> -<span class='fl'>0.7</span>, <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fl'>4</span>)
+<span class='va'>obj</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BiCop.html'>BiCop</a></span><span class='op'>(</span>family <span class='op'>=</span> <span class='fl'>2</span>, par <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.7</span>, par2 <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
 
 <span class='co'># simulate 500 observations of (U1, U2)</span>
-<span class='no'>sim</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span>(<span class='fl'>500</span>, <span class='no'>obj</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='no'>sim</span>[, <span class='fl'>1</span>])  <span class='co'># data have uniform distribution</span></div><div class='img'><img src='BiCopCondSim-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='no'>sim</span>[, <span class='fl'>2</span>])  <span class='co'># data have uniform distribution</span></div><div class='img'><img src='BiCopCondSim-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>sim</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span><span class='op'>(</span><span class='fl'>500</span>, <span class='va'>obj</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>sim</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span>  <span class='co'># data have uniform distribution</span>
+</div><div class='img'><img src='BiCopCondSim-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>sim</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>  <span class='co'># data have uniform distribution</span>
+</div><div class='img'><img src='BiCopCondSim-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># simulate 500 observations of (U2 | U1 = 0.7)</span>
-<span class='no'>sim1</span> <span class='kw'>&lt;-</span> <span class='fu'>BiCopCondSim</span>(<span class='fl'>500</span>, <span class='kw'>cond.val</span> <span class='kw'>=</span> <span class='fl'>0.7</span>, <span class='kw'>cond.var</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>obj</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='no'>sim1</span>)  <span class='co'># not uniform!</span></div><div class='img'><img src='BiCopCondSim-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>sim1</span> <span class='op'>&lt;-</span> <span class='fu'>BiCopCondSim</span><span class='op'>(</span><span class='fl'>500</span>, cond.val <span class='op'>=</span> <span class='fl'>0.7</span>, cond.var <span class='op'>=</span> <span class='fl'>1</span>, <span class='va'>obj</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>sim1</span><span class='op'>)</span>  <span class='co'># not uniform!</span>
+</div><div class='img'><img src='BiCopCondSim-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># simulate 500 observations of (U1 | U2 = 0.1)</span>
-<span class='no'>sim2</span> <span class='kw'>&lt;-</span> <span class='fu'>BiCopCondSim</span>(<span class='fl'>500</span>, <span class='kw'>cond.val</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>cond.var</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>obj</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='no'>sim2</span>)  <span class='co'># not uniform!</span></div><div class='img'><img src='BiCopCondSim-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>sim2</span> <span class='op'>&lt;-</span> <span class='fu'>BiCopCondSim</span><span class='op'>(</span><span class='fl'>500</span>, cond.val <span class='op'>=</span> <span class='fl'>0.1</span>, cond.var <span class='op'>=</span> <span class='fl'>2</span>, <span class='va'>obj</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>sim2</span><span class='op'>)</span>  <span class='co'># not uniform!</span>
+</div><div class='img'><img src='BiCopCondSim-4.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -263,7 +270,7 @@ object <code>obj</code>, the alternative version</p><pre><span class='fu'>BiCopC
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

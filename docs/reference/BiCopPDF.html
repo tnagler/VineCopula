@@ -73,7 +73,7 @@ parametric bivariate copula." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.3</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@ parametric bivariate copula." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -95,7 +95,7 @@ parametric bivariate copula." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/tnagler/VineCopula/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -122,7 +122,7 @@ parametric bivariate copula." />
 parametric bivariate copula.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>BiCopPDF</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='no'>family</span>, <span class='no'>par</span>, <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>check.pars</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>BiCopPDF</span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span>, <span class='va'>family</span>, <span class='va'>par</span>, par2 <span class='op'>=</span> <span class='fl'>0</span>, obj <span class='op'>=</span> <span class='cn'>NULL</span>, check.pars <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -209,22 +209,26 @@ care).</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If the family and parameter specification is stored in a <code><a href='BiCop.html'>BiCop()</a></code>
-object <code>obj</code>, the alternative version <br /></p><pre><span class='fu'>BiCopPDF</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='no'>obj</span>)</pre><p>can be used.</p>
+object <code>obj</code>, the alternative version <br /></p><pre><span class='fu'>BiCopPDF</span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span>, <span class='va'>obj</span><span class='op'>)</span></pre><p>can be used.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='BiCopCDF.html'>BiCopCDF()</a></code>, <code><a href='BiCopHfunc.html'>BiCopHfunc()</a></code>,
 <code><a href='BiCopSim.html'>BiCopSim()</a></code>, <code><a href='BiCop.html'>BiCop()</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Eike Brechmann</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
 <span class='co'>## simulate from a bivariate Student-t copula</span>
-<span class='no'>cop</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCop.html'>BiCop</a></span>(<span class='kw'>family</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>par</span> <span class='kw'>=</span> -<span class='fl'>0.7</span>, <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fl'>4</span>)
-<span class='no'>simdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span>(<span class='fl'>100</span>, <span class='no'>cop</span>)
+<span class='va'>cop</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BiCop.html'>BiCop</a></span><span class='op'>(</span>family <span class='op'>=</span> <span class='fl'>2</span>, par <span class='op'>=</span> <span class='op'>-</span><span class='fl'>0.7</span>, par2 <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
+<span class='va'>simdata</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='va'>cop</span><span class='op'>)</span>
 
 <span class='co'>## evaluate the density of the bivariate t-copula</span>
-<span class='no'>u1</span> <span class='kw'>&lt;-</span> <span class='no'>simdata</span>[,<span class='fl'>1</span>]
-<span class='no'>u2</span> <span class='kw'>&lt;-</span> <span class='no'>simdata</span>[,<span class='fl'>2</span>]
-<span class='fu'>BiCopPDF</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='no'>cop</span>)</div><div class='output co'>#&gt;   [1] 1.7476289 1.1253686 4.3948771 0.8726650 1.5970650 4.0665279 1.5506525
+<span class='va'>u1</span> <span class='op'>&lt;-</span> <span class='va'>simdata</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>
+<span class='va'>u2</span> <span class='op'>&lt;-</span> <span class='va'>simdata</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>
+<span class='fu'>BiCopPDF</span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span>, <span class='va'>cop</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   [1] 1.7476289 1.1253686 4.3948771 0.8726650 1.5970650 4.0665279 1.5506525
 #&gt;   [8] 3.2518440 0.3420938 0.9234262 1.3371767 0.1861758 1.2740615 1.5294965
 #&gt;  [15] 0.7933051 0.3425504 1.0041005 4.5411878 1.9548186 1.0939714 1.7351468
 #&gt;  [22] 1.4652813 0.6291736 1.7040858 1.6721897 2.8457657 1.9823741 1.3391780
@@ -240,8 +244,9 @@ object <code>obj</code>, the alternative version <br /></p><pre><span class='fu'
 #&gt;  [92] 1.7982885 1.6135021 1.8222352 0.4068980 1.3195279 4.0104640 3.1903099
 #&gt;  [99] 1.5967170 2.2580077</div><div class='input'>
 <span class='co'>## select a bivariate copula for the simulated data</span>
-<span class='no'>fit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopSelect.html'>BiCopSelect</a></span>(<span class='no'>u1</span>, <span class='no'>u2</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>fit</span>)</div><div class='output co'>#&gt; Family
+<span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BiCopSelect.html'>BiCopSelect</a></span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>fit</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Family
 #&gt; ------ 
 #&gt; No:    5
 #&gt; Name:  Frank
@@ -252,7 +257,7 @@ object <code>obj</code>, the alternative version <br /></p><pre><span class='fu'
 #&gt; 
 #&gt; Dependence measures
 #&gt; -------------------
-#&gt; Kendall's tau:    -0.54 (empirical = -0.52, p value &lt; 0.01)
+#&gt; Kendall's tau:    -0.55 (empirical = -0.52, p value &lt; 0.01)
 #&gt; Upper TD:         0 
 #&gt; Lower TD:         0 
 #&gt; 
@@ -262,7 +267,8 @@ object <code>obj</code>, the alternative version <br /></p><pre><span class='fu'
 #&gt; AIC:    -69.08 
 #&gt; BIC:    -66.47 
 #&gt; </div><div class='input'><span class='co'>## and evaluate its PDF</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span>(<span class='fu'>BiCopPDF</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='no'>fit</span>), <span class='fl'>3</span>)</div><div class='output co'>#&gt;   [1] 1.832 1.090 4.311 0.719 1.792 3.616 1.658 3.277 0.163 1.108 1.486 0.125
+<span class='fu'><a href='https://rdrr.io/r/base/Round.html'>round</a></span><span class='op'>(</span><span class='fu'>BiCopPDF</span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span>, <span class='va'>fit</span><span class='op'>)</span>, <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   [1] 1.832 1.090 4.311 0.719 1.792 3.616 1.658 3.277 0.163 1.108 1.486 0.125
 #&gt;  [13] 1.236 1.679 0.588 0.477 0.849 4.070 2.039 0.971 1.839 1.559 0.493 1.800
 #&gt;  [25] 1.788 3.064 2.168 1.330 2.795 2.779 1.294 1.220 2.113 0.712 2.070 1.487
 #&gt;  [37] 0.991 1.177 1.822 0.518 2.080 1.405 2.157 0.946 3.040 2.608 1.847 0.791
@@ -287,7 +293,7 @@ object <code>obj</code>, the alternative version <br /></p><pre><span class='fu'
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

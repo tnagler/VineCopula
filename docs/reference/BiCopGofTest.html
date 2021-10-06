@@ -76,7 +76,7 @@ and p-values." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.3</span>
       </span>
     </div>
 
@@ -84,7 +84,7 @@ and p-values." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -98,7 +98,7 @@ and p-values." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/tnagler/VineCopula/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -128,17 +128,17 @@ Huang and Prokhorov (2011) or based on Kendall's process
 and p-values.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>BiCopGofTest</span>(
-  <span class='no'>u1</span>,
-  <span class='no'>u2</span>,
-  <span class='no'>family</span>,
-  <span class='kw'>par</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>par2</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"white"</span>,
-  <span class='kw'>max.df</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>B</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>obj</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>BiCopGofTest</span><span class='op'>(</span>
+  <span class='va'>u1</span>,
+  <span class='va'>u2</span>,
+  <span class='va'>family</span>,
+  par <span class='op'>=</span> <span class='fl'>0</span>,
+  par2 <span class='op'>=</span> <span class='fl'>0</span>,
+  method <span class='op'>=</span> <span class='st'>"white"</span>,
+  max.df <span class='op'>=</span> <span class='fl'>30</span>,
+  B <span class='op'>=</span> <span class='fl'>100</span>,
+  obj <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -275,17 +275,21 @@ Econometrica, 50, 1-26.</p>
 
     <div class='dont-index'><p><code><a href='BiCopDeriv2.html'>BiCopDeriv2()</a></code>, <code><a href='BiCopDeriv.html'>BiCopDeriv()</a></code>,
 <code><a href='BiCopIndTest.html'>BiCopIndTest()</a></code>, <code><a href='BiCopVuongClarke.html'>BiCopVuongClarke()</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Ulf Schepsmeier, Wanling Huang, Jiying Luo, Eike Brechmann</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># simulate from a bivariate Clayton copula</span>
-<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>123</span>)
-<span class='no'>simdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span>(<span class='fl'>100</span>, <span class='fl'>3</span>, <span class='fl'>2</span>)
-<span class='no'>u1</span> <span class='kw'>&lt;-</span> <span class='no'>simdata</span>[,<span class='fl'>1</span>]
-<span class='no'>u2</span> <span class='kw'>&lt;-</span> <span class='no'>simdata</span>[,<span class='fl'>2</span>]
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>123</span><span class='op'>)</span>
+<span class='va'>simdata</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='fl'>3</span>, <span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>u1</span> <span class='op'>&lt;-</span> <span class='va'>simdata</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>
+<span class='va'>u2</span> <span class='op'>&lt;-</span> <span class='va'>simdata</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>
 
 <span class='co'># perform White's goodness-of-fit test for the true copula</span>
-<span class='fu'>BiCopGofTest</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='output co'>#&gt; $statistic
+<span class='fu'>BiCopGofTest</span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span>, family <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $statistic
 #&gt;           [,1]
 #&gt; [1,] 0.1928955
 #&gt; 
@@ -293,7 +297,8 @@ Econometrica, 50, 1-26.</p>
 #&gt; [1] 0.66
 #&gt; </div><div class='input'>
 <span class='co'># perform White's goodness-of-fit test for the Frank copula</span>
-<span class='fu'>BiCopGofTest</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='fl'>5</span>)</div><div class='output co'>#&gt; $statistic
+<span class='fu'>BiCopGofTest</span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span>, family <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $statistic
 #&gt;           [,1]
 #&gt; [1,] 0.2883409
 #&gt; 
@@ -301,7 +306,8 @@ Econometrica, 50, 1-26.</p>
 #&gt; [1] 0.58
 #&gt; </div><div class='input'>
 <span class='co'># perform Kendall's goodness-of-fit test for the true copula</span>
-<span class='fu'>BiCopGofTest</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kendall"</span>, <span class='kw'>B</span><span class='kw'>=</span><span class='fl'>50</span>)</div><div class='output co'>#&gt; $p.value.CvM
+<span class='fu'>BiCopGofTest</span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span>, family <span class='op'>=</span> <span class='fl'>3</span>, method <span class='op'>=</span> <span class='st'>"kendall"</span>, B<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $p.value.CvM
 #&gt; [1] 0.78
 #&gt; 
 #&gt; $p.value.KS
@@ -314,7 +320,8 @@ Econometrica, 50, 1-26.</p>
 #&gt; [1] 0.7013761
 #&gt; </div><div class='input'>
 <span class='co'># perform Kendall's goodness-of-fit test for the Frank copula</span>
-<span class='fu'>BiCopGofTest</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"kendall"</span>, <span class='kw'>B</span><span class='kw'>=</span><span class='fl'>50</span>)</div><div class='output co'>#&gt; $p.value.CvM
+<span class='fu'>BiCopGofTest</span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span>, family <span class='op'>=</span> <span class='fl'>5</span>, method <span class='op'>=</span> <span class='st'>"kendall"</span>, B<span class='op'>=</span><span class='fl'>50</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $p.value.CvM
 #&gt; [1] 0.02
 #&gt; 
 #&gt; $p.value.KS
@@ -342,7 +349,7 @@ Econometrica, 50, 1-26.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

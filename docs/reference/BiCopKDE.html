@@ -76,7 +76,7 @@ this function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.3</span>
       </span>
     </div>
 
@@ -84,7 +84,7 @@ this function." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -98,7 +98,7 @@ this function." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/tnagler/VineCopula/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -128,7 +128,7 @@ be passed to <code><a href='https://rdrr.io/pkg/kdecopula/man/kdecop.html'>kdeco
 this function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>BiCopKDE</span>(<span class='no'>u1</span>, <span class='no'>u2</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"contour"</span>, <span class='no'>margins</span>, <span class='no'>size</span>, <span class='kw'>kde.pars</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>BiCopKDE</span><span class='op'>(</span><span class='va'>u1</span>, <span class='va'>u2</span>, type <span class='op'>=</span> <span class='st'>"contour"</span>, <span class='va'>margins</span>, <span class='va'>size</span>, kde.pars <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -173,20 +173,30 @@ grid; default is 100 for <code>type = "contour"</code>, and 25 for <code>type = 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>For further details on estimation see <code><a href='https://rdrr.io/pkg/kdecopula/man/kdecop.html'>kdecopula::kdecop()</a></code>.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Thomas Nagler</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># simulate data from Joe copula</span>
-<span class='no'>cop</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCop.html'>BiCop</a></span>(<span class='fl'>3</span>, <span class='kw'>tau</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)
-<span class='no'>u</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span>(<span class='fl'>1000</span>, <span class='no'>cop</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/contour.html'>contour</a></span>(<span class='no'>cop</span>)  <span class='co'># true contours</span></div><div class='img'><img src='BiCopKDE-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>cop</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BiCop.html'>BiCop</a></span><span class='op'>(</span><span class='fl'>3</span>, tau <span class='op'>=</span> <span class='fl'>0.3</span><span class='op'>)</span>
+<span class='va'>u</span> <span class='op'>&lt;-</span> <span class='fu'><a href='BiCopSim.html'>BiCopSim</a></span><span class='op'>(</span><span class='fl'>1000</span>, <span class='va'>cop</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/contour.html'>contour</a></span><span class='op'>(</span><span class='va'>cop</span><span class='op'>)</span>  <span class='co'># true contours</span>
+</div><div class='img'><img src='BiCopKDE-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># kernel contours with standard normal margins</span>
-<span class='fu'>BiCopKDE</span>(<span class='no'>u</span>[, <span class='fl'>1</span>], <span class='no'>u</span>[, <span class='fl'>2</span>])</div><div class='img'><img src='BiCopKDE-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>BiCopKDE</span>(<span class='no'>u</span>[, <span class='fl'>1</span>], <span class='no'>u</span>[, <span class='fl'>2</span>], <span class='kw'>kde.pars</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>mult</span> <span class='kw'>=</span> <span class='fl'>0.5</span>))  <span class='co'># undersmooth</span></div><div class='img'><img src='BiCopKDE-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>BiCopKDE</span>(<span class='no'>u</span>[, <span class='fl'>1</span>], <span class='no'>u</span>[, <span class='fl'>2</span>], <span class='kw'>kde.pars</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>mult</span> <span class='kw'>=</span> <span class='fl'>2</span>))  <span class='co'># oversmooth</span></div><div class='img'><img src='BiCopKDE-4.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>BiCopKDE</span><span class='op'>(</span><span class='va'>u</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>u</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='img'><img src='BiCopKDE-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>BiCopKDE</span><span class='op'>(</span><span class='va'>u</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>u</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>, kde.pars <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>mult <span class='op'>=</span> <span class='fl'>0.5</span><span class='op'>)</span><span class='op'>)</span>  <span class='co'># undersmooth</span>
+</div><div class='img'><img src='BiCopKDE-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>BiCopKDE</span><span class='op'>(</span><span class='va'>u</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>u</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>, kde.pars <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>mult <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>  <span class='co'># oversmooth</span>
+</div><div class='img'><img src='BiCopKDE-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># kernel density with uniform margins</span>
-<span class='fu'>BiCopKDE</span>(<span class='no'>u</span>[, <span class='fl'>1</span>], <span class='no'>u</span>[, <span class='fl'>2</span>], <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"surface"</span>, <span class='kw'>zlim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>4</span>))</div><div class='img'><img src='BiCopKDE-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cop</span>, <span class='kw'>zlim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>4</span>))  <span class='co'># true density</span></div><div class='img'><img src='BiCopKDE-6.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>BiCopKDE</span><span class='op'>(</span><span class='va'>u</span><span class='op'>[</span>, <span class='fl'>1</span><span class='op'>]</span>, <span class='va'>u</span><span class='op'>[</span>, <span class='fl'>2</span><span class='op'>]</span>, type <span class='op'>=</span> <span class='st'>"surface"</span>, zlim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='BiCopKDE-5.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>cop</span>, zlim <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>4</span><span class='op'>)</span><span class='op'>)</span>  <span class='co'># true density</span>
+</div><div class='img'><img src='BiCopKDE-6.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># kernel contours are also used in pairs.copuladata</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>daxreturns</span>)
-<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='as.copuladata.html'>as.copuladata</a></span>(<span class='no'>daxreturns</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span>(<span class='no'>data</span>[<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>14</span>, <span class='fl'>15</span>)])</div><div class='img'><img src='BiCopKDE-7.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>daxreturns</span><span class='op'>)</span>
+<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='as.copuladata.html'>as.copuladata</a></span><span class='op'>(</span><span class='va'>daxreturns</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/pairs.html'>pairs</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>5</span>, <span class='fl'>14</span>, <span class='fl'>15</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='img'><img src='BiCopKDE-7.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -203,7 +213,7 @@ grid; default is 100 for <code>type = "contour"</code>, and 25 for <code>type = 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

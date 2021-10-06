@@ -73,7 +73,7 @@ character expression and vice versa." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.3</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@ character expression and vice versa." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -95,7 +95,7 @@ character expression and vice versa." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/tnagler/VineCopula/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -122,7 +122,7 @@ character expression and vice versa." />
 character expression and vice versa.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>BiCopName</span>(<span class='no'>family</span>, <span class='kw'>short</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>BiCopName</span><span class='op'>(</span><span class='va'>family</span>, short <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -189,22 +189,31 @@ character expression is returned, otherwise the long version.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='RVineTreePlot.html'>RVineTreePlot()</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Ulf Schepsmeier</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>## family number to character expression</span>
-<span class='no'>family</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>
-<span class='fu'>BiCopName</span>(<span class='no'>family</span>, <span class='kw'>short</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)  <span class='co'># short version</span></div><div class='output co'>#&gt; [1] "N"</div><div class='input'><span class='fu'>BiCopName</span>(<span class='no'>family</span>, <span class='kw'>short</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)         <span class='co'># long version</span></div><div class='output co'>#&gt; [1] "Gaussian"</div><div class='input'>
+<span class='va'>family</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
+<span class='fu'>BiCopName</span><span class='op'>(</span><span class='va'>family</span>, short <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>   <span class='co'># short version</span>
+</div><div class='output co'>#&gt; [1] "N"</div><div class='input'><span class='fu'>BiCopName</span><span class='op'>(</span><span class='va'>family</span>, short <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>   <span class='co'># long version</span>
+</div><div class='output co'>#&gt; [1] "Gaussian"</div><div class='input'>
 <span class='co'>## family character expression (short version) to number</span>
-<span class='no'>family</span> <span class='kw'>&lt;-</span> <span class='st'>"C"</span>
-<span class='fu'>BiCopName</span>(<span class='no'>family</span>)       <span class='co'># as number</span></div><div class='output co'>#&gt; C 
+<span class='va'>family</span> <span class='op'>&lt;-</span> <span class='st'>"C"</span>
+<span class='fu'>BiCopName</span><span class='op'>(</span><span class='va'>family</span><span class='op'>)</span>  <span class='co'># as number</span>
+</div><div class='output co'>#&gt; C 
 #&gt; 3 </div><div class='input'>
 <span class='co'>## family character expression (long version) to number</span>
-<span class='no'>family</span> <span class='kw'>&lt;-</span> <span class='st'>"Clayton"</span>
-<span class='fu'>BiCopName</span>(<span class='no'>family</span>)       <span class='co'># as number</span></div><div class='output co'>#&gt; Clayton 
+<span class='va'>family</span> <span class='op'>&lt;-</span> <span class='st'>"Clayton"</span>
+<span class='fu'>BiCopName</span><span class='op'>(</span><span class='va'>family</span><span class='op'>)</span>  <span class='co'># as number</span>
+</div><div class='output co'>#&gt; Clayton 
 #&gt;       3 </div><div class='input'>
 <span class='co'>## vectors of families</span>
-<span class='fu'>BiCopName</span>(<span class='fl'>1</span>:<span class='fl'>10</span>)    <span class='co'># as character expression</span></div><div class='output co'>#&gt;  [1] "N"   "t"   "C"   "G"   "F"   "J"   "BB1" "BB6" "BB7" "BB8"</div><div class='input'><span class='fu'>BiCopName</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Clayton"</span>,<span class='st'>"t"</span>,<span class='st'>"J"</span>))    <span class='co'># as number</span></div><div class='output co'>#&gt; Clayton       t       J 
+<span class='fu'>BiCopName</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span>    <span class='co'># as character expression</span>
+</div><div class='output co'>#&gt;  [1] "N"   "t"   "C"   "G"   "F"   "J"   "BB1" "BB6" "BB7" "BB8"</div><div class='input'><span class='fu'>BiCopName</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Clayton"</span>,<span class='st'>"t"</span>,<span class='st'>"J"</span><span class='op'>)</span><span class='op'>)</span>    <span class='co'># as number</span>
+</div><div class='output co'>#&gt; Clayton       t       J 
 #&gt;       3       2       6 </div><div class='input'>
 </div></pre>
   </div>
@@ -222,7 +231,7 @@ character expression is returned, otherwise the long version.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
