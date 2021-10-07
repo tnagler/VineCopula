@@ -57,8 +57,7 @@
 #' [BiCop()],
 #' [BiCopEst()],
 #' [plot.RVineMatrix()],
-#' [contour.RVineMatrix()],
-#' [foreach::foreach()]
+#' [contour.RVineMatrix()]
 #'
 #' @examples
 #'

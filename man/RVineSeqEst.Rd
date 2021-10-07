@@ -125,8 +125,7 @@ summary(RVineSeqEst(simdata, RVM, method = "mle", se = TRUE))
 \code{\link[=BiCop]{BiCop()}},
 \code{\link[=BiCopEst]{BiCopEst()}},
 \code{\link[=plot.RVineMatrix]{plot.RVineMatrix()}},
-\code{\link[=contour.RVineMatrix]{contour.RVineMatrix()}},
-\code{\link[foreach:foreach]{foreach::foreach()}}
+\code{\link[=contour.RVineMatrix]{contour.RVineMatrix()}}
 }
 \author{
 Ulf Schepsmeier, Jeffrey Dissmann, Thomas Nagler

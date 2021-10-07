@@ -74,8 +74,7 @@
 #' [BiCop()],
 #' [BiCopSelect()],
 #' [plot.RVineMatrix()],
-#' [contour.RVineMatrix()],
-#' [foreach::foreach()]
+#' [contour.RVineMatrix()]
 #'
 #' @references Brechmann, E. C., C. Czado, and K. Aas (2012). Truncated regular
 #' vines in high dimensions with applications to financial data. Canadian

@@ -164,8 +164,7 @@ returns. Computational Statistics & Data Analysis, 59 (1), 52-69.
 \code{\link[=BiCop]{BiCop()}},
 \code{\link[=BiCopSelect]{BiCopSelect()}},
 \code{\link[=plot.RVineMatrix]{plot.RVineMatrix()}},
-\code{\link[=contour.RVineMatrix]{contour.RVineMatrix()}},
-\code{\link[foreach:foreach]{foreach::foreach()}}
+\code{\link[=contour.RVineMatrix]{contour.RVineMatrix()}}
 }
 \author{
 Eike Brechmann, Thomas Nagler
