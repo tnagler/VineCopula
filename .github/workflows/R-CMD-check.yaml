@@ -48,6 +48,7 @@ jobs:
           Rscript -e "install.packages('remotes')" -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
+          Rscript -e "install.packages('rcmdcheck')"
 
       - name: Install GSL
         run:   |
