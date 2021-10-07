@@ -46,7 +46,7 @@
 #'
 #' Brechmann, E. C. and U. Schepsmeier (2013). Modeling Dependence with C- and
 #' D-Vine Copulas: The R Package CDVine. Journal of Statistical Software, 52
-#' (3), 1-27. <https://doi.org/10.18637/jss.v052.i03>.
+#' (3), 1-27. \doi{10.18637/jss.v052.i03}.
 #'
 #' Czado, C., U. Schepsmeier, and A. Min (2012). Maximum likelihood estimation
 #' of mixed C-vines with application to exchange rates. Statistical Modelling,
