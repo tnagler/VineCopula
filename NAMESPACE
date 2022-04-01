@@ -118,5 +118,6 @@ S3method(plot, RVineMatrix)
 S3method(contour, RVineMatrix)
 S3method(print, RVineMatrix)
 S3method(summary, RVineMatrix)
+S3method(dim, RVineMatrix)
 
 useDynLib("VineCopula")

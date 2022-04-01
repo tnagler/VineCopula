@@ -298,9 +298,7 @@ RVineMatrixNormalize <- function(RVM) {
 }
 
 dim.RVineMatrix <- function(x) {
-    RVine <- x
-    return(dim(RVine$Matrix)[1])
-    NextMethod("dim")
+    dim(x$Matrix)[1]
 }
 
 print.RVineMatrix <- function(x, ...) {
