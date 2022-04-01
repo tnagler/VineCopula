@@ -236,10 +236,10 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
         } else if (Copula.Types[i] %in% c(6, 16)) {
             # joe
             lb[i] <- 1.0001
-            ub[i] <- 50
+            ub[i] <- 30
         } else if (Copula.Types[i] %in% c(26, 36)) {
             # rotated joe
-            lb[i] <- -50
+            lb[i] <- -30
             ub[i] <- -1.0001
         } else if (Copula.Types[i] %in% c(7, 17)) {
             # bb1
@@ -494,6 +494,8 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
     newpar <- newpar2 <- matrix(0, d, d)
     newpar[posParams]  <- out1$par[1:nParams]
     newpar2[posParams2] <- out1$par[nParams + seq_len(nParams2)]
+    newpar[(oldRVM$family == 5) & (newpar == 0)] <- 1e-10
+
     # create RVineMatrix object
     out$RVM <- RVineMatrix(Matrix = oldRVM$Matrix,
                            family = oldRVM$family,
