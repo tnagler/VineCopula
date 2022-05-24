@@ -34,7 +34,7 @@ grid; default is 100 for \code{type = "contour"}, and 25 for \code{type = "surfa
 A kernel density estimate of the copula density is visualized. The function
 provides the same options as \code{\link[=plot.BiCop]{plot.BiCop()}}. Further arguments can
 be passed to \code{\link[kdecopula:kdecop]{kdecopula::kdecop()}} to modify the estimate. The
-\code{\link[kdecopula:kdecopula]{kdecopula::kdecopula-package()}} must be installed to use
+\code{\link[kdecopula:kdecopula-package]{kdecopula::kdecopula-package()}} must be installed to use
 this function.
 }
 \details{

@@ -1,4 +1,4 @@
-VineCopula 2.4.4 (October 6, 2021)
+VineCopula 2.4.4
 ----------------------------------------------------------------
 
 BUG FIXES
@@ -8,7 +8,7 @@ BUG FIXES
 * adapt `RVineMLE()` to tighter parameter bounds introduced in previous versions.
 
 
-VineCopula 2.4.3 (October 6, 2021)
+VineCopula 2.4.3
 ----------------------------------------------------------------
 
 BUG FIXES
@@ -19,7 +19,7 @@ BUG FIXES
 * Increased precision in boundary of unit cube (#77).
 
 
-VineCopula 2.4.2 (May 11, 2021)
+VineCopula 2.4.2
 ----------------------------------------------------------------
 
 BUG FIXES
@@ -30,7 +30,7 @@ BUG FIXES
 * Removed all calls to `closeAllConnections()`.
 
 
-VineCopula 2.4.1 (October 18, 2020)
+VineCopula 2.4.1
 ----------------------------------------------------------------
 
 DEPENDS
@@ -38,7 +38,7 @@ DEPENDS
   * Removed archived package `CDVine` from Suggests.
 
   
-VineCopula 2.4.0 (September 30, 2020)
+VineCopula 2.4.0
 ----------------------------------------------------------------
 
 NEW FEATURES
@@ -59,7 +59,7 @@ BUG FIXES
   
   
   
-VineCopula 2.3.0 (November 26, 2019)
+VineCopula 2.3.0
 ----------------------------------------------------------------
 
 DEPENDENCIES
@@ -81,7 +81,7 @@ BUG FIXES
     bounds (#64, thanks to @notEvil).
   
 
-VineCopula 2.2.0 (July 15, 2019)
+VineCopula 2.2.0
 ----------------------------------------------------------------
 
 NEW FEATURES
@@ -99,7 +99,7 @@ BUG FIXES
   * fix `length(condition) > 1` errors.
   
 
-VineCopula 2.1.8 (September 17, 2018)
+VineCopula 2.1.8
 ----------------------------------------------------------------
 
 BUG FIXES
@@ -107,7 +107,7 @@ BUG FIXES
   * prevent heap-buffer overflows in `BiCopHfuncDeriv(2)` (non-critical).
 
   
-VineCopula 2.1.7 (August 31, 2018)
+VineCopula 2.1.7
 ----------------------------------------------------------------
 
 BUG FIXES
@@ -122,7 +122,7 @@ BUG FIXES
   * fix parameters bounds for BB copulas in `RVineMLE()`.
   
 
-VineCopula 2.1.6 (June 18, 2018)
+VineCopula 2.1.6
 ----------------------------------------------------------------
 
 BUG FIXES
@@ -134,7 +134,7 @@ BUG FIXES
   * fixed typos in API documentation.
 
 
-VineCopula 2.1.5 (May 16, 2018)
+VineCopula 2.1.5
 ----------------------------------------------------------------
 
 NEW FEATURES
@@ -150,7 +150,7 @@ BUG FIXES
   * improved starting parameter for Joe copula MLE.
 
 
-VineCopula 2.1.4 (February 11, 2018)
+VineCopula 2.1.4
 ----------------------------------------------------------------
 
 NEW FEATURES
@@ -166,7 +166,7 @@ BUG FIXES
   * Fixed fix (non-critical) memory-access bug.
 
 
-VineCopula 2.1.3 (August 15, 2017)
+VineCopula 2.1.3
 ----------------------------------------------------------------
 
 NEW FEATURES
@@ -190,7 +190,7 @@ BUG FIXES
   * Fix bug in detecting C-vine copulas for `summary/print.RVineMatrix()` (#38).
     
 
-VineCopula 2.1.2 (April 24, 2017)
+VineCopula 2.1.2
 ----------------------------------------------------------------
 
 NEW FEATURES
@@ -213,7 +213,7 @@ BUG FIXES
   * Safer `BiCopEst()` for `method = "itau"`.
 
 
-VineCopula 2.1.1 (January 11, 2017)
+VineCopula 2.1.1
 ----------------------------------------------------------------
 
 IMPORTS
@@ -229,10 +229,10 @@ NEW FEATURES
   
 
 
-VineCopula 2.1.0 (December 23, 2016)
+VineCopula 2.1.0
 ----------------------------------------------------------------
 
-# DEPENDS
+DEPENDS
 
   * Now depends explicitly on `R (>= 3.1.0)`. So far, this dependence was
     implicit trhough our dependence on the copula package.
@@ -279,7 +279,7 @@ BUG FIXES
     
 
 
-VineCopula 2.0.5 (September 25, 2016)
+VineCopula 2.0.5
 ----------------------------------------------------------------
 
 DEPENDS
@@ -302,7 +302,7 @@ BUG FIXES
 
 
 
-VineCopula 2.0.4 (August 8, 2016)
+VineCopula 2.0.4
 ----------------------------------------------------------------
 
 NEW FEATURES
@@ -325,7 +325,7 @@ BUG FIXES
   * Fix bug in annotation of edges with Kendall's when using `plot.RVineMatrix`.
 
 
-VineCopula 2.0.1 (June 9, 2016)
+VineCopula 2.0.1
 ----------------------------------------------------------------
 
 BUG FIXES
@@ -333,7 +333,7 @@ BUG FIXES
   * fixed small memory leak (reported by Prof. Ripley, thanks!).
 
 
-VineCopula 2.0.0 (June 8, 2016)
+VineCopula 2.0.0
 ----------------------------------------------------------------
 
 MAINTAINER
@@ -448,7 +448,7 @@ BUG FIXES
     instabilities in -PDF and -Sim functions.
    
 
-VineCopula 1.6-1 (November 9, 2015)
+VineCopula 1.6-1
 ----------------------------------------------------------------
 
 DEPENDS:
@@ -461,7 +461,7 @@ BUG FIXES:
     change in the copula package.
   
 
-VineCopula 1.6 (July 16, 2015)
+VineCopula 1.6
 ----------------------------------------------------------------
 
 NEW FEATURES
@@ -485,7 +485,7 @@ IMPORTS
   * New version requires `igraph (>= 1.0.0)`.
 
 
-VineCopula 1.5 (June 2, 2015)
+VineCopula 1.5
 ----------------------------------------------------------------
 
 NEW FEATURES
@@ -528,7 +528,7 @@ BUG FIXES
   * `RVineCopSelect`: `RVM` object now uses variable names as provided by data.
 
 
-VineCopula 1.4 (January 26, 2015)
+VineCopula 1.4
 ----------------------------------------------------------------
 
 NEW FEATURES
@@ -538,7 +538,7 @@ NEW FEATURES
     However, both functions were not intended to be used for vectorized input.
 
 
-VineCopula 1.3-2 (January 19, 2015)
+VineCopula 1.3-2
 ----------------------------------------------------------------
 
 NEW AUTHOR
@@ -579,7 +579,7 @@ BUG FIXES
   * Import of function `ad.test` from `ADGofTest` for `gof_PIT.R`.
 
 
-VineCopula 1.3-1 (September 10, 2014)
+VineCopula 1.3-1
 ----------------------------------------------------------------
 
 BUG FIXES
@@ -598,7 +598,7 @@ BUG FIXES
     (Reported by Radek Solnicky. Thanks!)
 
 
-VineCopula 1.3 (March 26, 2014)
+VineCopula 1.3
 ----------------------------------------------------------------
 
 MAINTAINER
@@ -606,7 +606,7 @@ MAINTAINER
  * changed from Ulf Schepsmeier to Tobias Erhardt (tobias.erhardt@tum.de).
 
 
-VineCopula 1.2-1 (March 21, 2014)
+VineCopula 1.2-1
 ----------------------------------------------------------------
 
 NEW FEATURES
@@ -618,7 +618,7 @@ IMPORTS
   * Moved copula from `Depends` to the more appropriate `Import` field.
 
 
-VineCopula 1.2-1 (March 4, 2014)
+VineCopula 1.2-1
 ----------------------------------------------------------------
 
 NEW FEATURES
@@ -656,7 +656,7 @@ BUG FIXES
     variable type causing an error in the second and higher order tree selection.
 
 
-VineCopula 1.2 (October 09, 2013)
+VineCopula 1.2
 ----------------------------------------------------------------
 
 NEW FEATURES
@@ -720,7 +720,7 @@ DOCUMENTAION
   * Updated manual files.
 
 
-VineCopula 1.1-2 (July 09, 2013)
+VineCopula 1.1-2
 ----------------------------------------------------------------
 
 NEW AUTHOR
@@ -749,7 +749,7 @@ BUG FIXES
   * Fixed memory problem in the C-function `ktau` (`TauMatrix`).
   
 
-VineCopula 1.1-1 (February 7, 2013)
+VineCopula 1.1-1
 ----------------------------------------------------------------
 
 BUG FIXES
@@ -757,7 +757,7 @@ BUG FIXES
   * Fixed issue with the inverse h-function of the Gumbel copula.
 
 
-VineCopula 1.1 (February 4, 2013)
+VineCopula 1.1
 ----------------------------------------------------------------
 
 NEW FEATURES
