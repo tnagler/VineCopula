@@ -12,10 +12,10 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - { os: windows-latest, r: '4.1', args: "--no-manual"}
-        - { os: macOS-latest, r: '4.1', args: "--no-manual"}
+        - { os: windows-latest, r: '4.2', args: "--no-manual"}
+        - { os: macOS-latest, r: '4.2', args: "--no-manual"}
         - { os: macOS-latest, r: 'devel', args: "--no-manual"}
-        - { os: ubuntu-20.04, r: '4.1', cran: "https://demo.rstudiopm.com/all/__linux__/focal/latest", args: "--no-manual" }
+        - { os: ubuntu-20.04, r: '4.2', cran: "https://demo.rstudiopm.com/all/__linux__/focal/latest", args: "--no-manual" }
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
@@ -42,14 +42,12 @@ jobs:
 
       - name: Install system dependencies
         if: runner.os == 'Linux'
-        env:
-          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
         run: |
-          Rscript -e "install.packages('remotes')" -e "remotes::install_github('r-hub/sysreqs')"
-          sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
-          sudo -s eval "$sysreqs"
-          sudo apt-get install -y libcurl4-openssl-dev
-          Rscript -e "install.packages('rcmdcheck')"
+          sudo apt-get install --no-install-recommends -y libcurl4-openssl-dev
+          while read -r cmd
+          do
+            eval sudo $cmd
+          done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
 
       - name: Install GSL
         run:   |
