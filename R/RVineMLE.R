@@ -216,18 +216,18 @@ RVineMLE <- function(data, RVM, start = RVM$par, start2 = RVM$par2, maxit = 200,
         } else if (Copula.Types[i] %in% c(3, 13)) {
             # clayton
             lb[i] <- 1e-04
-            ub[i] <- 100
+            ub[i] <- 28
         } else if (Copula.Types[i] %in% c(23, 33)) {
             # rotated clayton
-            lb[i] <- -100
+            lb[i] <- -28
             ub[i] <- -1e-04
         } else if (Copula.Types[i] %in% c(4, 14)) {
             # gumbel
             lb[i] <- 1.0001
-            ub[i] <- 50
+            ub[i] <- 17
         } else if (Copula.Types[i] %in% c(24, 34)) {
             # rotated gumbel
-            lb[i] <- -50
+            lb[i] <- -17
             ub[i] <- -1.0001
         } else if (Copula.Types[i] == 5) {
             # frank
