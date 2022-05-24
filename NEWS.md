@@ -1,5 +1,17 @@
+VineCopula 2.4.4 (October 6, 2021)
+----------------------------------------------------------------
+
+BUG FIXES
+
+* explicitly export method `dim.RVineMatrix()`.
+
+* adapt `RVineMLE()` to tighter parameter bounds introduced in previous versions.
+
+
 VineCopula 2.4.3 (October 6, 2021)
 ----------------------------------------------------------------
+
+BUG FIXES
 
 * Fix inversion of Kendall's tau for Frank copula (#78, #79, thanks to 
   @oezgesahin).  
@@ -9,6 +21,8 @@ VineCopula 2.4.3 (October 6, 2021)
 
 VineCopula 2.4.2 (May 11, 2021)
 ----------------------------------------------------------------
+
+BUG FIXES
 
 * Improved numeric stability by more conservative parameter bounds (#74, 
   thanks to @oezgesahin).
