@@ -255,7 +255,7 @@ extract_from_BiCop <- function(args) {
     if (is.symbol(args$par))
         args$par <- NA
     # has the short version BiCop...(u1, u2, obj) been used?
-    if (class(args$family) == "BiCop")
+    if (inherits(args$family, "BiCop"))
         args$obj <- args$family
     # store info from obj into family par and par2
     if (!is.null(args$obj)) {

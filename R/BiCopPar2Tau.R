@@ -253,7 +253,7 @@ BiCopPar2Tau <- function(family, par, par2 = 0, obj = NULL, check.pars = TRUE) {
     # fix for SemiParBIVProbit package
     dims <- set_dims(family, par, par2)
     # set arbitrary par2 for t-copula
-    if (class(family) != "BiCop")
+    if (!inherits(family, "BiCop"))
         par2[family == 2] <- par2[family == 2] + 4
     ## preprocessing of arguments
     args <- preproc(c(as.list(environment()), call = match.call()),

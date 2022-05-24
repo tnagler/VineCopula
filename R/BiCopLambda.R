@@ -108,14 +108,14 @@ BiCopLambda <- function(u1 = NULL, u2 = NULL, family = "emp", par = 0, par2 = 0,
                         PLOT = TRUE, obj = NULL, ...) {
     ## extract family and parameters if BiCop object is provided
     if (!is.null(obj)) {
-        stopifnot(class(obj) == "BiCop")
+        stopifnot(inherits(obj, "BiCop"))
         family <- obj$family
         par <- obj$par
         par2 <- obj$par2
     }
-    if (class(u1) == "BiCop") {
+    if (inherits(u1, "BiCop")) {
         # for short hand usage extract from u1
-        if (class(u2) == "logical")
+        if (inherits(u2, "logical"))
             PLOT <- u2
         obj <- u1
         family <- obj$family
@@ -123,9 +123,9 @@ BiCopLambda <- function(u1 = NULL, u2 = NULL, family = "emp", par = 0, par2 = 0,
         par2 <- obj$par2
         u1 <- NULL
     }
-    if (class(family) == "BiCop") {
+    if (inherits(family, "BiCop")) {
         # for short hand usage extract from family
-        if (class(par) == "logical")
+        if (inherits(par, "logical"))
             PLOT <- par
         obj <- family
         family <- obj$family
