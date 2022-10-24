@@ -7,9 +7,10 @@ by Uwe Ligges).
 * CRAN win builder (devel)
 * macOS Catalina 10.15 (devel, release)
 
-Check status summary:
+## Check status summary
                   WARNING NOTE OK
   Source packages       0    0  1
   Reverse depends       1    4 10
 
+* Warning unrelated to this package.
 

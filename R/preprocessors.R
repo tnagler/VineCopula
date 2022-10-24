@@ -264,6 +264,15 @@ extract_from_BiCop <- function(args) {
         args$par <- args$obj$par
         args$par2 <- args$obj$par2
     }
+    # make sure the family has appropriate form
+    if (!is.numeric(args$family)) {
+        stop(paste0("'family' must be numeric (not ", class(args$family), ")"),
+             call. = FALSE)
+    }
+    if (!isTRUE(all.equal(args$family, round(args$family)))) {
+        stop("'family' must be an integer", call. = FALSE)
+    }
+
     # set parameter if independence copula was specified without
     if (is.null(args$par) & (all(args$family == 0)))
         args$par <- 0
