@@ -327,7 +327,7 @@ void SimulateBj(double* S, int *T, int* d, int* B, int* method, int *alpha, doub
 
 	for(m=0;m<*B;m++)
 	{
-		for(i=1;i<=*d;i++) { tmp[i] = runif(0,1);}
+		for(i=0;i<*d;i++) { tmp[i] = runif(0,1);}
 		qsort(tmp, *d, sizeof(double), comp_nums);
 		ZStar(tmp,d,ustar);		//Transformation von Berg and Bakken (2007)
 
