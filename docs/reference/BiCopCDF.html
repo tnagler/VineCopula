@@ -18,7 +18,7 @@ given parametric bivariate copula."><!-- mathjax --><script src="https://cdnjs.c
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -62,6 +62,8 @@ given parametric bivariate copula.</p>
     <h2>Arguments</h2>
     <dl><dt>u1, u2</dt>
 <dd><p>numeric vectors of equal length with values in \([0,1]\).</p></dd>
+
+
 <dt>family</dt>
 <dd><p>integer; single number or vector of size <code>length(u1)</code>;
 defines the bivariate copula family: <br><code>0</code> = independence copula <br><code>1</code> = Gaussian copula <br><code>2</code> = Student t copula (t-copula) <br><code>3</code> = Clayton copula <br><code>4</code> = Gumbel copula <br><code>5</code> = Frank copula <br><code>6</code> = Joe copula <br><code>7</code> = BB1 copula <br><code>8</code> = BB6 copula <br><code>9</code> = BB7 copula <br><code>10</code> = BB8 copula <br><code>13</code> = rotated Clayton copula (180 degrees; <code>survival Clayton'') \cr `14` = rotated Gumbel copula (180 degrees; </code>survival Gumbel'') <br><code>16</code> = rotated Joe copula (180 degrees; <code>survival Joe'') \cr `17` = rotated BB1 copula (180 degrees; </code>survival BB1'')<br><code>18</code> = rotated BB6 copula (180 degrees; <code>survival BB6'')\cr `19` = rotated BB7 copula (180 degrees; </code>survival BB7'')<br><code>20</code> = rotated BB8 copula (180 degrees; ``survival BB8'')<br><code>23</code> = rotated Clayton copula (90 degrees) <br>
@@ -86,24 +88,35 @@ defines the bivariate copula family: <br><code>0</code> = independence copula <b
 `214` = rotated Tawn type 2 copula (180 degrees) <br>
 `224` = rotated Tawn type 2 copula (90 degrees) <br>
 `234` = rotated Tawn type 2 copula (270 degrees) <br></p></dd>
+
+
 <dt>par</dt>
 <dd><p>numeric; single number or vector of size <code>length(u1)</code>;
 copula parameter.</p></dd>
+
+
 <dt>par2</dt>
 <dd><p>numeric; single number or vector of size <code>length(u1)</code>;
 second parameter for bivariate copulas with two parameters (BB1, BB6, BB7,
 BB8, Tawn type 1 and type 2; default: <code>par2 = 0</code>).</p></dd>
+
+
 <dt>obj</dt>
 <dd><p><code>BiCop</code> object containing the family and parameter
 specification.</p></dd>
+
+
 <dt>check.pars</dt>
 <dd><p>logical; default is <code>TRUE</code>; if <code>FALSE</code>, checks
 for family/parameter-consistency are omitted (should only be used with
 care).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A numeric vector of the bivariate copula distribution function</p><ul><li><p>of the copula <code>family</code></p></li>
+    
+
+<p>A numeric vector of the bivariate copula distribution function</p><ul><li><p>of the copula <code>family</code></p></li>
 <li><p>with parameter(s) <code>par</code>, <code>par2</code></p></li>
 <li><p>evaluated at <code>u1</code> and <code>u2</code>.</p></li>
 </ul></div>
@@ -284,7 +297,7 @@ integer before calculation of the CDF.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -21,7 +21,7 @@ and p-values."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/li
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -78,6 +78,8 @@ and p-values.</p>
     <h2>Arguments</h2>
     <dl><dt>u1, u2</dt>
 <dd><p>Numeric vectors of equal length with values in \([0,1]\).</p></dd>
+
+
 <dt>family</dt>
 <dd><p>An integer defining the bivariate copula family: <br><code>0</code> = independence copula <br><code>1</code> = Gaussian copula <br><code>2</code> = Student t copula (t-copula) (only for <code>method = "white"</code>; see details)<br><code>3</code> = Clayton copula <br><code>4</code> = Gumbel copula <br><code>5</code> = Frank copula <br><code>6</code> = Joe copula <br><code>7</code> = BB1 copula (only for <code>method = "kendall"</code>)<br><code>8</code> = BB6 copula (only for <code>method = "kendall"</code>)<br><code>9</code> = BB7 copula (only for <code>method = "kendall"</code>)<br><code>10</code> = BB8 copula (only for <code>method ="kendall"</code>)<br><code>13</code> = rotated Clayton copula (180 degrees; <code>survival Clayton'') \cr `14` = rotated Gumbel copula (180 degrees; </code>survival Gumbel'') <br><code>16</code> = rotated Joe copula (180 degrees; <code>survival Joe'') \cr `17` = rotated BB1 copula (180 degrees; </code>survival BB1'';
 only for <code>method = "kendall"</code>)<br><code>18</code> = rotated BB6 copula (180 degrees; <code>survival BB6''; only for `method = "kendall"`)\cr `19` = rotated BB7 copula (180 degrees; </code>survival BB7'';
@@ -97,45 +99,66 @@ only for <code>method = "kendall"</code>)<br>
 `38` = rotated BB6 copula (270 degrees; only for `method = "kendall"`) <br>
 `39` = rotated BB7 copula (270 degrees; only for `method = "kendall"`) <br>
 `40` = rotated BB8 copula (270 degrees; only for `method = "kendall"`)</p></dd>
+
+
 <dt>par</dt>
 <dd><p>Copula parameter (optional).</p></dd>
+
+
 <dt>par2</dt>
 <dd><p>Second parameter for bivariate t-copula (optional); default:
 <code>par2 = 0</code>.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>A string indicating the goodness-of-fit method:<br><code>"white"</code> = goodness-of-fit test based on White's information matrix
 equality (default) <br><code>"kendall"</code> = goodness-of-fit test based on Kendall's process</p></dd>
+
+
 <dt>max.df</dt>
 <dd><p>Numeric; upper bound for the estimation of the degrees of
 freedom parameter of the t-copula (default: <code>max.df = 30</code>).</p></dd>
+
+
 <dt>B</dt>
 <dd><p>Integer; number of bootstrap samples (default: <code>B = 100</code>).
 For <code>B = 0</code> only the the test statistics are returned.<br> WARNING: If
 <code>B</code> is chosen too large, computations will take very long.</p></dd>
+
+
 <dt>obj</dt>
 <dd><p><code>BiCop</code> object containing the family and parameter
 specification.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>For <code>method = "white"</code>:</p>
+    
+
+<p>For <code>method = "white"</code>:</p>
 <dl><dt>p.value</dt>
 <dd><p>Asymptotic p-value.</p></dd>
+
 <dt>statistic</dt>
 <dd><p>The observed test statistic.</p></dd>
-</dl><p><br>For <code>method ="kendall"</code></p>
+</dl><p><br></p>
+
+
+<p>For <code>method ="kendall"</code></p>
 <dl><dt>p.value.CvM</dt>
 <dd><p>Bootstrapped p-value of the goodness-of-fit
 test using the Cramer-von Mises statistic (if <code>B &gt; 0</code>).</p></dd>
+
 <dt>p.value.KS</dt>
 <dd><p>Bootstrapped p-value of the goodness-of-fit test using the
 Kolmogorov-Smirnov statistic (if <code>B &gt; 0</code>).</p></dd>
-<dt>statistic.CvM</dt>
+ <dt>statistic.CvM</dt>
 <dd><p>The
 observed Cramer-von Mises test statistic.</p></dd>
-<dt>statistic.KS</dt>
+ <dt>statistic.KS</dt>
 <dd><p>The observed
 Kolmogorov-Smirnov test statistic.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -263,7 +286,7 @@ Econometrica, 50, 1-26.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

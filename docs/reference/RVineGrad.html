@@ -19,7 +19,7 @@ evaluates it on a given copula data set."><!-- mathjax --><script src="https://c
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -71,6 +71,8 @@ evaluates it on a given copula data set.</p>
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>An N x d data matrix (with uniform margins).</p></dd>
+
+
 <dt>RVM</dt>
 <dd><p>An <code><a href="RVineMatrix.html">RVineMatrix()</a></code> object including the structure and
 the pair-copula families and parameters. <br>
@@ -81,23 +83,37 @@ families are allowed in <code>RVM$family</code> <br><code>0</code> = independenc
 `33` = rotated Clayton copula (270 degrees) <br>
 `34` = rotated Gumbel copula (270 degrees) <br>
 `36` = rotated Joe copula (270 degrees) <br></p></dd>
+
+
 <dt>par</dt>
 <dd><p>A d x d matrix with the pair-copula parameters (optional;
 default: <code>par = RVM$par</code>).</p></dd>
+
+
 <dt>par2</dt>
 <dd><p>A d x d matrix with the second parameters of pair-copula
 families with two parameters (optional; default: <code>par2 = RVM$par2</code>).</p></dd>
+
+
 <dt>start.V</dt>
 <dd><p>Transformations (h-functions and log-likelihoods of each
 pair-copula) of previous calculations (see output; default: <code>start.V = NA</code>).</p></dd>
+
+
 <dt>posParams</dt>
 <dd><p>A d x d matrix indicating which copula has to be considered
 in the gradient (default: <code>posParams = (RVM$family &gt; 0)</code>).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>gradient The calculated gradient of the log-likelihood value
-of the R-vine copula model. (three matrices: <code>direct</code>, <code>indirect</code>and <code>value</code>).</p>
+    
+
+<p>gradient The calculated gradient of the log-likelihood value
+of the R-vine copula model. (three matrices: <code>direct</code>, <code>indirect</code></p>
+
+
+<p>and <code>value</code>).</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -204,7 +220,7 @@ vine copula models. Computational Statistics, 28 (6), 2679-2707
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

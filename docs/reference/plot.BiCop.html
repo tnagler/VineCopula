@@ -21,7 +21,7 @@ BiCopLambda())."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -72,23 +72,32 @@ plot. Optionally, the density can be coupled with standard normal margins
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p><code>BiCop object.</code></p></dd>
+
+
 <dt>type</dt>
 <dd><p>plot type; either <code>"surface"</code>, <code>"contour"</code>, or
 <code>"lambda"</code> (partial matching is activated); the latter is only
 implemented for a few families (c.f., <code><a href="BiCopLambda.html">BiCopLambda()</a></code>).</p></dd>
+
+
 <dt>margins</dt>
 <dd><p>only relevant for types <code>"contour"</code> and
 <code>"surface"</code>; options are: <code>"unif"</code> for the original copula density,
 <code>"norm"</code> for the transformed density with standard normal margins,
 <code>"exp"</code> with standard exponential margins, and  <code>"flexp"</code> with
 flipped exponential margins. Default is <code>"norm"</code> for <code>type = "contour"</code>, and <code>"unif"</code> for <code>type = "surface"</code>.</p></dd>
+
+
 <dt>size</dt>
 <dd><p>integer; only relevant for types <code>"contour"</code> and
 <code>"surface"</code>; the plot is based on values on a \(size x size\) grid;
 default is 100 for <code>type = "contour"</code>, and 25 for <code>type = "surface"</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>optional arguments passed to <code><a href="https://rdrr.io/r/graphics/contour.html" class="external-link">contour()</a></code> or
 <code>wireframe()</code>.</p></dd>
+
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -127,7 +136,7 @@ default is 100 for <code>type = "contour"</code>, and 25 for <code>type = "surfa
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

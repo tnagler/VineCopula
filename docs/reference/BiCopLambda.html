@@ -18,7 +18,7 @@ data."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathj
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -72,6 +72,8 @@ data.</p>
     <dl><dt>u1, u2</dt>
 <dd><p>Data vectors of equal length with values in \([0,1]\) (default:
 <code>u1</code> and <code>u2 = NULL</code>).</p></dd>
+
+
 <dt>family</dt>
 <dd><p>An integer defining the bivariate copula family or indicating
 the empirical lambda-function: <br><code>"emp"</code> = empirical lambda-function
@@ -79,29 +81,42 @@ the empirical lambda-function: <br><code>"emp"</code> = empirical lambda-functio
 (no closed formula available) <br><code>2</code> = Student-t copula; the theoretical lambda-function is simulated
 (no closed formula available) <br><code>3</code> = Clayton copula <br><code>4</code> = Gumbel copula <br><code>5</code> = Frank copula <br><code>6</code> = Joe copula <br><code>7</code> = BB1 copula <br><code>8</code> = BB6 copula <br><code>9</code> = BB7 copula <br><code>10</code> = BB8
 copula</p></dd>
+
+
 <dt>par</dt>
 <dd><p>Copula parameter; if the empirical lambda-function is chosen,
 <code>par = NULL</code> or <code>0</code> (default).</p></dd>
+
+
 <dt>par2</dt>
 <dd><p>Second copula parameter for t-, BB1, BB6, BB7 and BB8 copulas
 (default: <code>par2 = 0</code>).</p></dd>
+
+
 <dt>PLOT</dt>
 <dd><p>Logical; whether the results are plotted. If <code>PLOT = FALSE</code>, the values <br><code>empLambda</code> and/or <code>theoLambda</code> are
 returned (see below; default: <code>PLOT = TRUE</code>).</p></dd>
+
+
 <dt>obj</dt>
 <dd><p><code>BiCop</code> object containing the family and parameter
 specification.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional plot arguments.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <dl><dt>empLambda</dt>
 <dd><p>If the empirical lambda-function is chosen and
 <code>PLOT = FALSE</code>, a vector of the empirical lambda's is returned.</p></dd>
+
 <dt>theoLambda</dt>
 <dd><p>If the theoretical lambda-function is chosen and
 <code>PLOT = FALSE</code>, a vector of the theoretical lambda's is returned.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -183,7 +198,7 @@ thesis, Technische Universitaet Muenchen.<br><a href="https://mediatum.ub.tum.de
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

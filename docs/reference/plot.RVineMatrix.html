@@ -21,7 +21,7 @@ pair-copula. contour.RVineMatrix produces a matrix of contour plots
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -80,24 +80,38 @@ pair-copula. <code>contour.RVineMatrix</code> produces a matrix of contour plots
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p><code>RVineMatrix</code> object.</p></dd>
+
+
 <dt>tree</dt>
 <dd><p><code>"ALL"</code> or integer vector; specifies which trees are
 plotted.</p></dd>
+
+
 <dt>xylim</dt>
 <dd><p>numeric vector of length 2; sets <code>xlim</code> and <code>ylim</code>
 for the contours</p></dd>
+
+
 <dt>cex.nums</dt>
 <dd><p>numeric; expansion factor for font of the numbers.</p></dd>
+
+
 <dt>data</dt>
 <dd><p>a data matrix for creating kernel density contours of each pair.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Arguments passed to
 <code><a href="https://rdrr.io/pkg/network/man/plot.network.html" class="external-link">network::plot.network()</a></code> or
 <code><a href="plot.BiCop.html">plot.BiCop()</a></code> respectively.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>integer; specifies how to make use of variable names: <br><code>0</code> = variable names are ignored, <br><code>1</code> = variable names are
 used to annotate vertices, <br><code>2</code> = uses numbers in plot and adds a
 legend for variable names.</p></dd>
+
+
 <dt>edge.labels</dt>
 <dd><p>character; either a vector of edge labels or one of the
 following: <br><code>"family"</code> = pair-copula family abbreviation (see
@@ -105,12 +119,17 @@ following: <br><code>"family"</code> = pair-copula family abbreviation (see
 pair-copula parameters, <br><code>"tau"</code> = pair-copula Kendall's tau (by
 conversion of parameters) <br><code>"family-par"</code> = pair-copula family and
 parameters <br><code>"family-tau"</code> = pair-copula family and Kendall's tau.</p></dd>
+
+
 <dt>legend.pos</dt>
 <dd><p>the <code>x</code> argument for
 <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">graphics::legend()</a></code>.</p></dd>
+
+
 <dt>interactive</dt>
 <dd><p>logical; if TRUE, the user is asked to adjust the
 positioning of vertices with his mouse.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -161,7 +180,7 @@ be <code>1.25/length(tree)*(d - min(tree))</code> times the plot width.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -66,15 +66,22 @@
     <dl><dt>x</dt>
 <dd><p>\(n\times d\)-matrix of random variates to be converted to
 pseudo-observations.</p></dd>
+
+
 <dt>na.last, ties.method</dt>
 <dd><p>are passed to <code><a href="https://rdrr.io/r/base/rank.html" class="external-link">rank()</a></code>; see there.</p></dd>
+
+
 <dt>lower.tail</dt>
 <dd><p><code><a href="https://rdrr.io/r/base/logical.html" class="external-link">logical()</a></code> which, if <code>FALSE</code>, returns the
 pseudo-observations when applying the empirical marginal survival functions.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>matrix of the same dimensions as <code>x</code> containing the
+    
+
+<p>matrix of the same dimensions as <code>x</code> containing the
 pseudo-observations.</p>
     </div>
     <div id="details">
@@ -111,18 +118,21 @@ avoid problems with density evaluation at the boundaries. Note that
 <span class="r-out co"><span class="r-pr">#&gt;</span>     lower.tail = TRUE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     ties.method &lt;- match.arg(ties.method)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     U &lt;- if (!is.null(dim(x))) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         apply(x, 2, rank, na.last = na.last, ties.method = ties.method)/(nrow(x) + </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     U &lt;- if (!is.null(dim(x))) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         R &lt;- apply(x, 2, rank, na.last = na.last, ties.method = ties.method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         apply(R, 2, function(x) x/(sum(!is.na(x)) + 1))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     else {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         rank(x, na.last = na.last, ties.method = ties.method)/(sum(!is.na(x)) + </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             1)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     else rank(x, na.last = na.last, ties.method = ties.method)/(length(x) + </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     if (inherits(x, "zoo")) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         attributes(U) &lt;- attributes(x)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     if (lower.tail) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         U</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     else 1 - U</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55a893e9f6e0&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x560ea92e5ea0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:VineCopula&gt;</span>
 <span class="r-in"></span>
 <span class="r-in"><span class="co">## simulate data from a multivariate normal distribution</span></span>
@@ -155,7 +165,7 @@ avoid problems with density evaluation at the boundaries. Note that
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

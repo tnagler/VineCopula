@@ -1,3 +1,15 @@
+VineCopula 2.4.5
+----------------------------------------------------------------
+
+BUG FIXES
+
+* better sanity checks for family argument.
+
+* fix C-loop in `BiCopGofTest()`.
+
+* fix NA handling in `pobs()`.
+
+
 VineCopula 2.4.4
 ----------------------------------------------------------------
 

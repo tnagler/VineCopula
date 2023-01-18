@@ -19,7 +19,7 @@ parameter estimates are obtained by maximum likelihood estimation."><!-- mathjax
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -76,6 +76,8 @@ parameter estimates are obtained by maximum likelihood estimation.</p>
     <h2>Arguments</h2>
     <dl><dt>u1, u2</dt>
 <dd><p>Data vectors of equal length with values in \([0,1]\).</p></dd>
+
+
 <dt>familyset</dt>
 <dd><p>Vector of bivariate copula families to select from.
 The vector has to include at least one bivariate copula
@@ -105,31 +107,47 @@ families: <br><code>0</code> = independence copula <br><code>1</code> = Gaussian
 `214` = rotated Tawn type 2 copula (180 degrees) <br>
 `224` = rotated Tawn type 2 copula (90 degrees) <br>
 `234` = rotated Tawn type 2 copula (270 degrees) <br></p></dd>
+
+
 <dt>selectioncrit</dt>
 <dd><p>Character indicating the criterion for bivariate copula
 selection. Possible choices: <code>selectioncrit = "AIC"</code> (default),
 <code>"BIC"</code>, or <code>"logLik"</code>.</p></dd>
+
+
 <dt>indeptest</dt>
 <dd><p>Logical; whether a hypothesis test for the independence of
 <code>u1</code> and <code>u2</code> is performed before bivariate copula selection
 (default: <code>indeptest = FALSE</code>; see <code><a href="BiCopIndTest.html">BiCopIndTest()</a></code>).  The
 independence copula is chosen if the null hypothesis of independence cannot
 be rejected.</p></dd>
+
+
 <dt>level</dt>
 <dd><p>Numeric; significance level of the independence test (default:
 <code>level = 0.05</code>).</p></dd>
+
+
 <dt>weights</dt>
 <dd><p>Numerical; weights for each observation (optional).</p></dd>
+
+
 <dt>rotations</dt>
 <dd><p>If <code>TRUE</code>, all rotations of the families in
 <code>familyset</code> are included (or subtracted).</p></dd>
+
+
 <dt>se</dt>
 <dd><p>Logical; whether standard error(s) of parameter estimates is/are
 estimated (default: <code>se = FALSE</code>).</p></dd>
+
+
 <dt>presel</dt>
 <dd><p>Logical; whether to exclude families before fitting based on
 symmetry properties of the data. Makes the selection about 30% faster
 (on average), but may yield slightly worse results in few special cases.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>indicates the estimation method: either maximum
 likelihood estimation (<code>method = "mle"</code>; default) or inversion of
@@ -137,26 +155,36 @@ Kendall's tau (<code>method = "itau"</code>). For <code>method = "itau"</code> o
 one parameter families and the Student t copula can be used (<code>family = 1,2,3,4,5,6,13,14,16,23,24,26,33,34</code> or <code>36</code>). For the t-copula,
 <code>par2</code> is found by a crude profile likelihood optimization over the
 interval (2, 10].</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code><a href="BiCop.html">BiCop()</a></code>, augmented with the following
+    
+
+<p>An object of class <code><a href="BiCop.html">BiCop()</a></code>, augmented with the following
 entries:</p>
 <dl><dt>se, se2</dt>
 <dd><p>standard errors for the parameter estimates (if
 <code>se = TRUE</code>,</p></dd>
+
 <dt>nobs</dt>
 <dd><p>number of observations,</p></dd>
+
 <dt>logLik</dt>
 <dd><p>log likelihood</p></dd>
+
 <dt>AIC</dt>
 <dd><p>Aikaike's Informaton Criterion,</p></dd>
+
 <dt>BIC</dt>
 <dd><p>Bayesian's Informaton Criterion,</p></dd>
+
 <dt>emptau</dt>
 <dd><p>empirical value of Kendall's tau,</p></dd>
+
 <dt>p.value.indeptest</dt>
 <dd><p>p-value of the independence test.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -335,7 +363,7 @@ Statistics 6 (2), 461-464.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

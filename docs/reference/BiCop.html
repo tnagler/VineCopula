@@ -18,7 +18,7 @@ family/parameter consistency."><!-- mathjax --><script src="https://cdnjs.cloudf
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -83,40 +83,58 @@ family/parameter consistency.</p>
 `214` = rotated Tawn type 2 copula (180 degrees) <br>
 `224` = rotated Tawn type 2 copula (90 degrees) <br>
 `234` = rotated Tawn type 2 copula (270 degrees) <br></p></dd>
+
+
 <dt>par</dt>
 <dd><p>Copula parameter.</p></dd>
+
+
 <dt>par2</dt>
 <dd><p>Second parameter for bivariate copulas with two parameters (t,
 BB1, BB6, BB7, BB8, Tawn type 1 and type 2; default is <code>par2 = 0</code>).
 <code>par2</code> should be an positive integer for the Students's t copula
 <code>family = 2</code>.</p></dd>
+
+
 <dt>tau</dt>
 <dd><p>numeric; value of Kendall's tau; has to lie in the interval
 (-1, 1). Can only be used with one-parameter families and the t copula.
 If <code>tau</code> is provided, <code>par</code> will be ignored.</p></dd>
+
+
 <dt>check.pars</dt>
 <dd><p>logical; default is <code>TRUE</code>; if <code>FALSE</code>, checks
 for family/parameter-consistency are omitted (should only be used with
 care).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>BiCop()</code>. It is a list containing
+    
+
+<p>An object of class <code>BiCop()</code>. It is a list containing
 information about the bivariate copula. Its components are:</p>
 <dl><dt>family, par, par2</dt>
 <dd><p>copula family number and parameter(s),</p></dd>
+
 <dt>npars</dt>
 <dd><p>number of parameters,</p></dd>
+
 <dt>familyname</dt>
 <dd><p>name of the copula family,</p></dd>
+
 <dt>tau</dt>
 <dd><p>Kendall's tau,</p></dd>
+
 <dt>beta</dt>
 <dd><p>Blomqvist's beta,</p></dd>
+
 <dt>taildep</dt>
 <dd><p>lower and upper tail dependence coefficients,</p></dd>
+
 <dt>call</dt>
 <dd><p>the call that created the object.</p></dd>
+
 </dl><p>Objects of this class are also returned by the <code><a href="BiCopEst.html">BiCopEst()</a></code> and
 <code><a href="BiCopSelect.html">BiCopSelect()</a></code> functions. In this case, further information about
 the fit is added.</p>
@@ -222,7 +240,7 @@ to see all its contents, use <code>str(object)</code>.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

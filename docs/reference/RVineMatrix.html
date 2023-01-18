@@ -20,7 +20,7 @@ matrices for corresponding parameter values."><!-- mathjax --><script src="https
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -74,6 +74,8 @@ matrices for corresponding parameter values.</p>
     <dl><dt>Matrix</dt>
 <dd><p>Lower (or upper) triangular d x d matrix that defines the
 R-vine tree structure.</p></dd>
+
+
 <dt>family</dt>
 <dd><p>Lower (or upper) triangular d x d matrix with zero diagonal
 entries that assigns the pair-copula families to each (conditional) pair
@@ -100,53 +102,77 @@ follows:<br><code>0</code> = independence copula <br><code>1</code> = Gaussian c
 `214` = rotated Tawn type 2 copula (180 degrees) <br>
 `224` = rotated Tawn type 2 copula (90 degrees) <br>
 `234` = rotated Tawn type 2 copula (270 degrees) <br></p></dd>
+
+
 <dt>par</dt>
 <dd><p>Lower (or upper) triangular d x d matrix with zero diagonal
 entries that assigns the (first) pair-copula parameter to each (conditional)
 pair defined by <code>Matrix</code> <br> (default: <code>par = array(NA, dim = dim(Matrix))</code>).</p></dd>
+
+
 <dt>par2</dt>
 <dd><p>Lower (or upper) triangular d x d matrix with zero diagonal
 entries that assigns the second parameter for pair-copula families with two
 parameters to each (conditional) pair defined by <code>Matrix</code> (default:
 <code>par2 = array(NA, dim = dim(Matrix))</code>).</p></dd>
+
+
 <dt>names</dt>
 <dd><p>A vector of names for the d variables; default: <code>names = NULL</code>.</p></dd>
+
+
 <dt>check.pars</dt>
 <dd><p>logical; default is <code>TRUE</code>; if <code>FALSE</code>, checks
 for family/parameter-consistency are omitted (should only be used with
 care).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>RVineMatrix()</code>, i.e., a list with the
+    
+
+<p>An object of class <code>RVineMatrix()</code>, i.e., a list with the
 following components:</p>
 <dl><dt>Matrix</dt>
 <dd><p>R-vine tree structure matrix.</p></dd>
+
 <dt>family</dt>
 <dd><p>pair-copula family matrix with values as above.</p></dd>
+
 <dt>par</dt>
 <dd><p>pair-copula parameter matrix.</p></dd>
+
 <dt>par2</dt>
 <dd><p>second pair-copula parameter matrix with parameters necessary for
 pair-copula families with two parameters.</p></dd>
+
 <dt>names</dt>
 <dd><p>variable names (defaults to <code>V1, V2, ...</code>).</p></dd>
+
 <dt>MaxMat, CondDistr</dt>
 <dd><p>additional matrices required internally for
 evaluating the density etc.,</p></dd>
+
 <dt>type</dt>
 <dd><p>the type of the vine copula structure; possible types are:</p><ul><li><p><code>"C-vine": </code>all trees consist of a star,</p></li>
 <li><p><code>"D-vine": </code>all trees consist of a path,</p></li>
 <li><p><code>"R-vine": </code>all structures that are neither a C- nor D-vine,</p></li>
 </ul></dd>
+
 <dt>tau</dt>
 <dd><p>Kendall's tau matrix,</p></dd>
+
 <dt>taildep</dt>
 <dd><p>matrices of lower and upper tail dependence coefficients,</p></dd>
+
 <dt>beta</dt>
 <dd><p>Blomqvist's beta matrix.</p></dd>
+
 </dl><p>Objects of this class are also returned by the <code><a href="RVineSeqEst.html">RVineSeqEst()</a></code>,
-<code><a href="RVineCopSelect.html">RVineCopSelect()</a></code>, and <code><a href="RVineStructureSelect.html">RVineStructureSelect()</a></code>functions. In this case, further information about the fit is added.</p>
+<code><a href="RVineCopSelect.html">RVineCopSelect()</a></code>, and <code><a href="RVineStructureSelect.html">RVineStructureSelect()</a></code></p>
+
+
+<p>functions. In this case, further information about the fit is added.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -270,7 +296,7 @@ financial returns. Computational Statistics &amp; Data Analysis, 59 (1), 52-69.<
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -19,7 +19,7 @@ estimated sequentially."><!-- mathjax --><script src="https://cdnjs.cloudflare.c
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -78,6 +78,8 @@ estimated sequentially.</p>
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>N x d data matrix (with uniform margins).</p></dd>
+
+
 <dt>familyset</dt>
 <dd><p>integer vector of pair-copula families to select from.
 The vector has to include at least one
@@ -87,35 +89,55 @@ limit cases.  If <code>familyset = NA</code> (default), selection among all
 possible families is performed. If a vector of negative numbers is provided,
 selection among all but <code>abs(familyset)</code> is performed. Coding of
 pair copula families is the same as in <code><a href="BiCop.html">BiCop()</a></code>.</p></dd>
+
+
 <dt>Matrix</dt>
 <dd><p>lower or upper triangular d x d matrix that defines the R-vine
 tree structure.</p></dd>
+
+
 <dt>selectioncrit</dt>
 <dd><p>Character indicating the criterion for pair-copula
 selection. Possible choices: <code>selectioncrit = "AIC"</code> (default),
 <code>"BIC"</code>, or <code>"logLik"</code> (see <code><a href="BiCopSelect.html">BiCopSelect()</a></code>).</p></dd>
+
+
 <dt>indeptest</dt>
 <dd><p>Logical; whether a hypothesis test for the independence of
 <code>u1</code> and <code>u2</code> is performed before bivariate copula selection
 (default: <code>indeptest = FALSE</code>; see <code><a href="BiCopIndTest.html">BiCopIndTest()</a></code>).  The
 independence copula is chosen for a (conditional) pair if the null
 hypothesis of independence cannot be rejected.</p></dd>
+
+
 <dt>level</dt>
 <dd><p>numeric; significance level of the independence test (default:
 <code>level = 0.05</code>).</p></dd>
+
+
 <dt>trunclevel</dt>
 <dd><p>integer; level of truncation.</p></dd>
+
+
 <dt>weights</dt>
 <dd><p>Numerical; weights for each observation (optional).</p></dd>
+
+
 <dt>rotations</dt>
 <dd><p>logical; if <code>TRUE</code>, all rotations of the families in
 <code>familyset</code> are included.</p></dd>
+
+
 <dt>se</dt>
 <dd><p>Logical; whether standard errors are estimated (default: <code>se = FALSE</code>).</p></dd>
+
+
 <dt>presel</dt>
 <dd><p>Logical; whether to exclude families before fitting based on
 symmetry properties of the data. Makes the selection about 30\<!-- % faster -->
 (on average), but may yield slightly worse results in few special cases.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>indicates the estimation method: either maximum
 likelihood estimation (<code>method = "mle"</code>; default) or inversion of
@@ -123,16 +145,21 @@ Kendall's tau (<code>method = "itau"</code>). For <code>method = "itau"</code> o
 one parameter families and the Student t copula can be used (<code>family = 1,2,3,4,5,6,13,14,16,23,24,26,33,34</code> or <code>36</code>). For the t-copula,
 <code>par2</code> is found by a crude profile likelihood optimization over the
 interval (2, 10].</p></dd>
+
+
 <dt>cores</dt>
 <dd><p>integer; if <code>cores &gt; 1</code>, estimation will be parallelized
 within each tree (using <code><a href="https://rdrr.io/pkg/foreach/man/foreach.html" class="external-link">foreach::foreach()</a></code>). Note that
 parallelization causes substantial overhead and may be slower than
 single-threaded computation when dimension, sample size, or family set are
 small or <code>method = "itau"</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An <code><a href="RVineMatrix.html">RVineMatrix()</a></code> object with the selected families
+    
+
+<p>An <code><a href="RVineMatrix.html">RVineMatrix()</a></code> object with the selected families
 (<code>RVM$family</code>) as well as sequentially
 estimated parameters stored in <code>RVM$par</code> and <code>RVM$par2</code>. The object
 is augmented by the following information about the fit:</p>
@@ -140,16 +167,22 @@ is augmented by the following information about the fit:</p>
 <dd><p>standard errors for the parameter estimates  (if
 <code>se = TRUE</code>; note that these are only approximate since they do not
 account for the sequential nature of the estimation,</p></dd>
+
 <dt>nobs</dt>
 <dd><p>number of observations,</p></dd>
+
 <dt>logLik, pair.logLik</dt>
 <dd><p>log likelihood (overall and pairwise)</p></dd>
+
 <dt>AIC, pair.AIC</dt>
 <dd><p>Aikaike's Informaton Criterion (overall and pairwise),</p></dd>
+
 <dt>BIC, pair.BIC</dt>
 <dd><p>Bayesian's Informaton Criterion (overall and pairwise),</p></dd>
+
 <dt>emptau</dt>
 <dd><p>matrix of empirical values of Kendall's tau,</p></dd>
+
 <dt>p.value.indeptest</dt>
 <dd><p>matrix of p-values of the independence test.</p></dd>
 </dl><p>#'</p>
@@ -291,7 +324,7 @@ returns. Computational Statistics &amp; Data Analysis, 59 (1), 52-69.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

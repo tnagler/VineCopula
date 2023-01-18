@@ -19,7 +19,7 @@ R-vine copula model parameters using sequential estimates as initial values
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -76,47 +76,68 @@ R-vine copula model parameters using sequential estimates as initial values
     <h2>Arguments</h2>
     <dl><dt>data</dt>
 <dd><p>An N x d data matrix (with uniform margins).</p></dd>
+
+
 <dt>RVM</dt>
 <dd><p>An <code><a href="RVineMatrix.html">RVineMatrix()</a></code> object including the structure and
 the pair-copula families and parameters (if known).</p></dd>
+
+
 <dt>start</dt>
 <dd><p>Lower triangular d x d matrix with zero diagonal entries with
 starting values for the pair-copula parameters (optional; otherwise they are
 calculated via <br><code><a href="RVineSeqEst.html">RVineSeqEst()</a></code>; default: <code>start = RVM$par</code>).</p></dd>
+
+
 <dt>start2</dt>
 <dd><p>Lower triangular d x d matrix with zero diagonal entries with
 starting values for the second parameters of pair-copula families with two
 parameters (optional; otherwise they are calculated via
 <code><a href="RVineSeqEst.html">RVineSeqEst()</a></code>; default: <code>start2 = RVM$par2</code>).</p></dd>
+
+
 <dt>maxit</dt>
 <dd><p>The maximum number of iteration steps (optional; default:
 <code>maxit = 200</code>).</p></dd>
+
+
 <dt>max.df</dt>
 <dd><p>Numeric; upper bound for the estimation of the degrees of
 freedom parameter of the t-copula (default: <code>max.df = 30</code>; for more
 details see <code><a href="BiCopEst.html">BiCopEst()</a></code>).</p></dd>
+
+
 <dt>max.BB</dt>
 <dd><p>List; upper bounds for the estimation of the two parameters
 (in absolute values) of the BB1, BB6, BB7 and BB8 copulas <br> (default:
 <code>max.BB = list(BB1=c(5,6),BB6=c(6,6),BB7=c(5,6),BB8=c(6,1))</code>).</p></dd>
+
+
 <dt>grad</dt>
 <dd><p>If RVM$family only contains one parameter copula families or the
 t-copula the analytical gradient can be used for maximization of the
 log-likelihood (see <code><a href="RVineGrad.html">RVineGrad()</a></code>; default: <code>grad = FALSE</code>).</p></dd>
+
+
 <dt>hessian</dt>
 <dd><p>Logical; whether the Hessian matrix of parameter estimates is
 estimated (default: <code>hessian = FALSE</code>). Note that this is not the
 Hessian Matrix calculated via <code><a href="RVineHessian.html">RVineHessian()</a></code> but via finite
 differences.</p></dd>
+
+
 <dt>se</dt>
 <dd><p>Logical; whether standard errors of parameter estimates are
 estimated on the basis of the Hessian matrix (see above; default: <code>se = FALSE</code>).</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Further arguments for <code>optim</code> (e.g. <code>factr</code> controls
 the convergence of the "L-BFGS-B" method, or <code>trace</code>, a non-negative
 integer, determines if tracing information on the progress of the
 optimization is produced.) <br> For more details see the documentation of
 <code><a href="https://rdrr.io/r/stats/optim.html" class="external-link">optim()</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
@@ -124,27 +145,30 @@ optimization is produced.) <br> For more details see the documentation of
 <dd><p><code><a href="RVineMatrix.html">RVineMatrix()</a></code> object with the calculated
 parameters stored in <code>RVM$par</code> and <code>RVM$par2</code>. Additional
 information about the fit is added (e.g., log-likelihood, AIC, BIC).</p></dd>
+
 <dt>value</dt>
 <dd><p>Optimized log-likelihood value corresponding to the estimated
 pair-copula parameters.</p></dd>
-<dt>convergence</dt>
+ <dt>convergence</dt>
 <dd><p>An integer code indicating
 either successful convergence (<code>convergence = 0</code>) or an error:<br><code>1</code> = the iteration limit <code>maxit</code> has been reached <br><code>51</code> =
 a warning from the "L-BFGS-B" method; see component <code>message</code> for
 further details <br><code>52</code> = an error from the "L-BFGS-B" method; see
 component <code>message</code> for further details</p></dd>
-<dt>message</dt>
+ <dt>message</dt>
 <dd><p>A character
 string giving any additional information returned by <code><a href="https://rdrr.io/r/stats/optim.html" class="external-link">optim()</a></code>, or
 <code>NULL</code>.</p></dd>
-<dt>counts</dt>
+ <dt>counts</dt>
 <dd><p>A two-element integer vector giving the number
 of calls to <code>fn</code> and <code>gr</code> respectively.  This excludes those calls
 needed to compute the Hessian, if requested, and any calls to <code>fn</code> to
 compute a finite-difference approximation to the gradient.</p></dd>
+
 <dt>hessian</dt>
 <dd><p>If <code>hessian = TRUE</code>, the Hessian matrix is returned. Its
 calculation is on the basis of finite differences (output of <code>optim</code>).</p></dd>
+
 </dl></div>
     <div id="note">
     <h2>Note</h2>
@@ -239,7 +263,7 @@ vine copula models. Computational Statistics, 1-29
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

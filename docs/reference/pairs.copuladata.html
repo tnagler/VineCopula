@@ -19,7 +19,7 @@ correlations on the upper panel and histograms on the diagonal panel."><!-- math
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -78,39 +78,62 @@ correlations on the upper panel and histograms on the diagonal panel.</p>
     <h2>Arguments</h2>
     <dl><dt>x</dt>
 <dd><p><code>copuladata</code> object.</p></dd>
+
+
 <dt>labels</dt>
 <dd><p>variable names/labels.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>other graphical parameters (see <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">graphics::par()</a></code>) or
 options passed to <code><a href="BiCopKDE.html">BiCopKDE()</a></code>.</p></dd>
+
+
 <dt>lower.panel</dt>
 <dd><p>panel function to be used on the lower diagonal panels
 (if not supplied, a default function is used)</p></dd>
+
+
 <dt>upper.panel</dt>
 <dd><p>panel function to be used on the upper diagonal panels
 (if not supplied, a default function is used)</p></dd>
+
+
 <dt>diag.panel</dt>
 <dd><p>panel function to be used on the diagonal panels (if not
 supplied, a default function is used)</p></dd>
+
+
 <dt>label.pos</dt>
 <dd><p>y position of labels in the diagonal panel; default:
 <code>label.pos = 0.85</code>.</p></dd>
+
+
 <dt>cex.labels</dt>
 <dd><p>magnification to be used for the labels of the diagonal
 panel; default: <code>cex.labels = 1</code>.</p></dd>
+
+
 <dt>gap</dt>
 <dd><p>distance between subplots, in margin lines; default: <code>gap = 0</code>.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>a character string indicating which correlation coefficients
 are computed. One of <code>"pearson"</code>, <code>"kendall"</code> (default), or
 <code>"spearman"</code></p></dd>
+
+
 <dt>ccols</dt>
 <dd><p>color to be used for the contour plots; default: <code>ccols = terrain.colors(30)</code>.</p></dd>
+
+
 <dt>margins</dt>
 <dd><p>character; margins for the contour plots. Options are:<br><code>"unif"</code> for the original copula density,
 <code>"norm"</code> for the transformed density with standard normal margins,
 <code>"exp"</code> with standard exponential margins, and  <code>"flexp"</code> with
 flipped exponential margins.</p></dd>
+
 </dl></div>
     <div id="note">
     <h2>Note</h2>
@@ -199,7 +222,7 @@ the points in the scatter plot (<code>upper.panel</code>)</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

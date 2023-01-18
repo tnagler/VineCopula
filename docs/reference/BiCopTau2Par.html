@@ -18,7 +18,7 @@ for a given value of Kendall's tau."><!-- mathjax --><script src="https://cdnjs.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -72,16 +72,23 @@ rotated Clayton copula (270 degrees) <br> `34` = rotated Gumbel copula
 (270 degrees) <br> `36` = rotated Joe copula (270 degrees)<br> Note that
 (with exception of the t-copula) two parameter bivariate copula families
 cannot be used.</p></dd>
+
+
 <dt>tau</dt>
 <dd><p>numeric; single number or vector of size <code>n</code>; Kendall's tau
 value (vector with elements in \([-1,1]\)).</p></dd>
+
+
 <dt>check.taus</dt>
 <dd><p>logical; default is <code>TRUE</code>; if <code>FALSE</code>, checks
 for family/tau-consistency are omitted (should only be used with care).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Parameter (vector) corresponding to the bivariate copula family and
+    
+
+<p>Parameter (vector) corresponding to the bivariate copula family and
 the value(s) of Kendall's tau (\(\tau\)).</p><table class="table table"><tr><td>No.
 (<code>family</code>)</td><td>Parameter (<code>par</code>)</td></tr><tr><td><code>1, 2</code></td><td>\(\sin(\tau \frac{\pi}{2})\)</td></tr><tr><td><code>3, 13</code></td><td>\(2\frac{\tau}{1-\tau}\)</td></tr><tr><td><code>4, 14</code></td><td>\(\frac{1}{1-\tau}\)</td></tr><tr><td><code>5</code></td><td>no closed form
 expression (numerical inversion)</td></tr><tr><td><code>6, 16</code></td><td>no closed form
@@ -200,7 +207,7 @@ of mixed C-vines with application to exchange rates. Statistical Modelling,
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

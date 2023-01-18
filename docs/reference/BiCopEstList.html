@@ -19,7 +19,7 @@ family, the parameters are estimated by maximum likelihood."><!-- mathjax --><sc
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -64,6 +64,8 @@ family, the parameters are estimated by maximum likelihood.</p>
     <h2>Arguments</h2>
     <dl><dt>u1, u2</dt>
 <dd><p>Data vectors of equal length with values in \([0,1]\).</p></dd>
+
+
 <dt>familyset</dt>
 <dd><p>Vector of bivariate copula families to select from.
 The vector has to include at least one bivariate copula
@@ -91,24 +93,35 @@ performed.  Coding of bivariate copula families: <br><code>0</code> = independen
 `214` = rotated Tawn type 2 copula (180 degrees) <br>
 `224` = rotated Tawn type 2 copula (90 degrees) <br>
 `234` = rotated Tawn type 2 copula (270 degrees) <br></p></dd>
+
+
 <dt>weights</dt>
 <dd><p>Numerical; weights for each observation (optional).</p></dd>
+
+
 <dt>rotations</dt>
 <dd><p>If <code>TRUE</code>, all rotations of the families in
 <code>familyset</code> are included.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>further arguments passed to <code><a href="BiCopEst.html">BiCopEst()</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list containing</p>
+    
+
+<p>A list containing</p>
 <dl><dt>models</dt>
 <dd><p>a list of <code><a href="BiCop.html">BiCop()</a></code> objects corresponding to the
 `familyset`` (only families corresponding to the sign of the empirical
 Kendall's tau are used),</p></dd>
+
 <dt>summary</dt>
 <dd><p>a data frame containing the log-likelihoods, AICs, and BICs
 of all the fitted models.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -165,7 +178,7 @@ Statistics 6 (2), 461-464.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

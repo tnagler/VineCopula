@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -60,28 +60,36 @@
     <h2>Arguments</h2>
     <dl><dt>u1, u2</dt>
 <dd><p>Data vectors of equal length with values in \([0,1]\).</p></dd>
+
+
 <dt>PLOT</dt>
 <dd><p>Logical; whether the results are plotted. If <code>PLOT = FALSE</code>, the values <code>lambda</code>, <code>chi</code> and <code>control.bounds</code> are
 returned (see below; default: <code>PLOT = TRUE</code>).</p></dd>
+
+
 <dt>mode</dt>
 <dd><p>Character; whether a general, lower or upper chi-plot is
 calculated.  Possible values are <code>mode = "NULL"</code>, <code>"upper"</code> and
 <code>"lower"</code>. <br><code>"NULL"</code> = general chi-plot (default)<br><code>"upper"</code> = upper chi-plot<br><code>"lower"</code> = lower chi-plot</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional plot arguments.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     <dl><dt>lambda</dt>
 <dd><p>Lambda-statistics (x-axis).</p></dd>
-<dt>chi</dt>
+ <dt>chi</dt>
 <dd><p>Chi-statistics
 (y-axis).</p></dd>
-<dt>control.bounds</dt>
+ <dt>control.bounds</dt>
 <dd><p>A 2-dimensional vector of bounds
 \(((1.54/\sqrt{n},-1.54/\sqrt{n})\), where \(n\) is the length of
 <code>u1</code> and where the chosen values correspond to an approximate
 significance level of \(10\%\).</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -178,7 +186,7 @@ Engineering, 12 (4), 347-368.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

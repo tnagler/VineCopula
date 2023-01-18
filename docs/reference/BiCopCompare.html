@@ -20,7 +20,7 @@ margins are available."><!-- mathjax --><script src="https://cdnjs.cloudflare.co
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -66,6 +66,8 @@ margins are available.</p>
     <h2>Arguments</h2>
     <dl><dt>u1, u2</dt>
 <dd><p>Data vectors of equal length with values in \([0,1]\).</p></dd>
+
+
 <dt>familyset</dt>
 <dd><p>Vector of bivariate copula families to select from.
 The vector has to include at least one bivariate copula
@@ -95,13 +97,18 @@ families: <br><code>0</code> = independence copula <br><code>1</code> = Gaussian
 `214` = rotated Tawn type 2 copula (180 degrees) <br>
 `224` = rotated Tawn type 2 copula (90 degrees) <br>
 `234` = rotated Tawn type 2 copula (270 degrees) <br></p></dd>
+
+
 <dt>rotations</dt>
 <dd><p>If <code>TRUE</code>, all rotations of the families in
 <code>familyset</code> are included (or subtracted).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code><a href="BiCop.html">BiCop()</a></code> object containing the model selected by the
+    
+
+<p>A <code><a href="BiCop.html">BiCop()</a></code> object containing the model selected by the
 user.</p>
     </div>
     <div id="author">
@@ -131,7 +138,7 @@ user.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

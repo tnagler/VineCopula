@@ -18,7 +18,7 @@ copula for given parameter values."><!-- mathjax --><script src="https://cdnjs.c
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -84,9 +84,13 @@ bivariate copula family: <br><code>0</code> = independence copula <br><code>1</c
 `214` = rotated Tawn type 2 copula (180 degrees) <br>
 `224` = rotated Tawn type 2 copula (90 degrees) <br>
 `234` = rotated Tawn type 2 copula (270 degrees) <br></p></dd>
+
+
 <dt>par</dt>
 <dd><p>numeric; single number or vector of size <code>n</code>; copula
 parameter.</p></dd>
+
+
 <dt>par2</dt>
 <dd><p>numeric; single number or vector of size <code>n</code>; second
 parameter for bivariate copulas with two parameters (t, BB1, BB6, BB7, BB8,
@@ -94,18 +98,28 @@ Tawn type 1 and type 2; default: <code>par2 = 0</code>).  Note that the degrees 
 freedom parameter of the t-copula does not need to be set, because the
 theoretical Kendall's tau value of the t-copula is independent of this
 choice.</p></dd>
+
+
 <dt>obj</dt>
 <dd><p><code>BiCop</code> object containing the family and parameter
 specification.</p></dd>
+
+
 <dt>check.pars</dt>
 <dd><p>logical; default is <code>TRUE</code>; if <code>FALSE</code>, checks
 for family/parameter-consistency are omitted (should only be used with
 care).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Theoretical value of Kendall's tau (vector) corresponding to the
-bivariate copula <code>family</code> and parameter vector \((\theta, \delta) =\)<code>(par, par2)</code>.</p><table class="table table"><tr><td>No. (<code>family</code>)</td><td>Kendall's tau (<code>tau</code>)</td></tr><tr><td><code>1, 2</code></td><td>\(\frac{2}{\pi}\arcsin(\theta)\)</td></tr><tr><td><code>3, 13</code></td><td>\(\frac{\theta}{\theta+2}\)</td></tr><tr><td><code>4, 14</code></td><td>\(1-\frac{1}{\theta}\)</td></tr><tr><td><code>5</code></td><td>\(1-\frac{4}{\theta}+4\frac{D_1(\theta)}{\theta}\)</td></tr><tr><td></td><td>with \(D_1(\theta)=\int_0^\theta \frac{x/\theta}{\exp(x)-1}dx\) (Debye function)</td></tr><tr><td><code>6, 16</code></td><td>\(1+\frac{4}{\theta^2}\int_0^1
+    
+
+<p>Theoretical value of Kendall's tau (vector) corresponding to the
+bivariate copula <code>family</code> and parameter vector \((\theta, \delta) =\)</p>
+
+
+<p><code>(par, par2)</code>.</p><table class="table table"><tr><td>No. (<code>family</code>)</td><td>Kendall's tau (<code>tau</code>)</td></tr><tr><td><code>1, 2</code></td><td>\(\frac{2}{\pi}\arcsin(\theta)\)</td></tr><tr><td><code>3, 13</code></td><td>\(\frac{\theta}{\theta+2}\)</td></tr><tr><td><code>4, 14</code></td><td>\(1-\frac{1}{\theta}\)</td></tr><tr><td><code>5</code></td><td>\(1-\frac{4}{\theta}+4\frac{D_1(\theta)}{\theta}\)</td></tr><tr><td></td><td>with \(D_1(\theta)=\int_0^\theta \frac{x/\theta}{\exp(x)-1}dx\) (Debye function)</td></tr><tr><td><code>6, 16</code></td><td>\(1+\frac{4}{\theta^2}\int_0^1
 x\log(x)(1-x)^{2(1-\theta)/\theta}dx\)</td></tr><tr><td><code>7, 17</code></td><td>\(1-\frac{2}{\delta(\theta+2)}\)</td></tr><tr><td><code>8, 18</code></td><td>\(1+4\int_0^1 -\log(-(1-t)^\theta+1)
 (1-t-(1-t)^{-\theta}+(1-t)^{-\theta}t)/(\delta\theta) dt\)</td></tr><tr><td><code>9, 19</code></td><td>\(1+4\int_0^1 ( (1-(1-t)^{\theta})^{-\delta} - 1)
 /( -\theta\delta(1-t)^{\theta-1}(1-(1-t)^{\theta})^{-\delta-1} ) dt\)</td></tr><tr><td><code>10, 20</code></td><td>\(1+4\int_0^1
@@ -334,7 +348,7 @@ of mixed C-vines with application to exchange rates. Statistical Modelling,
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

@@ -18,7 +18,7 @@ character expression and vice versa."><!-- mathjax --><script src="https://cdnjs
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.5</span>
       </span>
     </div>
 
@@ -63,14 +63,19 @@ character expression and vice versa.</p>
     <dl><dt>family</dt>
 <dd><p>Bivariate copula family, either its number or its character
 expression (see table below).</p><table class="table table"><tr><td>No.</td><td>Short name</td><td>Long name</td></tr><tr><td><code>0</code></td><td><code>"I"</code></td><td><code>"Independence"</code></td></tr><tr><td><code>1</code></td><td><code>"N"</code></td><td><code>"Gaussian"</code></td></tr><tr><td><code>2</code></td><td><code>"t"</code></td><td><code>"t"</code></td></tr><tr><td><code>3</code></td><td><code>"C"</code></td><td><code>"Clayton"</code></td></tr><tr><td><code>4</code></td><td><code>"G"</code></td><td><code>"Gumbel"</code></td></tr><tr><td><code>5</code></td><td><code>"F"</code></td><td><code>"Frank"</code></td></tr><tr><td><code>6</code></td><td><code>"J"</code></td><td><code>"Joe"</code></td></tr><tr><td><code>7</code></td><td><code>"BB1"</code></td><td><code>"BB1"</code></td></tr><tr><td><code>8</code></td><td><code>"BB6"</code></td><td><code>"BB6"</code></td></tr><tr><td><code>9</code></td><td><code>"BB7"</code></td><td><code>"BB7"</code></td></tr><tr><td><code>10</code></td><td><code>"BB8"</code></td><td><code>"Frank-Joe"</code></td></tr><tr><td><code>13</code></td><td><code>"SC"</code></td><td><code>"Survival Clayton"</code></td></tr><tr><td><code>14</code></td><td><code>"SG"</code></td><td><code>"Survival Gumbel"</code></td></tr><tr><td><code>16</code></td><td><code>"SJ"</code></td><td><code>"Survival Joe"</code></td></tr><tr><td><code>17</code></td><td><code>"SBB1"</code></td><td><code>"Survival BB1"</code></td></tr><tr><td><code>18</code></td><td><code>"SBB6"</code></td><td><code>"Survival BB6"</code></td></tr><tr><td><code>19</code></td><td><code>"SBB7"</code></td><td><code>"Survival BB7"</code></td></tr><tr><td><code>20</code></td><td><code>"SBB8"</code></td><td><code>"Survival BB8"</code></td></tr><tr><td><code>23</code></td><td><code>"C90"</code></td><td><code>"Rotated Clayton 90 degrees"</code></td></tr><tr><td><code>24</code></td><td><code>"G90"</code></td><td><code>"Rotated Gumbel 90 degrees"</code></td></tr><tr><td><code>26</code></td><td><code>"J90"</code></td><td><code>"Rotated Joe 90 degrees"</code></td></tr><tr><td><code>27</code></td><td><code>"BB1_90"</code></td><td><code>"Rotated BB1 90 degrees"</code></td></tr><tr><td><code>28</code></td><td><code>"BB6_90"</code></td><td><code>"Rotated BB6 90 degrees"</code></td></tr><tr><td><code>29</code></td><td><code>"BB7_90"</code></td><td><code>"Rotated BB7 90 degrees"</code></td></tr><tr><td><code>30</code></td><td><code>"BB8_90"</code></td><td><code>"Rotated Frank-Joe 90 degrees"</code></td></tr><tr><td><code>33</code></td><td><code>"C270"</code></td><td><code>"Rotated Clayton 270 degrees"</code></td></tr><tr><td><code>34</code></td><td><code>"G270"</code></td><td><code>"Rotated Gumbel 270 degrees"</code></td></tr><tr><td><code>36</code></td><td><code>"J270"</code></td><td><code>"Rotated Joe 270 degrees"</code></td></tr><tr><td><code>37</code></td><td><code>"BB1_270"</code></td><td><code>"Rotated BB1 270 degrees"</code></td></tr><tr><td><code>38</code></td><td><code>"BB6_270"</code></td><td><code>"Rotated BB6 270 degrees"</code></td></tr><tr><td><code>39</code></td><td><code>"BB7_270"</code></td><td><code>"Rotated BB7 270 degrees"</code></td></tr><tr><td><code>40</code></td><td><code>"BB8_270"</code></td><td><code>"Rotated Frank-Joe 270 degrees"</code></td></tr><tr><td><code>104</code></td><td><code>"Tawn"</code></td><td><code>"Tawn type 1"</code></td></tr><tr><td><code>114</code></td><td><code>"Tawn180"</code></td><td><code>"Rotated Tawn type 1 180 degrees"</code></td></tr><tr><td><code>124</code></td><td><code>"Tawn90"</code></td><td><code>"Rotated Tawn type 1 90 degrees"</code></td></tr><tr><td><code>134</code></td><td><code>"Tawn270"</code></td><td><code>"Rotated Tawn type 1 270 degrees"</code></td></tr><tr><td><code>204</code></td><td><code>"Tawn2"</code></td><td><code>"Tawn type 2"</code></td></tr><tr><td><code>214</code></td><td><code>"Tawn2_180"</code></td><td><code>"Rotated Tawn type 2 180 degrees"</code></td></tr><tr><td><code>224</code></td><td><code>"Tawn2_90"</code></td><td><code>"Rotated Tawn type 2 90 degrees"</code></td></tr><tr><td><code>234</code></td><td><code>"Tawn2_270"</code></td><td><code>"Rotated Tawn type 2 270 degrees"</code></td></tr></table></dd>
+
+
 <dt>short</dt>
 <dd><p>Logical; if the number of a bivariate copula family is used and
 <code>short = TRUE</code> (default), a short version of the corresponding
 character expression is returned, otherwise the long version.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The transformed bivariate copula family (see table above).</p>
+    
+
+<p>The transformed bivariate copula family (see table above).</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -124,7 +129,7 @@ character expression is returned, otherwise the long version.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
