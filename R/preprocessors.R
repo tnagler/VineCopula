@@ -509,7 +509,7 @@ check_est_pars <- function(args) {
                             BB8 = c(6, 1))
     }
 
-    if (!is.null(args$family)) {
+    if (!is.null(args[["family"]])) {
         if (!(all(args$family %in% allfams)))
             stop("\n In ", args$call[1], ": ",
                  "Copula family not implemented.",
@@ -528,8 +528,8 @@ check_est_pars <- function(args) {
             stop("\n In ", args$call[1], ": ",
                  "Estimation method has to be either 'mle' or 'itau'.",
                  call. = FALSE)
-        if (!is.null(args$family)) {
-            if ((args$method == "itau") && (!(args$family %in% c(0, 2, allfams[onepar])))) {
+        if (!is.null(args[["family"]])) {
+            if ((args$method == "itau") && (!all(args$family %in% c(0, 2, allfams[onepar])))) {
                 warning(" In ", args$call[1], ": ",
                         "For two parameter copulas the estimation method 'itau' cannot ",
                         "be used. The method is automatically set to 'mle'.",
