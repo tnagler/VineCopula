@@ -23,6 +23,7 @@ importFrom("parallel",
 
 export(pobs)
 
+export(EmpCDF)
 export(BiCop)
 export(BiCopCheck)
 export(BiCopEst)

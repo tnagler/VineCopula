@@ -1,3 +1,11 @@
+VineCopula 2.5.0
+----------------------------------------------------------------
+
+NEW FEATURES
+
+* add `EmpCDF()` function for the tail corrected empirical CDF.
+
+
 VineCopula 2.4.5
 ----------------------------------------------------------------
 

@@ -66,3 +66,31 @@ pobs <- function(x, na.last = "keep",
     else 1 - U
 }
 
+#' Corrected Empirical CDF
+#'
+#' The empirical CDF with tail correction, ensuring that its output is never
+#' 0 or 1.
+#'
+#' @details The corrected empirical CDF is defined as
+#' \deqn{
+#' F_n(x) = \frac{1}{n + 1} \min\biggl\{1, \sum_{i = 1}^n 1(X_i \le x)\biggr\}
+#' }
+#'
+#' @param x numeric vector of observations
+#'
+#' @return A function with signature `function(x)` that returns \eqn{F_n(x)}.
+#'
+#' @examples
+#' # fit ECDF on simulated data
+#' x <- rnorm(100)
+#' cdf <- EmpCDF(x)
+#'
+#' # output is bounded away from 0 and 1
+#' cdf(-50)
+#' cdf(50)
+EmpCDF <- function(x) {
+    stopifnot(is.numeric(x))
+    n <- length(x)
+    Fn <- ecdf(x)
+    function(xx) pmax(n * Fn(xx), 1) / (n + 1)
+}
