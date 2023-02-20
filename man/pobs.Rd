@@ -43,8 +43,7 @@ avoid problems with density evaluation at the boundaries. Note that
 \code{pobs(, lower.tail=FALSE)} simply returns \code{1-pobs()}.
 }
 \note{
-This function is borrowed from the
-\code{\link[copula:pobs]{copula()}} package.
+This function is adapted from the \code{\link[copula:pobs]{copula()}} package.
 }
 \examples{
 
@@ -67,5 +66,5 @@ fit <- RVineStructureSelect(udat, familyset = c(1, 2))
 
 }
 \author{
-Marius Hofert
+Marius Hofert, Thomas Nagler
 }

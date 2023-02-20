@@ -25,10 +25,9 @@
 #' @return matrix of the same dimensions as `x` containing the
 #' pseudo-observations.
 #'
-#' @note This function is borrowed from the
-#' [`copula()`][copula::pobs] package.
+#' @note This function is adapted from the [`copula()`][copula::pobs] package.
 #'
-#' @author Marius Hofert
+#' @author Marius Hofert, Thomas Nagler
 #' @examples
 #'
 #' ## Simple definition of the function:
