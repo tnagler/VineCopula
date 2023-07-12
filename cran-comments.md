@@ -1,10 +1,8 @@
-Added references to DESCRIPTION and replaced URL by DOI (following request
-by Uwe Ligges).
-
-## Test environments
-* ubuntu 20.04 (release) 
+# Test environments
+* ubuntu 22.04 (devel) 
 * Windows Server 2019 (release) 
 * CRAN win builder (devel)
+* CRAN mac builder (devel)
 * macOS Catalina 10.15 (devel, release)
 
 ## Check status summary
