@@ -294,6 +294,8 @@ fam_name <- function(family, short) {
             fam <- 8
         if (family == "BB7" || family == "BB7")
             fam <- 9
+        if (family == "BB8")
+            fam <- 10
         if (family == "SC" || family == "Survival Clayton")
             fam <- 13
         if (family == "SG" || family == "Survival Gumbel")
