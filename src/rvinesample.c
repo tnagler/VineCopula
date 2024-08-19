@@ -12,12 +12,10 @@ int largest(int *array, int size)
 {
     int i;
     int value = array[0];
-    int index = 0;
 
     for (i = 0; i < size; i++) {
         if (array[i] > value) {
             value = array[i];
-            index = i;
         }
     }
     return value;
@@ -29,7 +27,6 @@ int find_index(int *array, int size, int value)
     int index = 0;
 
     for (i = 0; i < size; i++) {
-        //printf("%d - %d - %d \n", i, array[i], value);
         if ( array[i] == value ) {
             index = i;
         }
