@@ -30,6 +30,9 @@ as.copuladata <- function(data) {
     UseMethod("as.copuladata", data)
 }
 
+
+#' @noRd
+#' @export
 as.copuladata.data.frame <- function(data) {
     ## coercion of 'data.frame' to 'copuladata'
     if (!all(sapply(data, is.numeric)))
@@ -40,6 +43,8 @@ as.copuladata.data.frame <- function(data) {
     return(data)
 }
 
+#' @noRd
+#' @export
 as.copuladata.matrix <- function(data) {
     ## coercion of 'matrix' to 'copuladata'
     if (!all(is.numeric(data)))
@@ -51,6 +56,8 @@ as.copuladata.matrix <- function(data) {
     return(data)
 }
 
+#' @noRd
+#' @export
 as.copuladata.list <- function(data) {
     ## coercion of 'list' to 'copuladata'
     if (!all(sapply(data, is.numeric)))

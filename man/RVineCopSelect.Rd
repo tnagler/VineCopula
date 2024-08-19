@@ -69,7 +69,7 @@ one parameter families and the Student t copula can be used (\verb{family = 1,2,
 interval (2, 10].}
 
 \item{cores}{integer; if \code{cores > 1}, estimation will be parallelized
-within each tree (using \code{\link[foreach:foreach]{foreach::foreach()}}). Note that
+within each tree (using \code{\link[parallel:clusterApply]{parallel::parLapply()}}). Note that
 parallelization causes substantial overhead and may be slower than
 single-threaded computation when dimension, sample size, or family set are
 small or \code{method = "itau"}.}

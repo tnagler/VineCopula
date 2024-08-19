@@ -27,7 +27,7 @@ flipped exponential margins. Default is \code{"norm"} for \code{type = "contour"
 default is 100 for \code{type = "contour"}, and 25 for \code{type = "surface"}.}
 
 \item{\dots}{optional arguments passed to \code{\link[=contour]{contour()}} or
-\code{\link[=wireframe]{wireframe()}}.}
+\code{\link[lattice:cloud]{lattice::wireframe()}}.}
 }
 \description{
 There are several options for plotting BiCop objects. The density of a
@@ -48,7 +48,7 @@ contour(obj, margins = "unif")  # contour plot of copula density
 
 }
 \seealso{
-\code{\link[=BiCop]{BiCop()}}, \code{\link[=contour]{contour()}}, \code{\link[=wireframe]{wireframe()}}
+\code{\link[=BiCop]{BiCop()}}, \code{\link[=contour]{contour()}}, \code{\link[lattice:cloud]{lattice::wireframe()}}
 }
 \author{
 Thomas Nagler

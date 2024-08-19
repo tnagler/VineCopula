@@ -28,8 +28,8 @@ this let \eqn{c_1} and \eqn{c_2} be two competing vine copulas in terms of
 their densities and with estimated parameter sets
 \eqn{\hat{\boldsymbol{\theta}}_1}{\theta_1} and
 \eqn{\hat{\boldsymbol{\theta}}_2}{\theta_2}. The null hypothesis of
-statistical indistinguishability of the two models is \deqn{ }{ H_0: P(m_i >
-0) = 0.5 forall i=1,..,N, }\deqn{H_0: P(m_i > 0) = 0.5\ \forall i=1,..,N, }{
+statistical indistinguishability of the two models is
+\deqn{H_0: P(m_i > 0) = 0.5\ \forall i=1,..,N, }{
 H_0: P(m_i > 0) = 0.5 forall i=1,..,N, } where
 \eqn{m_i:=\log\left[\frac{c_1(\boldsymbol{u}_i|\hat{\boldsymbol{\theta}}_1)}{c_2(\boldsymbol{u}_i|\hat{\boldsymbol{\theta}}_2)}\right]}{m_i:=log[
 c_1(u_i|\theta_1) / c_2(u_i|\theta_2) ]} for observations
@@ -38,8 +38,7 @@ c_1(u_i|\theta_1) / c_2(u_i|\theta_2) ]} for observations
 Since under statistical equivalence of the two models the log likelihood
 ratios of the single observations are uniformly distributed around zero and
 in expectation \eqn{50\%} of the log likelihood ratios greater than zero,
-the test statistic \deqn{ }{ statistic := B = \sum_{i=1}^N
-1_{(0,\infty)}(m_i), }\deqn{\texttt{statistic} := B = \sum_{i=1}^N
+the test statistic \deqn{\texttt{statistic} := B = \sum_{i=1}^N
 \mathbf{1}_{(0,\infty)}(m_i), }{ statistic := B = \sum_{i=1}^N
 1_{(0,\infty)}(m_i), } where \eqn{\mathbf{1}}{1} is the indicator function,
 is distributed Binomial with parameters \eqn{N} and \eqn{p=0.5}, and

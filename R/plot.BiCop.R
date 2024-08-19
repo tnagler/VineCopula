@@ -24,9 +24,9 @@
 #' default is 100 for `type = "contour"`, and 25 for `type =
 #' "surface"`.
 #' @param \dots optional arguments passed to [contour()] or
-#' [wireframe()].
+#' [lattice::wireframe()].
 #' @author Thomas Nagler
-#' @seealso [BiCop()], [contour()], [wireframe()]
+#' @seealso [BiCop()], [contour()], [lattice::wireframe()]
 #' @keywords plot
 #' @examples
 #'

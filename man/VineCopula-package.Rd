@@ -101,3 +101,35 @@ vine copula models. Computational Statistics, 28 (6), 2679-2707 \cr
 White, H. (1982) Maximum likelihood estimation of misspecified models,
 Econometrica, 50, 1-26.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/tnagler/VineCopula}
+  \item Report bugs at \url{https://github.com/tnagler/VineCopula/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Thomas Nagler \email{mail@tnagler.com}
+
+Authors:
+\itemize{
+  \item Ulf Schepsmeier \email{ulf.schepsmeier@tum.de}
+  \item Jakob Stoeber
+  \item Eike Christian Brechmann
+  \item Benedikt Graeler
+  \item Tobias Erhardt \email{tobias.erhardt@tum.de}
+}
+
+Other contributors:
+\itemize{
+  \item Carlos Almeida [contributor]
+  \item Aleksey Min [contributor, thesis advisor]
+  \item Claudia Czado [contributor, thesis advisor]
+  \item Mathias Hofmann [contributor]
+  \item Matthias Killiches [contributor]
+  \item Harry Joe [contributor]
+  \item Thibault Vatter [contributor]
+}
+
+}

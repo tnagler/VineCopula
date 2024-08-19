@@ -30,7 +30,7 @@
 #' (default: `progress = FALSE`).
 #' @param weights Numerical; weights for each observation (optional).
 #' @param cores integer; if `cores > 1`, estimation will be parallelized
-#' within each tree (using [foreach::foreach()]). However, the
+#' within each tree (using [parallel::parLapply()]). However, the
 #' overhead caused by parallelization is likely to make the function run slower
 #' unless sample size is really large and `method = "itau"`.
 #'

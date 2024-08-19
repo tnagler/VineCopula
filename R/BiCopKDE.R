@@ -25,7 +25,7 @@
 #' @param kde.pars list of arguments passed to
 #'  [kdecopula::kdecop()].
 #' @param \dots optional arguments passed to [contour()] or
-#' [wireframe()].
+#' [lattice::wireframe()].
 #'
 #' @details
 #' For further details on estimation see [kdecopula::kdecop()].

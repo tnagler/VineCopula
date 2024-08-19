@@ -18,7 +18,6 @@
 #'
 #' @name VineCopula-package
 #' @aliases VineCopula-package VineCopula
-#' @docType package
 #'
 #' @section Remark: The package `VineCopula` is a continuation of the
 #' package `CDVine` by U. Schepsmeier and E. C. Brechmann (see Brechmann
@@ -97,7 +96,7 @@
 #'
 #' White, H. (1982) Maximum likelihood estimation of misspecified models,
 #' Econometrica, 50, 1-26.
-NULL
+"_PACKAGE"
 
 
 #' Major German Stocks

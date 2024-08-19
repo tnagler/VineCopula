@@ -175,6 +175,8 @@ fams10 <- c(23, 34, 36, 27, 37, 38, 29, 39, 40, 134, 234)
 # families with more dependence near (u, v) = (0, 1)
 fams01 <- c(33, 24, 26, 27, 37, 28, 29, 39, 30, 124, 224)
 
+#' @noRd
+#' @export
 print.BiCop <- function(x, ...) {
     cat("Bivariate copula: ")
     cat(x$familyname, " (par = ", round(x$par, 2), sep = "")
@@ -187,7 +189,8 @@ print.BiCop <- function(x, ...) {
     invisible(x)
 }
 
-
+#' @noRd
+#' @export
 summary.BiCop <- function(object, ...) {
     ## print family name
     cat("Family\n")

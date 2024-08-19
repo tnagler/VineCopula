@@ -86,11 +86,9 @@ pair-copula families with two parameters.}
 \item{MaxMat, CondDistr}{additional matrices required internally for
 evaluating the density etc.,}
 \item{type}{the type of the vine copula structure; possible types are:
-\itemize{
-\item{\verb{"C-vine": }}{all trees consist of a star,}
-\item{\verb{"D-vine": }}{all trees consist of a path,}
-\item{\verb{"R-vine": }}{all structures that are neither a C- nor D-vine,}
-}}
+\code{"C-vine"}: all trees consist of a star;
+\code{"D-vine"}: all trees consist of a path;
+\code{"R-vine"}: all structures that are neither a C- nor D-vine.}
 \item{tau}{Kendall's tau matrix,}
 \item{taildep}{matrices of lower and upper tail dependence coefficients,}
 \item{beta}{Blomqvist's beta matrix.}

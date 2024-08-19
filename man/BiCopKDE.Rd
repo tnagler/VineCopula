@@ -28,7 +28,7 @@ grid; default is 100 for \code{type = "contour"}, and 25 for \code{type = "surfa
 \code{\link[kdecopula:kdecop]{kdecopula::kdecop()}}.}
 
 \item{\dots}{optional arguments passed to \code{\link[=contour]{contour()}} or
-\code{\link[=wireframe]{wireframe()}}.}
+\code{\link[lattice:cloud]{lattice::wireframe()}}.}
 }
 \description{
 A kernel density estimate of the copula density is visualized. The function

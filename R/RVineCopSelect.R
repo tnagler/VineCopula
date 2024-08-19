@@ -45,7 +45,7 @@
 #' `par2` is found by a crude profile likelihood optimization over the
 #' interval (2, 10].
 #' @param cores integer; if `cores > 1`, estimation will be parallelized
-#' within each tree (using [foreach::foreach()]). Note that
+#' within each tree (using [parallel::parLapply()]). Note that
 #' parallelization causes substantial overhead and may be slower than
 #' single-threaded computation when dimension, sample size, or family set are
 #' small or `method = "itau"`.

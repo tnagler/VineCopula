@@ -78,11 +78,9 @@
 #' \item{MaxMat, CondDistr}{additional matrices required internally for
 #' evaluating the density etc.,}
 #' \item{type}{the type of the vine copula structure; possible types are:
-#' \itemize{
-#' \item{`"C-vine": `}{all trees consist of a star,}
-#' \item{`"D-vine": `}{all trees consist of a path,}
-#' \item{`"R-vine": `}{all structures that are neither a C- nor D-vine,}
-#' }}
+#' `"C-vine"`: all trees consist of a star;
+#' `"D-vine"`: all trees consist of a path;
+#' `"R-vine"`: all structures that are neither a C- nor D-vine.}
 #' \item{tau}{Kendall's tau matrix,}
 #' \item{taildep}{matrices of lower and upper tail dependence coefficients,}
 #' \item{beta}{Blomqvist's beta matrix.}
@@ -297,10 +295,14 @@ RVineMatrixNormalize <- function(RVM) {
     return(normalizeRVineMatrix(RVM))
 }
 
+#' @noRd
+#' @export
 dim.RVineMatrix <- function(x) {
     dim(x$Matrix)[1]
 }
 
+#' @noRd
+#' @export
 print.RVineMatrix <- function(x, ...) {
     RVine <- x
     cat(x$type, "copula with the following pair-copulas:\n")
@@ -369,6 +371,8 @@ print.RVineMatrix <- function(x, ...) {
     }
 }
 
+#' @noRd
+#' @export
 summary.RVineMatrix <- function(object, with.se = TRUE, ...) {
 
     ## create character matrices with pair-copula info

@@ -51,7 +51,7 @@
 #' `par2` is found by a crude profile likelihood optimization over the
 #' interval (2, 10].
 #' @param cores integer; if `cores > 1`, estimation will be parallelized
-#' within each tree (using [foreach::foreach()]). Note that
+#' within each tree (using [parallel::parLapply()]). Note that
 #' parallelization causes substantial overhead and may be slower than
 #' single-threaded computation when dimension, sample size, or family set are
 #' small or `method = "itau"`.
@@ -69,7 +69,7 @@
 #' \item{BIC, pair.BIC}{Bayesian's Informaton Criterion (overall and pairwise),}
 #' \item{emptau}{matrix of empirical values of Kendall's tau,}
 #' \item{p.value.indeptest}{matrix of p-values of the independence test.}
-#'
+
 #' @note For a comprehensive summary of the vine copula model, use
 #' `summary(object)`; to see all its contents, use `str(object)`.
 #'
