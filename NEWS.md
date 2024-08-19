@@ -1,9 +1,13 @@
-VineCopula 2.5.1.999
+VineCopula 2.5.1
 ----------------------------------------------------------------
 
 BUG FIXES
 
 * fix log-derivatives of 90 and 270 degree rotations.
+
+* Fix missing `BB8` in `BiCopName()`.
+
+* Comply with upcoming `STRICT_R_HEADERS=1` requirements (use `R_` forms for C-memory management, POSIX `M_PI`).
 
 
 VineCopula 2.5.0
