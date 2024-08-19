@@ -46,7 +46,7 @@ void pcc(int* n, int* d, int* family, int* type, double* par, double* nu, double
 
   GetRNGstate();		//Init random number generator
   //Allocate memory:
-  w = Calloc((*d+1),double);
+  w = R_Calloc((*d+1),double);
 
   v = create_matrix(*d+1,2*(*d)-1);
   theta = create_matrix(*d,*d);
@@ -137,7 +137,7 @@ void pcc(int* n, int* d, int* family, int* type, double* par, double* nu, double
   }
   PutRNGstate();		// Function for the random number generator
   //Free memory:
-  Free(w); free_matrix(v,*d+1); free_matrix(theta,*d); free_matrix(ny,*d); free_intmatrix(fam,*d); free_matrix(x,*n+1);
+  R_Free(w); free_matrix(v,*d+1); free_matrix(theta,*d); free_matrix(ny,*d); free_intmatrix(fam,*d); free_matrix(x,*n+1);
 }
 
 

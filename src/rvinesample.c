@@ -86,7 +86,7 @@ void getRVM(int* b, int* d, int* RVM)
     {
         int *toAssign;
         size = j-1;
-        toAssign=(int*) Calloc(size,double);
+        toAssign=(int*) R_Calloc(size,double);
         for (i=0;i<size;i++ )
         {
             toAssign[i] = i+1;
@@ -124,7 +124,7 @@ void getRVM(int* b, int* d, int* RVM)
             nn = nn + 1;
         }
         n = nn;
-        Free(toAssign);
+        R_Free(toAssign);
     }
     RVM[0] = 1;
 

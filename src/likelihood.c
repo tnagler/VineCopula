@@ -453,7 +453,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
     int j;
     double *dat, rho, ll=0.0, t1=0.0, t2=0.0, f;
     //Allocate memory:
-    dat = Calloc(2,double);
+    dat = R_Calloc(2,double);
 
     for(int i=0;i<*n;i++)
     {
@@ -486,7 +486,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
         {
             dat[0] = u[j]; dat[1] = v[j];
             t1 = qt(dat[0],*nu,1,0); t2 = qt(dat[1],*nu,1,0);
-            f = StableGammaDivision((*nu+2.0)/2.0,*nu/2.0)/(*nu*pi*sqrt(1.0-pow(rho,2.0))*dt(t1,*nu,0)*dt(t2,*nu,0))*pow(1.0+(pow(t1,2.0)+pow(t2,2.0)-2.0*rho*t1*t2)/(*nu*(1.0-pow(rho,2.0))),-(*nu+2.0)/2.0);
+            f = StableGammaDivision((*nu+2.0)/2.0,*nu/2.0)/(*nu*M_PI*sqrt(1.0-pow(rho,2.0))*dt(t1,*nu,0)*dt(t2,*nu,0))*pow(1.0+(pow(t1,2.0)+pow(t2,2.0)-2.0*rho*t1*t2)/(*nu*(1.0-pow(rho,2.0))),-(*nu+2.0)/2.0);
             if(log(f)>XINFMAX) ll += log(XINFMAX);
             else if(f < DBL_MIN) ll += log(DBL_MIN);
             else ll += log(f);
@@ -561,10 +561,10 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
         }else{
 
             double *param, *fuc;
-            param=Calloc(2,double);
+            param=R_Calloc(2,double);
             param[0]=*theta;
             param[1]=*nu;
-            fuc = Calloc(*n,double);
+            fuc = R_Calloc(*n,double);
             dbb1(u, v, n, param, fuc);
             for(j=0;j<*n;j++)
             {
@@ -577,16 +577,16 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
                 else if(fuc[j]<DBL_MIN) ll += log(DBL_MIN);
                 else ll += log(fuc[j]);
             }
-            Free(fuc); Free(param);
+            R_Free(fuc); R_Free(param);
         }
     }
     else if(*family==8)	//BB6
     {
         double *param, *fuc;
-        param=Calloc(2,double);
+        param=R_Calloc(2,double);
         param[0]=*theta;
         param[1]=*nu;
-        fuc = Calloc(*n,double);
+        fuc = R_Calloc(*n,double);
         dbb6(u, v, n, param, fuc);
         for(j=0;j<*n;j++)
         {
@@ -599,7 +599,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
             else if(fuc[j]<DBL_MIN) ll += log(DBL_MIN);
             else ll += log(fuc[j]);
         }
-        Free(fuc); Free(param);
+        R_Free(fuc); R_Free(param);
     }
     else if(*family==9)	//BB7
     {
@@ -616,10 +616,10 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
         else
         {
             double *param, *fuc;
-            param=Calloc(2,double);
+            param=R_Calloc(2,double);
             param[0]=*theta;
             param[1]=*nu;
-            fuc = Calloc(*n,double);
+            fuc = R_Calloc(*n,double);
             dbb7(u, v, n, param, fuc);
             for(j=0;j<*n;j++)
             {
@@ -632,16 +632,16 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
                 else if(fuc[j]<DBL_MIN) ll += log(DBL_MIN);
                 else ll += log(fuc[j]);
             }
-            Free(fuc); Free(param);
+            R_Free(fuc); R_Free(param);
         }
     }
     else if(*family==10) //BB8
     {
         double *param, *fuc;
-        param=Calloc(2,double);
+        param=R_Calloc(2,double);
         param[0]=*theta;
         param[1]=*nu;
-        fuc = Calloc(*n,double);
+        fuc = R_Calloc(*n,double);
         dbb8(u, v, n, param, fuc);
         for(j=0;j<*n;j++)
         {
@@ -654,7 +654,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
             else if(fuc[j]<DBL_MIN) ll += log(DBL_MIN);
             else ll += log(fuc[j]);
         }
-        Free(fuc); Free(param);
+        R_Free(fuc); R_Free(param);
 
     }
     else if(*family==13) //rotated Clayton (180?)
@@ -714,10 +714,10 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
         }else{
 
             double *param, *fuc;
-            param=Calloc(2,double);
+            param=R_Calloc(2,double);
             param[0]=*theta;
             param[1]=*nu;
-            fuc = Calloc(*n,double);
+            fuc = R_Calloc(*n,double);
             int k=1;
             for(j=0;j<*n;j++)
             {
@@ -734,16 +734,16 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
                 else if(fuc[j]<DBL_MIN) ll += log(DBL_MIN);
                 else ll += log(fuc[j]);
             }
-            Free(fuc); Free(param);
+            R_Free(fuc); R_Free(param);
         }
     }
     else if(*family==18) //rotated BB6
     {
         double *param, *fuc;
-        param=Calloc(2,double);
+        param=R_Calloc(2,double);
         param[0]=*theta;
         param[1]=*nu;
-        fuc = Calloc(*n,double);
+        fuc = R_Calloc(*n,double);
         int k=1;
         for(j=0;j<*n;j++)
         {
@@ -760,7 +760,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
             else if(fuc[j]<DBL_MIN) ll += log(DBL_MIN);
             else ll += log(fuc[j]);
         }
-        Free(fuc); Free(param);
+        R_Free(fuc); R_Free(param);
     }
     else if(*family==19) //rotated BB7
     {
@@ -774,10 +774,10 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
             }
         }else{
             double *param, *fuc;
-            param=Calloc(2,double);
+            param=R_Calloc(2,double);
             param[0]=*theta;
             param[1]=*nu;
-            fuc = Calloc(*n,double);
+            fuc = R_Calloc(*n,double);
             int k=1;
 
             for(j=0;j<*n;j++)
@@ -794,16 +794,16 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
                 else if(fuc[j]<DBL_MIN) ll += log(DBL_MIN);
                 else ll += log(fuc[j]);
             }
-            Free(fuc); Free(param);
+            R_Free(fuc); R_Free(param);
         }
     }
     else if(*family==20) //rotated BB8
     {
         double *param, *fuc;
-        param=Calloc(2,double);
+        param=R_Calloc(2,double);
         param[0]=*theta;
         param[1]=*nu;
-        fuc = Calloc(*n,double);
+        fuc = R_Calloc(*n,double);
         int k=1;
 
         for(j=0;j<*n;j++)
@@ -820,7 +820,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
             else if(fuc[j]<DBL_MIN) ll += log(DBL_MIN);
             else ll += log(fuc[j]);
         }
-        Free(fuc); Free(param);
+        R_Free(fuc); R_Free(param);
     }
     else if(*family==41)		// New: 1-parametric asymmetric copula (from Harry Joe)
     {
@@ -911,7 +911,7 @@ void LL(int* family, int* n, double* u, double* v, double* theta, double* nu, do
     }
 
     //Free memory:
-    Free(dat);
+    R_Free(dat);
     //Write to output vector:
     *loglik = ll;
 }
@@ -996,7 +996,7 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
     int j;
     double *dat, rho, lik=1.0, t1=0.0, t2=0.0, f;
     //Allocate memory:
-    dat = Calloc(2,double);
+    dat = R_Calloc(2,double);
 
     for(int i=0;i<*n;i++)
     {
@@ -1027,7 +1027,7 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
         {
             dat[0] = u[j]; dat[1] = v[j];
             t1 = qt(dat[0],*nu,1,0); t2 = qt(dat[1],*nu,1,0);
-            f = StableGammaDivision((*nu+2.0)/2.0,*nu/2.0)/(*nu*pi*sqrt(1.0-pow(rho,2.0))*dt(t1,*nu,0)*dt(t2,*nu,0))*pow(1.0+(pow(t1,2.0)+pow(t2,2.0)-2.0*rho*t1*t2)/(*nu*(1.0-pow(rho,2.0))),-(*nu+2.0)/2.0);
+            f = StableGammaDivision((*nu+2.0)/2.0,*nu/2.0)/(*nu*M_PI*sqrt(1.0-pow(rho,2.0))*dt(t1,*nu,0)*dt(t2,*nu,0))*pow(1.0+(pow(t1,2.0)+pow(t2,2.0)-2.0*rho*t1*t2)/(*nu*(1.0-pow(rho,2.0))),-(*nu+2.0)/2.0);
             lik *= f;
         }
     }
@@ -1090,10 +1090,10 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
         }else{
 
             double *param, *fuc;
-            param=Calloc(2,double);
+            param=R_Calloc(2,double);
             param[0]=*theta;
             param[1]=*nu;
-            fuc = Calloc(*n,double);
+            fuc = R_Calloc(*n,double);
             dbb1(u, v, n, param, fuc);
             for(j=0;j<*n;j++)
             {
@@ -1104,16 +1104,16 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
 
                 lik *= fuc[j];
             }
-            Free(fuc); Free(param);
+            R_Free(fuc); R_Free(param);
         }
     }
     else if(*family==8)	//BB6
     {
         double *param, *fuc;
-        param=Calloc(2,double);
+        param=R_Calloc(2,double);
         param[0]=*theta;
         param[1]=*nu;
-        fuc = Calloc(*n,double);
+        fuc = R_Calloc(*n,double);
         dbb6(u, v, n, param, fuc);
         for(j=0;j<*n;j++)
         {
@@ -1124,7 +1124,7 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
 
             lik *= fuc[j];
         }
-        Free(fuc); Free(param);
+        R_Free(fuc); R_Free(param);
     }
     else if(*family==9)	//BB7
     {
@@ -1137,10 +1137,10 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
         }else{
 
             double *param, *fuc;
-            param=Calloc(2,double);
+            param=R_Calloc(2,double);
             param[0]=*theta;
             param[1]=*nu;
-            fuc = Calloc(*n,double);
+            fuc = R_Calloc(*n,double);
             dbb7(u, v, n, param, fuc);
             for(j=0;j<*n;j++)
             {
@@ -1151,16 +1151,16 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
 
                 lik *= fuc[j];
             }
-            Free(fuc); Free(param);
+            R_Free(fuc); R_Free(param);
         }
     }
     else if(*family==10)	//BB8
     {
         double *param, *fuc;
-        param=Calloc(2,double);
+        param=R_Calloc(2,double);
         param[0]=*theta;
         param[1]=*nu;
-        fuc = Calloc(*n,double);
+        fuc = R_Calloc(*n,double);
         dbb8(u, v, n, param, fuc);
         for(j=0;j<*n;j++)
         {
@@ -1171,7 +1171,7 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
 
             lik *= fuc[j];
         }
-        Free(fuc); Free(param);
+        R_Free(fuc); R_Free(param);
     }
     else if(*family==13) //rotated Clayton (180?)
     {
@@ -1223,10 +1223,10 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
         }else{
 
             double *param, *fuc;
-            param=Calloc(2,double);
+            param=R_Calloc(2,double);
             param[0]=*theta;
             param[1]=*nu;
-            fuc = Calloc(*n,double);
+            fuc = R_Calloc(*n,double);
             int k=1;
             for(j=0;j<*n;j++)
             {
@@ -1241,16 +1241,16 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
 
                 lik *= fuc[j];
             }
-            Free(fuc); Free(param);
+            R_Free(fuc); R_Free(param);
         }
     }
     else if(*family==18)	//rotated BB6
     {
         double *param, *fuc;
-        param=Calloc(2,double);
+        param=R_Calloc(2,double);
         param[0]=*theta;
         param[1]=*nu;
-        fuc = Calloc(*n,double);
+        fuc = R_Calloc(*n,double);
         int k=1;
         for(j=0;j<*n;j++)
         {
@@ -1265,7 +1265,7 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
 
             lik *= fuc[j];
         }
-        Free(fuc); Free(param);
+        R_Free(fuc); R_Free(param);
     }
     else if(*family==19)	//rotated BB7
     {
@@ -1278,10 +1278,10 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
         }else{
 
             double *param, *fuc;
-            param=Calloc(2,double);
+            param=R_Calloc(2,double);
             param[0]=*theta;
             param[1]=*nu;
-            fuc = Calloc(*n,double);
+            fuc = R_Calloc(*n,double);
             int k=1;
 
             for(j=0;j<*n;j++)
@@ -1297,16 +1297,16 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
 
                 lik *= fuc[j];
             }
-            Free(fuc); Free(param);
+            R_Free(fuc); R_Free(param);
         }
     }
     else if(*family==20)	//rotated BB8
     {
         double *param, *fuc;
-        param=Calloc(2,double);
+        param=R_Calloc(2,double);
         param[0]=*theta;
         param[1]=*nu;
-        fuc = Calloc(*n,double);
+        fuc = R_Calloc(*n,double);
         int k=1;
 
         for(j=0;j<*n;j++)
@@ -1322,11 +1322,11 @@ void copLik(int* family, int* n, double* u, double* v, double* theta, double* nu
 
             lik *= fuc[j];
         }
-        Free(fuc); Free(param);
+        R_Free(fuc); R_Free(param);
     }
 
     //Free memory:
-    Free(dat);
+    R_Free(dat);
     //Write to output vector:
     *coplik = lik;
 }

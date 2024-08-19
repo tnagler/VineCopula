@@ -27,7 +27,7 @@ void diffX_nu_tCopula(double* x, double* param, double* out)
 	//double xmin=0, val=0, err=0, val2;
 	double xmax=0;
 	double *inbeder_out;
-	inbeder_out=Calloc(3,double);
+	inbeder_out=R_Calloc(3,double);
 	double t1, t2, t3, t4, t5, t6, t7;
 	double x_help;
 
@@ -61,7 +61,7 @@ void diffX_nu_tCopula(double* x, double* param, double* out)
 		out[0]=-out[0];
 	}
 
-Free(inbeder_out);
+R_Free(inbeder_out);
 }
 
 void integral1(unsigned ndim, const double *x, void *fdata, unsigned fdim, double *fval)
@@ -115,7 +115,7 @@ void diff_t_nu(double* x, double* nu, double* out)
 {
 	double xmax=0;
 	double *inbeder_out;
-	inbeder_out=Calloc(3,double);
+	inbeder_out=R_Calloc(3,double);
 	double t2, t3, t4, t5, t6, t7;
 	double x_help;
 
@@ -145,7 +145,7 @@ void diff_t_nu(double* x, double* nu, double* out)
 		out[0]=-out[0];
 	}
 
-	Free(inbeder_out);
+	R_Free(inbeder_out);
 }
 
 
@@ -194,7 +194,7 @@ void diff_t_nu_nu(double* x, double* nu, double* out)
 {
 	double xmax=0;
 	double *inbeder_out;
-	inbeder_out=Calloc(3,double);
+	inbeder_out=R_Calloc(3,double);
 	double t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11, t12, t13, t14;
 	double x_help;
 
@@ -240,7 +240,7 @@ void diff_t_nu_nu(double* x, double* nu, double* out)
 		out[0]=-out[0];
 	}
 
-	Free(inbeder_out);
+	R_Free(inbeder_out);
 }
 
 
@@ -248,7 +248,7 @@ void diff2_x_nu(double* x, double* nu, double* out)
 {
 	double t1, t2, t3, t4, t5;
 	double *param;
-	param=Calloc(2,double);
+	param=R_Calloc(2,double);
 	param[0]=0;
 	param[1]=*nu;
 
@@ -260,7 +260,7 @@ void diff2_x_nu(double* x, double* nu, double* out)
 
 	out[0]=(-t5*t4*t4-t2-2.0*t3*t4)/t1;
 
-	Free(param);
+	R_Free(param);
 }
 
 

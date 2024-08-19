@@ -384,7 +384,7 @@ void diffPDF_u(double* u, double* v, int* n, double* param, int* copula, double*
             t8 = t3*(t6+t7)-(2.0*theta*t1*t2);
             t9 = exp(-t8/t4/2.0);
             t10 = t9/t5;
-            t11 = sqrt(2.0*pi);
+            t11 = sqrt(2.0*M_PI);
             t12 = exp(-t6/2.0);
             t13 = t11/t12;
             out[j] = -t10*(theta*t13/t4)*(theta*t1-t2);

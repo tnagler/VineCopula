@@ -237,7 +237,7 @@ void inbeder(double* x_in, double* p_in, double* q_in, double* der)
 
   double *c;
   double c0, d;
-  c=Calloc(3,double);
+  c=R_Calloc(3,double);
   c[0]=p*logx+(q-1)*logomx-lbet-log(p);
   c0=exp(c[0]);
   if (*x_in>*p_in/(*p_in+*q_in))
@@ -254,18 +254,18 @@ void inbeder(double* x_in, double* p_in, double* q_in, double* der)
 
   int del=1, i=0;
   double *an, *bn, *an1, *an2, *bn1, *bn2, *dr;
-  an=Calloc(3,double);
-  bn=Calloc(3,double);
-  an1=Calloc(3,double);
-  bn1=Calloc(3,double);
-  an2=Calloc(3,double);
-  bn2=Calloc(3,double);
-  dr=Calloc(3,double);
+  an=R_Calloc(3,double);
+  bn=R_Calloc(3,double);
+  an1=R_Calloc(3,double);
+  bn1=R_Calloc(3,double);
+  an2=R_Calloc(3,double);
+  bn2=R_Calloc(3,double);
+  dr=R_Calloc(3,double);
   double *dan, *dbn, *der_old, *d1;
-  dan=Calloc(3,double);
-  dbn=Calloc(3,double);
-  der_old=Calloc(3,double);
-  d1=Calloc(3,double);
+  dan=R_Calloc(3,double);
+  dbn=R_Calloc(3,double);
+  der_old=R_Calloc(3,double);
+  d1=R_Calloc(3,double);
 
   double Rn=0, pr=0;
 
@@ -413,18 +413,18 @@ void inbeder(double* x_in, double* p_in, double* q_in, double* der)
 		der[2]=-der[2];
 	  }
 
-  Free(c);
-  Free(an);
-  Free(bn);
-  Free(dan);
-  Free(dbn);
-  Free(dr);
-  Free(an1);
-  Free(an2);
-  Free(bn1);
-  Free(bn2);
-  Free(d1);
-  Free(der_old);
+  R_Free(c);
+  R_Free(an);
+  R_Free(bn);
+  R_Free(dan);
+  R_Free(dbn);
+  R_Free(dr);
+  R_Free(an1);
+  R_Free(an2);
+  R_Free(bn1);
+  R_Free(bn2);
+  R_Free(d1);
+  R_Free(der_old);
   
 }
 

@@ -66,27 +66,27 @@ void VineLogLikRvineDeriv2(int* T, int* d, int* family, int* kk, int* ii, int* k
 	double ***barvdirect, ***barvindirect;
 
 	
-	zr1=(double*) Calloc(*T,double);
-	zr2=(double*) Calloc(*T,double);
-	handle1=(double*) Calloc(*T,double);
-	helpvar=(double*) Calloc(*T,double);
-	helpvar2=(double*) Calloc(*T,double);
-	helpvar3=(double*) Calloc(*T,double);
-	helpvar4=(double*) Calloc(*T,double);
-	helpvar5=(double*) Calloc(*T,double);
-	helpvar6=(double*) Calloc(*T,double);
-	tildezr1=(double*) Calloc(*T,double);
-	tildezr2=(double*) Calloc(*T,double);
-	tildezr1_hatk_hati=(double*) Calloc(*T,double);
-	tildezr1_tildek_tildei=(double*) Calloc(*T,double);
-	barzr1=(double*) Calloc(*T,double);
-	tildezr2_hatk_hati=(double*) Calloc(*T,double);
-	tildezr2_tildek_tildei=(double*) Calloc(*T,double);
-	barzr2=(double*) Calloc(*T,double);
-	cop=(double*) Calloc(*T,double);
-	der=(double*) Calloc(*T,double);
-	der_hatk_hati=(double*) Calloc(*T,double);
-	der_tildek_tildei=(double*) Calloc(*T,double);
+	zr1=(double*) R_Calloc(*T,double);
+	zr2=(double*) R_Calloc(*T,double);
+	handle1=(double*) R_Calloc(*T,double);
+	helpvar=(double*) R_Calloc(*T,double);
+	helpvar2=(double*) R_Calloc(*T,double);
+	helpvar3=(double*) R_Calloc(*T,double);
+	helpvar4=(double*) R_Calloc(*T,double);
+	helpvar5=(double*) R_Calloc(*T,double);
+	helpvar6=(double*) R_Calloc(*T,double);
+	tildezr1=(double*) R_Calloc(*T,double);
+	tildezr2=(double*) R_Calloc(*T,double);
+	tildezr1_hatk_hati=(double*) R_Calloc(*T,double);
+	tildezr1_tildek_tildei=(double*) R_Calloc(*T,double);
+	barzr1=(double*) R_Calloc(*T,double);
+	tildezr2_hatk_hati=(double*) R_Calloc(*T,double);
+	tildezr2_tildek_tildei=(double*) R_Calloc(*T,double);
+	barzr2=(double*) R_Calloc(*T,double);
+	cop=(double*) R_Calloc(*T,double);
+	der=(double*) R_Calloc(*T,double);
+	der_hatk_hati=(double*) R_Calloc(*T,double);
+	der_tildek_tildei=(double*) R_Calloc(*T,double);
 	
 	
 	
@@ -452,11 +452,11 @@ free_intmatrix(calc, *d);
 free_intmatrix(calc2, *d); 
 free_3darray(barvindirect,*d,*d); 
 free_3darray(barvdirect,*d,*d); 
-Free(zr1); Free(zr2); Free(tildezr1); Free(tildezr2);Free(handle1);Free(cop);Free(der);
-Free(helpvar);Free(helpvar2);Free(helpvar3);Free(helpvar4);Free(helpvar5);Free(helpvar6);
-Free(tildezr1_hatk_hati); Free(tildezr1_tildek_tildei);Free(barzr1);
-Free(tildezr2_hatk_hati); Free(tildezr2_tildek_tildei);Free(barzr2);
-Free(der_hatk_hati);Free(der_tildek_tildei);
+R_Free(zr1); R_Free(zr2); R_Free(tildezr1); R_Free(tildezr2);R_Free(handle1);R_Free(cop);R_Free(der);
+R_Free(helpvar);R_Free(helpvar2);R_Free(helpvar3);R_Free(helpvar4);R_Free(helpvar5);R_Free(helpvar6);
+R_Free(tildezr1_hatk_hati); R_Free(tildezr1_tildek_tildei);R_Free(barzr1);
+R_Free(tildezr2_hatk_hati); R_Free(tildezr2_tildek_tildei);R_Free(barzr2);
+R_Free(der_hatk_hati);R_Free(der_tildek_tildei);
 }
 
 
@@ -604,21 +604,21 @@ void hesse(int* T, int* d, int* family, int* maxmat, int* matrix, int* condirect
 	int *calcupdate1, *calcupdate2;
 	int i=0, j=0, i1=0, i2=0, k1=0, k2=0, t1=0, t2=0, seperate=1, dd=*d*(*d-1)/2, tt=0, t=0;
 	int kk_second=0, kkk_second=0;
-	loglik = Calloc(*T,double);
-	ll = Calloc(((*d)*(*d)*(*T)),double);
-	vv = Calloc(((*d)*(*d)*(*T)),double);
-	vv2 = Calloc(((*d)*(*d)*(*T)),double);
-	calcupdate1 = Calloc(((*d)*(*d)),int);
-	calcupdate2 = Calloc(((*d)*(*d)),int);
-	barvalue_out = Calloc(((*d)*(*d)*(*T)),double);
-	barvdirect_out = Calloc(((*d)*(*d)*(*T)),double);
-	barvindirect_out = Calloc(((*d)*(*d)*(*T)),double);
-	tilde_vdirect = Calloc(((*d)*(*d)*(*T)),double);
-	tilde_vindirect = Calloc(((*d)*(*d)*(*T)),double);
-	tilde_value = Calloc(((*d)*(*d)*(*T)),double);
-	hat_vdirect = Calloc(((*d)*(*d)*(*T)),double);
-	hat_vindirect = Calloc(((*d)*(*d)*(*T)),double);
-	hat_value = Calloc(((*d)*(*d)*(*T)),double);
+	loglik = R_Calloc(*T,double);
+	ll = R_Calloc(((*d)*(*d)*(*T)),double);
+	vv = R_Calloc(((*d)*(*d)*(*T)),double);
+	vv2 = R_Calloc(((*d)*(*d)*(*T)),double);
+	calcupdate1 = R_Calloc(((*d)*(*d)),int);
+	calcupdate2 = R_Calloc(((*d)*(*d)),int);
+	barvalue_out = R_Calloc(((*d)*(*d)*(*T)),double);
+	barvdirect_out = R_Calloc(((*d)*(*d)*(*T)),double);
+	barvindirect_out = R_Calloc(((*d)*(*d)*(*T)),double);
+	tilde_vdirect = R_Calloc(((*d)*(*d)*(*T)),double);
+	tilde_vindirect = R_Calloc(((*d)*(*d)*(*T)),double);
+	tilde_value = R_Calloc(((*d)*(*d)*(*T)),double);
+	hat_vdirect = R_Calloc(((*d)*(*d)*(*T)),double);
+	hat_vindirect = R_Calloc(((*d)*(*d)*(*T)),double);
+	hat_value = R_Calloc(((*d)*(*d)*(*T)),double);
 
 	for(i=0;i<*d*(*d);i++)
 	{
@@ -862,21 +862,21 @@ void hesse(int* T, int* d, int* family, int* maxmat, int* matrix, int* condirect
 
 
 	free_intmatrix(fam,*d);
-	Free(loglik);
-	Free(ll); 
-	Free(vv); 
-	Free(vv2); 
-	Free(calcupdate1); 
-	Free(calcupdate2);
-	Free(barvalue_out); 
-	Free(barvdirect_out); 
-	Free(barvindirect_out);
-	Free(tilde_vdirect);
-	Free(tilde_vindirect);
-	Free(tilde_value);
-	Free(hat_vdirect);
-	Free(hat_vindirect);
-	Free(hat_value);
+	R_Free(loglik);
+	R_Free(ll); 
+	R_Free(vv); 
+	R_Free(vv2); 
+	R_Free(calcupdate1); 
+	R_Free(calcupdate2);
+	R_Free(barvalue_out); 
+	R_Free(barvdirect_out); 
+	R_Free(barvindirect_out);
+	R_Free(tilde_vdirect);
+	R_Free(tilde_vindirect);
+	R_Free(tilde_value);
+	R_Free(hat_vdirect);
+	R_Free(hat_vindirect);
+	R_Free(hat_value);
 }
 
 
@@ -889,8 +889,8 @@ void calcupdate_func(int* d, int* matrix, int* i, int* j, int* calc)
 {
 	int *g, *c;
 	int ii=0, jj=0, kk=0, handle=0, r=0;
-	g=Calloc(*d-*i+2,int);
-	c=Calloc(*d,int);
+	g=R_Calloc(*d-*i+2,int);
+	c=R_Calloc(*d,int);
 
 	// calc initialisieren
 	for(ii=0;ii<(*d)*(*d);ii++)
@@ -937,8 +937,8 @@ void calcupdate_func(int* d, int* matrix, int* i, int* j, int* calc)
 		}
 	}
 
-	Free(g);
-	Free(c);
+	R_Free(g);
+	R_Free(c);
 }
 
 

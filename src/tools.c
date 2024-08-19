@@ -78,8 +78,8 @@ void ktau(double *X, double *Y, int *N, double *tau, double *S, double *D, int *
 	// Defining variables
 	int K, L, I, J, Iend, Jend;
 	int i, j, m;
-	double *Y2 = Calloc(*N, double);
-	double *X2 = Calloc(*N, double);
+	double *Y2 = R_Calloc(*N, double);
+	double *X2 = R_Calloc(*N, double);
 	double *xptr,*yptr; // HJ addition for swapping
 	boolean Iflag, Jflag, Xflag;
 	*S = 0.; *D = 0.; *T = 0; *U = 0; *V = 0;
@@ -248,8 +248,8 @@ void ktau(double *X, double *Y, int *N, double *tau, double *S, double *D, int *
 	*tau = (*S) / (*D);
 
 
-  Free(Y2);
-  Free(X2);
+  R_Free(Y2);
+  R_Free(X2);
 }
 
 
@@ -269,8 +269,8 @@ void ktau_matrix(double *data, int *d, int *N, double *out)
 	double **x, S=0.0, D=0.0, *X, *Y;
 	int k=0, i, j, t, T=0, U=0, V=0;
 	x = create_matrix(*d,*N);
-	X = (double*) Calloc(*N,double);
-	Y = (double*) Calloc(*N,double);
+	X = (double*) R_Calloc(*N,double);
+	Y = (double*) R_Calloc(*N,double);
 
 	for(i=0;i<*d;i++)
     {
@@ -290,13 +290,12 @@ void ktau_matrix(double *data, int *d, int *N, double *out)
 			{
 				X[t]=x[i][t];
 				Y[t]=x[j][t];
-			}
-			ktau(X, Y, N, &out[k], &S, &D, &T, &U, &V);
+			}			ktau(X, Y, N, &out[k], &S, &D, &T, &U, &V);
 			k++;
 		}
 	}
 
-	Free(X);Free(Y);free_matrix(x, *d);
+	R_Free(X);R_Free(Y);free_matrix(x, *d);
 }
 
 

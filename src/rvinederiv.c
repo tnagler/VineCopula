@@ -52,12 +52,12 @@ void VineLogLikRvineDeriv(int* T, int* d, int* family, int* kk, int* ii, int* ma
 	double *handle1;
 	double param[2];
 	
-	zr1=(double*) Calloc(*T,double);
-	zr2=(double*) Calloc(*T,double);
-	handle1=(double*) Calloc(*T,double);
-	tildezr1=(double*) Calloc(*T,double);
-	tildezr2=(double*) Calloc(*T,double);
-	cop=(double*) Calloc(*T,double);
+	zr1=(double*) R_Calloc(*T,double);
+	zr2=(double*) R_Calloc(*T,double);
+	handle1=(double*) R_Calloc(*T,double);
+	tildezr1=(double*) R_Calloc(*T,double);
+	tildezr2=(double*) R_Calloc(*T,double);
+	cop=(double*) R_Calloc(*T,double);
 	
 	double ***tildevalue;
 	tildevalue=create_3darray(*d,*d,*T);
@@ -343,7 +343,7 @@ void VineLogLikRvineDeriv(int* T, int* d, int* family, int* kk, int* ii, int* ma
 	free_3darray(tildevindirect,*d,*d); 
 	free_3darray(tildevdirect,*d,*d); 
 	free_3darray(tildevalue,*d,*d); 
-	Free(zr1); Free(zr2); Free(tildezr1); Free(tildezr2); Free(handle1); Free(cop);
+	R_Free(zr1); R_Free(zr2); R_Free(tildezr1); R_Free(tildezr2); R_Free(handle1); R_Free(cop);
 
 }
 
@@ -366,11 +366,11 @@ void VineLogLikRvineGradient(int* T, int* d, int* family, int* maxmat, int* matr
 {
 	int kk, ii, tt, i, j, tcop=0, dd=1, aa=0, margin=0;
 	int *calc;
-	calc = Calloc(((*d)*(*d)),int);
+	calc = R_Calloc(((*d)*(*d)),int);
 	double *tilde_vdirect, *tilde_vindirect, *tilde_value;
-	tilde_vdirect = Calloc(((*d)*(*d)*(*T)),double);
-	tilde_vindirect = Calloc(((*d)*(*d)*(*T)),double);
-	tilde_value = Calloc(((*d)*(*d)*(*T)),double);
+	tilde_vdirect = R_Calloc(((*d)*(*d)*(*T)),double);
+	tilde_vindirect = R_Calloc(((*d)*(*d)*(*T)),double);
+	tilde_value = R_Calloc(((*d)*(*d)*(*T)),double);
 	int **pospar, **fam;
 	pospar=create_intmatrix(*d,*d);
 	fam=create_intmatrix(*d,*d);
@@ -417,7 +417,7 @@ void VineLogLikRvineGradient(int* T, int* d, int* family, int* maxmat, int* matr
 		}
 	}
 
-Free(calc);free_intmatrix(pospar,*d);free_intmatrix(fam,*d);
-Free(tilde_vdirect);Free(tilde_vindirect);Free(tilde_value);
+R_Free(calc);free_intmatrix(pospar,*d);free_intmatrix(fam,*d);
+R_Free(tilde_vdirect);R_Free(tilde_vindirect);R_Free(tilde_value);
 }
 

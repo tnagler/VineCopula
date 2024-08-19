@@ -47,7 +47,7 @@ void VineLogLikRvine(int* T, int* d, int* family, int* maxmat, int* matrix, int*
     double loglik=1.0, sumloglik=0.0, **x, **theta, **nu, ***vdirect, ***vindirect;
 
     double *sumsplitlog;
-    sumsplitlog=(double*) Calloc(*T,double);
+    sumsplitlog=(double*) R_Calloc(*T,double);
 
     for (t=0;t<*T;t++ )
     {
@@ -251,7 +251,7 @@ void VineLogLikRvine(int* T, int* d, int* family, int* maxmat, int* matrix, int*
     free_matrix(value,*d);
     free_3darray(value2,*d,*d);
     free_3darray(vindirect,*d,*d);
-    Free(sumsplitlog);
+    R_Free(sumsplitlog);
 }
 
 // memory efficient version, where outer loop is over sample size
@@ -265,7 +265,7 @@ void VineLogLikRvine2(int* T, int* d, int* family, int* maxmat, int* matrix,
     double loglik=1.0, **x, **theta, **nu, ***vdirect, ***vindirect;
 
     double *sumsplitlog;
-    sumsplitlog=(double*) Calloc(*T,double);
+    sumsplitlog=(double*) R_Calloc(*T,double);
 
     for (t=0;t<*T;t++ )
     {
@@ -363,7 +363,7 @@ void VineLogLikRvine2(int* T, int* d, int* family, int* maxmat, int* matrix,
     free_intmatrix(fam,*d);
     free_3darray(value2,*d,*d);
     free_3darray(vindirect,*d,*d);
-    Free(sumsplitlog);
+    R_Free(sumsplitlog);
 
 }
 
@@ -398,7 +398,7 @@ void VineLikRvine(int* T, int* d, int* family, int* maxmat, int* matrix, int* co
     double loglik=1.0, sumloglik=1.0, **x, **theta, **nu, ***vdirect, ***vindirect;
 
     double *sumsplitlog;
-    sumsplitlog=(double*) Calloc(*T,double);
+    sumsplitlog=(double*) R_Calloc(*T,double);
 
     for (t=0;t<*T;t++ )
     {
@@ -557,7 +557,7 @@ void VineLikRvine(int* T, int* d, int* family, int* maxmat, int* matrix, int* co
     //Free memory:
     free_matrix(x,*d); free_3darray(vdirect,*d,*d); free_matrix(theta,*d); free_matrix(nu,*d); free_intmatrix(fam,*d); free_matrix(value,*d);free_3darray(value2,*d,*d);
     free_intmatrix(mmat,*d); free_intmatrix(cdirect,*d); free_intmatrix(cindirect,*d);   free_3darray(vindirect,*d,*d); free_intmatrix(calc, *d); free_intmatrix(mat, *d);
-    Free(sumsplitlog);
+    R_Free(sumsplitlog);
 }
 
 

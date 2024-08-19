@@ -1,12 +1,12 @@
 /*
-** memoryhandling.c - C code of the package CDRVine  
-** 
-** with contributions from Carlos Almeida, Aleksey Min, 
+** memoryhandling.c - C code of the package CDRVine
+**
+** with contributions from Carlos Almeida, Aleksey Min,
 ** Ulf Schepsmeier, Jakob Stoeber and Eike Brechmann
-** 
+**
 ** A first version was based on code
 ** from Daniel Berg <daniel at danielberg.no>
-** provided by personal communication. 
+** provided by personal communication.
 **
 */
 
@@ -21,8 +21,8 @@ double **create_matrix(int rows, int columns)
 {
   double **a;
   int i=0;
-  a = (double**) Calloc(rows, double*);
-  for(i=0;i<rows;i++) a[i] = (double*) Calloc(columns,double);
+  a = (double**) R_Calloc(rows, double*);
+  for(i=0;i<rows;i++) a[i] = (double*) R_Calloc(columns,double);
   return a;
 }
 
@@ -34,8 +34,8 @@ double **create_matrix(int rows, int columns)
 void free_matrix(double **a, int rows)
 {
   int i=0;
-  for(i=0;i<rows;i++) Free(a[i]);
-  Free(a);
+  for(i=0;i<rows;i++) R_Free(a[i]);
+  R_Free(a);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -47,8 +47,8 @@ int **create_intmatrix(int rows, int columns)
 {
   int **a;
   int i=0;
-  a = (int**) Calloc(rows,int*);
-  for(i=0;i<rows;i++) a[i] = (int*) Calloc(columns,int);
+  a = (int**) R_Calloc(rows,int*);
+  for(i=0;i<rows;i++) a[i] = (int*) R_Calloc(columns,int);
   return a;
 }
 
@@ -60,8 +60,8 @@ int **create_intmatrix(int rows, int columns)
 void free_intmatrix(int **a, int rows)
 {
   int i=0;
-  for(i=0;i<rows;i++) Free(a[i]);
-  Free(a);
+  for(i=0;i<rows;i++) R_Free(a[i]);
+  R_Free(a);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -73,13 +73,13 @@ double ***create_3darray(int d1, int d2, int d3)
 {
   double ***a;
   int i=0,j=0;
-  a = (double ***) Calloc(d1,double*);
+  a = (double ***) R_Calloc(d1,double*);
   for(i=0;i<d1;i++)
-  {  
-    a[i] = (double**) Calloc(d2, double*);
+  {
+    a[i] = (double**) R_Calloc(d2, double*);
     for(j=0;j<d2;j++)
     {
-      a[i][j] = (double*) Calloc(d3,double);
+      a[i][j] = (double*) R_Calloc(d3,double);
     }
   }
   return a;
@@ -96,12 +96,12 @@ void free_3darray(double ***a, int d1, int d2)
 {
   int i=0,j=0;
   for(i=0;i<d1;i++)
-  {  
+  {
     for(j=0;j<d2;j++)
     {
-      Free(a[i][j]);
+      R_Free(a[i][j]);
     }
-    Free(a[i]);
+    R_Free(a[i]);
   }
-  Free(a);
+  R_Free(a);
 }

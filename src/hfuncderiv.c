@@ -427,7 +427,7 @@ void diffhfunc_v(double* u, double* v, int* n, double* param, int* copula, doubl
             t5=sqrt(t4);
             t6=t3/t5;
             t7=dnorm(t6,0.0,1.0,0);
-            t8=sqrt(2.0*pi);
+            t8=sqrt(2.0*M_PI);
             t9=pow(t2,2);
             t10=exp(-t9/2.0);
             out[j]=t7*t8*(-theta)/t5/t10;

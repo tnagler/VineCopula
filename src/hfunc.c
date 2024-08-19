@@ -412,7 +412,7 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
 {
     int j;
     double *h;
-    h = Calloc(*n,double);
+    h = R_Calloc(*n,double);
     double x;
 
 
@@ -483,7 +483,7 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
             else if(*family==7)	//BB1
             {
                 double* param;
-                param = Calloc(2,double);
+                param = R_Calloc(2,double);
                 param[0]=*theta;
                 param[1]=*nu;
                 int T=1;
@@ -500,12 +500,12 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                 {
                     pcondbb1(&v[j],&u[j],&T,param,&h[j]);
                 }
-                Free(param);
+                R_Free(param);
             }
             else if(*family==8) //BB6
             {
                 double* param;
-                param = Calloc(2,double);
+                param = R_Calloc(2,double);
                 param[0]=*theta;
                 param[1]=*nu;
                 int T=1;
@@ -522,12 +522,12 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                 {
                     pcondbb6(&v[j],&u[j],&T,param,&h[j]);
                 }
-                Free(param);
+                R_Free(param);
             }
             else if(*family==9)	//BB7
             {
                 double* param;
-                param = Calloc(2,double);
+                param = R_Calloc(2,double);
                 param[0]=*theta;
                 param[1]=*nu;
                 int T=1;
@@ -544,12 +544,12 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                 {
                     pcondbb7(&v[j],&u[j],&T,param,&h[j]);
                 }
-                Free(param);
+                R_Free(param);
             }
             else if(*family==10) //BB8
             {
                 double* param;
-                param = Calloc(2,double);
+                param = R_Calloc(2,double);
                 param[0]=*theta;
                 param[1]=*nu;
                 int T=1;
@@ -566,7 +566,7 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                 {
                     pcondbb8(&v[j],&u[j],&T,param,&h[j]);
                 }
-                Free(param);
+                R_Free(param);
             }
             else if(*family==13) //rotated clayton (180?)
             {
@@ -604,7 +604,7 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
             else if(*family==17) //rotated BB1
             {
                 double* param;
-                param = Calloc(2,double);
+                param = R_Calloc(2,double);
                 param[0]=*theta;
                 param[1]=*nu;
                 int T=1;
@@ -631,12 +631,12 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                     v[j]=1-v[j];
                     h[j]= 1-h[j];
                 }
-                Free(param);
+                R_Free(param);
             }
             else if(*family==18) //rotated BB6
             {
                 double* param;
-                param = Calloc(2,double);
+                param = R_Calloc(2,double);
                 param[0]=*theta;
                 param[1]=*nu;
                 int T=1;
@@ -663,12 +663,12 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                     v[j]=1-v[j];
                     h[j]= 1-h[j];
                 }
-                Free(param);
+                R_Free(param);
             }
             else if(*family==19) //rotated BB7
             {
                 double* param;
-                param = Calloc(2,double);
+                param = R_Calloc(2,double);
                 param[0]=*theta;
                 param[1]=*nu;
                 int T=1;
@@ -694,12 +694,12 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                     v[j]=1-v[j];
                     h[j]= 1-h[j];
                 }
-                Free(param);
+                R_Free(param);
             }
             else if(*family==20) //rotated BB8
             {
                 double* param;
-                param = Calloc(2,double);
+                param = R_Calloc(2,double);
                 param[0]=*theta;
                 param[1]=*nu;
                 int T=1;
@@ -724,7 +724,7 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
                     v[j]=1-v[j];
                     h[j]= 1-h[j];
                 }
-                Free(param);
+                R_Free(param);
             }
             else if(*family==41)
             {
@@ -737,7 +737,7 @@ void Hfunc(int* family, int* n, double* u, double* v, double* theta, double* nu,
         }
         out[j] = MAX(MIN(h[j],UMAX),UMIN);
     }
-    Free(h);
+    R_Free(h);
 }
 
 ///////////////////////////////////////////////////////////////
@@ -941,8 +941,8 @@ void HNumInv2(int* family, double* v, double* u, double* theta, double* nu, doub
 void Hinv1(int* family, int* n, double* u, double* v, double* theta, double* nu, double* out)
 {
     double *negv, *negu;
-    negv = (double*) Calloc(*n,double);
-    negu = (double*) Calloc(*n,double);
+    negv = (double*) R_Calloc(*n,double);
+    negu = (double*) R_Calloc(*n,double);
     double ntheta, nnu;
     int nfamily;
     ntheta = -*theta;
@@ -998,8 +998,8 @@ void Hinv1(int* family, int* n, double* u, double* v, double* theta, double* nu,
     else {
         Hinv(family,  n,  u,  v,  theta,  nu,  out);
     }
-    Free(negv);
-    Free(negu);
+    R_Free(negv);
+    R_Free(negu);
 }
 
 void Hinv2(int* family, int* n, double* v, double* u, double* theta, double* nu, double* out)
@@ -1129,7 +1129,7 @@ void Hinv(int* family, int* n, double* u, double* v, double* theta, double* nu, 
 {
     int j;
     double *hinv;
-    hinv = Calloc(*n,double);
+    hinv = R_Calloc(*n,double);
 
     for(int i=0;i<*n;i++)
     {
@@ -1310,6 +1310,6 @@ void Hinv(int* family, int* n, double* u, double* v, double* theta, double* nu, 
 
         out[j] = MAX(MIN(hinv[j],UMAX),UMIN);
     }
-    Free(hinv);
+    R_Free(hinv);
 }
 
