@@ -60,6 +60,7 @@ export(BiCopKDE)
 
 export(RVineLogLik)
 export(RVinePDF)
+export(RVineCDF)
 export(RVineAIC)
 export(RVineBIC)
 export(RVineMatrix)

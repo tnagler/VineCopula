@@ -418,6 +418,7 @@ stopifnot(inherits(e, "try-error"))
 e <- try(RVineBIC(simdata, RVM))
 stopifnot(inherits(e, "try-error"))
 
+
 ## RVineClarkeTest/ RVineVuongTest ---------------
 data(daxreturns)
 RVM <- RVineMatrix(Matrix = Matrix, family = family, par = par, par2 = par2)
@@ -432,6 +433,7 @@ simdata <- RVineSim(10, RVM)
 simdata[2, 2] <- NA
 RVineLogLik(simdata, RVM, separate = TRUE)
 RVineLogLik(simdata, RVM, separate = FALSE)
+RVineCDF(simdata, RVM)
 
 ## RVineCopSelect ----------------------------
 RVM <- RVineMatrix(Matrix = Matrix, family = family, par = par, par2 = par2)

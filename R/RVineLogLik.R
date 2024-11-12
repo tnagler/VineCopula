@@ -339,3 +339,105 @@ RVineLogLik <- function(data, RVM, par = RVM$par, par2 = RVM$par2,
 RVinePDF <- function(newdata, RVM, verbose = TRUE) {
     exp(RVineLogLik(newdata, RVM, separate = TRUE, calculate.V = FALSE, verbose = verbose)$loglik)
 }
+
+#' CDF of an R-Vine Copula Model
+#'
+#' This function calculates the cumulative distribution
+#' function of a d-dimensional R-vine copula.
+#'
+#' The cumulative distribution function of a \eqn{d}-dimensional R-vine copula
+#' cannot be expressed in closed form.
+#' However, it can be calculated by numerical integration. The function uses
+#' the \code{\link[=RVineSim]{RVineSim()}} function to
+#' simulate a grid of points and then computes the CDF via Monte Carlo.
+#'
+#' @param data An N x d data matrix that specifies where
+#' the CDF shall be evaluated.
+#' @param RVM An [RVineMatrix()] object including the
+#' structure and the pair-copula families and parameters.
+#' @param N Number of points to simulate for the Monte
+#' Carlo integration (default: `n = 1000`).
+#'
+#' @return A vector of length N with the CDF values.
+#'
+#' @author Thibault Vatter
+#'
+#' @seealso [RVineSim()], [RVineMatrix()], [RVineLogLik()], [RVinePDF()]
+#'
+#' @examples
+#' # define 5-dimensional R-vine tree structure matrix
+#' Matrix <- c(
+#'   5, 2, 3, 1, 4,
+#'   0, 2, 3, 4, 1,
+#'   0, 0, 3, 4, 1,
+#'   0, 0, 0, 4, 1,
+#'   0, 0, 0, 0, 1
+#' )
+#' Matrix <- matrix(Matrix, 5, 5)
+#'
+#' # define R-vine pair-copula family matrix
+#' family <- c(
+#'   0, 1, 3, 4, 4,
+#'   0, 0, 3, 4, 1,
+#'   0, 0, 0, 4, 1,
+#'   0, 0, 0, 0, 3,
+#'   0, 0, 0, 0, 0
+#' )
+#' family <- matrix(family, 5, 5)
+#'
+#' # define R-vine pair-copula parameter matrix
+#' par <- c(
+#'   0, 0.2, 0.9, 1.5, 3.9,
+#'   0, 0, 1.1, 1.6, 0.9,
+#'   0, 0, 0, 1.9, 0.5,
+#'   0, 0, 0, 0, 4.8,
+#'   0, 0, 0, 0, 0
+#' )
+#' par <- matrix(par, 5, 5)
+#'
+#' # define second R-vine pair-copula parameter matrix
+#' par2 <- matrix(0, 5, 5)
+#'
+#' # define RVineMatrix object
+#' RVM <- RVineMatrix(
+#'   Matrix = Matrix, family = family,
+#'   par = par, par2 = par2,
+#'   names = c("V1", "V2", "V3", "V4", "V5")
+#' )
+#'
+#' # compute the CDF at (0.1, 0.2, 0.3, 0.4, 0.5)
+#' RVineCDF(c(0.1, 0.2, 0.3, 0.4, 0.5), RVM)
+#'
+RVineCDF <- function(data, RVM, N = 1000) {
+  # Preprocess arguments
+  args <- preproc(
+    c(as.list(environment()), call = match.call()),
+    check_data,
+    fix_nas,
+    check_if_01,
+    check_RVMs,
+    prep_RVMs
+  )
+  list2env(args, environment())
+
+  # Simulate N random numbers from the vine model
+  u_sim <- RVineSim(N, RVM)
+
+  # Initialize output vector
+  n <- nrow(data)
+  vine_distribution <- numeric(n)
+
+  # Compute the cumulative distribution
+  for (i in seq_len(n)) {
+    temp <- data[i, ]
+
+    # Calculate the maximum difference row-wise between u_sim and temp
+    x <- apply(u_sim, 1, function(row) max(row - temp))
+
+    # Count occurrences where all differences are <= 0
+    vine_distribution[i] <- sum(x <= 0)
+  }
+
+  # Return normalized cumulative distribution
+  return(vine_distribution / N)
+}
