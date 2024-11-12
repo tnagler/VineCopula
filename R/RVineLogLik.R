@@ -351,13 +351,12 @@ RVinePDF <- function(newdata, RVM, verbose = TRUE) {
 #' the \code{\link[=RVineSim]{RVineSim()}} function to
 #' simulate a grid of points and then computes the CDF via Monte Carlo.
 #'
-#' @param newdata An N x d data matrix that specifies where
+#' @param data An N x d data matrix that specifies where
 #' the CDF shall be evaluated.
 #' @param RVM An [RVineMatrix()] object including the
 #' structure and the pair-copula families and parameters.
-#' @param n Number of points to simulate for the Monte
+#' @param N Number of points to simulate for the Monte
 #' Carlo integration (default: `n = 1000`).
-#' @param seed Seed for the random number generator (default: `seed = 42`).
 #'
 #' @return A vector of length N with the CDF values.
 #'
@@ -409,20 +408,28 @@ RVinePDF <- function(newdata, RVM, verbose = TRUE) {
 #' # compute the CDF at (0.1, 0.2, 0.3, 0.4, 0.5)
 #' RVineCDF(c(0.1, 0.2, 0.3, 0.4, 0.5), RVM)
 #'
-RVineCDF < -function(newdata, RVM, n = 1000, seed = 42) {
-  # Set random seed
-  set.seed(seed)
+RVineCDF <- function(data, RVM, N = 1000) {
+  # Preprocess arguments
+  args <- preproc(
+    c(as.list(environment()), call = match.call()),
+    check_data,
+    fix_nas,
+    check_if_01,
+    check_RVMs,
+    prep_RVMs
+  )
+  list2env(args, environment())
 
   # Simulate N quasi-random numbers from the vine model
   u_sim <- RVineSim(N, RVM)
 
   # Initialize output vector
-  n <- nrow(u)
+  n <- nrow(data)
   vine_distribution <- numeric(n)
 
   # Compute the cumulative distribution
   for (i in seq_len(n)) {
-    temp <- u[i, ]
+    temp <- data[i, ]
 
     # Calculate the maximum difference row-wise between u_sim and temp
     x <- apply(u_sim, 1, function(row) max(row - temp))

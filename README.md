@@ -160,8 +160,8 @@ specifying `family`, `par` and `par2` manually.
   * `RVinePar2Tau`, `RVinePar2Beta`: Calculate dependence measures 
     corresponding to a vine copula model.
     
-  * `RVinePDF`, `RVineLogLik`, `RVineAIC`, `RVineBIC`: Calculate the density, 
-    log-likelihood, AIC, and BIC of a vine copula.
+* `RVinePDF`, `RVineCDF`, `RVineLogLik`, `RVineAIC`, `RVineBIC`: Calculate the density,
+    cumulative distribution, log-likelihood, AIC, and BIC of a vine copula.
 
 
 ### Additional features
