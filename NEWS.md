@@ -1,3 +1,10 @@
+VineCopula 2.5.0
+----------------------------------------------------------------
+
+NEW FEATURES
+
+* add `RVineCDF()` function for cumulative distribution of vine copulas models (#97).
+
 VineCopula 2.5.1
 ----------------------------------------------------------------
 
