@@ -420,7 +420,7 @@ RVineCDF <- function(data, RVM, N = 1000) {
   )
   list2env(args, environment())
 
-  # Simulate N quasi-random numbers from the vine model
+  # Simulate N random numbers from the vine model
   u_sim <- RVineSim(N, RVM)
 
   # Initialize output vector
