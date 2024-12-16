@@ -3,7 +3,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-news">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.6.0</span>
       </span>
     </div>
 
@@ -31,14 +31,14 @@
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/tnagler/VineCopula/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
@@ -48,7 +48,14 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="2.5.1" id="vinecopula-251">VineCopula 2.5.1<a class="anchor" aria-label="anchor" href="#vinecopula-251"></a></h2>
+<h2 class="page-header" data-toc-text="2.6.0" id="vinecopula-260">VineCopula 2.6.0<a class="anchor" aria-label="anchor" href="#vinecopula-260"></a></h2>
+<p>NEW FEATURES</p>
+<ul><li>add <code><a href="../reference/RVineCDF.html">RVineCDF()</a></code> function for cumulative distribution of vine copulas models (<a href="https://github.com/tnagler/VineCopula/issues/97" class="external-link">#97</a>).</li>
+</ul><p>BUG FIX</p>
+<ul><li>Fix read past parameter boundary in <code>difflPDF_mod</code> (non-critical).</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="2.5.1" id="vinecopula-251">VineCopula 2.5.1<small>2024-08-19</small><a class="anchor" aria-label="anchor" href="#vinecopula-251"></a></h2>
 <p>BUG FIXES</p>
 <ul><li><p>fix log-derivatives of 90 and 270 degree rotations.</p></li>
 <li><p>Fix missing <code>BB8</code> in <code><a href="../reference/BiCopName.html">BiCopName()</a></code>.</p></li>
@@ -314,8 +321,8 @@
 <ul><li><p><code>BiCopEst</code>: extend search interval for Tawn MLE to avoid <code>optim</code>-errors.</p></li>
 <li><p><code>BiCopEst</code>: fix for optim error (‘non-finite value supplied’).</p></li>
 <li><p><code>RVineSim</code>: reorder <code>U</code> so that it corresponds to the order of <code>RVM</code>.</p></li>
-<li><p><code>RVineCor2pcor</code>: include normalization step for a more intuitive behavior, bug fix for <span class="math inline"><em>d</em> = 2, 3</span> and <span class="math inline"><em>d</em> &gt; 9</span>.</p></li>
-<li><p><code>RVinePcor2cor</code>: bug fixes for <span class="math inline"><em>d</em> = 2</span> and <span class="math inline"><em>d</em> &gt; 9</span>.</p></li>
+<li><p><code>RVineCor2pcor</code>: include normalization step for a more intuitive behavior, bug fix for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mo>=</mo><mn>2</mn><mo>,</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">d = 2, 3</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mo>&gt;</mo><mn>9</mn></mrow><annotation encoding="application/x-tex">d &gt; 9</annotation></semantics></math>.</p></li>
+<li><p><code>RVinePcor2cor</code>: bug fixes for <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">d = 2</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mo>&gt;</mo><mn>9</mn></mrow><annotation encoding="application/x-tex">d &gt; 9</annotation></semantics></math>.</p></li>
 <li><p><code>RVineCopSelect</code>: <code>RVM</code> object now uses variable names as provided by data.</p></li>
 </ul></div>
     <div class="section level2">
@@ -367,7 +374,7 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.2-1" id="vinecopula-12-1-1">VineCopula 1.2-1<a class="anchor" aria-label="anchor" href="#vinecopula-12-1-1"></a></h2>
 <p>NEW FEATURES</p>
-<ul><li><p><code>RVineSim</code> allows to commit a <code>(N x d)</code>-matrix of <span class="math inline"><em>U</em>[0,1]</span> random variates to be transformed to the copula sample. For example if you want to use quasi random variables instead of the pseudo random variables implemented in R. (Thanks to Marius Hofert)</p></li>
+<ul><li><p><code>RVineSim</code> allows to commit a <code>(N x d)</code>-matrix of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>U</mi><mrow><mo stretchy="true" form="prefix">[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">U[0,1]</annotation></semantics></math> random variates to be transformed to the copula sample. For example if you want to use quasi random variables instead of the pseudo random variables implemented in R. (Thanks to Marius Hofert)</p></li>
 <li><p>The package now contains class wrappers that are compatible with the <code>copula</code> class from the <code>copula</code> R-package. These include all bivariate families currently implemented: The class representation for different rotated families of e.g the BB6 family are represented as <code>BB6Copula</code>, <code>r90B6Copula</code>, <code>surBB6Copula</code> and <code>r270BB6Copula</code>. These bivariate classes are fully compatible with the standard copula methods such as <code>dCopula</code>, <code>pCopula</code>, <code>rCopula</code> or <code>fitCopula</code> including <code>persp</code> and <code>contour</code>. A vine copula can as well be coerced into a class representation of <code>vineCopula</code>. However, the support of the standard methods is limited. See the corresponding help pages for details. Earlier introduced R-wrapper of C-functions have been removed, as they are no longer needed by the <code>spcopula</code> R-package.</p></li>
 <li><p>Added parameter <code>verbose</code> to <code>RVineLogLik</code> to allow to suppress some debug output.</p></li>
 </ul><p>BUG FIXES</p>
@@ -446,15 +453,15 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 
