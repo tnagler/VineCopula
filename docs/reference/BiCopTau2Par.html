@@ -4,7 +4,7 @@ for a given value of Kendall's tau."><!-- mathjax --><script src="https://cdnjs.
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -18,7 +18,7 @@ for a given value of Kendall's tau."><!-- mathjax --><script src="https://cdnjs.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.6.0</span>
       </span>
     </div>
 
@@ -32,14 +32,14 @@ for a given value of Kendall's tau."><!-- mathjax --><script src="https://cdnjs.
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/tnagler/VineCopula/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
@@ -60,12 +60,14 @@ for a given value of Kendall's tau.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>family</dt>
+
+
+<dl><dt id="arg-family">family<a class="anchor" aria-label="anchor" href="#arg-family"></a></dt>
 <dd><p>integer; single number or vector of size <code>n</code>; defines the
 bivariate copula family: <br><code>0</code> = independence copula <br><code>1</code> =
 Gaussian copula <br><code>2</code> = Student t copula (Here only the first
 parameter can be computed) <br><code>3</code> = Clayton copula <br><code>4</code> =
-Gumbel copula <br><code>5</code> = Frank copula <br><code>6</code> = Joe copula <br><code>13</code> = rotated Clayton copula (180 degrees; <code>survival Clayton'') \cr `14` = rotated Gumbel copula (180 degrees; </code>survival Gumbel'') <br><code>16</code> = rotated Joe copula (180 degrees; ``survival Joe'') <br><code>23</code>
+Gumbel copula <br><code>5</code> = Frank copula <br><code>6</code> = Joe copula <br><code>13</code> = rotated Clayton copula (180 degrees; <code>survival Clayton'') \cr `14` = rotated Gumbel copula (180 degrees; </code>survival Gumbel”) <br><code>16</code> = rotated Joe copula (180 degrees; “survival Joe”) <br><code>23</code>
 = rotated Clayton copula (90 degrees) <br> `24` = rotated Gumbel copula
 (90 degrees) <br> `26` = rotated Joe copula (90 degrees) <br> `33` =
 rotated Clayton copula (270 degrees) <br> `34` = rotated Gumbel copula
@@ -74,21 +76,19 @@ rotated Clayton copula (270 degrees) <br> `34` = rotated Gumbel copula
 cannot be used.</p></dd>
 
 
-<dt>tau</dt>
+<dt id="arg-tau">tau<a class="anchor" aria-label="anchor" href="#arg-tau"></a></dt>
 <dd><p>numeric; single number or vector of size <code>n</code>; Kendall's tau
 value (vector with elements in \([-1,1]\)).</p></dd>
 
 
-<dt>check.taus</dt>
+<dt id="arg-check-taus">check.taus<a class="anchor" aria-label="anchor" href="#arg-check-taus"></a></dt>
 <dd><p>logical; default is <code>TRUE</code>; if <code>FALSE</code>, checks
 for family/tau-consistency are omitted (should only be used with care).</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>Parameter (vector) corresponding to the bivariate copula family and
+    <p>Parameter (vector) corresponding to the bivariate copula family and
 the value(s) of Kendall's tau (\(\tau\)).</p><table class="table table"><tr><td>No.
 (<code>family</code>)</td><td>Parameter (<code>par</code>)</td></tr><tr><td><code>1, 2</code></td><td>\(\sin(\tau \frac{\pi}{2})\)</td></tr><tr><td><code>3, 13</code></td><td>\(2\frac{\tau}{1-\tau}\)</td></tr><tr><td><code>4, 14</code></td><td>\(\frac{1}{1-\tau}\)</td></tr><tr><td><code>5</code></td><td>no closed form
 expression (numerical inversion)</td></tr><tr><td><code>6, 16</code></td><td>no closed form
@@ -141,57 +141,6 @@ of mixed C-vines with application to exchange rates. Statistical Modelling,
 <span class="r-in"><span><span class="fu"><a href="BiCopPar2Tau.html">BiCopPar2Tau</a></span><span class="op">(</span>family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">6</span><span class="op">)</span>, par <span class="op">=</span> <span class="va">theta</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.4 0.5 0.6</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># \dontshow{</span></span></span>
-<span class="r-in"><span><span class="co"># Test BiCopTau2Par</span></span></span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">0</span>, tau <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0 0 0</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">1</span>, tau <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5877853 0.7071068 0.8090170</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">2</span>, tau <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5877853 0.7071068 0.8090170</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">3</span>, tau <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.333333 2.000000 3.000000</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">4</span>, tau <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.666667 2.000000 2.500000</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">5</span>, tau <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 4.168941 5.747564 7.940414</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">6</span>, tau <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.219070 2.856257 3.826659</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">13</span>, tau <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.333333 2.000000 3.000000</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">14</span>, tau <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.666667 2.000000 2.500000</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">16</span>, tau <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.219070 2.856257 3.826659</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">23</span>, tau <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.333333 -2.000000 -3.000000</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">24</span>, tau <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.666667 -2.000000 -2.500000</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">26</span>, tau <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -2.219070 -2.856257 -3.826659</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">33</span>, tau <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.333333 -2.000000 -3.000000</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">34</span>, tau <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -1.666667 -2.000000 -2.500000</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">36</span>, tau <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -2.219070 -2.856257 -3.826659</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">41</span>, tau <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3.278015 4.836848 7.703827</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">51</span>, tau <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3.278015 4.836848 7.703827</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">61</span>, tau <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.3583378 -0.2699585 -0.1968076</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">71</span>, tau <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -0.3583378 -0.2699585 -0.1968076</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">41</span>, tau <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3583378 0.2699585 0.1968076</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">51</span>, tau <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.3583378 0.2699585 0.1968076</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">61</span>, tau <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -3.278015 -4.836848 -7.703827</span>
-<span class="r-in"><span><span class="fu">BiCopTau2Par</span><span class="op">(</span>family <span class="op">=</span> <span class="fl">71</span>, tau <span class="op">=</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>,<span class="fl">0.5</span>,<span class="fl">0.6</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -3.278015 -4.836848 -7.703827</span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -207,15 +156,15 @@ of mixed C-vines with application to exchange rates. Statistical Modelling,
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 

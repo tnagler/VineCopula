@@ -6,7 +6,7 @@ margins are available."><!-- mathjax --><script src="https://cdnjs.cloudflare.co
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -20,7 +20,7 @@ margins are available."><!-- mathjax --><script src="https://cdnjs.cloudflare.co
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.6.0</span>
       </span>
     </div>
 
@@ -34,14 +34,14 @@ margins are available."><!-- mathjax --><script src="https://cdnjs.cloudflare.co
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/tnagler/VineCopula/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
@@ -64,18 +64,20 @@ margins are available.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>u1, u2</dt>
+
+
+<dl><dt id="arg-u-u-">u1, u2<a class="anchor" aria-label="anchor" href="#arg-u-u-"></a></dt>
 <dd><p>Data vectors of equal length with values in \([0,1]\).</p></dd>
 
 
-<dt>familyset</dt>
+<dt id="arg-familyset">familyset<a class="anchor" aria-label="anchor" href="#arg-familyset"></a></dt>
 <dd><p>Vector of bivariate copula families to select from.
 The vector has to include at least one bivariate copula
 family that allows for positive and one that allows for negative dependence.
 If <code>familyset = NA</code> (default), selection among all possible families is
 performed. If a vector of negative numbers is provided, selection among all
 but <code>abs(familyset)</code> families is performed. Coding of bivariate copula
-families: <br><code>0</code> = independence copula <br><code>1</code> = Gaussian copula <br><code>2</code> = Student t copula (t-copula) <br><code>3</code> = Clayton copula <br><code>4</code> = Gumbel copula <br><code>5</code> = Frank copula <br><code>6</code> = Joe copula <br><code>7</code> = BB1 copula <br><code>8</code> = BB6 copula <br><code>9</code> = BB7 copula <br><code>10</code> = BB8 copula <br><code>13</code> = rotated Clayton copula (180 degrees; <code>survival Clayton'') \cr `14` = rotated Gumbel copula (180 degrees; </code>survival Gumbel'') <br><code>16</code> = rotated Joe copula (180 degrees; <code>survival Joe'') \cr `17` = rotated BB1 copula (180 degrees; </code>survival BB1'')<br><code>18</code> = rotated BB6 copula (180 degrees; <code>survival BB6'')\cr `19` = rotated BB7 copula (180 degrees; </code>survival BB7'')<br><code>20</code> = rotated BB8 copula (180 degrees; ``survival BB8'')<br><code>23</code> = rotated Clayton copula (90 degrees) <br>
+families: <br><code>0</code> = independence copula <br><code>1</code> = Gaussian copula <br><code>2</code> = Student t copula (t-copula) <br><code>3</code> = Clayton copula <br><code>4</code> = Gumbel copula <br><code>5</code> = Frank copula <br><code>6</code> = Joe copula <br><code>7</code> = BB1 copula <br><code>8</code> = BB6 copula <br><code>9</code> = BB7 copula <br><code>10</code> = BB8 copula <br><code>13</code> = rotated Clayton copula (180 degrees; <code>survival Clayton'') \cr `14` = rotated Gumbel copula (180 degrees; </code>survival Gumbel”) <br><code>16</code> = rotated Joe copula (180 degrees; <code>survival Joe'') \cr `17` = rotated BB1 copula (180 degrees; </code>survival BB1”)<br><code>18</code> = rotated BB6 copula (180 degrees; <code>survival BB6'')\cr `19` = rotated BB7 copula (180 degrees; </code>survival BB7”)<br><code>20</code> = rotated BB8 copula (180 degrees; “survival BB8”)<br><code>23</code> = rotated Clayton copula (90 degrees) <br>
 `24` = rotated Gumbel copula (90 degrees) <br>
 `26` = rotated Joe copula (90 degrees) <br>
 `27` = rotated BB1 copula (90 degrees) <br>
@@ -99,16 +101,14 @@ families: <br><code>0</code> = independence copula <br><code>1</code> = Gaussian
 `234` = rotated Tawn type 2 copula (270 degrees) <br></p></dd>
 
 
-<dt>rotations</dt>
+<dt id="arg-rotations">rotations<a class="anchor" aria-label="anchor" href="#arg-rotations"></a></dt>
 <dd><p>If <code>TRUE</code>, all rotations of the families in
 <code>familyset</code> are included (or subtracted).</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>A <code><a href="BiCop.html">BiCop()</a></code> object containing the model selected by the
+    <p>A <code><a href="BiCop.html">BiCop()</a></code> object containing the model selected by the
 user.</p>
     </div>
     <div id="author">
@@ -122,7 +122,7 @@ user.</p>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">daxreturns</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># find a suitable copula family for the first two stocks</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">BiCopCompare</span><span class="op">(</span><span class="va">daxreturns</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, <span class="va">daxreturns</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">BiCopCompare</span><span class="op">(</span><span class="va">daxreturns</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, <span class="va">daxreturns</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="co"># \dontrun{}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -138,15 +138,15 @@ user.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 

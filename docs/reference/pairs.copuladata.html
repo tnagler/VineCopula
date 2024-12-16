@@ -5,7 +5,7 @@ correlations on the upper panel and histograms on the diagonal panel."><!-- math
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -19,7 +19,7 @@ correlations on the upper panel and histograms on the diagonal panel."><!-- math
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.6.0</span>
       </span>
     </div>
 
@@ -33,14 +33,14 @@ correlations on the upper panel and histograms on the diagonal panel."><!-- math
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/tnagler/VineCopula/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
@@ -57,7 +57,7 @@ correlations on the upper panel and histograms on the diagonal panel.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for copuladata</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'copuladata'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/pairs.html" class="external-link">pairs</a></span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,</span>
@@ -76,59 +76,61 @@ correlations on the upper panel and histograms on the diagonal panel.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>x</dt>
+
+
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p><code>copuladata</code> object.</p></dd>
 
 
-<dt>labels</dt>
+<dt id="arg-labels">labels<a class="anchor" aria-label="anchor" href="#arg-labels"></a></dt>
 <dd><p>variable names/labels.</p></dd>
 
 
-<dt>...</dt>
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other graphical parameters (see <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">graphics::par()</a></code>) or
 options passed to <code><a href="BiCopKDE.html">BiCopKDE()</a></code>.</p></dd>
 
 
-<dt>lower.panel</dt>
+<dt id="arg-lower-panel">lower.panel<a class="anchor" aria-label="anchor" href="#arg-lower-panel"></a></dt>
 <dd><p>panel function to be used on the lower diagonal panels
 (if not supplied, a default function is used)</p></dd>
 
 
-<dt>upper.panel</dt>
+<dt id="arg-upper-panel">upper.panel<a class="anchor" aria-label="anchor" href="#arg-upper-panel"></a></dt>
 <dd><p>panel function to be used on the upper diagonal panels
 (if not supplied, a default function is used)</p></dd>
 
 
-<dt>diag.panel</dt>
+<dt id="arg-diag-panel">diag.panel<a class="anchor" aria-label="anchor" href="#arg-diag-panel"></a></dt>
 <dd><p>panel function to be used on the diagonal panels (if not
 supplied, a default function is used)</p></dd>
 
 
-<dt>label.pos</dt>
+<dt id="arg-label-pos">label.pos<a class="anchor" aria-label="anchor" href="#arg-label-pos"></a></dt>
 <dd><p>y position of labels in the diagonal panel; default:
 <code>label.pos = 0.85</code>.</p></dd>
 
 
-<dt>cex.labels</dt>
+<dt id="arg-cex-labels">cex.labels<a class="anchor" aria-label="anchor" href="#arg-cex-labels"></a></dt>
 <dd><p>magnification to be used for the labels of the diagonal
 panel; default: <code>cex.labels = 1</code>.</p></dd>
 
 
-<dt>gap</dt>
+<dt id="arg-gap">gap<a class="anchor" aria-label="anchor" href="#arg-gap"></a></dt>
 <dd><p>distance between subplots, in margin lines; default: <code>gap = 0</code>.</p></dd>
 
 
-<dt>method</dt>
+<dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>a character string indicating which correlation coefficients
 are computed. One of <code>"pearson"</code>, <code>"kendall"</code> (default), or
 <code>"spearman"</code></p></dd>
 
 
-<dt>ccols</dt>
+<dt id="arg-ccols">ccols<a class="anchor" aria-label="anchor" href="#arg-ccols"></a></dt>
 <dd><p>color to be used for the contour plots; default: <code>ccols = terrain.colors(30)</code>.</p></dd>
 
 
-<dt>margins</dt>
+<dt id="arg-margins">margins<a class="anchor" aria-label="anchor" href="#arg-margins"></a></dt>
 <dd><p>character; margins for the contour plots. Options are:<br><code>"unif"</code> for the original copula density,
 <code>"norm"</code> for the transformed density with standard normal margins,
 <code>"exp"</code> with standard exponential margins, and  <code>"flexp"</code> with
@@ -157,7 +159,6 @@ the points in the scatter plot (<code>upper.panel</code>)</p></li>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">daxreturns</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">daxreturns</span> <span class="op">&lt;-</span> <span class="va">daxreturns</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span>, <span class="op">]</span></span></span>
 <span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="as.copuladata.html">as.copuladata</a></span><span class="op">(</span><span class="va">daxreturns</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">sel</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">5</span>,<span class="fl">14</span>,<span class="fl">15</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -222,15 +223,15 @@ the points in the scatter plot (<code>upper.panel</code>)</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 

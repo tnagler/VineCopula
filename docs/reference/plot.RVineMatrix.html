@@ -7,7 +7,7 @@ pair-copula. contour.RVineMatrix produces a matrix of contour plots
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -21,7 +21,7 @@ pair-copula. contour.RVineMatrix produces a matrix of contour plots
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.6.0</span>
       </span>
     </div>
 
@@ -35,14 +35,14 @@ pair-copula. contour.RVineMatrix produces a matrix of contour plots
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/tnagler/VineCopula/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
@@ -61,10 +61,10 @@ pair-copula. <code>contour.RVineMatrix</code> produces a matrix of contour plots
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for RVineMatrix</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'RVineMatrix'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/contour.html" class="external-link">contour</a></span><span class="op">(</span><span class="va">x</span>, tree <span class="op">=</span> <span class="st">"ALL"</span>, xylim <span class="op">=</span> <span class="cn">NULL</span>, cex.nums <span class="op">=</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for RVineMatrix</span></span>
+<span><span class="co"># S3 method for class 'RVineMatrix'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  tree <span class="op">=</span> <span class="st">"ALL"</span>,</span>
@@ -78,41 +78,43 @@ pair-copula. <code>contour.RVineMatrix</code> produces a matrix of contour plots
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>x</dt>
+
+
+<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
 <dd><p><code>RVineMatrix</code> object.</p></dd>
 
 
-<dt>tree</dt>
+<dt id="arg-tree">tree<a class="anchor" aria-label="anchor" href="#arg-tree"></a></dt>
 <dd><p><code>"ALL"</code> or integer vector; specifies which trees are
 plotted.</p></dd>
 
 
-<dt>xylim</dt>
+<dt id="arg-xylim">xylim<a class="anchor" aria-label="anchor" href="#arg-xylim"></a></dt>
 <dd><p>numeric vector of length 2; sets <code>xlim</code> and <code>ylim</code>
 for the contours</p></dd>
 
 
-<dt>cex.nums</dt>
+<dt id="arg-cex-nums">cex.nums<a class="anchor" aria-label="anchor" href="#arg-cex-nums"></a></dt>
 <dd><p>numeric; expansion factor for font of the numbers.</p></dd>
 
 
-<dt>data</dt>
+<dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>a data matrix for creating kernel density contours of each pair.</p></dd>
 
 
-<dt>...</dt>
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Arguments passed to
 <code><a href="https://rdrr.io/pkg/network/man/plot.network.html" class="external-link">network::plot.network()</a></code> or
 <code><a href="plot.BiCop.html">plot.BiCop()</a></code> respectively.</p></dd>
 
 
-<dt>type</dt>
+<dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
 <dd><p>integer; specifies how to make use of variable names: <br><code>0</code> = variable names are ignored, <br><code>1</code> = variable names are
 used to annotate vertices, <br><code>2</code> = uses numbers in plot and adds a
 legend for variable names.</p></dd>
 
 
-<dt>edge.labels</dt>
+<dt id="arg-edge-labels">edge.labels<a class="anchor" aria-label="anchor" href="#arg-edge-labels"></a></dt>
 <dd><p>character; either a vector of edge labels or one of the
 following: <br><code>"family"</code> = pair-copula family abbreviation (see
 <code><a href="BiCopName.html">BiCopName()</a></code>), <br><code>"par"</code> =
@@ -121,12 +123,12 @@ conversion of parameters) <br><code>"family-par"</code> = pair-copula family and
 parameters <br><code>"family-tau"</code> = pair-copula family and Kendall's tau.</p></dd>
 
 
-<dt>legend.pos</dt>
+<dt id="arg-legend-pos">legend.pos<a class="anchor" aria-label="anchor" href="#arg-legend-pos"></a></dt>
 <dd><p>the <code>x</code> argument for
 <code><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">graphics::legend()</a></code>.</p></dd>
 
 
-<dt>interactive</dt>
+<dt id="arg-interactive">interactive<a class="anchor" aria-label="anchor" href="#arg-interactive"></a></dt>
 <dd><p>logical; if TRUE, the user is asked to adjust the
 positioning of vertices with his mouse.</p></dd>
 
@@ -160,7 +162,7 @@ be <code>1.25/length(tree)*(d - min(tree))</code> times the plot width.</p>
 <span class="r-in"><span><span class="va">RVM</span>  <span class="op">&lt;-</span> <span class="fu"><a href="RVineMatrix.html">RVineMatrix</a></span><span class="op">(</span><span class="va">strucmat</span>, <span class="va">fammat</span>, <span class="va">parmat</span>, <span class="va">par2mat</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># plot trees</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">RVM</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">RVM</span><span class="op">)</span> <span class="co"># \dontrun{}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># show contour plots</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/contour.html" class="external-link">contour</a></span><span class="op">(</span><span class="va">RVM</span><span class="op">)</span></span></span>
@@ -180,15 +182,15 @@ be <code>1.25/length(tree)*(d - min(tree))</code> times the plot width.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 

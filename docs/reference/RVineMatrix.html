@@ -6,7 +6,7 @@ matrices for corresponding parameter values."><!-- mathjax --><script src="https
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -20,7 +20,7 @@ matrices for corresponding parameter values."><!-- mathjax --><script src="https
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.6.0</span>
       </span>
     </div>
 
@@ -34,14 +34,14 @@ matrices for corresponding parameter values."><!-- mathjax --><script src="https
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/tnagler/VineCopula/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
@@ -71,16 +71,18 @@ matrices for corresponding parameter values.</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>Matrix</dt>
+
+
+<dl><dt id="arg-matrix">Matrix<a class="anchor" aria-label="anchor" href="#arg-matrix"></a></dt>
 <dd><p>Lower (or upper) triangular d x d matrix that defines the
 R-vine tree structure.</p></dd>
 
 
-<dt>family</dt>
+<dt id="arg-family">family<a class="anchor" aria-label="anchor" href="#arg-family"></a></dt>
 <dd><p>Lower (or upper) triangular d x d matrix with zero diagonal
 entries that assigns the pair-copula families to each (conditional) pair
 defined by <code>Matrix</code> (default: <code>family = array(0,dim=dim(Matrix))</code>).  The bivariate copula families are defined as
-follows:<br><code>0</code> = independence copula <br><code>1</code> = Gaussian copula <br><code>2</code> = Student t copula (t-copula) <br><code>3</code> = Clayton copula <br><code>4</code> = Gumbel copula <br><code>5</code> = Frank copula <br><code>6</code> = Joe copula <br><code>7</code> = BB1 copula <br><code>8</code> = BB6 copula <br><code>9</code> = BB7 copula <br><code>10</code> = BB8 copula <br><code>13</code> = rotated Clayton copula (180 degrees; <code>survival Clayton'') \cr `14` = rotated Gumbel copula (180 degrees; </code>survival Gumbel'') <br><code>16</code> = rotated Joe copula (180 degrees; <code>survival Joe'') \cr `17` = rotated BB1 copula (180 degrees; </code>survival BB1'')<br><code>18</code> = rotated BB6 copula (180 degrees; <code>survival BB6'')\cr `19` = rotated BB7 copula (180 degrees; </code>survival BB7'')<br><code>20</code> = rotated BB8 copula (180 degrees; ``survival BB8'')<br><code>23</code> = rotated Clayton copula (90 degrees) <br>
+follows:<br><code>0</code> = independence copula <br><code>1</code> = Gaussian copula <br><code>2</code> = Student t copula (t-copula) <br><code>3</code> = Clayton copula <br><code>4</code> = Gumbel copula <br><code>5</code> = Frank copula <br><code>6</code> = Joe copula <br><code>7</code> = BB1 copula <br><code>8</code> = BB6 copula <br><code>9</code> = BB7 copula <br><code>10</code> = BB8 copula <br><code>13</code> = rotated Clayton copula (180 degrees; <code>survival Clayton'') \cr `14` = rotated Gumbel copula (180 degrees; </code>survival Gumbel”) <br><code>16</code> = rotated Joe copula (180 degrees; <code>survival Joe'') \cr `17` = rotated BB1 copula (180 degrees; </code>survival BB1”)<br><code>18</code> = rotated BB6 copula (180 degrees; <code>survival BB6'')\cr `19` = rotated BB7 copula (180 degrees; </code>survival BB7”)<br><code>20</code> = rotated BB8 copula (180 degrees; “survival BB8”)<br><code>23</code> = rotated Clayton copula (90 degrees) <br>
 `24` = rotated Gumbel copula (90 degrees) <br>
 `26` = rotated Joe copula (90 degrees) <br>
 `27` = rotated BB1 copula (90 degrees) <br>
@@ -104,24 +106,24 @@ follows:<br><code>0</code> = independence copula <br><code>1</code> = Gaussian c
 `234` = rotated Tawn type 2 copula (270 degrees) <br></p></dd>
 
 
-<dt>par</dt>
+<dt id="arg-par">par<a class="anchor" aria-label="anchor" href="#arg-par"></a></dt>
 <dd><p>Lower (or upper) triangular d x d matrix with zero diagonal
 entries that assigns the (first) pair-copula parameter to each (conditional)
 pair defined by <code>Matrix</code> <br> (default: <code>par = array(NA, dim = dim(Matrix))</code>).</p></dd>
 
 
-<dt>par2</dt>
+<dt id="arg-par-">par2<a class="anchor" aria-label="anchor" href="#arg-par-"></a></dt>
 <dd><p>Lower (or upper) triangular d x d matrix with zero diagonal
 entries that assigns the second parameter for pair-copula families with two
 parameters to each (conditional) pair defined by <code>Matrix</code> (default:
 <code>par2 = array(NA, dim = dim(Matrix))</code>).</p></dd>
 
 
-<dt>names</dt>
+<dt id="arg-names">names<a class="anchor" aria-label="anchor" href="#arg-names"></a></dt>
 <dd><p>A vector of names for the d variables; default: <code>names = NULL</code>.</p></dd>
 
 
-<dt>check.pars</dt>
+<dt id="arg-check-pars">check.pars<a class="anchor" aria-label="anchor" href="#arg-check-pars"></a></dt>
 <dd><p>logical; default is <code>TRUE</code>; if <code>FALSE</code>, checks
 for family/parameter-consistency are omitted (should only be used with
 care).</p></dd>
@@ -129,9 +131,7 @@ care).</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>An object of class <code>RVineMatrix()</code>, i.e., a list with the
+    <p>An object of class <code>RVineMatrix()</code>, i.e., a list with the
 following components:</p>
 <dl><dt>Matrix</dt>
 <dd><p>R-vine tree structure matrix.</p></dd>
@@ -169,10 +169,8 @@ evaluating the density etc.,</p></dd>
 <dd><p>Blomqvist's beta matrix.</p></dd>
 
 </dl><p>Objects of this class are also returned by the <code><a href="RVineSeqEst.html">RVineSeqEst()</a></code>,
-<code><a href="RVineCopSelect.html">RVineCopSelect()</a></code>, and <code><a href="RVineStructureSelect.html">RVineStructureSelect()</a></code></p>
-
-
-<p>functions. In this case, further information about the fit is added.</p>
+<code><a href="RVineCopSelect.html">RVineCopSelect()</a></code>, and <code><a href="RVineStructureSelect.html">RVineStructureSelect()</a></code>
+functions. In this case, further information about the fit is added.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -274,7 +272,7 @@ financial returns. Computational Statistics &amp; Data Analysis, 59 (1), 52-69.<
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 &lt;-&gt; V1,   2 &lt;-&gt; V2,   3 &lt;-&gt; V3,   4 &lt;-&gt; V4,   5 &lt;-&gt; V5</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## inspect the model using plots</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">RVM</span><span class="op">)</span>  <span class="co"># tree structure</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">RVM</span><span class="op">)</span>  <span class="co"># tree structure # \dontrun{}</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/contour.html" class="external-link">contour</a></span><span class="op">(</span><span class="va">RVM</span><span class="op">)</span>  <span class="co"># contour plots of all pair-copulas</span></span></span>
 <span class="r-plt img"><img src="RVineMatrix-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
@@ -296,15 +294,15 @@ financial returns. Computational Statistics &amp; Data Analysis, 59 (1), 52-69.<
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 
