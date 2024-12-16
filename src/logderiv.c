@@ -313,8 +313,8 @@ void difflPDF_mod(double* u, double* v, int* n, double* param, int* copula, doub
   double* nparam = (double *) malloc(2*sizeof(double));
 
   int ncopula;
-  nparam[0]= -param[0];
-  nparam[1]= -param[1];
+  nparam[0]= -param[0]; 
+  nparam[1]=0; // only implemented for one parameter families
   int i;
 
 
@@ -324,6 +324,7 @@ void difflPDF_mod(double* u, double* v, int* n, double* param, int* copula, doub
       for (i = 0; i < *n; ++i) {negu[i] = 1 - u[i];}
 	  difflPDF(negu, v, n, nparam, &ncopula, out);
 	  for(i=0;i<*n;i++){out[i]=-out[i];}
+
     }
   else if(((*copula==33) | (*copula==34) | (*copula==36) | (*copula==37) | (*copula==38) | (*copula==39) | (*copula==40)))	// 270? rotated copulas
     {
