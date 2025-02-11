@@ -96,7 +96,7 @@ are only approximate since they do not
 account for the sequential nature of the estimation,}
 \item{nobs}{number of observations,}
 \item{logLik, pair.logLik}{log likelihood (overall and pairwise)}
-\item{AIC, pair.AIC}{Aikaike's Informaton Criterion (overall and pairwise),}
+\item{AIC, pair.AIC}{Akaike's Informaton Criterion (overall and pairwise),}
 \item{BIC, pair.BIC}{Bayesian's Informaton Criterion (overall and pairwise),}
 \item{emptau}{matrix of empirical values of Kendall's tau,}
 \item{p.value.indeptest}{matrix of p-values of the independence test.}

@@ -93,7 +93,7 @@
 #' `se = TRUE`,}
 #' \item{nobs}{number of observations,}
 #' \item{logLik}{log likelihood}
-#' \item{AIC}{Aikaike's Informaton Criterion,}
+#' \item{AIC}{Akaike's Informaton Criterion,}
 #' \item{BIC}{Bayesian's Informaton Criterion,}
 #' \item{emptau}{empirical value of Kendall's tau,}
 #' \item{p.value.indeptest}{p-value of the independence test.}
