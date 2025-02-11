@@ -3,7 +3,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.6.0</span>
       </span>
     </div>
 
@@ -31,14 +31,14 @@
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/tnagler/VineCopula/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
@@ -58,28 +58,32 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>u1, u2</dt>
+
+
+<dl><dt id="arg-u-u-">u1, u2<a class="anchor" aria-label="anchor" href="#arg-u-u-"></a></dt>
 <dd><p>Data vectors of equal length with values in \([0,1]\).</p></dd>
 
 
-<dt>PLOT</dt>
+<dt id="arg-plot">PLOT<a class="anchor" aria-label="anchor" href="#arg-plot"></a></dt>
 <dd><p>Logical; whether the results are plotted. If <code>PLOT = FALSE</code>, the values <code>lambda</code>, <code>chi</code> and <code>control.bounds</code> are
 returned (see below; default: <code>PLOT = TRUE</code>).</p></dd>
 
 
-<dt>mode</dt>
+<dt id="arg-mode">mode<a class="anchor" aria-label="anchor" href="#arg-mode"></a></dt>
 <dd><p>Character; whether a general, lower or upper chi-plot is
 calculated.  Possible values are <code>mode = "NULL"</code>, <code>"upper"</code> and
 <code>"lower"</code>. <br><code>"NULL"</code> = general chi-plot (default)<br><code>"upper"</code> = upper chi-plot<br><code>"lower"</code> = lower chi-plot</p></dd>
 
 
-<dt>...</dt>
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional plot arguments.</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <dl><dt>lambda</dt>
+
+
+<dl><dt>lambda</dt>
 <dd><p>Lambda-statistics (x-axis).</p></dd>
  <dt>chi</dt>
 <dd><p>Chi-statistics
@@ -116,7 +120,7 @@ coefficient between dichotomized values of \(U_1\) and \(U_2\). Under
 independence it holds that \(\chi_i \sim
 \mathcal{N}(0,\frac{1}{N})\) and \(\lambda_i \sim
 \mathcal{U}[-1,1]\) asymptotically, i.e., values of
-\(\chi_i\) close to zero indicate independence---corresponding to
+\(\chi_i\) close to zero indicate independence—corresponding to
 \(F_{1, 2}=F_{1}F_{2}\).</p>
 <p>When plotting these quantities, the pairs of \(\left(\lambda_i, \chi_i
 \right)\) will tend to be located above zero for
@@ -186,15 +190,15 @@ Engineering, 12 (4), 347-368.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 

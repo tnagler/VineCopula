@@ -1,9 +1,14 @@
-VineCopula 2.5.0
+VineCopula 2.6.0
 ----------------------------------------------------------------
 
 NEW FEATURES
 
 * add `RVineCDF()` function for cumulative distribution of vine copulas models (#97).
+
+BUG FIX
+
+* Fix read past parameter boundary in `difflPDF_mod` (non-critical).
+
 
 VineCopula 2.5.1
 ----------------------------------------------------------------

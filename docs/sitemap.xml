@@ -1,279 +1,75 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BB1Copula-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BB1Copula.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BB6Copula-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BB6Copula.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BB7Copula-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BB7Copula.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BB8Copula-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BB8Copula.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BetaMatrix.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCop.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopCDF.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopCheck.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopChiPlot.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopCompare.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopCondSim.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopDeriv.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopDeriv2.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopEst.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopEstList.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopGofTest.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopHfunc.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopHfuncDeriv.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopHfuncDeriv2.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopHinv.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopIndTest.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopKDE.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopKPlot.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopLambda.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopMetaContour.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopName.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopPDF.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopPar2Beta.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopPar2TailDep.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopPar2Tau.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopSelect.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopSim.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopTau2Par.html</loc>
-  </url>
-  <url>
-    <loc>/reference/BiCopVuongClarke.html</loc>
-  </url>
-  <url>
-    <loc>/reference/C2RVine.html</loc>
-  </url>
-  <url>
-    <loc>/reference/D2RVine.html</loc>
-  </url>
-  <url>
-    <loc>/reference/EmpCDF.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineAIC.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineClarkeTest.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineCopSelect.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineCor2pcor.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineGofTest.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineGrad.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineHessian.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineLogLik.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineMLE.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineMatrix.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineMatrixCheck.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineMatrixNormalize.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineMatrixSample.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVinePDF.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVinePIT.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVinePar2Beta.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVinePar2Tau.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineSeqEst.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineSim.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineStdError.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineStructureSelect.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineTreePlot.html</loc>
-  </url>
-  <url>
-    <loc>/reference/RVineVuongTest.html</loc>
-  </url>
-  <url>
-    <loc>/reference/TauMatrix.html</loc>
-  </url>
-  <url>
-    <loc>/reference/VC2copula-deprecated.html</loc>
-  </url>
-  <url>
-    <loc>/reference/VineCopula-package.html</loc>
-  </url>
-  <url>
-    <loc>/reference/as.copuladata.html</loc>
-  </url>
-  <url>
-    <loc>/reference/copulaFromFamilyIndex.html</loc>
-  </url>
-  <url>
-    <loc>/reference/daxreturns.html</loc>
-  </url>
-  <url>
-    <loc>/reference/ddCopula.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/joeBiCopula-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/joeBiCopula.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pairs.copuladata.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot.BiCop.html</loc>
-  </url>
-  <url>
-    <loc>/reference/plot.RVineMatrix.html</loc>
-  </url>
-  <url>
-    <loc>/reference/pobs.html</loc>
-  </url>
-  <url>
-    <loc>/reference/surClaytonCopula-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/surClaytonCopula.html</loc>
-  </url>
-  <url>
-    <loc>/reference/surGumbelCopula-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/surGumbelCopula.html</loc>
-  </url>
-  <url>
-    <loc>/reference/tawnT1Copula-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/tawnT1Copula.html</loc>
-  </url>
-  <url>
-    <loc>/reference/tawnT2Copula-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/tawnT2Copula.html</loc>
-  </url>
-  <url>
-    <loc>/reference/vineCopula-class.html</loc>
-  </url>
-  <url>
-    <loc>/reference/vineCopula.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/BetaMatrix.html</loc></url>
+<url><loc>/reference/BiCop.html</loc></url>
+<url><loc>/reference/BiCopCDF.html</loc></url>
+<url><loc>/reference/BiCopCheck.html</loc></url>
+<url><loc>/reference/BiCopChiPlot.html</loc></url>
+<url><loc>/reference/BiCopCompare.html</loc></url>
+<url><loc>/reference/BiCopCondSim.html</loc></url>
+<url><loc>/reference/BiCopDeriv.html</loc></url>
+<url><loc>/reference/BiCopDeriv2.html</loc></url>
+<url><loc>/reference/BiCopEst.html</loc></url>
+<url><loc>/reference/BiCopEstList.html</loc></url>
+<url><loc>/reference/BiCopGofTest.html</loc></url>
+<url><loc>/reference/BiCopHfunc.html</loc></url>
+<url><loc>/reference/BiCopHfuncDeriv.html</loc></url>
+<url><loc>/reference/BiCopHfuncDeriv2.html</loc></url>
+<url><loc>/reference/BiCopHinv.html</loc></url>
+<url><loc>/reference/BiCopIndTest.html</loc></url>
+<url><loc>/reference/BiCopKDE.html</loc></url>
+<url><loc>/reference/BiCopKPlot.html</loc></url>
+<url><loc>/reference/BiCopLambda.html</loc></url>
+<url><loc>/reference/BiCopMetaContour.html</loc></url>
+<url><loc>/reference/BiCopName.html</loc></url>
+<url><loc>/reference/BiCopPDF.html</loc></url>
+<url><loc>/reference/BiCopPar2Beta.html</loc></url>
+<url><loc>/reference/BiCopPar2TailDep.html</loc></url>
+<url><loc>/reference/BiCopPar2Tau.html</loc></url>
+<url><loc>/reference/BiCopSelect.html</loc></url>
+<url><loc>/reference/BiCopSim.html</loc></url>
+<url><loc>/reference/BiCopTau2Par.html</loc></url>
+<url><loc>/reference/BiCopVuongClarke.html</loc></url>
+<url><loc>/reference/C2RVine.html</loc></url>
+<url><loc>/reference/D2RVine.html</loc></url>
+<url><loc>/reference/EmpCDF.html</loc></url>
+<url><loc>/reference/RVineAIC.html</loc></url>
+<url><loc>/reference/RVineCDF.html</loc></url>
+<url><loc>/reference/RVineClarkeTest.html</loc></url>
+<url><loc>/reference/RVineCopSelect.html</loc></url>
+<url><loc>/reference/RVineCor2pcor.html</loc></url>
+<url><loc>/reference/RVineGofTest.html</loc></url>
+<url><loc>/reference/RVineGrad.html</loc></url>
+<url><loc>/reference/RVineHessian.html</loc></url>
+<url><loc>/reference/RVineLogLik.html</loc></url>
+<url><loc>/reference/RVineMLE.html</loc></url>
+<url><loc>/reference/RVineMatrix.html</loc></url>
+<url><loc>/reference/RVineMatrixCheck.html</loc></url>
+<url><loc>/reference/RVineMatrixNormalize.html</loc></url>
+<url><loc>/reference/RVineMatrixSample.html</loc></url>
+<url><loc>/reference/RVinePDF.html</loc></url>
+<url><loc>/reference/RVinePIT.html</loc></url>
+<url><loc>/reference/RVinePar2Beta.html</loc></url>
+<url><loc>/reference/RVinePar2Tau.html</loc></url>
+<url><loc>/reference/RVineSeqEst.html</loc></url>
+<url><loc>/reference/RVineSim.html</loc></url>
+<url><loc>/reference/RVineStdError.html</loc></url>
+<url><loc>/reference/RVineStructureSelect.html</loc></url>
+<url><loc>/reference/RVineTreePlot.html</loc></url>
+<url><loc>/reference/RVineVuongTest.html</loc></url>
+<url><loc>/reference/TauMatrix.html</loc></url>
+<url><loc>/reference/VC2copula-deprecated.html</loc></url>
+<url><loc>/reference/VineCopula-package.html</loc></url>
+<url><loc>/reference/as.copuladata.html</loc></url>
+<url><loc>/reference/daxreturns.html</loc></url>
+<url><loc>/reference/ddCopula.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/pairs.copuladata.html</loc></url>
+<url><loc>/reference/plot.BiCop.html</loc></url>
+<url><loc>/reference/plot.RVineMatrix.html</loc></url>
+<url><loc>/reference/pobs.html</loc></url>
 </urlset>
+

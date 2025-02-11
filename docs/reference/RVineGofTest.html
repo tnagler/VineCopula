@@ -5,7 +5,7 @@ Schepsmeier (2013)."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/a
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-reference-topic">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -19,7 +19,7 @@ Schepsmeier (2013)."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/a
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">VineCopula</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.6.0</span>
       </span>
     </div>
 
@@ -33,14 +33,14 @@ Schepsmeier (2013)."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/a
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/tnagler/VineCopula/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul></div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
@@ -69,16 +69,18 @@ Schepsmeier (2013).</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>data</dt>
+
+
+<dl><dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
 <dd><p>An N x d data matrix (with uniform margins).</p></dd>
 
 
-<dt>RVM</dt>
+<dt id="arg-rvm">RVM<a class="anchor" aria-label="anchor" href="#arg-rvm"></a></dt>
 <dd><p><code><a href="RVineMatrix.html">RVineMatrix()</a></code> objects of the R-vine model under the
 null hypothesis. <br>
 Only the following copula families are allowed in
 <code>RVM$family</code> due to restrictions in <code><a href="RVineGrad.html">RVineGrad()</a></code> and
-<code><a href="RVineHessian.html">RVineHessian()</a></code> <br><code>0</code> = independence copula <br><code>1</code> = Gaussian copula <br><code>2</code> = Student t copula (t-copula)<br><code>3</code> = Clayton copula <br><code>4</code> = Gumbel copula <br><code>5</code> = Frank copula <br><code>6</code> = Joe copula <br><code>13</code> = rotated Clayton copula (180 degrees; <code>survival Clayton'') \cr `14` = rotated Gumbel copula (180 degrees; </code>survival Gumbel'') <br><code>16</code> = rotated Joe copula (180 degrees; ``survival Joe'') <br><code>23</code> = rotated Clayton copula (90 degrees) <br>
+<code><a href="RVineHessian.html">RVineHessian()</a></code> <br><code>0</code> = independence copula <br><code>1</code> = Gaussian copula <br><code>2</code> = Student t copula (t-copula)<br><code>3</code> = Clayton copula <br><code>4</code> = Gumbel copula <br><code>5</code> = Frank copula <br><code>6</code> = Joe copula <br><code>13</code> = rotated Clayton copula (180 degrees; <code>survival Clayton'') \cr `14` = rotated Gumbel copula (180 degrees; </code>survival Gumbel”) <br><code>16</code> = rotated Joe copula (180 degrees; “survival Joe”) <br><code>23</code> = rotated Clayton copula (90 degrees) <br>
 `24` = rotated Gumbel copula (90 degrees) <br>
 `26` = rotated Joe copula (90 degrees) <br>
 `33` = rotated Clayton copula (270 degrees) <br>
@@ -86,7 +88,7 @@ Only the following copula families are allowed in
 `36` = rotated Joe copula (270 degrees) <br></p></dd>
 
 
-<dt>method</dt>
+<dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>A string indicating the goodness-of-fit method:<br><code>"White"</code> = goodness-of-fit test based on White's information matrix
 equality (default) <br><code>"IR"</code> = goodness-of-fit test based on the
 information ratio <br><code>"Breymann"</code> = goodness-of-fit test based on the
@@ -101,7 +103,7 @@ integral transform (PIT) and empirical copula process (ECP) (Genest et al.
 2009) <br></p></dd>
 
 
-<dt>statistic</dt>
+<dt id="arg-statistic">statistic<a class="anchor" aria-label="anchor" href="#arg-statistic"></a></dt>
 <dd><p>A string indicating the goodness-of-fit test statistic
 type:<br><code>"CvM"</code> = Cramer-von Mises test statistic (univariate for
 <code>"Breymann"</code>, <code>"Berg"</code> and <code>"Berg2"</code>, multivariate for
@@ -111,23 +113,21 @@ statistic (univariate for <code>"Breymann"</code>, <code>"Berg"</code> and
 <code>"Breymann"</code>, <code>"Berg"</code> and <code>"Berg2"</code>)</p></dd>
 
 
-<dt>B</dt>
+<dt id="arg-b">B<a class="anchor" aria-label="anchor" href="#arg-b"></a></dt>
 <dd><p>an integer for the number of bootstrap steps (default <code>B = 200</code>)<br>
 For <code>B = 0</code> the asymptotic p-value is returned if available,
 otherwise only the test statistic is returned.<br>
 WARNING: If <code>B</code> is chosen too large, computations will take very long.</p></dd>
 
 
-<dt>alpha</dt>
+<dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
 <dd><p>an integer of the set <code>2,4,6,...</code> for the <code>"Berg2"</code>
 goodness-of-fit test (default <code>alpha = 2</code>)</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    
-
-<p>For <code>method = "White"</code>:</p>
+    <p>For <code>method = "White"</code>:</p>
 <dl><dt>White</dt>
 <dd><p>test statistic</p></dd>
 
@@ -145,10 +145,8 @@ bootstrapped one. How to calculated a bootstrapped p-value is explained in
 Schepsmeier (2013). Be aware, that the test statistics than have to be adjusted
 with the empirical variance.</p></dd>
 
-</dl><p>For <code>method = "Breymann"</code>, <code>method = "Berg"</code></p>
-
-
-<p>and <code>method = "Berg2"</code>:</p>
+</dl><p>For <code>method = "Breymann"</code>, <code>method = "Berg"</code>
+and <code>method = "Berg2"</code>:</p>
 <dl><dt>CvM, KS, AD</dt>
 <dd><p>test statistic according to
 the choice of <code>statistic</code></p></dd>
@@ -169,10 +167,8 @@ choice of <code>statistic</code></p></dd>
 
 <dt>p.value</dt>
 <dd><p>bootstrapped p-value</p></dd>
- </dl><p><br></p>
-
-
-<p>Warning: The code for all the p-values are not yet approved since some of them are
+ </dl><p><br>
+Warning: The code for all the p-values are not yet approved since some of them are
 moved from R-code to C-code. If you need p-values the best way is to write your own
 algorithm as suggested in Schepsmeier (2013) to get bootstrapped p-values.</p>
     </div>
@@ -332,15 +328,15 @@ Econometrica, 50, 1-26.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer></div>
 
-  
 
 
-  
+
+
 
   </body></html>
 
