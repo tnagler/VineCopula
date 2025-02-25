@@ -133,6 +133,12 @@ RVineLogLik <- function(data, RVM, par = RVM$par, par2 = RVM$par2,
     n <- d
     N <- T
 
+    if (any(RVM$family == 1004)) {
+        ix <- which(RVM$family == 10004)
+        RVM$family[ix] <- 4 + 20 * (par[ix] < 1)
+        par[ix] <- sign(par[ix]) * (1 + abs(par[ix]))
+    }
+
     o <- diag(RVM$Matrix)
     if (any(o != length(o):1)) {
         oldRVM <- RVM
@@ -409,35 +415,35 @@ RVinePDF <- function(newdata, RVM, verbose = TRUE) {
 #' RVineCDF(c(0.1, 0.2, 0.3, 0.4, 0.5), RVM)
 #'
 RVineCDF <- function(data, RVM, N = 1000) {
-  # Preprocess arguments
-  args <- preproc(
-    c(as.list(environment()), call = match.call()),
-    check_data,
-    fix_nas,
-    check_if_01,
-    check_RVMs,
-    prep_RVMs
-  )
-  list2env(args, environment())
+    # Preprocess arguments
+    args <- preproc(
+        c(as.list(environment()), call = match.call()),
+        check_data,
+        fix_nas,
+        check_if_01,
+        check_RVMs,
+        prep_RVMs
+    )
+    list2env(args, environment())
 
-  # Simulate N random numbers from the vine model
-  u_sim <- RVineSim(N, RVM)
+    # Simulate N random numbers from the vine model
+    u_sim <- RVineSim(N, RVM)
 
-  # Initialize output vector
-  n <- nrow(data)
-  vine_distribution <- numeric(n)
+    # Initialize output vector
+    n <- nrow(data)
+    vine_distribution <- numeric(n)
 
-  # Compute the cumulative distribution
-  for (i in seq_len(n)) {
-    temp <- data[i, ]
+    # Compute the cumulative distribution
+    for (i in seq_len(n)) {
+        temp <- data[i, ]
 
-    # Calculate the maximum difference row-wise between u_sim and temp
-    x <- apply(u_sim, 1, function(row) max(row - temp))
+        # Calculate the maximum difference row-wise between u_sim and temp
+        x <- apply(u_sim, 1, function(row) max(row - temp))
 
-    # Count occurrences where all differences are <= 0
-    vine_distribution[i] <- sum(x <= 0)
-  }
+        # Count occurrences where all differences are <= 0
+        vine_distribution[i] <- sum(x <= 0)
+    }
 
-  # Return normalized cumulative distribution
-  return(vine_distribution / N)
+    # Return normalized cumulative distribution
+    return(vine_distribution / N)
 }

@@ -266,7 +266,8 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = FALSE, max.df = 30,
                             27, 28, 29, 30,
                             37, 38, 39, 40,
                             104, 114, 124, 134,
-                            204, 214, 224, 234))) {
+                            204, 214, 224, 234,
+                            1004))) {
             theta1 <- theta
         }
         if (family == 2) {
@@ -404,12 +405,23 @@ BiCopEst <- function(u1, u2, family, method = "mle", se = FALSE, max.df = 30,
             theta <- out$par
             if (se == TRUE)
                 se1 <- out$se
-        } else if (family > 100) {
+        } else if (family > 100 & family < 100) {
             # New
             out <- MLE_intern_Tawn(cbind(u1, u2),
                                    c(theta1, delta),
                                    family = family,
                                    se)
+            theta <- out$par
+            if (se == TRUE)
+                se1 <- out$se
+        } else if (family > 1000) {
+            out <- MLE_intern(cbind(u1, u2),
+                              c(theta1, delta),
+                              family = family,
+                              se,
+                              max.df,
+                              max.BB,
+                              weights)
             theta <- out$par
             if (se == TRUE)
                 se1 <- out$se
@@ -975,7 +987,27 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
             return(ll)
         }
 
+        if (family == 1004) {
+            t_LL <- function(param) {
+                fam <- ifelse(param >= 0, 4, 24)
+                par <- sign(param) * (1 + abs(param))
+                    ll <- .C("LL_mod2", as.integer(fam),
+                             as.integer(n),
+                             as.double(data[, 1]),
+                             as.double(data[, 2]),
+                             as.double(par),
+                             as.double(0), as.double(0),
+                             PACKAGE = "VineCopula")[[7]]
+                if (is.infinite(ll) || is.na(ll) || ll < -10^250)
+                    ll <- -10^250
+
+                return(ll)
+            }
+        }
+
         gr_LL <- function(param) {
+            fam <- ifelse(param >= 0, 4, 24)
+            par <- sign(param) * (1 + abs(param))
             gr <- sum(BiCopDeriv(data[, 1],
                                  data[, 2],
                                  family = family,
@@ -998,6 +1030,9 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
         } else if (family %in% c(4, 14)) {
             low <- 1.0001
             up <- 17
+        } else if (family %in% c(1004)) {
+            low <- -16
+            up <- 16
         } else if (family %in% c(5)) {
             low <- -35
             up <- 35

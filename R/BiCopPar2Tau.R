@@ -302,7 +302,7 @@ calcTau <- function(family, par, par2) {
         tau <- 2/pi * asin(par)
     } else if (family == 3 || family == 13) {
         tau <- par/(par + 2)
-    } else if (family == 4 || family == 14) {
+    } else if (family == 4 || family == 14 || family == 1004) {
         tau <- 1 - 1/par
     } else if (family == 5) {
         tau <- frankTau(par)

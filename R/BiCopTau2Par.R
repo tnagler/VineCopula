@@ -146,7 +146,7 @@ calcPar <- function(family, tau) {
         par <- sin(pi * tau/2)
     } else if (family %in% c(3, 13)) {
         par <- 2 * tau/(1 - tau)
-    } else if (family %in% c(4, 14)) {
+    } else if (family %in% c(4, 14, 1004)) {
         par <- 1/(1 - tau)
     } else if (family == 5) {
         par <- if (tau == 0) 0 else Frank.itau.JJ(tau)

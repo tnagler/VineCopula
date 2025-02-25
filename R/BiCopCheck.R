@@ -68,7 +68,7 @@ BiCopCheck <- function(family, par, par2 = 0, ...) {
     if (!(all(family %in% c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 13, 14, 16, 17, 18, 19,
                             20, 23, 24, 26, 27, 28, 29, 30, 33, 34, 36, 37, 38, 39,
                             40, 41, 42, 51, 52,  61, 62, 71, 72,
-                            104, 114, 124, 134, 204, 214, 224, 234))))
+                            104, 114, 124, 134, 204, 214, 224, 234, 1004))))
         stop("\n In ", call_, ": ",
              "Copula family not implemented.",
              call. = FALSE)
@@ -112,7 +112,11 @@ checkPars <- function(x, cl) {
         stop("\n In ", cl, ": ",
              "The parameter of the Gumbel copula has to be in the interval [1,17].",
              call. = FALSE)
-    } else if (family == 5) {
+    }  else if ((family == 1004 || family == 10014) && (par < -17 || par > 17)) {
+        stop("\n In ", cl, ": ",
+             "The parameter of the Gumbel copula has to be in the interval [-17,17].",
+             call. = FALSE)
+    }  else if (family == 5) {
         if (par == 0)
             stop("\n In ", cl, ": ",
                  "The parameter of the Frank copula has to be unequal to 0.",

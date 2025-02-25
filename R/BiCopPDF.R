@@ -106,6 +106,11 @@ BiCopPDF <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRU
     ## evaluate log-density
     n <- args$n
     if (length(par) == 1) {
+        if (family == 1004) {
+            family <- ifelse(par >= 0, 4, 24)
+            par <- sign(par) * (1 + abs(par))
+        }
+
         # unvectorized call
         coplik <- .C("PDF_seperate",
                      as.integer(family),

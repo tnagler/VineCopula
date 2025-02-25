@@ -160,7 +160,10 @@ calcTD <- function(family, par, par2) {
     } else if (family == 4 | family == 6) {
         lower <- 0
         upper <- 2 - 2^(1/par)
-    } else if (family == 7) {
+    }  else if (family == 1004) {
+        lower <- 0
+        upper <- 2 - 2^(1/par)
+    }  else if (family == 7) {
         lower <- 2^(-1/(par * par2))
         upper <- 2 - 2^(1/par2)
     } else if (family == 8) {

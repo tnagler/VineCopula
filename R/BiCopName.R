@@ -99,6 +99,8 @@ fam_name <- function(family, short) {
                 fam <- "C"
             if (family == 4)
                 fam <- "G"
+            if (family == 1004)
+                fam <- "Gx"
             if (family == 5)
                 fam <- "F"
             if (family == 6)
@@ -191,6 +193,8 @@ fam_name <- function(family, short) {
                 fam <- "Clayton"
             if (family == 4)
                 fam <- "Gumbel"
+            if (family == 1004)
+                fam <- "Gumbel-xtd"
             if (family == 5)
                 fam <- "Frank"
             if (family == 6)
