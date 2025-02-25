@@ -108,7 +108,7 @@ BiCopPDF <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TRU
     if (length(par) == 1) {
         if (family == 1004) {
             family <- ifelse(par >= 0, 4, 24)
-            par <- sign(par) * (1 + abs(par))
+            par <- sign(par+ 1e-100) * (1 + abs(par))
         }
 
         # unvectorized call

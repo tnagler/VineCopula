@@ -990,7 +990,7 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
         if (family == 1004) {
             t_LL <- function(param) {
                 fam <- ifelse(param >= 0, 4, 24)
-                par <- sign(param) * (1 + abs(param))
+                par <- sign(param + 1e-100) * (1 + abs(param))
                     ll <- .C("LL_mod2", as.integer(fam),
                              as.integer(n),
                              as.double(data[, 1]),
@@ -1007,7 +1007,7 @@ MLE_intern <- function(data, start.parm, family, se = FALSE, max.df = 30,
 
         gr_LL <- function(param) {
             fam <- ifelse(param >= 0, 4, 24)
-            par <- sign(param) * (1 + abs(param))
+            par <- sign(param + 1e-100) * (1 + abs(param))
             gr <- sum(BiCopDeriv(data[, 1],
                                  data[, 2],
                                  family = family,

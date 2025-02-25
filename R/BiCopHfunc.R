@@ -194,7 +194,7 @@ BiCopHfunc1 <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = 
     if (length(par) == 1) {
         if (family == 1004) {
             family <- ifelse(par >= 0, 4, 24)
-            par <- sign(par) * (1 + abs(par))
+            par <- sign(par+ 1e-100) * (1 + abs(par))
         }
         # call for single parameters
         hfunc1 <- .C("Hfunc1",                      # h(u2|u1)
@@ -242,7 +242,7 @@ BiCopHfunc2 <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = 
     if (length(par) == 1) {
         if (family == 1004) {
             family <- ifelse(par >= 0, 4, 24)
-            par <- sign(par) * (1 + abs(par))
+            par <- sign(par+ 1e-100) * (1 + abs(par))
         }
         # call for single parameters
         hfunc2 <- .C("Hfunc2",                      # h(u1|u2)

@@ -302,7 +302,7 @@ calcTau <- function(family, par, par2) {
         tau <- 2/pi * asin(par)
     } else if (family == 3 || family == 13) {
         tau <- par/(par + 2)
-    } else if (family == 4 || family == 14 || family == 1004) {
+    } else if (family == 4 || family == 14) {
         tau <- 1 - 1/par
     } else if (family == 5) {
         tau <- frankTau(par)
@@ -484,6 +484,10 @@ calcTau <- function(family, par, par2) {
         if (inherits(tau, "try-error"))
             tau <- NA
         tau <- -tau
+    } else if (family == 1004) {
+        fam <- ifelse(par >= 0, 4, 24)
+        par <- sign(par + 1e-100) * (1 + abs(par))
+        tau <- calcTau(fam, par)
     }
 
     ## return result
