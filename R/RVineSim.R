@@ -65,6 +65,14 @@ RVineSim <- function(N, RVM, U = NULL) {
     if (!is(RVM, "RVineMatrix"))
         stop("'RVM' has to be an RVineMatrix object.")
 
+
+    if (any(RVM$family == 1004)) {
+        ix <- which(RVM$family == 1004)
+        RVM$family[ix] <- 4 + 20 * (par[ix] < 1)
+        RVM$par[ix] <- sign( RVM$par[ix]) * (1 + abs( RVM$par[ix]))
+    }
+
+
     ## reorder matrix and U (if provided)
     n <- dim(RVM)
     o <- diag(RVM$Matrix)

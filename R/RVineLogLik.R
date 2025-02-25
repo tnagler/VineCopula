@@ -134,7 +134,7 @@ RVineLogLik <- function(data, RVM, par = RVM$par, par2 = RVM$par2,
     N <- T
 
     if (any(RVM$family == 1004)) {
-        ix <- which(RVM$family == 10004)
+        ix <- which(RVM$family == 1004)
         RVM$family[ix] <- 4 + 20 * (par[ix] < 1)
         par[ix] <- sign(par[ix]) * (1 + abs(par[ix]))
     }

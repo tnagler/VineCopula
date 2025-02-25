@@ -130,6 +130,10 @@ BiCopHinv <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = TR
     ## calculate inverse h-functions
     n <- args$n
     if (length(par) == 1) {
+        if (family == 1004) {
+            family <- ifelse(par >= 0, 4, 24)
+            par <- sign(par) * (1 + abs(par))
+        }
         # call for single parameters
         hinv1 <- .C("Hinv1",                      # h(u2|u1)
                     as.integer(family),
@@ -194,6 +198,10 @@ BiCopHinv1 <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = T
     ## calculate inverse h-function
     n <- args$n
     if (length(par) == 1) {
+        if (family == 1004) {
+            family <- ifelse(par >= 0, 4, 24)
+            par <- sign(par) * (1 + abs(par))
+        }
         # call for single parameters
         hinv1 <- .C("Hinv1",                      # h(u2|u1)
                     as.integer(family),
@@ -238,6 +246,10 @@ BiCopHinv2 <- function(u1, u2, family, par, par2 = 0, obj = NULL, check.pars = T
     ## calculate inverse h-functions
     n <- args$n
     if (length(par) == 1) {
+        if (family == 1004) {
+            family <- ifelse(par >= 0, 4, 24)
+            par <- sign(par) * (1 + abs(par))
+        }
         # call for single parameters
         hinv2 <- .C("Hinv2",                      # h(u1|u2)
                     as.integer(family),
