@@ -68,8 +68,10 @@ RVineSim <- function(N, RVM, U = NULL) {
 
     if (any(RVM$family == 1004)) {
         ix <- which(RVM$family == 1004)
-        RVM$family[ix] <- 4 + 20 * (RVM$par[ix] < 1)
-        RVM$par[ix] <- sign( RVM$par[ix]) * (1 + abs( RVM$par[ix]))
+        RVM$family[ix] <- 4 + 20 * (RVM$par[ix] < 0)
+        RVM$par[ix] <- sign(RVM$par[ix] + 1e-100) * (1 + abs(RVM$par[ix]))
+        print(RVM$par)
+        print(RVM$family)
     }
 
 
