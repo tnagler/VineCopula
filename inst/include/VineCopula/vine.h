@@ -42,8 +42,6 @@
 
 /* define boolean type for C */
 typedef unsigned int boolean;
-#define false 0
-#define true (!false)
 
 #define ep 1e-6
 
