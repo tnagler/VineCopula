@@ -1,3 +1,14 @@
+VineCopula 2.6.1
+----------------------------------------------------------------
+
+BUG FIX
+
+* Allow for `tau = 0` in Kendall's tau inversion for the Frank copula.
+
+* Remove `true/false` C macro from header files.
+
+
+
 VineCopula 2.6.0
 ----------------------------------------------------------------
 
