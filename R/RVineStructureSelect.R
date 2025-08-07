@@ -271,6 +271,20 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0,
         # find optimal tree
         g <- buildNextGraph(VineTree, weights, treecrit = treecrit, cores > 1,
                             truncated = trunclevel < tree)
+
+        # kraus method
+        {
+            taus <- g$E$weights
+            ps <- sapply(seq_along(g$E$u), \(i) {
+                covariates <- data[,  g$E$conditioningSet[[i]]]
+                pacotest::pacotest(g$E$u[[i]], covariates, "CCC")$pValue
+            })
+            tau_rank <- rank(taus)
+            p_rank <- rank(ps)
+            score <- 0.4 * tau_rank + 0.6 * p_rank
+            g$E$weights <- score
+        }
+
         MST <- findMaxTree(g, mode = type, truncated = trunclevel < tree)
         # estimate pair-copulas
         VineTree <- fit.TreeCopulas(MST,
@@ -453,7 +467,7 @@ findMaxTree <- function(g, mode = "RVine", truncated = FALSE) {
                     A[i, t] <- A[t, i] <- Inf
             }
 
-            ## reorder edges for backwads compatibility with igraph output
+            ## reorder edges for backwards compatibility with igraph output
             edges <- t(apply(edges, 1, function(x) sort(x)))
             edges <- edges[order(edges[, 2], edges[, 1]), ]
 
@@ -750,10 +764,12 @@ buildNextGraph <- function(oldVineGraph, treecrit, weights = NA, parallel,
     g$E$conditionedSet  <- lapply(out, function(x) x$nedSet)
     g$E$conditioningSet <- lapply(out, function(x) x$ningSet)
     g$E$todel           <- sapply(out, function(x) x$todel)
+    g$E$u               <- lapply(out, function(x) x$u)
 
     ## delete edges that are prohibited by the proximity condition
     deleteEdges(g)
 }
+
 
 ## function for obtaining edge information
 getEdgeInfo <- function(i, g, oldVineGraph, treecrit, weights,
@@ -779,6 +795,7 @@ getEdgeInfo <- function(i, g, oldVineGraph, treecrit, weights,
     ## dummy output
     w <- nedSet <- ningSet <- name <- NA
     todel <- TRUE
+    u <- NULL
 
     # info if proximity condition is fulfilled ...
     if (ok) {
@@ -828,6 +845,7 @@ getEdgeInfo <- function(i, g, oldVineGraph, treecrit, weights,
             name <- paste(paste(nmdiff, collapse = ","),
                           paste(nmsect, collapse = ","),
                           sep = " ; ")
+            u <- cbind(zr1a, zr2a)
         } else {
             w <- 1
         }
@@ -838,7 +856,8 @@ getEdgeInfo <- function(i, g, oldVineGraph, treecrit, weights,
          nedSet = nedSet,
          ningSet = ningSet,
          name = name,
-         todel = todel)
+         todel = todel,
+         u = u)
 }
 
 
@@ -1128,7 +1147,8 @@ deleteEdges <- function(g) {
               names           = g$E$names[keep],
               weights         = g$E$weights[keep],
               conditionedSet  = g$E$conditionedSet[keep],
-              conditioningSet = g$E$conditioningSet[keep])
+              conditioningSet = g$E$conditioningSet[keep],
+              u               = g$E$u[keep])
 
     ## return reduced graph
     list(V = g$V, E = E)

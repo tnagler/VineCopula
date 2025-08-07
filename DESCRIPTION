@@ -36,7 +36,8 @@ Imports:
     methods,
     ADGofTest,
     lattice,
-    parallel
+    parallel,
+    pacotest
 Suggests:
     TSP,
     shiny,
