@@ -1,6 +1,10 @@
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on: [push, pull_request]
 
 name: R-CMD-check
+
+permissions: read-all
 
 jobs:
   R-CMD-check:
@@ -12,72 +16,49 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - { os: windows-latest, r: 'release', args: "--no-manual"}
-        - { os: macOS-latest, r: 'release', args: "--no-manual"}
-        - { os: macOS-latest, r: 'devel', args: "--as-cran"}
-        - { os: ubuntu-22.04, r: 'devel', args: "--no-manual" }
+          - {os: windows-latest, r: 'release', args: 'c("--no-manual")'}
+          - {os: macos-latest,   r: 'release', args: 'c("--no-manual")'}
+          - {os: macos-latest,   r: 'devel',   args: 'c("--as-cran")', manual: true, incoming: 'true'}
+          - {os: ubuntu-latest,  r: 'devel',   args: 'c("--no-manual")', http-user-agent: 'release'}
 
     env:
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      CRAN: ${{ matrix.config.cran }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+      # Keep CRAN checks as strict as the previous workflow (check-r-package@v2
+      # relaxes both of these by default): require every Suggests package to be
+      # present, and run the full CRAN incoming-feasibility check on the
+      # --as-cran job only (empty elsewhere -> left disabled).
+      _R_CHECK_FORCE_SUGGESTS_: "true"
+      _R_CHECK_CRAN_INCOMING_: ${{ matrix.config.incoming }}
 
     steps:
       - uses: actions/checkout@v4
 
+      - uses: r-lib/actions/setup-pandoc@v2
+
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+          use-public-rspm: true
 
-      - uses: r-lib/actions/setup-pandoc@v2
-
+      # The PDF manual is only rendered on the --as-cran job. TinyTeX ships
+      # without the URW Courier metrics (pcrr8t.tfm) that \texttt{} needs, so
+      # add the recommended font collection to let the manual build.
       - uses: r-lib/actions/setup-tinytex@v2
-        if: contains(matrix.config.args, 'no-manual') == false
-
-      - name: Cache R packages
-        if: runner.os != 'Windows'
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r-${{ matrix.config.r }}-${{ hashFiles('DESCRIPTION') }}
-
-      - name: Install system dependencies
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get install --no-install-recommends -y libcurl4-openssl-dev
-          while read -r cmd
-          do
-            eval sudo $cmd
-          done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
-
-      - name: Install system dependencies
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get install --no-install-recommends -y libcurl4-openssl-dev
-          while read -r cmd
-          do
-            eval sudo $cmd
-          done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
-
-
-      - name: Install GSL
-        run:   |
-          if [ "${{ runner.os }}" == "Linux" ]; then
-            sudo apt-get install --no-install-recommends -y libgsl0-dev
-          elif [ "${{ runner.os }}" == "macOS" ]; then
-            brew install gsl
-          fi
+        if: matrix.config.manual
+      - name: Install LaTeX fonts for the PDF manual
+        if: matrix.config.manual
+        run: tlmgr install collection-fontsrecommended
         shell: bash
 
-      - name: Install dependencies
-        run: Rscript -e "install.packages('remotes')" -e "remotes::install_deps(dependencies = TRUE)" -e "remotes::install_cran('rcmdcheck')"
-
-      - name: Check
-        run: Rscript -e "rcmdcheck::rcmdcheck(args = '${{ matrix.config.args }}', error_on = 'warning', check_dir = 'check')"
-
-      - name: Upload check results
-        if: failure()
-        uses: actions/upload-artifact@main
+      - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
-          path: check
+          extra-packages: any::rcmdcheck
+          needs: check
 
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          args: ${{ matrix.config.args }}
+          build_args: 'c("--no-manual")'
+          upload-snapshots: true
