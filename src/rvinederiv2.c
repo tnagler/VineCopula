@@ -50,12 +50,21 @@
 // barvdirect_out, barvindirect_out	array for the derivatives of the h-functions  
 /////////////////////////////////////////////////////////////
 
+static int swap_rotation(int family)
+{
+	if(family >= 23 && family <= 30)
+		return family + 10;
+	if(family >= 33 && family <= 40)
+		return family - 10;
+	return family;
+}
+
 
 void VineLogLikRvineDeriv2(int* T, int* d, int* family, int* kk, int* ii, int* kkk, int* iii, int* maxmat, int* matrix, int* condirect, int* conindirect, double* par, double* par2, double* data, 
 						  double* ll_tilde, double* vv_tilde, double* vv2_tilde, double* ll_hat, double* vv_hat, double* vv2_hat, int* calcupdate, int* calcupdate2,
 						  double* out, double* ll, double* vv, double* vv2, double* barvalue_out, double* barvdirect_out, double* barvindirect_out, int* tcop, int* kk_second)
 {
-	int i, j, k, t, m, **fam, **calc, **calc2, a=1;
+	int i, j, k, t, m, direct_family, **fam, **calc, **calc2, a=1;
 	
 	double sumloglik=0.0, **theta, **nu, *zr1, *zr2, *tildezr1, *tildezr2, *cop;
 	double *handle1, *helpvar, *helpvar2, *helpvar3, *helpvar4, *helpvar5, *helpvar6;
@@ -179,9 +188,10 @@ void VineLogLikRvineDeriv2(int* T, int* d, int* family, int* kk, int* ii, int* k
 			}
 			else
 			{
-				diff2hfunc_mod(zr1,zr2,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],barvdirect[*kk-2][(*ii-1)]);
+				direct_family=swap_rotation(fam[*kk-1][*ii-1]);
+				diff2hfunc_mod(zr1,zr2,T,&theta[*kk-1][*ii-1],&direct_family,barvdirect[*kk-2][(*ii-1)]);
 				diff2hfunc_mod(zr2,zr1,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],barvindirect[*kk-2][(*ii-1)]);
-				diff2PDF_mod(zr1,zr2,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],helpvar);
+				diff2PDF_mod(zr2,zr1,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],helpvar);
 			}
 			
 			for(t=0;t<*T;t++)
@@ -216,8 +226,8 @@ void VineLogLikRvineDeriv2(int* T, int* d, int* family, int* kk, int* ii, int* k
 			}
 			else
 			{
-				diffPDF_mod(zr1,zr2,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],helpvar);
-				diff2PDF_par_u_mod(zr1,zr2,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],helpvar2);
+				diffPDF_mod(zr2,zr1,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],helpvar);
+				diff2PDF_par_v_mod(zr2,zr1,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],helpvar2);
 				diff2hfunc_par_v_mod2(zr2,zr1,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],barvindirect[*kk-2][(*ii-1)]);
 			}
 			
@@ -243,7 +253,7 @@ void VineLogLikRvineDeriv2(int* T, int* d, int* family, int* kk, int* ii, int* k
 			}
 			else
 			{
-				diff2PDF_par_v_mod(zr1,zr2,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],helpvar);
+				diff2PDF_par_u_mod(zr2,zr1,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],helpvar);
 			}
 			
 			for(t=0;t<*T;t++)
@@ -262,7 +272,7 @@ void VineLogLikRvineDeriv2(int* T, int* d, int* family, int* kk, int* ii, int* k
 				}
 				else
 				{
-					diffPDF_mod(zr1,zr2,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],helpvar);
+					diffPDF_mod(zr2,zr1,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],helpvar);
 				}
 				
 				for(t=0;t<*T;t++)
@@ -283,7 +293,8 @@ void VineLogLikRvineDeriv2(int* T, int* d, int* family, int* kk, int* ii, int* k
 			}
 			else
 			{
-				diff2hfunc_par_v_mod(zr1,zr2,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],helpvar);
+				direct_family=swap_rotation(fam[*kk-1][*ii-1]);
+				diff2hfunc_par_v_mod(zr1,zr2,T,&theta[*kk-1][*ii-1],&direct_family,helpvar);
 				diffPDF_mod(zr2,zr1,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],helpvar2);
 			}
 
@@ -348,16 +359,16 @@ void VineLogLikRvineDeriv2(int* T, int* d, int* family, int* kk, int* ii, int* k
 				//Rprintf("Fall 1\n");
 				param[0]=theta[k][i];
 				param[1]=nu[k][i];
-				diff2PDF_u_mod(zr1,zr2,T,param,&fam[k][i],helpvar);
-				diffPDF_u_mod(zr1,zr2,T,param,&fam[k][i],helpvar2);
+				diff2PDF_v_mod(zr2,zr1,T,param,&fam[k][i],helpvar);
+				diffPDF_v_mod(zr2,zr1,T,param,&fam[k][i],helpvar2);
 
 				for(t=0;t<*T;t++)
 				{
 					LL_mod2(&fam[k][i],&a,&zr2[t],&zr1[t],&theta[k][i],&nu[k][i],&helpvar3[t]);
 				}
-				diffPDF_u_mod(zr1,zr2,T,param,&fam[k][i],helpvar4);
+				diffPDF_v_mod(zr2,zr1,T,param,&fam[k][i],helpvar4);
 				diffhfunc_v_mod2(zr2,zr1,T,param,&fam[k][i],helpvar5);
-				diff2hfunc_v_mod2(zr2,zr1,T,param,&fam[k][i],helpvar6);
+				diff2hfunc_v_mod(zr2,zr1,T,param,&fam[k][i],helpvar6);
 				
 				for(t=0;t<*T;t++ ) 
 				{
@@ -372,10 +383,11 @@ void VineLogLikRvineDeriv2(int* T, int* d, int* family, int* kk, int* ii, int* k
 				//Rprintf("Fall2\n");
 				param[0]=theta[k][i];
 				param[1]=nu[k][i];
-				diff2PDF_v_mod(zr1,zr2,T,param,&fam[k][i],helpvar);
-				diffPDF_v_mod(zr1,zr2,T,param,&fam[k][i],helpvar2);
-				diffhfunc_v_mod(zr1,zr2,T,param,&fam[k][i],helpvar3);
-				diff2hfunc_v_mod(zr1,zr2,T,param,&fam[k][i],helpvar4);
+				direct_family=swap_rotation(fam[k][i]);
+				diff2PDF_u_mod(zr2,zr1,T,param,&fam[k][i],helpvar);
+				diffPDF_u_mod(zr2,zr1,T,param,&fam[k][i],helpvar2);
+				diffhfunc_v_mod(zr1,zr2,T,param,&direct_family,helpvar3);
+				diff2hfunc_v_mod(zr1,zr2,T,param,&direct_family,helpvar4);
 				for(t=0;t<*T;t++)
 				{
 					LL_mod2(&fam[k][i],&a,&zr2[t],&zr1[t],&theta[k][i],&nu[k][i],&helpvar5[t]);
@@ -393,9 +405,9 @@ void VineLogLikRvineDeriv2(int* T, int* d, int* family, int* kk, int* ii, int* k
 				//Rprintf("Fall3\n");
 				param[0]=theta[k][i];
 				param[1]=nu[k][i];
-				diff2PDF_u_v_mod(zr1,zr2,T,param,&fam[k][i],helpvar);
-				diffPDF_v_mod(zr1,zr2,T,param,&fam[k][i],helpvar2);
-				diffPDF_v_mod(zr2,zr1,T,param,&fam[k][i],helpvar3);				
+				diff2PDF_u_v_mod(zr2,zr1,T,param,&fam[k][i],helpvar);
+				diffPDF_u_mod(zr2,zr1,T,param,&fam[k][i],helpvar2);
+				diffPDF_v_mod(zr2,zr1,T,param,&fam[k][i],helpvar3);
 				for(t=0;t<*T;t++ ) 
 				{
 					barvalue_out[(k+1)+(*d)*i+(*d)*(*d)*t-1] = barvalue_out[(k+1)+(*d)*i+(*d)*(*d)*t-1] + helpvar[t]/cop[t]*tildezr1_hatk_hati[t]*tildezr2_tildek_tildei[t];
@@ -408,9 +420,9 @@ void VineLogLikRvineDeriv2(int* T, int* d, int* family, int* kk, int* ii, int* k
 				//Rprintf("Fall4\n");
 				param[0]=theta[k][i];
 				param[1]=nu[k][i];
-				diff2PDF_u_v_mod(zr1,zr2,T,param,&fam[k][i],helpvar);
-				diffPDF_v_mod(zr1,zr2,T,param,&fam[k][i],helpvar2);
-				diffPDF_v_mod(zr2,zr1,T,param,&fam[k][i],helpvar3);				
+				diff2PDF_u_v_mod(zr2,zr1,T,param,&fam[k][i],helpvar);
+				diffPDF_u_mod(zr2,zr1,T,param,&fam[k][i],helpvar2);
+				diffPDF_v_mod(zr2,zr1,T,param,&fam[k][i],helpvar3);
 				for(t=0;t<*T;t++ ) 
 				{
 					barvalue_out[(k+1)+(*d)*i+(*d)*(*d)*t-1] = barvalue_out[(k+1)+(*d)*i+(*d)*(*d)*t-1] + helpvar[t]/cop[t]*tildezr2_hatk_hati[t]*tildezr1_tildek_tildei[t];
@@ -940,6 +952,4 @@ void calcupdate_func(int* d, int* matrix, int* i, int* j, int* calc)
 	R_Free(g);
 	R_Free(c);
 }
-
-
 

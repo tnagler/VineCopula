@@ -42,11 +42,20 @@
 // Estimating standard errors in regular vine copula models
 // Computational Statistics, 28 (6), 2679-2707
 
+static int swap_rotation(int family)
+{
+	if(family >= 23 && family <= 30)
+		return family + 10;
+	if(family >= 33 && family <= 40)
+		return family - 10;
+	return family;
+}
+
 
 void VineLogLikRvineDeriv(int* T, int* d, int* family, int* kk, int* ii, int* maxmat, int* matrix, int* condirect, int* conindirect, double* par, double* par2, double* data, 
 						  double* out, double* ll, double* vv, double* vv2, int* calcupdate, double* tilde_vdirect, double* tilde_vindirect, double* tilde_value, int* tcop, int* margin)
 {
-	int i, j, k, t, m, **fam, **calc;
+	int i, j, k, t, m, direct_family, **fam, **calc;
 	
 	double sumloglik=0.0, **theta, **nu, ***tildevdirect, ***tildevindirect, *zr1, *zr2, *tildezr1, *tildezr2, *cop;
 	double *handle1;
@@ -151,10 +160,11 @@ void VineLogLikRvineDeriv(int* T, int* d, int* family, int* kk, int* ii, int* ma
 	else
 	{
 		if( *margin == 0 )		//Das ist unser bisheriger Fall mit stetigen Variablen (ohne t-copula)
-		{		
-			diffhfunc_mod(zr1,zr2,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],tildevdirect[*kk-2][*ii-1]);
+		{
+			direct_family=swap_rotation(fam[*kk-1][*ii-1]);
+			diffhfunc_mod(zr1,zr2,T,&theta[*kk-1][*ii-1],&direct_family,tildevdirect[*kk-2][*ii-1]);
 			diffhfunc_mod2(zr2,zr1,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],tildevindirect[*kk-2][*ii-1]);
-			diffPDF_mod(zr1,zr2,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],tildevalue[*kk-1][*ii-1]);
+			diffPDF_mod(zr2,zr1,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],tildevalue[*kk-1][*ii-1]);
 			for(t=0;t<*T;t++ ) 
 			{
 				tildevalue[*kk-1][*ii-1][t]=tildevalue[*kk-1][*ii-1][t]/cop[t];
@@ -163,7 +173,7 @@ void VineLogLikRvineDeriv(int* T, int* d, int* family, int* kk, int* ii, int* ma
 		else if( *margin== 1)	// Ableitung nach dem ersten Argument = margin1
 		{
 			diffhfunc_v_mod2(zr2,zr1,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],tildevindirect[*kk-2][*ii-1]);
-			diffPDF_u_mod(zr1,zr2,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],tildevalue[*kk-1][*ii-1]); // hier k?nnte difflPDF stehen
+			diffPDF_v_mod(zr2,zr1,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],tildevalue[*kk-1][*ii-1]); // hier k?nnte difflPDF stehen
 			for(t=0;t<*T;t++ ) 
 			{
 				tildevdirect[*kk-2][*ii-1][t]=cop[t];
@@ -172,8 +182,9 @@ void VineLogLikRvineDeriv(int* T, int* d, int* family, int* kk, int* ii, int* ma
 		}
 		else					// Ableitung nach dem zweiten Argument = margin2
 		{
-			diffhfunc_v_mod(zr1,zr2,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],tildevdirect[*kk-2][*ii-1]);
-			diffPDF_v_mod(zr1,zr2,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],tildevalue[*kk-1][*ii-1]); // hier k?nnte difflPDF stehen
+			direct_family=swap_rotation(fam[*kk-1][*ii-1]);
+			diffhfunc_v_mod(zr1,zr2,T,&theta[*kk-1][*ii-1],&direct_family,tildevdirect[*kk-2][*ii-1]);
+			diffPDF_u_mod(zr2,zr1,T,&theta[*kk-1][*ii-1],&fam[*kk-1][*ii-1],tildevalue[*kk-1][*ii-1]); // hier k?nnte difflPDF stehen
 			for(t=0;t<*T;t++ ) 
 			{
 				tildevindirect[*kk-2][*ii-1][t]=cop[t];
@@ -236,7 +247,7 @@ void VineLogLikRvineDeriv(int* T, int* d, int* family, int* kk, int* ii, int* ma
 					}
 					else
 					{
-						diffPDF_u_mod(zr1,zr2,T,&theta[k][i],&fam[k][i],handle1);
+						diffPDF_v_mod(zr2,zr1,T,&theta[k][i],&fam[k][i],handle1);
 					}
 					for(t=0;t<*T;t++ ) 
 					{
@@ -279,7 +290,7 @@ void VineLogLikRvineDeriv(int* T, int* d, int* family, int* kk, int* ii, int* ma
 					}
 					else
 					{
-						diffPDF_v_mod(zr1,zr2,T,&theta[k][i],&fam[k][i],handle1);
+						diffPDF_u_mod(zr2,zr1,T,&theta[k][i],&fam[k][i],handle1);
 					}
 					for(t=0;t<*T;t++ ) 
 					{
@@ -296,7 +307,8 @@ void VineLogLikRvineDeriv(int* T, int* d, int* family, int* kk, int* ii, int* ma
 						}
 						else
 						{
-							diffhfunc_v_mod(zr1,zr2,T,&theta[k][i],&fam[k][i],handle1);
+							direct_family=swap_rotation(fam[k][i]);
+							diffhfunc_v_mod(zr1,zr2,T,&theta[k][i],&direct_family,handle1);
 						}
 						for(t=0;t<*T;t++ ) 
 						{
@@ -420,4 +432,3 @@ void VineLogLikRvineGradient(int* T, int* d, int* family, int* maxmat, int* matr
 R_Free(calc);free_intmatrix(pospar,*d);free_intmatrix(fam,*d);
 R_Free(tilde_vdirect);R_Free(tilde_vindirect);R_Free(tilde_value);
 }
-
