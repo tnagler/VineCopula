@@ -76,6 +76,7 @@ test_that("90 deg rotation is handled correctly in evaluators", {
             label = paste("2nd pdf derivative w.r.t.", paste(unique(deriv), collapse = ""))
         )
     }
+    expect_equal(BiCopDeriv2(u1, u2, cop, deriv = "par"), hess[3, 3])
 
     ## 2nd hfunc derivatives
     hfunc_fun <- function(theta) {
@@ -92,6 +93,7 @@ test_that("90 deg rotation is handled correctly in evaluators", {
             label = paste("2nd hfunc derivative w.r.t.", paste(unique(deriv), collapse = ""))
         )
     }
+    expect_equal(BiCopHfuncDeriv2(u1, u2, cop, deriv = "par"), hess[3, 3])
 })
 
 test_that("270 deg rotation is handled correctly in evaluators", {
@@ -169,6 +171,7 @@ test_that("270 deg rotation is handled correctly in evaluators", {
             label = paste("2nd pdf derivative w.r.t.", paste(unique(deriv), collapse = ""))
         )
     }
+    expect_equal(BiCopDeriv2(u1, u2, cop, deriv = "par"), hess[3, 3])
 
     ## 2nd hfunc derivatives
     hfunc_fun <- function(theta) {
@@ -185,6 +188,7 @@ test_that("270 deg rotation is handled correctly in evaluators", {
             label = paste("2nd hfunc derivative w.r.t.", paste(unique(deriv), collapse = ""))
         )
     }
+    expect_equal(BiCopHfuncDeriv2(u1, u2, cop, deriv = "par"), hess[3, 3])
 })
 
 
