@@ -1,3 +1,16 @@
+VineCopula 2.6.2
+----------------------------------------------------------------
+
+BUG FIX
+
+* Fix wrong gradient and Hessian of vine copula models that include rotated
+  families (#100).
+
+* Fix `RVineHessian()` ignoring the sample size, which caused the Hessian to
+  be computed from a single malformed pseudo-observation (#99).
+
+
+
 VineCopula 2.6.1
 ----------------------------------------------------------------
 
