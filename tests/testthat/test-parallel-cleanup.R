@@ -54,3 +54,13 @@ test_that("no stale default cluster is left registered", {
     cl <- tryCatch(parallel::getDefaultCluster(), error = function(e) NULL)
     expect_null(cl)
 })
+
+test_that("the tree criterion does not capture the caller's frame", {
+    ## set_treecrit() returns a closure carrying its own frame as environment.
+    ## Only the AIC/BIC branches read `famset`, so under the default "tau" the
+    ## promise went unforced and kept a live reference to the frame of
+    ## RVineStructureSelect() -- data matrix included. The closure is shipped to
+    ## every worker on every parallel dispatch, so it must stay small.
+    tc <- VineCopula:::set_treecrit("tau", famset = 1:40)
+    expect_lt(length(serialize(tc, NULL)), 100000)
+})

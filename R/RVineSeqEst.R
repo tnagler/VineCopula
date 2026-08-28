@@ -250,9 +250,12 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
         }
 
         ## run pair-copula estimation for tree k
-        if (cores > 1)
-            lapply <- function(...) parallel::parLapply(getDefaultCluster(), ...)
-        res.k <- lapply(seq_len(k - 1), doEst)
+        map <- if (cores > 1) {
+            function(...) parallel::parLapply(getDefaultCluster(), ...)
+        } else {
+            base::lapply
+        }
+        res.k <- map(seq_len(k - 1), doEst)
 
         for (i in 1:(k-1)) {
             ## store results in matrices
