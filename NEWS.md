@@ -9,6 +9,11 @@ BUG FIX
 * Fix `RVineHessian()` ignoring the sample size, which caused the Hessian to
   be computed from a single malformed pseudo-observation (#99).
 
+* Fix `RVineStructureSelect()`, `RVineCopSelect()` and `RVineSeqEst()` leaking
+  their socket cluster when called with `cores > 1`. Each call left `cores`
+  worker processes running for the rest of the session, so repeated fits
+  accumulated workers and progressively slowed the machine down.
+
 
 
 VineCopula 2.6.1

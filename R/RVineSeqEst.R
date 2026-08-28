@@ -153,9 +153,18 @@ RVineSeqEst <- function(data, RVM, method = "mle", se = FALSE, max.df = 30,
         if (is.na(cores))
             cores <- max(1, detectCores() - 1)
         if (cores > 1) {
-            cl <- makePSOCKcluster(cores)
-            setDefaultCluster(cl)
-            on.exit(try(stopCluster(cl), silent = TRUE))
+            ## the name must start with a dot: this function calls
+            ## rm(list = ls()) before returning, and ls() does not list
+            ## dot-prefixed names.  A plain `cl` is removed before the exit
+            ## handler runs, so the handler fails on the lookup, the failure
+            ## is swallowed by try(silent = TRUE), and the workers survive the
+            ## call.
+            .cl <- makePSOCKcluster(cores)
+            setDefaultCluster(.cl)
+            on.exit({
+                try(stopCluster(.cl), silent = TRUE)
+                try(setDefaultCluster(NULL), silent = TRUE)
+            }, add = TRUE)
         }
     }
 
