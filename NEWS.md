@@ -9,6 +9,16 @@ BUG FIX
 * Fix `RVineHessian()` ignoring the sample size, which caused the Hessian to
   be computed from a single malformed pseudo-observation (#99).
 
+* Fix `cores > 1` being dramatically slower than `cores = 1` in
+  `RVineStructureSelect()`. Three separate causes: the tree criterion returned
+  by `set_treecrit()` captured an unforced promise and so dragged the caller's
+  entire frame (7.4 MB, serialized to every worker on every dispatch); rebinding
+  `lapply` to a parallel version shadowed `base::lapply`, so two subsequent list
+  extractions were dispatched to the worker pool; and `getEdgeInfo()` was handed
+  the whole graph when it reads seven fields. A 50-dimensional fit on 8 cores
+  went from 80s to 12s, and a 20-dimensional maximum-likelihood fit now scales
+  4.3x on 8 cores where it previously managed 2.9x. Results are unchanged.
+
 * Fix `RVineStructureSelect()`, `RVineCopSelect()` and `RVineSeqEst()` leaking
   their socket cluster when called with `cores > 1`. Each call left `cores`
   worker processes running for the rest of the session, so repeated fits

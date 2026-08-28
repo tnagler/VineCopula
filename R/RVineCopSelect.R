@@ -301,9 +301,12 @@ RVineCopSelect <- function(data, familyset = NA, Matrix, selectioncrit = "AIC",
         }
 
         ## run pair-copula selection for tree k
-        if (cores > 1)
-            lapply <- function(...) parallel::parLapply(getDefaultCluster(), ...)
-        res.k <- lapply(seq_len(k - 1), doEst)
+        map <- if (cores > 1) {
+            function(...) parallel::parLapply(getDefaultCluster(), ...)
+        } else {
+            base::lapply
+        }
+        res.k <- map(seq_len(k - 1), doEst)
 
         for (i in seq_len(k - 1)) {
             ## store info about selected pair-copula in matrices

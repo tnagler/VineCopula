@@ -321,6 +321,16 @@ RVineStructureSelect <- function(data, familyset = NA, type = 0,
 
 
 set_treecrit <- function(treecrit, famset) {
+    ## Force both arguments. The closures below are returned to the caller and
+    ## carry this frame as their environment; an unforced promise keeps a live
+    ## reference to the frame of whoever called us, which holds the full data
+    ## matrix and every other local. Only the AIC/BIC branches ever look at
+    ## famset, so in the common "tau" case the promise would never be forced --
+    ## and the closure then serializes at several megabytes when it is shipped
+    ## to a worker process, instead of a few kilobytes.
+    force(treecrit)
+    force(famset)
+
     ## check if function is appropriate or type is implemented
     if (is.function(treecrit)) {
         w <- try(treecrit(u1 = runif(10), u2 = runif(10), weights = rep(1, 10)),
@@ -603,9 +613,12 @@ fit.FirstTreeCopulas <- function(MST, data.univ, familyset, selectioncrit,
     }
 
     ## estimate parameters and select family
-    if (cores > 1)
-        lapply <- function(...) parallel::parLapply(getDefaultCluster(), ...)
-    pc.fits <- lapply(pc.data,
+    map <- if (cores > 1) {
+        function(...) parallel::parLapply(getDefaultCluster(), ...)
+    } else {
+        base::lapply
+    }
+    pc.fits <- map(pc.data,
                       pcSelect,
                       familyset = familyset,
                       selectioncrit = selectioncrit,
@@ -700,9 +713,12 @@ fit.TreeCopulas <- function(MST, oldVineGraph, familyset, selectioncrit,
     }
 
     ## estimate parameters and select family
-    if (cores > 1)
-        lapply <- function(...) parallel::parLapply(getDefaultCluster(), ...)
-    pc.fits <- lapply(pc.data,
+    map <- if (cores > 1) {
+        function(...) parallel::parLapply(getDefaultCluster(), ...)
+    } else {
+        base::lapply
+    }
+    pc.fits <- map(pc.data,
                       pcSelect,
                       familyset = familyset,
                       selectioncrit = selectioncrit,
@@ -743,12 +759,35 @@ buildNextGraph <- function(oldVineGraph, treecrit, weights = NA, parallel,
     g$V$conditioningSet <- oldVineGraph$E$conditioningSet
 
     ## get info for all edges
-    if (parallel)
-        lapply <- function(...) parallel::parLapply(getDefaultCluster(), ...)
-    out <- lapply(seq_len(nrow(g$E$nums)),
+    ## `map`, not `lapply`: rebinding the name shadows base::lapply for the rest
+    ## of the function, and the two field extractions below were then dispatched
+    ## to the worker pool -- shipping the whole `out` list to every worker twice
+    ## per tree to read one element out of each entry.
+    map <- if (parallel) {
+        function(...) parallel::parLapply(getDefaultCluster(), ...)
+    } else {
+        base::lapply
+    }
+    ## Pass only the fields getEdgeInfo reads.  Under parLapply every argument
+    ## is serialized to every worker once per chunk, and the fitted pair copulas
+    ## in oldVineGraph$E$fits -- more than half the object, and the part that is
+    ## slowest to serialize because it is many small objects rather than a few
+    ## large ones -- are never looked at here.
+    g_lite <- list(
+        E = list(nums = g$E$nums),
+        V = list(names = g$V$names,
+                 conditionedSet = g$V$conditionedSet,
+                 conditioningSet = g$V$conditioningSet)
+    )
+    old_lite <- list(
+        E = list(nums = oldVineGraph$E$nums,
+                 Copula.CondData.1 = oldVineGraph$E$Copula.CondData.1,
+                 Copula.CondData.2 = oldVineGraph$E$Copula.CondData.2)
+    )
+    out <- map(seq_len(nrow(g$E$nums)),
                   getEdgeInfo,
-                  g = g,
-                  oldVineGraph = oldVineGraph,
+                  g = g_lite,
+                  oldVineGraph = old_lite,
                   treecrit = treecrit,
                   weights = weights,
                   truncated = truncated)
